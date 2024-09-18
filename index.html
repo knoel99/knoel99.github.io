@@ -1,7 +1,156 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Name - Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #35424a;
+            color: #ffffff;
+            text-align: center;
+            padding: 1rem;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+        section {
+            margin: 2rem 0;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #35424a;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .profile img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .projects {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .project {
+            flex-basis: calc(50% - 20px);
+            margin-bottom: 20px;
+        }
+        .project img {
+            max-width: 100%;
+            height: auto;
+        }
+        footer {
+            background-color: #35424a;
+            color: #ffffff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <header>
+        <h1>Student Name</h1>
+        <p>Web Developer | Designer | Creative Thinker</p>
+    </header>
+
+    <div class="container">
+        <section id="about" class="profile">
+            <img src="/api/placeholder/200/200" alt="Student Name">
+            <div>
+                <h2>About Me</h2>
+                <p>Hello! I'm [Your Name], a passionate student studying [Your Field] at [Your University]. I love creating web applications and exploring new technologies. This portfolio showcases my skills, experiences, and interests.</p>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2>Experience</h2>
+            <h3>Job Title - Company Name</h3>
+            <p>Start Date - End Date</p>
+            <ul>
+                <li>Key responsibility or achievement</li>
+                <li>Another key responsibility or achievement</li>
+                <li>One more key responsibility or achievement</li>
+            </ul>
+
+            <h3>Another Job Title - Another Company Name</h3>
+            <p>Start Date - End Date</p>
+            <ul>
+                <li>Key responsibility or achievement</li>
+                <li>Another key responsibility or achievement</li>
+                <li>One more key responsibility or achievement</li>
+            </ul>
+        </section>
+
+        <section id="skills">
+            <h2>Skills</h2>
+            <ul>
+                <li>HTML, CSS, JavaScript</li>
+                <li>React, Vue.js</li>
+                <li>Node.js, Express</li>
+                <li>Git, GitHub</li>
+                <li>Responsive Web Design</li>
+            </ul>
+        </section>
+
+        <section id="projects">
+            <h2>My Projects</h2>
+            <div class="projects">
+                <div class="project">
+                    <h3>Project 1</h3>
+                    <img src="/api/placeholder/300/200" alt="Project 1">
+                    <p>Description of your first project goes here.</p>
+                </div>
+                <div class="project">
+                    <h3>Project 2</h3>
+                    <img src="/api/placeholder/300/200" alt="Project 2">
+                    <p>Description of your second project goes here.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="hobbies">
+            <h2>Hobbies & Interests</h2>
+            <ul>
+                <li>Photography</li>
+                <li>Hiking</li>
+                <li>Reading science fiction novels</li>
+                <li>Playing guitar</li>
+                <li>Cooking international cuisines</li>
+            </ul>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <p>Email: your.email@example.com</p>
+            <p>Phone: (123) 456-7890</p>
+            <p>GitHub: <a href="https://github.com/yourusername">github.com/yourusername</a></p>
+            <p>LinkedIn: <a href="https://linkedin.com/in/yourusername">linkedin.com/in/yourusername</a></p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Student Name. All rights reserved.</p>
+    </footer>
 </body>
 </html>
