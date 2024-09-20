@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website with Side Menu</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica', sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
+            line-height: 1.6;
+            display: flex;
+        }
+
+        /* Side Menu */
+        .side-menu {
+            width: 200px;
+            height: 100vh;
+            background-color: #2c3e50;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .side-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .side-menu li {
+            margin-bottom: 20px;
+        }
+
+        .side-menu a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: 300;
+            position: relative;
+            display: block;
+        }
+
+        .side-menu a:hover {
+            color: #ffcc00;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .side-menu a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #ffcc00;
+            transition: width 0.3s ease-in-out;
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+        }
+
+        .side-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Content Area */
+        .content {
+            margin-left: 240px; /* Creates space for the side menu */
+            padding: 20px;
+            width: calc(100% - 240px);
+        }
+
+        section {
+            padding: 60px 20px;
+            text-align: left;
+            min-height: 100vh;
+        }
+
+        section h1, section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: 300;
+            color: #1b1b1b;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        /* Section Colors */
+        #home {
+            background-color: #eaeaea;
+        }
+
+        #objectif {
+            background-color: #d3d3d3;
+        }
+
+        #programme {
+            background-color: #c5c5c5;
+        }
+
+        #candidature {
+            background-color: #b7b7b7;
+        }
+
+        #tarifs {
+            background-color: #a8a8a8;
+        }
+
+        #debouches {
+            background-color: #999999;
+        }
+
+        #contact {
+            background-color: #8a8a8a;
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .side-menu {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .side-menu ul {
+                flex-direction: row;
+                justify-content: space-around;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        .logo {
+            font-size: 1.8em;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Side Menu -->
+    <div class="side-menu">
+        <div class="logo">My Website</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#objectif">Objectif</a></li>
+            <li><a href="#programme">Programme</a></li>
+            <li><a href="#candidature">Candidature</a></li>
+            <li><a href="#tarifs">Tarifs</a></li>
+            <li><a href="#debouches">Débouchés</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content">
+        <!-- Home Section -->
+        <section id="home">
+            <h1>Home</h1>
+            <p>Welcome to my website! This is where we showcase the best of our program and what we offer.</p>
+        </section>
+
+        <!-- Objectif Section -->
+        <section id="objectif">
+            <h2>Objectif</h2>
+            <p>Our primary objective is to provide quality content and resources to help individuals and organizations achieve their goals. We aim to deliver expert guidance and programs tailored to meet diverse needs.</p>
+        </section>
+
+        <!-- Programme Section -->
+        <section id="programme">
+            <h2>Programme</h2>
+            <p>Our program is designed to provide a comprehensive approach to learning and development. We cover various subjects, including professional skills development, technical training, and personal growth courses.</p>
+        </section>
+
+        <!-- Candidature Section -->
+        <section id="candidature">
+            <h2>Candidature</h2>
+            <p>Applying to our program is simple. Follow the instructions outlined on our website, and make sure to meet the application deadlines. We look forward to receiving your application!</p>
+        </section>
+
+        <!-- Tarifs Section -->
+        <section id="tarifs">
+            <h2>Tarifs</h2>
+            <p>Our pricing is transparent and competitive. We offer various payment plans to accommodate your financial situation, ensuring everyone can access the resources they need.</p>
+        </section>
+
+        <!-- Débouchés Section -->
+        <section id="debouches">
+            <h2>Débouchés</h2>
+            <p>Upon completing our program, participants will be equipped with the necessary skills to excel in their fields. Career opportunities abound in many industries, and our alumni have gone on to achieve great success.</p>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>If you have any questions or would like more information about our program, feel free to reach out to us. You can contact us via email or phone, and we'll be happy to assist you.</p>
+        </section>
+    </div>
+</body>
+</html>
