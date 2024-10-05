@@ -3,85 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MS Geo Data Management for Energy Mix - IFP School & ENSG-Géomatique</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        header {
-            background-color: #2c3e50;
-            color: #ffffff;
-            text-align: center;
-            padding: 1rem;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 0 20px;
-        }
-        section {
-            margin: 2rem 0;
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1, h2 {
-            color: #2c3e50;
-        }
-        .cta-button {
-            display: inline-block;
-            background-color: #e74c3c;
-            color: #ffffff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        footer {
-            background-color: #2c3e50;
-            color: #ffffff;
-            text-align: center;
-            padding: 1rem;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+    <title>Staircase Program</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
 </head>
 <body>
-    <header>
-        <h1>Mastère Spécialisé Geo Data Management for Energy Mix</h1>
-        <p>IFP School & ENSG-Géomatique</p>
-    </header>
+    <main>
+        <h1>Staircase Program</h1>
+        <p>The purpose of this program is to send recently deceased people to deep space.</p>
+        <p>This program is inspired from the staircase program in the 3 body problem series by Liu Cixin.</p>
 
-    <div class="container">
-        <section id="about">
-            <h2>About the Program</h2>
-            <p><strong>English:</strong> As the ecological transition accelerates, new data is being produced and its volume is exploding! Our "Geo Data Management for Energy Mix" program is a unique specialized master's degree. You will acquire the necessary skills to manage data specific to the context of energy production and the study of industrial project impact on the environment.</p>
-            <p><strong>Français:</strong> Alors que la transition écologique accélère, de nouvelles données sont produites et leur volume est en explosion ! Notre programme « Geo Data Management for Energy Mix » est un mastère spécialisé unique. Vous acquerrez les compétences nécessaires à la gestion des données spécifiques au contexte de la production d'énergie et l'étude d'impact de projet industriel sur l'environnement.</p>
-            <a href="#" class="cta-button">Learn More</a>
-        </section>
 
-        <section id="key-points">
-            <h2>Key Points</h2>
-            <ul>
-                <li>Unique collaboration between IFP School and ENSG-Géomatique</li>
-                <li>Focus on data management for energy and environmental projects</li>
-                <li>Hands-on experience with cutting-edge technologies</li>
-                <li>Strong industry partnerships</li>
-            </ul>
-        </section>
-    </div>
+        <h2>Target velocities</h2>
+        <p>Let us assume the destination of the payload (the body placed in a coffin) is the Alpha Centuri, the closest star system. The three escape velocities are:</p>
+
+
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                border: 1px solid black;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+        </style>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Escape Velocity</th>
+                    <th>Equation</th>
+                    <th>Approximate Value</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Earth</td>
+                    <td>$$v_e = \sqrt{\frac{2GM_E}{R_E}}$$</td>
+                    <td>11.2 km/s</td>
+                    <td>Velocity needed to escape Earth's gravitational field</td>
+                </tr>
+                <tr>
+                    <td>Solar System</td>
+                    <td>$$v_{ss} = \sqrt{v_o^2 + v_e^2}$$</td>
+                    <td>42.1 km/s</td>
+                    <td>Velocity needed to escape the Solar System from Earth's orbit</td>
+                </tr>
+                <tr>
+                    <td>Galactic</td>
+                    <td>$$v_g = \sqrt{\frac{2GM_g}{r}}$$</td>
+                    <td>550-650 km/s</td>
+                    <td>Velocity needed to escape the Milky Way galaxy</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Where:</p>
+        <ul>
+            <li>$G$ is the gravitational constant</li>
+            <li>$M_E$ is the mass of Earth</li>
+            <li>$R_E$ is the radius of Earth</li>
+            <li>$v_o$ is Earth's orbital velocity around the Sun (about 29.8 km/s)</li>
+            <li>$M_g$ is the mass of the Milky Way galaxy</li>
+            <li>$r$ is the distance from the galactic center</li>
+        </ul>
+
+        <h2>Payload</h2>
+        <p>The payload is a space coffin containing and the body of the person and some personal belongings. A rough estimation of mass of the payload is 250 kg (150 kg body + objects, 100 kg the coffin).</p>
+
+        <h2>Trajectory</h2>
+        <p>Given the current state propulsion, the best solution to escape the solar system gravity is to use gravitational slingshot (just like Voyager 1). </p>
+        <p>The take-off should occur on Earth, because there is no launch base on the Moon.</p>
+
+        <h2>Acceleration constrains</h2>
+        <p>The acceleration during take-off must be limited to preserve the integrity of the body. The typical acceleration of a habitable mission is 3 to 5 g.</p>
+
+        <h2>Journey monitoring</h2>
+        <p>The relatives of the customer must be provided a online monitoring of the coffin. It's approximate location, it's relative speed, and during the early stage of the journey, a live stream of the flight provided by Starlink.</p>
+
+
+
+       
+    
+    </main>
 
     <footer>
-        <p>&copy; 2024 IFP School & ENSG-Géomatique. All rights reserved.</p>
+        <p>&copy; 2024 Program</p>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
