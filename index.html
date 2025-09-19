@@ -1,3 +1,73 @@
-Hello world
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon site perso</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background: #4CAF50;
+      color: white;
+      padding: 50px 20px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    header p {
+      font-size: 1.2em;
+      margin: 10px 0 20px;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 15px 30px;
+      background: #ff9800;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1.2em;
+    }
+    .cta-button:hover {
+      background: #e68900;
+    }
+    section {
+      padding: 40px 20px;
+    }
+    footer {
+      background: #f1f1f1;
+      padding: 20px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bienvenue sur Notre Site</h1>
+    <p>Découvrez notre solution pour simplifier votre quotidien.</p>
+    <a href="#inscription" class="cta-button">Inscrivez-vous</a>
+  </header>
 
-I am in ENSG today
+  <section>
+    <h2>Pourquoi nous choisir ?</h2>
+    <p>Nous offrons une solution rapide, intuitive et fiable pour répondre à vos besoins.</p>
+  </section>
+
+  <section id="inscription">
+    <h2>Rejoignez-nous</h2>
+    <form>
+      <input type="email" placeholder="Votre email" required>
+      <button type="submit">S'inscrire</button>
+    </form>
+  </section>
+
+  <footer>
+    © 2025 Ma Landing Page - Tous droits réservés
+  </footer>
+</body>
+</html>
