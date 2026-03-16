@@ -1,109 +1,1459 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GDM_2025 – Simplifiez votre quotidien</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    header {
-      background: #1E88E5; /* Changement ici : bleu profond */
-      color: white;
-      padding: 50px 20px;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-    }
-    header p {
-      font-size: 1.2em;
-      margin: 10px 0 20px;
-    }
-    .cta-button {
-      display: inline-block;
-      padding: 15px 30px;
-      background: #9C27B0; /* Changement ici : violet doux */
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 1.2em;
-    }
-    .cta-button:hover {
-      background: #7B1FA2; /* Changement ici : violet foncé au survol */
-    }
-    section {
-      padding: 40px 20px;
-    }
-    .container {
-        padding: 40px 20px;
-        text-align: center;
-    }
-    .features {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 30px;
-    }
-    .feature {
-        width: 30%;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    footer {
-      background: #f1f1f1;
-      padding: 20px;
-      font-size: 0.9em;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exposition des métiers français à l'IA</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0f;
+  --bg2: #12121a;
+  --fg: #e0e0e8;
+  --fg2: #888894;
+  --sidebar-w: 230px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  overflow: hidden;
+  height: 100vh;
+}
+
+#sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--bg2);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  padding: 20px 18px;
+  z-index: 10;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#sidebar h1 {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+#sidebar .subtitle {
+  font-size: 11px;
+  color: var(--fg2);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+#sidebar .subtitle a { color: var(--fg2); }
+
+.stat-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.stat-section h3 {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg2);
+}
+.stat-big {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--fg2);
+}
+
+.tier-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tier-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+.tier-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.tier-name {
+  flex: 1;
+  color: var(--fg2);
+}
+.tier-jobs {
+  text-align: right;
+  white-space: nowrap;
+}
+.tier-pct {
+  text-align: right;
+  width: 32px;
+  color: var(--fg2);
+  font-size: 10px;
+}
+
+.histogram {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 48px;
+}
+.histogram .bar {
+  flex: 1;
+  border-radius: 1px 1px 0 0;
+  min-height: 1px;
+  position: relative;
+}
+.hist-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: var(--fg2);
+  margin-top: 2px;
+}
+
+.hbar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.hbar-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+.hbar-label {
+  width: 80px;
+  flex-shrink: 0;
+  color: var(--fg2);
+  font-size: 10px;
+  text-align: right;
+}
+.hbar-track {
+  flex: 1;
+  height: 10px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.hbar-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+.hbar-val {
+  width: 22px;
+  flex-shrink: 0;
+  font-size: 10px;
+  color: var(--fg);
+  text-align: right;
+}
+
+.color-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.color-toggle button {
+  padding: 4px 8px;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.6);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.color-toggle button.active {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border-color: rgba(255,255,255,0.3);
+}
+.view-toggle {
+  display: flex;
+  gap: 4px;
+}
+.view-toggle button {
+  flex: 1;
+  padding: 5px 0;
+  font-size: 10px;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--fg2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.view-toggle button.active {
+  background: rgba(255,255,255,0.08);
+  color: var(--fg);
+  border-color: rgba(255,255,255,0.2);
+}
+.view-toggle button:hover:not(.active) {
+  background: rgba(255,255,255,0.04);
+}
+
+.legend-help {
+  font-size: 11px;
+  line-height: 1.5;
+}
+.legend-help summary {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg2);
+  cursor: pointer;
+  user-select: none;
+}
+.legend-help summary:hover { color: var(--fg); }
+.legend-help p {
+  margin-top: 6px;
+  color: var(--fg2);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.legend-help b { color: var(--fg); font-weight: 600; }
+.legend-help kbd {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 3px;
+  padding: 1px 4px;
+  font-size: 10px;
+  font-family: inherit;
+}
+
+.gradient-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--fg2);
+}
+.gradient-legend canvas {
+  border-radius: 2px;
+}
+
+canvas#canvas {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-w);
+  cursor: default;
+}
+
+#breadcrumb {
+  position: fixed;
+  top: 8px;
+  left: calc(var(--sidebar-w) + 12px);
+  z-index: 15;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+.bread-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  color: var(--fg2);
+  cursor: pointer;
+  font-size: 11px;
+  padding: 4px 10px;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.bread-btn:hover {
+  background: rgba(255,255,255,0.15);
+  color: var(--fg);
+}
+.bread-sep {
+  color: var(--fg2);
+  font-size: 14px;
+}
+.bread-current {
+  color: var(--fg);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+#tooltip {
+  position: fixed;
+  pointer-events: none;
+  background: var(--bg2);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  line-height: 1.5;
+  max-width: 360px;
+  opacity: 0;
+  transition: opacity 0.12s;
+  z-index: 20;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
+#tooltip.visible { opacity: 1; }
+#tooltip .tt-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #fff;
+}
+#tooltip .tt-code {
+  font-size: 11px;
+  color: var(--fg2);
+  margin-bottom: 6px;
+}
+#tooltip .tt-exposure {
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+#tooltip .tt-stats {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 2px 12px;
+  font-size: 12px;
+}
+#tooltip .tt-stats .label { color: var(--fg2); }
+#tooltip .tt-stats .value { color: var(--fg); text-align: right; }
+#tooltip .tt-rationale {
+  font-size: 11px;
+  color: var(--fg2);
+  margin-top: 8px;
+  line-height: 1.4;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 8px;
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>welcome_GDM_2025</h1>
-    <p>Découvrez notre solution pour simplifier votre quotidien.</p>
-    <a href="#inscription" class="cta-button">Inscrivez-vous</a>
-  </header>
 
-  <section>
-    <h2>Pourquoi nous choisir ?</h2>
-    <p>Nous offrons une solution rapide, intuitive et fiable pour répondre à vos besoins.</p>
-  </section>
+<div id="sidebar">
+  <div>
+    <h1>Exposition des métiers français à l'IA</h1>
+    <div class="subtitle">Fiches ROME &middot; Données <a href="https://candidat.francetravail.fr/">France Travail</a>, scoré par Gemini Flash<br><a href="https://github.com/karpathy/jobs">GitHub</a></div>
+  </div>
 
-  <section id="inscription">
-    <h2>Rejoignez-nous</h2>
-    <form>
-      <input type="email" placeholder="Votre email" required>
-      <button type="submit">S'inscrire</button>
-    </form>
-  </section>
-  <section>
-    <div class="container">
-      <h2>Nos élèves</h2>
-      <p>Voici la liste de nos élèves</p>
-  
-      <!-- Features -->
-      <div class="features">
-          <div class="feature">
-              <h3>nrod2025</h3>
-              <a href="https://nrod2025.github.io/"> https://nrod2025.github.io/</a>
-          </div>
-          <div class="feature">
-              <h3>JDEdoa1</h3>
-              <a href="https://JDEdoa1.github.io/"> https://JDEdoa1.github.io/ </a>
-          </div>
-          <div class="feature">
-              <h3>phanalexandre</h3>
-              <a href="https://phanalexandre.github.io/"> https://phanalexandre.github.io/</a>
-          </div>
-      </div>
-    </section>
-  <footer>
-    © 2025 Ma Landing Page - Tous droits réservés
-  </footer>
+  <div class="view-toggle">
+    <button class="active" onclick="setView('treemap')">Treemap</button>
+    <button onclick="setView('scatter')">Exposition vs Tension</button>
+  </div>
+
+  <div class="legend-help" id="legendTreemap">
+    <details>
+      <summary>Comment lire la Treemap</summary>
+      <p>Chaque rectangle représente un métier ou un groupe de métiers. La <b>taille</b> est proportionnelle au nombre de demandeurs d'emploi inscrits à France Travail. La <b>couleur</b> dépend de la couche sélectionnée ci-dessous. Cliquez pour explorer : domaines → sous-domaines → métiers. <kbd>Échap</kbd> pour remonter.</p>
+    </details>
+  </div>
+  <div class="legend-help" id="legendScatter" style="display:none;">
+    <details>
+      <summary>Comment lire ce graphique</summary>
+      <p>Chaque colonne correspond à un score d'exposition IA (0 à 10). La <b>largeur</b> de la colonne est proportionnelle au nombre total de demandeurs à ce niveau d'exposition. Les métiers sont empilés verticalement et triés par <b>tension de recrutement</b> (plus tendu en haut). La <b>hauteur</b> de chaque bloc est proportionnelle au nombre de demandeurs du métier. Cela permet de repérer quels niveaux d'exposition concentrent le plus de demandeurs et si ces métiers sont en tension ou non.</p>
+    </details>
+  </div>
+
+  <div class="stat-section">
+    <h3>Couche</h3>
+    <div class="color-toggle" id="colorToggle">
+      <button data-mode="tension" class="active">Tension marché</button>
+      <button data-mode="pay">Salaire médian</button>
+      <button data-mode="education">Études</button>
+      <button data-mode="exposure">Exposition IA</button>
+    </div>
+  </div>
+
+  <div class="stat-section">
+    <h3 id="statScopeLabel">Demandeurs d'emploi</h3>
+    <div class="stat-big" id="statTotalJobs">&mdash;</div>
+    <div class="stat-label" id="statScopeDesc"></div>
+  </div>
+
+  <div class="stat-section">
+    <h3>Exposition moyenne pondérée</h3>
+    <div class="stat-big" id="statAvgExposure">&mdash;</div>
+    <div class="stat-label">pondérée par demandeurs, échelle 0-10</div>
+  </div>
+
+  <div class="stat-section">
+    <h3>Demandeurs par exposition</h3>
+    <div class="histogram" id="histogram"></div>
+    <div class="hist-labels"><span>0</span><span>5</span><span>10</span></div>
+  </div>
+
+  <div class="stat-section">
+    <h3>Répartition</h3>
+    <div class="tier-bar" id="tierBar"></div>
+  </div>
+
+  <div class="stat-section">
+    <h3>Exposition par salaire</h3>
+    <div class="hbar-chart" id="payChart"></div>
+  </div>
+
+  <div class="stat-section">
+    <h3>Exposition par niveau d'études</h3>
+    <div class="hbar-chart" id="eduChart"></div>
+  </div>
+
+  <div class="stat-section">
+    <h3>Masse salariale exposée</h3>
+    <div class="stat-big" id="statWages">&mdash;</div>
+    <div class="stat-label" id="statWagesDesc">salaires annuels des métiers très exposés (7+)</div>
+  </div>
+
+  <div class="gradient-legend">
+    <span id="legendLow">Défavorable</span>
+    <canvas id="gradientLegend" width="80" height="8"></canvas>
+    <span id="legendHigh">Favorable</span>
+  </div>
+</div>
+
+<div id="breadcrumb"></div>
+
+<canvas id="canvas"></canvas>
+
+<div id="tooltip">
+  <div class="tt-title"></div>
+  <div class="tt-code"></div>
+  <div class="tt-exposure"></div>
+  <div class="tt-stats"></div>
+  <div class="tt-rationale"></div>
+</div>
+
+<script>
+
+// ── Exposure color scale ───────────────────────────────────────────────
+
+function exposureColor(score) {
+  if (score == null) return [128, 128, 128];
+  const t = Math.max(0, Math.min(10, score)) / 10;
+  let r, g, b;
+  if (t < 0.5) {
+    const s = t / 0.5;
+    r = Math.round(50 + s * 180);
+    g = Math.round(160 - s * 10);
+    b = Math.round(50 - s * 20);
+  } else {
+    const s = (t - 0.5) / 0.5;
+    r = Math.round(230 + s * 25);
+    g = Math.round(150 - s * 110);
+    b = Math.round(30 - s * 10);
+  }
+  return [r, g, b];
+}
+
+function exposureColorCSS(score, alpha) {
+  const [r, g, b] = exposureColor(score);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function tensionColorCSS(tension, alpha) {
+  if (tension == null) return `rgba(128,128,128,${alpha})`;
+  const t = Math.max(0, Math.min(1, (tension - 1) / 4));
+  let r, g, b;
+  if (t < 0.5) {
+    const s = t / 0.5;
+    r = Math.round(220 - s * 40);
+    g = Math.round(60 + s * 100);
+    b = Math.round(50 - s * 20);
+  } else {
+    const s = (t - 0.5) / 0.5;
+    r = Math.round(180 - s * 130);
+    g = Math.round(160 + s * 10);
+    b = Math.round(30 + s * 30);
+  }
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+// ── Color mode system ─────────────────────────────────────────────────
+
+let colorMode = "tension";
+
+const EDU_LEVELS_FR = [
+  "Sans diplôme",
+  "CAP/BEP",
+  "Bac",
+  "Bac (Baccalauréat)",
+  "Bac+2 (BTS/DUT)",
+  "Bac+3 (Licence)",
+  "Bac+5 (Master/Ingénieur)",
+  "Bac+8 (Doctorat)",
+];
+
+function boostContrast(t) {
+  const c = (t - 0.5) * 2;
+  const b = Math.sign(c) * Math.pow(Math.abs(c), 0.55);
+  return b / 2 + 0.5;
+}
+
+function greenRedCSS(t, alpha) {
+  t = boostContrast(Math.max(0, Math.min(1, t)));
+  let r, g, b;
+  if (t < 0.5) {
+    const s = t / 0.5;
+    r = Math.round(30 + s * 200);
+    g = Math.round(180 - s * 20);
+    b = Math.round(40 - s * 20);
+  } else {
+    const s = (t - 0.5) / 0.5;
+    r = Math.round(230 + s * 25);
+    g = Math.round(160 - s * 130);
+    b = Math.round(20 - s * 5);
+  }
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function payColorCSS(pay, alpha) {
+  if (pay == null) return `rgba(128,128,128,${alpha})`;
+  const t = 1 - (Math.log(Math.max(20000, Math.min(120000, pay))) - Math.log(20000)) / (Math.log(120000) - Math.log(20000));
+  return greenRedCSS(t, alpha);
+}
+
+function eduColorCSS(edu, alpha) {
+  if (!edu) return `rgba(128,128,128,${alpha})`;
+  let idx = EDU_LEVELS_FR.indexOf(edu);
+  if (idx < 0) {
+    // Fuzzy match
+    for (let i = 0; i < EDU_LEVELS_FR.length; i++) {
+      if (edu.includes(EDU_LEVELS_FR[i]) || EDU_LEVELS_FR[i].includes(edu)) { idx = i; break; }
+    }
+  }
+  if (idx < 0) return `rgba(128,128,128,${alpha})`;
+  return greenRedCSS(1 - idx / (EDU_LEVELS_FR.length - 1), alpha);
+}
+
+function tensionMarketColorCSS(tension, alpha) {
+  if (tension == null) return `rgba(128,128,128,${alpha})`;
+  // 1=très défavorable (red) → 5=très favorable (green)
+  const t = (tension - 1) / 4;  // 0=défavorable, 1=favorable
+  return greenRedCSS(1 - t, alpha);
+}
+
+function colorForItem(d, alpha) {
+  switch (colorMode) {
+    case "tension": return tensionMarketColorCSS(d.tension, alpha);
+    case "pay": return payColorCSS(d.pay, alpha);
+    case "education": return eduColorCSS(d.education, alpha);
+    case "exposure": return exposureColorCSS(d.exposure, alpha);
+    default: return exposureColorCSS(d.exposure, alpha);
+  }
+}
+
+function colorForAggregate(items, alpha) {
+  switch (colorMode) {
+    case "tension": {
+      let s = 0, c = 0;
+      for (const d of items) { if (d.tension != null) { const w = d.demandeurs || 1; s += d.tension * w; c += w; } }
+      return c > 0 ? tensionMarketColorCSS(s / c, alpha) : `rgba(128,128,128,${alpha})`;
+    }
+    case "pay": {
+      let s = 0, c = 0;
+      for (const d of items) { if (d.pay != null) { const w = d.demandeurs || 1; s += d.pay * w; c += w; } }
+      return c > 0 ? payColorCSS(s / c, alpha) : `rgba(128,128,128,${alpha})`;
+    }
+    case "education": {
+      // Mode education: show most common level
+      let s = 0, c = 0;
+      for (const d of items) {
+        let idx = EDU_LEVELS_FR.indexOf(d.education);
+        if (idx < 0) for (let i = 0; i < EDU_LEVELS_FR.length; i++) {
+          if (d.education && (d.education.includes(EDU_LEVELS_FR[i]) || EDU_LEVELS_FR[i].includes(d.education))) { idx = i; break; }
+        }
+        if (idx >= 0) { const w = d.demandeurs || 1; s += idx * w; c += w; }
+      }
+      if (c === 0) return `rgba(128,128,128,${alpha})`;
+      const avgIdx = Math.round(s / c);
+      return eduColorCSS(EDU_LEVELS_FR[avgIdx] || "", alpha);
+    }
+    case "exposure":
+    default: {
+      const exp = weightedExposure(items);
+      return exposureColorCSS(exp, alpha);
+    }
+  }
+}
+
+function updateLegend() {
+  const lo = document.getElementById("legendLow");
+  const hi = document.getElementById("legendHigh");
+  switch (colorMode) {
+    case "tension": lo.textContent = "Défavorable"; hi.textContent = "Favorable"; break;
+    case "pay": lo.textContent = "< 20K\u20ac"; hi.textContent = "120K\u20ac+"; break;
+    case "education": lo.textContent = "Sans diplôme"; hi.textContent = "Doctorat"; break;
+    case "exposure": lo.textContent = "Faible"; hi.textContent = "Élevée"; break;
+  }
+  drawGradientLegend();
+}
+
+// ── Squarified treemap layout ──────────────────────────────────────────
+
+function squarify(items, x, y, w, h) {
+  if (items.length === 0) return [];
+  if (items.length === 1) {
+    return [{ ...items[0], rx: x, ry: y, rw: w, rh: h }];
+  }
+
+  const total = items.reduce((s, d) => s + d.value, 0);
+  if (total === 0) return [];
+
+  const results = [];
+  let remaining = [...items];
+  let cx = x, cy = y, cw = w, ch = h;
+
+  while (remaining.length > 0) {
+    const remTotal = remaining.reduce((s, d) => s + d.value, 0);
+    const vertical = cw >= ch;
+    const side = vertical ? ch : cw;
+
+    let row = [remaining[0]];
+    let rowSum = remaining[0].value;
+
+    for (let i = 1; i < remaining.length; i++) {
+      const candidate = [...row, remaining[i]];
+      const candidateSum = rowSum + remaining[i].value;
+      if (worstAspect(candidate, candidateSum, side, remTotal, vertical ? cw : ch) <
+          worstAspect(row, rowSum, side, remTotal, vertical ? cw : ch)) {
+        row = candidate;
+        rowSum = candidateSum;
+      } else {
+        break;
+      }
+    }
+
+    const rowFraction = rowSum / remTotal;
+    const rowThickness = vertical ? cw * rowFraction : ch * rowFraction;
+
+    let offset = 0;
+    for (const item of row) {
+      const itemFraction = item.value / rowSum;
+      const itemLength = side * itemFraction;
+      if (vertical) {
+        results.push({ ...item, rx: cx, ry: cy + offset, rw: rowThickness, rh: itemLength });
+      } else {
+        results.push({ ...item, rx: cx + offset, ry: cy, rw: itemLength, rh: rowThickness });
+      }
+      offset += itemLength;
+    }
+
+    if (vertical) {
+      cx += rowThickness;
+      cw -= rowThickness;
+    } else {
+      cy += rowThickness;
+      ch -= rowThickness;
+    }
+
+    remaining = remaining.slice(row.length);
+  }
+
+  return results;
+}
+
+function worstAspect(row, rowSum, side, totalArea, availableExtent) {
+  const rowExtent = availableExtent * (rowSum / totalArea);
+  if (rowExtent === 0) return Infinity;
+  let worst = 0;
+  for (const item of row) {
+    const itemLen = side * (item.value / rowSum);
+    if (itemLen === 0) continue;
+    const aspect = Math.max(rowExtent / itemLen, itemLen / rowExtent);
+    if (aspect > worst) worst = aspect;
+  }
+  return worst;
+}
+
+// ── ROME hierarchy ─────────────────────────────────────────────────────
+
+const ROME_DOMAINS = {
+  'A': 'Agriculture, Pêche, Espaces naturels',
+  'B': 'Arts et Façonnage d\'ouvrages d\'art',
+  'C': 'Banque, Assurance, Immobilier',
+  'D': 'Commerce, Vente, Grande distribution',
+  'E': 'Communication, Média, Multimédia',
+  'F': 'Construction, Bâtiment, Travaux publics',
+  'G': 'Hôtellerie-Restauration, Tourisme, Loisirs',
+  'H': 'Industrie',
+  'I': 'Installation et Maintenance',
+  'J': 'Santé',
+  'K': 'Services à la personne et à la collectivité',
+  'L': 'Spectacle',
+  'M': 'Support à l\'entreprise',
+  'N': 'Transport et Logistique',
+};
+
+let data = [];
+let rects = [];
+let hovered = null;
+let currentView = "treemap";
+
+// Drill-down state: [] = domains, ["M"] = subdomains, ["M","M18"] = jobs
+let drillPath = [];
+let domainNames = {};
+let subdomainNames = {};
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+let dpr = window.devicePixelRatio || 1;
+
+const MARGIN = 12;
+const GAP = 1.5;
+
+function buildHierarchyMaps() {
+  for (const d of data) {
+    // Derive codes from code_rome if not set
+    if (!d.domain_code && d.code_rome) d.domain_code = d.code_rome[0];
+    if (!d.subdomain_code && d.code_rome && d.code_rome.length >= 3) {
+      d.subdomain_code = d.code_rome.substring(0, 3);
+    }
+    // Build name maps
+    if (d.domain_code) {
+      if (d.domain_name) domainNames[d.domain_code] = d.domain_name;
+      else if (!domainNames[d.domain_code]) domainNames[d.domain_code] = ROME_DOMAINS[d.domain_code] || d.domain_code;
+    }
+    if (d.subdomain_code && d.subdomain_name) {
+      subdomainNames[d.subdomain_code] = d.subdomain_name;
+    }
+  }
+}
+
+function getFilteredData() {
+  if (drillPath.length === 0) return data;
+  if (drillPath.length === 1) return data.filter(d => d.domain_code === drillPath[0]);
+  return data.filter(d => d.subdomain_code === drillPath[1]);
+}
+
+function weightedExposure(items) {
+  let wSum = 0, wCount = 0;
+  for (const d of items) {
+    if (d.exposure != null) {
+      const w = d.demandeurs || 1;
+      wSum += d.exposure * w;
+      wCount += w;
+    }
+  }
+  return wCount > 0 ? Math.round(wSum / wCount * 10) / 10 : null;
+}
+
+// ── Navigation ─────────────────────────────────────────────────────────
+
+function drillDown(key) {
+  drillPath.push(key);
+  hovered = null;
+  hideTooltip();
+  updateBreadcrumb();
+  computeStats();
+  resize();
+}
+
+function drillUp(level) {
+  drillPath = drillPath.slice(0, level);
+  hovered = null;
+  hideTooltip();
+  updateBreadcrumb();
+  computeStats();
+  resize();
+}
+
+function updateBreadcrumb() {
+  const el = document.getElementById("breadcrumb");
+  if (drillPath.length === 0) {
+    el.style.display = "none";
+    return;
+  }
+  el.style.display = "flex";
+
+  let html = '<button class="bread-btn" onclick="drillUp(0)">\u25C2 Tous les domaines</button>';
+
+  if (drillPath.length >= 1) {
+    const dName = domainNames[drillPath[0]] || drillPath[0];
+    html += '<span class="bread-sep">\u203A</span>';
+    if (drillPath.length > 1) {
+      html += `<button class="bread-btn" onclick="drillUp(1)">${dName}</button>`;
+    } else {
+      html += `<span class="bread-current">${dName}</span>`;
+    }
+  }
+
+  if (drillPath.length >= 2) {
+    const sName = subdomainNames[drillPath[1]] || drillPath[1];
+    html += '<span class="bread-sep">\u203A</span>';
+    html += `<span class="bread-current">${sName}</span>`;
+  }
+
+  el.innerHTML = html;
+}
+
+// ── Rendering ──────────────────────────────────────────────────────────
+
+function setView(view) {
+  currentView = view;
+  // Reset drill-down when switching views to avoid broken filtered state
+  drillPath = [];
+  updateBreadcrumb();
+  document.querySelectorAll(".view-toggle button").forEach(b => b.classList.remove("active"));
+  document.querySelector(`.view-toggle button[onclick="setView('${view}')"]`).classList.add("active");
+  // Toggle contextual legend
+  document.getElementById("legendTreemap").style.display = view === "treemap" ? "" : "none";
+  document.getElementById("legendScatter").style.display = view === "scatter" ? "" : "none";
+  hovered = null;
+  hideTooltip();
+  computeStats();
+  resize();
+}
+
+function layout() {
+  const sidebarW = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sidebar-w'));
+  const w = (window.innerWidth - sidebarW);
+  const h = window.innerHeight;
+
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + "px";
+  canvas.style.height = h + "px";
+
+  const breadcrumbH = drillPath.length > 0 ? 36 : 0;
+  const tx = MARGIN;
+  const ty = MARGIN + breadcrumbH;
+  const tw = w - MARGIN * 2;
+  const th = h - MARGIN * 2 - breadcrumbH;
+
+  if (drillPath.length < 2) {
+    // Aggregate view: domains (level 0) or subdomains (level 1)
+    const filtered = getFilteredData();
+    const groupKey = drillPath.length === 0 ? 'domain_code' : 'subdomain_code';
+    const nameMap = drillPath.length === 0 ? domainNames : subdomainNames;
+
+    const byGroup = {};
+    for (const d of filtered) {
+      const key = d[groupKey] || 'other';
+      if (!byGroup[key]) byGroup[key] = [];
+      byGroup[key].push(d);
+    }
+
+    const items = Object.entries(byGroup).map(([code, jobs]) => {
+      // Compute weighted averages for all color modes
+      let wPay = 0, cPay = 0, wTen = 0, cTen = 0, wEdu = 0, cEdu = 0;
+      for (const j of jobs) {
+        const w = j.demandeurs || 1;
+        if (j.pay != null) { wPay += j.pay * w; cPay += w; }
+        if (j.tension != null) { wTen += j.tension * w; cTen += w; }
+        let idx = EDU_LEVELS_FR.indexOf(j.education);
+        if (idx < 0 && j.education) for (let i = 0; i < EDU_LEVELS_FR.length; i++) {
+          if (j.education.includes(EDU_LEVELS_FR[i]) || EDU_LEVELS_FR[i].includes(j.education)) { idx = i; break; }
+        }
+        if (idx >= 0) { wEdu += idx * w; cEdu += w; }
+      }
+      return {
+        isAggregate: true,
+        drillKey: code,
+        title: nameMap[code] || code,
+        code_rome: code,
+        exposure: weightedExposure(jobs),
+        pay: cPay > 0 ? Math.round(wPay / cPay) : null,
+        tension: cTen > 0 ? Math.round(wTen / cTen * 10) / 10 : null,
+        education: cEdu > 0 ? (EDU_LEVELS_FR[Math.round(wEdu / cEdu)] || "") : "",
+        demandeurs: jobs.reduce((s, j) => s + (j.demandeurs || 0), 0),
+        offres: jobs.reduce((s, j) => s + (j.offres || 0), 0),
+        jobCount: jobs.length,
+        value: jobs.reduce((s, j) => s + (j.demandeurs || 1), 0),
+        _children: jobs,
+      };
+    }).sort((a, b) => b.value - a.value);
+
+    rects = squarify(items, tx, ty, tw, th);
+  } else {
+    // Individual jobs within a subdomain
+    const filtered = getFilteredData();
+    const items = filtered
+      .map(d => ({ ...d, value: d.demandeurs || 1 }))
+      .sort((a, b) => b.value - a.value);
+    rects = squarify(items, tx, ty, tw, th);
+  }
+}
+
+function draw() {
+  const w = canvas.width;
+  const h = canvas.height;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.fillStyle = "#0a0a0f";
+  ctx.fillRect(0, 0, w / dpr, h / dpr);
+
+  for (const r of rects) {
+    const isHovered = r === hovered;
+
+    const g = GAP / 2;
+    const rx = r.rx + g;
+    const ry = r.ry + g;
+    const rw = r.rw - g * 2;
+    const rh = r.rh - g * 2;
+
+    if (rw <= 0 || rh <= 0) continue;
+
+    const fillAlpha = isHovered ? 0.8 : 0.5;
+    ctx.fillStyle = colorForItem(r, fillAlpha);
+    ctx.fillRect(rx, ry, rw, rh);
+
+    if (isHovered) {
+      ctx.strokeStyle = "#fff";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(rx, ry, rw, rh);
+    }
+
+    // Aggregate indicator: subtle dashed border
+    if (r.isAggregate && !isHovered) {
+      ctx.strokeStyle = "rgba(255,255,255,0.15)";
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 3]);
+      ctx.strokeRect(rx, ry, rw, rh);
+      ctx.setLineDash([]);
+    }
+
+    const minW = r.isAggregate ? 60 : 50;
+    const minH = r.isAggregate ? 22 : 18;
+    if (rw > minW && rh > minH) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(rx + 4, ry + 2, rw - 8, rh - 4);
+      ctx.clip();
+
+      const fontSize = Math.min(14, Math.max(9, Math.min(rw / 10, rh / 3)));
+      ctx.font = `${r.isAggregate ? 600 : 500} ${fontSize}px -apple-system, system-ui, sans-serif`;
+      ctx.fillStyle = isHovered ? "#fff" : "rgba(255,255,255,0.85)";
+      ctx.textBaseline = "top";
+      ctx.fillText(r.title, rx + 5, ry + 4);
+
+      if (rh > 34 && rw > 60) {
+        let info;
+        if (r.isAggregate) {
+          info = r.jobCount + " métiers";
+          if (r.exposure != null) info += " \u00b7 moy. " + r.exposure.toFixed(1) + "/10";
+          if (r.demandeurs) info += " \u00b7 " + formatNumber(r.demandeurs) + " DE";
+        } else {
+          info = (r.exposure != null ? r.exposure + "/10" : "") +
+                 (r.demandeurs ? " \u00b7 " + formatNumber(r.demandeurs) + " DE" : "");
+        }
+        ctx.font = `400 ${Math.max(8, fontSize - 2)}px -apple-system, system-ui, sans-serif`;
+        ctx.fillStyle = "rgba(255,255,255,0.5)";
+        ctx.fillText(info, rx + 5, ry + 4 + fontSize + 2);
+      }
+
+      // Drill indicator for aggregates
+      if (r.isAggregate && rw > 80 && rh > 50) {
+        ctx.font = `400 ${Math.max(8, fontSize - 2)}px -apple-system, system-ui, sans-serif`;
+        ctx.fillStyle = "rgba(255,255,255,0.25)";
+        ctx.textBaseline = "bottom";
+        ctx.fillText("cliquer pour explorer \u25B8", rx + 5, ry + rh - 4);
+      }
+
+      ctx.restore();
+    }
+  }
+}
+
+function hitTest(mx, my) {
+  const sidebarW = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sidebar-w'));
+  const cx = mx - sidebarW;
+  const cy = my;
+  for (let i = rects.length - 1; i >= 0; i--) {
+    const r = rects[i];
+    if (cx >= r.rx && cx < r.rx + r.rw && cy >= r.ry && cy < r.ry + r.rh) {
+      return r;
+    }
+  }
+  return null;
+}
+
+function formatNumber(n) {
+  if (n == null) return "\u2014";
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + "M";
+  if (n >= 1000) return Math.round(n / 1000) + "K";
+  return n.toLocaleString("fr-FR");
+}
+
+function formatPay(n) {
+  if (n == null) return "\u2014";
+  return n.toLocaleString("fr-FR") + " \u20ac";
+}
+
+function showTooltip(d, mx, my) {
+  const tt = document.getElementById("tooltip");
+
+  tt.querySelector(".tt-title").textContent = d.title;
+
+  if (d.isAggregate) {
+    tt.querySelector(".tt-code").textContent = `Code ${d.code_rome} \u00b7 ${d.jobCount} métiers`;
+
+    const score = d.exposure;
+    if (score != null) {
+      const barWidth = score * 10;
+      const color = exposureColorCSS(score, 1);
+      tt.querySelector(".tt-exposure").innerHTML =
+        `<span style="color:${color};font-weight:600;">Exposition moyenne : ${score.toFixed(1)}/10</span>` +
+        `<div style="margin-top:3px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;">` +
+        `<div style="height:100%;width:${barWidth}%;background:${color};border-radius:2px;"></div></div>`;
+    } else {
+      tt.querySelector(".tt-exposure").innerHTML = "";
+    }
+
+    tt.querySelector(".tt-stats").innerHTML = `
+      <span class="label">Demandeurs</span><span class="value">${formatNumber(d.demandeurs)}</span>
+      <span class="label">Offres</span><span class="value">${formatNumber(d.offres)}</span>
+    `;
+    tt.querySelector(".tt-rationale").textContent = "Cliquer pour explorer les métiers";
+  } else {
+    tt.querySelector(".tt-code").textContent = d.code_rome ? `Code ROME : ${d.code_rome}` : "";
+
+    const score = d.exposure != null ? d.exposure : null;
+    if (score != null) {
+      const barWidth = score * 10;
+      const color = exposureColorCSS(score, 1);
+      tt.querySelector(".tt-exposure").innerHTML =
+        `<span style="color:${color};font-weight:600;">Exposition IA : ${score}/10</span>` +
+        `<div style="margin-top:3px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;">` +
+        `<div style="height:100%;width:${barWidth}%;background:${color};border-radius:2px;"></div></div>`;
+    } else {
+      tt.querySelector(".tt-exposure").innerHTML = "";
+    }
+
+    tt.querySelector(".tt-stats").innerHTML = `
+      <span class="label">Salaire médian</span><span class="value">${formatPay(d.pay)}</span>
+      <span class="label">Demandeurs</span><span class="value">${formatNumber(d.demandeurs)}</span>
+      <span class="label">Offres</span><span class="value">${formatNumber(d.offres)}</span>
+      <span class="label">Tension</span><span class="value">${d.tension != null ? d.tension + '/5' : '\u2014'} ${d.tension_desc ? '(' + d.tension_desc + ')' : ''}</span>
+      <span class="label">Formation</span><span class="value">${d.education || '\u2014'}</span>
+    `;
+
+    tt.querySelector(".tt-rationale").textContent = d.exposure_rationale || "";
+  }
+
+  const pad = 16;
+  let tx = mx + pad;
+  let ty = my - pad;
+  if (tx + 360 > window.innerWidth) tx = mx - 360 - pad;
+  if (ty < 10) ty = my + pad;
+  if (ty + 200 > window.innerHeight) ty = my - 200;
+
+  tt.style.left = tx + "px";
+  tt.style.top = ty + "px";
+  tt.classList.add("visible");
+}
+
+function hideTooltip() {
+  document.getElementById("tooltip").classList.remove("visible");
+}
+
+// ── Column view (exposure x tension) ─────────────────────────────────
+
+let colRects = [];
+
+function layoutColumns() {
+  const sidebarW = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sidebar-w'));
+  const w = (window.innerWidth - sidebarW);
+  const h = window.innerHeight;
+
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + "px";
+  canvas.style.height = h + "px";
+
+  const pad = { top: 20, bottom: 24, left: 4, right: 4 };
+  const plotW = w - pad.left - pad.right;
+  const plotH = h - pad.top - pad.bottom;
+  const colGap = 2;
+
+  // Use filtered data based on drill path
+  const filtered = getFilteredData();
+
+  const byExposure = {};
+  let totalJobs = 0;
+  for (const d of filtered) {
+    if (d.exposure == null) continue;
+    if (!byExposure[d.exposure]) byExposure[d.exposure] = [];
+    byExposure[d.exposure].push(d);
+    totalJobs += d.demandeurs || 0;
+  }
+
+  const scores = Object.keys(byExposure).map(Number).sort((a, b) => a - b);
+  const numCols = scores.length;
+
+  const colJobTotals = scores.map(s => byExposure[s].reduce((sum, d) => sum + (d.demandeurs || 0), 0));
+  const totalGap = colGap * (numCols - 1);
+  const availW = plotW - totalGap;
+
+  colRects = [];
+  let cx = pad.left;
+
+  for (let i = 0; i < scores.length; i++) {
+    const score = scores[i];
+    const items = byExposure[score];
+    const colJobs = colJobTotals[i];
+    const colW = totalJobs > 0 ? (colJobs / totalJobs) * availW : availW / numCols;
+
+    items.sort((a, b) => (b.tension || 0) - (a.tension || 0));
+
+    let cy = pad.top;
+    for (const d of items) {
+      const jobs = d.demandeurs || 0;
+      const itemH = colJobs > 0 ? (jobs / colJobs) * plotH : plotH / items.length;
+      if (itemH < 0.3) { cy += itemH; continue; }
+      colRects.push({ ...d, rx: cx, ry: cy, rw: colW, rh: itemH });
+      cy += itemH;
+    }
+
+    cx += colW + colGap;
+  }
+
+  colRects._meta = { scores, pad, colJobTotals, totalJobs, availW, plotH, colGap };
+}
+
+function drawColumns() {
+  const w = canvas.width;
+  const h = canvas.height;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.fillStyle = "#0a0a0f";
+  ctx.fillRect(0, 0, w / dpr, h / dpr);
+
+  const meta = colRects._meta;
+  if (!meta) return;
+
+  ctx.font = "500 11px -apple-system, system-ui, sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "bottom";
+
+  let hx = meta.pad.left;
+  for (let i = 0; i < meta.scores.length; i++) {
+    const colW = meta.totalJobs > 0
+      ? (meta.colJobTotals[i] / meta.totalJobs) * meta.availW
+      : meta.availW / meta.scores.length;
+    if (colW > 16) {
+      ctx.fillStyle = colorForItem({exposure: meta.scores[i], tension: meta.scores[i], pay: null, education: ""}, 0.7);
+      ctx.fillText(meta.scores[i], hx + colW / 2, meta.pad.top - 5);
+    }
+    hx += colW + meta.colGap;
+  }
+
+  ctx.fillStyle = "rgba(255,255,255,0.4)";
+  ctx.font = "11px -apple-system, system-ui, sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "top";
+  ctx.fillText("Exposition IA", meta.pad.left + meta.availW / 2, meta.pad.top + meta.plotH + 6);
+
+  const gap = 0.5;
+  for (const r of colRects) {
+    const isHovered = r === hovered;
+    const rx = r.rx + gap;
+    const ry = r.ry + gap;
+    const rw = r.rw - gap * 2;
+    const rh = r.rh - gap * 2;
+    if (rw <= 0 || rh <= 0) continue;
+
+    const fillAlpha = isHovered ? 0.8 : 0.5;
+    ctx.fillStyle = colorForItem(r, fillAlpha);
+    ctx.fillRect(rx, ry, rw, rh);
+
+    if (isHovered) {
+      ctx.strokeStyle = "#fff";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(rx, ry, rw, rh);
+    }
+
+    if (rw > 40 && rh > 14) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(rx + 3, ry + 1, rw - 6, rh - 2);
+      ctx.clip();
+
+      const fontSize = Math.min(12, Math.max(8, Math.min(rw / 12, rh / 2.5)));
+      ctx.font = `500 ${fontSize}px -apple-system, system-ui, sans-serif`;
+      ctx.fillStyle = isHovered ? "#fff" : "rgba(255,255,255,0.85)";
+      ctx.textBaseline = "top";
+      ctx.textAlign = "left";
+      ctx.fillText(r.title, rx + 4, ry + 2);
+
+      if (rh > 28 && rw > 50) {
+        const info = (r.tension != null ? "tension " + r.tension + "/5" : "") +
+                     (r.demandeurs ? " \u00b7 " + formatNumber(r.demandeurs) + " DE" : "");
+        ctx.font = `400 ${Math.max(7, fontSize - 2)}px -apple-system, system-ui, sans-serif`;
+        ctx.fillStyle = "rgba(255,255,255,0.5)";
+        ctx.fillText(info, rx + 4, ry + 2 + fontSize + 1);
+      }
+
+      ctx.restore();
+    }
+  }
+}
+
+function hitTestColumns(mx, my) {
+  const sidebarW = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sidebar-w'));
+  const cx = mx - sidebarW;
+  const cy = my;
+  for (let i = colRects.length - 1; i >= 0; i--) {
+    const r = colRects[i];
+    if (cx >= r.rx && cx < r.rx + r.rw && cy >= r.ry && cy < r.ry + r.rh) {
+      return r;
+    }
+  }
+  return null;
+}
+
+// ── Sidebar stats ──────────────────────────────────────────────────────
+
+function computeStats() {
+  const filtered = getFilteredData();
+
+  const totalJobs = filtered.reduce((s, d) => s + (d.demandeurs || 0), 0);
+
+  // Scope label
+  const scopeEl = document.getElementById("statScopeDesc");
+  if (drillPath.length === 0) {
+    scopeEl.textContent = data.length + " métiers";
+  } else if (drillPath.length === 1) {
+    scopeEl.textContent = (domainNames[drillPath[0]] || drillPath[0]) + " \u00b7 " + filtered.length + " métiers";
+  } else {
+    scopeEl.textContent = (subdomainNames[drillPath[1]] || drillPath[1]) + " \u00b7 " + filtered.length + " métiers";
+  }
+
+  let weightedSum = 0, weightedCount = 0;
+  for (const d of filtered) {
+    if (d.exposure != null && d.demandeurs) {
+      weightedSum += d.exposure * d.demandeurs;
+      weightedCount += d.demandeurs;
+    }
+  }
+  const weightedAvg = weightedCount > 0 ? weightedSum / weightedCount : 0;
+
+  const histogram = new Array(11).fill(0);
+  for (const d of filtered) {
+    if (d.exposure != null && d.demandeurs) {
+      histogram[d.exposure] += d.demandeurs;
+    }
+  }
+
+  const tiers = [
+    { name: "Minimale", range: [0, 1], color: exposureColorCSS(0.5, 1) },
+    { name: "Faible", range: [2, 3], color: exposureColorCSS(2.5, 1) },
+    { name: "Modérée", range: [4, 5], color: exposureColorCSS(4.5, 1) },
+    { name: "Élevée", range: [6, 7], color: exposureColorCSS(6.5, 1) },
+    { name: "Très élevée", range: [8, 10], color: exposureColorCSS(9, 1) },
+  ];
+  for (const tier of tiers) {
+    tier.demandeurs = 0;
+    for (const d of filtered) {
+      if (d.exposure != null && d.demandeurs &&
+          d.exposure >= tier.range[0] && d.exposure <= tier.range[1]) {
+        tier.demandeurs += d.demandeurs;
+      }
+    }
+    tier.pct = totalJobs > 0 ? (tier.demandeurs / totalJobs * 100) : 0;
+  }
+
+  let wagesExposed = 0;
+  for (const d of filtered) {
+    if (d.exposure != null && d.exposure >= 7 && d.demandeurs && d.pay) {
+      wagesExposed += d.demandeurs * d.pay;
+    }
+  }
+
+  // Render
+  const jobsDisplay = totalJobs >= 1000000
+    ? (totalJobs / 1e6).toFixed(1) + "M"
+    : totalJobs >= 1000
+      ? Math.round(totalJobs / 1000) + "K"
+      : totalJobs.toLocaleString("fr-FR");
+  document.getElementById("statTotalJobs").textContent = jobsDisplay;
+
+  document.getElementById("statAvgExposure").innerHTML =
+    `<span style="color:${exposureColorCSS(weightedAvg, 1)}">${weightedAvg.toFixed(1)}</span>`;
+
+  const maxHist = Math.max(...histogram);
+  const histEl = document.getElementById("histogram");
+  histEl.innerHTML = histogram.map((count, i) => {
+    const h = maxHist > 0 ? (count / maxHist * 100) : 0;
+    return `<div class="bar" style="height:${Math.max(2, h)}%;background:${exposureColorCSS(i, 0.7)}" title="${i}: ${formatNumber(count)} demandeurs"></div>`;
+  }).join("");
+
+  const tierEl = document.getElementById("tierBar");
+  tierEl.innerHTML = tiers.map(t =>
+    `<div class="tier-row">
+      <div class="tier-color" style="background:${t.color}"></div>
+      <span class="tier-name">${t.name} (${t.range[0]}-${t.range[1]})</span>
+      <span class="tier-jobs">${formatNumber(t.demandeurs)}</span>
+      <span class="tier-pct">${t.pct.toFixed(0)}%</span>
+    </div>`
+  ).join("");
+
+  // Exposition par bande salariale (EUR)
+  const payBands = [
+    { label: "< 25K\u20ac", min: 0, max: 25000 },
+    { label: "25-35K\u20ac", min: 25000, max: 35000 },
+    { label: "35-50K\u20ac", min: 35000, max: 50000 },
+    { label: "50-75K\u20ac", min: 50000, max: 75000 },
+    { label: "75K\u20ac+", min: 75000, max: Infinity },
+  ];
+  const payChartEl = document.getElementById("payChart");
+  payChartEl.innerHTML = payBands.map(band => {
+    let wSum = 0, wCount = 0;
+    for (const d of filtered) {
+      if (d.exposure != null && d.demandeurs && d.pay != null &&
+          d.pay >= band.min && d.pay < band.max) {
+        wSum += d.exposure * d.demandeurs;
+        wCount += d.demandeurs;
+      }
+    }
+    const avg = wCount > 0 ? wSum / wCount : 0;
+    const pct = avg / 10 * 100;
+    return `<div class="hbar-row">
+      <span class="hbar-label">${band.label}</span>
+      <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%;background:${exposureColorCSS(avg, 0.8)}"></div></div>
+      <span class="hbar-val">${avg.toFixed(1)}</span>
+    </div>`;
+  }).join("");
+
+  // Exposition par niveau d'études (système français)
+  const eduGroups = [
+    { label: "CAP/BEP", match: ["CAP/BEP"] },
+    { label: "Bac", match: ["Bac"] },
+    { label: "Bac+2", match: ["Bac+2 (BTS/DUT)"] },
+    { label: "Bac+3", match: ["Bac+3 (Licence)"] },
+    { label: "Bac+5/8", match: ["Bac+5 (Master/Ingénieur)", "Bac+8 (Doctorat)"] },
+  ];
+  const eduChartEl = document.getElementById("eduChart");
+  eduChartEl.innerHTML = eduGroups.map(grp => {
+    let wSum = 0, wCount = 0;
+    for (const d of filtered) {
+      if (d.exposure != null && d.demandeurs && grp.match.includes(d.education)) {
+        wSum += d.exposure * d.demandeurs;
+        wCount += d.demandeurs;
+      }
+    }
+    const avg = wCount > 0 ? wSum / wCount : 0;
+    const pct = avg / 10 * 100;
+    return `<div class="hbar-row">
+      <span class="hbar-label">${grp.label}</span>
+      <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%;background:${exposureColorCSS(avg, 0.8)}"></div></div>
+      <span class="hbar-val">${avg.toFixed(1)}</span>
+    </div>`;
+  }).join("");
+
+  // Masse salariale exposée
+  const milliards = wagesExposed / 1e9;
+  document.getElementById("statWages").textContent =
+    milliards >= 1000
+      ? (milliards / 1000).toFixed(1) + " T\u20ac"
+      : milliards.toFixed(0) + " Md\u20ac";
+}
+
+// ── Events ─────────────────────────────────────────────────────────────
+
+canvas.addEventListener("mousemove", (e) => {
+  const hit = currentView === "treemap" ? hitTest(e.clientX, e.clientY) : hitTestColumns(e.clientX, e.clientY);
+  if (hit !== hovered) {
+    hovered = hit;
+    currentView === "treemap" ? draw() : drawColumns();
+  }
+  if (hovered) {
+    showTooltip(hovered, e.clientX, e.clientY);
+    canvas.style.cursor = "pointer";
+  } else {
+    hideTooltip();
+    canvas.style.cursor = "default";
+  }
+});
+
+canvas.addEventListener("click", (e) => {
+  const hit = currentView === "treemap" ? hitTest(e.clientX, e.clientY) : hitTestColumns(e.clientX, e.clientY);
+  if (hit) {
+    if (hit.isAggregate) {
+      drillDown(hit.drillKey);
+    } else if (hit.url) {
+      window.open(hit.url, "_blank");
+    }
+  }
+});
+
+canvas.addEventListener("mouseleave", () => {
+  hovered = null;
+  hideTooltip();
+  currentView === "treemap" ? draw() : drawColumns();
+});
+
+// Keyboard: Escape to go back
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && drillPath.length > 0) {
+    drillUp(drillPath.length - 1);
+  }
+});
+
+function resize() {
+  dpr = window.devicePixelRatio || 1;
+  if (currentView === "treemap") {
+    layout();
+    draw();
+  } else {
+    layoutColumns();
+    drawColumns();
+  }
+}
+
+// ── Legend gradient ────────────────────────────────────────────────────
+
+function drawGradientLegend() {
+  const c = document.getElementById("gradientLegend");
+  const gctx = c.getContext("2d");
+  for (let x = 0; x < 80; x++) {
+    const t = x / 79;
+    switch (colorMode) {
+      case "tension": gctx.fillStyle = tensionMarketColorCSS(1 + t * 4, 1); break;
+      case "pay": gctx.fillStyle = payColorCSS(20000 + t * 100000, 1); break;
+      case "education": gctx.fillStyle = eduColorCSS(EDU_LEVELS_FR[Math.round(t * (EDU_LEVELS_FR.length - 1))], 1); break;
+      case "exposure": default: gctx.fillStyle = exposureColorCSS(t * 10, 1); break;
+    }
+    gctx.fillRect(x, 0, 1, 8);
+  }
+}
+
+// ── Color mode toggle ──────────────────────────────────────────────────
+
+document.getElementById("colorToggle").addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-mode]");
+  if (!btn) return;
+  colorMode = btn.dataset.mode;
+  document.querySelectorAll("#colorToggle button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  updateLegend();
+  hovered = null;
+  hideTooltip();
+  resize();
+});
+
+// ── Load ───────────────────────────────────────────────────────────────
+
+fetch("data.json")
+  .then(r => r.json())
+  .then(d => {
+    data = d;
+    buildHierarchyMaps();
+    computeStats();
+    updateLegend();
+    updateBreadcrumb();
+    resize();
+  });
+
+window.addEventListener("resize", resize);
+</script>
 </body>
 </html>
