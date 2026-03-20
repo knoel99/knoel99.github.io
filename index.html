@@ -369,10 +369,10 @@ canvas#canvas {
   <div class="stat-section">
     <h3>Couche</h3>
     <div class="color-toggle" id="colorToggle">
-      <button data-mode="tension" class="active">Tension marché</button>
+      <button data-mode="exposure" class="active">Exposition IA</button>
+      <button data-mode="tension">Tension marché</button>
       <button data-mode="pay">Salaire médian</button>
       <button data-mode="education">Études</button>
-      <button data-mode="exposure">Exposition IA</button>
     </div>
   </div>
 
@@ -416,9 +416,9 @@ canvas#canvas {
   </div>
 
   <div class="gradient-legend">
-    <span id="legendLow">Défavorable</span>
+    <span id="legendLow">Faible</span>
     <canvas id="gradientLegend" width="80" height="8"></canvas>
-    <span id="legendHigh">Favorable</span>
+    <span id="legendHigh">Élevée</span>
   </div>
 </div>
 
@@ -481,7 +481,7 @@ function tensionColorCSS(tension, alpha) {
 
 // ── Color mode system ─────────────────────────────────────────────────
 
-let colorMode = "tension";
+let colorMode = "exposure";
 
 const EDU_LEVELS_FR = [
   "Sans diplôme",
@@ -937,18 +937,9 @@ function draw() {
       ctx.fillText(r.title, rx + 5, ry + 4);
 
       if (rh > 34 && rw > 60) {
-        let info;
-        if (r.isAggregate) {
-          info = r.jobCount + " métiers";
-          if (r.exposure != null) info += " \u00b7 moy. " + r.exposure.toFixed(1) + "/10";
-          if (r.demandeurs) info += " \u00b7 " + formatNumber(r.demandeurs) + " DE";
-        } else {
-          info = (r.exposure != null ? r.exposure + "/10" : "") +
-                 (r.demandeurs ? " \u00b7 " + formatNumber(r.demandeurs) + " DE" : "");
-        }
         ctx.font = `400 ${Math.max(8, fontSize - 2)}px -apple-system, system-ui, sans-serif`;
         ctx.fillStyle = "rgba(255,255,255,0.5)";
-        ctx.fillText(info, rx + 5, ry + 4 + fontSize + 2);
+        ctx.fillText(tileSubInfo(r), rx + 5, ry + 4 + fontSize + 2);
       }
 
       // Drill indicator for aggregates
@@ -989,6 +980,93 @@ function formatPay(n) {
   return n.toLocaleString("fr-FR") + " \u20ac";
 }
 
+function tensionLabel(t) {
+  if (t == null) return "\u2014";
+  if (t <= 1) return "Très défavorable";
+  if (t <= 2) return "Défavorable";
+  if (t <= 3) return "Neutre";
+  if (t <= 4) return "Favorable";
+  return "Très favorable";
+}
+
+function tileSubInfo(r) {
+  if (r.isAggregate) {
+    let info = r.jobCount + " métiers";
+    switch (colorMode) {
+      case "tension":
+        if (r.tension != null) info += " \u00b7 tension " + r.tension.toFixed(1) + "/5";
+        break;
+      case "pay":
+        if (r.pay != null) info += " \u00b7 " + formatPay(r.pay);
+        break;
+      case "education":
+        if (r.education) info += " \u00b7 " + r.education;
+        break;
+      case "exposure":
+      default:
+        if (r.exposure != null) info += " \u00b7 moy. " + r.exposure.toFixed(1) + "/10";
+        break;
+    }
+    if (r.demandeurs) info += " \u00b7 " + formatNumber(r.demandeurs) + " DE";
+    return info;
+  } else {
+    switch (colorMode) {
+      case "tension":
+        return (r.tension != null ? "tension " + r.tension + "/5" : "") +
+               (r.demandeurs ? " \u00b7 " + formatNumber(r.demandeurs) + " DE" : "");
+      case "pay":
+        return (r.pay != null ? formatPay(r.pay) : "") +
+               (r.demandeurs ? " \u00b7 " + formatNumber(r.demandeurs) + " DE" : "");
+      case "education":
+        return (r.education || "") +
+               (r.demandeurs ? " \u00b7 " + formatNumber(r.demandeurs) + " DE" : "");
+      case "exposure":
+      default:
+        return (r.exposure != null ? r.exposure + "/10" : "") +
+               (r.demandeurs ? " \u00b7 " + formatNumber(r.demandeurs) + " DE" : "");
+    }
+  }
+}
+
+function tooltipHighlight(d) {
+  switch (colorMode) {
+    case "exposure": {
+      const score = d.exposure;
+      if (score == null) return "";
+      const barWidth = score * 10;
+      const color = exposureColorCSS(score, 1);
+      return `<span style="color:${color};font-weight:600;">${d.isAggregate ? 'Exposition moyenne' : 'Exposition IA'} : ${d.isAggregate ? score.toFixed(1) : score}/10</span>` +
+        `<div style="margin-top:3px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;">` +
+        `<div style="height:100%;width:${barWidth}%;background:${color};border-radius:2px;"></div></div>`;
+    }
+    case "tension": {
+      const t = d.isAggregate ? d.tension : d.tension;
+      if (t == null) return "";
+      const color = tensionMarketColorCSS(t, 1);
+      const label = d.isAggregate ? "Tension moyenne" : "Tension marché";
+      return `<span style="color:${color};font-weight:600;">${label} : ${d.isAggregate ? t.toFixed(1) : t}/5</span>` +
+        (d.tension_desc && !d.isAggregate ? ` <span style="color:var(--fg2);">(${d.tension_desc})</span>` : '') +
+        (d.isAggregate ? ` <span style="color:var(--fg2);">(${tensionLabel(t)})</span>` : '') +
+        `<div style="margin-top:3px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;">` +
+        `<div style="height:100%;width:${Math.min(100, (t - 1) / 4 * 100)}%;background:${color};border-radius:2px;"></div></div>`;
+    }
+    case "pay": {
+      const v = d.pay;
+      if (v == null) return "";
+      const color = payColorCSS(v, 1);
+      return `<span style="color:${color};font-weight:600;">${d.isAggregate ? 'Salaire moyen' : 'Salaire médian'} : ${formatPay(v)}</span>` +
+        `<div style="margin-top:3px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;">` +
+        `<div style="height:100%;width:${Math.min(100, v / 120000 * 100)}%;background:${color};border-radius:2px;"></div></div>`;
+    }
+    case "education": {
+      const edu = d.education || "";
+      const color = eduColorCSS(edu, 1);
+      return `<span style="color:${color};font-weight:600;">Formation : ${edu || '\u2014'}</span>`;
+    }
+  }
+  return "";
+}
+
 function showTooltip(d, mx, my) {
   const tt = document.getElementById("tooltip");
 
@@ -996,19 +1074,7 @@ function showTooltip(d, mx, my) {
 
   if (d.isAggregate) {
     tt.querySelector(".tt-code").textContent = `Code ${d.code_rome} \u00b7 ${d.jobCount} métiers`;
-
-    const score = d.exposure;
-    if (score != null) {
-      const barWidth = score * 10;
-      const color = exposureColorCSS(score, 1);
-      tt.querySelector(".tt-exposure").innerHTML =
-        `<span style="color:${color};font-weight:600;">Exposition moyenne : ${score.toFixed(1)}/10</span>` +
-        `<div style="margin-top:3px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;">` +
-        `<div style="height:100%;width:${barWidth}%;background:${color};border-radius:2px;"></div></div>`;
-    } else {
-      tt.querySelector(".tt-exposure").innerHTML = "";
-    }
-
+    tt.querySelector(".tt-exposure").innerHTML = tooltipHighlight(d);
     tt.querySelector(".tt-stats").innerHTML = `
       <span class="label">Demandeurs</span><span class="value">${formatNumber(d.demandeurs)}</span>
       <span class="label">Offres</span><span class="value">${formatNumber(d.offres)}</span>
@@ -1016,19 +1082,7 @@ function showTooltip(d, mx, my) {
     tt.querySelector(".tt-rationale").textContent = "Cliquer pour explorer les métiers";
   } else {
     tt.querySelector(".tt-code").textContent = d.code_rome ? `Code ROME : ${d.code_rome}` : "";
-
-    const score = d.exposure != null ? d.exposure : null;
-    if (score != null) {
-      const barWidth = score * 10;
-      const color = exposureColorCSS(score, 1);
-      tt.querySelector(".tt-exposure").innerHTML =
-        `<span style="color:${color};font-weight:600;">Exposition IA : ${score}/10</span>` +
-        `<div style="margin-top:3px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;">` +
-        `<div style="height:100%;width:${barWidth}%;background:${color};border-radius:2px;"></div></div>`;
-    } else {
-      tt.querySelector(".tt-exposure").innerHTML = "";
-    }
-
+    tt.querySelector(".tt-exposure").innerHTML = tooltipHighlight(d);
     tt.querySelector(".tt-stats").innerHTML = `
       <span class="label">Salaire médian</span><span class="value">${formatPay(d.pay)}</span>
       <span class="label">Demandeurs</span><span class="value">${formatNumber(d.demandeurs)}</span>
@@ -1036,8 +1090,7 @@ function showTooltip(d, mx, my) {
       <span class="label">Tension</span><span class="value">${d.tension != null ? d.tension + '/5' : '\u2014'} ${d.tension_desc ? '(' + d.tension_desc + ')' : ''}</span>
       <span class="label">Formation</span><span class="value">${d.education || '\u2014'}</span>
     `;
-
-    tt.querySelector(".tt-rationale").textContent = d.exposure_rationale || "";
+    tt.querySelector(".tt-rationale").textContent = colorMode === "exposure" ? (d.exposure_rationale || "") : "";
   }
 
   const pad = 16;
@@ -1185,11 +1238,9 @@ function drawColumns() {
       ctx.fillText(r.title, rx + 4, ry + 2);
 
       if (rh > 28 && rw > 50) {
-        const info = (r.tension != null ? "tension " + r.tension + "/5" : "") +
-                     (r.demandeurs ? " \u00b7 " + formatNumber(r.demandeurs) + " DE" : "");
         ctx.font = `400 ${Math.max(7, fontSize - 2)}px -apple-system, system-ui, sans-serif`;
         ctx.fillStyle = "rgba(255,255,255,0.5)";
-        ctx.fillText(info, rx + 4, ry + 2 + fontSize + 1);
+        ctx.fillText(tileSubInfo(r), rx + 4, ry + 2 + fontSize + 1);
       }
 
       ctx.restore();
