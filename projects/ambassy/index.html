@@ -25,6 +25,8 @@
                     top: 0.0%;
                 }
                 .leaflet-container { font-size: 1rem; }
+                #info-panel .info-extras { display: none; }
+                #info-panel:hover .info-extras { display: block; }
             </style>
 
             <style>html, body {
@@ -82,6 +84,7 @@
             background:#0066cc;color:white;border-radius:6px;text-decoration:none;font-size:12px;font-weight:500;">
             View Distance Matrix Table
         </a>
+        <div class="info-extras">
         <details>
             <summary style="cursor:pointer; font-weight:bold; color:#555; margin-bottom:6px;">
                 Average Distance Ranking
@@ -221,9 +224,10 @@
                 </p>
             </div>
         </details>
+        </div>
     </div>
-    
-    
+
+
     <div id="nav-panel" style="
         position: fixed;
         top: 10px;
