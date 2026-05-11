@@ -27710,6 +27710,19 @@
   "forceSeparateButton": false,
 }
             ).addTo(map_eb7ab2763940fdba25389e10a7118c56);
-        
+
+
+            feature_group_9729873c6a1a1c5192d9a97cb5704c9c.eachLayer(function(marker) {
+                var tooltip = marker.getTooltip && marker.getTooltip();
+                if (!tooltip) return;
+                var raw = String(tooltip.getContent() || '');
+                var name = raw.replace(/<[^>]+>/g, '').replace(/[^\x00-\x7F]+/g, '').trim().split(':')[0].trim();
+                if (!name) return;
+                marker.on('click', function() {
+                    var ll = marker.getLatLng();
+                    goToCountry(ll.lat, ll.lng, name);
+                });
+            });
+
 </script>
 </html>
