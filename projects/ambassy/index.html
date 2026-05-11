@@ -451,7 +451,32 @@
     
     
             <div class="folium-map" id="map_eb7ab2763940fdba25389e10a7118c56" ></div>
-        
+
+<a href="../../" class="knoel-home-link" aria-label="Retour à l'accueil">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+  <span>Home</span>
+</a>
+<style>
+.knoel-home-link {
+  position: fixed; top: 14px; left: 54px; z-index: 100000;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 12px 7px 10px;
+  font: 500 12px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  letter-spacing: 0.01em; color: #1d1d1f; text-decoration: none;
+  background: rgba(255,255,255,0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(0,0,0,0.08); border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06);
+  transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.knoel-home-link:hover {
+  background: rgba(255,255,255,0.94); transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 8px 18px rgba(0,0,0,0.08);
+}
+.knoel-home-link svg { transition: transform .18s ease; }
+.knoel-home-link:hover svg { transform: translateX(-2px); }
+</style>
 </body>
 <script>
     
@@ -475,25 +500,27 @@
 
         
     
-            var tile_layer_163f0ab832ac930460d7a69c81860d5f = L.tileLayer(
-                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-                {
-  "minZoom": 0,
-  "maxZoom": 20,
-  "maxNativeZoom": 20,
-  "noWrap": false,
-  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
-  "subdomains": "abcd",
-  "detectRetina": false,
-  "tms": false,
-  "opacity": 1,
-}
 
+            var tile_layer_satellite = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+                    "maxZoom": 19,
+                    "maxNativeZoom": 19,
+                    "attribution": "Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community"
+                }
             );
-        
-    
-            tile_layer_163f0ab832ac930460d7a69c81860d5f.addTo(map_eb7ab2763940fdba25389e10a7118c56);
-        
+
+            var tile_layer_voyager = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+                {
+                    "subdomains": "abcd",
+                    "maxZoom": 20,
+                    "attribution": "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors &copy; <a href=\"https://carto.com/attributions\">CARTO</a>"
+                }
+            );
+
+            tile_layer_voyager.addTo(map_eb7ab2763940fdba25389e10a7118c56);
+
     
             var feature_group_9ab4fa0af5a162e3fe5e97d6d6449649 = L.featureGroup(
                 {
@@ -27667,7 +27694,8 @@
     
             var layer_control_ee394ac758e22895a57b22513f95d3e0_layers = {
                 base_layers : {
-                    "cartodbpositron" : tile_layer_163f0ab832ac930460d7a69c81860d5f,
+                    "Voyager" : tile_layer_voyager,
+                    "Satellite" : tile_layer_satellite,
                 },
                 overlays :  {
                     "\u003cimg src=\"https://flagcdn.com/w40/ar.png\" width=\"16\" height=\"10\" style=\"vertical-align:middle;border:1px solid #ccc;border-radius:2px;\" alt=\"Argentina\"\u003e Argentina" : feature_group_9ab4fa0af5a162e3fe5e97d6d6449649,
