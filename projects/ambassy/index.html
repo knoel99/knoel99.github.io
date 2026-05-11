@@ -25,6 +25,7 @@
                     top: 0.0%;
                 }
                 .leaflet-container { font-size: 1rem; }
+                .leaflet-control-layers-overlays label:has(img[src*="flagcdn.com"]) { display: none; }
                 #info-panel .info-extras { display: none; }
                 #info-panel:hover .info-extras { display: block; }
                 #info-panel-toggle {
@@ -463,6 +464,7 @@
         </button>
     </div>
     <script>
+    var _goToCountryState = { name: null, close: false };
     function goToCountry(lat, lon, name) {
         // Find the map object
         var maps = document.querySelectorAll('.folium-map');
@@ -479,7 +481,20 @@
                 }
             }
             if (map) {
-                map.setView([lat, lon], 12, {animate: true, duration: 0.8});
+                if (_goToCountryState.name === name) {
+                    _goToCountryState.close = !_goToCountryState.close;
+                } else {
+                    _goToCountryState.name = name;
+                    _goToCountryState.close = false;
+                }
+
+                if (_goToCountryState.close) {
+                    // 130% of the 1 km easy spying zone: viewport spans 2.6 km centered on the seat of power
+                    var bounds = L.latLng(lat, lon).toBounds(2600);
+                    map.flyToBounds(bounds, {animate: true, duration: 0.8});
+                } else {
+                    map.setView([lat, lon], 12, {animate: true, duration: 0.8});
+                }
 
                 // Try to activate the corresponding layer
                 var inputs = document.querySelectorAll('.leaflet-control-layers-selector');
