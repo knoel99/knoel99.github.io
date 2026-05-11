@@ -82,6 +82,13 @@
                 }
                 #legend-toggle-btn:hover { background: #e8e8e8; }
                 #legend-details[open] #legend-toggle-btn { transform: rotate(90deg); }
+                #nav-panel { max-width: min(92vw, 760px); }
+                #nav-panel #flag-bar {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 4px;
+                }
             </style>
 
             <style>html, body {
@@ -109,6 +116,384 @@
         
     <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..600,30..100,0..1;1,9..144,400..600,30..100,0..1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style id="archives-style">
+      :root {
+        --paper: #f4ede0;
+        --paper-darker: #ede4d3;
+        --ink: #2b241c;
+        --ink-faded: #6b5e4e;
+        --rule: #c9b896;
+        --accent: #9e2b25;
+        --accent-soft: #c66c66;
+      }
+
+      #archives-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(440px, 92vw);
+        height: 100vh;
+        background:
+          radial-gradient(ellipse at 30% 0%, rgba(255,250,235,0.6), transparent 60%),
+          linear-gradient(180deg, var(--paper) 0%, var(--paper-darker) 100%);
+        color: var(--ink);
+        z-index: 2000;
+        transform: translateX(105%);
+        transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        box-shadow: -8px 0 32px rgba(40, 30, 15, 0.18);
+        overflow-y: auto;
+        font-family: 'IBM Plex Sans', system-ui, sans-serif;
+        border-left: 1px solid rgba(40, 30, 15, 0.12);
+      }
+      #archives-panel.open { transform: translateX(0); }
+      #archives-panel::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.15 0 0 0 0 0.08 0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+        opacity: 0.45;
+        mix-blend-mode: multiply;
+      }
+      #archives-panel .ap-inner { position: relative; padding: 28px 32px 80px; }
+
+      #archives-panel .ap-close {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--rule);
+        background: transparent;
+        color: var(--ink-faded);
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 18px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.18s;
+      }
+      #archives-panel .ap-close:hover { background: var(--accent); border-color: var(--accent); color: white; }
+
+      #archives-panel .ap-eyebrow {
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-faded);
+        margin: 0 0 14px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      #archives-panel .ap-eyebrow .stamp {
+        padding: 1px 6px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        border-radius: 2px;
+      }
+
+      #archives-panel h2.ap-title {
+        font-family: 'Fraunces', 'DM Serif Display', Georgia, serif;
+        font-weight: 500;
+        font-size: 34px;
+        line-height: 1.04;
+        letter-spacing: -0.01em;
+        margin: 0 0 4px;
+        color: var(--ink);
+        font-variation-settings: 'opsz' 144, 'SOFT' 50, 'WONK' 1;
+      }
+      #archives-panel h2.ap-title em {
+        font-style: italic;
+        color: var(--accent);
+        font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+      }
+
+      #archives-panel .ap-lede {
+        font-family: 'Fraunces', Georgia, serif;
+        font-size: 14.5px;
+        line-height: 1.55;
+        color: var(--ink-faded);
+        margin: 14px 0 28px;
+        font-style: italic;
+        font-variation-settings: 'opsz' 18;
+        border-top: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+        padding: 14px 0;
+      }
+
+      #archives-panel .ap-timeline { position: relative; padding-left: 28px; }
+      #archives-panel .ap-timeline::before {
+        content: '';
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        bottom: 8px;
+        width: 1px;
+        background: var(--rule);
+      }
+
+      #archives-panel .ap-entry {
+        position: relative;
+        margin-bottom: 26px;
+        opacity: 0;
+        animation: ap-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+      @keyframes ap-rise {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      #archives-panel .ap-entry::before {
+        content: '';
+        position: absolute;
+        left: -25px;
+        top: 7px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--paper);
+        border: 2px solid var(--ink);
+      }
+      #archives-panel .ap-entry.current::before {
+        background: var(--accent);
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--paper), 0 0 0 4px var(--accent);
+      }
+
+      #archives-panel .ap-date {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ink-faded);
+        margin-bottom: 2px;
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      #archives-panel .ap-entry h3 {
+        font-family: 'Fraunces', Georgia, serif;
+        font-weight: 500;
+        font-size: 17px;
+        line-height: 1.25;
+        color: var(--ink);
+        margin: 0 0 2px;
+        font-variation-settings: 'opsz' 36, 'SOFT' 30;
+      }
+      #archives-panel .ap-building {
+        font-family: 'Fraunces', Georgia, serif;
+        font-style: italic;
+        font-size: 13px;
+        color: var(--ink-faded);
+        margin: 0 0 8px;
+      }
+      #archives-panel .ap-note {
+        font-size: 13px;
+        line-height: 1.55;
+        color: var(--ink);
+        margin: 0;
+      }
+      #archives-panel .ap-kind {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 9px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding: 1px 5px;
+        border: 1px solid var(--rule);
+        color: var(--ink-faded);
+        border-radius: 2px;
+      }
+      #archives-panel .ap-entry.current .ap-kind {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* Dimming applied to non-US markers while archives mode is active */
+      .leaflet-marker-icon.archives-dimmed,
+      .leaflet-marker-pane .archives-dimmed {
+        filter: grayscale(0.75) brightness(1.08);
+        opacity: 0.35 !important;
+        transition: filter 0.35s ease, opacity 0.35s ease;
+      }
+      .leaflet-marker-icon.archives-focused {
+        filter: drop-shadow(0 0 6px rgba(158, 43, 37, 0.9));
+        transition: filter 0.35s ease;
+      }
+
+      .historic-flag-icon { background: transparent !important; border: none !important; }
+      .historic-flag-icon .hfi-wrap {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .historic-flag-icon .hfi-flag {
+        width: 28px;
+        height: 20px;
+        border: 1.5px solid #2b241c;
+        border-radius: 2px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.35), 0 0 0 2px rgba(244,237,224,0.85);
+        background-size: cover;
+        background-position: center;
+        position: relative;
+      }
+      .historic-flag-icon .hfi-flag::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        width: 1.5px;
+        height: 8px;
+        background: #2b241c;
+        transform: translateX(-50%);
+      }
+      .historic-flag-icon.current .hfi-flag {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 0 2px #9e2b25;
+      }
+      .historic-flag-icon .hfi-date {
+        margin-top: 12px;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 9.5px;
+        letter-spacing: 0.05em;
+        background: rgba(244,237,224,0.96);
+        color: #2b241c;
+        padding: 1px 5px;
+        border: 1px solid #c9b896;
+        border-radius: 2px;
+        white-space: nowrap;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+      }
+      .historic-flag-icon.current .hfi-date {
+        background: #9e2b25;
+        color: #f4ede0;
+        border-color: #9e2b25;
+        font-weight: 600;
+      }
+      .historic-flag-icon .hfi-person {
+        position: absolute;
+        right: -5px;
+        bottom: -3px;
+        width: 14px;
+        height: 14px;
+        background: #f4ede0;
+        border: 1.2px solid #2b241c;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #2b241c;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      }
+      .historic-flag-icon.current.kind-residence .hfi-person {
+        background: #9e2b25;
+        border-color: #9e2b25;
+        color: #f4ede0;
+      }
+      .historic-flag-icon .hfi-person svg { width: 9px; height: 9px; display: block; }
+
+      /* Bottom timeline navigator */
+      #archives-nav {
+        position: fixed;
+        bottom: 22px;
+        left: 50%;
+        z-index: 2100;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: rgba(43, 36, 28, 0.96);
+        color: var(--paper);
+        padding: 6px 8px;
+        border-radius: 14px;
+        box-shadow: 0 10px 28px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(244,237,224,0.08);
+        font-family: 'IBM Plex Mono', monospace;
+        opacity: 0;
+        transform: translate(-50%, 140%);
+        transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+        pointer-events: none;
+      }
+      #archives-nav.visible {
+        transform: translate(-50%, 0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+      #archives-nav button {
+        background: transparent;
+        border: 1px solid rgba(244,237,224,0.22);
+        color: var(--paper);
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        font-size: 13px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.15s, border-color 0.15s;
+        padding: 0;
+        font-family: inherit;
+      }
+      #archives-nav button:hover:not(:disabled) {
+        background: rgba(244,237,224,0.12);
+        border-color: rgba(244,237,224,0.45);
+      }
+      #archives-nav button:disabled { opacity: 0.25; cursor: not-allowed; }
+      #archives-nav .nav-current {
+        /* Fixed width sized for the worst-case label ("chancellerie · 11 / 11") so the bar
+           never resizes between addresses. */
+        width: 200px;
+        text-align: center;
+        padding: 0 10px;
+        line-height: 1.15;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      #archives-nav .nc-date {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: var(--paper);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      #archives-nav .nc-label {
+        display: block;
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        opacity: 0.55;
+        margin-top: 1px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      #archives-panel .ap-entry { cursor: pointer; transition: background 0.15s; }
+      #archives-panel .ap-entry:hover h3 { color: var(--accent); }
+      #archives-panel .ap-entry.active {
+        background: rgba(158, 43, 37, 0.06);
+        border-radius: 4px;
+        padding: 8px 10px;
+        margin-left: -10px;
+      }
+      #archives-panel .ap-entry.active::before {
+        background: var(--accent);
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--accent);
+        left: -16px;
+        top: 14px;
+      }
+
+    </style>
 </head>
 <body>
     
@@ -307,13 +692,8 @@
         padding: 8px 12px;
         border-radius: 10px;
         box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 4px;
-        max-width: 90vw;
-        justify-content: center;
     ">
-        
+        <div id="flag-bar">
         <button onclick="goToCountry(-34.6083,-58.3712,'Argentina')"
             style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
             border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
@@ -482,6 +862,7 @@
             onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
             <img src="https://flagcdn.com/w20/il.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Israel</span>
         </button>
+        </div>
     </div>
     <script>
     var _goToCountryState = { name: null, close: false };
@@ -534,6 +915,54 @@
     
     
             <div class="folium-map" id="map_eb7ab2763940fdba25389e10a7118c56" ></div>
+
+    <script id="embassy-history-fr" type="application/json">
+{
+  "host": { "code": "FR", "name": "France", "capital": "Paris" },
+  "note": "Coordonnées géocodées manuellement à la précision de la rue.",
+  "embassies": {
+    "US": {
+      "name": "United States",
+      "flag": "us",
+      "current": { "chancery": "2 avenue Gabriel, 75008", "residence": "41 rue du Faubourg Saint-Honoré, 75008" },
+      "addresses": [
+        { "from": "1777", "to": "1785", "address": "66 rue Raynouard, Passy (16ᵉ)", "building": "Hôtel de Valentinois", "kind": "legation", "lat": 48.8567, "lon": 2.2825, "note": "Première légation américaine en France, installée par Benjamin Franklin. La rue Franklin voisine conserve la mémoire du lieu — l'hôtel lui-même a disparu." },
+        { "from": "1785", "to": "1789", "address": "Hôtel de Langeac, angle Champs-Élysées / rue de Berri (8ᵉ)", "building": "Hôtel de Langeac", "kind": "residence", "lat": 48.8718, "lon": 2.3056, "note": "Résidence de Thomas Jefferson en tant que ministre plénipotentiaire. Démoli au XIXᵉ siècle ; une plaque au 92 Champs-Élysées en rappelle l'emplacement." },
+        { "from": "1830", "to": "1840", "address": "44 rue de la Victoire (9ᵉ)", "kind": "legation", "lat": 48.8767, "lon": 2.3382, "note": "Légation américaine sous Louis-Philippe. L'emplacement abrite aujourd'hui la grande synagogue de Paris (consacrée en 1874)." },
+        { "from": "1840", "to": null, "address": "30 rue d'Hauteville (10ᵉ)", "kind": "consulate", "lat": 48.8757, "lon": 2.3500, "note": "Premier consulat général américain à Paris, dans un quartier marchand alors fréquenté par la communauté étrangère." },
+        { "from": "1870", "to": "1871", "address": "75 avenue Foch, alors avenue de l'Impératrice (16ᵉ)", "kind": "legation", "lat": 48.8722, "lon": 2.2799, "note": "Pendant le siège de Paris et la Commune, l'ambassadeur Elihu Washburne demeure dans la capitale assiégée — l'un des très rares diplomates à le faire — et protège les ressortissants étrangers." },
+        { "from": "1881", "to": "1907", "address": "3 place des États-Unis, ex-place de Bitche (16ᵉ)", "kind": "embassy", "lat": 48.8682, "lon": 2.2926, "note": "L'ambassadeur s'installe sur la place rebaptisée en l'honneur des États-Unis en 1881, en commémoration de l'aide américaine pendant la guerre de Sécession." },
+        { "from": "1907", "to": "1919", "address": "5 rue François-Iᵉʳ (8ᵉ)", "kind": "embassy", "lat": 48.8682, "lon": 2.3047, "note": "Ambassade installée près du Triangle d'Or. À la même époque la chancellerie occupe le 18 avenue Kléber et le consulat général le 36 avenue de l'Opéra." },
+        { "from": "1919", "to": "1926", "address": "5 place d'Iéna (16ᵉ)", "kind": "embassy", "lat": 48.8638, "lon": 2.2939, "note": "Transfert au lendemain de la Première Guerre mondiale, sous l'ambassade de Hugh C. Wallace. Le bâtiment précédent au 14 avenue d'Eylau est abandonné." },
+        { "from": "1922", "to": "1971", "address": "2 avenue d'Iéna, place d'Iéna (16ᵉ)", "building": "Hôtel Wilson dit « maison Grévy »", "kind": "residence", "lat": 48.8650, "lon": 2.2935, "note": "Hôtel particulier construit pour Daniel Wilson, gendre du président Jules Grévy. L'ambassadeur Myron T. Herrick l'acquiert en 1922 et le donne au gouvernement américain pour servir de résidence officielle. Quatorze ambassadeurs s'y succèderont jusqu'au déménagement à l'hôtel de Pontalba en 1971. Bâtiment démoli depuis." },
+        { "from": "1926", "to": null, "address": "2 avenue Gabriel, place de la Concorde (8ᵉ)", "building": "Hôtel Grimod de La Reynière, puis chancellerie reconstruite (1931)", "kind": "chancery", "lat": 48.8679, "lon": 2.3207, "current": true, "note": "Acquisition autorisée par décret du Congrès en 1926. La chancellerie actuelle, achevée en 1933, est le premier bâtiment construit par le gouvernement américain pour regrouper ses services diplomatiques à l'étranger." },
+        { "from": "1971", "to": null, "address": "41 rue du Faubourg Saint-Honoré (8ᵉ)", "building": "Hôtel de Pontalba", "kind": "residence", "lat": 48.8694, "lon": 2.3184, "current": true, "note": "Résidence officielle de l'ambassadeur depuis 1971, mitoyenne du palais de l'Élysée. Hôtel particulier du XIXᵉ siècle commandé par la baronne de Pontalba." }
+      ]
+    }
+  }
+}
+    </script>
+
+    <nav id="archives-nav" aria-label="Navigation chronologique">
+        <button class="nav-first" type="button" aria-label="Première adresse (la plus ancienne)" title="Première (1777)">⏮</button>
+        <button class="nav-prev" type="button" aria-label="Adresse précédente" title="Précédente">◀</button>
+        <div class="nav-current">
+            <span class="nc-date">—</span>
+            <span class="nc-label">—</span>
+        </div>
+        <button class="nav-next" type="button" aria-label="Adresse suivante" title="Suivante">▶</button>
+        <button class="nav-last" type="button" aria-label="Dernière adresse (la plus récente)" title="Dernière">⏭</button>
+    </nav>
+
+    <aside id="archives-panel" aria-hidden="true" aria-labelledby="ap-title-h2">
+        <div class="ap-inner">
+            <button class="ap-close" type="button" aria-label="Fermer les archives"
+                onclick="window.__closeArchives && window.__closeArchives()">&times;</button>
+            <div id="ap-content">
+                <p class="ap-eyebrow"><span class="stamp">Archives</span><span>Loading…</span></p>
+            </div>
+        </div>
+    </aside>
 
 </body>
 <script>
@@ -27873,4 +28302,386 @@
             })();
 
 </script>
+
+<script>
+(function () {
+  var ARCHIVES = { data: null, layer: null, map: null };
+
+  function findMap() {
+    if (ARCHIVES.map) return ARCHIVES.map;
+    for (var key in window) {
+      try { if (window[key] instanceof L.Map) { ARCHIVES.map = window[key]; break; } } catch (e) {}
+    }
+    return ARCHIVES.map;
+  }
+
+  function fmtRange(from, to) {
+    if (!to) return from + ' →';
+    if (from === to) return from;
+    return from + '–' + to;
+  }
+
+  var KIND_FR = {
+    legation: 'légation',
+    embassy: 'ambassade',
+    chancery: 'chancellerie',
+    consulate: 'consulat',
+    residence: 'résidence'
+  };
+  function kindLabel(k) { return KIND_FR[k] || k || ''; }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  // Sorted-by-date navigation state, populated by renderPanel/buildMarkers.
+  var ADDR_STATE = { sorted: [], markers: [], current: -1 };
+
+  function sortedAddresses(emb) {
+    return emb.addresses.slice().sort(function (a, b) {
+      return parseInt(a.from, 10) - parseInt(b.from, 10);
+    });
+  }
+
+  // Simple person silhouette — inline SVG renders identically across systems (no emoji font dependency).
+  var PERSON_SVG = '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
+                 + '<circle cx="8" cy="5" r="2.5" fill="currentColor"/>'
+                 + '<path d="M2.8 14 C2.8 10.9, 5.1 8.8, 8 8.8 C10.9 8.8, 13.2 10.9, 13.2 14 Z" fill="currentColor"/>'
+                 + '</svg>';
+
+  function renderPanel(emb, hostName) {
+    var addrs = sortedAddresses(emb);
+    ADDR_STATE.sorted = addrs;
+    var html = '';
+    html += '<p class="ap-eyebrow">'
+         + '<span class="stamp">Archives</span>'
+         + '<span>Embassy of ' + escapeHtml(emb.name) + ' &middot; in ' + escapeHtml(hostName) + '</span>'
+         + '</p>';
+    html += '<h2 id="ap-title-h2" class="ap-title">Deux siècles et demi <em>d’adresses</em> parisiennes</h2>';
+    html += '<p class="ap-lede">'
+         + 'De l’hôtel de Valentinois où Benjamin Franklin signa en 1778 l’alliance franco-américaine, '
+         + 'jusqu’à la chancellerie de la place de la Concorde — '
+         + addrs.length + ' adresses successives racontent la diplomatie américaine en France.'
+         + '</p>';
+    html += '<div class="ap-timeline">';
+    addrs.forEach(function (e, i) {
+      html += '<div class="ap-entry' + (e.current ? ' current' : '') + '" data-index="' + i + '" '
+           + 'style="animation-delay:' + (i * 60) + 'ms" '
+           + 'role="button" tabindex="0">';
+      html += '<div class="ap-date">'
+           + '<span>' + escapeHtml(fmtRange(e.from, e.to)) + '</span>'
+           + (e.kind ? '<span class="ap-kind">' + escapeHtml(kindLabel(e.kind)) + '</span>' : '')
+           + '</div>';
+      html += '<h3>' + escapeHtml(e.address) + '</h3>';
+      if (e.building) html += '<p class="ap-building">' + escapeHtml(e.building) + '</p>';
+      html += '<p class="ap-note">' + escapeHtml(e.note) + '</p>';
+      html += '</div>';
+    });
+    html += '</div>';
+    document.getElementById('ap-content').innerHTML = html;
+    // Wire click + keyboard on timeline entries
+    document.querySelectorAll('#archives-panel .ap-entry').forEach(function (el) {
+      el.addEventListener('click', function () {
+        flyToIndex(parseInt(el.getAttribute('data-index'), 10));
+      });
+      el.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          flyToIndex(parseInt(el.getAttribute('data-index'), 10));
+        }
+      });
+    });
+  }
+
+  function buildMarkers(emb) {
+    var group = L.layerGroup();
+    var addrs = sortedAddresses(emb);
+    ADDR_STATE.markers = [];
+    addrs.forEach(function (e, i) {
+      var classes = 'historic-flag-icon';
+      if (e.current) classes += ' current';
+      if (e.kind) classes += ' kind-' + e.kind;
+      var inner = '<div class="hfi-wrap">'
+                + '<div class="hfi-flag" style="background-image:url(https://flagcdn.com/w40/' + emb.flag + '.png)">'
+                + (e.kind === 'residence' ? '<span class="hfi-person" title="Résidence">' + PERSON_SVG + '</span>' : '')
+                + '</div>'
+                + '<div class="hfi-date">' + escapeHtml(fmtRange(e.from, e.to)) + '</div>'
+                + '</div>';
+      var icon = L.divIcon({
+        className: classes,
+        iconSize: [70, 52],
+        iconAnchor: [35, 38],
+        html: inner
+      });
+      var m = L.marker([e.lat, e.lon], { icon: icon, zIndexOffset: 800 });
+      m.__archivesHistoric = true;
+      // No popup on historic markers — the side panel carries the full info, and an open popup
+      // hides the flag underneath. Clicking the marker just syncs the navigation cursor.
+      m.on('click', function () {
+        ADDR_STATE.current = i;
+        updateNavCaption();
+        highlightActiveEntry();
+      });
+      group.addLayer(m);
+      ADDR_STATE.markers[i] = m;
+    });
+    return group;
+  }
+
+  function highlightActiveEntry() {
+    document.querySelectorAll('#archives-panel .ap-entry').forEach(function (el) {
+      el.classList.remove('active');
+    });
+    if (ADDR_STATE.current < 0) return;
+    var entry = document.querySelector('#archives-panel .ap-entry[data-index="' + ADDR_STATE.current + '"]');
+    if (entry) {
+      entry.classList.add('active');
+      // Scroll only the panel, not the document.
+      var panel = document.getElementById('archives-panel');
+      var er = entry.getBoundingClientRect();
+      var pr = panel.getBoundingClientRect();
+      panel.scrollTop += (er.top + er.height / 2) - (pr.top + pr.height / 2);
+    }
+  }
+
+  function updateNavCaption() {
+    var nav = document.getElementById('archives-nav');
+    if (!nav) return;
+    var i = ADDR_STATE.current;
+    var total = ADDR_STATE.sorted.length;
+    var addr = ADDR_STATE.sorted[i];
+    var dateEl = nav.querySelector('.nc-date');
+    var labelEl = nav.querySelector('.nc-label');
+    if (addr) {
+      dateEl.textContent = fmtRange(addr.from, addr.to);
+      labelEl.textContent = kindLabel(addr.kind) + ' · ' + (i + 1) + ' / ' + total;
+    } else {
+      dateEl.textContent = '—';
+      labelEl.textContent = total ? '— / ' + total : '—';
+    }
+    nav.querySelector('.nav-first').disabled = i <= 0;
+    nav.querySelector('.nav-prev').disabled = i <= 0;
+    nav.querySelector('.nav-next').disabled = i < 0 || i >= total - 1;
+    nav.querySelector('.nav-last').disabled = i < 0 || i >= total - 1;
+  }
+
+  function flyToIndex(i) {
+    var total = ADDR_STATE.sorted.length;
+    if (i < 0 || i >= total) return;
+    ADDR_STATE.current = i;
+    var addr = ADDR_STATE.sorted[i];
+    var map = findMap();
+    if (map) {
+      map.flyTo([addr.lat, addr.lon], 16, { animate: true, duration: 0.8 });
+      map.closePopup();
+    }
+    highlightActiveEntry();
+    updateNavCaption();
+  }
+
+  function wireNavButtons() {
+    var nav = document.getElementById('archives-nav');
+    if (!nav || nav.__wired) return;
+    nav.__wired = true;
+    nav.querySelector('.nav-first').addEventListener('click', function () { flyToIndex(0); });
+    nav.querySelector('.nav-prev').addEventListener('click', function () { flyToIndex(ADDR_STATE.current - 1); });
+    nav.querySelector('.nav-next').addEventListener('click', function () { flyToIndex(ADDR_STATE.current + 1); });
+    nav.querySelector('.nav-last').addEventListener('click', function () { flyToIndex(ADDR_STATE.sorted.length - 1); });
+  }
+
+  function loadFr() {
+    if (ARCHIVES.data) return Promise.resolve(ARCHIVES.data);
+    var inline = document.getElementById('embassy-history-fr');
+    if (inline && inline.textContent.trim()) {
+      try {
+        ARCHIVES.data = JSON.parse(inline.textContent);
+        return Promise.resolve(ARCHIVES.data);
+      } catch (e) {
+        console.warn('Inline embassy-history JSON parse failed, falling back to fetch:', e);
+      }
+    }
+    return fetch('data/embassy_history/fr.json')
+      .then(function (r) {
+        if (!r.ok) throw new Error('fr.json HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (j) { ARCHIVES.data = j; return j; });
+  }
+
+  window.__openArchives = function () {
+    loadFr().then(function (j) {
+      renderPanel(j.embassies.US, j.host.name);
+      var p = document.getElementById('archives-panel');
+      p.classList.add('open');
+      p.setAttribute('aria-hidden', 'false');
+    }).catch(function (err) {
+      console.error('Archives load failed:', err);
+      document.getElementById('ap-content').innerHTML =
+        '<p class="ap-eyebrow"><span class="stamp">Archives</span></p>' +
+        '<p style="font-family:Fraunces,serif;color:#9e2b25">Données indisponibles (' + escapeHtml(err.message) + ').</p>';
+      document.getElementById('archives-panel').classList.add('open');
+    });
+  };
+
+  window.__closeArchives = function () {
+    var p = document.getElementById('archives-panel');
+    p.classList.remove('open');
+    p.setAttribute('aria-hidden', 'true');
+    exitArchivesMode();
+  };
+
+  window.__toggleHistoric = function (on) {
+    var map = findMap();
+    if (!map) return;
+    loadFr().then(function (j) {
+      if (on) {
+        if (!ARCHIVES.layer) ARCHIVES.layer = buildMarkers(j.embassies.US);
+        ARCHIVES.layer.addTo(map);
+      } else if (ARCHIVES.layer) {
+        map.removeLayer(ARCHIVES.layer);
+      }
+    });
+  };
+
+  // Archives MODE: dim other markers, surface historic flags, open panel.
+  // Entered by clicking the US-in-France marker; exited by closing the panel.
+  var ARCHIVES_MODE = { active: false, dimmed: [], dimmedIcons: [] };
+
+  // Folium nests markers in FeatureGroups, so map.eachLayer doesn't see them directly. Walk recursively.
+  function walkMarkers(layer, fn) {
+    if (!layer) return;
+    if (layer instanceof L.Marker) fn(layer);
+    else if (typeof layer.eachLayer === 'function') {
+      layer.eachLayer(function (child) { walkMarkers(child, fn); });
+    }
+  }
+
+  function popupHtml(marker) {
+    var p = marker.getPopup && marker.getPopup();
+    if (!p) return '';
+    var c = p.getContent && p.getContent();
+    if (typeof c === 'string') return c;
+    if (c && c.outerHTML) return c.outerHTML;
+    return '';
+  }
+
+  function enterArchivesMode(usMarker) {
+    if (ARCHIVES_MODE.active) return;
+    ARCHIVES_MODE.active = true;
+    var map = findMap();
+    if (!map) return;
+    walkMarkers(map, function (layer) {
+      if (layer === usMarker) return;
+      if (layer.__archivesHistoric) return;
+      try {
+        var prev = layer.options.opacity != null ? layer.options.opacity : 1;
+        ARCHIVES_MODE.dimmed.push({ marker: layer, prev: prev });
+        layer.setOpacity(0.22);
+        // divIcon markers (the embassy flag pins) don't honor setOpacity for inner HTML,
+        // so also tag their element for CSS desaturation.
+        var el = layer.getElement && layer.getElement();
+        if (el) { el.classList.add('archives-dimmed'); ARCHIVES_MODE.dimmedIcons.push(el); }
+      } catch (e) {}
+    });
+    if (usMarker) {
+      var usEl = usMarker.getElement && usMarker.getElement();
+      if (usEl) usEl.classList.add('archives-focused');
+    }
+    // Close any popup the click may have just opened (Folium's default G20-marker popup),
+    // and keep popups closed for the duration of archives mode so info bubbles never hide flags.
+    map.closePopup();
+    if (!map.__archivesPopupGuard) {
+      map.__archivesPopupGuard = function (e) {
+        if (ARCHIVES_MODE.active) setTimeout(function () { map.closePopup(); }, 0);
+      };
+      map.on('popupopen', map.__archivesPopupGuard);
+    }
+    window.__toggleHistoric(true);
+    window.__openArchives();
+    // Default cursor: the current chancery; fall back to the latest entry. No auto-fly so the
+    // overview the user just landed on stays visible until they click prev/next or a timeline entry.
+    setTimeout(function () {
+      wireNavButtons();
+      var idx = ADDR_STATE.sorted.findIndex(function (a) { return a.current && a.kind === 'chancery'; });
+      if (idx < 0) idx = ADDR_STATE.sorted.length - 1;
+      ADDR_STATE.current = idx;
+      updateNavCaption();
+      highlightActiveEntry();
+      var nav = document.getElementById('archives-nav');
+      if (nav) nav.classList.add('visible');
+    }, 60);
+  }
+
+  function exitArchivesMode() {
+    // Run unconditionally so a stale state from a previous session still gets cleaned up.
+    ARCHIVES_MODE.active = false;
+    ARCHIVES_MODE.dimmed.forEach(function (entry) {
+      try { entry.marker.setOpacity(entry.prev); } catch (e) {}
+    });
+    ARCHIVES_MODE.dimmed = [];
+    ARCHIVES_MODE.dimmedIcons = [];
+    // Belt-and-suspenders: sweep every leftover dimmed/focused element from the DOM, and
+    // re-walk the map to reset opacity on any marker whose tracking we may have missed.
+    document.querySelectorAll('.archives-dimmed, .archives-focused').forEach(function (el) {
+      el.classList.remove('archives-dimmed');
+      el.classList.remove('archives-focused');
+      el.style.opacity = '';
+    });
+    var map = findMap();
+    if (map) {
+      walkMarkers(map, function (m) {
+        try { m.setOpacity(1); } catch (e) {}
+      });
+    }
+    window.__toggleHistoric(false);
+    var nav = document.getElementById('archives-nav');
+    if (nav) nav.classList.remove('visible');
+    ADDR_STATE.current = -1;
+  }
+
+  // Find the US embassy marker located in France (popup mentions "Embassy of United States" + "France (Paris)").
+  function findUsInFranceMarker() {
+    var map = findMap();
+    if (!map) return null;
+    var found = null;
+    walkMarkers(map, function (layer) {
+      if (found) return;
+      var html = popupHtml(layer);
+      if (html.indexOf('Embassy of United States') !== -1 &&
+          html.indexOf('France (Paris)') !== -1) {
+        found = layer;
+      }
+    });
+    return found;
+  }
+
+  function attachUsHandler() {
+    var marker = findUsInFranceMarker();
+    if (!marker || marker.__archivesBound) return marker;
+    marker.__archivesBound = true;
+    marker.on('click', function () { enterArchivesMode(marker); });
+    return marker;
+  }
+
+  // Surface the click target whenever France becomes the active host.
+  var prevGoToCountry = window.goToCountry;
+  window.goToCountry = function (lat, lon, name) {
+    if (prevGoToCountry) prevGoToCountry.apply(this, arguments);
+    if (name === 'France') {
+      // Layer activation runs via input.click() in the existing helper — give it a tick.
+      setTimeout(attachUsHandler, 250);
+      setTimeout(attachUsHandler, 700);
+    } else {
+      window.__closeArchives();
+    }
+  };
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') window.__closeArchives();
+  });
+})();
+</script>
+
 </html>

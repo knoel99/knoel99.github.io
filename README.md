@@ -10,7 +10,7 @@ projects/
   jobs-fr/                      # Treemap exposition IA des metiers francais
     index.html
     data.json
-  ambassy/                      # Carte des ambassades G20
+  embassy/                      # Carte des ambassades G20
     index.html
 ```
 
