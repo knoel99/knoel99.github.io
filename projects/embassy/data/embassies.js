@@ -1,0 +1,4603 @@
+var EMBASSY_DATA = [
+  {
+    code: "ar",
+    name: "Argentina",
+    capital: "Buenos Aires",
+    powerCenter: "Casa Rosada",
+    lat: -34.6083,
+    lon: -58.3712,
+    avgDist: 4.5,
+    closest: {
+      code: "il",
+      name: "Israel",
+      dist: 0.5
+    },
+    farthest: {
+      code: "cn",
+      name: "China",
+      dist: 12.5
+    },
+    embassies: [
+      {
+        code: "il",
+        name: "Israel",
+        lat: -34.6085,
+        lon: -58.3767,
+        dist: 0.5,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: -34.6016,
+        lon: -58.3688,
+        dist: 0.8,
+        rank: 2,
+        total: 20,
+        color: "#0bb400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: -34.5966,
+        lon: -58.3706,
+        dist: 1.3,
+        rank: 3,
+        total: 20,
+        color: "#22b400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: -34.5964,
+        lon: -58.3752,
+        dist: 1.4,
+        rank: 4,
+        total: 20,
+        color: "#24b400"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: -34.5922,
+        lon: -58.383,
+        dist: 2.1,
+        rank: 5,
+        total: 20,
+        color: "#43b400"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: -34.5918,
+        lon: -58.3825,
+        dist: 2.1,
+        rank: 6,
+        total: 20,
+        color: "#44b400"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: -34.5907,
+        lon: -58.3883,
+        dist: 2.5,
+        rank: 7,
+        total: 20,
+        color: "#55b400"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: -34.5852,
+        lon: -58.3952,
+        dist: 3.4,
+        rank: 8,
+        total: 20,
+        color: "#7ab400"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: -34.583,
+        lon: -58.402,
+        dist: 4,
+        rank: 9,
+        total: 20,
+        color: "#93b400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: -34.5798,
+        lon: -58.3977,
+        dist: 4,
+        rank: 10,
+        total: 20,
+        color: "#94b400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: -34.5824,
+        lon: -58.4026,
+        dist: 4.1,
+        rank: 11,
+        total: 20,
+        color: "#97b400"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: -34.5792,
+        lon: -58.3997,
+        dist: 4.2,
+        rank: 12,
+        total: 20,
+        color: "#9bb400"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: -34.5794,
+        lon: -58.402,
+        dist: 4.3,
+        rank: 13,
+        total: 20,
+        color: "#a0b400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: -34.5793,
+        lon: -58.4052,
+        dist: 4.5,
+        rank: 14,
+        total: 20,
+        color: "#a9b400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: -34.5767,
+        lon: -58.4188,
+        dist: 5.6,
+        rank: 15,
+        total: 20,
+        color: "#d8b400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: -34.5668,
+        lon: -58.4394,
+        dist: 7.8,
+        rank: 16,
+        total: 20,
+        color: "#ff8e00"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: -34.5647,
+        lon: -58.4439,
+        dist: 8.2,
+        rank: 17,
+        total: 20,
+        color: "#ff8000"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: -34.5657,
+        lon: -58.4456,
+        dist: 8.3,
+        rank: 18,
+        total: 20,
+        color: "#ff7d00"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: -34.5649,
+        lon: -58.4505,
+        dist: 8.7,
+        rank: 19,
+        total: 20,
+        color: "#ff7100"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: -34.5628,
+        lon: -58.4961,
+        dist: 12.5,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "au",
+    name: "Australia",
+    capital: "Canberra",
+    powerCenter: "Parliament House",
+    lat: -35.3082,
+    lon: 149.1245,
+    avgDist: 0.9,
+    closest: {
+      code: "ca",
+      name: "Canada",
+      dist: 0.4
+    },
+    farthest: {
+      code: "ru",
+      name: "Russia",
+      dist: 1.9
+    },
+    embassies: [
+      {
+        code: "ca",
+        name: "Canada",
+        lat: -35.3095,
+        lon: 149.129,
+        dist: 0.4,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: -35.306,
+        lon: 149.12,
+        dist: 0.5,
+        rank: 2,
+        total: 20,
+        color: "#11b400"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: -35.3078,
+        lon: 149.1184,
+        dist: 0.6,
+        rank: 3,
+        total: 20,
+        color: "#2eb400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: -35.3022,
+        lon: 149.121,
+        dist: 0.7,
+        rank: 4,
+        total: 20,
+        color: "#6db400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: -35.3064,
+        lon: 149.1167,
+        dist: 0.7,
+        rank: 5,
+        total: 20,
+        color: "#6db400"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: -35.304,
+        lon: 149.118,
+        dist: 0.8,
+        rank: 6,
+        total: 20,
+        color: "#71b400"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: -35.3041,
+        lon: 149.1178,
+        dist: 0.8,
+        rank: 7,
+        total: 20,
+        color: "#74b400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: -35.305,
+        lon: 149.117,
+        dist: 0.8,
+        rank: 8,
+        total: 20,
+        color: "#78b400"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: -35.3013,
+        lon: 149.1246,
+        dist: 0.8,
+        rank: 9,
+        total: 20,
+        color: "#78b400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: -35.3076,
+        lon: 149.1332,
+        dist: 0.8,
+        rank: 10,
+        total: 20,
+        color: "#7fb400"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: -35.3033,
+        lon: 149.1174,
+        dist: 0.8,
+        rank: 11,
+        total: 20,
+        color: "#91b400"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: -35.3039,
+        lon: 149.1166,
+        dist: 0.9,
+        rank: 12,
+        total: 20,
+        color: "#98b400"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: -35.3078,
+        lon: 149.114,
+        dist: 0.9,
+        rank: 13,
+        total: 20,
+        color: "#b8b400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: -35.3112,
+        lon: 149.1142,
+        dist: 1,
+        rank: 14,
+        total: 20,
+        color: "#c6b400"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: -35.3038,
+        lon: 149.1145,
+        dist: 1,
+        rank: 15,
+        total: 20,
+        color: "#d4b400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: -35.303,
+        lon: 149.115,
+        dist: 1,
+        rank: 16,
+        total: 20,
+        color: "#d8b400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: -35.3077,
+        lon: 149.1127,
+        dist: 1.1,
+        rank: 17,
+        total: 20,
+        color: "#e2b400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: -35.31,
+        lon: 149.1114,
+        dist: 1.2,
+        rank: 18,
+        total: 20,
+        color: "#ffa500"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: -35.3114,
+        lon: 149.1061,
+        dist: 1.7,
+        rank: 19,
+        total: 20,
+        color: "#ff2800"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: -35.3208,
+        lon: 149.1381,
+        dist: 1.9,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "br",
+    name: "Brazil",
+    capital: "Brasília",
+    powerCenter: "Palácio do Planalto",
+    lat: -15.7999,
+    lon: -47.8603,
+    avgDist: 3.3,
+    closest: {
+      code: "us",
+      name: "United States",
+      dist: 1.4
+    },
+    farthest: {
+      code: "cn",
+      name: "China",
+      dist: 6.4
+    },
+    embassies: [
+      {
+        code: "us",
+        name: "United States",
+        lat: -15.8043,
+        lon: -47.8728,
+        dist: 1.4,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: -15.8058,
+        lon: -47.8733,
+        dist: 1.5,
+        rank: 2,
+        total: 20,
+        color: "#0cb400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: -15.8075,
+        lon: -47.8738,
+        dist: 1.7,
+        rank: 3,
+        total: 20,
+        color: "#19b400"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: -15.8048,
+        lon: -47.8755,
+        dist: 1.7,
+        rank: 4,
+        total: 20,
+        color: "#1eb400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: -15.8084,
+        lon: -47.8741,
+        dist: 1.8,
+        rank: 5,
+        total: 20,
+        color: "#21b400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: -15.7842,
+        lon: -47.8642,
+        dist: 1.8,
+        rank: 6,
+        total: 20,
+        color: "#25b400"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: -15.8094,
+        lon: -47.8745,
+        dist: 1.9,
+        rank: 7,
+        total: 20,
+        color: "#2bb400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: -15.8118,
+        lon: -47.8784,
+        dist: 2.4,
+        rank: 8,
+        total: 20,
+        color: "#5eb400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: -15.8152,
+        lon: -47.8796,
+        dist: 2.7,
+        rank: 9,
+        total: 20,
+        color: "#80b400"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: -15.8151,
+        lon: -47.8839,
+        dist: 3,
+        rank: 10,
+        total: 20,
+        color: "#a5b400"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: -15.8164,
+        lon: -47.8852,
+        dist: 3.2,
+        rank: 11,
+        total: 20,
+        color: "#b8b400"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: -15.8182,
+        lon: -47.8872,
+        dist: 3.5,
+        rank: 12,
+        total: 20,
+        color: "#d6b400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: -15.8189,
+        lon: -47.8879,
+        dist: 3.6,
+        rank: 13,
+        total: 20,
+        color: "#e1b400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: -15.8213,
+        lon: -47.8863,
+        dist: 3.7,
+        rank: 14,
+        total: 20,
+        color: "#e4b400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: -15.8247,
+        lon: -47.8899,
+        dist: 4.2,
+        rank: 15,
+        total: 20,
+        color: "#ff9f00"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: -15.8377,
+        lon: -47.8773,
+        dist: 4.6,
+        rank: 16,
+        total: 20,
+        color: "#ff8400"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: -15.8277,
+        lon: -47.8973,
+        dist: 5,
+        rank: 17,
+        total: 20,
+        color: "#ff6400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: -15.8303,
+        lon: -47.896,
+        dist: 5.1,
+        rank: 18,
+        total: 20,
+        color: "#ff5f00"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: -15.8436,
+        lon: -47.8952,
+        dist: 6.1,
+        rank: 19,
+        total: 20,
+        color: "#ff1400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: -15.8365,
+        lon: -47.9067,
+        dist: 6.4,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "ca",
+    name: "Canada",
+    capital: "Ottawa",
+    powerCenter: "Parliament Hill",
+    lat: 45.4236,
+    lon: -75.7009,
+    avgDist: 1.4,
+    closest: {
+      code: "mx",
+      name: "Mexico",
+      dist: 0.3
+    },
+    farthest: {
+      code: "id",
+      name: "Indonesia",
+      dist: 3
+    },
+    embassies: [
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 45.4217,
+        lon: -75.6978,
+        dist: 0.3,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 45.421,
+        lon: -75.6989,
+        dist: 0.3,
+        rank: 2,
+        total: 20,
+        color: "#01b400"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: 45.421,
+        lon: -75.6988,
+        dist: 0.3,
+        rank: 3,
+        total: 20,
+        color: "#01b400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 45.4214,
+        lon: -75.6958,
+        dist: 0.5,
+        rank: 4,
+        total: 20,
+        color: "#1cb400"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 45.4222,
+        lon: -75.6949,
+        dist: 0.5,
+        rank: 5,
+        total: 20,
+        color: "#20b400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 45.4188,
+        lon: -75.7015,
+        dist: 0.5,
+        rank: 6,
+        total: 20,
+        color: "#2ab400"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 45.4198,
+        lon: -75.6951,
+        dist: 0.6,
+        rank: 7,
+        total: 20,
+        color: "#39b400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 45.428,
+        lon: -75.6959,
+        dist: 0.6,
+        rank: 8,
+        total: 20,
+        color: "#3bb400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 45.4333,
+        lon: -75.6987,
+        dist: 1.1,
+        rank: 9,
+        total: 20,
+        color: "#93b400"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 45.4344,
+        lon: -75.6982,
+        dist: 1.2,
+        rank: 10,
+        total: 20,
+        color: "#acb400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 45.4349,
+        lon: -75.6948,
+        dist: 1.3,
+        rank: 11,
+        total: 20,
+        color: "#c3b400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 45.4185,
+        lon: -75.6817,
+        dist: 1.6,
+        rank: 12,
+        total: 20,
+        color: "#f5b400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 45.4363,
+        lon: -75.685,
+        dist: 1.9,
+        rank: 13,
+        total: 20,
+        color: "#ff9400"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 45.4292,
+        lon: -75.6759,
+        dist: 2,
+        rank: 14,
+        total: 20,
+        color: "#ff7d00"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 45.4434,
+        lon: -75.6944,
+        dist: 2.3,
+        rank: 15,
+        total: 20,
+        color: "#ff6100"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 45.4299,
+        lon: -75.6731,
+        dist: 2.3,
+        rank: 16,
+        total: 20,
+        color: "#ff5e00"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 45.4348,
+        lon: -75.6754,
+        dist: 2.4,
+        rank: 17,
+        total: 20,
+        color: "#ff5500"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 45.4441,
+        lon: -75.6925,
+        dist: 2.4,
+        rank: 18,
+        total: 20,
+        color: "#ff5200"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 45.4445,
+        lon: -75.6839,
+        dist: 2.7,
+        rank: 19,
+        total: 20,
+        color: "#ff2800"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 45.4103,
+        lon: -75.734,
+        dist: 3,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "cn",
+    name: "China",
+    capital: "Beijing",
+    powerCenter: "Zhongnanhai",
+    lat: 39.913,
+    lon: 116.3815,
+    avgDist: 6.6,
+    closest: {
+      code: "br",
+      name: "Brazil",
+      dist: 4.2
+    },
+    farthest: {
+      code: "fr",
+      name: "France",
+      dist: 8.2
+    },
+    embassies: [
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 39.9124,
+        lon: 116.431,
+        dist: 4.2,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 39.938,
+        lon: 116.424,
+        dist: 4.6,
+        rank: 2,
+        total: 20,
+        color: "#2db400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 39.921,
+        lon: 116.438,
+        dist: 4.9,
+        rank: 3,
+        total: 20,
+        color: "#57b400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 39.9406,
+        lon: 116.4415,
+        dist: 6,
+        rank: 4,
+        total: 20,
+        color: "#e1b400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 39.9406,
+        lon: 116.4432,
+        dist: 6.1,
+        rank: 5,
+        total: 20,
+        color: "#f1b400"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 39.9125,
+        lon: 116.4541,
+        dist: 6.2,
+        rank: 6,
+        total: 20,
+        color: "#feb400"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 39.9431,
+        lon: 116.4425,
+        dist: 6.2,
+        rank: 7,
+        total: 20,
+        color: "#feb400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 39.9406,
+        lon: 116.4454,
+        dist: 6.2,
+        rank: 8,
+        total: 20,
+        color: "#ffae00"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 39.9434,
+        lon: 116.4458,
+        dist: 6.4,
+        rank: 9,
+        total: 20,
+        color: "#ff9d00"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 39.9349,
+        lon: 116.4542,
+        dist: 6.7,
+        rank: 10,
+        total: 20,
+        color: "#ff8900"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 39.9428,
+        lon: 116.45,
+        dist: 6.7,
+        rank: 11,
+        total: 20,
+        color: "#ff8400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 39.9405,
+        lon: 116.4518,
+        dist: 6.7,
+        rank: 12,
+        total: 20,
+        color: "#ff8300"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 39.9425,
+        lon: 116.4509,
+        dist: 6.8,
+        rank: 13,
+        total: 20,
+        color: "#ff7f00"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 39.9394,
+        lon: 116.4537,
+        dist: 6.8,
+        rank: 14,
+        total: 20,
+        color: "#ff7b00"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 39.9429,
+        lon: 116.4525,
+        dist: 6.9,
+        rank: 15,
+        total: 20,
+        color: "#ff7200"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 39.9519,
+        lon: 116.4594,
+        dist: 7.9,
+        rank: 16,
+        total: 20,
+        color: "#ff1500"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: 39.951,
+        lon: 116.4616,
+        dist: 8,
+        rank: 17,
+        total: 20,
+        color: "#ff0c00"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 39.9521,
+        lon: 116.461,
+        dist: 8.1,
+        rank: 18,
+        total: 20,
+        color: "#ff0a00"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 39.9532,
+        lon: 116.4602,
+        dist: 8.1,
+        rank: 19,
+        total: 20,
+        color: "#ff0a00"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 39.9516,
+        lon: 116.463,
+        dist: 8.2,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "fr",
+    name: "France",
+    capital: "Paris",
+    powerCenter: "Palais de l'Élysée",
+    lat: 48.8704,
+    lon: 2.3167,
+    avgDist: 1.7,
+    closest: {
+      code: "il",
+      name: "Israel",
+      dist: 0.2
+    },
+    farthest: {
+      code: "ru",
+      name: "Russia",
+      dist: 3.6
+    },
+    embassies: [
+      {
+        code: "il",
+        name: "Israel",
+        lat: 48.8691,
+        lon: 2.3192,
+        dist: 0.2,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 48.8693,
+        lon: 2.3196,
+        dist: 0.2,
+        rank: 2,
+        total: 20,
+        color: "#01b400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 48.8724,
+        lon: 2.3124,
+        dist: 0.4,
+        rank: 3,
+        total: 20,
+        color: "#18b400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 48.8674,
+        lon: 2.3204,
+        dist: 0.4,
+        rank: 4,
+        total: 20,
+        color: "#1eb400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 48.8661,
+        lon: 2.31,
+        dist: 0.7,
+        rank: 5,
+        total: 20,
+        color: "#43b400"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 48.8645,
+        lon: 2.3102,
+        dist: 0.8,
+        rank: 6,
+        total: 20,
+        color: "#57b400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 48.8623,
+        lon: 2.3078,
+        dist: 1.1,
+        rank: 7,
+        total: 20,
+        color: "#84b400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 48.8774,
+        lon: 2.3041,
+        dist: 1.2,
+        rank: 8,
+        total: 20,
+        color: "#93b400"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 48.8788,
+        lon: 2.3039,
+        dist: 1.3,
+        rank: 9,
+        total: 20,
+        color: "#a4b400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 48.8578,
+        lon: 2.3163,
+        dist: 1.4,
+        rank: 10,
+        total: 20,
+        color: "#b0b400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 48.8545,
+        lon: 2.3218,
+        dist: 1.8,
+        rank: 11,
+        total: 20,
+        color: "#eeb400"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 48.8648,
+        lon: 2.2923,
+        dist: 1.9,
+        rank: 12,
+        total: 20,
+        color: "#fab400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 48.8682,
+        lon: 2.29,
+        dist: 2,
+        rank: 13,
+        total: 20,
+        color: "#ffae00"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 48.8501,
+        lon: 2.3165,
+        dist: 2.3,
+        rank: 14,
+        total: 20,
+        color: "#ff8f00"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 48.8642,
+        lon: 2.2854,
+        dist: 2.4,
+        rank: 15,
+        total: 20,
+        color: "#ff8100"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 48.8552,
+        lon: 2.2904,
+        dist: 2.6,
+        rank: 16,
+        total: 20,
+        color: "#ff6f00"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 48.8602,
+        lon: 2.2784,
+        dist: 3,
+        rank: 17,
+        total: 20,
+        color: "#ff3e00"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 48.8546,
+        lon: 2.2805,
+        dist: 3.2,
+        rank: 18,
+        total: 20,
+        color: "#ff2d00"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 48.8601,
+        lon: 2.2705,
+        dist: 3.6,
+        rank: 19,
+        total: 20,
+        color: "#ff0400"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 48.8633,
+        lon: 2.2685,
+        dist: 3.6,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "de",
+    name: "Germany",
+    capital: "Berlin",
+    powerCenter: "Bundeskanzleramt",
+    lat: 52.52,
+    lon: 13.3693,
+    avgDist: 2.6,
+    closest: {
+      code: "fr",
+      name: "France",
+      dist: 0.8
+    },
+    farthest: {
+      code: "tr",
+      name: "Turkey",
+      dist: 14
+    },
+    embassies: [
+      {
+        code: "fr",
+        name: "France",
+        lat: 52.5172,
+        lon: 13.3795,
+        dist: 0.8,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: 52.5172,
+        lon: 13.3795,
+        dist: 0.8,
+        rank: 2,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 52.517,
+        lon: 13.3804,
+        dist: 0.8,
+        rank: 3,
+        total: 20,
+        color: "#02b400"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 52.5157,
+        lon: 13.381,
+        dist: 0.9,
+        rank: 4,
+        total: 20,
+        color: "#06b400"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 52.5161,
+        lon: 13.3837,
+        dist: 1.1,
+        rank: 5,
+        total: 20,
+        color: "#0bb400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 52.5103,
+        lon: 13.3775,
+        dist: 1.2,
+        rank: 6,
+        total: 20,
+        color: "#11b400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 52.5094,
+        lon: 13.3621,
+        dist: 1.3,
+        rank: 7,
+        total: 20,
+        color: "#14b400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 52.5094,
+        lon: 13.3616,
+        dist: 1.3,
+        rank: 8,
+        total: 20,
+        color: "#14b400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 52.5093,
+        lon: 13.3597,
+        dist: 1.4,
+        rank: 9,
+        total: 20,
+        color: "#17b400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 52.5092,
+        lon: 13.3581,
+        dist: 1.4,
+        rank: 10,
+        total: 20,
+        color: "#19b400"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 52.5086,
+        lon: 13.3559,
+        dist: 1.6,
+        rank: 11,
+        total: 20,
+        color: "#1eb400"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 52.5092,
+        lon: 13.3533,
+        dist: 1.6,
+        rank: 12,
+        total: 20,
+        color: "#21b400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 52.5096,
+        lon: 13.3507,
+        dist: 1.7,
+        rank: 13,
+        total: 20,
+        color: "#24b400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 52.507,
+        lon: 13.3544,
+        dist: 1.8,
+        rank: 14,
+        total: 20,
+        color: "#26b400"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 52.5081,
+        lon: 13.3513,
+        dist: 1.8,
+        rank: 15,
+        total: 20,
+        color: "#28b400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 52.5123,
+        lon: 13.4095,
+        dist: 2.9,
+        rank: 16,
+        total: 20,
+        color: "#50b400"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 52.5136,
+        lon: 13.4136,
+        dist: 3.1,
+        rank: 17,
+        total: 20,
+        color: "#59b400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 52.5136,
+        lon: 13.4168,
+        dist: 3.3,
+        rank: 18,
+        total: 20,
+        color: "#61b400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 52.4523,
+        lon: 13.2726,
+        dist: 10,
+        rank: 19,
+        total: 20,
+        color: "#ff6d00"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 52.4741,
+        lon: 13.5621,
+        dist: 14,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "in",
+    name: "India",
+    capital: "New Delhi",
+    powerCenter: "Rashtrapati Bhavan",
+    lat: 28.6143,
+    lon: 77.1994,
+    avgDist: 3.2,
+    closest: {
+      code: "id",
+      name: "Indonesia",
+      dist: 1.4
+    },
+    farthest: {
+      code: "za",
+      name: "South Africa",
+      dist: 6.6
+    },
+    embassies: [
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 28.6022,
+        lon: 77.1947,
+        dist: 1.4,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 28.5988,
+        lon: 77.1936,
+        dist: 1.8,
+        rank: 2,
+        total: 20,
+        color: "#26b400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 28.6,
+        lon: 77.19,
+        dist: 1.8,
+        rank: 3,
+        total: 20,
+        color: "#29b400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 28.5971,
+        lon: 77.1884,
+        dist: 2.2,
+        rank: 4,
+        total: 20,
+        color: "#4bb400"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 28.5956,
+        lon: 77.1877,
+        dist: 2.4,
+        rank: 5,
+        total: 20,
+        color: "#5db400"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 28.602,
+        lon: 77.2195,
+        dist: 2.4,
+        rank: 6,
+        total: 20,
+        color: "#5fb400"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: 28.6016,
+        lon: 77.2212,
+        dist: 2.5,
+        rank: 7,
+        total: 20,
+        color: "#6fb400"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 28.5935,
+        lon: 77.1866,
+        dist: 2.6,
+        rank: 8,
+        total: 20,
+        color: "#77b400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 28.595,
+        lon: 77.183,
+        dist: 2.7,
+        rank: 9,
+        total: 20,
+        color: "#7cb400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 28.5903,
+        lon: 77.1891,
+        dist: 2.9,
+        rank: 10,
+        total: 20,
+        color: "#8db400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 28.5889,
+        lon: 77.1884,
+        dist: 3,
+        rank: 11,
+        total: 20,
+        color: "#9db400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 28.5912,
+        lon: 77.1823,
+        dist: 3.1,
+        rank: 12,
+        total: 20,
+        color: "#a1b400"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 28.5922,
+        lon: 77.1807,
+        dist: 3.1,
+        rank: 13,
+        total: 20,
+        color: "#a1b400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 28.587,
+        lon: 77.186,
+        dist: 3.3,
+        rank: 14,
+        total: 20,
+        color: "#bab400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 28.592,
+        lon: 77.175,
+        dist: 3.4,
+        rank: 15,
+        total: 20,
+        color: "#c7b400"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 28.5853,
+        lon: 77.1833,
+        dist: 3.6,
+        rank: 16,
+        total: 20,
+        color: "#d6b400"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 28.595,
+        lon: 77.23,
+        dist: 3.7,
+        rank: 17,
+        total: 20,
+        color: "#deb400"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 28.5801,
+        lon: 77.164,
+        dist: 5.1,
+        rank: 18,
+        total: 20,
+        color: "#ff6400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 28.57,
+        lon: 77.158,
+        dist: 6.4,
+        rank: 19,
+        total: 20,
+        color: "#ff0f00"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 28.5661,
+        lon: 77.1602,
+        dist: 6.6,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "id",
+    name: "Indonesia",
+    capital: "Jakarta",
+    powerCenter: "Istana Merdeka",
+    lat: -6.1701,
+    lon: 106.8272,
+    avgDist: 5,
+    closest: {
+      code: "us",
+      name: "United States",
+      dist: 1.3
+    },
+    farthest: {
+      code: "kr",
+      name: "South Korea",
+      dist: 7.7
+    },
+    embassies: [
+      {
+        code: "us",
+        name: "United States",
+        lat: -6.1811,
+        lon: 106.8309,
+        dist: 1.3,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: -6.1857,
+        lon: 106.8222,
+        dist: 1.8,
+        rank: 2,
+        total: 20,
+        color: "#29b400"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: -6.1888,
+        lon: 106.8235,
+        dist: 2.1,
+        rank: 3,
+        total: 20,
+        color: "#41b400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: -6.1918,
+        lon: 106.8225,
+        dist: 2.5,
+        rank: 4,
+        total: 20,
+        color: "#5db400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: -6.1968,
+        lon: 106.8237,
+        dist: 3,
+        rank: 5,
+        total: 20,
+        color: "#86b400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: -6.2009,
+        lon: 106.8401,
+        dist: 3.7,
+        rank: 6,
+        total: 20,
+        color: "#bfb400"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: -6.2119,
+        lon: 106.8299,
+        dist: 4.7,
+        rank: 7,
+        total: 20,
+        color: "#ffab00"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: -6.215,
+        lon: 106.825,
+        dist: 5,
+        rank: 8,
+        total: 20,
+        color: "#ff9800"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: -6.2153,
+        lon: 106.8204,
+        dist: 5.1,
+        rank: 9,
+        total: 20,
+        color: "#ff9400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: -6.2174,
+        lon: 106.8128,
+        dist: 5.5,
+        rank: 10,
+        total: 20,
+        color: "#ff7c00"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: -6.22,
+        lon: 106.828,
+        dist: 5.5,
+        rank: 11,
+        total: 20,
+        color: "#ff7900"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: -6.2204,
+        lon: 106.8311,
+        dist: 5.6,
+        rank: 12,
+        total: 20,
+        color: "#ff7600"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: -6.2242,
+        lon: 106.8336,
+        dist: 6.1,
+        rank: 13,
+        total: 20,
+        color: "#ff5d00"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: -6.225,
+        lon: 106.83,
+        dist: 6.1,
+        rank: 14,
+        total: 20,
+        color: "#ff5a00"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: -6.2256,
+        lon: 106.8254,
+        dist: 6.2,
+        rank: 15,
+        total: 20,
+        color: "#ff5700"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: -6.2292,
+        lon: 106.8252,
+        dist: 6.6,
+        rank: 16,
+        total: 20,
+        color: "#ff4000"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: -6.2309,
+        lon: 106.8345,
+        dist: 6.8,
+        rank: 17,
+        total: 20,
+        color: "#ff3300"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: -6.2329,
+        lon: 106.8337,
+        dist: 7,
+        rank: 18,
+        total: 20,
+        color: "#ff2700"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: -6.2362,
+        lon: 106.8286,
+        dist: 7.3,
+        rank: 19,
+        total: 20,
+        color: "#ff1500"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: -6.2394,
+        lon: 106.8329,
+        dist: 7.7,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "it",
+    name: "Italy",
+    capital: "Rome",
+    powerCenter: "Palazzo Chigi",
+    lat: 41.9009,
+    lon: 12.4803,
+    avgDist: 1.8,
+    closest: {
+      code: "eu",
+      name: "European Union",
+      dist: 0.2
+    },
+    farthest: {
+      code: "au",
+      name: "Australia",
+      dist: 3.3
+    },
+    embassies: [
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 41.901,
+        lon: 12.483,
+        dist: 0.2,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 41.8981,
+        lon: 12.4728,
+        dist: 0.7,
+        rank: 2,
+        total: 20,
+        color: "#4eb400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 41.9028,
+        lon: 12.4916,
+        dist: 1,
+        rank: 3,
+        total: 20,
+        color: "#7ab400"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 41.8948,
+        lon: 12.4708,
+        dist: 1,
+        rank: 4,
+        total: 20,
+        color: "#88b400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 41.9069,
+        lon: 12.4916,
+        dist: 1.1,
+        rank: 5,
+        total: 20,
+        color: "#9ab400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 41.8988,
+        lon: 12.4971,
+        dist: 1.4,
+        rank: 6,
+        total: 20,
+        color: "#c5b400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 41.9081,
+        lon: 12.4948,
+        dist: 1.4,
+        rank: 7,
+        total: 20,
+        color: "#cab400"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 41.9026,
+        lon: 12.4626,
+        dist: 1.5,
+        rank: 8,
+        total: 20,
+        color: "#d1b400"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 41.9104,
+        lon: 12.4935,
+        dist: 1.5,
+        rank: 9,
+        total: 20,
+        color: "#d7b400"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 41.9082,
+        lon: 12.5012,
+        dist: 1.9,
+        rank: 10,
+        total: 20,
+        color: "#ffa100"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 41.9135,
+        lon: 12.4968,
+        dist: 2,
+        rank: 11,
+        total: 20,
+        color: "#ff9b00"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 41.9065,
+        lon: 12.5028,
+        dist: 2,
+        rank: 12,
+        total: 20,
+        color: "#ff9b00"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 41.9051,
+        lon: 12.5034,
+        dist: 2,
+        rank: 13,
+        total: 20,
+        color: "#ff9a00"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 41.9169,
+        lon: 12.4924,
+        dist: 2,
+        rank: 14,
+        total: 20,
+        color: "#ff9200"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: 41.9195,
+        lon: 12.4845,
+        dist: 2.1,
+        rank: 15,
+        total: 20,
+        color: "#ff8b00"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 41.9183,
+        lon: 12.502,
+        dist: 2.6,
+        rank: 16,
+        total: 20,
+        color: "#ff4c00"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 41.9131,
+        lon: 12.5094,
+        dist: 2.8,
+        rank: 17,
+        total: 20,
+        color: "#ff3e00"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 41.9228,
+        lon: 12.4995,
+        dist: 2.9,
+        rank: 18,
+        total: 20,
+        color: "#ff2c00"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 41.9223,
+        lon: 12.5012,
+        dist: 2.9,
+        rank: 19,
+        total: 20,
+        color: "#ff2900"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 41.9168,
+        lon: 12.5139,
+        dist: 3.3,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "jp",
+    name: "Japan",
+    capital: "Tokyo",
+    powerCenter: "Kantei",
+    lat: 35.6735,
+    lon: 139.7525,
+    avgDist: 2.8,
+    closest: {
+      code: "mx",
+      name: "Mexico",
+      dist: 0.9
+    },
+    farthest: {
+      code: "id",
+      name: "Indonesia",
+      dist: 5.7
+    },
+    embassies: [
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 35.6769,
+        lon: 139.7432,
+        dist: 0.9,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 35.6717,
+        lon: 139.7356,
+        dist: 1.5,
+        rank: 2,
+        total: 20,
+        color: "#42b400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 35.6838,
+        lon: 139.7379,
+        dist: 1.8,
+        rank: 3,
+        total: 20,
+        color: "#59b400"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 35.6597,
+        lon: 139.7412,
+        dist: 1.8,
+        rank: 4,
+        total: 20,
+        color: "#63b400"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: 35.686,
+        lon: 139.7376,
+        dist: 1.9,
+        rank: 5,
+        total: 20,
+        color: "#6cb400"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 35.6889,
+        lon: 139.7415,
+        dist: 2,
+        rank: 6,
+        total: 20,
+        color: "#72b400"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 35.6625,
+        lon: 139.7335,
+        dist: 2.1,
+        rank: 7,
+        total: 20,
+        color: "#80b400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 35.6732,
+        lon: 139.7284,
+        dist: 2.2,
+        rank: 8,
+        total: 20,
+        color: "#87b400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 35.694,
+        lon: 139.7472,
+        dist: 2.3,
+        rank: 9,
+        total: 20,
+        color: "#98b400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 35.6556,
+        lon: 139.7296,
+        dist: 2.9,
+        rank: 10,
+        total: 20,
+        color: "#d2b400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 35.6563,
+        lon: 139.7272,
+        dist: 3,
+        rank: 11,
+        total: 20,
+        color: "#deb400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 35.6468,
+        lon: 139.7414,
+        dist: 3.1,
+        rank: 12,
+        total: 20,
+        color: "#eeb400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 35.6468,
+        lon: 139.7414,
+        dist: 3.1,
+        rank: 13,
+        total: 20,
+        color: "#eeb400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 35.6515,
+        lon: 139.7287,
+        dist: 3.3,
+        rank: 14,
+        total: 20,
+        color: "#fcb400"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 35.6503,
+        lon: 139.7303,
+        dist: 3.3,
+        rank: 15,
+        total: 20,
+        color: "#fdb400"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 35.6709,
+        lon: 139.7145,
+        dist: 3.4,
+        rank: 16,
+        total: 20,
+        color: "#ffa800"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 35.6489,
+        lon: 139.726,
+        dist: 3.6,
+        rank: 17,
+        total: 20,
+        color: "#ff9800"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 35.6489,
+        lon: 139.726,
+        dist: 3.6,
+        rank: 18,
+        total: 20,
+        color: "#ff9800"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 35.6732,
+        lon: 139.7084,
+        dist: 4,
+        rank: 19,
+        total: 20,
+        color: "#ff7f00"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 35.6273,
+        lon: 139.7265,
+        dist: 5.7,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "mx",
+    name: "Mexico",
+    capital: "Mexico City",
+    powerCenter: "Palacio Nacional",
+    lat: 19.4326,
+    lon: -99.1312,
+    avgDist: 7.7,
+    closest: {
+      code: "gb",
+      name: "United Kingdom",
+      dist: 3.6
+    },
+    farthest: {
+      code: "cn",
+      name: "China",
+      dist: 12.8
+    },
+    embassies: [
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 19.4303,
+        lon: -99.1657,
+        dist: 3.6,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 19.4263,
+        lon: -99.1708,
+        dist: 4.2,
+        rank: 2,
+        total: 20,
+        color: "#20b400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 19.4298,
+        lon: -99.1832,
+        dist: 5.5,
+        rank: 3,
+        total: 20,
+        color: "#66b400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 19.429,
+        lon: -99.1861,
+        dist: 5.8,
+        rank: 4,
+        total: 20,
+        color: "#77b400"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 19.4098,
+        lon: -99.1826,
+        dist: 6,
+        rank: 5,
+        total: 20,
+        color: "#81b400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 19.4265,
+        lon: -99.1933,
+        dist: 6.5,
+        rank: 6,
+        total: 20,
+        color: "#a2b400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 19.4269,
+        lon: -99.1959,
+        dist: 6.8,
+        rank: 7,
+        total: 20,
+        color: "#b1b400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 19.4367,
+        lon: -99.1962,
+        dist: 6.8,
+        rank: 8,
+        total: 20,
+        color: "#b2b400"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 19.428,
+        lon: -99.197,
+        dist: 6.9,
+        rank: 9,
+        total: 20,
+        color: "#b7b400"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 19.4282,
+        lon: -99.1995,
+        dist: 7.2,
+        rank: 10,
+        total: 20,
+        color: "#c5b400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 19.4347,
+        lon: -99.2052,
+        dist: 7.8,
+        rank: 11,
+        total: 20,
+        color: "#e6b400"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: 19.4246,
+        lon: -99.2074,
+        dist: 8,
+        rank: 12,
+        total: 20,
+        color: "#f5b400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 19.4251,
+        lon: -99.2094,
+        dist: 8.2,
+        rank: 13,
+        total: 20,
+        color: "#ffb200"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 19.4157,
+        lon: -99.2137,
+        dist: 8.8,
+        rank: 14,
+        total: 20,
+        color: "#ff9a00"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 19.4153,
+        lon: -99.2138,
+        dist: 8.9,
+        rank: 15,
+        total: 20,
+        color: "#ff9900"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 19.4122,
+        lon: -99.2211,
+        dist: 9.7,
+        rank: 16,
+        total: 20,
+        color: "#ff7900"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 19.4161,
+        lon: -99.2243,
+        dist: 9.9,
+        rank: 17,
+        total: 20,
+        color: "#ff7000"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 19.4163,
+        lon: -99.2292,
+        dist: 10.4,
+        rank: 18,
+        total: 20,
+        color: "#ff5c00"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 19.4074,
+        lon: -99.2289,
+        dist: 10.6,
+        rank: 19,
+        total: 20,
+        color: "#ff5400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 19.336,
+        lon: -99.1972,
+        dist: 12.8,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "ru",
+    name: "Russia",
+    capital: "Moscow",
+    powerCenter: "Kremlin",
+    lat: 55.752,
+    lon: 37.6175,
+    avgDist: 2.9,
+    closest: {
+      code: "ca",
+      name: "Canada",
+      dist: 1.5
+    },
+    farthest: {
+      code: "de",
+      name: "Germany",
+      dist: 10.6
+    },
+    embassies: [
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 55.7468,
+        lon: 37.595,
+        dist: 1.5,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 55.7526,
+        lon: 37.6425,
+        dist: 1.6,
+        rank: 2,
+        total: 20,
+        color: "#02b400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 55.759,
+        lon: 37.5944,
+        dist: 1.6,
+        rank: 3,
+        total: 20,
+        color: "#06b400"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 55.738,
+        lon: 37.6301,
+        dist: 1.8,
+        rank: 4,
+        total: 20,
+        color: "#0cb400"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 55.746,
+        lon: 37.59,
+        dist: 1.9,
+        rank: 5,
+        total: 20,
+        color: "#12b400"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 55.7584,
+        lon: 37.5879,
+        dist: 2,
+        rank: 6,
+        total: 20,
+        color: "#19b400"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 55.7432,
+        lon: 37.5898,
+        dist: 2,
+        rank: 7,
+        total: 20,
+        color: "#1ab400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 55.7528,
+        lon: 37.6499,
+        dist: 2,
+        rank: 8,
+        total: 20,
+        color: "#1cb400"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: 55.7338,
+        lon: 37.6237,
+        dist: 2.1,
+        rank: 9,
+        total: 20,
+        color: "#1eb400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 55.7432,
+        lon: 37.5875,
+        dist: 2.1,
+        rank: 10,
+        total: 20,
+        color: "#21b400"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 55.7325,
+        lon: 37.6133,
+        dist: 2.2,
+        rank: 11,
+        total: 20,
+        color: "#25b400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 55.731,
+        lon: 37.6237,
+        dist: 2.4,
+        rank: 12,
+        total: 20,
+        color: "#2fb400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 55.756,
+        lon: 37.5794,
+        dist: 2.4,
+        rank: 13,
+        total: 20,
+        color: "#33b400"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 55.7506,
+        lon: 37.5774,
+        dist: 2.5,
+        rank: 14,
+        total: 20,
+        color: "#37b400"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 55.7393,
+        lon: 37.5833,
+        dist: 2.6,
+        rank: 15,
+        total: 20,
+        color: "#3ab400"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 55.741,
+        lon: 37.5743,
+        dist: 3,
+        rank: 16,
+        total: 20,
+        color: "#51b400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 55.7379,
+        lon: 37.5752,
+        dist: 3.1,
+        rank: 17,
+        total: 20,
+        color: "#57b400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 55.7779,
+        lon: 37.6419,
+        dist: 3.3,
+        rank: 18,
+        total: 20,
+        color: "#61b400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 55.7108,
+        lon: 37.5162,
+        dist: 7.8,
+        rank: 19,
+        total: 20,
+        color: "#ff6d00"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 55.6714,
+        lon: 37.5274,
+        dist: 10.6,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "sa",
+    name: "Saudi Arabia",
+    capital: "Riyadh",
+    powerCenter: "Al-Yamamah Palace",
+    lat: 24.65,
+    lon: 46.71,
+    avgDist: 9.1,
+    closest: {
+      code: "ar",
+      name: "Argentina",
+      dist: 4.8
+    },
+    farthest: {
+      code: "za",
+      name: "South Africa",
+      dist: 10.9
+    },
+    embassies: [
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 24.6834,
+        lon: 46.6796,
+        dist: 4.8,
+        rank: 1,
+        total: 19,
+        color: "#00b400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 24.6733,
+        lon: 46.6263,
+        dist: 8.8,
+        rank: 2,
+        total: 19,
+        color: "#ff7a00"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 24.6859,
+        lon: 46.6309,
+        dist: 8.9,
+        rank: 3,
+        total: 19,
+        color: "#ff7500"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 24.6843,
+        lon: 46.6293,
+        dist: 9,
+        rank: 4,
+        total: 19,
+        color: "#ff7100"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 24.6849,
+        lon: 46.629,
+        dist: 9.1,
+        rank: 5,
+        total: 19,
+        color: "#ff6d00"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 24.685,
+        lon: 46.629,
+        dist: 9.1,
+        rank: 6,
+        total: 19,
+        color: "#ff6d00"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 24.6818,
+        lon: 46.6273,
+        dist: 9.1,
+        rank: 7,
+        total: 19,
+        color: "#ff6d00"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 24.6846,
+        lon: 46.6281,
+        dist: 9.1,
+        rank: 8,
+        total: 19,
+        color: "#ff6900"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 24.683,
+        lon: 46.627,
+        dist: 9.2,
+        rank: 9,
+        total: 19,
+        color: "#ff6800"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 24.6814,
+        lon: 46.625,
+        dist: 9.3,
+        rank: 10,
+        total: 19,
+        color: "#ff6100"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 24.684,
+        lon: 46.626,
+        dist: 9.3,
+        rank: 11,
+        total: 19,
+        color: "#ff6000"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 24.6755,
+        lon: 46.6217,
+        dist: 9.4,
+        rank: 12,
+        total: 19,
+        color: "#ff5c00"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 24.688,
+        lon: 46.6274,
+        dist: 9.4,
+        rank: 13,
+        total: 19,
+        color: "#ff5c00"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 24.6858,
+        lon: 46.6253,
+        dist: 9.4,
+        rank: 14,
+        total: 19,
+        color: "#ff5700"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 24.6725,
+        lon: 46.6191,
+        dist: 9.5,
+        rank: 15,
+        total: 19,
+        color: "#ff5200"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 24.6866,
+        lon: 46.6246,
+        dist: 9.5,
+        rank: 16,
+        total: 19,
+        color: "#ff5100"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 24.6803,
+        lon: 46.621,
+        dist: 9.6,
+        rank: 17,
+        total: 19,
+        color: "#ff4d00"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 24.6862,
+        lon: 46.6235,
+        dist: 9.6,
+        rank: 18,
+        total: 19,
+        color: "#ff4c00"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 24.7021,
+        lon: 46.6184,
+        dist: 10.9,
+        rank: 19,
+        total: 19,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "za",
+    name: "South Africa",
+    capital: "Pretoria",
+    powerCenter: "Union Buildings",
+    lat: -25.7411,
+    lon: 28.212,
+    avgDist: 3.3,
+    closest: {
+      code: "it",
+      name: "Italy",
+      dist: 0.7
+    },
+    farthest: {
+      code: "br",
+      name: "Brazil",
+      dist: 8.5
+    },
+    embassies: [
+      {
+        code: "it",
+        name: "Italy",
+        lat: -25.7412,
+        lon: 28.219,
+        dist: 0.7,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: -25.7462,
+        lon: 28.2236,
+        dist: 1.3,
+        rank: 2,
+        total: 20,
+        color: "#26b400"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: -25.7457,
+        lon: 28.2268,
+        dist: 1.6,
+        rank: 3,
+        total: 20,
+        color: "#39b400"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: -25.7471,
+        lon: 28.227,
+        dist: 1.6,
+        rank: 4,
+        total: 20,
+        color: "#3db400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: -25.7447,
+        lon: 28.2289,
+        dist: 1.7,
+        rank: 5,
+        total: 20,
+        color: "#44b400"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: -25.755,
+        lon: 28.23,
+        dist: 2.4,
+        rank: 6,
+        total: 20,
+        color: "#6db400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: -25.7492,
+        lon: 28.2354,
+        dist: 2.5,
+        rank: 7,
+        total: 20,
+        color: "#76b400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: -25.762,
+        lon: 28.23,
+        dist: 2.9,
+        rank: 8,
+        total: 20,
+        color: "#93b400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: -25.758,
+        lon: 28.235,
+        dist: 3,
+        rank: 9,
+        total: 20,
+        color: "#95b400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: -25.765,
+        lon: 28.228,
+        dist: 3.1,
+        rank: 10,
+        total: 20,
+        color: "#9db400"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: -25.7572,
+        lon: 28.2385,
+        dist: 3.2,
+        rank: 11,
+        total: 20,
+        color: "#a4b400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: -25.7706,
+        lon: 28.2225,
+        dist: 3.4,
+        rank: 12,
+        total: 20,
+        color: "#b4b400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: -25.7723,
+        lon: 28.2139,
+        dist: 3.5,
+        rank: 13,
+        total: 20,
+        color: "#b6b400"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: -25.7724,
+        lon: 28.2268,
+        dist: 3.8,
+        rank: 14,
+        total: 20,
+        color: "#cab400"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: -25.7708,
+        lon: 28.2366,
+        dist: 4.1,
+        rank: 15,
+        total: 20,
+        color: "#e0b400"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: -25.7615,
+        lon: 28.2476,
+        dist: 4.2,
+        rank: 16,
+        total: 20,
+        color: "#e7b400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: -25.77,
+        lon: 28.24,
+        dist: 4.3,
+        rank: 17,
+        total: 20,
+        color: "#e9b400"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: -25.7738,
+        lon: 28.2367,
+        dist: 4.4,
+        rank: 18,
+        total: 20,
+        color: "#f3b400"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: -25.7591,
+        lon: 28.2628,
+        dist: 5.5,
+        rank: 19,
+        total: 20,
+        color: "#ff8a00"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: -25.7874,
+        lon: 28.279,
+        dist: 8.5,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "kr",
+    name: "South Korea",
+    capital: "Seoul",
+    powerCenter: "Yongsan Presidential Office",
+    lat: 37.532,
+    lon: 126.98,
+    avgDist: 3.5,
+    closest: {
+      code: "ar",
+      name: "Argentina",
+      dist: 0.8
+    },
+    farthest: {
+      code: "br",
+      name: "Brazil",
+      dist: 5.5
+    },
+    embassies: [
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 37.5361,
+        lon: 126.9874,
+        dist: 0.8,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 37.5317,
+        lon: 126.9917,
+        dist: 1,
+        rank: 2,
+        total: 20,
+        color: "#18b400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 37.5372,
+        lon: 127.0055,
+        dist: 2.3,
+        rank: 3,
+        total: 20,
+        color: "#a4b400"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 37.553,
+        lon: 126.975,
+        dist: 2.4,
+        rank: 4,
+        total: 20,
+        color: "#aab400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 37.5559,
+        lon: 126.9735,
+        dist: 2.7,
+        rank: 5,
+        total: 20,
+        color: "#cfb400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 37.5355,
+        lon: 127.0111,
+        dist: 2.8,
+        rank: 6,
+        total: 20,
+        color: "#d4b400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 37.5359,
+        lon: 127.0117,
+        dist: 2.8,
+        rank: 7,
+        total: 20,
+        color: "#dbb400"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 37.56,
+        lon: 126.978,
+        dist: 3.1,
+        rank: 8,
+        total: 20,
+        color: "#fab400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 37.563,
+        lon: 126.983,
+        dist: 3.5,
+        rank: 9,
+        total: 20,
+        color: "#ff9d00"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 37.5614,
+        lon: 126.9655,
+        dist: 3.5,
+        rank: 10,
+        total: 20,
+        color: "#ff9900"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 37.5649,
+        lon: 126.9718,
+        dist: 3.7,
+        rank: 11,
+        total: 20,
+        color: "#ff8800"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 37.5673,
+        lon: 126.9747,
+        dist: 4,
+        rank: 12,
+        total: 20,
+        color: "#ff7700"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 37.5669,
+        lon: 126.9709,
+        dist: 4,
+        rank: 13,
+        total: 20,
+        color: "#ff7600"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: 37.5694,
+        lon: 126.9786,
+        dist: 4.2,
+        rank: 14,
+        total: 20,
+        color: "#ff6700"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 37.5712,
+        lon: 126.9778,
+        dist: 4.4,
+        rank: 15,
+        total: 20,
+        color: "#ff5800"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 37.5185,
+        lon: 126.9316,
+        dist: 4.5,
+        rank: 16,
+        total: 20,
+        color: "#ff4c00"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 37.5732,
+        lon: 126.9778,
+        dist: 4.6,
+        rank: 17,
+        total: 20,
+        color: "#ff4600"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 37.5752,
+        lon: 126.9801,
+        dist: 4.8,
+        rank: 18,
+        total: 20,
+        color: "#ff3600"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 37.5755,
+        lon: 126.9805,
+        dist: 4.8,
+        rank: 19,
+        total: 20,
+        color: "#ff3300"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 37.5816,
+        lon: 126.9804,
+        dist: 5.5,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "tr",
+    name: "Turkey",
+    capital: "Ankara",
+    powerCenter: "Presidential Complex",
+    lat: 39.931,
+    lon: 32.799,
+    avgDist: 6.6,
+    closest: {
+      code: "il",
+      name: "Israel",
+      dist: 2.2
+    },
+    farthest: {
+      code: "cn",
+      name: "China",
+      dist: 9.3
+    },
+    embassies: [
+      {
+        code: "il",
+        name: "Israel",
+        lat: 39.9121,
+        lon: 32.8046,
+        dist: 2.2,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 39.9085,
+        lon: 32.8033,
+        dist: 2.5,
+        rank: 2,
+        total: 20,
+        color: "#1ab400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 39.9054,
+        lon: 32.8564,
+        dist: 5.7,
+        rank: 3,
+        total: 20,
+        color: "#fbb400"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 39.9026,
+        lon: 32.8558,
+        dist: 5.8,
+        rank: 4,
+        total: 20,
+        color: "#ffb000"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 39.9041,
+        lon: 32.8576,
+        dist: 5.8,
+        rank: 5,
+        total: 20,
+        color: "#ffae00"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 39.8936,
+        lon: 32.8529,
+        dist: 6.2,
+        rank: 6,
+        total: 20,
+        color: "#ff9b00"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 39.8958,
+        lon: 32.8565,
+        dist: 6.3,
+        rank: 7,
+        total: 20,
+        color: "#ff9700"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 39.8881,
+        lon: 32.8496,
+        dist: 6.4,
+        rank: 8,
+        total: 20,
+        color: "#ff8f00"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 39.8925,
+        lon: 32.8559,
+        dist: 6.5,
+        rank: 9,
+        total: 20,
+        color: "#ff8d00"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 39.8896,
+        lon: 32.8559,
+        dist: 6.7,
+        rank: 10,
+        total: 20,
+        color: "#ff8200"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 39.896,
+        lon: 32.8645,
+        dist: 6.8,
+        rank: 11,
+        total: 20,
+        color: "#ff7c00"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 39.8897,
+        lon: 32.8583,
+        dist: 6.8,
+        rank: 12,
+        total: 20,
+        color: "#ff7b00"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 39.8962,
+        lon: 32.87,
+        dist: 7.2,
+        rank: 13,
+        total: 20,
+        color: "#ff6800"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 39.8942,
+        lon: 32.87,
+        dist: 7.3,
+        rank: 14,
+        total: 20,
+        color: "#ff6200"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 39.8881,
+        lon: 32.8722,
+        dist: 7.9,
+        rank: 15,
+        total: 20,
+        color: "#ff4600"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 39.8959,
+        lon: 32.8794,
+        dist: 7.9,
+        rank: 16,
+        total: 20,
+        color: "#ff4500"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 39.8957,
+        lon: 32.8797,
+        dist: 7.9,
+        rank: 17,
+        total: 20,
+        color: "#ff4300"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 39.8914,
+        lon: 32.8815,
+        dist: 8.3,
+        rank: 18,
+        total: 20,
+        color: "#ff3000"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 39.8702,
+        lon: 32.8559,
+        dist: 8.3,
+        rank: 19,
+        total: 20,
+        color: "#ff2f00"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 39.8517,
+        lon: 32.8323,
+        dist: 9.3,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "gb",
+    name: "United Kingdom",
+    capital: "London",
+    powerCenter: "10 Downing Street",
+    lat: 51.5034,
+    lon: -0.1276,
+    avgDist: 1.7,
+    closest: {
+      code: "br",
+      name: "Brazil",
+      dist: 0.5
+    },
+    farthest: {
+      code: "ru",
+      name: "Russia",
+      dist: 4.5
+    },
+    embassies: [
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 51.5075,
+        lon: -0.1308,
+        dist: 0.5,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 51.5079,
+        lon: -0.1296,
+        dist: 0.5,
+        rank: 2,
+        total: 20,
+        color: "#01b400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 51.5083,
+        lon: -0.1268,
+        dist: 0.6,
+        rank: 3,
+        total: 20,
+        color: "#05b400"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 51.4969,
+        lon: -0.1275,
+        dist: 0.7,
+        rank: 4,
+        total: 20,
+        color: "#1ab400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 51.4975,
+        lon: -0.1356,
+        dist: 0.9,
+        rank: 5,
+        total: 20,
+        color: "#2cb400"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 51.4955,
+        lon: -0.1279,
+        dist: 0.9,
+        rank: 6,
+        total: 20,
+        color: "#2fb400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 51.5126,
+        lon: -0.1182,
+        dist: 1.2,
+        rank: 7,
+        total: 20,
+        color: "#59b400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 51.5053,
+        lon: -0.1461,
+        dist: 1.3,
+        rank: 8,
+        total: 20,
+        color: "#64b400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 51.5129,
+        lon: -0.1156,
+        dist: 1.3,
+        rank: 9,
+        total: 20,
+        color: "#6ab400"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 51.5073,
+        lon: -0.1479,
+        dist: 1.5,
+        rank: 10,
+        total: 20,
+        color: "#7ab400"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 51.513,
+        lon: -0.1437,
+        dist: 1.5,
+        rank: 11,
+        total: 20,
+        color: "#83b400"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 51.4999,
+        lon: -0.1522,
+        dist: 1.8,
+        rank: 12,
+        total: 20,
+        color: "#9eb400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 51.5123,
+        lon: -0.1487,
+        dist: 1.8,
+        rank: 13,
+        total: 20,
+        color: "#9fb400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 51.5119,
+        lon: -0.1493,
+        dist: 1.8,
+        rank: 14,
+        total: 20,
+        color: "#a1b400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 51.498,
+        lon: -0.1545,
+        dist: 2,
+        rank: 15,
+        total: 20,
+        color: "#b9b400"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 51.5025,
+        lon: -0.1581,
+        dist: 2.1,
+        rank: 16,
+        total: 20,
+        color: "#ccb400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 51.521,
+        lon: -0.146,
+        dist: 2.3,
+        rank: 17,
+        total: 20,
+        color: "#e8b400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 51.4826,
+        lon: -0.1322,
+        dist: 2.3,
+        rank: 18,
+        total: 20,
+        color: "#e8b400"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: 51.5032,
+        lon: -0.1896,
+        dist: 4.3,
+        rank: 19,
+        total: 20,
+        color: "#ff1200"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 51.5095,
+        lon: -0.1919,
+        dist: 4.5,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "us",
+    name: "United States",
+    capital: "Washington, D.C.",
+    powerCenter: "White House",
+    lat: 38.8977,
+    lon: -77.0365,
+    avgDist: 2.8,
+    closest: {
+      code: "mx",
+      name: "Mexico",
+      dist: 0.7
+    },
+    farthest: {
+      code: "il",
+      name: "Israel",
+      dist: 5.7
+    },
+    embassies: [
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 38.9007,
+        lon: -77.044,
+        dist: 0.7,
+        rank: 1,
+        total: 20,
+        color: "#00b400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 38.908,
+        lon: -77.037,
+        dist: 1.1,
+        rank: 2,
+        total: 20,
+        color: "#2bb400"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 38.9029,
+        lon: -77.0486,
+        dist: 1.2,
+        rank: 3,
+        total: 20,
+        color: "#30b400"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 38.8978,
+        lon: -77.054,
+        dist: 1.5,
+        rank: 4,
+        total: 20,
+        color: "#4fb400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 38.9114,
+        lon: -77.0424,
+        dist: 1.6,
+        rank: 5,
+        total: 20,
+        color: "#5ab400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 38.893,
+        lon: -77.0186,
+        dist: 1.6,
+        rank: 6,
+        total: 20,
+        color: "#5cb400"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 38.9103,
+        lon: -77.0461,
+        dist: 1.6,
+        rank: 7,
+        total: 20,
+        color: "#5cb400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 38.9113,
+        lon: -77.0471,
+        dist: 1.8,
+        rank: 8,
+        total: 20,
+        color: "#6ab400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 38.9147,
+        lon: -77.0547,
+        dist: 2.5,
+        rank: 9,
+        total: 20,
+        color: "#b1b400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 38.9156,
+        lon: -77.0564,
+        dist: 2.6,
+        rank: 10,
+        total: 20,
+        color: "#c2b400"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 38.9165,
+        lon: -77.056,
+        dist: 2.7,
+        rank: 11,
+        total: 20,
+        color: "#c8b400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 38.9178,
+        lon: -77.0605,
+        dist: 3,
+        rank: 12,
+        total: 20,
+        color: "#edb400"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 38.9189,
+        lon: -77.061,
+        dist: 3.2,
+        rank: 13,
+        total: 20,
+        color: "#f9b400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 38.92,
+        lon: -77.0606,
+        dist: 3.2,
+        rank: 14,
+        total: 20,
+        color: "#ffb200"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 38.9199,
+        lon: -77.0627,
+        dist: 3.4,
+        rank: 15,
+        total: 20,
+        color: "#ffaa00"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 38.914,
+        lon: -77.0786,
+        dist: 4.1,
+        rank: 16,
+        total: 20,
+        color: "#ff7600"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 38.9243,
+        lon: -77.0745,
+        dist: 4.4,
+        rank: 17,
+        total: 20,
+        color: "#ff5d00"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 38.9146,
+        lon: -77.0888,
+        dist: 4.9,
+        rank: 18,
+        total: 20,
+        color: "#ff3a00"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 38.9426,
+        lon: -77.067,
+        dist: 5.7,
+        rank: 19,
+        total: 20,
+        color: "#ff0400"
+      },
+      {
+        code: "il",
+        name: "Israel",
+        lat: 38.9427,
+        lon: -77.0684,
+        dist: 5.7,
+        rank: 20,
+        total: 20,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "eu",
+    name: "European Union",
+    capital: "Brussels",
+    powerCenter: "European Commission (Berlaymont)",
+    lat: 50.8438,
+    lon: 4.3828,
+    avgDist: 2,
+    closest: {
+      code: "gb",
+      name: "United Kingdom",
+      dist: 0.3
+    },
+    farthest: {
+      code: "kr",
+      name: "South Korea",
+      dist: 5.5
+    },
+    embassies: [
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 50.8417,
+        lon: 4.3845,
+        dist: 0.3,
+        rank: 1,
+        total: 19,
+        color: "#00b400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 50.8408,
+        lon: 4.378,
+        dist: 0.5,
+        rank: 2,
+        total: 19,
+        color: "#14b400"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 50.8439,
+        lon: 4.3738,
+        dist: 0.6,
+        rank: 3,
+        total: 19,
+        color: "#23b400"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 50.8463,
+        lon: 4.3709,
+        dist: 0.9,
+        rank: 4,
+        total: 19,
+        color: "#3bb400"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 50.8403,
+        lon: 4.3705,
+        dist: 0.9,
+        rank: 5,
+        total: 19,
+        color: "#42b400"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 50.8413,
+        lon: 4.3688,
+        dist: 1,
+        rank: 6,
+        total: 19,
+        color: "#49b400"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 50.8419,
+        lon: 4.3677,
+        dist: 1.1,
+        rank: 7,
+        total: 19,
+        color: "#4fb400"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 50.8468,
+        lon: 4.368,
+        dist: 1.1,
+        rank: 8,
+        total: 19,
+        color: "#50b400"
+      },
+      {
+        code: "us",
+        name: "United States",
+        lat: 50.8445,
+        lon: 4.367,
+        dist: 1.1,
+        rank: 9,
+        total: 19,
+        color: "#52b400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 50.8411,
+        lon: 4.3669,
+        dist: 1.2,
+        rank: 10,
+        total: 19,
+        color: "#57b400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 50.8407,
+        lon: 4.3666,
+        dist: 1.2,
+        rank: 11,
+        total: 19,
+        color: "#59b400"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 50.8357,
+        lon: 4.4061,
+        dist: 1.9,
+        rank: 12,
+        total: 19,
+        color: "#9bb400"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 50.8258,
+        lon: 4.3649,
+        dist: 2.4,
+        rank: 13,
+        total: 19,
+        color: "#cbb400"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 50.8201,
+        lon: 4.366,
+        dist: 2.9,
+        rank: 14,
+        total: 19,
+        color: "#feb400"
+      },
+      {
+        code: "id",
+        name: "Indonesia",
+        lat: 50.8384,
+        lon: 4.4347,
+        dist: 3.7,
+        rank: 15,
+        total: 19,
+        color: "#ff7d00"
+      },
+      {
+        code: "sa",
+        name: "Saudi Arabia",
+        lat: 50.8101,
+        lon: 4.382,
+        dist: 3.8,
+        rank: 16,
+        total: 19,
+        color: "#ff7900"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 50.8083,
+        lon: 4.385,
+        dist: 4,
+        rank: 17,
+        total: 19,
+        color: "#ff6b00"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 50.8056,
+        lon: 4.3538,
+        dist: 4.7,
+        rank: 18,
+        total: 19,
+        color: "#ff3800"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 50.7957,
+        lon: 4.4026,
+        dist: 5.5,
+        rank: 19,
+        total: 19,
+        color: "#ff0000"
+      }
+    ]
+  },
+  {
+    code: "il",
+    name: "Israel",
+    capital: "Jerusalem",
+    powerCenter: "Knesset",
+    lat: 31.7765,
+    lon: 35.2054,
+    avgDist: 49.9,
+    closest: {
+      code: "us",
+      name: "United States",
+      dist: 3.7
+    },
+    farthest: {
+      code: "ar",
+      name: "Argentina",
+      dist: 57.2
+    },
+    embassies: [
+      {
+        code: "us",
+        name: "United States",
+        lat: 31.7475,
+        lon: 35.2247,
+        dist: 3.7,
+        rank: 1,
+        total: 18,
+        color: "#00b400"
+      },
+      {
+        code: "ca",
+        name: "Canada",
+        lat: 32.0625,
+        lon: 34.7905,
+        dist: 50.5,
+        rank: 2,
+        total: 18,
+        color: "#ff2d00"
+      },
+      {
+        code: "za",
+        name: "South Africa",
+        lat: 32.0852,
+        lon: 34.8046,
+        dist: 51.1,
+        rank: 3,
+        total: 18,
+        color: "#ff2900"
+      },
+      {
+        code: "eu",
+        name: "European Union",
+        lat: 32.0846,
+        lon: 34.8008,
+        dist: 51.3,
+        rank: 4,
+        total: 18,
+        color: "#ff2700"
+      },
+      {
+        code: "de",
+        name: "Germany",
+        lat: 32.0746,
+        lon: 34.7833,
+        dist: 51.8,
+        rank: 5,
+        total: 18,
+        color: "#ff2400"
+      },
+      {
+        code: "jp",
+        name: "Japan",
+        lat: 32.0787,
+        lon: 34.7871,
+        dist: 51.8,
+        rank: 6,
+        total: 18,
+        color: "#ff2400"
+      },
+      {
+        code: "au",
+        name: "Australia",
+        lat: 32.0617,
+        lon: 34.7706,
+        dist: 51.9,
+        rank: 7,
+        total: 18,
+        color: "#ff2400"
+      },
+      {
+        code: "br",
+        name: "Brazil",
+        lat: 32.0617,
+        lon: 34.7706,
+        dist: 51.9,
+        rank: 8,
+        total: 18,
+        color: "#ff2400"
+      },
+      {
+        code: "kr",
+        name: "South Korea",
+        lat: 32.075,
+        lon: 34.78,
+        dist: 52.1,
+        rank: 9,
+        total: 18,
+        color: "#ff2200"
+      },
+      {
+        code: "cn",
+        name: "China",
+        lat: 32.07,
+        lon: 34.775,
+        dist: 52.1,
+        rank: 10,
+        total: 18,
+        color: "#ff2200"
+      },
+      {
+        code: "it",
+        name: "Italy",
+        lat: 32.0628,
+        lon: 34.763,
+        dist: 52.5,
+        rank: 11,
+        total: 18,
+        color: "#ff1f00"
+      },
+      {
+        code: "mx",
+        name: "Mexico",
+        lat: 32.0628,
+        lon: 34.7629,
+        dist: 52.5,
+        rank: 12,
+        total: 18,
+        color: "#ff1f00"
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        lat: 32.0814,
+        lon: 34.7686,
+        dist: 53.4,
+        rank: 13,
+        total: 18,
+        color: "#ff1900"
+      },
+      {
+        code: "fr",
+        name: "France",
+        lat: 32.0809,
+        lon: 34.7678,
+        dist: 53.4,
+        rank: 14,
+        total: 18,
+        color: "#ff1900"
+      },
+      {
+        code: "in",
+        name: "India",
+        lat: 32.083,
+        lon: 34.7691,
+        dist: 53.5,
+        rank: 15,
+        total: 18,
+        color: "#ff1900"
+      },
+      {
+        code: "gb",
+        name: "United Kingdom",
+        lat: 32.0878,
+        lon: 34.7715,
+        dist: 53.6,
+        rank: 16,
+        total: 18,
+        color: "#ff1800"
+      },
+      {
+        code: "tr",
+        name: "Turkey",
+        lat: 32.0886,
+        lon: 34.7719,
+        dist: 53.6,
+        rank: 17,
+        total: 18,
+        color: "#ff1800"
+      },
+      {
+        code: "ar",
+        name: "Argentina",
+        lat: 32.1667,
+        lon: 34.8099,
+        dist: 57.2,
+        rank: 18,
+        total: 18,
+        color: "#ff0000"
+      }
+    ]
+  }
+];
