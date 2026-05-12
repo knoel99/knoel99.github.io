@@ -1,3 +1,223 @@
-<div class="exec-summary">
-  <p><strong>Section pas encore generee.</strong> Lancez <code>python scripts/generate_summaries.py</code> pour generer le contenu de cette section.</p>
+<h3>Alternative Reading Angle: Pre-Training</h3>
+
+<h4>Commentary</h4>
+
+<p>This section is the engineering backbone of the entire paper — where architectural ambition meets the messy reality of training trillion-parameter MoE models. The core tension is <strong>efficiency vs. capability</strong>: DeepSeek-V4-Flash must outperform the larger V3.2 with fewer active parameters, while V4-Pro pushes the frontier by scaling everything up. The 32T-token corpus, with its deliberate emphasis on long documents and agentic coding data, signals that the team isn't just scaling compute — they're reshaping the data diet to match where they want the model to excel.</p>
+
+<p>The most revealing details are the <strong>instability mitigation techniques</strong>. Anticipatory Routing is essentially a temporal hack: use stale parameters for routing decisions to break the feedback loop where outlier activations reinforce themselves through expert selection. It's a pragmatic admission that MoE routing creates a vicious cycle the optimizer can't self-correct. SwiGLU Clamping — capping values to [−10, 10] — is even more blunt, yet both work without performance degradation. The authors openly acknowledge they lack theoretical justification, which is refreshingly honest and suggests the community still doesn't fully understand MoE training dynamics at this scale.</p>
+
+<p>The training schedule itself tells a story: start dense, go sparse only at 64K context, and extend to 1M gradually. This phased approach reflects a constraint — sparse attention mechanisms need a mature representation space before they can safely replace full attention without collapsing.</p>
+
+<details>
+<summary>Why Muon + AdamW hybrid?</summary>
+<p>The Muon optimizer (momentum-based, with orthogonalized updates) handles the bulk of parameters more efficiently than Adam, but the authors fall back to AdamW for embeddings, prediction heads, and RMSNorm — modules where update orthogonality might disrupt delicate scaling. The RMS rescaling to 0.18 is specifically chosen so Muon's update magnitude matches AdamW's, allowing a shared learning rate schedule. This is a practical engineering choice, not a theoretical one.</p>
+</details>
+
+<div class="diagram">
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" style="font-family: system-ui, sans-serif;">
+  <defs>
+    <marker id="arrow-slate" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#fb923c"/>
+    </marker>
+    <marker id="arrow-rose" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#fb7185"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="450" y="22" fill="#94a3b8" font-size="11" text-anchor="middle" font-weight="600">PRE-TRAINING PROGRESSION (DeepSeek-V4)</text>
+
+  <!-- Timeline axis -->
+  <line x1="60" y1="60" x2="860" y2="60" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow-slate)"/>
+  <text x="870" y="64" fill="#64748b" font-size="8">tokens</text>
+
+  <!-- Phase markers on timeline -->
+  <line x1="100" y1="50" x2="100" y2="70" stroke="#94a3b8" stroke-width="1"/>
+  <text x="100" y="44" fill="#94a3b8" font-size="8" text-anchor="middle">0</text>
+
+  <line x1="250" y1="50" x2="250" y2="70" stroke="#94a3b8" stroke-width="1"/>
+  <text x="250" y="44" fill="#94a3b8" font-size="8" text-anchor="middle">~1T</text>
+
+  <line x1="440" y1="50" x2="440" y2="70" stroke="#94a3b8" stroke-width="1"/>
+  <text x="440" y="44" fill="#94a3b8" font-size="8" text-anchor="middle">~8T</text>
+
+  <line x1="620" y1="50" x2="620" y2="70" stroke="#94a3b8" stroke-width="1"/>
+  <text x="620" y="44" fill="#94a3b8" font-size="8" text-anchor="middle">~20T</text>
+
+  <line x1="800" y1="50" x2="800" y2="70" stroke="#94a3b8" stroke-width="1"/>
+  <text x="800" y="44" fill="#94a3b8" font-size="8" text-anchor="middle">32-33T</text>
+
+  <!-- Row 1: Sequence Length -->
+  <text x="30" y="105" fill="#22d3ee" font-size="10" font-weight="600">Seq Len</text>
+
+  <rect x="100" y="90" width="150" height="26" rx="4" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.2"/>
+  <text x="175" y="107" fill="#fff" font-size="10" text-anchor="middle">4K</text>
+
+  <rect x="250" y="90" width="190" height="26" rx="4" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.2"/>
+  <text x="345" y="107" fill="#fff" font-size="10" text-anchor="middle">16K</text>
+
+  <rect x="440" y="90" width="180" height="26" rx="4" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.2"/>
+  <text x="530" y="107" fill="#fff" font-size="10" text-anchor="middle">64K</text>
+
+  <rect x="620" y="90" width="180" height="26" rx="4" fill="rgba(8, 51, 68, 0.5)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="710" y="107" fill="#fff" font-size="10" text-anchor="middle">1M</text>
+
+  <!-- Row 2: Attention Mode -->
+  <text x="30" y="160" fill="#34d399" font-size="10" font-weight="600">Attention</text>
+
+  <rect x="100" y="145" width="340" height="26" rx="4" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.2"/>
+  <text x="270" y="162" fill="#fff" font-size="10" text-anchor="middle">Dense Attention</text>
+
+  <rect x="440" y="145" width="80" height="26" rx="4" fill="rgba(251, 146, 60, 0.3)" stroke="#fb923c" stroke-width="1.2"/>
+  <text x="480" y="162" fill="#fff" font-size="9" text-anchor="middle">Indexer warmup</text>
+
+  <rect x="520" y="145" width="280" height="26" rx="4" fill="rgba(6, 78, 59, 0.5)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="660" y="162" fill="#fff" font-size="10" text-anchor="middle">Sparse Attention (CSA + HCA)</text>
+
+  <!-- Row 3: Learning Rate -->
+  <text x="30" y="215" fill="#a78bfa" font-size="10" font-weight="600">LR</text>
+
+  <!-- LR curve (simplified) -->
+  <path d="M100,225 L140,205 L160,195 L440,195 L700,195 Q750,195 780,210 L800,218" fill="none" stroke="#a78bfa" stroke-width="2"/>
+  <text x="300" y="190" fill="#a78bfa" font-size="8">2.7e-4 (Flash) / 2.0e-4 (Pro)</text>
+  <text x="800" y="232" fill="#a78bfa" font-size="8">2.7e-5</text>
+  <text x="130" y="200" fill="#94a3b8" font-size="7">warmup</text>
+  <text x="760" y="200" fill="#94a3b8" font-size="7">cosine decay</text>
+
+  <!-- Row 4: Stability Techniques -->
+  <text x="30" y="275" fill="#fb7185" font-size="10" font-weight="600">Stability</text>
+
+  <!-- Anticipatory Routing box -->
+  <rect x="100" y="258" width="320" height="50" rx="6" fill="rgba(136, 19, 55, 0.3)" stroke="#fb7185" stroke-width="1.2"/>
+  <rect x="100" y="258" width="320" height="50" rx="6" fill="#0f172a"/>
+  <rect x="100" y="258" width="320" height="50" rx="6" fill="rgba(136, 19, 55, 0.3)" stroke="#fb7185" stroke-width="1.2"/>
+  <text x="260" y="276" fill="#fb7185" font-size="10" font-weight="600" text-anchor="middle">Anticipatory Routing</text>
+  <text x="260" y="292" fill="#94a3b8" font-size="8" text-anchor="middle">Route with θ_{t-Δt}, compute with θ_t</text>
+  <text x="260" y="303" fill="#94a3b8" font-size="8" text-anchor="middle">Auto-triggered on loss spikes → ~20% overhead</text>
+
+  <!-- SwiGLU Clamping box -->
+  <rect x="440" y="258" width="360" height="50" rx="6" fill="rgba(136, 19, 55, 0.3)" stroke="#fb7185" stroke-width="1.2"/>
+  <rect x="440" y="258" width="360" height="50" rx="6" fill="#0f172a"/>
+  <rect x="440" y="258" width="360" height="50" rx="6" fill="rgba(136, 19, 55, 0.3)" stroke="#fb7185" stroke-width="1.2"/>
+  <text x="620" y="276" fill="#fb7185" font-size="10" font-weight="600" text-anchor="middle">SwiGLU Clamping</text>
+  <text x="620" y="292" fill="#94a3b8" font-size="8" text-anchor="middle">Linear ∈ [−10, 10], Gate cap = 10</text>
+  <text x="620" y="303" fill="#94a3b8" font-size="8" text-anchor="middle">Suppresses MoE outliers → no perf loss</text>
+
+  <!-- Row 5: Data composition (simplified bar) -->
+  <text x="30" y="345" fill="#fbbf24" font-size="10" font-weight="600">Data</text>
+
+  <rect x="100" y="330" width="700" height="24" rx="4" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="0.5"/>
+  <!-- Approximate proportions -->
+  <rect x="100" y="330" width="280" height="24" rx="4" fill="rgba(8, 51, 68, 0.5)" stroke="#22d3ee" stroke-width="0.8"/>
+  <text x="240" y="346" fill="#fff" font-size="8" text-anchor="middle">Web (filtered)</text>
+
+  <rect x="380" y="330" width="120" height="24" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="0.8"/>
+  <text x="440" y="346" fill="#fff" font-size="8" text-anchor="middle">Math</text>
+
+  <rect x="500" y="330" width="100" height="24" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="0.8"/>
+  <text x="550" y="346" fill="#fff" font-size="8" text-anchor="middle">Code</text>
+
+  <rect x="600" y="330" width="100" height="24" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="0.8"/>
+  <text x="650" y="346" fill="#fff" font-size="8" text-anchor="middle">Long docs</text>
+
+  <rect x="700" y="330" width="100" height="24" rx="0 4 4 0" fill="rgba(30, 41, 59, 0.6)" stroke="#94a3b8" stroke-width="0.8"/>
+  <text x="750" y="346" fill="#fff" font-size="8" text-anchor="middle">Multilingual+</text>
+
+  <text x="450" y="372" fill="#94a3b8" font-size="9" text-anchor="middle">32T+ tokens total · 128K vocab · Fill-in-Middle · Sample-level attention masking</text>
+
+  <!-- Architecture comparison at bottom -->
+  <text x="450" y="400" fill="#94a3b8" font-size="11" text-anchor="middle" font-weight="600">MODEL CONFIG COMPARISON</text>
+
+  <!-- Flash box -->
+  <rect x="80" y="415" width="340" height="95" rx="6" fill="rgba(6, 78, 59, 0.3)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="250" y="435" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle">DeepSeek-V4-Flash</text>
+  <text x="250" y="452" fill="#fff" font-size="9" text-anchor="middle">284B total · 13B active · 43 layers · d=4096</text>
+  <text x="250" y="467" fill="#94a3b8" font-size="8" text-anchor="middle">256 routed experts (6 active) · 1 shared · d_expert=2048</text>
+  <text x="250" y="482" fill="#94a3b8" font-size="8" text-anchor="middle">CSA top-k=512 · 64 heads · Layers 1-2: sliding window</text>
+  <text x="250" y="497" fill="#94a3b8" font-size="8" text-anchor="middle">Hash routing (first 3 MoE) · MTP depth=1</text>
+
+  <!-- Pro box -->
+  <rect x="480" y="415" width="340" height="95" rx="6" fill="rgba(76, 29, 149, 0.3)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="650" y="435" fill="#a78bfa" font-size="11" font-weight="700" text-anchor="middle">DeepSeek-V4-Pro</text>
+  <text x="650" y="452" fill="#fff" font-size="9" text-anchor="middle">1.6T total · 49B active · 61 layers · d=7168</text>
+  <text x="650" y="467" fill="#94a3b8" font-size="8" text-anchor="middle">384 routed experts (6 active) · 1 shared · d_expert=3072</text>
+  <text x="650" y="482" fill="#94a3b8" font-size="8" text-anchor="middle">CSA top-k=1024 · 128 heads · Layers 1-2: HCA</text>
+  <text x="650" y="497" fill="#94a3b8" font-size="8" text-anchor="middle">Hash routing (first 3 MoE) · MTP depth=1</text>
+
+</svg>
 </div>
+
+<h4>Flash vs. Pro: What Actually Differs</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dimension</th>
+      <th>V4-Flash</th>
+      <th>V4-Pro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Total / Active params</td>
+      <td>284B / 13B</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>1.6T / 49B</strong></td>
+    </tr>
+    <tr>
+      <td>Layers / Hidden dim</td>
+      <td>43 / 4096</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>61 / 7168</strong></td>
+    </tr>
+    <tr>
+      <td>Routed experts (active)</td>
+      <td>256 (6)</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>384 (6)</strong></td>
+    </tr>
+    <tr>
+      <td>Expert intermediate dim</td>
+      <td>2048</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>3072</strong></td>
+    </tr>
+    <tr>
+      <td>CSA top-k</td>
+      <td>512</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>1024</strong></td>
+    </tr>
+    <tr>
+      <td>Attention heads</td>
+      <td>64</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>128</strong></td>
+    </tr>
+    <tr>
+      <td>First 2 layers</td>
+      <td>Sliding window</td>
+      <td><strong>HCA</strong></td>
+    </tr>
+    <tr>
+      <td>Peak LR</td>
+      <td>2.7 × 10⁻⁴</td>
+      <td>2.0 × 10⁻⁴</td>
+    </tr>
+    <tr>
+      <td>Max batch size</td>
+      <td>75.5M tokens</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>94.4M tokens</strong></td>
+    </tr>
+    <tr>
+      <td>Training tokens</td>
+      <td>32T</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>33T</strong></td>
+    </tr>
+    <tr>
+      <td>Dense attention stage</td>
+      <td>~1T tokens</td>
+      <td>Longer than Flash</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+"Although a comprehensive theoretical understanding of their underlying mechanisms remains an open question for now, we are sharing them openly to foster further exploration by the community." — The authors on Anticipatory Routing and SwiGLU Clamping, two techniques that empirically solve instability they can't yet fully explain.</blockquote>
