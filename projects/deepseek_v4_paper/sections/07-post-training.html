@@ -1,0 +1,215 @@
+<h3>Alternative Reading Angle: Post-Training</h3>
+
+<h4>Commentary</h4>
+
+<p>This section is the engineering heart of DeepSeek-V4 — the place where a generalist base model becomes a product-grade system. The core architectural decision is <strong>replacing mixed RL with On-Policy Distillation (OPD)</strong>: instead of trying to train one model on all domains simultaneously (where gradient signals from different tasks interfere), they train a dozen+ independent specialists, then merge them into a single student via logits-level KL alignment. Think of it as <strong>hiring separate tutors for each subject, then having the student learn from all of them simultaneously</strong> — rather than one tutor trying to teach everything at once and confusing the student.</p>
+
+<p>Several design choices deserve attention as a package: the <strong>Generative Reward Model</strong> collapses the actor-critic separation by making the model judge its own outputs — eliminating the need for separate scalar reward models and their costly human annotation. The <strong>three reasoning modes</strong> (Non-think / Think High / Think Max) are not just inference-time knobs — they are trained as distinct RL configurations with different length penalties, then unified through OPD. The <strong>FP4 QAT</strong> insight is particularly elegant: because FP8 has a larger dynamic range than FP4, the FP4→FP8 dequantization is lossless, meaning the entire existing FP8 training stack can be reused without modification. The <strong>full-vocabulary KL</strong> choice over token-level approximation trades compute for stability — a gamble that only pays off with the teacher scheduling infrastructure (hidden-state caching, sorted dispatch, async loading) described in 5.2.2.</p>
+
+<p>The preemptible rollout service reveals a subtle correctness concern: <strong>length bias from preemption</strong>. If interrupted requests are regenerated from scratch, shorter sequences survive more often, implicitly rewarding brevity. The token-granular WAL is the fix — it preserves partial generation state so resumption is unbiased.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 880 520" xmlns="http://www.w3.org/2000/svg" style="max-width:880px; width:100%;">
+  <defs>
+    <marker id="arrow-slate" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-emerald" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-violet" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#a78bfa"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#fb923c"/>
+    </marker>
+    <marker id="arrow-rose" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 3.5 L 0 7 z" fill="#fb7185"/>
+    </marker>
+  </defs>
+
+  <!-- Stage 1: Specialist Training -->
+  <text x="30" y="24" fill="#94a3b8" font-size="10" font-weight="600" letter-spacing="1">STAGE 1: SPECIALIST TRAINING</text>
+
+  <!-- Base Model -->
+  <rect x="30" y="38" width="120" height="44" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="90" y="57" fill="#fff" font-size="11" text-anchor="middle" font-weight="600">Base Model</text>
+  <text x="90" y="72" fill="#94a3b8" font-size="9" text-anchor="middle">V4-Flash / V4-Pro</text>
+
+  <!-- Arrow to specialists -->
+  <line x1="150" y1="60" x2="185" y2="60" stroke="#64748b" stroke-width="1.2" marker-end="url(#arrow-slate)"/>
+
+  <!-- SFT + RL box -->
+  <rect x="188" y="38" width="100" height="44" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="238" y="57" fill="#fff" font-size="11" text-anchor="middle" font-weight="600">SFT + GRPO</text>
+  <text x="238" y="72" fill="#94a3b8" font-size="9" text-anchor="middle">per-domain RL</text>
+
+  <!-- Arrow to specialist row -->
+  <line x1="288" y1="60" x2="323" y2="60" stroke="#64748b" stroke-width="1.2" marker-end="url(#arrow-slate)"/>
+
+  <!-- Specialists -->
+  <rect x="326" y="34" width="80" height="24" rx="5" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.2"/>
+  <text x="366" y="50" fill="#fff" font-size="10" text-anchor="middle">Math Exp.</text>
+
+  <rect x="326" y="62" width="80" height="24" rx="5" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.2"/>
+  <text x="366" y="78" fill="#fff" font-size="10" text-anchor="middle">Code Exp.</text>
+
+  <rect x="414" y="34" width="80" height="24" rx="5" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.2"/>
+  <text x="454" y="50" fill="#fff" font-size="10" text-anchor="middle">Reason Exp.</text>
+
+  <rect x="414" y="62" width="80" height="24" rx="5" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.2"/>
+  <text x="454" y="78" fill="#fff" font-size="10" text-anchor="middle">Tool Exp.</text>
+
+  <text x="504" y="50" fill="#94a3b8" font-size="11">…</text>
+  <text x="516" y="78" fill="#94a3b8" font-size="9">10+ teachers</text>
+
+  <!-- Reasoning modes annotation -->
+  <rect x="326" y="96" width="168" height="36" rx="5" fill="rgba(136,19,55,0.3)" stroke="#fb7185" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="410" y="110" fill="#fb7185" font-size="9" text-anchor="middle">3 reasoning modes per expert:</text>
+  <text x="410" y="124" fill="#94a3b8" font-size="9" text-anchor="middle">Non-think · Think High · Think Max</text>
+
+  <!-- GRM annotation -->
+  <rect x="188" y="96" width="100" height="36" rx="5" fill="rgba(136,19,55,0.3)" stroke="#fb7185" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="238" y="110" fill="#fb7185" font-size="9" text-anchor="middle">Generative RM</text>
+  <text x="238" y="124" fill="#94a3b8" font-size="9" text-anchor="middle">actor = judge</text>
+
+  <!-- Stage 2: OPD -->
+  <text x="30" y="168" fill="#94a3b8" font-size="10" font-weight="600" letter-spacing="1">STAGE 2: ON-POLICY DISTILLATION</text>
+
+  <!-- Teachers flow down -->
+  <line x1="366" y1="86" x2="366" y2="185" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <line x1="454" y1="86" x2="454" y2="185" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="4,3"/>
+
+  <!-- OPD box -->
+  <rect x="180" y="180" width="340" height="70" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <rect x="180" y="180" width="340" height="70" rx="6" fill="#0f172a"/>
+  <rect x="180" y="180" width="340" height="70" rx="6" fill="rgba(6,78,59,0.3)" stroke="#34d399" stroke-width="1.5"/>
+
+  <text x="350" y="200" fill="#fff" font-size="12" text-anchor="middle" font-weight="600">On-Policy Distillation (OPD)</text>
+  <text x="350" y="216" fill="#94a3b8" font-size="9" text-anchor="middle">Student samples trajectories → teachers score them → reverse KL on full vocab</text>
+  <text x="350" y="232" fill="#94a3b8" font-size="9" text-anchor="middle">L_OPD = Σ wᵢ · D_KL(π_θ ‖ π_Eᵢ) — full logits, not token-level approx</text>
+
+  <!-- Student -->
+  <rect x="560" y="190" width="120" height="48" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="620" y="210" fill="#fff" font-size="11" text-anchor="middle" font-weight="600">Unified Student</text>
+  <text x="620" y="226" fill="#94a3b8" font-size="9" text-anchor="middle">single model, all skills</text>
+
+  <line x1="520" y1="215" x2="557" y2="215" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-emerald)"/>
+
+  <!-- Stage 3: QAT + Deployment Prep -->
+  <text x="30" y="290" fill="#94a3b8" font-size="10" font-weight="600" letter-spacing="1">STAGE 3: QAT + DEPLOYMENT PREP</text>
+
+  <line x1="620" y1="238" x2="620" y2="300" stroke="#22d3ee" stroke-width="1.2" marker-end="url(#arrow-slate)"/>
+
+  <!-- QAT box -->
+  <rect x="520" y="304" width="200" height="60" rx="6" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="620" y="322" fill="#fff" font-size="11" text-anchor="middle" font-weight="600">FP4 Quantization-Aware Training</text>
+  <text x="620" y="338" fill="#94a3b8" font-size="9" text-anchor="middle">MoE expert weights: FP32→FP4→FP8 (lossless)</text>
+  <text x="620" y="352" fill="#94a3b8" font-size="9" text-anchor="middle">CSA QK path: FP4 activations for long ctx</text>
+
+  <!-- Infrastructure layer -->
+  <text x="30" y="400" fill="#94a3b8" font-size="10" font-weight="600" letter-spacing="1">INFRASTRUCTURE ENABLERS</text>
+
+  <!-- Infra boxes -->
+  <rect x="30" y="414" width="170" height="52" rx="6" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.2"/>
+  <text x="115" y="434" fill="#fff" font-size="10" text-anchor="middle" font-weight="600">Teacher Scheduling</text>
+  <text x="115" y="448" fill="#94a3b8" font-size="8" text-anchor="middle">Cache hidden states, reconstruct</text>
+  <text x="115" y="459" fill="#94a3b8" font-size="8" text-anchor="middle">logits on-demand; sort by teacher idx</text>
+
+  <rect x="215" y="414" width="170" height="52" rx="6" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.2"/>
+  <text x="300" y="434" fill="#fff" font-size="10" text-anchor="middle" font-weight="600">Preemptible Rollout</text>
+  <text x="300" y="448" fill="#94a3b8" font-size="8" text-anchor="middle">Token-granular WAL; KV cache</text>
+  <text x="300" y="459" fill="#94a3b8" font-size="8" text-anchor="middle">save/restore; avoids length bias</text>
+
+  <rect x="400" y="414" width="170" height="52" rx="6" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.2"/>
+  <text x="485" y="434" fill="#fff" font-size="10" text-anchor="middle" font-weight="600">1M-Token RL Scaling</text>
+  <text x="485" y="448" fill="#94a3b8" font-size="8" text-anchor="middle">Metadata/Per-token split;</text>
+  <text x="485" y="459" fill="#94a3b8" font-size="8" text-anchor="middle">shared-mem loader; dynamic batching</text>
+
+  <rect x="585" y="414" width="170" height="52" rx="6" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.2"/>
+  <text x="670" y="434" fill="#fff" font-size="10" text-anchor="middle" font-weight="600">DSec Sandbox</text>
+  <text x="670" y="448" fill="#94a3b8" font-size="8" text-anchor="middle">4 substrates: Fn / Container /</text>
+  <text x="670" y="459" fill="#94a3b8" font-size="8" text-anchor="middle">microVM / fullVM; EROFS layers</text>
+
+  <!-- Connecting lines from infra to stages above -->
+  <line x1="115" y1="414" x2="115" y2="395" stroke="#fbbf24" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <line x1="300" y1="414" x2="300" y2="395" stroke="#fbbf24" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <line x1="485" y1="414" x2="485" y2="395" stroke="#fbbf24" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <line x1="670" y1="414" x2="670" y2="395" stroke="#fbbf24" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <line x1="115" y1="395" x2="670" y2="395" stroke="#fbbf24" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+  <!-- Quick Instruction + Interleaved Thinking callout -->
+  <rect x="560" y="100" width="170" height="68" rx="6" fill="rgba(251,146,60,0.2)" stroke="#fb923c" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="645" y="118" fill="#fb923c" font-size="10" text-anchor="middle" font-weight="600">Inference-Time Design</text>
+  <text x="645" y="133" fill="#94a3b8" font-size="9" text-anchor="middle">Quick Instruction: aux tasks via</text>
+  <text x="645" y="145" fill="#94a3b8" font-size="9" text-anchor="middle">special tokens → reuse KV cache</text>
+  <text x="645" y="160" fill="#94a3b8" font-size="9" text-anchor="middle">Interleaved: keep -thinking across tools</text>
+
+  <line x1="560" y1="134" x2="525" y2="200" stroke="#fb923c" stroke-width="0.8" stroke-dasharray="3,2"/>
+</svg>
+</div>
+
+<h4>Key Design Choices at a Glance</h4>
+
+<table>
+<thead>
+<tr>
+<th>Design Choice</th>
+<th>Conventional Approach</th>
+<th>DeepSeek-V4 Approach</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Multi-domain merging</strong></td>
+<td>Mixed RL (train one model on all tasks)</td>
+<td>On-Policy Distillation from 10+ specialists</td>
+<td>Avoids gradient interference between domains</td>
+</tr>
+<tr>
+<td><strong>KL divergence in OPD</strong></td>
+<td>Token-level KL estimate (low compute)</td>
+<td>Full-vocabulary logit KL (high compute)</td>
+<td>Token-level has high variance → training instability</td>
+</tr>
+<tr>
+<td><strong>Reward model for hard-to-verify tasks</strong></td>
+<td>RLHF with scalar reward model + human annotation</td>
+<td>Generative RM (actor = judge, self-evaluates)</td>
+<td>Eliminates separate critic; fuses reasoning into evaluation</td>
+</tr>
+<tr>
+<td><strong>Quantization</strong></td>
+<td>Post-training quantization (PTQ)</td>
+<td>QAT with FP4→FP8 (lossless dequant)</td>
+<td>FP8's larger dynamic range absorbs FP4 scale info; reuses FP8 stack</td>
+</tr>
+<tr>
+<td><strong>Rollout preemption</strong></td>
+<td>Regenerate from scratch with fixed seed</td>
+<td>Token-granular WAL + KV cache save/restore</td>
+<td>Regeneration introduces length bias (shorter sequences survive more)</td>
+</tr>
+<tr>
+<td><strong>Reasoning effort</strong></td>
+<td>Single reasoning mode</td>
+<td>3 trained modes (Non-think / High / Max)</td>
+<td>Different RL configs per mode; unified via OPD</td>
+</tr>
+</tbody>
+</table>
+
+<details>
+<summary>Why FP4→FP8 is lossless (the bit-level argument)</summary>
+
+<p>FP4 uses E2M1 format (2 exponent bits, 1 mantissa bit), giving it a very narrow dynamic range. FP8 E4M3 has 4 exponent bits — two more than FP4. When quantizing FP32 master weights, the FP4 sub-blocks (1×32 tiles) each get their own scale factor. When dequantizing to FP8 (128×128 blocks), as long as the ratio between the maximum and minimum FP4 sub-block scale factors within each FP8 block doesn't exceed the threshold that FP8's extra exponent bits can represent, all the fine-grained scale information is absorbed by FP8's wider dynamic range. The authors verify this empirically holds for their weights. This means the QAT forward pass is <strong>bit-identical</strong> to what a native FP8 training pipeline would produce — zero modification needed.</p>
+
+</details>
+
+<details>
+<summary>The length bias problem in preemptible rollout</summary>
+
+<p>Consider a batch of generation requests running when a preemption occurs. Shorter sequences are more likely to have already completed and been returned; longer sequences are more likely to be interrupted mid-generation. If you regenerate interrupted requests from scratch, you're implicitly creating a survival bias: the training data over-represents short outputs and under-represents long ones. Over many preemption events, the model learns to produce shorter responses. The token-granular WAL fixes this by persisting every generated token immediately, so resumption continues exactly where it left off — no bias toward any sequence length.</p>
+
+</details>

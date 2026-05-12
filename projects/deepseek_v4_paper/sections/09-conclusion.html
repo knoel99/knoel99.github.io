@@ -1,0 +1,88 @@
+<h3>Conclusion, limites & perspectives</h3>
+
+<h4>Where the roadmap meets the research frontier</h4>
+
+<p>This closing section maps the territory the authors have <em>not yet</em> conquered — and that mapping is itself informative. Each announced direction corresponds to a known bottleneck in the current architecture: MoE and sparse attention buy efficiency in compute, but <strong>embedding tables remain dense memory hogs</strong>; long-context works but latency makes deployment painful; single-turn reasoning is strong but <strong>agentic multi-round orchestration</strong> remains fragile; the model is text-only; and data quality ceilings intelligence regardless of architecture. Read this way, the conclusion is less a wish list and more a <strong>diagnosis of the five pressure points</strong> that currently limit the system.</p>
+
+<p>The emphasis on <strong>sparsity along new dimensions</strong> — specifically sparse embeddings — signals that the team views sparsity not as a one-time architectural trick but as a <em>design principle with multiple levers</em>. The mention of Cheng et al. (2026), a future-dated reference, suggests this is work already in progress rather than speculative. The commitment to low-latency systems work acknowledges a hard truth: efficient inference at long context lengths is as much a <strong>systems problem as a model problem</strong>, and architectural innovation alone won't close the gap.</p>
+
+<blockquote>"We recognize the importance and practical value of long-horizon, multi-round agentic tasks, and will continue to iterate and explore in this direction."</blockquote>
+
+<p>This is the most strategically significant sentence. Agentic capability — sustained, tool-using, multi-step autonomy — is where the field is converging, and the authors are explicit that their current model, while strong on benchmarks, has not yet cracked it.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow-slate" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-cyan" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22d3ee"/>
+    </marker>
+  </defs>
+
+  <!-- Central node: Current Model -->
+  <rect x="270" y="140" width="180" height="56" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <rect x="270" y="140" width="180" height="56" rx="6" fill="#0f172a"/>
+  <rect x="270" y="140" width="180" height="56" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="360" y="164" text-anchor="middle" fill="#fff" font-size="12">Current Architecture</text>
+  <text x="360" y="180" text-anchor="middle" fill="#94a3b8" font-size="9">MoE + Sparse Attention</text>
+
+  <!-- Direction 1: Sparse Embeddings (top-left) -->
+  <line x1="290" y1="140" x2="145" y2="68" stroke="#22d3ee" stroke-width="1.2" marker-end="url(#arrow-cyan)"/>
+  <rect x="30" y="30" width="170" height="50" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <rect x="30" y="30" width="170" height="50" rx="6" fill="#0f172a"/>
+  <rect x="30" y="30" width="170" height="50" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="115" y="52" text-anchor="middle" fill="#fff" font-size="11">Sparse Embeddings</text>
+  <text x="115" y="68" text-anchor="middle" fill="#94a3b8" font-size="8">Memory efficiency lever</text>
+
+  <!-- Direction 2: Low-Latency Systems (top-right) -->
+  <line x1="430" y1="140" x2="575" y2="68" stroke="#fbbf24" stroke-width="1.2" marker-end="url(#arrow-slate)"/>
+  <rect x="520" y="30" width="170" height="50" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+  <rect x="520" y="30" width="170" height="50" rx="6" fill="#0f172a"/>
+  <rect x="520" y="30" width="170" height="50" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="605" y="52" text-anchor="middle" fill="#fff" font-size="11">Low-Latency Systems</text>
+  <text x="605" y="68" text-anchor="middle" fill="#94a3b8" font-size="8">Long-context deployment</text>
+
+  <!-- Direction 3: Agentic Tasks (bottom-left) -->
+  <line x1="290" y1="196" x2="145" y2="268" stroke="#fb923c" stroke-width="1.2" marker-end="url(#arrow-slate)"/>
+  <rect x="20" y="250" width="190" height="50" rx="6" fill="rgba(251, 146, 60, 0.3)" stroke="#fb923c" stroke-width="1.5"/>
+  <rect x="20" y="250" width="190" height="50" rx="6" fill="#0f172a"/>
+  <rect x="20" y="250" width="190" height="50" rx="6" fill="rgba(251, 146, 60, 0.3)" stroke="#fb923c" stroke-width="1.5"/>
+  <text x="115" y="272" text-anchor="middle" fill="#fff" font-size="11">Agentic Multi-Round</text>
+  <text x="115" y="288" text-anchor="middle" fill="#94a3b8" font-size="8">Long-horizon tool use</text>
+
+  <!-- Direction 4: Multimodal (bottom-center) -->
+  <line x1="360" y1="196" x2="360" y2="268" stroke="#a78bfa" stroke-width="1.2" marker-end="url(#arrow-slate)"/>
+  <rect x="275" y="270" width="170" height="50" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+  <rect x="275" y="270" width="170" height="50" rx="6" fill="#0f172a"/>
+  <rect x="275" y="270" width="170" height="50" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="360" y="292" text-anchor="middle" fill="#fff" font-size="11">Multimodal</text>
+  <text x="360" y="308" text-anchor="middle" fill="#94a3b8" font-size="8">Beyond text-only</text>
+
+  <!-- Direction 5: Data Curation (bottom-right) -->
+  <line x1="430" y1="196" x2="575" y2="268" stroke="#fb7185" stroke-width="1.2" marker-end="url(#arrow-slate)"/>
+  <rect x="510" y="250" width="190" height="50" rx="6" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/>
+  <rect x="510" y="250" width="190" height="50" rx="6" fill="#0f172a"/>
+  <rect x="510" y="250" width="190" height="50" rx="6" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/>
+  <text x="605" y="272" text-anchor="middle" fill="#fff" font-size="11">Data Curation</text>
+  <text x="605" y="288" text-anchor="middle" fill="#94a3b8" font-size="8">Quality & synthesis</text>
+
+  <!-- Annotation: sparsity as design principle -->
+  <text x="200" y="105" text-anchor="middle" fill="#94a3b8" font-size="8" font-style="italic">sparsity as a</text>
+  <text x="200" y="115" text-anchor="middle" fill="#94a3b8" font-size="8" font-style="italic">multi-lever principle</text>
+
+  <!-- Annotation: systems + model co-design -->
+  <text x="520" y="105" text-anchor="middle" fill="#94a3b8" font-size="8" font-style="italic">systems–model</text>
+  <text x="520" y="115" text-anchor="middle" fill="#94a3b8" font-size="8" font-style="italic">co-design needed</text>
+
+  <!-- Annotation: strategic priority -->
+  <text x="115" y="240" text-anchor="middle" fill="#94a3b8" font-size="8" font-style="italic">highest strategic</text>
+  <text x="115" y="248" text-anchor="middle" fill="#94a3b8" font-size="8" font-style="italic">priority</text>
+</svg>
+</div>
+
+<details>
+<summary>Why these five directions specifically?</summary>
+<p>Each direction maps to a distinct <strong>bottleneck class</strong>: (1) memory — dense embeddings don't scale; (2) latency — long-context is computationally viable but too slow for real-time use; (3) robustness — single-turn benchmarks don't capture agentic failure modes; (4) modality — text-only limits real-world grounding; (5) data — architecture improvements yield diminishing returns without better training signals. The authors are covering the full stack: from hardware-aware systems through model architecture to data quality, which suggests a team that has hit walls at every level and is now pushing on all of them simultaneously.</p>
+</details>

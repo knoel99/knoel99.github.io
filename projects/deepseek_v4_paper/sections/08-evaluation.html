@@ -1,0 +1,229 @@
+<h3>Reading Angle: The Reasoning-Effort Dial as the Real Architecture</h3>
+
+<p>The benchmarks tell one story — DeepSeek-V4-Pro-Max is competitive with closed models — but the deeper story is about <strong>what variable actually drives the performance curves</strong>. This section reveals that the model's three reasoning-effort modes (Non-Think → High → Max) function less like presets and more like a <strong>compute-allocation architecture layered on top of the neural architecture</strong>. Each mode reconfigures context windows (8K → 128K → 384K), RL length penalties, and tool-access budgets simultaneously. The jumps aren't incremental: HLE goes from 7.7% to 37.7% on Pro, and Codeforces rating leaps from nothing to 3206. This is the paper's quiet argument — that inference-time scaling is now a first-class design axis, not an afterthought.</p>
+
+<p>The real-world evaluations (Chinese writing, white-collar tasks, internal R&D coding) serve a different purpose than the benchmarks. They are the authors' <strong>answer to the growing distrust of standardized benchmarks</strong> — the acknowledgment that leaderboard numbers and user satisfaction diverge, especially in non-English, non-code domains. The human-evaluated white-collar tasks expose the model's actual failure modes: formatting aesthetics (76.68 vs 72.68 — both mediocre), instruction-following on hard constraints, and over-condensation. These are precisely the weaknesses that no benchmark in Table 6 would surface.</p>
+
+<p>The formal math result (120/120 on Putnam-2025) is strategically placed: it demonstrates that the hybrid informal-formal pipeline — where natural-language drafts guide a Lean prover — is the path to mathematical reliability, not raw scale alone. This mirrors the broader thesis: <strong>hybrid orchestration beats monolithic inference</strong>.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 820 420" xmlns="http://www.w3.org/2000/svg">
+<style>
+  .label { fill: #fff; font-size: 11px; font-family: system-ui, sans-serif; }
+  .sublabel { fill: #94a3b8; font-size: 9px; font-family: system-ui, sans-serif; }
+  .annotation { fill: #94a3b8; font-size: 8px; font-family: system-ui, sans-serif; }
+  .arrow-line { stroke: #64748b; stroke-width: 1.5; fill: none; }
+</style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#64748b"/>
+    </marker>
+    <marker id="arrowhead-cyan" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#22d3ee"/>
+    </marker>
+    <marker id="arrowhead-emerald" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34d399"/>
+    </marker>
+    <marker id="arrowhead-violet" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#a78bfa"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="410" y="24" fill="#94a3b8" font-size="10" font-family="system-ui, sans-serif" text-anchor="middle" font-weight="600">EVALUATION LANDSCAPE: FROM BENCHMARKS TO REAL-WORLD TASKS</text>
+
+  <!-- Reasoning Effort Dial (left) -->
+  <rect x="20" y="50" width="200" height="340" rx="8" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="120" y="72" fill="#94a3b8" font-size="10" font-family="system-ui, sans-serif" text-anchor="middle" font-weight="600">REASONING EFFORT DIAL</text>
+
+  <!-- Non-Think -->
+  <rect x="40" y="88" width="160" height="60" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <rect x="40" y="88" width="160" height="60" rx="6" fill="#0f172a"/>
+  <rect x="40" y="88" width="160" height="60" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="120" y="110" class="label" text-anchor="middle">Non-Think</text>
+  <text x="120" y="124" class="sublabel" text-anchor="middle">8K ctx · temp 1.0</text>
+  <text x="120" y="138" class="annotation" text-anchor="middle">Fast path, no chain-of-thought</text>
+
+  <!-- High -->
+  <rect x="40" y="168" width="160" height="60" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <rect x="40" y="168" width="160" height="60" rx="6" fill="#0f172a"/>
+  <rect x="40" y="168" width="160" height="60" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="120" y="190" class="label" text-anchor="middle">High</text>
+  <text x="120" y="204" class="sublabel" text-anchor="middle">128K ctx · temp 1.0</text>
+  <text x="120" y="218" class="annotation" text-anchor="middle">Extended CoT, moderate compute</text>
+
+  <!-- Max -->
+  <rect x="40" y="248" width="160" height="60" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+  <rect x="40" y="248" width="160" height="60" rx="6" fill="#0f172a"/>
+  <rect x="40" y="248" width="160" height="60" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="120" y="270" class="label" text-anchor="middle">Max</text>
+  <text x="120" y="284" class="sublabel" text-anchor="middle">384K ctx · reduced len penalty</text>
+  <text x="120" y="298" class="annotation" text-anchor="middle">Full reasoning budget, frontier tasks</text>
+
+  <!-- Arrows between modes -->
+  <line x1="120" y1="148" x2="120" y2="168" class="arrow-line" marker-end="url(#arrowhead)"/>
+  <line x1="120" y1="228" x2="120" y2="248" class="arrow-line" marker-end="url(#arrowhead)"/>
+
+  <!-- Performance jump annotation -->
+  <text x="120" y="330" class="annotation" text-anchor="middle">HLE: 7.7% → 34.5% → 37.7%</text>
+  <text x="120" y="344" class="annotation" text-anchor="middle">CF Rating: — → 2919 → 3206</text>
+  <text x="120" y="358" class="annotation" text-anchor="middle">LiveCodeBench: 56.8 → 89.8 → 93.5</text>
+  <text x="120" y="376" fill="#fb7185" font-size="8" font-family="system-ui, sans-serif" text-anchor="middle">↑ All Pro variant — Flash shows same pattern</text>
+
+  <!-- Benchmark Categories (center) -->
+  <rect x="260" y="50" width="240" height="340" rx="8" fill="rgba(30, 41, 59, 0.3)" stroke="#64748b" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="380" y="72" fill="#94a3b8" font-size="10" font-family="system-ui, sans-serif" text-anchor="middle" font-weight="600">STANDARD BENCHMARKS</text>
+
+  <!-- Knowledge -->
+  <rect x="275" y="84" width="210" height="42" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="380" y="102" class="label" text-anchor="middle">Knowledge & Reasoning</text>
+  <text x="380" y="116" class="sublabel" text-anchor="middle">MMLU-Pro · GPQA · SimpleQA · HLE</text>
+
+  <!-- Code -->
+  <rect x="275" y="138" width="210" height="42" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="380" y="156" class="label" text-anchor="middle">Code & Competition</text>
+  <text x="380" y="170" class="sublabel" text-anchor="middle">LiveCodeBench · Codeforces (Elo 3206)</text>
+
+  <!-- Math -->
+  <rect x="275" y="192" width="210" height="42" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="380" y="210" class="label" text-anchor="middle">Formal Math</text>
+  <text x="380" y="224" class="sublabel" text-anchor="middle">Putnam-2025: 120/120 · Lean v4 agent</text>
+
+  <!-- Long Context -->
+  <rect x="275" y="246" width="210" height="42" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="380" y="264" class="label" text-anchor="middle">1M-Token Context</text>
+  <text x="380" y="278" class="sublabel" text-anchor="middle">MRCR · CorpusQA (stable to 128K)</text>
+
+  <!-- Agent -->
+  <rect x="275" y="300" width="210" height="42" rx="6" fill="rgba(251, 146, 60, 0.3)" stroke="#fb923c" stroke-width="1.5"/>
+  <text x="380" y="318" class="label" text-anchor="middle">Agent Tasks</text>
+  <text x="380" y="332" class="sublabel" text-anchor="middle">SWE · BrowseComp · MCPAtlas · Toolathlon</text>
+
+  <!-- Real-World Tasks (right) -->
+  <rect x="540" y="50" width="260" height="340" rx="8" fill="rgba(30, 41, 59, 0.3)" stroke="#64748b" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="670" y="72" fill="#94a3b8" font-size="10" font-family="system-ui, sans-serif" text-anchor="middle" font-weight="600">REAL-WORLD TASKS (Human Eval)</text>
+
+  <!-- Chinese Writing -->
+  <rect x="555" y="84" width="230" height="55" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="670" y="102" class="label" text-anchor="middle">Chinese Writing</text>
+  <text x="670" y="116" class="sublabel" text-anchor="middle">vs Gemini-3.1-Pro: 62.7% win (functional)</text>
+  <text x="670" y="130" class="sublabel" text-anchor="middle">77.5% win on writing quality (creative)</text>
+
+  <!-- Search -->
+  <rect x="555" y="152" width="230" height="55" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="670" y="170" class="label" text-anchor="middle">Search (RAG vs Agentic)</text>
+  <text x="670" y="184" class="sublabel" text-anchor="middle">Agentic search > RAG on complex tasks</text>
+  <text x="670" y="198" class="sublabel" text-anchor="middle">Marginal cost increase, significant gain</text>
+
+  <!-- White-Collar -->
+  <rect x="555" y="220" width="230" height="70" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="670" y="238" class="label" text-anchor="middle">White-Collar Tasks (30 tasks, 13 industries)</text>
+  <text x="670" y="252" class="sublabel" text-anchor="middle">vs Opus-4.6-Max: 63% non-loss rate</text>
+  <text x="670" y="266" class="sublabel" text-anchor="middle">Strong: task completion, content quality</text>
+  <text x="670" y="280" class="annotation" text-anchor="middle" fill="#fb7185">Weak: formatting aesthetics, condensation</text>
+
+  <!-- Code Agent -->
+  <rect x="555" y="302" width="230" height="55" rx="6" fill="rgba(251, 146, 60, 0.3)" stroke="#fb923c" stroke-width="1.5"/>
+  <text x="670" y="320" class="label" text-anchor="middle">R&D Code Agent (internal)</text>
+  <text x="670" y="334" class="sublabel" text-anchor="middle">67% pass — near Opus 4.5 (70%)</text>
+  <text x="670" y="348" class="sublabel" text-anchor="middle">52% devs say "yes" as primary model</text>
+
+  <!-- Connecting arrows: Dial → Benchmarks -->
+  <line x1="200" y1="118" x2="260" y2="105" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrowhead-cyan)" opacity="0.5"/>
+  <line x1="200" y1="198" x2="260" y2="159" stroke="#34d399" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrowhead-emerald)" opacity="0.5"/>
+  <line x1="200" y1="278" x2="260" y2="213" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrowhead-violet)" opacity="0.5"/>
+
+  <!-- Connecting arrows: Benchmarks → Real-World -->
+  <line x1="500" y1="105" x2="540" y2="112" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrowhead)" opacity="0.4"/>
+  <line x1="500" y1="159" x2="540" y2="180" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrowhead)" opacity="0.4"/>
+  <line x1="500" y1="321" x2="540" y2="330" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrowhead)" opacity="0.4"/>
+
+  <!-- Gap annotation -->
+  <text x="520" y="395" fill="#fb7185" font-size="8" font-family="system-ui, sans-serif" text-anchor="middle">← benchmarks don't surface formatting/condensation weaknesses →</text>
+
+</svg>
+</div>
+
+<h4>Where DeepSeek-V4-Pro-Max Wins and Loses</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Arena</th>
+      <th>DS-V4-Pro-Max</th>
+      <th>Best Competitor</th>
+      <th>Gap Direction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SimpleQA-Verified</td>
+      <td>57.9</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;">Gemini-3.1-Pro: <strong>75.6</strong></td>
+      <td>Trails by 17.7</td>
+    </tr>
+    <tr>
+      <td>Codeforces Rating</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>3206</strong></td>
+      <td>GPT-5.4: 3168</td>
+      <td>First open model to match closed</td>
+    </tr>
+    <tr>
+      <td>Apex Shortlist</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>90.2</strong></td>
+      <td>Gemini-3.1-Pro: 89.1</td>
+      <td>Narrow lead</td>
+    </tr>
+    <tr>
+      <td>Putnam-2025 (formal)</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>120/120</strong></td>
+      <td>Axiom: 120/120</td>
+      <td>Ties frontier</td>
+    </tr>
+    <tr>
+      <td>MRCR 1M</td>
+      <td>83.5</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;">Opus-4.6: <strong>92.9</strong></td>
+      <td>Trails by 9.4</td>
+    </tr>
+    <tr>
+      <td>SWE Verified</td>
+      <td>80.6</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;">Opus-4.6: <strong>80.8</strong></td>
+      <td>Effectively tied</td>
+    </tr>
+    <tr>
+      <td>HLE w/ tools</td>
+      <td>48.2</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;">K2.6: <strong>54.0</strong></td>
+      <td>Trails by 5.8</td>
+    </tr>
+    <tr>
+      <td>Chinese Writing (functional)</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>62.7% win</strong></td>
+      <td>Gemini-3.1-Pro: 34.1%</td>
+      <td>Dominant</td>
+    </tr>
+    <tr>
+      <td>White-Collar (human eval)</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;"><strong>63% non-loss</strong></td>
+      <td>Opus-4.6-Max</td>
+      <td>Wins on content, loses on formatting</td>
+    </tr>
+  </tbody>
+</table>
+
+<details>
+<summary>Why the Codeforces Elo calculation is unusually careful</summary>
+
+<p>The rating methodology — generating 32 candidates, sampling 10 without replacement, randomizing order, scoring via human penalty schemes, then averaging expected ratings across 14 contests — is designed to <strong>neutralize the "volume advantage"</strong> that LLMs have over humans. A human gets one submission sequence; a model could submit thousands. By sampling a fixed subset and randomizing order, the authors approximate what rating the model would earn if it were a human participant making a single contest attempt. This is why the resulting 3206 Elo is meaningful: it's not inflated by brute-force submission volume.</p>
+
+</details>
+
+<details>
+<summary>The informal→formal math pipeline as a design pattern</summary>
+
+<p>The Putnam-2025 result (120/120) relies on a two-stage pipeline: first generate and self-verify informal natural-language proofs, then feed survivors as guidance to a Lean formal agent. This is architecturally significant — it treats <strong>informal reasoning as a heuristic search pruner</strong> and formal verification as the correctness guarantee. The same pattern (cheap exploration → expensive validation) appears in the agentic search design (RAG for simple queries, iterative agentic search for complex ones) and in the reasoning-effort dial itself (Non-Think for easy, Max for hard). It's the paper's recurring motif: <strong>allocate compute proportionally to problem difficulty, and never trust without verification</strong>.</p>
+
+</details>

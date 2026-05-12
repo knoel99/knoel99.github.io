@@ -1,0 +1,208 @@
+<h3>Reading Angle: Co-Design as the Unifying Thread</h3>
+
+<p>This section reads like a catalog of infrastructure components, but the deeper logic connecting them is <strong>co-design</strong> — every subsystem is shaped by a specific hardware constraint, and every optimization is a negotiation between performance and numerical fidelity. The authors are not simply throwing faster kernels at the problem; they are rethinking the boundary between what the algorithm demands and what the hardware can deliver.</p>
+
+<p>Consider the through-line: EP wave scheduling exists because <em>computation time exceeds communication time</em> in MoE layers, making overlap theoretically possible — but only if you slice experts finely enough to keep the pipeline full. TileLang exists because hand-writing hundreds of fused CUDA kernels is unsustainable, yet off-the-shelf ATen operators leave too much performance on the table — the Z3 integration and host codegen are specifically there to close the gap between DSL productivity and hand-tuned quality. Batch invariance and determinism exist because <em>non-deterministic training makes debugging impossible at scale</em>, and the cost of atomicAdd-based accumulation is paid in debugging time, not FLOPs. The Muon-ZeRO hybrid exists because Muon's matrix-level updates are fundamentally incompatible with element-wise parameter partitioning — a classic algorithm-system mismatch.</p>
+
+<p>The KV cache design is perhaps the most emblematic: hybrid attention breaks PagedAttention's assumptions, so the authors treat SWA + uncompressed tails as a <strong>state-space model</strong> — a conceptual reframing that unlocks a fixed-allocation strategy. This is co-design in its purest form: changing the <em>mental model</em> of what the cache <em>is</em> to make it manageable.</p>
+
+<blockquote>The computation-communication ratio insight — each GBps of bandwidth hides 6.1 TFLOP/s of compute, and beyond that threshold, more bandwidth yields diminishing returns — is a design principle for future hardware, not just a tuning knob for current systems.</blockquote>
+
+<div class="diagram">
+<svg viewBox="0 0 780 310" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="ah-ep" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#64748b"/>
+    </marker>
+    <marker id="ah-cyan" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#22d3ee"/>
+    </marker>
+    <marker id="ah-emerald" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#34d399"/>
+    </marker>
+    <marker id="ah-rose" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#fb7185"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="390" y="18" fill="#94a3b8" font-size="10" text-anchor="middle" font-weight="600">WAVE-BASED EP PIPELINE — TEMPORAL VIEW</text>
+
+  <!-- Time axis -->
+  <line x1="130" y1="285" x2="740" y2="285" stroke="#475569" stroke-width="1" marker-end="url(#ah-ep)"/>
+  <text x="745" y="289" fill="#64748b" font-size="8">time</text>
+
+  <!-- Row labels -->
+  <text x="125" y="60" fill="#22d3ee" font-size="10" text-anchor="end" font-weight="500">Dispatch</text>
+  <text x="125" y="60" fill="#22d3ee" font-size="7" text-anchor="end">(All-to-All)</text>
+  <text x="125" y="140" fill="#34d399" font-size="10" text-anchor="end" font-weight="500">Compute</text>
+  <text x="125" y="140" fill="#34d399" font-size="7" text-anchor="end">(L1 → Act → L2)</text>
+  <text x="125" y="220" fill="#fb7185" font-size="10" text-anchor="end" font-weight="500">Combine</text>
+  <text x="125" y="220" fill="#fb7185" font-size="7" text-anchor="end">(All-to-All)</text>
+
+  <!-- Wave 1 -->
+  <rect x="140" y="42" width="120" height="30" rx="4" fill="rgba(8, 51, 68, 0.5)" stroke="#22d3ee" stroke-width="1.2"/>
+  <text x="200" y="61" fill="#fff" font-size="9" text-anchor="middle">Wave 1</text>
+
+  <rect x="260" y="122" width="180" height="30" rx="4" fill="rgba(6, 78, 59, 0.5)" stroke="#34d399" stroke-width="1.2"/>
+  <text x="350" y="141" fill="#fff" font-size="9" text-anchor="middle">Wave 1 compute</text>
+
+  <rect x="440" y="202" width="120" height="30" rx="4" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.2"/>
+  <text x="500" y="221" fill="#fff" font-size="9" text-anchor="middle">Wave 1</text>
+
+  <!-- Wave 2 -->
+  <rect x="270" y="42" width="120" height="30" rx="4" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4,2"/>
+  <text x="330" y="61" fill="#94a3b8" font-size="9" text-anchor="middle">Wave 2</text>
+
+  <rect x="450" y="122" width="180" height="30" rx="4" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="4,2"/>
+  <text x="540" y="141" fill="#94a3b8" font-size="9" text-anchor="middle">Wave 2 compute</text>
+
+  <rect x="570" y="202" width="120" height="30" rx="4" fill="rgba(136, 19, 55, 0.3)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4,2"/>
+  <text x="630" y="221" fill="#94a3b8" font-size="9" text-anchor="middle">Wave 2</text>
+
+  <!-- Wave 3 (partial) -->
+  <rect x="400" y="42" width="120" height="30" rx="4" fill="rgba(8, 51, 68, 0.3)" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="460" y="61" fill="#64748b" font-size="9" text-anchor="middle">Wave 3</text>
+
+  <rect x="640" y="122" width="90" height="30" rx="4" fill="rgba(6, 78, 59, 0.3)" stroke="#34d399" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="685" y="141" fill="#64748b" font-size="9" text-anchor="middle">W3…</text>
+
+  <!-- Overlap arrows -->
+  <line x1="260" y1="72" x2="260" y2="122" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#ah-cyan)"/>
+  <line x1="440" y1="152" x2="440" y2="202" stroke="#34d399" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#ah-emerald)"/>
+
+  <!-- Steady-state annotation -->
+  <rect x="260" y="255" width="330" height="22" rx="4" fill="rgba(251, 146, 60, 0.1)" stroke="#fb923c" stroke-width="0.8"/>
+  <text x="425" y="270" fill="#fb923c" font-size="8" text-anchor="middle">Steady state: dispatch(Wₙ₊₁) ‖ compute(Wₙ) ‖ combine(Wₙ₋₁)</text>
+
+  <!-- Speedup box -->
+  <rect x="580" y="255" width="160" height="22" rx="4" fill="rgba(6, 78, 59, 0.2)" stroke="#34d399" stroke-width="0.8"/>
+  <text x="660" y="270" fill="#34d399" font-size="8" text-anchor="middle">1.50–1.73× general / 1.96× RL</text>
+</svg>
+</div>
+
+<div class="diagram">
+<svg viewBox="0 0 780 340" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="ah2" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <text x="390" y="18" fill="#94a3b8" font-size="10" text-anchor="middle" font-weight="600">KV CACHE TWO-TIER ARCHITECTURE</text>
+
+  <!-- State Cache tier -->
+  <rect x="30" y="35" width="720" height="120" rx="6" fill="rgba(76, 29, 149, 0.15)" stroke="#a78bfa" stroke-width="1.2"/>
+  <text x="50" y="55" fill="#a78bfa" font-size="11" font-weight="600">State Cache</text>
+  <text x="50" y="68" fill="#64748b" font-size="8">Fixed-size per request · position-dependent · no PagedAttention</text>
+
+  <!-- Request blocks inside state cache -->
+  <rect x="50" y="80" width="140" height="60" rx="4" fill="rgba(30, 41, 59, 0.6)" stroke="#94a3b8" stroke-width="0.8"/>
+  <text x="120" y="98" fill="#fff" font-size="9" text-anchor="middle">Request 1</text>
+  <rect x="58" y="105" width="55" height="12" rx="2" fill="rgba(8, 51, 68, 0.5)" stroke="#22d3ee" stroke-width="0.7"/>
+  <text x="85" y="114" fill="#22d3ee" font-size="7" text-anchor="middle">SWA n_win</text>
+  <rect x="118" y="105" width="62" height="12" rx="2" fill="rgba(136, 19, 55, 0.3)" stroke="#fb7185" stroke-width="0.7"/>
+  <text x="149" y="114" fill="#fb7185" font-size="7" text-anchor="middle">Uncomp. tail</text>
+  <text x="120" y="132" fill="#64748b" font-size="7" text-anchor="middle">treated as state-space model</text>
+
+  <rect x="210" y="80" width="140" height="60" rx="4" fill="rgba(30, 41, 59, 0.6)" stroke="#94a3b8" stroke-width="0.8"/>
+  <text x="280" y="98" fill="#fff" font-size="9" text-anchor="middle">Request 2</text>
+  <rect x="218" y="105" width="55" height="12" rx="2" fill="rgba(8, 51, 68, 0.5)" stroke="#22d3ee" stroke-width="0.7"/>
+  <text x="245" y="114" fill="#22d3ee" font-size="7" text-anchor="middle">SWA n_win</text>
+  <rect x="278" y="105" width="62" height="12" rx="2" fill="rgba(136, 19, 55, 0.3)" stroke="#fb7185" stroke-width="0.7"/>
+  <text x="309" y="114" fill="#fb7185" font-size="7" text-anchor="middle">Uncomp. tail</text>
+
+  <rect x="370" y="80" width="140" height="60" rx="4" fill="rgba(30, 41, 59, 0.6)" stroke="#94a3b8" stroke-width="0.8"/>
+  <text x="440" y="98" fill="#fff" font-size="9" text-anchor="middle">Request 3</text>
+  <rect x="378" y="105" width="55" height="12" rx="2" fill="rgba(8, 51, 68, 0.5)" stroke="#22d3ee" stroke-width="0.7"/>
+  <text x="405" y="114" fill="#22d3ee" font-size="7" text-anchor="middle">SWA n_win</text>
+  <rect x="438" y="105" width="62" height="12" rx="2" fill="rgba(136, 19, 55, 0.3)" stroke="#fb7185" stroke-width="0.7"/>
+  <text x="469" y="114" fill="#fb7185" font-size="7" text-anchor="middle">Uncomp. tail</text>
+
+  <text x="560" y="110" fill="#64748b" font-size="16">⋯</text>
+
+  <!-- Arrow between tiers -->
+  <line x1="390" y1="158" x2="390" y2="178" stroke="#64748b" stroke-width="1.2" marker-end="url(#ah2)"/>
+  <text x="410" y="172" fill="#64748b" font-size="7">compressed entries</text>
+
+  <!-- Classical KV Cache tier -->
+  <rect x="30" y="185" width="720" height="140" rx="6" fill="rgba(6, 78, 59, 0.12)" stroke="#34d399" stroke-width="1.2"/>
+  <text x="50" y="205" fill="#34d399" font-size="11" font-weight="600">Classical KV Cache (PagedAttention-style)</text>
+  <text x="50" y="218" fill="#64748b" font-size="8">Variable-size blocks · block size = lcm(m, m′) original tokens · shared across layers</text>
+
+  <!-- Block structure -->
+  <rect x="50" y="230" width="105" height="80" rx="4" fill="rgba(30, 41, 59, 0.6)" stroke="#94a3b8" stroke-width="0.8"/>
+  <text x="102" y="248" fill="#fff" font-size="9" text-anchor="middle">Block 0</text>
+  <rect x="58" y="255" width="88" height="14" rx="2" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="0.6"/>
+  <text x="102" y="265" fill="#22d3ee" font-size="7" text-anchor="middle">CSA: k₁ compressed</text>
+  <rect x="58" y="273" width="88" height="14" rx="2" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="0.6"/>
+  <text x="102" y="283" fill="#34d399" font-size="7" text-anchor="middle">HCA: k₂ compressed</text>
+  <rect x="58" y="291" width="88" height="12" rx="2" fill="rgba(76, 29, 149, 0.3)" stroke="#a78bfa" stroke-width="0.6"/>
+  <text x="102" y="300" fill="#a78bfa" font-size="7" text-anchor="middle">CSA Indexer</text>
+
+  <rect x="170" y="230" width="105" height="80" rx="4" fill="rgba(30, 41, 59, 0.6)" stroke="#94a3b8" stroke-width="0.8"/>
+  <text x="222" y="248" fill="#fff" font-size="9" text-anchor="middle">Block 1</text>
+  <rect x="178" y="255" width="88" height="14" rx="2" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="0.6"/>
+  <text x="222" y="265" fill="#22d3ee" font-size="7" text-anchor="middle">CSA: k₁ compressed</text>
+  <rect x="178" y="273" width="88" height="14" rx="2" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="0.6"/>
+  <text x="222" y="283" fill="#34d399" font-size="7" text-anchor="middle">HCA: k₂ compressed</text>
+  <rect x="178" y="291" width="88" height="12" rx="2" fill="rgba(76, 29, 149, 0.3)" stroke="#a78bfa" stroke-width="0.6"/>
+  <text x="222" y="300" fill="#a78bfa" font-size="7" text-anchor="middle">CSA Indexer</text>
+
+  <text x="300" y="275" fill="#64748b" font-size="16">⋯</text>
+
+  <rect x="330" y="230" width="105" height="80" rx="4" fill="rgba(30, 41, 59, 0.6)" stroke="#94a3b8" stroke-width="0.8"/>
+  <text x="382" y="248" fill="#fff" font-size="9" text-anchor="middle">Block N</text>
+  <rect x="338" y="255" width="88" height="14" rx="2" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="0.6"/>
+  <text x="382" y="265" fill="#22d3ee" font-size="7" text-anchor="middle">CSA: k₁ compressed</text>
+  <rect x="338" y="273" width="88" height="14" rx="2" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="0.6"/>
+  <text x="382" y="283" fill="#34d399" font-size="7" text-anchor="middle">HCA: k₂ compressed</text>
+  <rect x="338" y="291" width="88" height="12" rx="2" fill="rgba(76, 29, 149, 0.3)" stroke="#a78bfa" stroke-width="0.6"/>
+  <text x="382" y="300" fill="#a78bfa" font-size="7" text-anchor="middle">CSA Indexer</text>
+
+  <!-- Key insight annotation -->
+  <rect x="480" y="240" width="255" height="60" rx="5" fill="rgba(251, 146, 60, 0.08)" stroke="#fb923c" stroke-width="0.8"/>
+  <text x="495" y="258" fill="#fb923c" font-size="8" font-weight="600">Key co-design constraint:</text>
+  <text x="495" y="272" fill="#94a3b8" font-size="8">Block token count must be multiple of</text>
+  <text x="495" y="284" fill="#94a3b8" font-size="8">lcm(m, m′) to align CSA &amp; HCA</text>
+  <text x="495" y="296" fill="#94a3b8" font-size="8">compression boundaries simultaneously</text>
+</svg>
+</div>
+
+<h4>On-Disk SWA Caching Strategies — Quick Reference</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Strategy</th>
+      <th>Storage Cost</th>
+      <th>Recomputation</th>
+      <th>Best For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Full SWA Caching</strong></td>
+      <td>High (all SWA KV for all tokens)</td>
+      <td>Zero — read last n_win tokens only</td>
+      <td>Read-heavy shared prefixes</td>
+    </tr>
+    <tr>
+      <td><strong>Periodic Checkpointing</strong></td>
+      <td>Medium (every p tokens)</td>
+      <td>Recompute from last checkpoint to prefix end</td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;">Balanced — tunable via p</td>
+    </tr>
+    <tr>
+      <td><strong>Zero SWA Caching</strong></td>
+      <td style="background: rgba(52, 211, 153, 0.15); color: #34d399;">Minimal (CSA/HCA only)</td>
+      <td>Recompute last n_win · L tokens</td>
+      <td>Storage-constrained serving</td>
+    </tr>
+  </tbody>
+</table>
+
+<details>
+<summary>Why the Muon–ZeRO conflict matters</summary>
+<p>Standard ZeRO partitions a parameter matrix <em>element-wise</em> across ranks — each rank owns a slice and updates it independently. Muon, however, needs the <em>full</em> gradient matrix to compute the orthogonalization via Newton-Schulz iterations. You can't orthogonalize a matrix you only see a slice of. The authors' knapsack-based bucket assignment is a pragmatic escape: keep entire matrices on each rank (limiting ZeRO parallelism for dense params), pad to equal sizes for efficient reduce-scatter, and accept ~10% memory overhead. For MoE params, the sheer number of experts makes per-matrix partitioning natural — flatten all down-projections, then up-projections, then gates, and distribute the flat vector without splitting any logical matrix. The BF16 gradient quantization with stochastic rounding + all-to-all-then-local-FP32-sum is a clever way to halve communication without sacrificing numerical robustness.</p>
+</details>
