@@ -1,0 +1,66 @@
+{
+  "name": "Saudi Arabia",
+  "flag": "sa",
+  "current": {
+    "chancery": "92 rue de Courcelles, 75008 Paris",
+    "residence": "18 rue Alfred-Dehodencq, 75016 Paris"
+  },
+  "addresses": [
+    {
+      "from": "1926",
+      "to": "1940",
+      "address": "Paris (adresse non identifiée)",
+      "kind": "legation",
+      "lat": null,
+      "lon": null,
+      "note": "En mars 1926 la France reconnaît le Royaume du Hedjaz et du Nedjd (futur Royaume d'Arabie saoudite) et accueille la première délégation officielle conduite par le prince Fayçal (vice-roi du Hedjaz). Une légation saoudienne est alors établie à Paris. La mission est interrompue lors de la Seconde Guerre mondiale."
+    },
+    {
+      "from": "1948",
+      "to": "1952",
+      "address": "1 rue André-Pascal, 75016 Paris",
+      "kind": "legation",
+      "lat": 48.8612,
+      "lon": 2.2699,
+      "note": "En octobre 1948 le roi Ibn Saoud réouvre la légation saoudienne à Paris, fermée depuis la guerre. La rue André-Pascal est une voie privée du 16e arrondissement, proche de l'OCDE. La mission est dirigée par un ministre plénipotentiaire."
+    },
+    {
+      "from": "1952",
+      "to": null,
+      "address": "1 rue André-Pascal, 75016 Paris",
+      "kind": "embassy",
+      "lat": 48.8612,
+      "lon": 2.2699,
+      "note": "En octobre 1952 la légation est élevée au rang d'ambassade, simultanément à l'élévation de la mission française à Djeddah. L'ambassade demeure rue André-Pascal jusqu'à son déménagement vers l'avenue Hoche."
+    },
+    {
+      "from": "1960",
+      "to": "2000",
+      "address": "5 avenue Hoche, 75008 Paris",
+      "kind": "chancery",
+      "lat": 48.8768,
+      "lon": 2.3067,
+      "note": "Chancellerie installée avenue Hoche, dans le 8e arrondissement à proximité du parc Monceau. Le 5 septembre 1973, un commando palestinien de Septembre noir prend en otage le personnel de l'ambassade pour exiger la libération d'Abou Daoud, détenu en Jordanie. La date exacte du déménagement vers la rue de Courcelles n'est pas documentée précisément."
+    },
+    {
+      "from": "2000",
+      "to": null,
+      "address": "92 rue de Courcelles, 75008 Paris",
+      "kind": "chancery",
+      "lat": 48.8789,
+      "lon": 2.3040,
+      "current": true,
+      "note": "Ambassade royale du Royaume d'Arabie saoudite, adresse actuelle. Depuis 2021 l'ambassadeur est Fahad M. Al-Ruwaily. La section consulaire (visas) est au 29 rue des Graviers à Neuilly-sur-Seine ; le bureau militaire au 87 rue de la Faisanderie (16e) ; le bureau culturel au 26 rue Murillo (8e)."
+    },
+    {
+      "from": "2009",
+      "to": null,
+      "address": "18 rue Alfred-Dehodencq, 75016 Paris",
+      "kind": "residence",
+      "lat": 48.8605,
+      "lon": 2.2724,
+      "current": true,
+      "note": "Résidence officielle de l'ambassadeur saoudien. L'hôtel Reichenbach, construction Art déco de 1932 (architecte Jean-Charles Moreux) qui occupait auparavant le site, a été démoli en 2009 pour faire place à la nouvelle résidence."
+    }
+  ]
+}
