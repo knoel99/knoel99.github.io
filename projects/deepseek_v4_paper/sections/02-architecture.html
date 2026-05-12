@@ -1,0 +1,188 @@
+<h3>Architecture — The Stability Playbook</h3>
+
+<p>This section is the engineering backbone of V4: it defines what changed from V3, what stayed, and <strong>why the single most important structural addition — mHC — exists to solve a problem that vanilla Hyper-Connections created at depth</strong>. The broader context is that V4 is not a radical redesign; it's a targeted upgrade where the authors identified exactly which components bottlenecked scaling and replaced only those.</p>
+
+<p>Think of standard residual connections as a highway with one lane. Hyper-Connections (HC) widen that highway to <code>n<sub>hc</sub></code> lanes, letting the model learn richer skip-path mixing. But without traffic rules, signals amplify or cancel unpredictably across layers — the highway becomes unstable. <strong>mHC is the traffic law</strong>: by constraining the residual mixing matrix <code>B<sub>l</sub></code> to the Birkhoff polytope (doubly stochastic matrices), the authors guarantee that no signal can grow unboundedly — every row and column of <code>B<sub>l</sub></code> sums to 1, so the transformation is inherently non-expansive. The Sinkhorn-Knopp algorithm is the differentiable projection that enforces this constraint.</p>
+
+<p>The MoE changes are deliberately conservative — switching the affinity function from Sigmoid to <code>Sqrt(Softplus(·))</code>, removing routing-target constraints, and adding Hash-routed MoE in early layers — because the MoE architecture was already well-tuned in V3. The authors' priority was clear: <strong>don't destabilize what works; fix what breaks at scale</strong>.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 780 420" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, sans-serif">
+  <defs>
+    <marker id="arr-slate" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#64748b"/>
+    </marker>
+    <marker id="arr-cyan" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#22d3ee"/>
+    </marker>
+    <marker id="arr-emerald" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#34d399"/>
+    </marker>
+    <marker id="arr-rose" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#fb7185"/>
+    </marker>
+    <marker id="arr-violet" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#a78bfa"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="390" y="22" fill="#94a3b8" font-size="11" text-anchor="middle" font-weight="600">mHC Data Flow Within One Transformer Layer</text>
+
+  <!-- X_l input -->
+  <rect x="20" y="170" width="100" height="50" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="70" y="192" fill="#fff" font-size="11" text-anchor="middle">X<tspan font-size="8" dy="3">l</tspan></text>
+  <text x="70" y="208" fill="#94a3b8" font-size="9" text-anchor="middle">R<sup>n×d</sup></text>
+
+  <!-- Arrow: X_l splits to A_l path and B_l path -->
+  <line x1="120" y1="185" x2="175" y2="110" stroke="#22d3ee" stroke-width="1.2" marker-end="url(#arr-cyan)"/>
+  <line x1="120" y1="205" x2="175" y2="290" stroke="#a78bfa" stroke-width="1.2" marker-end="url(#arr-violet)"/>
+
+  <!-- A_l box -->
+  <rect x="178" y="85" width="90" height="48" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="223" y="106" fill="#fff" font-size="11" text-anchor="middle">A<tspan font-size="8" dy="3">l</tspan><tspan dy="-3"> · X</tspan><tspan font-size="8" dy="3">l</tspan></text>
+  <text x="223" y="122" fill="#94a3b8" font-size="9" text-anchor="middle">σ(Ã<tspan font-size="7" dy="2">l</tspan><tspan dy="-2">)</tspan> → R<sup>d</sup></text>
+
+  <!-- Arrow A_l → F_l -->
+  <line x1="268" y1="109" x2="330" y2="109" stroke="#34d399" stroke-width="1.2" marker-end="url(#arr-emerald)"/>
+
+  <!-- F_l box (layer) -->
+  <rect x="333" y="82" width="120" height="54" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="393" y="104" fill="#fff" font-size="11" text-anchor="middle">F<tspan font-size="8" dy="3">l</tspan></text>
+  <text x="393" y="120" fill="#94a3b8" font-size="9" text-anchor="middle">CSA/HCA + MoE</text>
+
+  <!-- Arrow F_l → C_l -->
+  <line x1="453" y1="109" x2="510" y2="109" stroke="#34d399" stroke-width="1.2" marker-end="url(#arr-emerald)"/>
+
+  <!-- C_l box -->
+  <rect x="513" y="85" width="90" height="48" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="558" y="106" fill="#fff" font-size="11" text-anchor="middle">C<tspan font-size="8" dy="3">l</tspan><tspan dy="-3"> · F</tspan><tspan font-size="8" dy="3">l</tspan><tspan dy="-3">(·)</tspan></text>
+  <text x="558" y="122" fill="#94a3b8" font-size="9" text-anchor="middle">2σ(C̃<tspan font-size="7" dy="2">l</tspan><tspan dy="-2">)</tspan></text>
+
+  <!-- B_l box -->
+  <rect x="178" y="270" width="90" height="48" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="223" y="291" fill="#fff" font-size="11" text-anchor="middle">B<tspan font-size="8" dy="3">l</tspan><tspan dy="-3"> · X</tspan><tspan font-size="8" dy="3">l</tspan></text>
+  <text x="223" y="307" fill="#94a3b8" font-size="9" text-anchor="middle">doubly stochastic</text>
+
+  <!-- Arrow B_l → sum -->
+  <line x1="268" y1="294" x2="620" y2="294" stroke="#a78bfa" stroke-width="1.2"/>
+  <line x1="620" y1="294" x2="620" y2="200" stroke="#a78bfa" stroke-width="1.2" marker-end="url(#arr-violet)"/>
+
+  <!-- Arrow C_l → sum -->
+  <line x1="603" y1="109" x2="620" y2="109" stroke="#22d3ee" stroke-width="1.2"/>
+  <line x1="620" y1="109" x2="620" y2="155" stroke="#22d3ee" stroke-width="1.2"/>
+
+  <!-- Sum node -->
+  <circle cx="620" cy="178" r="18" fill="rgba(30, 41, 59, 0.6)" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="620" y="183" fill="#fff" font-size="14" text-anchor="middle">+</text>
+
+  <!-- Arrow sum → X_{l+1} -->
+  <line x1="638" y1="178" x2="670" y2="178" stroke="#64748b" stroke-width="1.2" marker-end="url(#arr-slate)"/>
+
+  <!-- X_{l+1} -->
+  <rect x="673" y="153" width="95" height="50" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="720" y="175" fill="#fff" font-size="11" text-anchor="middle">X<tspan font-size="8" dy="3">l+1</tspan></text>
+  <text x="720" y="192" fill="#94a3b8" font-size="9" text-anchor="middle">R<sup>n×d</sup></text>
+
+  <!-- ===== Constraint detail box (bottom) ===== -->
+  <rect x="30" y="345" width="720" height="65" rx="6" fill="rgba(136, 19, 55, 0.15)" stroke="#fb7185" stroke-width="1" stroke-dasharray="4 2"/>
+  <text x="390" y="363" fill="#fb7185" font-size="10" text-anchor="middle" font-weight="600">Constraint Pipeline for B̃ₗ → Bₗ</text>
+
+  <!-- B̃_l -->
+  <rect x="50" y="373" width="80" height="28" rx="4" fill="rgba(76, 29, 149, 0.3)" stroke="#a78bfa" stroke-width="1"/>
+  <text x="90" y="391" fill="#fff" font-size="10" text-anchor="middle">B̃<tspan font-size="7" dy="2">l</tspan></text>
+
+  <line x1="130" y1="387" x2="165" y2="387" stroke="#64748b" stroke-width="1" marker-end="url(#arr-slate)"/>
+  <text x="148" y="381" fill="#94a3b8" font-size="8" text-anchor="middle">exp</text>
+
+  <!-- M^(0) -->
+  <rect x="168" y="373" width="80" height="28" rx="4" fill="rgba(76, 29, 149, 0.3)" stroke="#a78bfa" stroke-width="1"/>
+  <text x="208" y="391" fill="#fff" font-size="10" text-anchor="middle">M<sup>(0)</sup> = exp(B̃<tspan font-size="7" dy="2">l</tspan><tspan dy="-2">)</tspan></text>
+
+  <line x1="248" y1="387" x2="283" y2="387" stroke="#64748b" stroke-width="1" marker-end="url(#arr-slate)"/>
+  <text x="266" y="381" fill="#94a3b8" font-size="8" text-anchor="middle">iter</text>
+
+  <!-- Sinkhorn-Knopp -->
+  <rect x="286" y="373" width="160" height="28" rx="4" fill="rgba(136, 19, 55, 0.3)" stroke="#fb7185" stroke-width="1"/>
+  <text x="366" y="391" fill="#fff" font-size="10" text-anchor="middle">Sinkhorn-Knopp ×20</text>
+
+  <line x1="446" y1="387" x2="481" y2="387" stroke="#64748b" stroke-width="1" marker-end="url(#arr-slate)"/>
+
+  <!-- B_l doubly stochastic -->
+  <rect x="484" y="373" width="120" height="28" rx="4" fill="rgba(6, 78, 59, 0.3)" stroke="#34d399" stroke-width="1"/>
+  <text x="544" y="391" fill="#34d399" font-size="10" text-anchor="middle">B<tspan font-size="7" dy="2">l</tspan><tspan dy="-2"> ∈ Birkhoff</tspan></text>
+
+  <!-- Property annotation -->
+  <text x="640" y="385" fill="#94a3b8" font-size="8">‖B<tspan font-size="6" dy="1">l</tspan><tspan dy="-1">‖₂ ≤ 1</tspan></text>
+  <text x="640" y="397" fill="#94a3b8" font-size="8">non-expansive</text>
+
+  <!-- Dynamic parameterization annotation -->
+  <text x="223" y="60" fill="#94a3b8" font-size="8" text-anchor="middle">dynamic: α·(X̂W) + S (static bias)</text>
+  <text x="223" y="72" fill="#94a3b8" font-size="8" text-anchor="middle">α initialized near zero</text>
+</svg>
+</div>
+
+<h4>V3 → V4: What Changed, What Stayed</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>DeepSeek-V3</th>
+      <th>DeepSeek-V4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Residual connection</td>
+      <td>Standard skip</td>
+      <td><strong>mHC</strong> (Birkhoff-constrained Hyper-Connection)</td>
+    </tr>
+    <tr>
+      <td>MoE affinity function</td>
+      <td>Sigmoid(·)</td>
+      <td><strong>Sqrt(Softplus(·))</strong></td>
+    </tr>
+    <tr>
+      <td>Early-layer FFN</td>
+      <td>Dense FFN</td>
+      <td><strong>Hash-routed MoE</strong></td>
+    </tr>
+    <tr>
+      <td>Routing target constraint</td>
+      <td>Fixed max nodes</td>
+      <td><strong>Removed</strong> (redesigned parallelism)</td>
+    </tr>
+    <tr>
+      <td>Load balancing</td>
+      <td>Aux-loss-free + seq-wise balance</td>
+      <td>Same strategy</td>
+    </tr>
+    <tr>
+      <td>MTP modules</td>
+      <td>Multi-Token Prediction</td>
+      <td><strong>Identical</strong> to V3</td>
+    </tr>
+    <tr>
+      <td>Attention</td>
+      <td>MLA</td>
+      <td><strong>CSA + HCA</strong> hybrid (§3)</td>
+    </tr>
+    <tr>
+      <td>Optimizer</td>
+      <td>AdamW</td>
+      <td><strong>Muon</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<details>
+<summary>Why doubly stochastic matrices guarantee stability</summary>
+
+<p>A doubly stochastic matrix has every row and column sum to 1 with all non-negative entries. This means:</p>
+<ul>
+  <li><strong>Spectral norm ≤ 1</strong>: the largest singular value is bounded by 1, so applying <code>B<sub>l</sub></code> never amplifies a vector's magnitude. Across <em>L</em> layers, the product <code>B<sub>L</sub>…B<sub>1</sub></code> also has spectral norm ≤ 1 because the Birkhoff polytope is <strong>closed under multiplication</strong>.</li>
+  <li><strong>No signal cancellation</strong>: combined with Sigmoid-constrained <code>A<sub>l</sub></code> and <code>C<sub>l</sub></code> (non-negative, bounded), the residual path can only mix or attenuate — never flip signs or explode.</li>
+  <li><strong>Sinkhorn-Knopp</strong> is the standard differentiable projection onto this manifold: alternate row and column normalization on <code>exp(B̃<sub>l</sub>)</code> until convergence. 20 iterations suffice in practice.</li>
+</ul>
+</details>

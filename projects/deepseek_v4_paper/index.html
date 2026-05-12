@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepSeek V4 - Paper Walkthrough FR</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0f0f14;
+  --bg2: #16161d;
+  --bg3: #1e1e28;
+  --fg: #e4e4ec;
+  --fg2: #8888a0;
+  --accent: #6c8cff;
+  --accent2: #4a6bff;
+  --border: rgba(255,255,255,0.08);
+  --nav-h: 52px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.top-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 100;
+  gap: 16px;
+}
+
+.top-nav .logo {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.top-nav .logo span {
+  color: var(--accent);
+}
+
+.top-nav .back-link {
+  font-size: 13px;
+  color: var(--fg2);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.top-nav .back-link:hover { color: var(--fg); }
+
+
+
+.split-container {
+  position: fixed;
+  top: var(--nav-h);
+  left: 0; right: 0; bottom: 0;
+  display: flex;
+}
+
+.panel {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.panel-divider {
+  width: 1px;
+  background: var(--border);
+  cursor: col-resize;
+  flex-shrink: 0;
+  position: relative;
+}
+.panel-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -4px;
+  width: 9px;
+  height: 40px;
+  background: var(--bg3);
+  border-radius: 4px;
+  transform: translateY(-50%);
+}
+
+#pdf-panel {
+  background: var(--bg2);
+}
+
+#pdf-canvas-container {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+}
+
+#pdf-canvas-container canvas {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 8px;
+}
+
+.pdf-page-info {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: var(--fg2);
+  background: var(--bg);
+  padding: 4px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+}
+
+#summary-panel {
+  background: var(--bg);
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+#summary-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 28px 80px;
+}
+
+.section-block {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+.section-block:last-child {
+  border-bottom: none;
+}
+
+.section-block .section-anchor {
+  display: block;
+  position: relative;
+  top: -20px;
+  visibility: hidden;
+}
+
+.section-block h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.section-block h2:hover {
+  color: var(--accent);
+}
+
+.section-block h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 24px 0 12px;
+}
+
+.section-block h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg2);
+  margin: 18px 0 8px;
+}
+
+.section-block p {
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 14px;
+  color: var(--fg);
+}
+
+.section-block ul, .section-block ol {
+  margin: 12px 0;
+  padding-left: 24px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.section-block li {
+  margin-bottom: 6px;
+}
+
+.section-block code {
+  background: var(--bg3);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.section-block blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 12px 20px;
+  margin: 16px 0;
+  background: rgba(108, 140, 255, 0.05);
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+  color: var(--fg2);
+}
+
+.section-block strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.section-block .exec-summary {
+  background: rgba(108, 140, 255, 0.08);
+  border: 1px solid rgba(108, 140, 255, 0.15);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.section-block .key-takeaways {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-top: 24px;
+}
+.section-block .key-takeaways h4 {
+  color: var(--accent);
+  margin-top: 0;
+}
+
+.section-block details {
+  margin: 12px 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.section-block summary {
+  padding: 10px 16px;
+  background: var(--bg2);
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--fg2);
+}
+.section-block details > div,
+.section-block details > p {
+  padding: 14px 16px;
+}
+
+.section-block table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13px;
+}
+.section-block th {
+  background: var(--bg3);
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--fg2);
+}
+.section-block td {
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+}
+.section-block tr:hover td {
+  background: rgba(108, 140, 255, 0.04);
+}
+
+.section-block .diagram {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+.section-block .diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.section-block .anim-flow {
+  margin: 20px 0;
+}
+
+.pdf-sync-hint {
+  font-size: 11px;
+  color: var(--fg2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(108, 140, 255, 0.1);
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--fg2);
+  font-size: 14px;
+}
+
+.loading::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-left: 12px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .split-container {
+    flex-direction: column;
+  }
+  .panel-divider {
+    width: 100%;
+    height: 1px;
+  }
+  .panel-divider::after {
+    top: -4px;
+    left: 50%;
+    width: 40px;
+    height: 9px;
+    transform: translateX(-50%);
+  }
+  #pdf-panel {
+    height: 45vh;
+    flex: none;
+  }
+  #summary-panel {
+    flex: 1;
+  }
+  .top-nav .logo { font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a class="back-link" href="../../">← Accueil</a>
+  <div class="logo">DeepSeek <span>V4</span> Paper Walkthrough</div>
+
+</nav>
+
+<div class="split-container">
+  <div class="panel" id="pdf-panel">
+    <div id="pdf-canvas-container"></div>
+    <div class="pdf-page-info" id="pdf-page-info">Chargement...</div>
+  </div>
+  <div class="panel-divider" id="panel-divider"></div>
+  <div class="panel" id="summary-panel">
+    <div id="summary-content">
+      <div class="loading" id="summary-loading">Chargement des sections</div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+const SECTIONS_DIR = 'sections/';
+let metadata = null;
+let currentPage = 1;
+let totalPages = 0;
+let pdfDoc = null;
+let syncing = false;
+
+const EMBEDDED_METADATA = {
+  "sections": [
+    {"id":"sec-abstract","title":"Abstract","slug":"00-abstract","file":"00-abstract.html","pdf_page_start":1,"pdf_page_end":3},
+    {"id":"sec-intro","title":"Introduction","slug":"01-introduction","file":"01-introduction.html","pdf_page_start":4,"pdf_page_end":5},
+    {"id":"sec-arch","title":"Architecture (MoE, mHC, designs herites de V3)","slug":"02-architecture","file":"02-architecture.html","pdf_page_start":6,"pdf_page_end":8},
+    {"id":"sec-attention","title":"Attention hybride (CSA & HCA)","slug":"03-hybrid-attention","file":"03-hybrid-attention.html","pdf_page_start":9,"pdf_page_end":13},
+    {"id":"sec-muon","title":"Muon Optimizer","slug":"04-muon-optimizer","file":"04-muon-optimizer.html","pdf_page_start":14,"pdf_page_end":14},
+    {"id":"sec-infra","title":"Infrastructures d'entrainement (EP, TileLang, FP8, KV Cache)","slug":"05-infrastructures","file":"05-infrastructures.html","pdf_page_start":15,"pdf_page_end":23},
+    {"id":"sec-pretrain","title":"Pre-entrainement (donnees, setups, resultats base)","slug":"06-pre-training","file":"06-pre-training.html","pdf_page_start":24,"pdf_page_end":27},
+    {"id":"sec-post","title":"Post-entrainement (SFT, RL, distillation, QAT)","slug":"07-post-training","file":"07-post-training.html","pdf_page_start":28,"pdf_page_end":35},
+    {"id":"sec-eval","title":"Evaluations & taches reelles","slug":"08-evaluation","file":"08-evaluation.html","pdf_page_start":36,"pdf_page_end":44},
+    {"id":"sec-conclusion","title":"Conclusion, limites & perspectives","slug":"09-conclusion","file":"09-conclusion.html","pdf_page_start":45,"pdf_page_end":45}
+  ]
+};
+
+function isFileProtocol() {
+  return location.protocol === 'file:';
+}
+
+function showProtocolError() {
+  const container = document.getElementById('summary-content');
+  container.innerHTML = `
+    <div style="background:rgba(255,80,80,0.1);border:1px solid rgba(255,80,80,0.3);border-radius:10px;padding:24px;margin:32px 0;">
+      <h2 style="color:#ff6b6b;margin-bottom:12px;">Erreur : protocole file:// non supporte</h2>
+      <p style="margin-bottom:16px;">Les navigateurs bloquent les requetes <code>fetch()</code> vers des fichiers locaux (CORS). Lancez un serveur HTTP local :</p>
+      <pre style="background:var(--bg3);padding:12px;border-radius:8px;margin-bottom:12px;overflow-x:auto;"><code>cd ${location.pathname.replace('/index.html','').replace('/projects/deepseek_v4_paper','')}
+python3 -m http.server 8080</code></pre>
+      <p style="margin-bottom:8px;">Puis ouvrez dans le navigateur :</p>
+      <pre style="background:var(--bg3);padding:12px;border-radius:8px;"><code>http://localhost:8080/projects/deepseek_v4_paper/</code></pre>
+    </div>`;
+  document.getElementById('pdf-page-info').textContent = 'Serveur requis';
+}
+
+async function loadPDF() {
+  const pdfjsLib = await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs');
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
+
+  const loadingTask = pdfjsLib.getDocument('deepseek_v4.pdf');
+  pdfDoc = await loadingTask.promise;
+  totalPages = pdfDoc.numPages;
+  document.getElementById('pdf-page-info').textContent = `Page 1 / ${totalPages}`;
+
+  await renderAllPages();
+}
+
+async function renderAllPages() {
+  const container = document.getElementById('pdf-canvas-container');
+  container.innerHTML = '';
+
+  for (let i = 1; i <= totalPages; i++) {
+    const page = await pdfDoc.getPage(i);
+    const viewport = page.getViewport({ scale: 1.5 });
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'pdf-page-wrapper';
+    wrapper.dataset.page = i;
+    wrapper.style.position = 'relative';
+    wrapper.style.marginBottom = '4px';
+
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    canvas.style.width = viewport.width + 'px';
+    canvas.style.display = 'block';
+
+    const ctx = canvas.getContext('2d');
+    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+    wrapper.appendChild(canvas);
+    container.appendChild(wrapper);
+  }
+
+  container.addEventListener('scroll', () => {
+    if (syncing) return;
+    const wrappers = container.querySelectorAll('.pdf-page-wrapper');
+    const containerRect = container.getBoundingClientRect();
+    const midY = containerRect.top + containerRect.height / 3;
+
+    for (const w of wrappers) {
+      const rect = w.getBoundingClientRect();
+      if (rect.top <= midY && rect.bottom > midY) {
+        const page = parseInt(w.dataset.page);
+        if (page !== currentPage) {
+          currentPage = page;
+          document.getElementById('pdf-page-info').textContent = `Page ${page} / ${totalPages}`;
+          syncPDFToSummary(page);
+        }
+        break;
+      }
+    }
+  });
+}
+
+function syncPDFToSummary(page) {
+  if (!metadata) return;
+  syncing = true;
+
+  for (const section of metadata.sections) {
+    if (page >= section.pdf_page_start && page <= section.pdf_page_end) {
+      const el = document.getElementById(section.id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      break;
+    }
+  }
+
+  setTimeout(() => { syncing = false; }, 500);
+}
+
+function syncSummaryToPDF(sectionId) {
+  if (!metadata || syncing) return;
+  syncing = true;
+
+  const section = metadata.sections.find(s => s.id === sectionId);
+  if (!section) return;
+
+  const page = section.pdf_page_start;
+  const wrapper = document.querySelector(`.pdf-page-wrapper[data-page="${page}"]`);
+  if (wrapper) {
+    const container = document.getElementById('pdf-canvas-container');
+    container.scrollTo({
+      top: wrapper.offsetTop - 16,
+      behavior: 'smooth'
+    });
+    currentPage = page;
+    document.getElementById('pdf-page-info').textContent = `Page ${page} / ${totalPages}`;
+  }
+
+  highlightTab(sectionId);
+  setTimeout(() => { syncing = false; }, 500);
+}
+
+async function loadMetadata() {
+  if (isFileProtocol()) {
+    metadata = EMBEDDED_METADATA;
+    return;
+  }
+  try {
+    const resp = await fetch(SECTIONS_DIR + 'metadata.json');
+    metadata = await resp.json();
+  } catch (e) {
+    console.warn('fetch metadata failed, using embedded fallback:', e);
+    metadata = EMBEDDED_METADATA;
+  }
+}
+
+async function loadSections() {
+  if (!metadata) return;
+
+  const container = document.getElementById('summary-content');
+  container.innerHTML = '';
+
+  const observer = new IntersectionObserver((entries) => {
+    if (syncing) return;
+    for (const entry of entries) {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+        break;
+      }
+    }
+  }, {
+    root: document.getElementById('summary-panel'),
+    threshold: 0.3
+  });
+
+  for (const section of metadata.sections) {
+    const block = document.createElement('div');
+    block.className = 'section-block';
+    block.id = section.id;
+
+    const anchor = document.createElement('span');
+    anchor.className = 'section-anchor';
+    block.appendChild(anchor);
+
+    const h2 = document.createElement('h2');
+    h2.textContent = section.title;
+    h2.addEventListener('click', () => syncSummaryToPDF(section.id));
+    block.appendChild(h2);
+
+    const hint = document.createElement('span');
+    hint.className = 'pdf-sync-hint';
+    hint.textContent = `PDF pp. ${section.pdf_page_start}\u2013${section.pdf_page_end}`;
+    block.appendChild(hint);
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'section-content';
+    contentDiv.innerHTML = '<div class="loading">Chargement</div>';
+    block.appendChild(contentDiv);
+
+    container.appendChild(block);
+    observer.observe(block);
+
+    fetch(SECTIONS_DIR + section.file)
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.text();
+      })
+      .then(html => {
+        contentDiv.innerHTML = html;
+      })
+      .catch(() => {
+        contentDiv.innerHTML = `<p style="color: var(--fg2); font-style: italic;">Section pas encore generee. Lance <code>python scripts/generate_summaries.py --test-section ${section.slug}</code></p>`;
+      });
+  }
+}
+
+function initDivider() {
+  const divider = document.getElementById('panel-divider');
+  const pdfPanel = document.getElementById('pdf-panel');
+  const summaryPanel = document.getElementById('summary-panel');
+  let isDragging = false;
+
+  divider.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const splitContainer = document.querySelector('.split-container');
+    const rect = splitContainer.getBoundingClientRect();
+    const offset = e.clientX - rect.left;
+    const total = rect.width;
+    const pct = Math.max(20, Math.min(80, (offset / total) * 100));
+    pdfPanel.style.flex = 'none';
+    pdfPanel.style.width = pct + '%';
+    summaryPanel.style.flex = '1';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    }
+  });
+}
+
+async function init() {
+  if (isFileProtocol()) {
+    showProtocolError();
+    return;
+  }
+  await loadMetadata();
+  await loadPDF();
+  await loadSections();
+  initDivider();
+}
+
+init();
+</script>
+</body>
+</html>

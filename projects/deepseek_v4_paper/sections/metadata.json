@@ -1,0 +1,84 @@
+{
+  "sections": [
+    {
+      "id": "sec-abstract",
+      "title": "Abstract",
+      "slug": "00-abstract",
+      "file": "00-abstract.html",
+      "pdf_page_start": 1,
+      "pdf_page_end": 3
+    },
+    {
+      "id": "sec-intro",
+      "title": "Introduction",
+      "slug": "01-introduction",
+      "file": "01-introduction.html",
+      "pdf_page_start": 4,
+      "pdf_page_end": 5
+    },
+    {
+      "id": "sec-arch",
+      "title": "Architecture (MoE, mHC, designs herites de V3)",
+      "slug": "02-architecture",
+      "file": "02-architecture.html",
+      "pdf_page_start": 6,
+      "pdf_page_end": 8
+    },
+    {
+      "id": "sec-attention",
+      "title": "Attention hybride (CSA & HCA)",
+      "slug": "03-hybrid-attention",
+      "file": "03-hybrid-attention.html",
+      "pdf_page_start": 9,
+      "pdf_page_end": 13
+    },
+    {
+      "id": "sec-muon",
+      "title": "Muon Optimizer",
+      "slug": "04-muon-optimizer",
+      "file": "04-muon-optimizer.html",
+      "pdf_page_start": 14,
+      "pdf_page_end": 14
+    },
+    {
+      "id": "sec-infra",
+      "title": "Infrastructures d'entrainement (EP, TileLang, FP8, KV Cache)",
+      "slug": "05-infrastructures",
+      "file": "05-infrastructures.html",
+      "pdf_page_start": 15,
+      "pdf_page_end": 23
+    },
+    {
+      "id": "sec-pretrain",
+      "title": "Pre-entrainement (donnees, setups, resultats base)",
+      "slug": "06-pre-training",
+      "file": "06-pre-training.html",
+      "pdf_page_start": 24,
+      "pdf_page_end": 27
+    },
+    {
+      "id": "sec-post",
+      "title": "Post-entrainement (SFT, RL, distillation, QAT)",
+      "slug": "07-post-training",
+      "file": "07-post-training.html",
+      "pdf_page_start": 28,
+      "pdf_page_end": 35
+    },
+    {
+      "id": "sec-eval",
+      "title": "Evaluations & taches reelles",
+      "slug": "08-evaluation",
+      "file": "08-evaluation.html",
+      "pdf_page_start": 36,
+      "pdf_page_end": 44
+    },
+    {
+      "id": "sec-conclusion",
+      "title": "Conclusion, limites & perspectives",
+      "slug": "09-conclusion",
+      "file": "09-conclusion.html",
+      "pdf_page_start": 45,
+      "pdf_page_end": 45
+    }
+  ]
+}
