@@ -1,0 +1,32 @@
+{
+  "name": "Australia",
+  "flag": "au",
+  "current": {
+    "chancery": "Suite 1301, 50 O'Connor Street, Ottawa, ON K1P 6L2",
+    "residence": "407 Wilbrod Street, Sandy Hill, Ottawa, ON K1N 6M3"
+  },
+  "addresses": [
+    {
+      "from": "1940",
+      "to": null,
+      "address": "407 Wilbrod Street, Sandy Hill, Ottawa, ON",
+      "building": "Australia House",
+      "kind": "residence",
+      "lat": 45.4289,
+      "lon": -75.678,
+      "current": true,
+      "note": "Résidence officielle du haut-commissaire d'Australie au Canada depuis 1940. La maison, construite en 1910 pour William Davis selon les plans de l'architecte John W.H. Watts, avait servi de résidence au consul général d'Allemagne, le Dr Erich Windels, de 1937 à 1939. À la déclaration de la guerre en septembre 1939, Windels fut réaffecté et la propriété fut mise à disposition du nouveau haut-commissariat australien. L'haut-commissaire Sir Thomas Glasgow, premier représentant australien au Canada (arrivé le 29 mars 1940), s'y installa. La maison est intégrée au Wilbrod Street Heritage Conservation District, quartier Sandy Hill."
+    },
+    {
+      "from": "1940",
+      "to": null,
+      "address": "50 O'Connor Street, Suite 1301, Ottawa, ON K1P 6L2",
+      "building": "Sun Life Financial Centre",
+      "kind": "high commission",
+      "lat": 45.4212,
+      "lon": -75.6989,
+      "current": true,
+      "note": "Chancellerie du haut-commissariat d'Australie au Canada. Les relations diplomatiques entre l'Australie et le Canada ont été formellement établies le 12 septembre 1939, lorsque les deux pays ont convenu d'échanger des hauts-commissaires. L'Australie, en tant que membre du Commonwealth, maintient un haut-commissariat (et non une ambassade) à Ottawa. L'adresse actuelle au Sun Life Financial Centre est la dernière en date ; des sources antérieures mentionnent la suite 710 du même immeuble au 50 O'Connor Street."
+    }
+  ]
+}
