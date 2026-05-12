@@ -1,95 +1,1320 @@
 {
-  "host": { "code": "FR", "name": "France", "capital": "Paris" },
+  "host": {
+    "code": "FR",
+    "name": "France",
+    "capital": "Paris"
+  },
   "note": "Coordonnées géocodées manuellement à la précision de la rue.",
   "embassies": {
     "US": {
       "name": "United States",
       "flag": "us",
-      "current": { "chancery": "2 avenue Gabriel, 75008", "residence": "41 rue du Faubourg Saint-Honoré, 75008" },
+      "current": {
+        "chancery": "2 avenue Gabriel, 75008",
+        "residence": "41 rue du Faubourg Saint-Honoré, 75008"
+      },
       "addresses": [
         {
-          "from": "1777", "to": "1785",
+          "from": "1777",
+          "to": "1785",
           "address": "66 rue Raynouard, Passy (16ᵉ)",
           "building": "Hôtel de Valentinois",
           "kind": "legation",
-          "lat": 48.8567, "lon": 2.2825,
+          "lat": 48.8567,
+          "lon": 2.2825,
           "note": "Première légation américaine en France, installée par Benjamin Franklin. La rue Franklin voisine conserve la mémoire du lieu — l'hôtel lui-même a disparu."
         },
         {
-          "from": "1785", "to": "1789",
+          "from": "1785",
+          "to": "1789",
           "address": "Hôtel de Langeac, angle Champs-Élysées / rue de Berri (8ᵉ)",
           "building": "Hôtel de Langeac",
           "kind": "residence",
-          "lat": 48.8718, "lon": 2.3056,
+          "lat": 48.8718,
+          "lon": 2.3056,
           "note": "Résidence de Thomas Jefferson en tant que ministre plénipotentiaire. Démoli au XIXᵉ siècle ; une plaque au 92 Champs-Élysées en rappelle l'emplacement."
         },
         {
-          "from": "1830", "to": "1840",
+          "from": "1830",
+          "to": "1840",
           "address": "44 rue de la Victoire (9ᵉ)",
           "kind": "legation",
-          "lat": 48.8767, "lon": 2.3382,
+          "lat": 48.8767,
+          "lon": 2.3382,
           "note": "Légation américaine sous Louis-Philippe. L'emplacement abrite aujourd'hui la grande synagogue de Paris (consacrée en 1874)."
         },
         {
-          "from": "1840", "to": null,
+          "from": "1840",
+          "to": null,
           "address": "30 rue d'Hauteville (10ᵉ)",
           "kind": "consulate",
-          "lat": 48.8757, "lon": 2.3500,
+          "lat": 48.8757,
+          "lon": 2.35,
           "note": "Premier consulat général américain à Paris, dans un quartier marchand alors fréquenté par la communauté étrangère."
         },
         {
-          "from": "1870", "to": "1871",
+          "from": "1870",
+          "to": "1871",
           "address": "75 avenue Foch, alors avenue de l'Impératrice (16ᵉ)",
           "kind": "legation",
-          "lat": 48.8722, "lon": 2.2799,
+          "lat": 48.8722,
+          "lon": 2.2799,
           "note": "Pendant le siège de Paris et la Commune, l'ambassadeur Elihu Washburne demeure dans la capitale assiégée — l'un des très rares diplomates à le faire — et protège les ressortissants étrangers."
         },
         {
-          "from": "1881", "to": "1907",
+          "from": "1881",
+          "to": "1907",
           "address": "3 place des États-Unis, ex-place de Bitche (16ᵉ)",
           "kind": "embassy",
-          "lat": 48.8682, "lon": 2.2926,
+          "lat": 48.8682,
+          "lon": 2.2926,
           "note": "L'ambassadeur s'installe sur la place rebaptisée en l'honneur des États-Unis en 1881, en commémoration de l'aide américaine pendant la guerre de Sécession."
         },
         {
-          "from": "1907", "to": "1919",
+          "from": "1907",
+          "to": "1919",
           "address": "5 rue François-Iᵉʳ (8ᵉ)",
           "kind": "embassy",
-          "lat": 48.8682, "lon": 2.3047,
+          "lat": 48.8682,
+          "lon": 2.3047,
           "note": "Ambassade installée près du Triangle d'Or. À la même époque la chancellerie occupe le 18 avenue Kléber et le consulat général le 36 avenue de l'Opéra."
         },
         {
-          "from": "1919", "to": "1926",
+          "from": "1919",
+          "to": "1926",
           "address": "5 place d'Iéna (16ᵉ)",
           "kind": "embassy",
-          "lat": 48.8638, "lon": 2.2939,
+          "lat": 48.8638,
+          "lon": 2.2939,
           "note": "Transfert au lendemain de la Première Guerre mondiale, sous l'ambassade de Hugh C. Wallace. Le bâtiment précédent au 14 avenue d'Eylau est abandonné."
         },
         {
-          "from": "1922", "to": "1971",
+          "from": "1922",
+          "to": "1971",
           "address": "2 avenue d'Iéna, place d'Iéna (16ᵉ)",
           "building": "Hôtel Wilson dit « maison Grévy »",
           "kind": "residence",
-          "lat": 48.8650, "lon": 2.2935,
+          "lat": 48.865,
+          "lon": 2.2935,
           "note": "Hôtel particulier construit pour Daniel Wilson, gendre du président Jules Grévy. L'ambassadeur Myron T. Herrick l'acquiert en 1922 et le donne au gouvernement américain pour servir de résidence officielle. Quatorze ambassadeurs s'y succèderont jusqu'au déménagement à l'hôtel de Pontalba en 1971. Bâtiment démoli depuis."
         },
         {
-          "from": "1926", "to": null,
+          "from": "1926",
+          "to": null,
           "address": "2 avenue Gabriel, place de la Concorde (8ᵉ)",
           "building": "Hôtel Grimod de La Reynière, puis chancellerie reconstruite (1931)",
           "kind": "chancery",
-          "lat": 48.8679, "lon": 2.3207,
+          "lat": 48.8679,
+          "lon": 2.3207,
           "current": true,
           "note": "Acquisition autorisée par décret du Congrès en 1926. La chancellerie actuelle, achevée en 1933, est le premier bâtiment construit par le gouvernement américain pour regrouper ses services diplomatiques à l'étranger."
         },
         {
-          "from": "1971", "to": null,
+          "from": "1971",
+          "to": null,
           "address": "41 rue du Faubourg Saint-Honoré (8ᵉ)",
           "building": "Hôtel de Pontalba",
           "kind": "residence",
-          "lat": 48.8694, "lon": 2.3184,
+          "lat": 48.8694,
+          "lon": 2.3184,
           "current": true,
           "note": "Résidence officielle de l'ambassadeur depuis 1971, mitoyenne du palais de l'Élysée. Hôtel particulier du XIXᵉ siècle commandé par la baronne de Pontalba."
+        }
+      ]
+    },
+    "AR": {
+      "name": "Argentina",
+      "flag": "ar",
+      "current": {
+        "chancery": "6 rue Cimarosa, 75116 Paris",
+        "residence": "6 rue Cimarosa, 75116 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1834",
+          "to": "c.1895",
+          "address": "adresse non déterminée avec certitude, Paris",
+          "kind": "legation",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "La France reconnaît l'indépendance de l'Argentine en 1830 (avènement de Louis-Philippe) et signe un premier traité de commerce le 18 mai 1834, date de l'établissement des relations diplomatiques formelles. Une légation des Provinces-Unies du Río de la Plata, puis de la République Argentine, est ouverte à Paris dans les années 1830. L'adresse exacte des premières décennies n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "c.1900",
+          "to": "c.1907",
+          "address": "9 rue Alfred-de-Vigny, 75008 Paris",
+          "kind": "legation",
+          "lat": 48.8787,
+          "lon": 2.3001,
+          "note": "En 1900 la légation argentine est installée au 9 rue Alfred-de-Vigny dans le 8ᵉ arrondissement. La rue est nommée en l'honneur du poète Alfred de Vigny (1797-1863)."
+        },
+        {
+          "from": "c.1907",
+          "to": "c.1926",
+          "address": "68 boulevard de Courcelles, 75017 Paris",
+          "kind": "legation",
+          "lat": 48.8813,
+          "lon": 2.3062,
+          "note": "Vers 1907 la légation déménage au 68 boulevard de Courcelles (17ᵉ arrondissement), sa chancellerie occupant alors le no 62 du même boulevard."
+        },
+        {
+          "from": "1926",
+          "to": "1964",
+          "address": "6 rue Cimarosa, 75116 Paris",
+          "building": "Hôtel Orsodi",
+          "kind": "residence",
+          "lat": 48.8583,
+          "lon": 2.2892,
+          "note": "Le 14 janvier 1926, l'ambassadeur Frederico Alvarez de Toledo achète l'hôtel particulier au nom du gouvernement argentin, sur instruction du président Marcelo T. de Alvear, mais sans autorisation formelle du pouvoir exécutif. Le gouvernement suivant ayant refusé de ratifier l'achat, la demeure devient résidence personnelle de l'ambassadeur. L'hôtel avait été commandé en 1895 par l'homme d'affaires Léon Orsodi et construit par l'architecte Jacques Hermant dans le style Belle Époque ; il se distingue par une frise dite « Galerie des Singes » au premier étage et par un salon mauresque (actuelle bibliothèque Jorge-Luis-Borges) au rez-de-chaussée."
+        },
+        {
+          "from": "1964",
+          "to": null,
+          "address": "6 rue Cimarosa, 75116 Paris",
+          "building": "Hôtel Orsodi (chancellerie et résidence)",
+          "kind": "chancery",
+          "lat": 48.8583,
+          "lon": 2.2892,
+          "current": true,
+          "note": "Le 10 février 1964 l'ambassade d'Argentine est officiellement installée au 6 rue Cimarosa, dans le même hôtel particulier Belle Époque qui servait jusqu'alors de résidence. Le bâtiment abrite à la fois la chancellerie et la résidence officielle de l'ambassadeur. Depuis 2024, l'ambassadeur est M. Ian Sielecki. La section consulaire occupe également les locaux de l'Impasse Kléber toute proche (75116). Site officiel : efran.cancilleria.gob.ar."
+        }
+      ]
+    },
+    "AU": {
+      "name": "Australia",
+      "flag": "au",
+      "current": {
+        "chancery": "4 rue Jean-Rey, 75015 Paris",
+        "residence": "4 rue Jean-Rey, 75015 Paris (dernier étage du bâtiment chancellerie)"
+      },
+      "addresses": [
+        {
+          "from": "1945",
+          "to": "1948",
+          "address": "Paris (adresse exacte non établie dans les sources publiques)",
+          "kind": "legation",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "Légation australienne ouverte en 1945, première représentation diplomatique officielle de l'Australie en France. Le colonel William Roy Hodgson en est le premier ministre plénipotentiaire. L'adresse précise des locaux de la légation n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "1948",
+          "to": "1977",
+          "address": "Paris (adresse exacte non établie dans les sources publiques)",
+          "kind": "embassy",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "La légation est élevée au rang d'ambassade en 1948 ; Keith Officer devient le premier ambassadeur. L'emplacement des locaux provisoires avant l'inauguration du bâtiment Seidler n'est pas documenté dans les sources accessibles."
+        },
+        {
+          "from": "1977",
+          "to": null,
+          "address": "4 rue Jean-Rey, 75015 Paris",
+          "building": "Complexe Seidler–Breuer–Nervi",
+          "kind": "chancery",
+          "lat": 48.8551,
+          "lon": 2.2904,
+          "current": true,
+          "note": "Bâtiment conçu par l'architecte australien Harry Seidler, avec la collaboration de Marcel Breuer (États-Unis) et Pier Luigi Nervi (Italie). Terrain acquis en 1972 par le gouvernement McMahon ; construction de mars 1975 à octobre 1977 ; inauguration officielle en 1978. Le complexe comprend deux immeubles de neuf étages en quart-de-cercle formant un S, orientés sur les axes de la Tour Eiffel et du Champ-de-Mars. L'un abrite la chancellerie, la représentation à l'UNESCO et à l'OCDE ainsi que le logement de l'ambassadeur au dernier étage ; l'autre contient 34 appartements de personnel diplomatique. Structure en béton préfabriqué modulaire, parement granite et quartz."
+        }
+      ]
+    },
+    "BR": {
+      "name": "Brazil",
+      "flag": "br",
+      "current": {
+        "chancery": "34 cours Albert-Iᵉʳ, 75008 Paris",
+        "residence": "5 rue de l'Amiral-d'Estaing, 75016 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1825",
+          "to": "c.1900",
+          "address": "adresse non déterminée avec certitude, Paris",
+          "kind": "legation",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "La France reconnaît l'indépendance du Brésil le 26 octobre 1825 (gouvernement de Charles X) ; une légation brésilienne est ouverte à Paris dans la foulée. L'adresse exacte des premières décennies n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "c.1900",
+          "to": "c.1920",
+          "address": "3 place Malesherbes (17ᵉ)",
+          "kind": "legation",
+          "lat": 48.8827,
+          "lon": 2.3189,
+          "note": "Dans les années 1900 la légation brésilienne est installée 3 place Malesherbes (17ᵉ arrondissement) ; sa chancellerie se trouve simultanément au 47 rue de Lisbonne (8ᵉ) et son consulat général au 51 rue Cambon (1ᵉʳ)."
+        },
+        {
+          "from": "c.1920",
+          "to": "1971",
+          "address": "17 rue Quentin-Bauchart, 75008 Paris",
+          "kind": "embassy",
+          "lat": 48.8714,
+          "lon": 2.301,
+          "note": "Dans les années 1920 l'ambassade du Brésil s'installe au 17 rue Quentin-Bauchart (8ᵉ), à proximité des Champs-Élysées ; le consulat général occupe alors le 23 rue Drouot (9ᵉ). Le titre de la représentation passe de légation à ambassade après la proclamation de la République brésilienne (1889), bien que la promotion effective au rang d'ambassade date des années qui suivirent. Le bâtiment de la rue Quentin-Bauchart est utilisé jusqu'à l'acquisition de l'Hôtel Schneider en 1971."
+        },
+        {
+          "from": "1971",
+          "to": null,
+          "address": "34 cours Albert-Iᵉʳ, 75008 Paris",
+          "building": "Hôtel de La Ferronnays, dit Hôtel Schneider",
+          "kind": "chancery",
+          "lat": 48.8648,
+          "lon": 2.3052,
+          "current": true,
+          "note": "Hôtel particulier construit dans la première moitié du XIXᵉ siècle pour Arthur Louis Gibert (agent de change), passé en 1865 aux comtesses de La Ferronnays. Vendu en 1900 à l'industriel Eugène II Schneider (aciéries du Creusot), qui le fait réaménager par l'architecte Ernest Sanson (enfilade de salons de réception de style XVIIIᵉ, panneaux peints, grisailles sur les fables de La Fontaine). Le 16 juillet 1971 la famille Schneider cède l'hôtel au Brésil pour 14 millions de francs ; la chancellerie de l'ambassade y est aussitôt installée. Classé dans le périmètre de protection d'un monument historique et dans l'inventaire des sites urbains pittoresques de Paris."
+        },
+        {
+          "from": "1971",
+          "to": null,
+          "address": "5 rue de l'Amiral-d'Estaing, 75016 Paris",
+          "kind": "residence",
+          "lat": 48.8651,
+          "lon": 2.2964,
+          "current": true,
+          "note": "Résidence officielle de l'ambassadeur du Brésil à Paris, dans le 16ᵉ arrondissement. La rue est nommée en l'honneur de l'amiral Jean Baptiste Charles Henri Hector, comte d'Estaing (1729-1794), qui participa à la guerre d'Indépendance américaine."
+        }
+      ]
+    },
+    "CA": {
+      "name": "Canada",
+      "flag": "ca",
+      "current": {
+        "chancery": "130 rue du Faubourg Saint-Honoré, 75008 Paris",
+        "residence": "135 rue du Faubourg Saint-Honoré, 75008 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1882",
+          "to": "1928",
+          "address": "Paris (adresse de bureau non précisée dans les sources consultées)",
+          "kind": "commission",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "Depuis 1882, Hector Fabre représente le Canada à Paris à titre d'« Agent du Dominion » (commissaire général), sans statut diplomatique formel — la Grande-Bretagne ne reconnaissant pas encore au Canada le droit d'établir des relations diplomatiques propres. Il est remplacé par le sénateur Philippe Roy en 1911."
+        },
+        {
+          "from": "1928",
+          "to": "1944",
+          "address": "17-19 boulevard des Capucines, 75009 Paris",
+          "kind": "legation",
+          "lat": 48.8706,
+          "lon": 2.3337,
+          "note": "Le 31 janvier 1928, le bureau canadien est élevé au rang de légation ; Philippe Roy devient le premier ministre plénipotentiaire canadien en France et présente ses lettres de créance le 19 septembre 1928. Première mission diplomatique canadienne distincte de l'ambassade britannique en Europe. La légation ferme en juin 1940 lors de l'occupation allemande et est rétablie après la libération de Paris en août 1944."
+        },
+        {
+          "from": "1944",
+          "to": "1957",
+          "address": "Paris (adresse provisoire — chancellerie réinstallée après la Libération)",
+          "kind": "embassy",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "Après la Libération de Paris (24 août 1944), la légation est élevée au rang d'ambassade. Le général Georges Vanier devient le premier ambassadeur résident du Canada en France, marquant la volonté canadienne d'une présence diplomatique indépendante en Europe à la fin de la Seconde Guerre mondiale."
+        },
+        {
+          "from": "1950",
+          "to": null,
+          "address": "135 rue du Faubourg Saint-Honoré, 75008 Paris",
+          "building": "Hôtel de Rigny",
+          "kind": "residence",
+          "lat": 48.872,
+          "lon": 2.3128,
+          "current": true,
+          "note": "L'hôtel de Rigny, hôtel particulier du Second Empire construit vers 1867 pour la comtesse de Rigny, est acquis par le gouvernement du Canada en 1950 (acte de vente signé le 12 mai 1950) auprès de la duchesse de La Rochefoucauld, héritière du comte de Fels qui avait fait rénover l'immeuble en style Louis XV à la fin du XIXe siècle. Résidence officielle de l'ambassadeur du Canada en France depuis lors."
+        },
+        {
+          "from": "1957",
+          "to": "2018",
+          "address": "35 avenue Montaigne, 75008 Paris",
+          "kind": "chancery",
+          "lat": 48.8664,
+          "lon": 2.3042,
+          "note": "Chancellerie construite en 1957 pour le gouvernement canadien, sur les plans des architectes Antoine Monette (Montréal) et Yves Courcoux (Paris). Premier immeuble construit spécifiquement pour l'ambassade du Canada à Paris. Le bâtiment est vendu en 2017 à un promoteur privé britannique."
+        },
+        {
+          "from": "2018",
+          "to": null,
+          "address": "130 rue du Faubourg Saint-Honoré, 75008 Paris",
+          "kind": "chancery",
+          "lat": 48.8718,
+          "lon": 2.312,
+          "current": true,
+          "note": "L'ambassade et le Centre culturel canadien sont réunis dans un immeuble haussmannien de 8 366 m² rénové par les architectes Jean-Paul Viguier & associés (Paris) avec la participation du cabinet Julian Smith Architects (Canada). Inauguration par le Premier ministre Justin Trudeau et l'ambassadrice Isabelle Hudon le 16 avril 2018 ; ouverture au public le 2 mai 2018."
+        }
+      ]
+    },
+    "CN": {
+      "name": "China",
+      "flag": "cn",
+      "current": {
+        "chancery": "20 rue Monsieur, 75007 Paris",
+        "residence": "35 boulevard du Château, 92200 Neuilly-sur-Seine"
+      },
+      "addresses": [
+        {
+          "from": "1878",
+          "to": "1912",
+          "address": "57 rue de Babylone (7ᵉ)",
+          "kind": "legation",
+          "lat": 48.8536,
+          "lon": 2.317,
+          "note": "Première légation permanente de la Chine impériale (Qing) à Paris, ouverte après la nomination de Guo Songtao puis de Zeng Jize comme ministres résidents en France (1878). Photographie de presse de l'Agence Rol conservée à Gallica (BnF) identifie le bâtiment au n° 57. La légation utilisa également, de 1896 à 1927 environ, la salle de réceptions dite « La Pagode » construite au 57 bis par l'architecte Alexandre Marcel — bâtiment voisin converti en cinéma en 1931."
+        },
+        {
+          "from": "1912",
+          "to": "1964",
+          "address": "57 rue de Babylone (7ᵉ)",
+          "kind": "legation",
+          "lat": 48.8536,
+          "lon": 2.317,
+          "note": "Après la révolution de 1911, la République de Chine (gouvernement de Nankin puis de Nankin/Taipei) maintient la légation à la même adresse. La France reconnaît la République de Chine (ROC) jusqu'au 27 janvier 1964 ; à cette date le gouvernement ROC rappelle son ambassadeur, et la légation/ambassade nationaliste cesse ses activités à Paris. L'adresse rue de Babylone reste en usage pour la représentation consulaire jusqu'au transfert vers l'avenue George-V."
+        },
+        {
+          "from": "1964",
+          "to": "1967",
+          "address": "Appartement provisoire, Paris (8ᵉ environ)",
+          "kind": "chancery",
+          "lat": 48.875,
+          "lon": 2.305,
+          "note": "Après la reconnaissance de la RPC par la France le 27 janvier 1964, le premier chargé d'affaires puis l'ambassadeur Huang Zhen installent l'ambassade dans un appartement loué à titre provisoire en attendant la récupération des locaux de l'ambassade nationaliste. Adresse précise non publiée dans les sources disponibles."
+        },
+        {
+          "from": "1964",
+          "to": "1964",
+          "address": "Résidence, rue du Château de Neuilly, Neuilly-sur-Seine (92)",
+          "kind": "residence",
+          "lat": 48.885,
+          "lon": 2.268,
+          "note": "Maison achetée par le gouvernement chinois pour servir de résidence au premier ambassadeur de la RPC en France, Huang Zhen (en poste 1964-1973). Selon des témoignages publiés, l'ambassadeur y reçoit ses premiers visiteurs à l'été 1964. Numéro de rue non confirmé par les sources consultées."
+        },
+        {
+          "from": "1967",
+          "to": "2017",
+          "address": "11 avenue George-V (8ᵉ)",
+          "building": "Hôtel de Rouvre, dit aussi Lebaudy",
+          "kind": "chancery",
+          "lat": 48.8706,
+          "lon": 2.3015,
+          "note": "Hôtel particulier construit pour l'industriel et homme politique Gustave Lebaudy (1827-1889) par l'architecte A. Coulomb. Passé à sa fille Geneviève et à son gendre Charles Bourlon de Rouvre, puis vendu à la République de Chine (ROC). Récupéré par la RPC à l'été 1967, lorsque l'ambassadeur Huang Zhen prend possession des anciens locaux nationalistes. Siège de l'ambassade jusqu'en avril 2017 ; depuis cette date abrite le service consulaire."
+        },
+        {
+          "from": "2017",
+          "to": null,
+          "address": "20 rue Monsieur (7ᵉ)",
+          "building": "Hôtel de Montesquiou",
+          "kind": "chancery",
+          "lat": 48.8533,
+          "lon": 2.3155,
+          "current": true,
+          "note": "Hôtel particulier construit en 1781 par l'architecte Alexandre-Théodore Brongniart pour Anne-Pierre de Montesquiou-Fézensac, premier écuyer du comte de Provence (futur Louis XVIII). Propriété de religieuses bénédictines de 1851 à 1938, puis du ministère de la Coopération. Acquis par des investisseurs russes en 2008 (147 M€), racheté par l'État chinois en 2012. Après cinq ans de travaux supervisés par le cabinet Arte Charpentier, la chancellerie y est inaugurée le 1ᵉʳ avril 2017. Monument historique classé."
+        },
+        {
+          "from": "1967",
+          "to": null,
+          "address": "35 boulevard du Château, 92200 Neuilly-sur-Seine",
+          "kind": "residence",
+          "lat": 48.8847,
+          "lon": 2.2713,
+          "current": true,
+          "note": "Résidence officielle de l'ambassadeur de Chine, située à Neuilly-sur-Seine. Répertoriée dans les annuaires officiels français sous la dénomination « Ambassade de la République Populaire de Chine ». La présence d'une résidence à Neuilly remonte à l'installation du premier ambassadeur Huang Zhen en 1964 ; l'adresse exacte du boulevard du Château est celle utilisée dans les annuaires contemporains."
+        }
+      ]
+    },
+    "DE": {
+      "name": "Germany",
+      "flag": "de",
+      "current": {
+        "chancery": "13-15 avenue Franklin D. Roosevelt, 75008 Paris",
+        "residence": "78 rue de Lille, 75007 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1818",
+          "to": "1871",
+          "address": "78 rue de Lille (7ᵉ)",
+          "building": "Hôtel de Beauharnais",
+          "kind": "legation",
+          "lat": 48.861,
+          "lon": 2.3224,
+          "note": "Acquis le 6 février 1818 par le roi Frédéric-Guillaume III de Prusse pour 570 000 francs. Hôtel particulier construit par Germain Boffrand (1714), puis remanié dans le style Empire par le prince Eugène de Beauharnais à partir de 1803. Siège de la légation de Prusse jusqu'à la proclamation de l'Empire allemand. Bismarck y résida en 1862 avant d'être nommé ministre-président."
+        },
+        {
+          "from": "1871",
+          "to": "1940",
+          "address": "78 rue de Lille (7ᵉ)",
+          "building": "Hôtel de Beauharnais",
+          "kind": "embassy",
+          "lat": 48.861,
+          "lon": 2.3224,
+          "note": "Ambassade du Reich allemand, puis de la République de Weimar (1919-1933) et du IIIᵉ Reich (1933-1940). Le statut passe de légation à ambassade à la demande de Bismarck lors de la création de l'Empire en 1871. L'ambassadeur Otto Abetz occupe les lieux jusqu'à la Libération (1944), après quoi la France confisque le bâtiment."
+        },
+        {
+          "from": "1963",
+          "to": null,
+          "address": "13-15 avenue Franklin D. Roosevelt (8ᵉ)",
+          "building": "Chancellerie de l'ambassade (construite 1960-1963)",
+          "kind": "chancery",
+          "lat": 48.8662,
+          "lon": 2.3096,
+          "current": true,
+          "note": "Terrain acquis par la République fédérale d'Allemagne en 1952. Bâtiment de huit étages conçu par des architectes allemands et français, construit entre 1960 et 1963 en face du Palais de la Découverte. Pendant les travaux de rénovation (à partir de 2015), les services ont été transférés provisoirement au 24 rue Marbeau (16ᵉ), l'ancienne ambassade de la RDA."
+        },
+        {
+          "from": "1968",
+          "to": null,
+          "address": "78 rue de Lille (7ᵉ)",
+          "building": "Hôtel de Beauharnais",
+          "kind": "residence",
+          "lat": 48.861,
+          "lon": 2.3224,
+          "current": true,
+          "note": "Restitué à la RFA en 1961 lors des négociations préparant le traité de l'Élysée (1963), puis restauré dans son état Empire de 1803-1815 entre 1964 et 1968. Résidence officielle de l'ambassadeur d'Allemagne en France depuis 1968."
+        },
+        {
+          "from": "1973",
+          "to": "1990",
+          "address": "24 rue Marbeau (16ᵉ)",
+          "kind": "embassy",
+          "lat": 48.8747,
+          "lon": 2.2804,
+          "note": "Ambassade de la République démocratique allemande (RDA). Relations diplomatiques établies entre la RDA et la France par traité du 9 février 1973. Le bâtiment a été acquis pour 4,12 millions de francs. Fermée lors de la réunification allemande en 1990."
+        }
+      ]
+    },
+    "GB": {
+      "name": "United Kingdom",
+      "flag": "gb",
+      "current": {
+        "chancery": "35 rue du Faubourg Saint-Honoré, 75008 Paris",
+        "residence": "39 rue du Faubourg Saint-Honoré, 75008 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1722",
+          "to": "1803",
+          "address": "39 rue du Faubourg Saint-Honoré (8ᵉ)",
+          "building": "Hôtel de Béthune-Charost",
+          "kind": "residence",
+          "lat": 48.8694,
+          "lon": 2.318,
+          "note": "Hôtel particulier construit entre 1722 et 1725 par Antoine Mazin pour Armand de Béthune, 2ᵉ duc de Charost, premier courtisan de Louis XV. Les ambassadeurs britanniques à Paris louaient à cette époque leurs résidences à titre privé ; aucune adresse précise n'a pu être confirmée pour les légations du XVIIᵉ et début XVIIIᵉ siècle."
+        },
+        {
+          "from": "1803",
+          "to": "1814",
+          "address": "39 rue du Faubourg Saint-Honoré (8ᵉ)",
+          "building": "Hôtel de Charost (propriété de Pauline Borghese)",
+          "kind": "residence",
+          "lat": 48.8694,
+          "lon": 2.318,
+          "note": "En 1803, la duchesse de Charost vend l'hôtel 300 000 francs à Pauline Bonaparte, sœur de Napoléon et princesse Borghese. Pauline y fait ajouter deux ailes au sud : l'une pour sa collection d'art, l'autre en salle à manger d'apparat. Ce n'est pas encore une propriété britannique."
+        },
+        {
+          "from": "1814",
+          "to": null,
+          "address": "39 rue du Faubourg Saint-Honoré (8ᵉ)",
+          "building": "Hôtel de Charost",
+          "kind": "residence",
+          "lat": 48.8694,
+          "lon": 2.318,
+          "current": true,
+          "note": "En août 1814, le duc de Wellington, nommé ambassadeur de Grande-Bretagne auprès de la France restaurée, achète l'hôtel à Pauline Borghese pour 861 500 francs (environ 275 000 livres sterling), meubles Empire compris mais peintures Borghese exclues. Le contrat définitif est signé le 24 octobre 1814. C'est le premier bâtiment acquis à l'étranger par le gouvernement britannique pour usage diplomatique. Wellington n'y séjournera que cinq mois avant de partir pour le congrès de Vienne, puis pour Waterloo. La résidence reste ininterrompue depuis lors, à l'exception de la fermeture de juin 1940 à septembre 1944 (occupation allemande) : le gardien William Chrystie refusa l'entrée à Hermann Göring en 1941, invoquant l'extraterritorialité, et fut emprisonné cinq mois. Le consulat suisse assura la protection du bâtiment. L'ambassadeur Duff Cooper rouvrit officiellement l'ambassade le 13 septembre 1944."
+        },
+        {
+          "from": "1947",
+          "to": null,
+          "address": "35 rue du Faubourg Saint-Honoré (8ᵉ)",
+          "building": "Chancellerie",
+          "kind": "chancery",
+          "lat": 48.8693,
+          "lon": 2.3195,
+          "current": true,
+          "note": "Le bâtiment de la chancellerie, mitoyen de la résidence, est acquis par le gouvernement britannique en 1947. Il abrite les services diplomatiques et consulaires de l'ambassade du Royaume-Uni en France."
+        }
+      ]
+    },
+    "ID": {
+      "name": "Indonesia",
+      "flag": "id",
+      "current": {
+        "chancery": "47-49 rue Cortambert, 75116 Paris",
+        "residence": "154 boulevard Bineau, 92200 Neuilly-sur-Seine (Wisma Duta)"
+      },
+      "addresses": [
+        {
+          "from": "1950",
+          "to": "1950",
+          "address": "112 rue du Faubourg Saint-Honoré (8ᵉ)",
+          "building": "Hôtel Le Bristol (locaux provisoires)",
+          "kind": "legation",
+          "lat": 48.8726,
+          "lon": 2.3118,
+          "note": "Premiers locaux provisoires de la légation indonésienne à Paris, occupés dès l'établissement des relations diplomatiques franco-indonésiennes le 4 janvier 1950, après la souveraineté transférée aux Pays-Bas le 27 décembre 1949. La délégation s'installe temporairement à l'hôtel Le Bristol, célèbre palace du Faubourg Saint-Honoré."
+        },
+        {
+          "from": "1950",
+          "to": "1952",
+          "address": "90 boulevard de la Tour-Maubourg (7ᵉ)",
+          "kind": "legation",
+          "lat": 48.8572,
+          "lon": 2.311,
+          "note": "Deuxième adresse de la légation indonésienne, dans le quartier diplomatique de la rive gauche, à quelques centaines de mètres des Invalides. La légation y est installée pendant environ deux ans avant de déménager dans le 16ᵉ arrondissement."
+        },
+        {
+          "from": "1952",
+          "to": "1954",
+          "address": "12 rue Dumont d'Urville (16ᵉ)",
+          "kind": "legation",
+          "lat": 48.8711,
+          "lon": 2.2988,
+          "note": "Troisième adresse de la légation, dans le 16ᵉ arrondissement entre avenue d'Iéna et avenue Kléber. La représentation est élevée au rang d'ambassade peu après, conformément à la pratique générale d'échange d'ambassadeurs adoptée par l'Indonésie avec ses principaux partenaires dans les années 1950."
+        },
+        {
+          "from": "1954",
+          "to": null,
+          "address": "154 boulevard Bineau, 92200 Neuilly-sur-Seine",
+          "building": "Wisma Duta",
+          "kind": "residence",
+          "lat": 48.8915,
+          "lon": 2.2742,
+          "current": true,
+          "note": "Résidence officielle de l'ambassadeur indonésien, acquise le 25 août 1954 en même temps que le 49 rue Cortambert. Baptisée « Wisma Duta » (maison de l'ambassadeur en indonésien), elle est située à Neuilly-sur-Seine, commune limitrophe du 16ᵉ arrondissement de Paris. Le bâtiment a fait l'objet d'une rénovation intérieure dans le style indonésien, présentée notamment dans la revue Indonesia Design."
+        },
+        {
+          "from": "1954",
+          "to": "1988",
+          "address": "49 rue Cortambert (16ᵉ)",
+          "kind": "chancery",
+          "lat": 48.8603,
+          "lon": 2.2786,
+          "note": "Chancellerie acquise le 25 août 1954 par le gouvernement indonésien. Siège principal de l'ambassade jusqu'en 1988, date à laquelle le bâtiment voisin est intégré pour former la chancellerie actuelle au 47-49 rue Cortambert."
+        },
+        {
+          "from": "1986",
+          "to": "1988",
+          "address": "47 rue Cortambert (16ᵉ) — acquisition et travaux",
+          "kind": "chancery",
+          "lat": 48.8603,
+          "lon": 2.2786,
+          "note": "Acquisition du 47 rue Cortambert le 24 octobre 1986, bâtiment contigu au siège historique au numéro 49. Des travaux de rénovation sont entrepris pour unifier les deux immeubles en une chancellerie agrandie."
+        },
+        {
+          "from": "1988",
+          "to": null,
+          "address": "47-49 rue Cortambert (16ᵉ)",
+          "kind": "chancery",
+          "lat": 48.8603,
+          "lon": 2.2786,
+          "current": true,
+          "note": "Chancellerie actuelle, inaugurée le 8 février 1988 par le ministre des Affaires étrangères Mochtar Kusumaatmadja et l'ambassadeur Tubagus Bachtiar Rifai. Le bâtiment résulte de la fusion des numéros 47 et 49, acquis respectivement en 1986 et 1954. L'ambassade se situe à l'angle de la rue Cortambert et de la rue Nicolo, dans le quartier de la Muette (16ᵉ). Elle a été la cible d'un attentat à la bombe plastique le 26 mai 1962 et d'un engin explosif le 8 octobre 2004 (revendiqué par le Front islamique armé de France)."
+        }
+      ]
+    },
+    "IL": {
+      "name": "Israel",
+      "flag": "il",
+      "current": {
+        "chancery": "3 rue Rabelais, 75008 Paris",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": "c. 1973",
+          "address": "143 avenue de Wagram, place d'Israël (17ᵉ)",
+          "building": "Hôtel Issaverdens",
+          "kind": "legation",
+          "lat": 48.8853,
+          "lon": 2.3033,
+          "note": "Première mission diplomatique israélienne à Paris, ouverte après la reconnaissance de facto d'Israël par la France le 24 janvier 1949 (de jure le 20 mai 1949). Maurice Fischer, représentant du gouvernement provisoire, fut le premier chef de mission. La légation fut élevée au rang d'ambassade en 1953, lors de la vente d'armes françaises à Israël. L'hôtel particulier avait été construit pour le baron Alfred Issaverdens (1839-1918), banquier leventin né à Smyrne. La place donnant sur l'ambassade prit le nom de place d'Israël en 1960 sur délibération du Conseil municipal de Paris. Les bâtiments furent détruits à la fin des années 1970 lors de la construction d'immeubles résidentiels."
+        },
+        {
+          "from": "c. 1953",
+          "to": "1973",
+          "address": "143 avenue de Wagram, place d'Israël (17ᵉ)",
+          "building": "Hôtel Issaverdens",
+          "kind": "embassy",
+          "lat": 48.8853,
+          "lon": 2.3033,
+          "note": "La légation israélienne est élevée au rang d'ambassade vers 1953, dans la foulée du rapprochement franco-israélien. L'ambassade reste à la même adresse jusqu'au déménagement de 1973."
+        },
+        {
+          "from": "1973",
+          "to": null,
+          "address": "3 rue Rabelais (8ᵉ)",
+          "kind": "chancery",
+          "lat": 48.871,
+          "lon": 2.3122,
+          "current": true,
+          "note": "L'ambassade s'installe en 1973 dans le 8ᵉ arrondissement. Le 23 mai 2002, un incendie accidentel détruisit une grande partie des locaux alors en cours de rénovation. Les bureaux furent entièrement reconstruits avec des murs en pierre de Jérusalem. Le hall d'entrée accueille une réplique de la mosaïque de la synagogue Shalom Al Yisrael de Jéricho. L'ambassadeur en poste depuis mai 2024 est Joshua Zarka."
+        }
+      ]
+    },
+    "IN": {
+      "name": "India",
+      "flag": "in",
+      "current": {
+        "chancery": "13-15 rue Alfred Dehodencq, 75016 Paris",
+        "residence": "9 avenue Charles-Floquet, 75007 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1947",
+          "to": "1949",
+          "address": "Paris (adresse provisoire, 16ᵉ ou 7ᵉ)",
+          "kind": "legation",
+          "lat": 48.86,
+          "lon": 2.29,
+          "note": "Représentation diplomatique indienne provisoire ouverte peu après l'indépendance du 15 août 1947. La France est l'un des premiers pays à reconnaître la République de l'Inde. Adresse exacte non établie par les sources disponibles."
+        },
+        {
+          "from": "1949",
+          "to": null,
+          "address": "9 avenue Charles-Floquet (7ᵉ)",
+          "building": "Hôtel de Malborough",
+          "kind": "residence",
+          "lat": 48.8548,
+          "lon": 2.2985,
+          "current": true,
+          "note": "Hôtel particulier construit en 1912 par l'architecte René Sergent pour Jules Steinbach. En 1922, il devient la résidence de Consuelo Vanderbilt, duchesse de Marlborough. Acquis par l'Inde en 1949, il sert depuis lors de résidence officielle de l'ambassadeur indien à Paris. Le bâtiment est situé à l'angle de l'avenue Charles-Floquet et de la rue du Général-Lambert, à proximité de la tour Eiffel."
+        },
+        {
+          "from": "1949",
+          "to": null,
+          "address": "13-15 rue Alfred Dehodencq (16ᵉ)",
+          "kind": "chancery",
+          "lat": 48.8603,
+          "lon": 2.2702,
+          "current": true,
+          "note": "Chancellerie principale de l'ambassade de l'Inde, acquise dans les années 1940-1950 et occupée depuis le premier ambassadeur résident, Sardar H.S. Malik, nommé en octobre 1949. Le bâtiment est situé dans le 16ᵉ arrondissement, quartier diplomatique de Paris."
+        },
+        {
+          "from": "1949",
+          "to": null,
+          "address": "20-22 rue Albéric Magnard (16ᵉ)",
+          "kind": "consulate",
+          "lat": 48.8592,
+          "lon": 2.2745,
+          "current": true,
+          "note": "Section consulaire de l'ambassade de l'Inde, distincte de la chancellerie principale. Gère les visas, passeports et affaires consulaires (CPV). Depuis juillet 2025, les services consulaires sont traités directement par l'ambassade à cette adresse, VFS Global ayant cessé d'être le prestataire externalisé."
+        }
+      ]
+    },
+    "IT": {
+      "name": "Italy",
+      "flag": "it",
+      "current": {
+        "chancery": "51 rue de Varenne, 75007 Paris",
+        "residence": "47 rue de Varenne, 75007 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1894",
+          "to": "1938",
+          "address": "73 rue de Grenelle / 50 rue de Varenne (7ᵉ)",
+          "building": "Hôtel de Galliffet",
+          "kind": "embassy",
+          "lat": 48.8547,
+          "lon": 2.319,
+          "note": "L'État italien loue entièrement l'Hôtel de Galliffet en 1894, puis l'acquiert en 1909. Construit par Étienne-François Legrand entre 1776 et 1792 pour le marquis Simon-Alexandre de Galliffet, le bâtiment avait abrité le ministère des Relations extérieures de Talleyrand (1795-1821). En 1895, le comte Giuseppe Tornielli, ambassadeur à Paris, s'y installe officiellement. Des travaux de restauration en 1898 dotent l'édifice de l'escalier d'honneur et du dôme à colonnes ioniques. Après le déménagement de l'ambassade en 1938, le consulat général d'Italie y demeure jusqu'en 1962, date à laquelle l'Institut culturel italien s'y établit."
+        },
+        {
+          "from": "1938",
+          "to": null,
+          "address": "47-51 rue de Varenne (7ᵉ)",
+          "building": "Hôtel de La Rochefoucauld-Doudeauville, dit Hôtel de Boisgelin",
+          "kind": "chancery",
+          "lat": 48.8555,
+          "lon": 2.3175,
+          "current": true,
+          "note": "Hôtel particulier construit entre 1732 et 1733 par Jean-Sylvain Cartaud pour Gérard Heusch de Janvry, secrétaire du roi. En 1782, il devient la propriété de Jean de Dieu-Raymond de Boisgelin, archevêque d'Aix-en-Provence, qui prononça le sacre de Louis XVI en 1775 — d'où son surnom courant. Vendu comme bien d'émigré sous la Révolution, acquis en 1807 par le comte Bigot de Préameneu (rédacteur du Code civil), puis en 1837 par le comte de Bourbon-Conti. À sa mort, il passe à sa veuve qui épouse en 1841 Sosthène Iᵉʳ de La Rochefoucauld, duc de Doudeauville. En vertu d'une convention de 1936 à baux emphytéotiques réciproques — accordant à la France le Palazzo Farnèse à Rome pour son ambassade —, la Caisse des Dépôts et Consignations acquiert l'hôtel le 21 avril 1937 et le cède au gouvernement italien. L'ambassade s'y installe en 1938. Le bâtiment est classé monument historique depuis l'arrêté du 11 juin 1926. La chancellerie (numéro officiel 51) et la résidence de l'ambassadeur (numéro 47) forment un ensemble continu."
+        }
+      ]
+    },
+    "JP": {
+      "name": "Japan",
+      "flag": "jp",
+      "current": {
+        "chancery": "7 avenue Hoche, 75008 Paris",
+        "residence": "31 rue du Faubourg Saint-Honoré, 75008 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1871",
+          "to": "1880",
+          "address": "avenue Hoche (alors rue de la Reine-Hortense), 75008",
+          "kind": "legation",
+          "lat": 48.877,
+          "lon": 2.302,
+          "note": "Première légation permanente du Japon à Paris, ouverte en 1871 sous la direction de Sameshima Naonobu, premier ministre résident du Japon en Europe. L'avenue portait alors le nom de rue de la Reine-Hortense ; le numéro exact du bâtiment initial n'est pas établi par les sources disponibles."
+        },
+        {
+          "from": "1880",
+          "to": "1906",
+          "address": "avenue Marceau (alors rue Joséphine), 75008",
+          "kind": "legation",
+          "lat": 48.8653,
+          "lon": 2.2991,
+          "note": "La légation déménage avenue Marceau, anciennement rue Joséphine. Elle y demeure jusqu'à l'acquisition du bâtiment de l'avenue Hoche en 1906."
+        },
+        {
+          "from": "1906",
+          "to": "1919",
+          "address": "7 avenue Hoche, 75008",
+          "kind": "embassy",
+          "lat": 48.8773,
+          "lon": 2.3042,
+          "note": "Le gouvernement japonais achète en 1906 l'immeuble au 7 avenue Hoche à Madame Vion-Whitcomb. La décoration intérieure est refaite dans le style japonais par la maison Mitsukoshi. La même année, la légation est élevée au rang d'ambassade à la suite de la victoire japonaise dans la guerre russo-japonaise (1905) ; Kurino Shinichiro devient le premier ambassadeur du Japon en France. L'annuaire diplomatique français de 1907 mentionne ce numéro."
+        },
+        {
+          "from": "1919",
+          "to": "~1930",
+          "address": "rue La Pérouse, 75116",
+          "kind": "chancery",
+          "lat": 48.8689,
+          "lon": 2.2944,
+          "note": "En 1919, les bureaux de la chancellerie sont transférés dans le 16ᵉ arrondissement, d'abord rue La Pérouse. Le numéro précis n'est pas établi par les sources disponibles. Le bâtiment de l'avenue Hoche devient alors résidence officielle de l'ambassadeur."
+        },
+        {
+          "from": "~1930",
+          "to": "1940",
+          "address": "rue Greuze, 75116",
+          "kind": "chancery",
+          "lat": 48.861,
+          "lon": 2.2842,
+          "note": "La chancellerie se déplace rue Greuze (16ᵉ). Les sources mentionnent les numéros 6 et 8 comme adresses d'ambassade dans cette rue ; le numéro exact de la chancellerie japonaise n'est pas confirmé."
+        },
+        {
+          "from": "1906",
+          "to": "1919",
+          "address": "7 avenue Hoche, 75008",
+          "kind": "residence",
+          "lat": 48.8773,
+          "lon": 2.3042,
+          "note": "Résidence de l'ambassadeur dans le bâtiment acheté en 1906, avant que les bureaux ne soient transférés en 1919."
+        },
+        {
+          "from": "1919",
+          "to": "1940",
+          "address": "7 avenue Hoche, 75008",
+          "kind": "residence",
+          "lat": 48.8773,
+          "lon": 2.3042,
+          "note": "Après le transfert des bureaux rue La Pérouse puis rue Greuze, le bâtiment de l'avenue Hoche est conservé comme résidence officielle de l'ambassadeur."
+        },
+        {
+          "from": "1940",
+          "to": "1952",
+          "address": "Paris / en province",
+          "kind": "embassy",
+          "lat": null,
+          "lon": null,
+          "note": "Période de la Seconde Guerre mondiale. L'ambassade est déplacée plusieurs fois en région. Avec la libération de Paris en août 1944 et la reconnaissance internationale du Gouvernement provisoire de la République française (octobre 1944), la France entre en état de belligérance avec le Japon et les relations diplomatiques sont rompues de facto. Le traité de San Francisco (signé le 8 septembre 1951, entré en vigueur le 28 avril 1952, ratifié par la France par la loi n°52-393 du 11 avril 1952) met fin à l'état de guerre et rétablit les relations diplomatiques franco-japonaises."
+        },
+        {
+          "from": "1952",
+          "to": "1969",
+          "address": "7 avenue Hoche, 75008",
+          "kind": "embassy",
+          "lat": 48.8773,
+          "lon": 2.3042,
+          "note": "Réouverture de l'ambassade avenue Hoche après le rétablissement des relations diplomatiques. Chancellerie et résidence cohabitent à nouveau dans le bâtiment."
+        },
+        {
+          "from": "1965",
+          "to": "1970",
+          "address": "31 rue du Faubourg Saint-Honoré, 75008",
+          "building": "Hôtel Pillet-Will (démoli 1967) / résidence Sakakura-Prouvé-Perriand",
+          "kind": "residence",
+          "lat": 48.8693,
+          "lon": 2.3163,
+          "note": "L'ambassade acquiert en 1965 l'hôtel Pillet-Will (construit en 1718, acheté en 1887 par le comte Frédéric Pillet-Will). En 1967, l'hôtel est démoli pour laisser place à une construction moderne conçue par l'architecte japonais Junzo Sakakura ; les deux façades reçoivent des murs-rideaux dessinés par l'atelier Jean Prouvé et le mobilier est réalisé par Charlotte Perriand. La résidence est inaugurée en avril 1970, peu après la mort de Sakakura.",
+          "current": true
+        },
+        {
+          "from": "1970",
+          "to": null,
+          "address": "7 avenue Hoche, 75008",
+          "kind": "chancery",
+          "lat": 48.8773,
+          "lon": 2.3042,
+          "current": true,
+          "note": "Entre 1969 et 1970, la résidence de l'ambassadeur est transférée au 31 rue du Faubourg Saint-Honoré et les bureaux de la chancellerie retournent avenue Hoche. L'édifice original est remplacé par un bâtiment moderne. Adresse actuelle de la chancellerie."
+        }
+      ]
+    },
+    "KR": {
+      "name": "South Korea",
+      "flag": "kr",
+      "current": {
+        "chancery": "41-43 rue Saint-Dominique, 75007 Paris",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1898",
+          "to": "1900",
+          "address": "Paris (7ᵉ arr., adresse exacte non établie)",
+          "kind": "consulate",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "Premier consulat de l'Empire coréen à Paris, ouvert après la proclamation de l'Empire en 1897. Le consul Min Yongchan est le premier représentant coréen accrédité en France. L'adresse précise n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "1900",
+          "to": "1906",
+          "address": "Paris (adresse exacte non établie)",
+          "kind": "legation",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "Le consulat est élevé au rang de légation en mars 1900. Après le traité d'Eulsa (novembre 1905) qui fait de la Corée un protectorat japonais, la légation coréenne à Paris est la dernière légation coréenne à fermer en Europe, vers 1906. L'adresse précise n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "1949",
+          "to": "1958",
+          "address": "Paris (adresse exacte non établie)",
+          "kind": "legation",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "La légation de la République de Corée est rouverte à Paris le 6 juillet 1949, après l'indépendance de 1948. L'adresse du premier établissement n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "1958",
+          "to": "2023",
+          "address": "125 rue de Grenelle, 75007 Paris",
+          "building": "Hôtel de Damas d'Antigny",
+          "kind": "chancery",
+          "lat": 48.8569,
+          "lon": 2.3154,
+          "note": "La légation est élevée au rang d'ambassade le 10 octobre 1958. La chancellerie s'installe dans l'hôtel de Damas d'Antigny, hôtel particulier construit en 1774 par l'architecte Mathurin Cherpitel pour la famille de Damas d'Antigny. L'ambassade occupe ce bâtiment jusqu'au déménagement de 2023."
+        },
+        {
+          "from": "1980",
+          "to": "2019",
+          "address": "2 avenue d'Iéna, 75116 Paris",
+          "kind": "cultural_center",
+          "lat": 48.8635,
+          "lon": 2.2939,
+          "note": "Centre culturel coréen fondé en 1980, rattaché à l'ambassade. Il déménage en 2019 au 20 rue La Boétie (8ᵉ arr.)."
+        },
+        {
+          "from": "2019",
+          "to": null,
+          "address": "20 rue La Boétie, 75008 Paris",
+          "kind": "cultural_center",
+          "lat": 48.8766,
+          "lon": 2.3121,
+          "note": "Nouveau site du Centre culturel coréen, après le déménagement depuis l'avenue d'Iéna en 2019."
+        },
+        {
+          "from": "2023",
+          "to": null,
+          "address": "41-43 rue Saint-Dominique, 75007 Paris",
+          "kind": "chancery",
+          "lat": 48.857,
+          "lon": 2.3192,
+          "note": "Nouvelle chancellerie inaugurée en octobre 2023. L'ambassade transfère ses bureaux depuis le 125 rue de Grenelle. La section consulaire est également déplacée vers le 2 avenue d'Iéna (ancienne adresse du centre culturel)."
+        },
+        {
+          "from": "2023",
+          "to": null,
+          "address": "2 avenue d'Iéna, 75116 Paris",
+          "kind": "consulate",
+          "lat": 48.8635,
+          "lon": 2.2939,
+          "note": "Section consulaire de l'ambassade, installée à cette adresse après le déménagement de 2023. Le bâtiment avait précédemment abrité le Centre culturel coréen (1980–2019)."
+        }
+      ]
+    },
+    "MX": {
+      "name": "Mexico",
+      "flag": "mx",
+      "current": {
+        "chancery": "9 rue de Longchamp, 75116 Paris",
+        "residence": "20 avenue du Président-Wilson, 75116 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1830",
+          "to": "1838",
+          "address": "Paris (adresse exacte non établie dans les sources publiques)",
+          "kind": "legation",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "La France reconnaît le Mexique en 1830 et les deux pays ouvrent des légations résidentes dans leurs capitales respectives. La « guerre des Pâtisseries » (1838-1839) — blocus naval français des ports mexicains — provoque une première rupture des relations diplomatiques."
+        },
+        {
+          "from": "1839",
+          "to": "1862",
+          "address": "Paris (adresse exacte non établie dans les sources publiques)",
+          "kind": "legation",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "Reprise des relations après le traité de 1839. La légation mexicaine fonctionne à Paris pendant deux décennies, jusqu'à ce que l'intervention militaire française et l'installation du Second Empire mexicain sous Maximilien (1864) provoquent l'interruption de la représentation républicaine."
+        },
+        {
+          "from": "1862",
+          "to": "1867",
+          "address": "Paris (adresse exacte non établie dans les sources publiques)",
+          "kind": "legation",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "Intermède impérial : Napoléon III soutient l'installation de l'archiduc Maximilien de Habsbourg comme empereur du Mexique (couronné en 1864). Durant cette période, une représentation officielle du régime de Maximilien existe à Paris ; la légation républicaine de Juárez n'y est pas reconnue. Maximilien est fusillé le 19 juin 1867 à l'issue de la victoire républicaine."
+        },
+        {
+          "from": "1880",
+          "to": "1900",
+          "address": "Paris (adresse exacte non établie dans les sources publiques)",
+          "kind": "legation",
+          "lat": 48.8566,
+          "lon": 2.3522,
+          "note": "La France et le Mexique reprennent leurs relations diplomatiques en 1880, treize ans après la chute de Maximilien et l'effondrement du Second Empire français (1870). Les deux pays renoncent mutuellement aux créances liées aux conflits antérieurs. La légation mexicaine rouvre à Paris."
+        },
+        {
+          "from": "1900",
+          "to": "1924",
+          "address": "19 boulevard Victor-Hugo, Neuilly-sur-Seine ; chancellerie : 13 rue Lamennais, 75008 Paris",
+          "kind": "legation",
+          "lat": 48.8837,
+          "lon": 2.2685,
+          "note": "Vers 1900, la légation mexicaine est installée au 19 boulevard Victor-Hugo à Neuilly-sur-Seine, tandis que la chancellerie occupe le 13 rue Lamennais (8ᵉ) et le consulat général le 5 rue Bourdaloue (9ᵉ). Adresses attestées par les annuaires diplomatiques de l'époque."
+        },
+        {
+          "from": "1924",
+          "to": "1926",
+          "address": "144 boulevard Haussmann, 75008 Paris",
+          "kind": "legation",
+          "lat": 48.8768,
+          "lon": 2.3131,
+          "note": "En 1924, la légation mexicaine déménage au 144 boulevard Haussmann (8ᵉ arrondissement). Le consulat général reste au 5 rue Bourdaloue. Cette installation est provisoire ; le gouvernement mexicain recherche un siège définitif et représentatif."
+        },
+        {
+          "from": "1926",
+          "to": null,
+          "address": "20 avenue du Président-Wilson, 75116 Paris",
+          "building": "Hôtel de la duchesse de Luynes, remanié par André Durand (1927)",
+          "kind": "residence",
+          "lat": 48.8635,
+          "lon": 2.2984,
+          "note": "En décembre 1926, le gouvernement mexicain acquiert l'hôtel de la duchesse de Luynes au 20 avenue du Président-Wilson pour y installer la résidence de l'ambassadeur. L'ambassadeur Alberto J. Pani, inspiré par l'Exposition internationale des Arts décoratifs de 1925, confie à l'architecte français André Durand l'adaptation et l'aménagement intérieur. Les travaux s'achèvent en juillet 1927. Le bâtiment, chef-d'œuvre Art déco, est inscrit au patrimoine."
+        },
+        {
+          "from": "1928",
+          "to": null,
+          "address": "9 rue de Longchamp, 75116 Paris",
+          "building": "Chancellerie, construite par André Durand (1927-1928)",
+          "kind": "chancery",
+          "lat": 48.8639,
+          "lon": 2.2979,
+          "note": "Sur le jardin arrière de l'hôtel de Luynes, donnant rue de Longchamp, André Durand conçoit et construit un bâtiment neuf spécialement destiné à abriter l'ambassade. Les travaux débutent en juillet 1927 et s'achèvent en janvier 1928. C'est l'un des premiers bâtiments diplomatiques dans le monde expressément conçu à cette fin. La façade en brique est ornée d'un aigle mexicain en pierres colorées ; l'intérieur Art déco est conservé quasi intact."
+        }
+      ]
+    },
+    "RU": {
+      "name": "Russia",
+      "flag": "ru",
+      "current": {
+        "chancery": "40-50 boulevard Lannes, 75116 Paris",
+        "residence": "79 rue de Grenelle, 75007 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1780",
+          "to": "1808",
+          "address": "30 rue de Gramont, angle boulevard des Italiens (2ᵉ)",
+          "building": "Hôtel de Lévis",
+          "kind": "legation",
+          "lat": 48.8706,
+          "lon": 2.3439,
+          "note": "Siège de la légation impériale russe vers 1780. Le tsarévitch Paul Ier et son épouse Maria Feodorovna y séjournent lors de leur visite à Paris en 1782. L'hôtel, construit en 1767 sur une partie de l'ancienne propriété des Gramont, a disparu au XIXᵉ siècle."
+        },
+        {
+          "from": "1808",
+          "to": "1811",
+          "address": "77 rue de Varenne (7ᵉ)",
+          "building": "Hôtel de Biron",
+          "kind": "embassy",
+          "lat": 48.856,
+          "lon": 2.3156,
+          "note": "Sous le Premier Empire, l'ambassade de Russie s'installe à l'Hôtel de Biron, occupé successivement par le légat papal puis par le représentant du tsar. Le bâtiment deviendra le musée Rodin en 1919."
+        },
+        {
+          "from": "1814",
+          "to": "1826",
+          "address": "30 rue de Provence / rue de la Victoire (9ᵉ)",
+          "building": "Hôtel Thellusson",
+          "kind": "embassy",
+          "lat": 48.8765,
+          "lon": 2.3374,
+          "note": "Construit en 1778 par Claude-Nicolas Ledoux, l'hôtel Thellusson accueille l'ambassade de Russie après la Restauration. L'ambassadeur Pozzo di Borgo, représentant du tsar Alexandre Iᵉʳ, y organise des réceptions fastueuses. Le tsar Alexandre Iᵉʳ y séjourne en 1818. L'hôtel est démoli en 1826 lors du percement de la rue Laffitte."
+        },
+        {
+          "from": "1863",
+          "to": "1917",
+          "address": "79 rue de Grenelle (7ᵉ)",
+          "building": "Hôtel d'Estrées",
+          "kind": "embassy",
+          "lat": 48.8558,
+          "lon": 2.3183,
+          "note": "Acquis par le gouvernement impérial russe le 12 décembre 1863, sous l'initiative d'Alexandre II. L'hôtel particulier, construit par Robert de Cotte en 1711-1713 pour la duchesse d'Estrées, est redécoré dans le style Second Empire avant la visite d'Alexandre II à l'Exposition universelle de 1867. Nicolas II et l'impératrice Alexandra Feodorovna y séjournent lors de leur visite officielle d'octobre 1896. Ambassade principale de l'Empire russe jusqu'à la rupture des relations franco-russes en novembre 1917."
+        },
+        {
+          "from": "1917",
+          "to": "1924",
+          "address": "79 rue de Grenelle (7ᵉ)",
+          "building": "Hôtel d'Estrées",
+          "kind": "legation",
+          "lat": 48.8558,
+          "lon": 2.3183,
+          "note": "Après la révolution bolchevique de novembre 1917, la France rompt ses relations diplomatiques avec la Russie soviétique. L'hôtel est occupé par des représentants des Russes blancs émigrés. La France reconnaît officiellement l'URSS le 28 octobre 1924, sous le gouvernement Herriot."
+        },
+        {
+          "from": "1924",
+          "to": "1977",
+          "address": "79 rue de Grenelle (7ᵉ)",
+          "building": "Hôtel d'Estrées",
+          "kind": "embassy",
+          "lat": 48.8558,
+          "lon": 2.3183,
+          "note": "Le 14 décembre 1924, le drapeau soviétique est hissé sur l'hôtel d'Estrées. Le premier ambassadeur soviétique, Léonid Krassine, arrive à Paris le 4 décembre 1924. L'ambassade de l'URSS occupe l'édifice jusqu'au déménagement de la chancellerie vers le boulevard Lannes en 1977. Pendant la Seconde Guerre mondiale, le bâtiment est occupé par les Allemands."
+        },
+        {
+          "from": "1977",
+          "to": null,
+          "address": "40-50 boulevard Lannes (16ᵉ)",
+          "kind": "chancery",
+          "lat": 48.8664,
+          "lon": 2.2704,
+          "current": true,
+          "note": "Nouvelle chancellerie soviétique inaugurée le 22 juin 1977 par Leonid Brejnev, secrétaire général du PCUS, en présence du président Valéry Giscard d'Estaing. La Fédération de Russie reprend les locaux après la dissolution de l'URSS en décembre 1991. Chancellerie et services consulaires se trouvent à cette adresse dans le 16ᵉ arrondissement."
+        },
+        {
+          "from": "1977",
+          "to": null,
+          "address": "79 rue de Grenelle (7ᵉ)",
+          "building": "Hôtel d'Estrées",
+          "kind": "residence",
+          "lat": 48.8558,
+          "lon": 2.3183,
+          "current": true,
+          "note": "Après le transfert de la chancellerie au boulevard Lannes en 1977, l'Hôtel d'Estrées devient la résidence officielle de l'ambassadeur. L'immeuble est fermé pour quatre ans de restauration à partir de 1978, retrouvant son apparence du XIXᵉ siècle. Classé monument historique, il est toujours la résidence de l'ambassadeur de la Fédération de Russie en France."
+        }
+      ]
+    },
+    "SA": {
+      "name": "Saudi Arabia",
+      "flag": "sa",
+      "current": {
+        "chancery": "92 rue de Courcelles, 75008 Paris",
+        "residence": "18 rue Alfred-Dehodencq, 75016 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1926",
+          "to": "1940",
+          "address": "Paris (adresse non identifiée)",
+          "kind": "legation",
+          "lat": null,
+          "lon": null,
+          "note": "En mars 1926 la France reconnaît le Royaume du Hedjaz et du Nedjd (futur Royaume d'Arabie saoudite) et accueille la première délégation officielle conduite par le prince Fayçal (vice-roi du Hedjaz). Une légation saoudienne est alors établie à Paris. La mission est interrompue lors de la Seconde Guerre mondiale."
+        },
+        {
+          "from": "1948",
+          "to": "1952",
+          "address": "1 rue André-Pascal, 75016 Paris",
+          "kind": "legation",
+          "lat": 48.8612,
+          "lon": 2.2699,
+          "note": "En octobre 1948 le roi Ibn Saoud réouvre la légation saoudienne à Paris, fermée depuis la guerre. La rue André-Pascal est une voie privée du 16e arrondissement, proche de l'OCDE. La mission est dirigée par un ministre plénipotentiaire."
+        },
+        {
+          "from": "1952",
+          "to": null,
+          "address": "1 rue André-Pascal, 75016 Paris",
+          "kind": "embassy",
+          "lat": 48.8612,
+          "lon": 2.2699,
+          "note": "En octobre 1952 la légation est élevée au rang d'ambassade, simultanément à l'élévation de la mission française à Djeddah. L'ambassade demeure rue André-Pascal jusqu'à son déménagement vers l'avenue Hoche."
+        },
+        {
+          "from": "1960",
+          "to": "2000",
+          "address": "5 avenue Hoche, 75008 Paris",
+          "kind": "chancery",
+          "lat": 48.8768,
+          "lon": 2.3067,
+          "note": "Chancellerie installée avenue Hoche, dans le 8e arrondissement à proximité du parc Monceau. Le 5 septembre 1973, un commando palestinien de Septembre noir prend en otage le personnel de l'ambassade pour exiger la libération d'Abou Daoud, détenu en Jordanie. La date exacte du déménagement vers la rue de Courcelles n'est pas documentée précisément."
+        },
+        {
+          "from": "2000",
+          "to": null,
+          "address": "92 rue de Courcelles, 75008 Paris",
+          "kind": "chancery",
+          "lat": 48.8789,
+          "lon": 2.304,
+          "current": true,
+          "note": "Ambassade royale du Royaume d'Arabie saoudite, adresse actuelle. Depuis 2021 l'ambassadeur est Fahad M. Al-Ruwaily. La section consulaire (visas) est au 29 rue des Graviers à Neuilly-sur-Seine ; le bureau militaire au 87 rue de la Faisanderie (16e) ; le bureau culturel au 26 rue Murillo (8e)."
+        },
+        {
+          "from": "2009",
+          "to": null,
+          "address": "18 rue Alfred-Dehodencq, 75016 Paris",
+          "kind": "residence",
+          "lat": 48.8605,
+          "lon": 2.2724,
+          "current": true,
+          "note": "Résidence officielle de l'ambassadeur saoudien. L'hôtel Reichenbach, construction Art déco de 1932 (architecte Jean-Charles Moreux) qui occupait auparavant le site, a été démoli en 2009 pour faire place à la nouvelle résidence."
+        }
+      ]
+    },
+    "TR": {
+      "name": "Turkey",
+      "flag": "tr",
+      "current": {
+        "chancery": "16 avenue de Lamballe, 75016 Paris",
+        "residence": "16 avenue de Lamballe (Hôtel de Lamballe), 75016 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1797",
+          "to": "1802",
+          "address": "57 rue Saint-Dominique (7ᵉ)",
+          "building": "Hôtel de Monaco",
+          "kind": "legation",
+          "lat": 48.8578,
+          "lon": 2.3138,
+          "note": "Première légation ottomane permanente à Paris. Le gouvernement du Directoire met l'hôtel à la disposition de Moralı Seyyid Ali Efendi, premier ambassadeur résident ottoman en France, nommé par le sultan Sélim III. Il présente ses lettres de créance le 28 juillet 1797 — première légation permanente de l'Empire ottoman en France. La rupture diplomatique de 1798 (campagne d'Égypte) est de courte durée ; la légation reprend ses fonctions. Seyyid Ali Efendi quittera Paris en 1802. L'hôtel, construit par Brongniart (1774-1777) pour la princesse de Monaco, abrite aujourd'hui l'ambassade de Pologne."
+        },
+        {
+          "from": "1802",
+          "to": "1808",
+          "address": "57 rue Saint-Dominique (7ᵉ)",
+          "building": "Hôtel de Monaco",
+          "kind": "legation",
+          "lat": 48.8578,
+          "lon": 2.3138,
+          "note": "Mehmed Sait Halet Efendi arrive à l'Hôtel de Monaco le 22 septembre 1803 et présente ses lettres de créance dans les 48 heures. Muhibb Efendi lui succède de 1806 à 1811. La légation quitte l'hôtel vers 1808, date à laquelle Emmanuel Sieyès en devient propriétaire."
+        },
+        {
+          "from": "1863",
+          "to": "1872",
+          "address": "10 rue de Presbourg (16ᵉ)",
+          "building": "Hôtel des Maréchaux",
+          "kind": "legation",
+          "lat": 48.8744,
+          "lon": 2.2944,
+          "note": "La légation ottomane s'installe à l'Hôtel des Maréchaux, rue de Presbourg, à proximité de l'Arc de Triomphe. La rue est tracée depuis 1864, rappelant la paix de Presbourg (1805). Sous la IIIᵉ République naissante, la légation déménage vers la rive droite."
+        },
+        {
+          "from": "1872",
+          "to": "1888",
+          "address": "17 rue Laffitte (9ᵉ)",
+          "building": "Hôtel de Saint-Julien",
+          "kind": "legation",
+          "lat": 48.8762,
+          "lon": 2.3383,
+          "note": "La légation ottomane occupe l'Hôtel de Saint-Julien dans le quartier financier de la rue Laffitte, alors très prisé par les représentations diplomatiques et les grandes banques (Rothschild notamment aux nos 17-19). La présence ottomane dans ce quartier reflète les liens commerciaux et financiers franco-ottomans de l'époque."
+        },
+        {
+          "from": "1888",
+          "to": "1908",
+          "address": "10 rue de Presbourg (16ᵉ)",
+          "building": "Hôtel des Maréchaux",
+          "kind": "legation",
+          "lat": 48.8744,
+          "lon": 2.2944,
+          "note": "Retour à l'Hôtel des Maréchaux, rue de Presbourg, où la légation ottomane avait déjà résidé de 1863 à 1872. L'Empire ottoman y maintient sa représentation jusqu'au début du XXᵉ siècle."
+        },
+        {
+          "from": "1908",
+          "to": "1923",
+          "address": "33 rue de Villejust, auj. rue Paul Valéry (16ᵉ)",
+          "kind": "legation",
+          "lat": 48.8706,
+          "lon": 2.2908,
+          "note": "L'ambassade ottomane s'installe dans cet hôtel particulier du 16ᵉ arrondissement. Après la proclamation de la République de Turquie le 29 octobre 1923, la continuité diplomatique est assurée : Fethi Okyar, proche d'Atatürk, devient le premier ambassadeur de la République de Turquie en France. La rue de Villejust sera rebaptisée rue Paul Valéry en 1945."
+        },
+        {
+          "from": "1923",
+          "to": "1940",
+          "address": "33 rue Paul Valéry (ex-rue de Villejust) (16ᵉ)",
+          "kind": "embassy",
+          "lat": 48.8706,
+          "lon": 2.2908,
+          "note": "Ambassade de la République de Turquie, continuant d'occuper les locaux de l'ancienne légation ottomane. Sous le gouvernement de Vichy, l'ambassade quitte Paris en septembre 1940 pour suivre le gouvernement à Vichy, où elle fermera définitivement en 1943."
+        },
+        {
+          "from": "1945",
+          "to": "1951",
+          "address": "16 avenue de Lamballe (7ᵉ arr. hist. de Passy, auj. 16ᵉ)",
+          "building": "Hôtel de Lamballe (en location)",
+          "kind": "legation",
+          "lat": 48.8546,
+          "lon": 2.2806,
+          "note": "Après la Libération, l'ambassadeur Numan Menemencioğlu rentre à Paris et loge au Bristol. Sa nièce Nevin Menemencioğlu, attachée culturelle, découvre l'Hôtel de Lamballe dans le quartier de Passy et convainc la légation de le louer fin 1945. L'hôtel, construit au XVIIᵉ siècle, fut la propriété de la princesse de Lamballe (achetée en 1783 pour 110 000 livres), amie de Marie-Antoinette, puis transformé en clinique psychiatrique de luxe par le Dr Blanche (1846-1893 : Gérard de Nerval, Guy de Maupassant y séjournèrent). L'État turc le rachète en 1951."
+        },
+        {
+          "from": "1951",
+          "to": null,
+          "address": "16 avenue de Lamballe (16ᵉ)",
+          "building": "Hôtel de Lamballe",
+          "kind": "residence",
+          "lat": 48.8546,
+          "lon": 2.2806,
+          "current": true,
+          "note": "Résidence officielle de l'ambassadeur de Turquie en France depuis l'achat par la République de Turquie en 1951. L'entrée principale se trouve au 16 avenue de Lamballe, avec un accès secondaire au 17 rue d'Ankara — rue baptisée ainsi en référence à la capitale turque, voisine de l'ambassade. Le bâtiment a été rénové au début des années 2000 (travaux sur environ trois ans). Il est protégé au titre de l'article L. 151-19 du code de l'urbanisme dans le cadre du PLUb bioclimatique."
+        },
+        {
+          "from": "1972",
+          "to": null,
+          "address": "16 avenue de Lamballe (16ᵉ)",
+          "building": "Chancellerie (bâtiment contemporain, arch. Henri Beauclair)",
+          "kind": "chancery",
+          "lat": 48.8546,
+          "lon": 2.2806,
+          "current": true,
+          "note": "En 1972, un nouveau bâtiment de chancellerie est édifié sur la parcelle de l'Hôtel de Lamballe, dessiné par l'architecte Henri Beauclair. L'ensemble forme ainsi un complexe unique : la chancellerie contemporaine (1972) côtoie la résidence historique (XVIIᵉ siècle). L'édifice figure sur la liste des Architectures contemporaines remarquables (ACR n° 0000712) de Paris."
+        }
+      ]
+    },
+    "ZA": {
+      "name": "South Africa",
+      "flag": "za",
+      "current": {
+        "chancery": "59 quai d'Orsay, 75007 Paris",
+        "residence": "5 rue Cimarosa, 75016 Paris"
+      },
+      "addresses": [
+        {
+          "from": "1927",
+          "to": "1974",
+          "address": "51 avenue Hoche, 75008 Paris",
+          "kind": "legation",
+          "lat": 48.8773,
+          "lon": 2.3082,
+          "note": "L'Union sud-africaine crée un Département des Affaires étrangères en 1927 et ouvre des légations dans les principales capitales d'Europe occidentale. La représentation à Paris (légation, puis ambassade après la proclamation de la République le 31 mai 1961) est établie au 51 avenue Hoche (8ᵉ). Pendant toute cette période, l'Afrique du Sud reste dans le giron du Commonwealth britannique jusqu'en 1961. L'adresse de l'avenue Hoche est utilisée jusqu'à l'inauguration du nouveau bâtiment du quai d'Orsay en 1974."
+        },
+        {
+          "from": "1974",
+          "to": null,
+          "address": "59 quai d'Orsay, 75007 Paris",
+          "building": "Ambassade d'Afrique du Sud (Garet, Lambert, Thierrart, 1974)",
+          "kind": "chancery",
+          "lat": 48.8614,
+          "lon": 2.3178,
+          "current": true,
+          "note": "Bâtiment inauguré le 3 mai 1974 par Hilgard Muller, ministre sud-africain des Affaires étrangères. Conçu par les architectes Jean-Marie Garet, Gérard Lambert et Jean Thierrart, avec le bureau d'études L'Œuf, il s'élève sur 6 étages (21 m) et présente trois façades en mur-rideau de verre fumé partiellement masqué par des avancées moulées en fonte d'aluminium. Ces protections furent notamment conçues pour protéger les vitres des projectiles lors des nombreuses manifestations anti-apartheid devant l'ambassade. Le bâtiment est considéré comme un exemple représentatif de l'architecture parisienne des années 1970. Entrée consulaire accessible par la rue Henri-Moissan (face au nᵒ 4)."
+        },
+        {
+          "from": "1974",
+          "to": null,
+          "address": "5 rue Cimarosa, 75016 Paris",
+          "kind": "residence",
+          "lat": 48.8659,
+          "lon": 2.2934,
+          "current": true,
+          "note": "Résidence officielle de l'ambassadeur d'Afrique du Sud à Paris, dans le 16ᵉ arrondissement (quartier de Chaillot). La rue Cimarosa est nommée en l'honneur du compositeur napolitain Domenico Cimarosa (1749-1801)."
         }
       ]
     }

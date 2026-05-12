@@ -1,0 +1,702 @@
+{
+  "host": {
+    "code": "BR",
+    "name": "Brazil",
+    "capital": "Brasília"
+  },
+  "embassies": {
+    "AR": {
+      "name": "Argentina",
+      "flag": "ar",
+      "current": {
+        "chancery": "SES Avenida das Nações, Quadra 803, Lote 12, Asa Sul, 70200-905 Brasília-DF",
+        "residence": "SHIS QL 02, Conjunto 01, Casa 19, Lago Sul, Brasília-DF"
+      },
+      "addresses": [
+        {
+          "from": "1823",
+          "to": "1825",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "L'envoyé argentin Valentín Gómez présente ses lettres de créance au ministre brésilien le 5 août 1823 et est reçu par l'empereur Dom Pedro Ier le 11 août, faisant de la République des Provinces-Unies du Río de la Plata le premier pays à reconnaître l'indépendance du Brésil. La mission est essentiellement axée sur la négociation de l'évacuation de la Province Cisplatine par les forces brésiliennes. L'adresse précise de la légation n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1825",
+          "to": "1828",
+          "address": "Relations interrompues (Guerre Cisplatine)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Les relations diplomatiques sont suspendues lors de la Guerre Cisplatine (1825–1828), conflit armé opposant les Provinces-Unies du Río de la Plata à l'Empire du Brésil. Le conflit se termine par la Convention préliminaire de paix signée le 27 août 1828, qui reconnaît l'indépendance de la Bande Orientale sous le nom de République orientale de l'Uruguay."
+        },
+        {
+          "from": "1828",
+          "to": "1937",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Les relations diplomatiques sont rétablies après la paix de 1828. La légation argentine siège à Rio de Janeiro, alors capitale impériale puis fédérale du Brésil. L'adresse précise des locaux au XIXe siècle et dans la première moitié du XXe siècle n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1937",
+          "to": "1972",
+          "address": "Praia de Botafogo, Botafogo, Rio de Janeiro-RJ",
+          "building": "Palácio Guinle",
+          "kind": "embassy",
+          "lat": -22.9425,
+          "lon": -43.1814,
+          "note": "Le « Palácio Guinle », siège de l'ambassade, est acquis par l'ambassadeur Ramón J. Cárcano au nom de l'État argentin le 24 mai 1937. Comme contrepartie partielle, la famille Guinle reçoit deux immeubles appartenant alors à l'ambassade dans le quartier Flamengo ; le solde est réglé en contos-de-réis. L'édifice est démoli dans les années 1970 après le transfert de l'ambassade à Brasília, pour faire place au Centro Empresarial República Argentina. Le consulat général s'installe ensuite dans l'Edifício Argentina construit sur l'emplacement même de l'ancienne résidence."
+        },
+        {
+          "from": "1972",
+          "to": "2011",
+          "address": "Brasília-DF (siège provisoire, adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -15.8118,
+          "lon": -47.8784,
+          "note": "L'ambassade est transférée de Rio de Janeiro à Brasília en 1972, à la suite du déplacement de la capitale fédérale brésilienne vers le Distrito Federal. L'Argentine avait reçu du gouvernement brésilien, dès 1968, un terrain de 25 000 m² dans le Setor de Embaixadas Sul (Quadra 803, Lote 12) pour y construire son siège permanent. Deux projets architecturaux sont élaborés (1970 et 1994) sans aboutir. L'ambassade occupe des locaux provisoires jusqu'à l'inauguration du bâtiment définitif en 2011."
+        },
+        {
+          "from": "2011",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 803, Lote 12, Asa Sul, 70200-905 Brasília-DF",
+          "building": "Chancellerie Estudio MSGSSS (Manteola, Sánchez Gómez, Santos, Solsona, Sallaberry)",
+          "kind": "chancery",
+          "lat": -15.8118,
+          "lon": -47.8784,
+          "current": true,
+          "note": "La nouvelle chancellerie est inaugurée le 29 juillet 2011 en présence de la présidente Cristina Fernández de Kirchner, de la présidente Dilma Rousseff et de l'ancien président Lula. L'édifice, de quelque 4 000 m² couverts, est conçu par le cabinet argentin Estudio MSGSSS (architectes Flora Manteola, Javier Sánchez Gómez, Josefa Santos, Justo Solsona et Carlos Sallaberry) selon une esthétique néobrutialiste. Le terrain avait été donné par le Brésil à l'Argentine en 1968, adjacent aux représentations diplomatiques du Chili et du Venezuela. La construction démarre en décembre 2007 et s'achève en 2011."
+        },
+        {
+          "from": "c.1972",
+          "to": null,
+          "address": "SHIS QL 02, Conjunto 01, Casa 19, Lago Sul, Brasília-DF",
+          "kind": "residence",
+          "lat": -15.8256,
+          "lon": -47.8697,
+          "current": true,
+          "note": "Résidence officielle de l'ambassadeur d'Argentine au Brésil, située dans le quartier résidentiel du Lago Sul (Setor de Habitações Individuais Sul). Cette adresse apparaît dans les répertoires diplomatiques consultés. La date précise d'acquisition ou de première occupation de cette propriété n'a pas pu être établie avec certitude à partir des sources disponibles."
+        }
+      ]
+    },
+    "AU": {
+      "name": "Australia",
+      "flag": "au",
+      "current": {
+        "chancery": "SES Avenida das Nações, Quadra 801, Conjunto K, Lote 7, Asa Sul, 70200-010 Brasília-DF",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1946",
+          "to": "1972",
+          "address": "Rio de Janeiro-RJ (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "L'Australie et le Brésil établissent leurs relations diplomatiques en 1945. En 1946, l'Australie ouvre une ambassade à Rio de Janeiro, première représentation diplomatique australienne en Amérique latine, tandis que le Brésil ouvre une légation à Canberra. L'adresse précise des locaux de l'ambassade à Rio de Janeiro n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1972",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 801, Conjunto K, Lote 7, Asa Sul, 70200-010 Brasília-DF",
+          "kind": "chancery",
+          "lat": -15.8084,
+          "lon": -47.8741,
+          "current": true,
+          "note": "Lorsque Brasília est proclamée capitale fédérale en 1960, l'Australie reçoit un terrain gratuit dans le Setor de Embaixadas Sul (SES) lors de la construction de la ville ; les Australiens visitent la cité et choisissent leur parcelle en 1959. L'ensemble diplomatique sur ce terrain comprend alors des bureaux provisoires, une résidence et vingt-sept logements pour le personnel. L'ambassade déménage définitivement de Rio de Janeiro à Brasília au début de l'année 1972. Coordonnées issues de Wikidata (Q105668890) : 15°48′30″S, 47°52′27″O."
+        }
+      ]
+    },
+    "CA": {
+      "name": "Canada",
+      "flag": "ca",
+      "current": {
+        "chancery": "SES Avenida das Nações, Quadra 803, Lote 16, Asa Sul, 70410-900 Brasília-DF",
+        "residence": "non établie (adresse non publique)"
+      },
+      "addresses": [
+        {
+          "from": "1941",
+          "to": "1943",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Jean Désy est nommé premier envoyé extraordinaire et ministre plénipotentiaire du Canada au Brésil le 24 juin 1941 ; il présente ses lettres de créance en septembre 1941. La légation est la première représentation diplomatique canadienne en Amérique latine. L'adresse précise des locaux de la légation au moment de l'ouverture n'a pas pu être établie avec certitude à partir des sources consultées."
+        },
+        {
+          "from": "1943",
+          "to": "c.1971",
+          "address": "Praia do Flamengo, 284, Flamengo, Rio de Janeiro-RJ",
+          "building": "Edifício Tucuman (1941)",
+          "kind": "embassy",
+          "lat": -22.934,
+          "lon": -43.1745,
+          "note": "Par le décret brésilien n° 14 250 du 10 décembre 1943, la légation canadienne est élevée au rang d'ambassade et Jean Désy devient le premier ambassadeur du Canada au Brésil. La chancellerie et les sections commerciales occupent l'Edifício Tucuman (284, Praia do Flamengo, Flamengo), immeuble résidentiel construit en 1941. Après le transfert de l'ambassade à Brasília, deux appartements du rez-de-chaussée du même édifice sont réunis pour abriter le consulat général du Canada à Rio de Janeiro. En 1942, l'ambassadeur Désy commande à Alfred Pellan deux toiles destinées à la salle de réception de la mission."
+        },
+        {
+          "from": "c.1971",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 803, Lote 16, Asa Sul, 70410-900 Brasília-DF",
+          "kind": "chancery",
+          "lat": -15.8155,
+          "lon": -47.8785,
+          "current": true,
+          "note": "Le gouvernement brésilien exige à partir des années 1970 que toutes les ambassades étrangères s'installent à Brasília, capitale fédérale depuis le 21 avril 1960. L'ambassade du Canada transfère sa chancellerie à Brasília vers 1971-1972 dans le Setor de Embaixadas Sul (SES), sur l'Avenida das Nações (allée diplomatique), au Lote 16 de la Quadra 803. Le consulat général du Canada à Rio de Janeiro est maintenu ; il se trouve aujourd'hui au 13ᵉ étage de l'Avenida Atlântica 1130, Copacabana, 22021-000 Rio de Janeiro."
+        }
+      ]
+    },
+    "CN": {
+      "name": "China",
+      "flag": "cn",
+      "current": {
+        "chancery": "SES Avenida das Nações, Quadra 813, Lote 51, Asa Sul, 70443-900 Brasília-DF",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1881",
+          "to": "1949",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Le traité d'amitié, de commerce et de navigation entre l'Empire du Brésil et la Chine des Qing est signé à Tianjin le 5 septembre 1880 (révisé le 3 octobre 1881), établissant des relations diplomatiques formelles. Une légation chinoise est ouverte à Rio de Janeiro, alors capitale fédérale. Sous la République de Chine (ROC, fondée le 1er janvier 1912), la légation continue à fonctionner dans la capitale brésilienne. L'adresse précise des locaux n'a pas pu être établie avec certitude à partir des sources disponibles. Les relations sont suspendues en 1949 avec la proclamation de la République populaire de Chine."
+        },
+        {
+          "from": "1975",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 813, Lote 51, Asa Sul, 70443-900 Brasília-DF",
+          "kind": "chancery",
+          "lat": -15.7595,
+          "lon": -47.8792,
+          "current": true,
+          "note": "Les relations diplomatiques entre le Brésil et la République populaire de Chine sont rétablies le 15 août 1974 par un communiqué conjoint signé à Pékin, le Brésil reconnaissant la RPC comme seul gouvernement légal représentant la Chine et rompt ses liens avec la République de Chine (Taïwan). La Chine reçoit gratuitement un terrain dans le Setor de Embaixadas Sul (SES) en 1974. L'ambassade ouvre ses portes en 1975. Le premier ambassadeur de la RPC au Brésil est Chang The-Chun, accrédité en 1975."
+        }
+      ]
+    },
+    "DE": {
+      "name": "Germany",
+      "flag": "de",
+      "current": {
+        "chancery": "SES Avenida das Nações, Quadra 807, Lote 25, Asa Sul, 70415-900 Brasília-DF",
+        "residence": "SES Avenida das Nações, Quadra 807, Lote 25, Asa Sul, 70415-900 Brasília-DF"
+      },
+      "addresses": [
+        {
+          "from": "1871",
+          "to": "1917",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Après l'unification allemande de 1871, l'Empire allemand établit une légation auprès de l'Empire du Brésil à Rio de Janeiro. Dès 1867, la Confédération de l'Allemagne du Nord avait envoyé un représentant diplomatique au Brésil. Les relations diplomatiques sont officiellement établies en 1871. L'adresse précise des locaux de la légation impériale au XIXᵉ siècle n'a pas pu être établie avec certitude à partir des sources disponibles. La légation est fermée en avril 1917, lorsque le Brésil rompt les relations diplomatiques avec l'Empire allemand à la suite du torpillage du vapeur brésilien Paraná par un sous-marin allemand (11 avril 1917) ; le Brésil déclare la guerre aux puissances centrales le 27 octobre 1917."
+        },
+        {
+          "from": "1920",
+          "to": "1942",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Les relations diplomatiques entre le Brésil et l'Allemagne (République de Weimar puis Troisième Reich) sont rétablies après la Première Guerre mondiale. La légation allemande à Rio de Janeiro est rouverte et demeure au rang de légation jusqu'en 1937, année où elle est élevée au rang d'ambassade. Karl Ritter est le premier ambassadeur nommé (1937-1938). Le Brésil rompt définitivement les relations diplomatiques avec l'Allemagne nazie le 28 janvier 1942, lors de son ralliement aux Alliés."
+        },
+        {
+          "from": "1937",
+          "to": "1942",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "La légation allemande à Rio de Janeiro est élevée au rang d'ambassade en 1937 sous le régime national-socialiste. Karl Ritter est accrédité comme premier ambassadeur (1937-1938). L'ambassade est fermée le 28 janvier 1942 lorsque le Brésil rompt ses relations diplomatiques avec les puissances de l'Axe (Allemagne, Italie, Japon) à la suite des pressions américaines et du torpillage de navires brésiliens."
+        },
+        {
+          "from": "1951",
+          "to": "1971",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Les relations diplomatiques entre le Brésil et la République fédérale d'Allemagne (RFA) sont rétablies en 1951. La même année, le Brésil ouvre une ambassade à Bonn et la RFA ouvre une ambassade à Rio de Janeiro, alors encore capitale fédérale du Brésil. L'adresse précise des locaux à Rio de Janeiro n'a pas pu être établie avec certitude à partir des sources disponibles. À la suite du transfert de la capitale fédérale à Brasília, l'ambassade y déménage définitivement ; les locaux de Rio de Janeiro sont transformés en consulat général."
+        },
+        {
+          "from": "1971",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 807, Lote 25, Asa Sul, 70415-900 Brasília-DF",
+          "building": "Complexe diplomatique Hans Scharoun (1964-1971)",
+          "kind": "chancery",
+          "lat": -15.8213,
+          "lon": -47.8863,
+          "current": true,
+          "note": "L'ambassade d'Allemagne prend ses fonctions à Brasília le 16 avril 1971, dans un complexe architectural conçu par l'architecte allemand Hans Scharoun (1893-1972) — unique réalisation de Scharoun à l'étranger et l'une des œuvres majeures de l'expressionnisme organique. Le projet est développé entre 1964 et 1967 ; la construction s'achève en 1971. Contrairement à la pratique diplomatique habituelle qui sépare chancellerie et résidence, Scharoun relie les deux fonctions en un ensemble organique unifié. Le jardin de la résidence est dessiné par le paysagiste brésilien Roberto Burle Marx et le sculpteur allemand Günter Ferdinand Ris. Une rénovation complète est réalisée de janvier 2005 à avril 2007 pour environ 12 millions d'euros. Le complexe abrite également quatre grands appartements de fonction et des logements pour le personnel."
+        },
+        {
+          "from": "1971",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 807, Lote 25, Asa Sul, 70415-900 Brasília-DF",
+          "building": "Résidence de l'ambassadeur — Hans Scharoun (1964-1971)",
+          "kind": "residence",
+          "lat": -15.8213,
+          "lon": -47.8863,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur d'Allemagne est intégrée au même complexe diplomatique que la chancellerie, sur le Lote 25 de la Quadra 807 du Setor de Embaixadas Sul. Conçue par Hans Scharoun dans le même esprit organique que la chancellerie, la résidence est caractérisée par une enfilade de salons de réception particulièrement soignée, considérée comme l'une des créations les plus remarquables de Scharoun. Jardins réalisés par Roberto Burle Marx."
+        },
+        {
+          "from": "1971",
+          "to": null,
+          "address": "Avenida Presidente Antônio Carlos, 58, 12° andar, Centro, 20020-010 Rio de Janeiro-RJ",
+          "kind": "consulate",
+          "lat": -22.908,
+          "lon": -43.1727,
+          "current": true,
+          "note": "Consulat général d'Allemagne à Rio de Janeiro, héritier de la présence diplomatique allemande dans cette ville depuis la seconde moitié du XIXᵉ siècle. Lors du transfert de l'ambassade à Brasília en 1971, les locaux de Rio de Janeiro ont été convertis en consulat général. L'adresse actuelle au 12e étage de l'Avenida Presidente Antônio Carlos, 58 est dans le quartier Centro."
+        }
+      ]
+    },
+    "FR": {
+      "name": "France",
+      "flag": "fr",
+      "current": {
+        "chancery": "SES Avenida das Nações, Quadra 801, Lote 04, Asa Sul, 70404-900 Brasília-DF",
+        "residence": "SES Avenida das Nações, Quadra 801, Lote 04, Asa Sul, 70404-900 Brasília-DF"
+      },
+      "addresses": [
+        {
+          "from": "1816",
+          "to": "1825",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "En décembre 1814, la France nomme un consul général à Rio de Janeiro, alors capitale du Royaume-Uni de Portugal et du Brésil. Le colonel Maler reçoit le titre de chargé d'affaires en 1815. En 1816, le duc de Luxembourg est nommé ambassadeur extraordinaire. La présence diplomatique française précède formellement la reconnaissance de l'indépendance brésilienne. L'adresse précise des locaux n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1825",
+          "to": "1919",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "La France reconnaît l'indépendance du Brésil en 1825 (Charles X, parmi les premiers États européens à le faire) et établit une légation officielle auprès de l'Empire du Brésil à Rio de Janeiro. Les archives de la légation couvrent la période 1816-1919 (1925). L'adresse précise des locaux de la légation au XIXᵉ siècle n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1919",
+          "to": "1972",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "La légation est élevée au rang d'ambassade le 28 juin 1919. L'ambassade demeure à Rio de Janeiro, capitale fédérale du Brésil, jusqu'au transfert à Brasília. Lorsque Brasília devient la capitale (1960), une chancellerie détachée est créée à Brasília dès 1961 tandis que l'ambassade reste officiellement à Rio jusqu'en juillet 1972. L'adresse précise des locaux à Rio de Janeiro n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1961",
+          "to": "1972",
+          "address": "Brasília-DF (chancellerie détachée, adresse provisoire)",
+          "kind": "chancery",
+          "lat": -15.8056,
+          "lon": -47.8743,
+          "note": "Chancellerie détachée ouverte à Brasília dès 1961 pour suivre le transfert de la capitale fédérale depuis Rio de Janeiro. Les affaires courantes sont progressivement traitées depuis Brasília avant que l'ambassade ne s'y installe définitivement en juillet 1972."
+        },
+        {
+          "from": "1972",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 801, Lote 04, Asa Sul, 70404-900 Brasília-DF",
+          "building": "Complexe diplomatique Guillermo Jullian de la Fuente (construction 1972-1974)",
+          "kind": "chancery",
+          "lat": -15.8056,
+          "lon": -47.8743,
+          "current": true,
+          "note": "L'ambassade est transférée définitivement à Brasília en juillet 1972. Le projet architectural avait d'abord été confié à Le Corbusier en raison de ses liens étroits avec Lúcio Costa (urbaniste de Brasília) et Oscar Niemeyer (architecte en chef) ; la mort de Le Corbusier en 1965 et l'évolution des besoins rendirent nécessaire une réévaluation complète. Le projet fut repris par l'architecte chilo-français Guillermo Jullian de la Fuente, ancien collaborateur de l'atelier Le Corbusier. Fidèle à l'esprit corbuséen, Jullian maintient le principe de deux volumes distincts — chancellerie et résidence — et opte pour le béton brut apparent. Le complexe comprend la chancellerie (bureaux sur deux niveaux), la résidence de l'ambassadeur (un niveau, 1 500 m²) et des logements de fonction. Les travaux se déroulent de janvier 1972 à décembre 1974, sous la maîtrise d'œuvre de l'architecte Louis Bach. Le complexe est situé dans le Setor de Embaixadas Sul (SES), à proximité du lac Paranoá."
+        },
+        {
+          "from": "1972",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 801, Lote 04, Asa Sul, 70404-900 Brasília-DF",
+          "building": "Résidence de l'ambassadeur — Guillermo Jullian de la Fuente (1972-1974)",
+          "kind": "residence",
+          "lat": -15.8056,
+          "lon": -47.8743,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur de France est intégrée au même complexe diplomatique que la chancellerie, sur le Lote 04 de la Quadra 801 du Setor de Embaixadas Sul. Bâtiment de plain-pied (1 500 m²), conçu par Guillermo Jullian de la Fuente dans l'esprit du brutalisme corbuséen, achevé en décembre 1974."
+        }
+      ]
+    },
+    "GB": {
+      "name": "United Kingdom",
+      "flag": "gb",
+      "current": {
+        "chancery": "SES Avenida das Nações, Quadra 801, Conjunto K, Lote 08, Asa Sul, 70408-900 Brasília-DF",
+        "residence": "SES Avenida das Nações, Quadra 801, Conjunto K, Lote 08, Asa Sul, 70408-900 Brasília-DF (même domaine)"
+      },
+      "addresses": [
+        {
+          "from": "1826",
+          "to": "1919",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "La Grande-Bretagne joue un rôle central dans la reconnaissance de l'indépendance du Brésil : le traité de Rio de Janeiro du 29 août 1825, négocié sous médiation britannique, conduit le Portugal à reconnaître l'Empire. Robert Gordon est accrédité comme envoyé extraordinaire et ministre plénipotentiaire en juillet 1826 et négocie le traité commercial du 23 novembre 1826. Henry Chamberlain avait auparavant été consul général (1815-1829) et chargé d'affaires. La légation britannique est ainsi l'une des plus anciennes présences diplomatiques à Rio de Janeiro. L'adresse précise des locaux de la légation au XIXe siècle n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1919",
+          "to": "1950",
+          "address": "Rio de Janeiro (locaux loués, adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "En 1919, les deux pays élèvent mutuellement leur légation au rang d'ambassade. Les bureaux de l'ambassade et du consulat occupent différents locaux loués éparpillés dans le centre-ville. En 1927, l'ambassadeur Sir Bielby Alston séjourne dans une maison louée à Santa Teresa qu'il juge insatisfaisante. Le gouvernement britannique achète en 1928 un terrain de quelque 7 000 m² au prix d'environ 22 000 £, sur lequel se trouve déjà une maison, en vue de construire une résidence officielle."
+        },
+        {
+          "from": "1950",
+          "to": "1972",
+          "address": "Rua São Clemente, 360, Botafogo, Rio de Janeiro-RJ",
+          "building": "Résidence de l'ambassadeur (arch. Robert Russell Prentice, 1947-1950) — auj. Palácio da Cidade",
+          "kind": "residence",
+          "lat": -22.9444,
+          "lon": -43.1879,
+          "note": "La première pierre est posée le 22 mars 1947 par Lady Gainer. Conçu par l'architecte écossais Robert Russell Prentice (formé à Édimbourg et Paris, actif à Rio depuis 1922) dans un style néo-georgien, le bâtiment est inauguré le 22 juin 1950 par une réception de 1 700 invités sous l'ambassade de Sir Nevile Montagu Butler. Cinq ans à peine après son occupation, le Brésil annonce le transfert de sa capitale à Brasília. Les ambassadeurs passent une part croissante de leur temps à Brasília dès le milieu des années 1960 ; toute l'ambassade déménage en 1972. La propriété est vendue en 1975 au maire de Rio de Janeiro pour 2,2 millions de livres sterling ; elle sert depuis lors de siège de la préfecture municipale de Rio (Palácio da Cidade), classé monument historique en 1984."
+        },
+        {
+          "from": "c.1961",
+          "to": "1972",
+          "address": "Rio de Janeiro — bâtiments temporaires à Brasília (Édifício Tucuman, Praia do Flamengo, 284, et locaux annexes)",
+          "kind": "chancery",
+          "lat": -22.9278,
+          "lon": -43.174,
+          "note": "Un terrain de 2,75 hectares à Brasília (Lote 8, Avenida das Nações) est accordé par acte de donation en 1960. Faute de bâtiments permanents, un immeuble de bureaux provisoire est construit en 1961 pour 30 000 £. Les architectes Peter et Alison Smithson avaient été retenus pour la chancellerie permanente, mais leur projet est abandonné en 1967 en raison de son coût excessif. Un nouveau programme est confié à Alfred Coutts. En attendant, la chancellerie et les sections commerciales demeurent à Rio dans l'immeuble Édifício Tucuman, 284 Praia do Flamengo. Toute l'ambassade emménage à Brasília en 1972 ; les appartements du premier étage de l'Édifício Tucuman deviennent le consulat général, qui occupe encore cette adresse (CEP 22210-065)."
+        },
+        {
+          "from": "1972",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 801, Conjunto K, Lote 08, Asa Sul, 70408-900 Brasília-DF",
+          "building": "Chancellerie et résidence (arch. Alfred Coutts / DEMOS, 1980-1983)",
+          "kind": "chancery",
+          "lat": -15.8094,
+          "lon": -47.8757,
+          "current": true,
+          "note": "L'ambassade s'installe définitivement à Brasília en 1972, sur le domaine de 2,75 hectares accordé en 1960. Les bâtiments permanents sont conçus par Alfred Coutts, architecte en chef du Directorate of Estate Management Overseas (DEMOS) du ministère des Travaux publics : travaux débutés en 1980, occupation en 1983. Le complexe comprend un immeuble de bureaux de trois étages (environ 2 500 m²), un pavillon-pyramide d'exposition et de réception, une résidence de style peu conventionnel sous une grande toiture plongeante, et des bâtiments annexes. Le tout est situé dans le Setor de Embaixadas Sul (SES), avenue des Nations, voisin de l'ambassade d'Australie."
+        },
+        {
+          "from": "1983",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 801, Conjunto K, Lote 08, Asa Sul, 70408-900 Brasília-DF",
+          "building": "Résidence de l'ambassadeur (arch. Alfred Coutts / DEMOS, 1983)",
+          "kind": "residence",
+          "lat": -15.8094,
+          "lon": -47.8757,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur est incluse dans le même domaine que la chancellerie (Lote 8, Avenida das Nações), sur le site de 2,75 hectares accordé par le gouvernement brésilien en 1960. Conçue par Alfred Coutts, elle se distingue par une grande toiture caractéristique qui descend par endroits jusqu'au sol. Une rénovation architecturale notable a été réalisée ultérieurement par le cabinet brésilien Hersen Mendes Arquitetura."
+        }
+      ]
+    },
+    "IT": {
+      "name": "Italy",
+      "flag": "it",
+      "current": {
+        "chancery": "SES Avenida das Nações, Quadra 807, Lote 30, Asa Sul, 70420-900 Brasília-DF",
+        "residence": "SES Avenida das Nações, Quadra 807, Lote 30, Asa Sul, 70420-900 Brasília-DF"
+      },
+      "addresses": [
+        {
+          "from": "1861",
+          "to": "1919",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "En novembre 1861, peu après l'unification italienne (17 mars 1861), l'Italie ouvre une mission diplomatique à Rio de Janeiro, alors capitale impériale du Brésil. L'empereur Pedro II reconnaît le Royaume d'Italie sous Victor-Emmanuel II. Cette légation accompagne le début de la grande vague d'immigration italienne au Brésil (plus d'un million d'arrivées entre 1880 et 1920 — la plus forte communauté d'origine italienne hors d'Italie). L'adresse précise des locaux au XIXᵉ siècle n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1919",
+          "to": "1972",
+          "address": "Rua das Laranjeiras, 154, Laranjeiras, Rio de Janeiro-RJ",
+          "building": "Solar de Laranjeiras (palacete)",
+          "kind": "embassy",
+          "lat": -22.9313,
+          "lon": -43.1795,
+          "note": "La légation est élevée au rang d'ambassade en 1919. L'ambassade s'installe dans un ancien palacete (solar) situé au 154 de la Rua das Laranjeiras, dans le quartier diplomatique de Laranjeiras, où voisinent les ambassades du Japon et d'Allemagne. L'ambassade y résidera plus de cinquante ans. En novembre 1959, le conseiller Carlo Enrico Figlioli choisit le lot n°30 de la Quadra 807 du Setor de Embaixadas Sul pour la future ambassade à Brasília ; le président Juscelino Kubitschek assiste personnellement à la pose de la première pierre aux côtés du président italien Giovanni Gronchi."
+        },
+        {
+          "from": "1972",
+          "to": "1977",
+          "address": "Asa Sul, Brasília-DF (logement provisoire)",
+          "kind": "chancery",
+          "lat": -15.82,
+          "lon": -47.9,
+          "note": "En 1972, l'ambassade quitte Rio de Janeiro et s'installe temporairement dans un appartement du quartier résidentiel de l'Asa Sul à Brasília, dans l'attente de l'achèvement du nouveau bâtiment conçu par Pier Luigi Nervi. Les travaux de construction débutent en 1974."
+        },
+        {
+          "from": "1977",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 807, Lote 30, Asa Sul, 70420-900 Brasília-DF",
+          "building": "Palais Pier Luigi Nervi (1971-1977)",
+          "kind": "chancery",
+          "lat": -15.8229,
+          "lon": -47.8879,
+          "current": true,
+          "note": "Le projet est confié directement à Pier Luigi Nervi le 1ᵉʳ juillet 1969 par le ministre des Affaires étrangères Pietro Nenni. Conçu avec son fils Antonio Nervi, c'est l'une des dernières œuvres majeures de l'ingénieur — il ne visitera le bâtiment achevé qu'une seule fois, en novembre 1978, quelques semaines avant sa mort. La construction débute en 1974 et s'achève en janvier 1977 ; la première réception officielle a lieu le 2 juin 1977, Fête de la République italienne. Le volume principal, reposant sur des « tétrapodes » en béton armé (piliers octogonaux s'ouvrant en quatre bras), abrite à la fois la chancellerie et la résidence de l'ambassadeur ; un corps secondaire en plan cruciforme loge les appartements du personnel. Le modèle du bâtiment est présenté à la XIIIᵉ Biennale de São Paulo en 1975. L'entreprise brésilienne Irfasa assure la construction. Le bâtiment est considéré comme l'un des plus remarquables de Brasília sur le plan architectural."
+        },
+        {
+          "from": "1977",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 807, Lote 30, Asa Sul, 70420-900 Brasília-DF",
+          "building": "Résidence de l'ambassadeur — Pier Luigi Nervi (1971-1977)",
+          "kind": "residence",
+          "lat": -15.8229,
+          "lon": -47.8879,
+          "current": true,
+          "note": "La résidence de l'ambassadeur d'Italie est intégrée au volume principal du complexe conçu par Pier Luigi Nervi, sur le même lote que la chancellerie (Lote 30, Quadra 807, SES). La hauteur du bâtiment ménage une vue privilégiée sur le lac Paranoá. Chancellerie et résidence partagent le même toit — une composition de « palazzo » modernement transfiguré selon les mots de Nervi."
+        }
+      ]
+    },
+    "JP": {
+      "name": "Japan",
+      "flag": "jp",
+      "current": {
+        "chancery": "SES Avenida das Nações, Quadra 811, Lote 39, Asa Sul, 70425-900 Brasília-DF",
+        "residence": "SES Avenida das Nações, Quadra 811, Lote 39, Asa Sul, 70425-900 Brasília-DF"
+      },
+      "addresses": [
+        {
+          "from": "1897",
+          "to": "1903",
+          "address": "Avenida Sete de Abril, 609, Petrópolis-RJ",
+          "building": "Pousada Dom Petrópolis (actuelle)",
+          "kind": "legation",
+          "lat": -22.5049,
+          "lon": -43.1756,
+          "note": "Première légation japonaise au Brésil, ouverte le 23 août 1897 par le ministre Sutemi Chinda. Installée à Petrópolis — résidence d'été de la cour impériale brésilienne — pour éviter la fièvre jaune qui sévissait à Rio de Janeiro. Le bâtiment, belle demeure du XIXᵉ siècle, abrite aujourd'hui la Pousada Dom Petrópolis, avec un espace muséal consacré à l'immigration japonaise au Brésil."
+        },
+        {
+          "from": "1903",
+          "to": "1923",
+          "address": "Avenida Ipiranga, Petrópolis-RJ",
+          "kind": "legation",
+          "lat": -22.5049,
+          "lon": -43.1756,
+          "note": "Transfert du siège de la légation japonaise à une nouvelle adresse sur l'Avenida Ipiranga à Petrópolis. En 1906, le 3ᵉ ministre du Japon au Brésil, Fukashi Sugimura, adresse depuis cette légation un rapport favorable à Tokyo qui conduira à l'ouverture du Brésil à l'immigration japonaise en 1908. La légation demeure à Petrópolis, capitale diplomatique de fait, car les ambassades étrangères suivaient la cour impériale dans cette ville."
+        },
+        {
+          "from": "1923",
+          "to": "1942",
+          "address": "Laranjeiras, Rio de Janeiro-RJ (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -22.9333,
+          "lon": -43.1833,
+          "note": "La légation impériale japonaise est élevée au rang d'ambassade le 1ᵉʳ mai 1923. La mission diplomatique quitte Petrópolis pour s'installer à Rio de Janeiro, alors capitale fédérale du Brésil. Comme la plupart des ambassades de l'époque, elle était implantée dans le quartier de Laranjeiras, proche du palais du Catete (siège du pouvoir exécutif). La présence japonaise au Brésil était alors croissante : depuis 1908, des centaines de milliers d'immigrants japonais travaillaient dans les fazendas de café de l'État de São Paulo. Les relations diplomatiques sont rompues le 28 janvier 1942 lorsque le Brésil rejoint les Alliés et rompt avec les puissances de l'Axe à la suite de l'attaque de Pearl Harbor. Les intérêts japonais sont d'abord représentés par l'ambassade d'Espagne, puis par celle de Suède après l'entrée en guerre de l'Espagne."
+        },
+        {
+          "from": "1952",
+          "to": "1971",
+          "address": "Rio de Janeiro-RJ (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Les relations diplomatiques sont rétablies en 1952, à la suite du Traité de paix de San Francisco (1951). Le premier ambassadeur extraordinaire et plénipotentiaire du Japon au Brésil nommé après la Seconde Guerre mondiale est Shin Kimitsuka, issu du secteur privé. L'ambassade reprend ses activités à Rio de Janeiro. Brasília est inaugurée comme nouvelle capitale fédérale le 21 avril 1960, mais le Japon maintient son ambassade à Rio pendant une décennie de transition."
+        },
+        {
+          "from": "1971",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 811, Lote 39, Asa Sul, 70425-900 Brasília-DF",
+          "building": "Chancelerie et résidence Fumihiko Maki (1976)",
+          "kind": "chancery",
+          "lat": -15.8302,
+          "lon": -47.8961,
+          "current": true,
+          "note": "L'ambassade est transférée à Brasília en 1971, lorsque la capitale diplomatique de facto rejoint officiellement la nouvelle capitale fédérale. Le gouvernement brésilien avait attribué gratuitement un terrain dans le Setor de Embaixadas Sul (SES) lors de la construction de Brasília. Un premier bâtiment provisoire de style vernaculaire japonais (pavillon) est construit entre 1970 et 1972 par l'architecte Yoshimi Ohashi. En 1976, Fumihiko Maki — futur lauréat du prix Pritzker en 1993, architecte du Hillside Terrace à Tokyo — conçoit la chancelerie définitive et la résidence de l'ambassadeur dans un style moderniste mêlant architecture japonaise traditionnelle et modernisme international. Chancelerie et résidence partagent le même lot (Lote 39) au sein du complexe diplomatique. Coordonnées : 15°49′48″S, 47°53′46″O."
+        },
+        {
+          "from": "1971",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 811, Lote 39, Asa Sul, 70425-900 Brasília-DF",
+          "building": "Résidence de l'ambassadeur — Fumihiko Maki (1976)",
+          "kind": "residence",
+          "lat": -15.8302,
+          "lon": -47.8961,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur du Japon est intégrée dans le même complexe que la chancelerie, sur le Lote 39 du Setor de Embaixadas Sul. Conçue par Fumihiko Maki en 1976, elle allie sobriété de l'architecture japonaise contemporaine et exigences protocolaires d'une résidence diplomatique. Contrairement à de nombreuses autres ambassades à Brasília dont la résidence est séparée dans le quartier résidentiel de Lago Sul, la résidence de l'ambassadeur du Japon se trouve sur le même lot que la chancelerie."
+        }
+      ]
+    },
+    "MX": {
+      "name": "Mexico",
+      "flag": "mx",
+      "current": {
+        "chancery": "SES Avenida das Nações, Quadra 805, Lote 18, Asa Sul, 70412-900 Brasília-DF",
+        "residence": "SES Avenida das Nações, Quadra 805, Lote 18, Asa Sul, 70412-900 Brasília-DF (résidence officielle au sein du même complexe)"
+      },
+      "addresses": [
+        {
+          "from": "1831",
+          "to": "1922",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Les relations diplomatiques entre le Mexique et le Brésil sont formellement établies le 9 mars 1825. La légation mexicaine à Rio de Janeiro est officiellement ouverte le 16 juin 1831, alors que la ville est la capitale de l'Empire du Brésil. Les relations sont suspendues pendant la Révolution mexicaine (1910-1920) puis rétablies en 1920 lorsque le Brésil reconnaît le nouveau gouvernement mexicain. L'adresse précise des locaux de la légation n'a pu être établie à partir des sources disponibles."
+        },
+        {
+          "from": "1922",
+          "to": "c.1961",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Le gouvernement mexicain élève unilatéralement sa représentation diplomatique au rang d'ambassade le 25 janvier 1922. L'ambassade demeure à Rio de Janeiro, capitale fédérale du Brésil jusqu'en 1960. L'adresse exacte des locaux à Rio de Janeiro n'a pas pu être établie avec certitude à partir des sources consultées."
+        },
+        {
+          "from": "c.1961",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 805, Lote 18, Asa Sul, 70412-900 Brasília-DF",
+          "building": "Complexe Teodoro González de León, Abraham Zabludowsky et Francisco Serrano (1975)",
+          "kind": "chancery",
+          "lat": -15.8227,
+          "lon": -47.8856,
+          "current": true,
+          "note": "À la suite du transfert de la capitale fédérale du Brésil à Brasília (inaugurée le 21 avril 1960), l'ambassade du Mexique s'y installe vers 1961. Le complexe diplomatique actuel — chancellerie, résidence officielle et maisons du personnel, regroupées sur le Lote 18 du Setor de Embaixadas Sul — est conçu par les architectes mexicains Teodoro González de León, Abraham Zabludowsky et Francisco Serrano et achevé en 1975. De style brutaliste, le bâtiment exploite un dénivelé de 16 mètres : les édifices semblent creusés dans le terrain, les talus enherbés évoquant les formes de l'architecture préhispanique. Le portique principal est surmonté d'une réplique d'une tête olmèque du Pré-classique moyen. Le président brésilien Juscelino Kubitschek avait personnellement assisté à la pose de la première pierre aux côtés du président mexicain Adolfo López Mateos."
+        },
+        {
+          "from": "c.1961",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 805, Lote 18, Asa Sul, 70412-900 Brasília-DF",
+          "building": "Résidence officielle — complexe González de León / Zabludowsky / Serrano (1975)",
+          "kind": "residence",
+          "lat": -15.8227,
+          "lon": -47.8856,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur se trouve au centre du complexe diplomatique, entre la chancellerie (côté avenue) et les maisons du personnel (côté opposé). Les trois ensembles de bâtiments partagent le même lot (Lote 18, SES Quadra 805) et constituent un ensemble architectural cohérent conçu par González de León, Zabludowsky et Serrano."
+        }
+      ]
+    },
+    "RU": {
+      "name": "Russia",
+      "flag": "ru",
+      "current": {
+        "chancery": "SES Avenida das Nações, Quadra 801, Lote 19, Asa Sul, 70402-900 Brasília-DF",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1811",
+          "to": "1828",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "consulate",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "En juillet 1811, le tsar Alexandre Iᵉʳ nomme Friedrich von der Pahlen envoyé auprès de la cour portugaise transférée à Rio de Janeiro. Simultanément, un consulat général est créé : Xavier Labenskii, diplomate de carrière, est nommé consul général, avec Mikhail Labenskii comme vice-consul. Georg Heinrich von Langsdorff prend ensuite le poste de consul général pour seize ans. C'est la première présence diplomatique officielle russe dans le Nouveau Monde. Les relations consulaires sont maintenues jusqu'en novembre 1827."
+        },
+        {
+          "from": "1828",
+          "to": "1917",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Le 3 octobre 1828, l'Empire russe signe le décret établissant des relations diplomatiques formelles avec l'Empire du Brésil, faisant du Brésil le premier pays d'Amérique du Sud à nouer des liens officiels avec la Russie. Frants Borel-Palentssky est nommé premier envoyé extraordinaire. L'Empereur Nicolas Iᵉʳ avait privilégié le Brésil en tant que monarchie constitutionnelle parmi les nouvelles nations indépendantes d'Amérique latine, alors toutes républicaines. En 1876, l'Empereur Dom Pedro II effectue une visite privée en Russie. La légation est établie à Rio de Janeiro, capitale impériale puis fédérale. Les relations sont rompues à la suite de la Révolution bolchévique d'octobre 1917."
+        },
+        {
+          "from": "1945",
+          "to": "1947",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Les relations diplomatiques entre l'URSS et le Brésil sont rétablies le 2 avril 1945, dans le contexte de l'alliance contre les puissances de l'Axe pendant la Seconde Guerre mondiale. L'ambassade soviétique s'installe à Rio de Janeiro, alors capitale fédérale. Les relations sont à nouveau rompues le 21 octobre 1947 sous la présidence d'Eurico Gaspar Dutra, anticommuniste, qui interdit le Parti communiste brésilien (PCB). La présence diplomatique soviétique n'aura duré que trente et un mois."
+        },
+        {
+          "from": "1961",
+          "to": "c.1971",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Les relations diplomatiques entre l'URSS et le Brésil sont rétablies en novembre 1961 sous le gouvernement de Jânio Quadros, qui mène une politique étrangère indépendante dite « política externa independente ». L'ambassade soviétique rouvre à Rio de Janeiro. Lors du transfert progressif des missions diplomatiques vers Brasília — capital inaugurée le 21 avril 1960 —, l'ambassade soviétique s'y installe au début des années 1970. Un terrain dans le Setor de Embaixadas Sul (SES) est mis à disposition par le gouvernement brésilien."
+        },
+        {
+          "from": "c.1971",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 801, Lote 19, Asa Sul, 70402-900 Brasília-DF",
+          "kind": "chancery",
+          "lat": -15.8042,
+          "lon": -47.8753,
+          "current": true,
+          "note": "La chancellerie soviétique puis russe s'installe dans le Setor de Embaixadas Sul (SES), sur l'Avenida das Nações, artère qui regroupe la quasi-totalité des ambassades accréditées auprès du Brésil. Le bâtiment, sobre et caractéristique de l'architecture diplomatique soviétique des années 1970, est attribué gratuitement par le gouvernement brésilien pour accélérer l'installation des représentations étrangères dans la nouvelle capitale. À la dissolution de l'URSS en décembre 1991, la Fédération de Russie est reconnue comme État continuateur et l'ambassade passe sous pavillon russe. L'ambassade a également compétence pour le Suriname."
+        }
+      ]
+    },
+    "US": {
+      "name": "United States",
+      "flag": "us",
+      "current": {
+        "chancery": "SES Avenida das Nações, Quadra 801, Lote 03, Asa Sul, 70403-900 Brasília-DF",
+        "residence": "SHIS QL 12, Conjunto 16, Lago Sul, 71630-165 Brasília-DF"
+      },
+      "addresses": [
+        {
+          "from": "1825",
+          "to": "1905",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "Les États-Unis reconnaissent l'Empire du Brésil le 26 mai 1824 (réception à Washington de José Silvestre Rebello). La légation américaine à Rio de Janeiro est officiellement ouverte le 29 octobre 1825, lorsque le chargé d'affaires Condy Raguet présente ses lettres de créance à l'empereur Pedro Iᵉʳ. L'adresse précise des locaux de la légation au XIXᵉ siècle n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1905",
+          "to": "1960",
+          "address": "Rio de Janeiro (bâtiment provisoire jusqu'en 1952)",
+          "kind": "embassy",
+          "lat": -22.9068,
+          "lon": -43.1729,
+          "note": "La légation est élevée au rang d'ambassade le 13 janvier 1905 : David E. Thompson est nommé premier ambassadeur extraordinaire et plénipotentiaire des États-Unis au Brésil. L'ambassade demeure à Rio de Janeiro, alors capitale fédérale. Les locaux exacts antérieurs à 1952 ne sont pas documentés dans les sources consultées."
+        },
+        {
+          "from": "1952",
+          "to": "1971",
+          "address": "Avenida Presidente Wilson, 147, Castelo, 20030-020 Rio de Janeiro-RJ",
+          "building": "Chancery Harrison & Abramovitz (1952)",
+          "kind": "chancery",
+          "lat": -22.9114,
+          "lon": -43.174,
+          "note": "Immeuble de treize étages revêtu de travertin italien, conçu par le cabinet new-yorkais Harrison and Abramovitz, inauguré en 1952. Il constitue l'une des premières grandes chancelleries américaines construites à l'étranger dans le style moderniste. Lorsque Brasília devient capitale et que l'ambassade s'y installe définitivement (1960-1971), le bâtiment est conservé et transformé en consulat général des États-Unis, fonction qu'il occupe encore aujourd'hui."
+        },
+        {
+          "from": "1960",
+          "to": "1961",
+          "address": "Brasília Palace Hotel, Eixo Monumental, Brasília-DF",
+          "kind": "embassy",
+          "lat": -15.7965,
+          "lon": -47.8825,
+          "note": "Les États-Unis sont la première nation à s'établir à Brasília : l'ambassade ouvre au Brasília Palace Hotel début 1960, après que le secrétaire d'État John Foster Dulles a personnellement choisi le terrain offert par le gouvernement brésilien lors de sa visite aux côtés du président Kubitschek en 1958. Le président Eisenhower pose symboliquement la première pierre de la nouvelle chancellerie lors de sa visite au Brésil le 23 février 1960."
+        },
+        {
+          "from": "1961",
+          "to": null,
+          "address": "SES Avenida das Nações, Quadra 801, Lote 03, Asa Sul, 70403-900 Brasília-DF",
+          "building": "Chancellerie McLeod & Ferrera (1961), agrandie par Henningson Durham Richardson (1972)",
+          "kind": "chancery",
+          "lat": -15.804,
+          "lon": -47.8728,
+          "current": true,
+          "note": "L'ambassade emménage dans la chancellerie provisoire en mars 1961 ; le bâtiment est officiellement inauguré en avril 1961. Conçue par le cabinet américain McLeod and Ferrera, l'édifice moderniste est habillé de briques blanches et de stuc, organisé autour d'une cour centrale, avec des jardins et des plans d'eau dessinés par le paysagiste brésilien Roberto Burle Marx. Un agrandissement est réalisé en 1972 par le cabinet Henningson, Durham and Richardson. Le terrain, situé à l'entrée du Setor de Embaixadas Sul (SES), a été donné par le gouvernement brésilien."
+        },
+        {
+          "from": "c.1960",
+          "to": null,
+          "address": "SHIS QL 12, Conjunto 16, Lago Sul, 71630-165 Brasília-DF",
+          "kind": "residence",
+          "lat": -15.8303,
+          "lon": -47.8569,
+          "current": true,
+          "note": "Résidence officielle de l'ambassadeur des États-Unis, située dans le quartier résidentiel de Lago Sul (Setor de Habitações Individuais Sul). La propriété appartient au gouvernement américain depuis les années 1960. Elle a fait l'objet d'une extension de la zone de réception (Chief Mission Residence) documentée autour de 2013, avec toiture végétale et pergola à stores automatiques."
+        }
+      ]
+    }
+  },
+  "note": "Adresses géocodées à la précision de la rue. Hôte partiel : 12/19 origines en attente du reset rate-limit."
+}
