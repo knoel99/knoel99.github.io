@@ -1,13 +1,8 @@
 (function () {
   var ARCHIVES = { data: null, layer: null, map: null };
 
-  function findMap() {
-    if (ARCHIVES.map) return ARCHIVES.map;
-    for (var key in window) {
-      try { if (window[key] instanceof L.Map) { ARCHIVES.map = window[key]; break; } } catch (e) {}
-    }
-    return ARCHIVES.map;
-  }
+  var findMap = window.EmbassyUtils.findMap;
+  var walkMarkers = window.EmbassyUtils.walkMarkers;
 
   function fmtRange(from, to) {
     if (!to) return from + ' →';
@@ -267,13 +262,6 @@
   var ARCHIVES_MODE = { active: false, dimmed: [], dimmedIcons: [] };
 
   // Folium nests markers in FeatureGroups, so map.eachLayer doesn't see them directly. Walk recursively.
-  function walkMarkers(layer, fn) {
-    if (!layer) return;
-    if (layer instanceof L.Marker) fn(layer);
-    else if (typeof layer.eachLayer === 'function') {
-      layer.eachLayer(function (child) { walkMarkers(child, fn); });
-    }
-  }
 
   function popupHtml(marker) {
     var p = marker.getPopup && marker.getPopup();

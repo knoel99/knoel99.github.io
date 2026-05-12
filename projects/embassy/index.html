@@ -23,185 +23,170 @@
 </head>
 <body>
         
-    <div id="info-panel" style="
-        position: fixed;
-        bottom: 50px;
-        left: 20px;
-        z-index: 1000;
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        max-width: 380px;
-        max-height: 60vh;
-        overflow-y: auto;
-        font-family: Arial, sans-serif;
-        font-size: 13px;
-    ">
+    <div id="info-panel">
         <button id="info-panel-toggle"
             onclick="document.getElementById('info-panel').classList.toggle('collapsed')"
             data-i18n-title="collapsePanel"
             title="Réduire / agrandir le panneau">
             <span class="ip-icon-expanded">&minus;</span><span class="ip-icon-collapsed">&#8505;</span>
         </button>
-        <h3 style="margin:0 0 10px; color:#333;" data-i18n="title">
+        <h3 class="panel-title" data-i18n="title">
             G20 Embassy Distance Map
         </h3>
-        <p style="margin:0 0 8px; color:#666; font-size:12px;" data-i18n="description">
+        <p class="panel-desc" data-i18n="description">
             Distance between G20 embassies and host country power centers.
             Click a flag button above or use the layer control to explore.
         </p>
-        <a href="g20_distance_matrix.html" style="display:inline-block;margin-bottom:10px;padding:6px 12px;
-            background:#0066cc;color:white;border-radius:6px;text-decoration:none;font-size:12px;font-weight:500;"
+        <a href="g20_distance_matrix.html" class="view-matrix-link"
             data-i18n="viewMatrix">
             View Distance Matrix Table
         </a>
         <div class="info-extras">
         <details>
-            <summary style="cursor:pointer; font-weight:bold; color:#555; margin-bottom:6px;" data-i18n="avgRanking">
+            <summary class="summary-heading" data-i18n="avgRanking">
                 Average Distance Ranking
             </summary>
-            <table style="width:100%; border-collapse:collapse; font-size:12px;">
+            <table class="ranking-table">
                 <thead>
-                    <tr style="border-bottom:1px solid #ddd;">
-                        <th style="padding:2px 6px; text-align:left;" data-i18n="rankCol">#</th>
-                        <th style="padding:2px 6px; text-align:left;" data-i18n="countryCol">Country</th>
-                        <th style="padding:2px 6px; text-align:right;" data-i18n="distCol">Avg. Dist.</th>
+                    <tr>
+                        <th data-i18n="rankCol">#</th>
+                        <th data-i18n="countryCol">Country</th>
+                        <th data-i18n="distCol">Avg. Dist.</th>
                     </tr>
                 </thead>
                 <tbody>
         <tr>
-            <td style="padding:2px 6px;">1</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/au.png" width="16" style="vertical-align:middle;border-radius:1px;"> Australia</td>
-            <td style="padding:2px 6px; text-align:right;">0.9 km</td>
+            <td>1</td>
+            <td><img src="https://flagcdn.com/w20/au.png" width="16"> Australia</td>
+            <td>0.9 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">2</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/ca.png" width="16" style="vertical-align:middle;border-radius:1px;"> Canada</td>
-            <td style="padding:2px 6px; text-align:right;">1.4 km</td>
+            <td>2</td>
+            <td><img src="https://flagcdn.com/w20/ca.png" width="16"> Canada</td>
+            <td>1.4 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">3</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/gb.png" width="16" style="vertical-align:middle;border-radius:1px;"> United Kingdom</td>
-            <td style="padding:2px 6px; text-align:right;">1.7 km</td>
+            <td>3</td>
+            <td><img src="https://flagcdn.com/w20/gb.png" width="16"> United Kingdom</td>
+            <td>1.7 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">4</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/fr.png" width="16" style="vertical-align:middle;border-radius:1px;"> France</td>
-            <td style="padding:2px 6px; text-align:right;">1.7 km</td>
+            <td>4</td>
+            <td><img src="https://flagcdn.com/w20/fr.png" width="16"> France</td>
+            <td>1.7 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">5</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/it.png" width="16" style="vertical-align:middle;border-radius:1px;"> Italy</td>
-            <td style="padding:2px 6px; text-align:right;">1.8 km</td>
+            <td>5</td>
+            <td><img src="https://flagcdn.com/w20/it.png" width="16"> Italy</td>
+            <td>1.8 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">6</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/eu.png" width="16" style="vertical-align:middle;border-radius:1px;"> European Union</td>
-            <td style="padding:2px 6px; text-align:right;">2.0 km</td>
+            <td>6</td>
+            <td><img src="https://flagcdn.com/w20/eu.png" width="16"> European Union</td>
+            <td>2.0 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">7</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/de.png" width="16" style="vertical-align:middle;border-radius:1px;"> Germany</td>
-            <td style="padding:2px 6px; text-align:right;">2.6 km</td>
+            <td>7</td>
+            <td><img src="https://flagcdn.com/w20/de.png" width="16"> Germany</td>
+            <td>2.6 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">8</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/jp.png" width="16" style="vertical-align:middle;border-radius:1px;"> Japan</td>
-            <td style="padding:2px 6px; text-align:right;">2.8 km</td>
+            <td>8</td>
+            <td><img src="https://flagcdn.com/w20/jp.png" width="16"> Japan</td>
+            <td>2.8 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">9</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/us.png" width="16" style="vertical-align:middle;border-radius:1px;"> United States</td>
-            <td style="padding:2px 6px; text-align:right;">2.8 km</td>
+            <td>9</td>
+            <td><img src="https://flagcdn.com/w20/us.png" width="16"> United States</td>
+            <td>2.8 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">10</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/ru.png" width="16" style="vertical-align:middle;border-radius:1px;"> Russia</td>
-            <td style="padding:2px 6px; text-align:right;">2.9 km</td>
+            <td>10</td>
+            <td><img src="https://flagcdn.com/w20/ru.png" width="16"> Russia</td>
+            <td>2.9 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">11</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/in.png" width="16" style="vertical-align:middle;border-radius:1px;"> India</td>
-            <td style="padding:2px 6px; text-align:right;">3.2 km</td>
+            <td>11</td>
+            <td><img src="https://flagcdn.com/w20/in.png" width="16"> India</td>
+            <td>3.2 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">12</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/br.png" width="16" style="vertical-align:middle;border-radius:1px;"> Brazil</td>
-            <td style="padding:2px 6px; text-align:right;">3.3 km</td>
+            <td>12</td>
+            <td><img src="https://flagcdn.com/w20/br.png" width="16"> Brazil</td>
+            <td>3.3 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">13</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/za.png" width="16" style="vertical-align:middle;border-radius:1px;"> South Africa</td>
-            <td style="padding:2px 6px; text-align:right;">3.3 km</td>
+            <td>13</td>
+            <td><img src="https://flagcdn.com/w20/za.png" width="16"> South Africa</td>
+            <td>3.3 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">14</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/kr.png" width="16" style="vertical-align:middle;border-radius:1px;"> South Korea</td>
-            <td style="padding:2px 6px; text-align:right;">3.5 km</td>
+            <td>14</td>
+            <td><img src="https://flagcdn.com/w20/kr.png" width="16"> South Korea</td>
+            <td>3.5 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">15</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/ar.png" width="16" style="vertical-align:middle;border-radius:1px;"> Argentina</td>
-            <td style="padding:2px 6px; text-align:right;">4.5 km</td>
+            <td>15</td>
+            <td><img src="https://flagcdn.com/w20/ar.png" width="16"> Argentina</td>
+            <td>4.5 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">16</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/id.png" width="16" style="vertical-align:middle;border-radius:1px;"> Indonesia</td>
-            <td style="padding:2px 6px; text-align:right;">5.0 km</td>
+            <td>16</td>
+            <td><img src="https://flagcdn.com/w20/id.png" width="16"> Indonesia</td>
+            <td>5.0 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">17</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/cn.png" width="16" style="vertical-align:middle;border-radius:1px;"> China</td>
-            <td style="padding:2px 6px; text-align:right;">6.6 km</td>
+            <td>17</td>
+            <td><img src="https://flagcdn.com/w20/cn.png" width="16"> China</td>
+            <td>6.6 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">18</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/tr.png" width="16" style="vertical-align:middle;border-radius:1px;"> Turkey</td>
-            <td style="padding:2px 6px; text-align:right;">6.6 km</td>
+            <td>18</td>
+            <td><img src="https://flagcdn.com/w20/tr.png" width="16"> Turkey</td>
+            <td>6.6 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">19</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/mx.png" width="16" style="vertical-align:middle;border-radius:1px;"> Mexico</td>
-            <td style="padding:2px 6px; text-align:right;">7.7 km</td>
+            <td>19</td>
+            <td><img src="https://flagcdn.com/w20/mx.png" width="16"> Mexico</td>
+            <td>7.7 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">20</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/sa.png" width="16" style="vertical-align:middle;border-radius:1px;"> Saudi Arabia</td>
-            <td style="padding:2px 6px; text-align:right;">9.1 km</td>
+            <td>20</td>
+            <td><img src="https://flagcdn.com/w20/sa.png" width="16"> Saudi Arabia</td>
+            <td>9.1 km</td>
         </tr>
         <tr>
-            <td style="padding:2px 6px;">21</td>
-            <td style="padding:2px 6px;"><img src="https://flagcdn.com/w20/il.png" width="16" style="vertical-align:middle;border-radius:1px;"> Israel</td>
-            <td style="padding:2px 6px; text-align:right;">49.9 km</td>
+            <td>21</td>
+            <td><img src="https://flagcdn.com/w20/il.png" width="16"> Israel</td>
+            <td>49.9 km</td>
         </tr></tbody>
             </table>
         </details>
-        <details id="legend-details" style="margin-top:8px;">
-            <summary style="cursor:pointer; font-weight:bold; color:#555; margin-bottom:6px;">
+        <details id="legend-details">
+            <summary>
                 <span id="legend-toggle-btn" role="button"
                     data-i18n-aria="showHideLegend" data-i18n-title="showHideLegend"
                     aria-label="Afficher / masquer la légende" title="Afficher / masquer la légende">&#9654;</span>
                 <span data-i18n="legend">Legend</span>
             </summary>
-            <div style="font-size:12px; color:#666;">
-                <p style="margin:4px 0;">
+            <div class="legend-block">
+                <p>
                     <span style="color:red;">&#9733;</span> <span data-i18n="powerCenterLegend">Power Center (government seat)</span>
                 </p>
-                <p style="margin:4px 0;">
-                    <img src="https://flagcdn.com/w20/us.png" width="14" style="vertical-align:middle;"> <span data-i18n="embassyLegend">Embassy location (flag of origin country)</span>
+                <p>
+                    <img src="https://flagcdn.com/w20/us.png" width="14"> <span data-i18n="embassyLegend">Embassy location (flag of origin country)</span>
                 </p>
-                <p style="margin:4px 0;">
+                <p>
                     <span style="color:green;">---</span> <span data-i18n="closeLegend">Close to power center</span>
                 </p>
-                <p style="margin:4px 0;">
+                <p>
                     <span style="color:red;">---</span> <span data-i18n="farLegend">Far from power center</span>
                 </p>
-                <p style="margin:4px 0;">
+                <p>
                     <span style="display:inline-block;width:12px;height:12px;background:rgba(231,76,60,0.25);border:1px solid #c0392b;vertical-align:middle;border-radius:50%;"></span>
                     <span data-i18n="easySpying">Easy spying (~1 km): documented SCS placements, GSM/WiFi/RF urban range</span>
                 </p>
-                <p style="margin:4px 0;">
+                <p>
                     <span style="display:inline-block;width:12px;height:12px;background:transparent;border:1.5px dashed #c0392b;vertical-align:middle;border-radius:50%;"></span>
                     <span data-i18n="maxSpying">Max spying (~5 km): line-of-sight microwave, counter-intel zoning range</span>
                 </p>
@@ -210,185 +195,91 @@
         </div>
     </div>
     
-    <div id="nav-panel" style="
-        position: fixed;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1000;
-        background: white;
-        padding: 8px 12px;
-        border-radius: 10px;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-    ">
+    <div id="nav-panel">
         <div id="flag-bar">
         <button onclick="goToCountry(-34.6083,-58.3712,'Argentina')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/ar.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Argentina</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/ar.png" width="20"> <span>Argentina</span>
         </button>
         <button onclick="goToCountry(-35.3082,149.1245,'Australia')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/au.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Australia</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/au.png" width="20"> <span>Australia</span>
         </button>
         <button onclick="goToCountry(-15.7999,-47.8603,'Brazil')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/br.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Brazil</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/br.png" width="20"> <span>Brazil</span>
         </button>
         <button onclick="goToCountry(45.4236,-75.7009,'Canada')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/ca.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Canada</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/ca.png" width="20"> <span>Canada</span>
         </button>
         <button onclick="goToCountry(39.913,116.3815,'China')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/cn.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>China</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/cn.png" width="20"> <span>China</span>
         </button>
         <button onclick="goToCountry(48.8704,2.3167,'France')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/fr.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>France</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/fr.png" width="20"> <span>France</span>
         </button>
         <button onclick="goToCountry(52.52,13.3693,'Germany')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/de.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Germany</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/de.png" width="20"> <span>Germany</span>
         </button>
         <button onclick="goToCountry(28.6143,77.1994,'India')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/in.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>India</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/in.png" width="20"> <span>India</span>
         </button>
         <button onclick="goToCountry(-6.1701,106.8272,'Indonesia')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/id.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Indonesia</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/id.png" width="20"> <span>Indonesia</span>
         </button>
         <button onclick="goToCountry(41.9009,12.4803,'Italy')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/it.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Italy</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/it.png" width="20"> <span>Italy</span>
         </button>
         <button onclick="goToCountry(35.6735,139.7525,'Japan')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/jp.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Japan</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/jp.png" width="20"> <span>Japan</span>
         </button>
         <button onclick="goToCountry(19.4326,-99.1312,'Mexico')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/mx.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Mexico</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/mx.png" width="20"> <span>Mexico</span>
         </button>
         <button onclick="goToCountry(55.752,37.6175,'Russia')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/ru.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Russia</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/ru.png" width="20"> <span>Russia</span>
         </button>
         <button onclick="goToCountry(24.65,46.71,'Saudi Arabia')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/sa.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Saudi Arabia</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/sa.png" width="20"> <span>Saudi Arabia</span>
         </button>
         <button onclick="goToCountry(-25.7411,28.212,'South Africa')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/za.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>South Africa</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/za.png" width="20"> <span>South Africa</span>
         </button>
         <button onclick="goToCountry(37.532,126.98,'South Korea')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/kr.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>South Korea</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/kr.png" width="20"> <span>South Korea</span>
         </button>
         <button onclick="goToCountry(39.931,32.799,'Turkey')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/tr.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Turkey</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/tr.png" width="20"> <span>Turkey</span>
         </button>
         <button onclick="goToCountry(51.5034,-0.1276,'United Kingdom')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/gb.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>United Kingdom</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/gb.png" width="20"> <span>United Kingdom</span>
         </button>
         <button onclick="goToCountry(38.8977,-77.0365,'United States')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/us.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>United States</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/us.png" width="20"> <span>United States</span>
         </button>
         <button onclick="goToCountry(50.8438,4.3828,'European Union')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/eu.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>European Union</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/eu.png" width="20"> <span>European Union</span>
         </button>
         <button onclick="goToCountry(31.7765,35.2054,'Israel')"
-            style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid #ddd;
-            border-radius:6px;background:white;cursor:pointer;font-size:11px;white-space:nowrap;
-            transition:all 0.15s;"
-            onmouseover="this.style.background='#f0f0f0';this.style.borderColor='#999'"
-            onmouseout="this.style.background='white';this.style.borderColor='#ddd'">
-            <img src="https://flagcdn.com/w20/il.png" width="20" style="vertical-align:middle;border-radius:2px;"> <span>Israel</span>
+            class="flag-btn">
+            <img src="https://flagcdn.com/w20/il.png" width="20"> <span>Israel</span>
         </button>
         </div>
     </div>
@@ -432,6 +323,7 @@
 </body>
 <script src="data/embassies.js"></script>
 <script src="data/embassy-history-fr.js"></script>
+<script src="js/utils.js"></script>
 <script src="js/map.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/archives.js"></script>

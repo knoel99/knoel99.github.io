@@ -597,22 +597,8 @@
     });
   }
 
-  /* Popup translator. Folium popups are bound at init with English HTML inside
-     `var html_xxx = $(...)` strings. We cache the original on first pass, then
-     run token replacements (labels + country names) on language change. */
-  function findMap() {
-    for (var k in window) {
-      try { if (window[k] instanceof L.Map) return window[k]; } catch (e) {}
-    }
-    return null;
-  }
-  function walkMarkers(layer, fn) {
-    if (!layer) return;
-    if (layer instanceof L.Marker) fn(layer);
-    else if (typeof layer.eachLayer === 'function') {
-      layer.eachLayer(function (c) { walkMarkers(c, fn); });
-    }
-  }
+  var findMap = window.EmbassyUtils.findMap;
+  var walkMarkers = window.EmbassyUtils.walkMarkers;
   function reEscape(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
   function translatePopups(t, cn) {

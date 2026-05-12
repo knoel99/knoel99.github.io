@@ -204,7 +204,7 @@
   window.goToCountry = function (lat, lon, name) {
     var maps = document.querySelectorAll('.folium-map');
     for (var i = 0; i < maps.length; i++) {
-      var mId = maps[0].id;
+      var mId = maps[i].id;
       var m = window[mId];
       if (!m) continue;
 
