@@ -58,11 +58,15 @@
          + '<span class="stamp">' + escapeHtml(t.archives || 'Archives') + '</span>'
          + '<span>' + embassyOf + '</span>'
          + '</p>';
-    var titleTpl = t.archivesTitle || 'Two and a half centuries of <em>Parisian addresses</em>';
+    var titleTpl = t.archivesTitle || 'Two and a half centuries of <em>diplomatic addresses</em>';
     html += '<h2 id="ap-title-h2" class="ap-title">' + titleTpl + '</h2>';
     var ledeTpl = t.archivesLede
-      || 'From the H\u00f4tel de Valentinois where Benjamin Franklin signed the Franco-American alliance in 1778, to the chancery on Place de la Concorde \u2014 {n} successive addresses tell the story of American diplomacy in France.';
-    html += '<p class="ap-lede">' + ledeTpl.replace('{n}', addrs.length) + '</p>';
+      || '{n} successive addresses tell the story of the Embassy of {name} in {host}.';
+    html += '<p class="ap-lede">' + ledeTpl
+      .replace('{n}', addrs.length)
+      .replace('{name}', escapeHtml(emb.name))
+      .replace('{host}', escapeHtml(hostName))
+      + '</p>';
     html += '<div class="ap-timeline">';
     addrs.forEach(function (e, i) {
       html += '<div class="ap-entry' + (e.current ? ' current' : '') + '" data-index="' + i + '" '

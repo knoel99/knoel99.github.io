@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate manifest.json from embassies.js + _progress.json + fragment files.
+"""Generate manifest.json from embassies.js + fragment files.
 
 The manifest is a lightweight index (~10 KB) used by the front-end to render
 the initial map without loading the full embassies.js (85 KB) or any fragment
@@ -16,9 +16,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EMBASSY_JS = os.path.join(ROOT, "projects", "embassy", "data", "embassies.js")
-PROGRESS_JSON = os.path.join(ROOT, "projects", "embassy", "data", "embassy_history", "_progress.json")
 FRAGMENTS_DIR = os.path.join(ROOT, "projects", "embassy", "data", "embassy_history", "_fragments")
-HISTORY_DIR = os.path.join(ROOT, "projects", "embassy", "data", "embassy_history")
 OUTPUT = os.path.join(ROOT, "projects", "embassy", "data", "manifest.json")
 
 
@@ -29,11 +27,6 @@ def parse_embassies_js(path):
         print("ERROR parsing embassies.js:", result.stderr, file=sys.stderr)
         sys.exit(1)
     return json.loads(result.stdout)
-
-
-def load_progress(path):
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
 
 
 def discover_fragments(fragments_dir):
@@ -48,17 +41,7 @@ def discover_fragments(fragments_dir):
     return available
 
 
-def discover_host_files(history_dir, progress):
-    available = {}
-    for code in progress.get("names", {}):
-        lc = code.lower()
-        fpath = os.path.join(history_dir, lc + ".json")
-        if os.path.isfile(fpath):
-            available[code] = fpath
-    return available
-
-
-def build_manifest(embassy_data, progress, fragments, host_files):
+def build_manifest(embassy_data, fragments):
     manifest = {"countries": {}, "embassies": {}, "fragments_available": sorted(fragments)}
 
     for item in embassy_data:
@@ -95,18 +78,11 @@ def main():
     print("Parsing", EMBASSY_JS)
     embassy_data = parse_embassies_js(EMBASSY_JS)
 
-    print("Loading", PROGRESS_JSON)
-    progress = load_progress(PROGRESS_JSON)
-
     print("Scanning fragments...")
     fragments = discover_fragments(FRAGMENTS_DIR)
     print(f"  Found {len(fragments)} fragments")
 
-    print("Scanning host country files...")
-    host_files = discover_host_files(HISTORY_DIR, progress)
-    print(f"  Found {len(host_files)} host files:", ", ".join(sorted(host_files.keys())))
-
-    manifest = build_manifest(embassy_data, progress, fragments, host_files)
+    manifest = build_manifest(embassy_data, fragments)
 
     with open(OUTPUT, "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, separators=(",", ":"))
