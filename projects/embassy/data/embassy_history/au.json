@@ -1,0 +1,615 @@
+{
+  "host": {
+    "code": "AU",
+    "name": "Australia",
+    "capital": "Canberra"
+  },
+  "note": "Coordonnées géocodées manuellement à la précision de la rue.",
+  "embassies": {
+    "AR": {
+      "name": "Argentina",
+      "flag": "ar",
+      "current": {
+        "chancery": "7 National Circuit, Barton ACT 2600, Canberra"
+      },
+      "addresses": [
+        {
+          "from": "c.1960",
+          "to": null,
+          "address": "7 National Circuit, Barton ACT 2600, Canberra",
+          "kind": "embassy",
+          "lat": -35.3076,
+          "lon": 149.1329,
+          "current": true,
+          "note": "L'Argentine et l'Australie établissent des relations diplomatiques en décembre 1959. L'ambassade d'Argentine à Canberra est ouverte peu après et s'installe au 7 National Circuit, dans le quartier de Barton, au cœur du triangle parlementaire de la capitale australienne. L'adresse des locaux précédents éventuels n'a pas pu être établie avec certitude à partir des sources disponibles."
+        }
+      ]
+    },
+    "BR": {
+      "name": "Brazil",
+      "flag": "br",
+      "current": {
+        "chancery": "19 Forster Crescent, Yarralumla, ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1946",
+          "to": null,
+          "address": "19 Forster Crescent, Yarralumla, ACT 2600",
+          "kind": "embassy",
+          "lat": -35.312,
+          "lon": 149.096,
+          "current": true,
+          "note": "Le Brésil et l'Australie établissent leurs relations diplomatiques en 1945. En 1946, le Brésil ouvre une légation à Canberra et l'Australie ouvre une ambassade à Rio de Janeiro, première représentation diplomatique australienne en Amérique latine. L'ambassade brésilienne est située à Yarralumla, quartier diplomatique de Canberra. L'adresse précise des premiers locaux n'a pas pu être établie avec certitude à partir des sources disponibles ; il est possible que l'ambassade ait occupé d'autres lieux à Canberra avant de s'installer au 19 Forster Crescent."
+        }
+      ]
+    },
+    "CA": {
+      "name": "Canada",
+      "flag": "ca",
+      "current": {
+        "chancery": "Commonwealth Avenue, Yarralumla ACT 2600",
+        "residence": "Mugga Way, Red Hill ACT 2603"
+      },
+      "addresses": [
+        {
+          "from": "1939",
+          "to": "1964",
+          "address": "Commonwealth Avenue, Canberra (locaux provisoires)",
+          "kind": "high commission",
+          "lat": -35.303,
+          "lon": 149.125,
+          "note": "Les relations diplomatiques entre le Canada et l'Australie sont formellement établies en 1939, au déclenchement de la Seconde Guerre mondiale, par l'échange de hauts-commissaires entre les deux pays. Le Canada et l'Australie, tous deux royaumes du Commonwealth, entretiennent une mission sous forme de haut-commissariat (et non d'ambassade). Le premier haut-commissaire, Charles Burchell, est nommé en 1939. La chancellerie occupe des locaux provisoires sur Commonwealth Avenue, près de State Circle, avant la construction du bâtiment actuel."
+        },
+        {
+          "from": "1950",
+          "to": null,
+          "address": "Mugga Way, Red Hill ACT 2603, Canberra",
+          "kind": "residence",
+          "lat": -35.3527,
+          "lon": 149.134,
+          "current": true,
+          "note": "Résidence officielle du haut-commissaire du Canada en Australie depuis 1950. Manoir élégant situé dans la zone de conservation historique de Red Hill à Canberra."
+        },
+        {
+          "from": "1964",
+          "to": null,
+          "address": "Commonwealth Avenue, Yarralumla ACT 2600, Canberra",
+          "kind": "high commission",
+          "lat": -35.303,
+          "lon": 149.125,
+          "current": true,
+          "note": "Chancellerie actuelle du haut-commissariat du Canada en Australie, inaugurée le 30 janvier 1964 par le premier ministre australien Sir Robert Menzies. Bâtiment de trois étages conçu pour regrouper les services diplomatiques canadiens. En 1994, une aile de deux étages est ajoutée à l'arrière du bâtiment, inaugurée le 4 août 1994 par l'honorable Raymond Chan, secrétaire d'État (Asie-Pacifique). Le haut-commissariat compte environ 60 employés et est également accrédité auprès de la Papouasie-Nouvelle-Guinée, des Îles Marshall, des États fédérés de Micronésie, de Nauru, des Palaos, des Îles Salomon et du Vanuatu."
+        }
+      ]
+    },
+    "DE": {
+      "name": "Germany",
+      "flag": "de",
+      "current": {
+        "chancery": "119 Empire Circuit, Yarralumla, Canberra ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1879",
+          "to": "1914",
+          "address": "Consulat général allemand, Sydney, Nouvelle-Galles du Sud (adresse exacte non établie)",
+          "kind": "consulate",
+          "lat": -33.8688,
+          "lon": 151.2093,
+          "note": "Ouverture en 1879 d'un consulat général à Sydney sous l'impulsion du chancelier Otto von Bismarck. Le premier consul est le Dr Richard Krauel. La mission est fermée au déclenchement de la Première Guerre mondiale en 1914."
+        },
+        {
+          "from": "1924",
+          "to": "1928",
+          "address": "Consulat général allemand, Melbourne, Victoria (adresse exacte non établie)",
+          "kind": "consulate",
+          "lat": -37.8136,
+          "lon": 144.9631,
+          "note": "Réouverture du consulat général le 24 mars 1924 à Melbourne après la parenthèse de la Première Guerre mondiale."
+        },
+        {
+          "from": "1928",
+          "to": "1939",
+          "address": "Consulat général allemand, Sydney, Nouvelle-Galles du Sud (adresse exacte non établie)",
+          "kind": "consulate",
+          "lat": -33.8688,
+          "lon": 151.2093,
+          "note": "Le consulat général est transféré de Melbourne à Sydney le 1er octobre 1928. Il est de nouveau fermé en 1939 au début de la Seconde Guerre mondiale."
+        },
+        {
+          "from": "1952",
+          "to": "1955",
+          "address": "Ambassade de la République fédérale d'Allemagne, Sydney, Nouvelle-Galles du Sud (adresse exacte non établie)",
+          "kind": "embassy",
+          "lat": -33.8688,
+          "lon": 151.2093,
+          "note": "Reprise des relations diplomatiques en 1952. Le Dr Walther Hess, premier ambassadeur d'Allemagne de l'Ouest, est accueilli à Sydney dans un contexte controversé, marqué par des protestations. La chancellerie n'étant pas encore trouvée à Canberra, l'ambassade opère depuis Sydney."
+        },
+        {
+          "from": "1955",
+          "to": null,
+          "address": "119 Empire Circuit, Yarralumla, Canberra ACT 2600",
+          "kind": "chancery",
+          "lat": -35.308,
+          "lon": 149.1122,
+          "current": true,
+          "note": "L'ambassade s'installe à Canberra en 1955, dans le quartier diplomatique de Yarralumla. Le bâtiment actuel est le siège de la chancellerie depuis lors. L'ambassadeur actuel est Beate Grzeski, en poste depuis septembre 2023."
+        }
+      ]
+    },
+    "FR": {
+      "name": "France",
+      "flag": "fr",
+      "current": {
+        "chancery": "6 Perth Avenue, Yarralumla, Canberra ACT 2600",
+        "residence": "6 Perth Avenue, Yarralumla, Canberra ACT 2600 (sur le même site que la chancellerie)"
+      },
+      "addresses": [
+        {
+          "from": "1836",
+          "to": "1842",
+          "address": "Sydney, Nouvelle-Galles du Sud (adresse exacte non établie)",
+          "kind": "consulate",
+          "lat": -33.8688,
+          "lon": 151.2093,
+          "note": "Le roi Louis-Philippe Ier crée le premier consulat de France en Australie à Sydney en 1836. Il est ouvert en 1842. L'adresse précise des premiers locaux consulaires n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "1854",
+          "to": "1944",
+          "address": "Sydney et Melbourne — consulats (adresses historiques non établies)",
+          "kind": "consulate",
+          "lat": -33.8688,
+          "lon": 151.2093,
+          "note": "Un second consulat est ouvert à Melbourne en 1854, concurrement à celui de Sydney. Pendant la Seconde Guerre mondiale, deux représentants de la France officient en parallèle : l'un au nom du régime de Vichy, l'autre pour la France libre. Ces consulats assurent seuls la représentation française jusqu'à l'établissement d'une délégation diplomatique à Canberra en 1944."
+        },
+        {
+          "from": "1944",
+          "to": "1959",
+          "address": "Canberra — adresse exacte non établie",
+          "kind": "embassy",
+          "lat": -35.2809,
+          "lon": 149.13,
+          "note": "La France libre crée une délégation diplomatique à Canberra en juillet 1944. Pierre Augé est nommé ambassadeur par le gouvernement provisoire du général de Gaulle en décembre 1944. Les locaux provisoires de la première ambassade ne sont pas documentés dans les sources accessibles."
+        },
+        {
+          "from": "1959",
+          "to": null,
+          "address": "6 Perth Avenue, Yarralumla, Canberra ACT 2600",
+          "building": "Chancellerie et résidence de l'ambassadeur (arch. Jean Desmarets)",
+          "kind": "chancery",
+          "lat": -35.3042,
+          "lon": 149.1175,
+          "current": true,
+          "note": "Chancellerie et résidence de l'ambassadeur réalisées par l'architecte parisien Jean Desmarets. Les travaux sont amorcés en 1957 et le bâtiment est inauguré le 19 mars 1959. L'ensemble du mobilier, de la vaisselle et des objets d'art vient de France : porcelaine de Sèvres, tapisseries des Gobelins ou d'Aubusson, mobilier Boulle. L'ambassade de France est la seule mission diplomatique à avoir érigé un monument aux morts australiens de la Première Guerre mondiale sur son site, inauguré en 1961 en hommage aux 313 814 soldats australiens engagés et aux 46 000 d'entre eux morts au front."
+        }
+      ]
+    },
+    "GB": {
+      "name": "United Kingdom",
+      "flag": "gb",
+      "current": {
+        "chancery": "Commonwealth Avenue, Yarralumla, Canberra ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1910",
+          "to": "1946",
+          "address": "Melbourne (Victoria) — adresse historique non établie",
+          "kind": "high commission",
+          "lat": -37.8136,
+          "lon": 144.9631,
+          "note": "Le Royaume-Uni nomme son premier haut-commissaire en Australie en 1910. La chancellerie est d'abord établie à Melbourne, alors capitale provisoire du Commonwealth australien. Les adresses précises des premiers locaux ne sont pas documentées dans les sources accessibles."
+        },
+        {
+          "from": "1946",
+          "to": null,
+          "address": "Commonwealth Avenue, Yarralumla, Canberra ACT 2600",
+          "building": "Haut-commissariat du Royaume-Uni",
+          "kind": "high commission",
+          "lat": -35.3062,
+          "lon": 149.1156,
+          "current": true,
+          "note": "Haut-commissariat du Royaume-Uni en Australie (et non ambassade, car les deux pays sont membres du Commonwealth). La chancellerie est située sur Commonwealth Avenue à Yarralumla, le quartier diplomatique de Canberra, en bordure du lac Burley Griffin. La mission est transférée de Melbourne à Canberra dans les années 1940, à la suite du transfert de la capitale fédérale australienne. La haute-commissaire actuelle est Dame Sarah MacIntosh DCMG."
+        }
+      ]
+    },
+    "ID": {
+      "name": "Indonesia",
+      "flag": "id",
+      "current": {
+        "chancery": "8 Darwin Avenue, Yarralumla, Canberra ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1947",
+          "to": "1949",
+          "address": "Melbourne, Victoria (adresse exacte non établie)",
+          "kind": "legation",
+          "lat": -37.8136,
+          "lon": 144.9631,
+          "note": "Première représentation indonésienne en Australie, établie durant la Révolution nationale indonésienne. Usman Sastroamidjojo est envoyé en juin 1947 comme « chef du service diplomatique et consulaire de la République indonésienne ». Les locaux se trouvent à Melbourne, alors siège provisoire du gouvernement du Commonwealth."
+        },
+        {
+          "from": "1949",
+          "to": "c.1955",
+          "address": "Hotel Canberra, Commonwealth Avenue, Yarralumla, Canberra",
+          "kind": "legation",
+          "lat": -35.305,
+          "lon": 149.125,
+          "note": "Transfert de la légation de Melbourne à Canberra après la reconnaissance internationale de l'indépendance indonésienne en 1949. Les premiers locaux diplomatiques à Canberra sont hébergés à l'Hotel Canberra, établissement servant fréquemment de logement provisoire aux missions diplomatiques naissantes dans la capitale."
+        },
+        {
+          "from": "c.1955",
+          "to": "1971",
+          "address": "Deakin, Canberra (adresse exacte non établie)",
+          "kind": "legation",
+          "lat": -35.318,
+          "lon": 149.1,
+          "note": "La légation s'installe dans le quartier de Deakin après son passage par l'Hotel Canberra. Elle y occupe des locaux provisoires en attendant la construction d'une ambassade permanente. L'adresse précise n'a pu être établie à partir des sources disponibles."
+        },
+        {
+          "from": "1971",
+          "to": null,
+          "address": "8 Darwin Avenue, Yarralumla, Canberra ACT 2600",
+          "building": "Ambassade conçue par l'architecte George Holland",
+          "kind": "embassy",
+          "lat": -35.304,
+          "lon": 149.1166,
+          "current": true,
+          "note": "Ambassade permanente inaugurée en août 1971, dont la construction a débuté en janvier 1970. Le bâtiment principal, conçu par l'architecte George Holland, comprend un pavillon d'exposition appelé « Wisma Wista Budaya ». Un bloc de bureaux supplémentaire est ajouté entre 1983 et 1984, suivi en 1986 de la salle d'exposition « Balai Kartini », nommée en l'honneur de la pionnière de l'émancipation féminine indonésienne Raden Ajeng Kartini. L'ambassade assure également la représentation diplomatique auprès du Vanuatu."
+        }
+      ]
+    },
+    "IL": {
+      "name": "Israel",
+      "flag": "il",
+      "current": {
+        "chancery": "6 Turrana Street, Yarralumla, Canberra ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": null,
+          "address": "6 Turrana Street, Yarralumla, Canberra ACT 2600",
+          "kind": "embassy",
+          "lat": -35.30793,
+          "lon": 149.11409,
+          "current": true,
+          "note": "L'Australie reconnaît l'État d'Israël le 28 janvier 1949, sous le gouvernement de Ben Chifley. Les relations diplomatiques sont établies la même année et l'ambassade d'Israël est ouverte à Canberra. La chancellerie est située à Yarralumla, le quartier diplomatique de la capitale, au 6 Turrana Street. L'ambassade est également accréditée auprès des Fiji, de la Papouasie-Nouvelle-Guinée, du Vanuatu, des îles Salomon, de Nauru, des Kiribati et des Tuvalu. Téléphone : +61 2 6215 4500 ; courriel : consular@canberra.mfa.gov.il. Coordonnées géocodées à la précision de l'adresse."
+        }
+      ]
+    },
+    "IN": {
+      "name": "India",
+      "flag": "in",
+      "current": {
+        "chancery": "3 Moonah Place, Yarralumla, Canberra ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1947",
+          "to": null,
+          "address": "3 Moonah Place, Yarralumla, Canberra ACT 2600",
+          "kind": "high commission",
+          "lat": -35.3206,
+          "lon": 149.097,
+          "current": true,
+          "note": "Haut-commissariat de l'Inde en Australie (et non ambassade, car les deux pays sont membres du Commonwealth). Établi peu après l'indépendance de l'Inde (15 août 1947). Les relations diplomatiques indo-australiennes sont parmi les premières nouées par l'Inde indépendante. La chancellerie est située à Yarralumla, le quartier diplomatique de Canberra, sur Moonah Place. Le haut-commissariat est également accrédité auprès de Nauru. Coordonnées géocodées à la précision de la rue."
+        }
+      ]
+    },
+    "IT": {
+      "name": "Italy",
+      "flag": "it",
+      "current": {
+        "chancery": "12 Grey Street, Deakin ACT 2600, Canberra",
+        "residence": "Résidence de l'ambassadeur, Deakin ACT 2600, Canberra (sur le site de la chancellerie)"
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": "c.1970",
+          "address": "Canberra — adresse provisoire non établie",
+          "kind": "legation",
+          "lat": -35.2809,
+          "lon": 149.13,
+          "note": "L'Italie nomme Giulio del Balzo di Presenzano comme premier ministre (envoyé extraordinaire) en Australie en février 1949, premier diplomate d'un ancien pays ennemi à être accrédité après la Seconde Guerre mondiale. La légation fonctionne depuis des locaux provisoires à Canberra dont l'adresse exacte n'est pas documentée dans les sources accessibles. En janvier 1958, la représentation diplomatique est élevée au rang d'ambassade."
+        },
+        {
+          "from": "c.1970",
+          "to": null,
+          "address": "12 Grey Street, Deakin ACT 2600, Canberra",
+          "building": "Ambassade d'Italie (arch. Enrico Taglietti)",
+          "kind": "chancery",
+          "lat": -35.3178,
+          "lon": 149.1005,
+          "current": true,
+          "note": "Chancellerie conçue par l'architecte italo-australien Enrico Taglietti, envoyé en Australie par le gouvernement italien en 1955 pour repérer un terrain à Canberra. Le bâtiment, de style moderniste organique, est achevé à la fin des années 1960. Taglietti, lauréat de la médaille d'or de l'Australian Institute of Architects en 2007, s'est installé définitivement à Canberra à la suite de cette commande. La résidence de l'ambassadeur se trouve sur le même site."
+        }
+      ]
+    },
+    "JP": {
+      "name": "Japan",
+      "flag": "jp",
+      "current": {
+        "chancery": "112 Empire Circuit, Yarralumla, Canberra ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1896",
+          "to": "c.1900",
+          "address": "Townsville, Queensland (adresse exacte non établie)",
+          "kind": "consulate",
+          "lat": -19.259,
+          "lon": 146.817,
+          "note": "Premier consulat du Japon en Australie, établi à Townsville en 1896. La ville constitue alors le principal centre de la communauté japonaise dans le nord du Queensland, active dans l'industrie de la pêche au troca et à la nacre ainsi que dans la culture de la canne à sucre. L'adresse précise du consulat n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "1897",
+          "to": "1941",
+          "address": "Sydney, Nouvelle-Galles du Sud (adresses historiques variables)",
+          "kind": "consulate",
+          "lat": -33.8688,
+          "lon": 151.2093,
+          "note": "Le Japon ouvre un second consulat à Sydney en 1897, élevé au rang de consulat général en 1902. Il constitue la principale représentation japonaise en Australie pendant toute la première moitié du XXᵉ siècle. Les relations diplomatiques sont rompues en décembre 1941 après l'attaque de Pearl Harbor ; le personnel consulaire est rapatrié et les ressortissants japonais en Australie sont internés."
+        },
+        {
+          "from": "1952",
+          "to": "c.1960",
+          "address": "Canberra — adresse provisoire non établie",
+          "kind": "embassy",
+          "lat": -35.2809,
+          "lon": 149.13,
+          "note": "Les relations diplomatiques sont rétablies en 1952 après l'entrée en vigueur du traité de San Francisco. Haruhiko Nishi est nommé premier ambassadeur du Japon en Australie. L'ambassade fonctionne dans des locaux provisoires à Canberra avant la construction de la chancellerie permanente à Yarralumla. L'adresse exacte de ces premiers locaux n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "c.1960",
+          "to": null,
+          "address": "112 Empire Circuit, Yarralumla, Canberra ACT 2600",
+          "kind": "chancery",
+          "lat": -35.31,
+          "lon": 149.1114,
+          "current": true,
+          "note": "Chancellerie de l'ambassade du Japon dans le quartier diplomatique de Yarralumla, à Canberra. Le bâtiment, de style architectural japonais, abrite les services diplomatiques et consulaires. Le Japon possède également des consulats généraux à Sydney, Melbourne, Brisbane et Perth, ainsi qu'un consulat à Cairns."
+        }
+      ]
+    },
+    "KR": {
+      "name": "South Korea",
+      "flag": "kr",
+      "current": {
+        "chancery": "113 Empire Circuit, Yarralumla, Canberra ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1962",
+          "to": "1970",
+          "address": "Sydney, Nouvelle-Galles du Sud (adresse exacte non établie)",
+          "kind": "embassy",
+          "lat": -33.8688,
+          "lon": 151.2093,
+          "note": "Les relations diplomatiques entre la République de Corée et l'Australie sont établies le 30 octobre 1961 au niveau ambassadeuriel. La première ambassade de Corée du Sud est ouverte à Sydney en 1962. L'adresse précise des premiers locaux n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "1970",
+          "to": null,
+          "address": "113 Empire Circuit, Yarralumla, Canberra ACT 2600",
+          "kind": "embassy",
+          "lat": -35.3089,
+          "lon": 149.1059,
+          "current": true,
+          "note": "En 1970, l'ambassade est transférée de Sydney à Canberra. Le consulat général de Sydney est créé en remplacement de l'ambassade déplacée, tandis que le consulat général existant à Canberra est élevé au rang d'ambassade. L'ambassade est située dans le quartier diplomatique de Yarralumla. Elle exerce sa juridiction sur le Territoire de la capitale australienne, la Tasmanie, l'Australie-Méridionale et l'Australie-Occidentale. Un bureau consulaire (분관) a été ouvert à Melbourne en 2012, et un bureau consulaire à Brisbane est également en activité."
+        }
+      ]
+    },
+    "MX": {
+      "name": "Mexico",
+      "flag": "mx",
+      "current": {
+        "chancery": "14 Perth Avenue, Yarralumla, ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1938",
+          "to": "1941",
+          "address": "Sydney, Nouvelle-Galles du Sud (adresse exacte non établie)",
+          "kind": "consulate",
+          "lat": -33.8688,
+          "lon": 151.2093,
+          "note": "Le Mexique ouvre un consulat honorifique à Sydney à la fin des années 1930. Il est fermé au début de la Seconde Guerre mondiale. L'adresse précise n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "1960",
+          "to": "1966",
+          "address": "Sydney, Nouvelle-Galles du Sud (adresse exacte non établie)",
+          "kind": "consulate",
+          "lat": -33.8688,
+          "lon": 151.2093,
+          "note": "Le Mexique rouvre un consulat à Sydney en 1960, qui sert de relais avant l'établissement de relations diplomatiques formelles avec l'Australie le 14 mars 1966. L'adresse précise n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "1966",
+          "to": "1982",
+          "address": "Canberra — adresse exacte non établie",
+          "kind": "embassy",
+          "lat": -35.2809,
+          "lon": 149.13,
+          "note": "Le Mexique ouvre son ambassade à Canberra en 1966, l'année même de l'établissement des relations diplomatiques formelles avec l'Australie le 14 mars 1966. Les locaux provisoires antérieurs à l'inauguration du bâtiment actuel ne sont pas documentés dans les sources accessibles."
+        },
+        {
+          "from": "1982",
+          "to": null,
+          "address": "14 Perth Avenue, Yarralumla, ACT 2600",
+          "kind": "chancery",
+          "lat": -35.3046,
+          "lon": 149.1172,
+          "current": true,
+          "note": "Bâtiment actuel de l'ambassade du Mexique, inauguré en 1982 dans le quartier diplomatique de Yarralumla à Canberra. Les deux nations ont célébré les 50 ans de leurs relations diplomatiques en 2016."
+        }
+      ]
+    },
+    "RU": {
+      "name": "Russia",
+      "flag": "ru",
+      "current": {
+        "chancery": "78 Canberra Avenue, Griffith ACT 2603"
+      },
+      "addresses": [
+        {
+          "from": "1857",
+          "to": "1918",
+          "address": "Melbourne et Sydney — consulats honoraires impériaux (adresses historiques non établies)",
+          "kind": "consulate",
+          "lat": -37.8136,
+          "lon": 144.9631,
+          "note": "Des relations consulaires entre l'Empire russe et les colonies australiennes sont établies en mars 1857 : James Damyon est nommé vice-consul honoraire à Melbourne et E. M. Paul à Sydney, peu après la fin de la guerre de Crimée et la reprise des échanges commerciaux russo-britanniques. En juillet 1893, Alexeï Poutyata devient le premier consul de carrière, basé à Melbourne. Le réseau consulaire s'étend ensuite à Sydney, Brisbane, Hobart, Newcastle, Perth, Darwin et Port Pirie. Après la révolution d'Octobre 1917, le consul général Alexandre Abaza démissionne en janvier 1918 et les consulats sont fermés."
+        },
+        {
+          "from": "1942",
+          "to": "1954",
+          "address": "78 Canberra Avenue, Griffith ACT",
+          "kind": "embassy",
+          "lat": -35.3206,
+          "lon": 149.1377,
+          "note": "Les relations diplomatiques entre l'URSS et l'Australie sont établies le 10 octobre 1942 par un échange de notes entre Viatcheslav Molotov et H. V. Evatt, dans le contexte de l'alliance de la Seconde Guerre mondiale. L'ambassade soviétique ouvre à Canberra l'année suivante, sur le site de Griffith alloué par le National Capital Planning and Development Committee. En avril 1954, l'affaire Petrov éclate : Vladimir Petrov, colonel du KGB en poste à l'ambassade, fait défection avec l'aide de l'ASIO. Son épouse Evdokia est arrachée aux agents soviétiques à l'aéroport de Darwin. L'Australie expulse le personnel diplomatique soviétique et les relations sont rompues."
+        },
+        {
+          "from": "1959",
+          "to": null,
+          "address": "78 Canberra Avenue, Griffith ACT 2603",
+          "kind": "chancery",
+          "lat": -35.3206,
+          "lon": 149.1377,
+          "current": true,
+          "note": "Les relations diplomatiques sont rétablies le 13 mars 1959. L'ambassade soviétique, puis russe à partir de décembre 1991, reprend ses quartiers au même site de Griffith, encerclé par une haute grille d'acier et bordé de pins le long de Canberra Avenue. Le site abritait autrefois une école élémentaire russe, démolie en 2021 et remplacée par un bloc d'hébergement. Un consulat général fonctionne par ailleurs à Sydney."
+        },
+        {
+          "from": "2008",
+          "to": "2023",
+          "address": "29 Forster Crescent, Yarralumla ACT 2600",
+          "kind": "embassy",
+          "lat": -35.3036,
+          "lon": 149.1207,
+          "note": "En 2008, un nouveau terrain est alloué à la Russie à Yarralumla, avec une date d'achèvement prévue pour 2014. En août 2022, après des années d'inactivité sur le chantier, la National Capital Authority exige la restitution du terrain. En mai 2023, la Cour fédérale donne raison à la Russie, mais le Parlement australien vote le Home Affairs Act 2023 en une seule journée, résiliant le bail pour des raisons de sécurité nationale. En novembre 2025, la Haute Cour confirme la constitutionnalité de la loi. La Russie conserve son ambassade historique de Griffith."
+        }
+      ]
+    },
+    "SA": {
+      "name": "Saudi Arabia",
+      "flag": "sa",
+      "current": {
+        "chancery": "Hopetoun Circuit, Yarralumla, Canberra ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1974",
+          "to": null,
+          "address": "Hopetoun Circuit, Yarralumla, Canberra ACT 2600",
+          "kind": "embassy",
+          "lat": -35.3114,
+          "lon": 149.1061,
+          "current": true,
+          "note": "Les relations diplomatiques entre l'Arabie saoudite et l'Australie sont établies le 15 janvier 1974. L'ambassade est située dans le quartier diplomatique de Yarralumla, au sud-ouest du lac Burley Griffin, aux côtés de nombreuses autres missions étrangères."
+        }
+      ]
+    },
+    "TR": {
+      "name": "Turkey",
+      "flag": "tr",
+      "current": {
+        "chancery": "6 Moonah Place, Yarralumla, Canberra ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1967",
+          "to": null,
+          "address": "6 Moonah Place, Yarralumla, Canberra ACT 2600",
+          "kind": "chancery",
+          "lat": -35.3078,
+          "lon": 149.1184,
+          "current": true,
+          "note": "Ambassade de Turquie établie à Canberra en 1967, année de l'établissement des relations diplomatiques formelles entre la Turquie et l'Australie. La chancellerie est située dans le quartier diplomatique de Yarralumla. La Turquie possède également des consulats généraux à Melbourne et à Sydney."
+        }
+      ]
+    },
+    "US": {
+      "name": "United States",
+      "flag": "us",
+      "current": {
+        "chancery": "Moonah Place, Yarralumla, Canberra ACT 2600",
+        "residence": "Résidence de l'ambassadeur, même site, Yarralumla, Canberra ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1940",
+          "to": "1942",
+          "address": "Canberra — locaux provisoires (adresse exacte non établie)",
+          "kind": "legation",
+          "lat": -35.2809,
+          "lon": 149.13,
+          "note": "Les relations diplomatiques entre les États-Unis et l'Australie sont établies en 1940. Une légation est ouverte à Canberra dans des locaux provisoires. L'adresse précise de ces premiers bureaux n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "1942",
+          "to": "1943",
+          "address": "Yarralumla, Canberra — construction de la résidence de l'ambassadeur",
+          "building": "Ambassador's Residence",
+          "kind": "residence",
+          "lat": -35.3072,
+          "lon": 149.1172,
+          "note": "La pierre de fondation de la résidence de l'ambassadeur est posée le 4 juin 1942. La construction s'inscrit dans le contexte de la Seconde Guerre mondiale, alors que les États-Unis et l'Australie renforcent leur alliance militaire. La résidence est achevée et occupée à Noël 1943."
+        },
+        {
+          "from": "1943",
+          "to": null,
+          "address": "Moonah Place, Yarralumla, Canberra ACT 2600",
+          "building": "Chancellerie et résidence de l'ambassadeur",
+          "kind": "chancery",
+          "lat": -35.3072,
+          "lon": 149.1172,
+          "current": true,
+          "note": "Chancellerie de style géorgien conçue par l'architecte Frederick Larkin, du Foreign Building Office du Département d'État, sous la supervision de l'architecte australien Malcolm Moir. Les plans s'inspirent des bâtiments de Christopher Wren pour la ville coloniale de Williamsburg en Virginie. La légation est élevée au rang d'ambassade le 9 juillet 1946 ; Robert Butler présente ses lettres de créance comme premier ambassadeur le 25 septembre 1946. Les matériaux de construction sont majoritairement australiens (marbre blanc de Nouvelle-Galles du Sud, parquet de jarrah et de tallowwood, grès Hawkesbury), à l'exception de briques importées des fours de Williamsburg lors de l'agrandissement de la chancellerie en 1959. L'ambassade est située à proximité de The Lodge, résidence officielle du Premier ministre australien, et de Parliament House. C'est l'une des plus grandes missions diplomatiques de Canberra."
+        }
+      ]
+    },
+    "ZA": {
+      "name": "South Africa",
+      "flag": "za",
+      "current": {
+        "chancery": "Corner State Circle and Rhodes Place, Yarralumla, ACT 2600"
+      },
+      "addresses": [
+        {
+          "from": "1947",
+          "to": "1961",
+          "address": "Canberra (adresse exacte non établie dans les sources consultées)",
+          "kind": "high commission",
+          "lat": -35.3052,
+          "lon": 149.1205,
+          "note": "Relations diplomatiques formellement établies en 1947 entre l'Afrique du Sud et l'Australie, toutes deux membres du Commonwealth. L'Union sud-africaine ouvre un haut-commissariat à Canberra. L'adresse des premiers locaux n'est pas documentée dans les sources accessibles. À l'époque, les chanceries diplomatiques se concentraient dans les quartiers de Red Hill et Forrest, avant le développement du quartier de Yarralumla."
+        },
+        {
+          "from": "1961",
+          "to": "1994",
+          "address": "Corner State Circle and Rhodes Place, Yarralumla, ACT 2600",
+          "kind": "embassy",
+          "lat": -35.3052,
+          "lon": 149.1205,
+          "note": "À la suite de la proclamation de la République d'Afrique du Sud (31 mai 1961) et du retrait du pays du Commonwealth des Nations, le haut-commissariat devient une ambassade et son chef de mission un ambassadeur. Cette période correspond à l'ère de l'apartheid ; les gouvernements australiens successifs, à partir des années 1970, se positionnent fermement dans le camp anti-apartheid, soutenant les résolutions de l'ONU et imposant des embargo sur le pétrole, le commerce et les armes. La mission conserve ses locaux de Yarralumla pendant toute cette période."
+        },
+        {
+          "from": "1994",
+          "to": null,
+          "address": "Corner State Circle and Rhodes Place, Yarralumla, ACT 2600",
+          "kind": "high commission",
+          "lat": -35.3052,
+          "lon": 149.1205,
+          "current": true,
+          "note": "Le 1er mai 1994, quatre jours après les premières élections libres en Afrique du Sud (27 avril 1994), le pays réintègre le Commonwealth — exactement 33 ans après l'en avoir quitté. L'ambassade redevient haut-commissariat. Les relations bilatérales se normalisent et se développent rapidement, notamment dans les domaines commercial, éducatif et sportif. Le haut-commissariat est situé à Yarralumla, le quartier diplomatique de Canberra, au carrefour de State Circle et Rhodes Place. Il est accrédité pour l'Australie et dispose de consulats à Melbourne et Perth."
+        }
+      ]
+    }
+  }
+}
