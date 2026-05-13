@@ -1,0 +1,546 @@
+{
+  "host": {
+    "code": "IN",
+    "name": "India",
+    "capital": "New Delhi"
+  },
+  "note": "Coordonnées géocodées manuellement à la précision de la rue.",
+  "embassies": {
+    "AR": {
+      "name": "Argentina",
+      "flag": "ar",
+      "current": {
+        "chancery": "F-3/3, Vasant Vihar, New Delhi 110057"
+      },
+      "addresses": [
+        {
+          "from": "c.1920",
+          "to": "1950",
+          "address": "Calcutta (adresse précise non établie)",
+          "kind": "consulate",
+          "lat": 22.5726,
+          "lon": 88.3639,
+          "note": "L'Argentine établit un consulat à Calcutta dans les années 1920, bien avant l'indépendance de l'Inde. Il s'agit de l'une des toutes premières représentations diplomatiques argentines en Asie. L'adresse exacte de ce consulat n'a pas pu être établie avec certitude à partir des sources disponibles. Calcutta, alors capitale de l'Inde britannique, abrite une communauté commerciale cosmopolite et attire plusieurs missions consulaires latino-américaines au début du XXᵉ siècle."
+        },
+        {
+          "from": "1950",
+          "to": null,
+          "address": "New Delhi (adresse des premières décennies non établie avec certitude)",
+          "kind": "embassy",
+          "lat": 28.6139,
+          "lon": 77.2090,
+          "note": "En 1950, le consulat argentin est transféré de Calcutta à New Delhi et élevé au rang d'ambassade, dans le contexte de l'établissement de relations diplomatiques formelles entre la République Argentine et la République de l'Inde indépendante. L'adresse exacte des premières décennies de l'ambassade à New Delhi n'a pas pu être établie avec certitude à partir des sources disponibles. L'ambassade est accréditée également auprès du Bhoutan."
+        },
+        {
+          "from": null,
+          "to": null,
+          "address": "F-3/3, Vasant Vihar, New Delhi 110057",
+          "kind": "chancery",
+          "lat": 28.5750,
+          "lon": 77.1590,
+          "current": true,
+          "note": "La chancellerie de l'ambassade de la République Argentine est installée au F-3/3, Vasant Vihar, New Delhi 110057. Le quartier de Vasant Vihar, voisin de l'enclave diplomatique de Chanakyapuri, abrite de nombreuses missions diplomatiques et résidences d'ambassadeurs. L'ambassadeur actuel est H.E. M. Mariano Agustín Caucino. Les dates exactes d'installation à cette adresse n'ont pas pu être établies avec certitude à partir des sources disponibles. L'Argentine dispose également d'un consulat général à Mumbai, ouvert en avril 2009."
+        }
+      ]
+    },
+    "AU": {
+      "name": "Australia",
+      "flag": "au",
+      "current": {
+        "chancery": "1/50 G, Shantipath, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1943",
+          "to": null,
+          "address": "1/50 G, Shantipath, Chanakyapuri, New Delhi 110021",
+          "kind": "high commission",
+          "lat": 28.5893,
+          "lon": 77.1837,
+          "current": true,
+          "note": "Haut-commissariat d'Australie en Inde, établi en 1943 durant la Seconde Guerre mondiale. L'Australie et l'Inde étant toutes deux membres du Commonwealth, la mission porte le titre de haut-commissariat (et non ambassade). Situé dans l'enclave diplomatique de Chanakyapuri, le bâtiment actuel est accrédité également auprès du Bhoutan. Le haut-commissaire actuel est Philip Green."
+        }
+      ]
+    },
+    "BR": {
+      "name": "Brazil",
+      "flag": "br",
+      "current": {
+        "chancery": "8, Dr. APJ Abdul Kalam Road, New Delhi 110011"
+      },
+      "addresses": [
+        {
+          "from": "1948",
+          "to": null,
+          "address": "8, Dr. APJ Abdul Kalam Road (ex-Aurangzeb Road), New Delhi 110011",
+          "kind": "embassy",
+          "lat": 28.5918,
+          "lon": 77.2069,
+          "current": true,
+          "note": "Le Brésil est le premier pays d'Amérique latine à établir des relations diplomatiques avec l'Inde indépendante, le 3 mai 1948. L'ambassade est installée au 8 Aurangzeb Road, artère résidentielle du quartier diplomatique de Lutyens' Delhi. La rue est rebaptisée Dr. APJ Abdul Kalam Road en août 2015, en l'honneur de l'ancien président indien et scientifique A. P. J. Abdul Kalam (1931-2015), décédé le 27 juillet 2015. La date précise d'installation à cette adresse n'a pas pu être établie avec certitude à partir des sources publiques disponibles. L'ambassade est également accréditée auprès du Bhoutan. Le consulat général du Brésil à Mumbai couvre les États du Maharashtra, de Goa et du Karnataka."
+        }
+      ]
+    },
+    "CA": {
+      "name": "Canada",
+      "flag": "ca",
+      "current": {
+        "chancery": "7/8 Shantipath, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1947",
+          "to": "c.1956",
+          "address": "New Delhi (adresse provisoire pré-Chanakyapuri)",
+          "kind": "high commission",
+          "lat": 28.6139,
+          "lon": 77.2090,
+          "note": "Haut-commissariat du Canada en Inde établi peu après l'indépendance de l'Inde (15 août 1947). Les relations diplomatiques Canada–Inde sont parmi les premières établies par le Canada après la Seconde Guerre mondiale. Le haut-commissariat fonctionne depuis un emplacement provisoire à New Delhi avant la construction de l'enclave diplomatique de Chanakyapuri dans les années 1950. Adresse exacte non établie par les sources disponibles."
+        },
+        {
+          "from": "c.1956",
+          "to": null,
+          "address": "7/8 Shantipath, Chanakyapuri, New Delhi 110021",
+          "kind": "high commission",
+          "lat": 28.5900,
+          "lon": 77.1720,
+          "current": true,
+          "note": "Haut-commissariat du Canada en Inde (et non ambassade, car les deux pays sont membres du Commonwealth). Installé sur Shantipath, artère principale de l'enclave diplomatique de Chanakyapuri, aménagée par le Central Public Works Department dans les années 1950 pour regrouper les missions étrangères à New Delhi. Le Canada fut l'un des premiers pays à s'y installer. Coordonnées géocodées à la précision de la rue."
+        }
+      ]
+    },
+    "CN": {
+      "name": "China",
+      "flag": "cn",
+      "current": {
+        "chancery": "50-D, Shantipath, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1947",
+          "to": "1950",
+          "address": "New Delhi (adresse précise non établie)",
+          "kind": "legation",
+          "lat": 28.6139,
+          "lon": 77.2090,
+          "note": "La République de Chine (Taiwan) établit une légation diplomatique à New Delhi peu après l'indépendance de l'Inde (15 août 1947). Une réception est tenue à l'ambassade chinoise le 10 octobre 1947, jour anniversaire de la République de Chine, en présence du vice-roi Louis Mountbatten, de Jawaharlal Nehru et du chargé d'affaires Dr Tsien. L'adresse exacte de cette légation nationaliste n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1950-04-01",
+          "to": "c.1956",
+          "address": "New Delhi (adresse provisoire, Chanakyapuri en construction)",
+          "kind": "embassy",
+          "lat": 28.6139,
+          "lon": 77.2090,
+          "note": "L'Inde reconnaît la République populaire de Chine le 30 décembre 1949 et les relations diplomatiques sont officiellement établies le 1er avril 1950, faisant de l'Inde le premier pays non socialiste d'Asie à reconnaître la RPC. La mission nationaliste de la République de Chine est fermée et remplacée par l'ambassade de la RPC. Yuan Zhongxian est nommé premier ambassadeur. Dans les années 1950, sous le slogan « Hindi-Chini bhai-bhai » (« Indiens et Chinois sont frères »), Nehru et Zhou Enlai co-patronnent les Cinq Principes de la Coexistence Pacifique (Panchsheel, 1954). L'ambassade fonctionne d'abord depuis des locaux provisoires, l'enclave diplomatique de Chanakyapuri étant encore en construction."
+        },
+        {
+          "from": "c.1956",
+          "to": null,
+          "address": "50-D, Shantipath, Chanakyapuri, New Delhi 110021",
+          "kind": "chancery",
+          "lat": 28.6000,
+          "lon": 77.1900,
+          "current": true,
+          "note": "L'ambassade s'installe au 50-D Shantipath dans l'enclave diplomatique de Chanakyapuri, aménagée par le gouvernement indien au milieu des années 1950 pour regrouper les missions étrangères. La guerre sino-indienne d'octobre-novembre 1962 marque une rupture décisive : après l'offensive chinoise dans l'Aksai Chin et le long de la McMahon Line, les deux pays rappellent leurs ambassadeurs. De 1962 à 1976, la mission chinoise à New Delhi est maintenue au niveau de chargé d'affaires, sans ambassadeur accrédité — une rupture de quatorze ans. En juillet 1976, les deux pays rétablissent l'échange d'ambassadeurs. L'ambassade abrite également la section chargée des relations avec le Bhoutan, la Chine n'entretenant pas d'ambassade à Thimphou."
+        }
+      ]
+    },
+    "DE": {
+      "name": "Germany",
+      "flag": "de",
+      "current": {
+        "chancery": "6/50G Shantipath, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1886",
+          "to": "1914",
+          "address": "Consulat général impérial allemand, Calcutta (adresse précise non établie)",
+          "kind": "consulate",
+          "lat": 22.5726,
+          "lon": 88.3639,
+          "note": "L'Empire allemand ouvre un consulat général à Calcutta, alors capitale de l'Inde britannique, en 1886. Hermann Gerlich est le premier consul général. Le consulat est situé dans le quartier commerçant de la ville, au cœur de la communauté européenne. Les relations consulaires sont interrompues en 1914 avec le déclenchement de la Première Guerre mondiale."
+        },
+        {
+          "from": "1922",
+          "to": "1939",
+          "address": "Consulat général allemand, Calcutta (adresse précise non établie)",
+          "kind": "consulate",
+          "lat": 22.5726,
+          "lon": 88.3639,
+          "note": "Reprise des relations consulaires en 1922 sous la République de Weimar. Le consulat général de Calcutta est à nouveau actif, dirigé successivement par Heinrich Rüdt von Collenberg-Bödigheim, Rudolf von Bassewitz, Wernher von Ow-Wachendorf et Erdmann von Podewils-Dürnitz. Les relations sont rompues le 3 septembre 1939 avec le déclenchement de la Seconde Guerre mondiale."
+        },
+        {
+          "from": "1952",
+          "to": null,
+          "address": "6/50G Shantipath, Chanakyapuri, New Delhi 110021",
+          "kind": "embassy",
+          "lat": 28.5897,
+          "lon": 77.1883,
+          "current": true,
+          "note": "La République fédérale d'Allemagne établit des relations diplomatiques avec l'Inde en 1951. Le premier ambassadeur, Ernst Meyer, prend ses fonctions à New Delhi en 1952. L'ambassade est installée à Chanakyapuri, l'enclave diplomatique de New Delhi, sur Shantipath. Elle est également accréditée auprès du Bhoutan. L'ambassadeur actuel est S.E. M. Philipp Ackermann (depuis 2022). L'Allemagne dispose en outre de consulats généraux à Bengaluru, Chennai, Kolkata et Mumbai."
+        }
+      ]
+    },
+    "FR": {
+      "name": "France",
+      "flag": "fr",
+      "current": {
+        "chancery": "2/50-E, Shantipath, Chanakyapuri, New Delhi 110021",
+        "residence": "12, Dr. APJ Abdul Kalam Road (ex-Aurangzeb Road), New Delhi 110011"
+      },
+      "addresses": [
+        {
+          "from": "1947",
+          "to": "c.1985",
+          "address": "adresse provisoire, New Delhi (Chanakyapuri ou alentours)",
+          "kind": "legation",
+          "lat": 28.5893,
+          "lon": 77.1837,
+          "note": "Ambassade de France établie peu après l'indépendance de l'Inde le 15 août 1947. Le premier ambassadeur, M. Raux, est nommé en 1944 auprès du gouvernement provisoire, suivi de Christian Fouchet (1945-1947). Daniel Lévi, nommé en 1947, est le premier ambassadeur résident de la République française auprès de la république de l'Inde indépendante. L'adresse précise des premières années n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "c.1985",
+          "to": null,
+          "address": "2/50-E, Shantipath, Chanakyapuri, New Delhi 110021",
+          "kind": "chancery",
+          "lat": 28.5956,
+          "lon": 77.1878,
+          "current": true,
+          "note": "Chancellerie actuelle de l'ambassade de France, construite entre 1982 et 1985 par les architectes Paul Chemetov et Borja Huidobro. Le bâtiment se distingue par son architecture moderniste intégrant des éléments de biodiversité et de climatisation naturelle adaptés au climat indien. Située dans l'enclave diplomatique de Chanakyapuri, la chancellerie abrite également le consulat général de France à New Delhi. L'ambassadeur actuel est Thierry Mathou, nommé en septembre 2023."
+        },
+        {
+          "from": "1947",
+          "to": null,
+          "address": "12, Dr. APJ Abdul Kalam Road (ex-Aurangzeb Road), New Delhi 110011",
+          "kind": "residence",
+          "lat": 28.5927,
+          "lon": 77.2057,
+          "current": true,
+          "note": "Résidence officielle de l'ambassadeur de France, située sur l'ancienne Aurangzeb Road, artère prestigieuse du quartier diplomatique de Lutyens' Delhi. La rue est rebaptisée Dr. APJ Abdul Kalam Road en août 2015 en l'honneur de l'ancien président indien et scientifique A. P. J. Abdul Kalam (1931-2015). La résidence se trouve à proximité de nombreuses autres ambassades et résidences diplomatiques."
+        }
+      ]
+    },
+    "GB": {
+      "name": "United Kingdom",
+      "flag": "gb",
+      "current": {
+        "chancery": "Shantipath, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1947",
+          "to": "c.1956",
+          "address": "New Delhi (emplacement provisoire pré-Chanakyapuri)",
+          "kind": "high commission",
+          "lat": 28.6139,
+          "lon": 77.2090,
+          "note": "Haut-commissariat du Royaume-Uni en Inde établi dès l'indépendance de l'Inde le 15 août 1947. Le Royaume-Uni entretient des relations diplomatiques avec l'Inde depuis l'époque coloniale ; le haut-commissariat est mis en place immédiatement après le transfert de souveraineté. Les premières années se font depuis un emplacement provisoire à New Delhi, avant la construction de l'enclave diplomatique de Chanakyapuri dans les années 1950. Adresse exacte non établie par les sources disponibles."
+        },
+        {
+          "from": "c.1956",
+          "to": null,
+          "address": "Shantipath, Chanakyapuri, New Delhi 110021",
+          "kind": "high commission",
+          "lat": 28.5893,
+          "lon": 77.1859,
+          "current": true,
+          "note": "Haut-commissariat du Royaume-Uni en Inde (et non ambassade, car les deux pays sont membres du Commonwealth). Installé sur Shantipath, artère principale de l'enclave diplomatique de Chanakyapuri, aménagée par le Central Public Works Department dans les années 1950 pour regrouper les missions étrangères à New Delhi. Le bâtiment actuel abrite également les services consulaires. La haute-commissaire actuelle est Lindy Cameron, nommée en avril 2024. Coordonnées géocodées à la précision de la rue."
+        }
+      ]
+    },
+    "ID": {
+      "name": "Indonesia",
+      "flag": "id",
+      "current": {
+        "chancery": "50-A Kautilya Marg, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1950",
+          "to": null,
+          "address": "50-A Kautilya Marg, Chanakyapuri, New Delhi 110021",
+          "kind": "embassy",
+          "lat": 28.6021,
+          "lon": 77.1945,
+          "current": true,
+          "note": "L'ambassade de la République d'Indonésie à New Delhi est établie en 1950, peu après la reconnaissance de l'indépendance indonésienne par l'Inde (septembre 1946) et l'établissement formel des relations diplomatiques le 16 avril 1949. Le premier ambassadeur, Sudarsono, prend ses fonctions en 1950. La chancellerie est située dans l'enclave diplomatique de Chanakyapuri, au 50-A Kautilya Marg. Elle est également accréditée auprès du royaume du Bhoutan. L'ambassadeur actuel est S.E. Mme Ina Hagniningtyas Krisnamurthi, en fonction depuis novembre 2021. L'Indonésie dispose par ailleurs d'un consulat général à Mumbai."
+        }
+      ]
+    },
+    "IL": {
+      "name": "Israel",
+      "flag": "il",
+      "current": {
+        "chancery": "3, Dr. APJ Abdul Kalam Road (ex-Aurangzeb Road), Chanakyapuri, New Delhi 110011"
+      },
+      "addresses": [
+        {
+          "from": "1992-01",
+          "to": null,
+          "address": "3, Dr. APJ Abdul Kalam Road (ex-Aurangzeb Road), Chanakyapuri, New Delhi 110011",
+          "kind": "embassy",
+          "lat": 28.5916,
+          "lon": 77.2045,
+          "current": true,
+          "note": "Ambassade d'Israël ouverte après l'établissement des relations diplomatiques entre l'Inde et Israël le 29 janvier 1992. Le premier ambassadeur est Ephraim Dowek. L'ambassade est située dans l'enclave diplomatique de Chanakyapuri, sur l'ancienne Aurangzeb Road, rebaptisée Dr. APJ Abdul Kalam Road en août 2015. Le 13 février 2012, l'épouse d'un diplomate israélien est blessée dans un attentat à la bombe ciblant son véhicule. Le 29 janvier 2021, un engin explosif de faible puissance explose à proximité de l'ambassade lors du 29ᵉ anniversaire des relations indo-israéliennes. L'ambassade exerce également une juridiction consulaire sur le Bhoutan et supervise les consulats généraux à Mumbai et Bengaluru."
+        }
+      ]
+    },
+    "IT": {
+      "name": "Italy",
+      "flag": "it",
+      "current": {
+        "chancery": "50 E Chandragupta Marg, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1947",
+          "to": "c.1956",
+          "address": "New Delhi (adresse provisoire, Chanakyapuri en construction)",
+          "kind": "embassy",
+          "lat": 28.6139,
+          "lon": 77.2090,
+          "note": "Les relations diplomatiques entre la République italienne et la République de l'Inde sont établies en 1947, au moment de l'indépendance indienne. L'ambassade d'Italie fonctionne d'abord depuis des locaux provisoires, l'enclave diplomatique de Chanakyapuri étant encore en construction. L'ambassadeur Vincenzo de Luca est l'actuel représentant de l'Italie en Inde. L'Italie dispose également de consulats généraux à Mumbai, Kolkata et Bengaluru."
+        },
+        {
+          "from": "c.1956",
+          "to": null,
+          "address": "50 E Chandragupta Marg, Chanakyapuri, New Delhi 110021",
+          "kind": "chancery",
+          "lat": 28.5890,
+          "lon": 77.1910,
+          "current": true,
+          "note": "L'ambassade s'installe au 50 E Chandragupta Marg dans l'enclave diplomatique de Chanakyapuri, aménagée par le gouvernement indien au milieu des années 1950 pour regrouper les missions étrangères. Les relations bilatérales, héritières de liens commerciaux remontant à l'Antiquité romaine, connaissent un fort renouveau depuis l'élévation au rang de partenariat stratégique en mars 2023. En novembre 2024, un Plan d'action stratégique conjoint 2025-2029 est signé par la présidente du Conseil Giorgia Meloni et le Premier ministre Narendra Modi, identifiant dix domaines prioritaires de coopération."
+        }
+      ]
+    },
+    "JP": {
+      "name": "Japan",
+      "flag": "jp",
+      "current": {
+        "chancery": "Plot No.4 & 5, 50-G Shantipath, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1952-08-27",
+          "to": "c.1956",
+          "address": "New Delhi (adresse provisoire, Chanakyapuri en construction)",
+          "kind": "embassy",
+          "lat": 28.6139,
+          "lon": 77.2090,
+          "note": "Les relations diplomatiques entre le Japon et l'Inde sont officiellement établies le 27 août 1952, lors de l'entrée en vigueur du traité de paix nippo-indien signé le 9 juin 1952. Le Japon, redevenu souverain le 28 avril 1952 par le traité de San Francisco (auquel l'Inde n'est pas signataire), ouvre son ambassade à New Delhi peu après. La mission fonctionne d'abord depuis des locaux provisoires, l'enclave diplomatique de Chanakyapuri étant encore en construction."
+        },
+        {
+          "from": "c.1956",
+          "to": null,
+          "address": "Plot No.4 & 5, 50-G Shantipath, Chanakyapuri, New Delhi 110021",
+          "kind": "chancery",
+          "lat": 28.5901,
+          "lon": 77.1884,
+          "current": true,
+          "note": "L'ambassade s'installe sur le Shantipath dans l'enclave diplomatique de Chanakyapuri, aménagée par le gouvernement indien au milieu des années 1950 pour regrouper les missions étrangères. En mars 1986, l'ambassade devient également accréditée auprès du Bhoutan, à la suite de l'établissement de relations diplomatiques entre Tokyo et Thimphou. Le Japon dispose en outre de consulats généraux à Chennai et à Mumbai. L'ambassadeur actuel est S.E. M. Ono Keiichi (depuis novembre 2024)."
+        }
+      ]
+    },
+    "KR": {
+      "name": "South Korea",
+      "flag": "kr",
+      "current": {
+        "chancery": "9 Chandragupta Marg, Chanakyapuri Extension, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1973-12-10",
+          "to": null,
+          "address": "9 Chandragupta Marg, Chanakyapuri Extension, New Delhi 110021",
+          "kind": "chancery",
+          "lat": 28.5885,
+          "lon": 77.1870,
+          "current": true,
+          "note": "Les relations diplomatiques entre la République de Corée et la République de l'Inde sont officiellement établies le 10 décembre 1973. L'ambassade de Corée du Sud est située sur Chandragupta Marg, dans l'enclave diplomatique de Chanakyapuri à New Delhi. La Corée du Sud dispose en outre de consulats généraux à Chennai et à Mumbai. L'ambassadeur actuel est S.E. M. Lee Seong-ho."
+        }
+      ]
+    },
+    "MX": {
+      "name": "Mexico",
+      "flag": "mx",
+      "current": {
+        "chancery": "EP-31, Chandragupta Marg, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1950-08-01",
+          "to": "c.1960",
+          "address": "New Delhi (adresse provisoire pré-Chanakyapuri)",
+          "kind": "embassy",
+          "lat": 28.6139,
+          "lon": 77.2090,
+          "note": "Les relations diplomatiques entre le Mexique et l'Inde sont officiellement établies le 1ᵉʳ août 1950. L'ancien président Emilio Portes Gil est nommé premier ambassadeur du Mexique en Inde, soulignant l'importance accordée par Mexico à cette nouvelle relation. La mission fonctionne d'abord depuis des locaux provisoires, l'enclave diplomatique de Chanakyapuri étant encore en construction. En 1947, le Mexique fut le premier pays d'Amérique latine à reconnaître l'indépendance de l'Inde."
+        },
+        {
+          "from": "c.1960",
+          "to": null,
+          "address": "EP-31, Chandragupta Marg, Chanakyapuri, New Delhi 110021",
+          "kind": "chancery",
+          "lat": 28.5885,
+          "lon": 77.1870,
+          "current": true,
+          "note": "L'ambassade s'installe sur Chandragupta Marg dans l'enclave diplomatique de Chanakyapuri, aménagée par le gouvernement indien au milieu des années 1950 pour regrouper les missions étrangères. L'ambassade est également accréditée auprès du Bangladesh, des Maldives, du Népal et du Sri Lanka. Le poète et prix Nobel Octavio Paz fut ambassadeur du Mexique en Inde en 1962. Le Mexique dispose en outre d'un consulat à Mumbai, ouvert en mars 2023. L'ambassadeur actuel est S.E. M. Federico Salas Lotfe."
+        }
+      ]
+    },
+    "RU": {
+      "name": "Russia",
+      "flag": "ru",
+      "current": {
+        "chancery": "Shantipath, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1900",
+          "to": "1910",
+          "address": "Consulat impérial russe, Bombay (Mumbai)",
+          "kind": "consulate",
+          "lat": 18.9300,
+          "lon": 72.8300,
+          "note": "Un consulat russe est ouvert à Bombay en 1900, sous le règne du tsar Nicolas II, principalement pour faciliter le commerce entre l'Empire russe et l'Inde britannique. Les marchands indiens entretenaient des relations commerciales avec Astrakhan depuis le XVIIIᵉ siècle, mais la voie consulaire formelle ne s'ouvre qu'au tournant du XXᵉ siècle. L'adresse exacte du consulate n'a pas pu être établie avec certitude."
+        },
+        {
+          "from": "1910",
+          "to": "1947",
+          "address": "Consulat russe, Calcutta (Kolkata)",
+          "kind": "consulate",
+          "lat": 22.5700,
+          "lon": 88.3500,
+          "note": "Le consulat est transféré de Bombay à Calcutta vers 1910, alors capitale de l'Inde britannique. Après la révolution d'Octobre 1917, le consulat est maintenu par le gouvernement soviétique mais les relations restent limitées pendant l'entre-deux-guerres. L'adresse précise n'a pas pu être établie."
+        },
+        {
+          "from": "1947-04",
+          "to": "c.1956",
+          "address": "Travancore House, Curzon Street (auj. Kasturba Gandhi Marg), New Delhi",
+          "kind": "embassy",
+          "lat": 28.6280,
+          "lon": 77.2200,
+          "note": "Les relations diplomatiques entre l'Inde et l'URSS sont établies en avril 1947, quelques mois avant l'indépendance de l'Inde le 15 août. L'ambassadeur soviétique Kirill Novikov arrive à New Delhi en décembre 1947. L'ambassade s'installe initialement dans le Travancore House, situé sur Curzon Street (aujourd'hui Kasturba Gandhi Marg), un édifice cédé par l'État princier de Travancore. La visite historique de Nikita Khrouchtchev en 1955 consolide l'alliance stratégique soviéto-indienne."
+        },
+        {
+          "from": "1956-02",
+          "to": "1991-12-26",
+          "address": "Shantipath, Chanakyapuri, New Delhi 110021",
+          "kind": "chancery",
+          "lat": 28.5925,
+          "lon": 77.1865,
+          "note": "En février 1956, un accord de bail est signé entre l'Inde et l'URSS pour deux parcelles totalisant environ 9 hectares (22 acres) dans la nouvelle enclave diplomatique de Chanakyapuri, aménagée par le gouvernement indien pour regrouper les missions étrangères. L'ambassade soviétique, la plus grande de Chanakyapuri, devient un centre névralgique de la coopération indo-soviétique pendant la guerre froide. Le Traité d'amitié et de coopération indo-soviétique est signé en août 1971. Après la dissolution de l'URSS le 26 décembre 1991, la Fédération de Russie reprend l'ensemble de la mission diplomatique."
+        },
+        {
+          "from": "1991-12-26",
+          "to": null,
+          "address": "Shantipath, Chanakyapuri, New Delhi 110021",
+          "kind": "chancery",
+          "lat": 28.5925,
+          "lon": 77.1865,
+          "current": true,
+          "note": "La Fédération de Russie succède à l'URSS et reprend les locaux de l'ambassade sans interruption. Le partenariat stratégique est renouvelé en octobre 2000 lors de la visite du président Vladimir Poutine. L'ambassadeur actuel est Denis Alipov, nommé en 2022. La Russie dispose également de consulats généraux à Mumbai, Chennai et Kolkata."
+        }
+      ]
+    },
+    "SA": {
+      "name": "Saudi Arabia",
+      "flag": "sa",
+      "current": {
+        "chancery": "EP 30, Chandergupta Marg, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1948",
+          "to": null,
+          "address": "EP 30, Chandergupta Marg, Chanakyapuri, New Delhi 110021",
+          "kind": "embassy",
+          "lat": 28.5900,
+          "lon": 77.1850,
+          "current": true,
+          "note": "L'Inde indépendante établit des relations diplomatiques avec le Royaume d'Arabie saoudite dès 1948. L'ambassade saoudienne s'installe à Chanakyapuri, l'enclave diplomatique de New Delhi aménagée dans les années 1950-1960 sur le modèle des capitales planifiées. La chancellerie occupe le EP 30, Chandergupta Marg, artère qui traverse le cœur du quartier diplomatique. L'Arabie saoudite est l'un des principaux fournisseurs de pétrole de l'Inde et accueille plus de 1,4 million de travailleurs indiens. L'ambassade est également accréditée auprès du Bhoutan. Un consulat général fonctionne à Mumbai (Maker Tower F, 4ᵉ étage, Cuffe Parade). L'ambassadeur actuel est S.E. Saud bin Mohammed Al-Saty. La date précise d'installation à cette adresse n'a pas pu être établie avec certitude à partir des sources publiques disponibles."
+        }
+      ]
+    },
+    "TR": {
+      "name": "Turkey",
+      "flag": "tr",
+      "current": {
+        "chancery": "50-N, Nyaya Marg, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1948",
+          "to": null,
+          "address": "50-N, Nyaya Marg, Chanakyapuri, New Delhi 110021",
+          "kind": "embassy",
+          "lat": 28.5920,
+          "lon": 77.1900,
+          "current": true,
+          "note": "Ambassade de Turquie établie en 1948, peu après l'indépendance de l'Inde le 15 août 1947. La Turquie est l'un des premiers pays à avoir reconnu l'Inde indépendante et les relations diplomatiques formelles sont instaurées dès 1948 ; le premier ambassadeur est Ali Türkgeldi. La chancellerie est située dans l'enclave diplomatique de Chanakyapuri, sur Nyaya Marg. La juridiction couvre également le Bhoutan, le Népal et les Maldives. L'ambassadeur actuel est Fırat Sunel, nommé en mai 2021. La Turquie dispose en outre de consulats généraux à Mumbai et Hyderabad."
+        }
+      ]
+    },
+    "US": {
+      "name": "United States",
+      "flag": "us",
+      "current": {
+        "chancery": "Shantipath, Chanakyapuri, New Delhi 110021",
+        "residence": "Roosevelt House, Shantipath, Chanakyapuri, New Delhi 110021"
+      },
+      "addresses": [
+        {
+          "from": "1792-11",
+          "to": "c.1946",
+          "address": "Consulat des États-Unis, Calcutta (Kolkata)",
+          "kind": "consulate",
+          "lat": 22.5726,
+          "lon": 88.3639,
+          "note": "En novembre 1792, le président George Washington nomme Benjamin Joy premier consul américain à Calcutta, alors capitale de l'Inde britannique. La présence consulaire se poursuit avec des interruptions tout au long du XIXᵉ et du début du XXᵉ siècle. L'adresse exacte des premiers bureaux consulaires n'a pu être établie avec certitude. Des consulats sont également ouverts ultérieurement à Bombay (Mumbai), Madras (Chennai) et ailleurs."
+        },
+        {
+          "from": "1946-11-01",
+          "to": "1959-01-05",
+          "address": "New Delhi (ancien palais d'un maharaja, locaux loués)",
+          "kind": "embassy",
+          "lat": 28.6139,
+          "lon": 77.2090,
+          "note": "Les relations diplomatiques formelles avec l'Inde sont établies le 1er novembre 1946 avec l'arrivée de George R. Merrell comme chargé d'affaires par intérim. Le premier ambassadeur, Henry F. Grady, présente ses lettres de créance le 1er juillet 1947, quelques semaines avant l'indépendance de l'Inde le 15 août. L'ambassade fonctionne depuis des locaux loués — un ancien palais d'un maharaja — que l'ambassadeur Loy W. Henderson juge rapidement insuffisants."
+        },
+        {
+          "from": "1956-09-01",
+          "to": null,
+          "address": "Shantipath, Chanakyapuri, New Delhi 110021",
+          "building": "Chancellerie Edward Durell Stone",
+          "kind": "chancery",
+          "lat": 28.5967,
+          "lon": 77.1848,
+          "current": true,
+          "note": "Le gouvernement indien aménage l'enclave diplomatique de Chanakyapuri au milieu des années 1950. Les États-Unis obtiennent le deuxième choix de parcelle, après le Royaume-Uni. L'architecte américain Edward Durell Stone conçoit un bâtiment inspiré des temples indiens et du Taj Mahal, avec un écran solaire blanc entourant une structure en forme de « donut rectangulaire » dotée d'un jardin tropical central. La pierre angulaire est posée le 1er septembre 1956 par le juge en chef Earl Warren. L'ambassade est inaugurée le 5 janvier 1959 en présence du Premier ministre Jawaharlal Nehru. Le New York Times la qualifie alors de « probablement la plus élégante au monde ». Le complexe de 28 acres inclut la Roosevelt House, résidence officielle de l'ambassadeur. L'ambassade est également accréditée auprès du Bhoutan, avec lequel les États-Unis n'entretiennent pas de relations diplomatiques formelles. Une rénovation majeure conduite par Weiss/Manfredi est en cours depuis janvier 2021, avec une achèvement prévu vers 2027. Les États-Unis disposent en outre de consulats généraux à Mumbai, Chennai, Kolkata et Hyderabad."
+        }
+      ]
+    },
+    "ZA": {
+      "name": "South Africa",
+      "flag": "za",
+      "current": {
+        "chancery": "B-18, Vasant Marg, Vasant Vihar, New Delhi 110057"
+      },
+      "addresses": [
+        {
+          "from": "1994",
+          "to": null,
+          "address": "B-18, Vasant Marg, Vasant Vihar, New Delhi 110057",
+          "kind": "high-commission",
+          "lat": 28.5661,
+          "lon": 77.1602,
+          "current": true,
+          "note": "L'Afrique du Sud et l'Inde établissent des relations diplomatiques en novembre 1994, après la fin de l'apartheid et les premières élections démocratiques d'avril 1994 qui portent Nelson Mandela à la présidence. L'Inde, qui avait rompu tout lien diplomatique, commercial et culturel avec le régime de l'apartheid en 1946, fut l'un des premiers pays à accueillir le nouveau régime. La haute-commission (les deux pays étant membres du Commonwealth) est installée à Vasant Vihar, quartier diplomatique du sud de New Delhi, sur Vasant Marg. L'Afrique du Sud dispose en outre d'un consulat général à Mumbai. Haut-commissaire actuel (2024–) : S.E. M. J. E. Mangolo."
+        }
+      ]
+    }
+  }
+}
