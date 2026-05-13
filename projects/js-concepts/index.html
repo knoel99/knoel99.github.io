@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les grands concepts de JavaScript</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #ffffff;
+  --bg2: #f5f5f7;
+  --bg3: #eaeaef;
+  --bg-code: #1d1d1f;
+  --fg: #1d1d1f;
+  --fg2: #6e6e73;
+  --fg-code: #f5f5f7;
+  --accent: #0066cc;
+  --accent2: #004499;
+  --green: #16a34a;
+  --red: #dc2626;
+  --yellow: #ca8a04;
+  --border: rgba(0,0,0,0.08);
+  --max-w: 920px;
+  --mono: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* --- Header --- */
+.header {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 64px 24px 32px;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--fg2);
+  margin-bottom: 24px;
+}
+.back-link:hover { color: var(--fg); text-decoration: none; }
+.header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+.header p.lead {
+  font-size: 17px;
+  color: var(--fg2);
+  max-width: 680px;
+}
+
+/* --- Layout --- */
+.layout {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px 32px;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 40px;
+}
+
+.toc {
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  font-size: 13px;
+  border-left: 1px solid var(--border);
+  padding-left: 16px;
+}
+.toc h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg2);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.toc a {
+  display: block;
+  color: var(--fg2);
+  padding: 4px 0;
+  border-radius: 4px;
+}
+.toc a:hover { color: var(--accent); text-decoration: none; }
+
+.content { min-width: 0; }
+
+section.concept {
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+}
+section.concept:first-child { padding-top: 8px; }
+section.concept h2 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  scroll-margin-top: 24px;
+}
+section.concept .summary {
+  font-size: 15px;
+  color: var(--fg2);
+  margin-bottom: 16px;
+}
+section.concept p { margin-bottom: 12px; font-size: 15px; }
+section.concept ul {
+  margin: 8px 0 16px 20px;
+  font-size: 15px;
+  color: var(--fg);
+}
+section.concept ul li { margin-bottom: 4px; }
+section.concept code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--bg2);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+/* --- Code blocks (interactive) --- */
+.code-block {
+  margin: 16px 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-code);
+}
+.code-block .toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #2a2a2e;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.code-block .toolbar .label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #a1a1a6;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.code-block .toolbar .actions { display: flex; gap: 8px; }
+.code-block button {
+  font-family: inherit;
+  font-size: 12px;
+  padding: 5px 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: var(--fg-code);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.code-block button:hover { background: rgba(255,255,255,0.12); }
+.code-block button.run {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.code-block button.run:hover { background: var(--accent2); }
+
+.code-block .editor {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.55;
+  width: 100%;
+  background: var(--bg-code);
+  color: var(--fg-code);
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  resize: vertical;
+  min-height: 80px;
+  white-space: pre;
+  tab-size: 2;
+}
+.code-block .editor::selection { background: rgba(0,102,204,0.4); }
+
+.code-block .output {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background: #111;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #d4d4d8;
+  padding: 12px 16px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 36px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+.code-block .output:empty::before {
+  content: '// Sortie : cliquez sur "Exécuter"';
+  color: #6e6e73;
+  font-style: italic;
+}
+.code-block .output .log-line { padding: 1px 0; }
+.code-block .output .log-line.log-error { color: #fca5a5; }
+.code-block .output .log-line.log-warn { color: #fde68a; }
+.code-block .output .log-line.log-info { color: #93c5fd; }
+.code-block .output .log-line .prefix {
+  color: #6e6e73;
+  margin-right: 8px;
+  user-select: none;
+}
+
+/* --- Playground (libre) --- */
+.playground {
+  margin: 48px 0 24px;
+  padding: 24px;
+  background: var(--bg2);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.playground h2 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.playground p {
+  font-size: 14px;
+  color: var(--fg2);
+  margin-bottom: 16px;
+}
+
+/* --- Footer --- */
+.footer {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 32px 24px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--fg2);
+  border-top: 1px solid var(--border);
+}
+
+/* --- Responsive --- */
+@media (max-width: 720px) {
+  .layout { grid-template-columns: 1fr; gap: 16px; }
+  .toc {
+    position: static;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding: 16px 0 0;
+    margin-bottom: 8px;
+  }
+  .toc-list { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+  .header { padding-top: 40px; }
+  .header h1 { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="back-link" href="../../">&larr; Tous les projets</a>
+  <h1>Les grands concepts de JavaScript</h1>
+  <p class="lead">
+    Un guide concis et interactif : chaque section explique un concept clé et propose un exemple
+    que vous pouvez modifier et exécuter directement dans le navigateur.
+  </p>
+</header>
+
+<div class="layout">
+
+  <nav class="toc">
+    <h3>Sommaire</h3>
+    <div class="toc-list">
+      <a href="#variables">1. Variables &amp; portées</a>
+      <a href="#types">2. Types &amp; coercition</a>
+      <a href="#functions">3. Fonctions</a>
+      <a href="#closures">4. Closures</a>
+      <a href="#this">5. <code>this</code> &amp; binding</a>
+      <a href="#prototypes">6. Prototypes &amp; classes</a>
+      <a href="#array-methods">7. Méthodes de tableau</a>
+      <a href="#destructuring">8. Destructuring &amp; spread</a>
+      <a href="#async">9. Promises &amp; async/await</a>
+      <a href="#event-loop">10. Event loop</a>
+      <a href="#modules">11. Modules</a>
+      <a href="#playground">▶ Playground</a>
+    </div>
+  </nav>
+
+  <main class="content">
+
+    <!-- 1. VARIABLES -->
+    <section class="concept" id="variables">
+      <h2>1. Variables &amp; portées</h2>
+      <p class="summary">Trois mots-clés pour déclarer : <code>var</code>, <code>let</code>, <code>const</code>.</p>
+      <ul>
+        <li><code>var</code> : portée fonction, <em>hoisté</em> avec valeur <code>undefined</code>.</li>
+        <li><code>let</code> : portée bloc, réassignable, zone morte temporelle (TDZ).</li>
+        <li><code>const</code> : portée bloc, non réassignable (mais le contenu d'un objet reste mutable).</li>
+      </ul>
+      <div class="code-block" data-snippet>
+        <div class="toolbar">
+          <span class="label">JavaScript</span>
+          <div class="actions">
+            <button class="reset">Réinitialiser</button>
+            <button class="run">▶ Exécuter</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="10">// var ignore le bloc, let/const le respectent
+if (true) {
+  var a = 1;
+  let b = 2;
+  const c = 3;
+}
+console.log("a (var) :", a);
+try { console.log(b); } catch (e) { console.log("b (let) :", e.message); }
+
+// const protege la reference, pas le contenu
+const obj = { n: 1 };
+obj.n = 42;
+console.log("obj.n :", obj.n);</textarea>
+        <div class="output"></div>
+      </div>
+    </section>
+
+    <!-- 2. TYPES -->
+    <section class="concept" id="types">
+      <h2>2. Types &amp; coercition</h2>
+      <p class="summary">7 types primitifs (<code>string</code>, <code>number</code>, <code>bigint</code>, <code>boolean</code>, <code>undefined</code>, <code>null</code>, <code>symbol</code>) et les objets.</p>
+      <p>JS coerce automatiquement les types : <code>==</code> compare après coercition, <code>===</code> compare strictement.</p>
+      <div class="code-block" data-snippet>
+        <div class="toolbar">
+          <span class="label">JavaScript</span>
+          <div class="actions">
+            <button class="reset">Réinitialiser</button>
+            <button class="run">▶ Exécuter</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="10">console.log(typeof null);           // "object" (bug historique)
+console.log(typeof NaN);            // "number"
+console.log("5" == 5);              // true  (coercition)
+console.log("5" === 5);             // false (strict)
+console.log([] + []);               // "" (concatenation)
+console.log([] + {});               // "[object Object]"
+console.log(Boolean(""), Boolean("0"), Boolean([])); // false true true</textarea>
+        <div class="output"></div>
+      </div>
+    </section>
+
+    <!-- 3. FONCTIONS -->
+    <section class="concept" id="functions">
+      <h2>3. Fonctions</h2>
+      <p class="summary">Citoyennes de première classe : on les assigne, on les passe en argument, on les retourne.</p>
+      <p>Les fonctions fléchées (<code>=&gt;</code>) n'ont pas leur propre <code>this</code> ni <code>arguments</code>.</p>
+      <div class="code-block" data-snippet>
+        <div class="toolbar">
+          <span class="label">JavaScript</span>
+          <div class="actions">
+            <button class="reset">Réinitialiser</button>
+            <button class="run">▶ Exécuter</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="10">// Declaration vs expression vs flechee
+function carre(x) { return x * x; }
+const cube = function (x) { return x ** 3; };
+const double = x => x * 2;
+
+// Parametres par defaut + rest
+const somme = (init = 0, ...nombres) =>
+  nombres.reduce((acc, n) => acc + n, init);
+
+console.log(carre(4), cube(3), double(5));
+console.log(somme(10, 1, 2, 3));</textarea>
+        <div class="output"></div>
+      </div>
+    </section>
+
+    <!-- 4. CLOSURES -->
+    <section class="concept" id="closures">
+      <h2>4. Closures</h2>
+      <p class="summary">Une fonction conserve l'accès aux variables de la portée dans laquelle elle a été créée, même après que cette portée s'est terminée.</p>
+      <div class="code-block" data-snippet>
+        <div class="toolbar">
+          <span class="label">JavaScript</span>
+          <div class="actions">
+            <button class="reset">Réinitialiser</button>
+            <button class="run">▶ Exécuter</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="12">function creerCompteur(depart = 0) {
+  let n = depart;                  // capturee par la closure
+  return {
+    inc: () => ++n,
+    dec: () => --n,
+    valeur: () => n,
+  };
+}
+
+const c = creerCompteur(10);
+c.inc(); c.inc(); c.dec();
+console.log("valeur :", c.valeur());
+// n n'est pas accessible directement
+console.log("n direct :", typeof n);</textarea>
+        <div class="output"></div>
+      </div>
+    </section>
+
+    <!-- 5. THIS -->
+    <section class="concept" id="this">
+      <h2>5. <code>this</code> &amp; binding</h2>
+      <p class="summary"><code>this</code> dépend de <em>comment</em> la fonction est appelée, pas où elle est écrite.</p>
+      <ul>
+        <li>Appel libre : <code>this</code> = <code>undefined</code> (strict) ou <code>globalThis</code>.</li>
+        <li>Appel méthode <code>obj.f()</code> : <code>this</code> = <code>obj</code>.</li>
+        <li><code>fn.call/apply/bind</code> force la valeur de <code>this</code>.</li>
+        <li>Flèche : hérite du <code>this</code> englobant.</li>
+      </ul>
+      <div class="code-block" data-snippet>
+        <div class="toolbar">
+          <span class="label">JavaScript</span>
+          <div class="actions">
+            <button class="reset">Réinitialiser</button>
+            <button class="run">▶ Exécuter</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="12">const user = {
+  nom: "Ada",
+  direBonjour() { return `Bonjour, je suis ${this.nom}`; },
+};
+
+console.log(user.direBonjour());
+
+const detachee = user.direBonjour;
+try { console.log(detachee()); }
+catch (e) { console.log("erreur :", e.message); }
+
+const liee = user.direBonjour.bind(user);
+console.log(liee());</textarea>
+        <div class="output"></div>
+      </div>
+    </section>
+
+    <!-- 6. PROTOTYPES -->
+    <section class="concept" id="prototypes">
+      <h2>6. Prototypes &amp; classes</h2>
+      <p class="summary">Tout objet a un prototype dont il hérite des propriétés. Les <code>class</code> ES6 sont du sucre syntaxique au-dessus des prototypes.</p>
+      <div class="code-block" data-snippet>
+        <div class="toolbar">
+          <span class="label">JavaScript</span>
+          <div class="actions">
+            <button class="reset">Réinitialiser</button>
+            <button class="run">▶ Exécuter</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="14">class Animal {
+  constructor(nom) { this.nom = nom; }
+  parler() { return `${this.nom} fait un bruit.`; }
+}
+
+class Chien extends Animal {
+  parler() { return `${this.nom} aboie.`; }
+}
+
+const rex = new Chien("Rex");
+console.log(rex.parler());
+console.log(rex instanceof Chien, rex instanceof Animal);
+console.log(Object.getPrototypeOf(rex) === Chien.prototype);</textarea>
+        <div class="output"></div>
+      </div>
+    </section>
+
+    <!-- 7. ARRAY METHODS -->
+    <section class="concept" id="array-methods">
+      <h2>7. Méthodes de tableau</h2>
+      <p class="summary"><code>map</code>, <code>filter</code>, <code>reduce</code>, <code>find</code>, <code>some</code>, <code>every</code>, <code>flatMap</code>… Pipeline déclaratif pour transformer des collections.</p>
+      <div class="code-block" data-snippet>
+        <div class="toolbar">
+          <span class="label">JavaScript</span>
+          <div class="actions">
+            <button class="reset">Réinitialiser</button>
+            <button class="run">▶ Exécuter</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="12">const personnes = [
+  { nom: "Ada",   age: 36 },
+  { nom: "Linus", age: 54 },
+  { nom: "Grace", age: 41 },
+  { nom: "Alan",  age: 27 },
+];
+
+const moyenneAdultes = personnes
+  .filter(p => p.age >= 30)
+  .map(p => p.age)
+  .reduce((s, a, _, arr) => s + a / arr.length, 0);
+
+console.log("moyenne (>=30) :", moyenneAdultes.toFixed(1));
+console.log("noms :", personnes.map(p => p.nom).join(", "));</textarea>
+        <div class="output"></div>
+      </div>
+    </section>
+
+    <!-- 8. DESTRUCTURING -->
+    <section class="concept" id="destructuring">
+      <h2>8. Destructuring &amp; spread</h2>
+      <p class="summary">Extraire des valeurs d'objets ou de tableaux en une ligne, ou recomposer avec <code>...</code>.</p>
+      <div class="code-block" data-snippet>
+        <div class="toolbar">
+          <span class="label">JavaScript</span>
+          <div class="actions">
+            <button class="reset">Réinitialiser</button>
+            <button class="run">▶ Exécuter</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="12">const reponse = {
+  data: { user: { nom: "Ada", roles: ["admin", "dev"] } },
+  status: 200,
+};
+
+const { data: { user: { nom, roles: [premier] } }, status } = reponse;
+console.log(nom, premier, status);
+
+const a = [1, 2];
+const b = [3, 4];
+console.log([...a, 0, ...b]);     // fusion
+console.log({ ...reponse, status: 404 }); // override</textarea>
+        <div class="output"></div>
+      </div>
+    </section>
+
+    <!-- 9. PROMISES & ASYNC -->
+    <section class="concept" id="async">
+      <h2>9. Promises &amp; async/await</h2>
+      <p class="summary">Une <code>Promise</code> représente une valeur future. <code>async/await</code> permet d'écrire de l'asynchrone comme du séquentiel.</p>
+      <div class="code-block" data-snippet>
+        <div class="toolbar">
+          <span class="label">JavaScript</span>
+          <div class="actions">
+            <button class="reset">Réinitialiser</button>
+            <button class="run">▶ Exécuter</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="14">const attendre = ms => new Promise(r => setTimeout(r, ms));
+
+async function pipeline() {
+  console.log("debut");
+  await attendre(200);
+  console.log("apres 200ms");
+  const resultats = await Promise.all([
+    attendre(100).then(() => "A"),
+    attendre(150).then(() => "B"),
+  ]);
+  console.log("resultats :", resultats);
+  return "fini";
+}
+
+pipeline().then(r => console.log(">", r));</textarea>
+        <div class="output"></div>
+      </div>
+    </section>
+
+    <!-- 10. EVENT LOOP -->
+    <section class="concept" id="event-loop">
+      <h2>10. Event loop</h2>
+      <p class="summary">JS est mono-thread. La call stack exécute le code synchrone ; les tâches asynchrones reviennent via deux files :
+        <em>microtasks</em> (promises) puis <em>macrotasks</em> (setTimeout, I/O).</p>
+      <div class="code-block" data-snippet>
+        <div class="toolbar">
+          <span class="label">JavaScript</span>
+          <div class="actions">
+            <button class="reset">Réinitialiser</button>
+            <button class="run">▶ Exécuter</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="10">console.log("1 sync");
+
+setTimeout(() => console.log("4 macrotask (setTimeout)"), 0);
+
+Promise.resolve().then(() => console.log("3 microtask (promise)"));
+
+console.log("2 sync");
+// Ordre attendu : 1, 2, 3, 4</textarea>
+        <div class="output"></div>
+      </div>
+    </section>
+
+    <!-- 11. MODULES -->
+    <section class="concept" id="modules">
+      <h2>11. Modules</h2>
+      <p class="summary">ES modules : <code>import</code> / <code>export</code>. Chaque module a sa propre portée et est évalué une fois.</p>
+      <p>Exemple (non exécutable ici, fourni à titre indicatif) :</p>
+      <div class="code-block" data-snippet data-no-run>
+        <div class="toolbar">
+          <span class="label">module math.js</span>
+          <div class="actions">
+            <button class="reset">Réinitialiser</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="6">// math.js
+export const PI = 3.14159;
+export function aire(r) { return PI * r * r; }
+export default function perimetre(r) { return 2 * PI * r; }</textarea>
+      </div>
+      <div class="code-block" data-snippet data-no-run>
+        <div class="toolbar">
+          <span class="label">module main.js</span>
+          <div class="actions">
+            <button class="reset">Réinitialiser</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="5">// main.js
+import perimetre, { aire, PI } from "./math.js";
+console.log(PI, aire(2), perimetre(2));</textarea>
+      </div>
+    </section>
+
+    <!-- PLAYGROUND -->
+    <div class="playground" id="playground">
+      <h2>▶ Playground libre</h2>
+      <p>Écrivez votre propre code JavaScript. Tout ce qui passe par <code>console.log/info/warn/error</code> apparaît dans la console ci-dessous.</p>
+      <div class="code-block" data-snippet>
+        <div class="toolbar">
+          <span class="label">JavaScript</span>
+          <div class="actions">
+            <button class="clear">Effacer sortie</button>
+            <button class="reset">Réinitialiser</button>
+            <button class="run">▶ Exécuter</button>
+          </div>
+        </div>
+<textarea class="editor" spellcheck="false" rows="14">// A vous de jouer !
+const fibo = n => {
+  const seq = [0, 1];
+  for (let i = 2; i < n; i++) seq.push(seq[i - 1] + seq[i - 2]);
+  return seq;
+};
+
+console.log(fibo(12));
+
+// Astuce : Ctrl/Cmd + Entree pour executer.</textarea>
+        <div class="output"></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer class="footer">
+  Tout le code s'exécute dans votre navigateur. Aucune donnée n'est envoyée. ·
+  <a href="../../">knoel99.github.io</a>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // --- Sauvegarde du code original pour le bouton "Reinitialiser" ---
+  document.querySelectorAll('.code-block .editor').forEach(ed => {
+    ed.dataset.initial = ed.value;
+  });
+
+  // --- Format de valeur pour console.log (similaire DevTools, simplifie) ---
+  function formatValue(v, depth) {
+    if (depth === undefined) depth = 0;
+    if (depth > 4) return '…';
+    if (v === null) return 'null';
+    if (v === undefined) return 'undefined';
+    const t = typeof v;
+    if (t === 'string') return depth === 0 ? v : JSON.stringify(v);
+    if (t === 'number' || t === 'boolean' || t === 'bigint' || t === 'symbol') return String(v);
+    if (t === 'function') {
+      const name = v.name || 'anonymous';
+      return `[Function: ${name}]`;
+    }
+    if (v instanceof Error) return `${v.name}: ${v.message}`;
+    if (Array.isArray(v)) {
+      if (!v.length) return '[]';
+      return '[ ' + v.map(x => formatValue(x, depth + 1)).join(', ') + ' ]';
+    }
+    if (t === 'object') {
+      try {
+        const proto = Object.getPrototypeOf(v);
+        const tag = proto && proto.constructor && proto.constructor.name;
+        const keys = Object.keys(v);
+        if (!keys.length) return tag && tag !== 'Object' ? `${tag} {}` : '{}';
+        const body = keys.slice(0, 20).map(k => {
+          return `${k}: ${formatValue(v[k], depth + 1)}`;
+        }).join(', ');
+        const more = keys.length > 20 ? `, … (${keys.length - 20})` : '';
+        const prefix = tag && tag !== 'Object' ? tag + ' ' : '';
+        return `${prefix}{ ${body}${more} }`;
+      } catch (e) {
+        return String(v);
+      }
+    }
+    return String(v);
+  }
+
+  function formatArgs(args) {
+    return Array.from(args).map(a => formatValue(a, 0)).join(' ');
+  }
+
+  // --- Executeur ---
+  async function runCode(code, outputEl) {
+    outputEl.innerHTML = '';
+
+    const append = (level, args) => {
+      const line = document.createElement('div');
+      line.className = 'log-line log-' + level;
+      const prefix = document.createElement('span');
+      prefix.className = 'prefix';
+      prefix.textContent = level === 'log' ? '›' : level === 'error' ? '✗' : level === 'warn' ? '!' : 'ℹ';
+      line.appendChild(prefix);
+      line.appendChild(document.createTextNode(formatArgs(args)));
+      outputEl.appendChild(line);
+      outputEl.scrollTop = outputEl.scrollHeight;
+    };
+
+    const sandboxConsole = {
+      log:   function () { append('log',   arguments); },
+      info:  function () { append('info',  arguments); },
+      warn:  function () { append('warn',  arguments); },
+      error: function () { append('error', arguments); },
+      debug: function () { append('log',   arguments); },
+      table: function () { append('log',   arguments); },
+    };
+
+    // On enveloppe dans une async function pour autoriser le await top-level
+    let fn;
+    try {
+      fn = new Function('console', `"use strict"; return (async () => {\n${code}\n})();`);
+    } catch (e) {
+      append('error', ['SyntaxError: ' + e.message]);
+      return;
+    }
+
+    try {
+      await fn(sandboxConsole);
+    } catch (e) {
+      append('error', [e && e.stack ? e.stack.split('\n')[0] : String(e)]);
+    }
+  }
+
+  // --- Cablage des boutons par snippet ---
+  document.querySelectorAll('.code-block[data-snippet]').forEach(block => {
+    const editor = block.querySelector('.editor');
+    const output = block.querySelector('.output');
+    const runBtn = block.querySelector('button.run');
+    const resetBtn = block.querySelector('button.reset');
+    const clearBtn = block.querySelector('button.clear');
+
+    if (runBtn && output) {
+      runBtn.addEventListener('click', () => runCode(editor.value, output));
+    }
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        editor.value = editor.dataset.initial;
+        if (output) output.innerHTML = '';
+      });
+    }
+    if (clearBtn && output) {
+      clearBtn.addEventListener('click', () => { output.innerHTML = ''; });
+    }
+
+    // Ctrl/Cmd + Entree pour executer
+    editor.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        e.preventDefault();
+        if (runBtn && output) runCode(editor.value, output);
+      }
+      // Tab insere une indentation
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+        editor.value = editor.value.slice(0, start) + '  ' + editor.value.slice(end);
+        editor.selectionStart = editor.selectionEnd = start + 2;
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
