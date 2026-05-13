@@ -212,7 +212,6 @@
           ).addTo(fg).bindTooltip('<div>\n                     ' + e.name + ' \u2192 ' + c.powerCenter + ': ' + e.dist + ' km\n                 </div>', { sticky: true });
         });
 
-        fg.addTo(map);
         var layerLabel = '<img src="https://flagcdn.com/w40/' + c.code + '.png" width="16" height="10" style="vertical-align:middle;border:1px solid #ccc;border-radius:2px;" alt="' + c.name + '"> ' + c.name;
         overlays[layerLabel] = fg;
         countryFeatureGroups[c.name] = fg;
