@@ -1,0 +1,955 @@
+{
+  "host": {
+    "code": "CN",
+    "name": "China",
+    "capital": "Beijing"
+  },
+  "note": "Adresses géocodées à la précision de la rue.",
+  "embassies": {
+    "AR": {
+      "name": "Argentina",
+      "flag": "ar",
+      "current": {
+        "chancery": "11 Dong Wu Jie (东五街11号), Sanlitun, District de Chaoyang, Pékin 100600",
+        "residence": "Sanlitun, District de Chaoyang, Pékin (adresse précise de la résidence non établie dans les sources publiques)"
+      },
+      "addresses": [
+        {
+          "from": "1972",
+          "to": null,
+          "address": "11 Dong Wu Jie (东五街11号), Sanlitun, District de Chaoyang, Pékin 100600",
+          "kind": "chancery",
+          "lat": 39.9359,
+          "lon": 116.4554,
+          "current": true,
+          "note": "L'Argentine et la République populaire de Chine établissent leurs relations diplomatiques le 19 février 1972 par un communiqué conjoint signé à Bucarest ; l'Argentine reconnaît la RPC comme seul gouvernement légal de la Chine et rompt ses liens avec la République de Chine (Taïwan). Cette normalisation intervient sous la présidence de facto d'Alejandro Lanusse, dans le contexte de la vague internationale de reconnaissance consécutive à la visite Nixon en Chine de février 1972. Il convient de noter qu'une première relation diplomatique avait été établie le 1er juin 1945 avec la Chine nationaliste de Chiang Kaï-shek, par échange de notes entre les ambassadeurs Ibarra García et Chen Chieh, à la suite de quoi une légation avait été ouverte à Nankin ; ces relations ont été suspendues lors de la création de la RPC (1949) et sont formellement rompues en 1972 lors de la reconnaissance de Pékin. L'ambassade de la RPC à Buenos Aires ouvre ses portes le 1er septembre 1972, et le premier ambassadeur chinois Zheng Weizhi présente ses lettres de créance le 26 septembre 1972. La chancellerie argentine à Pékin est implantée au 11 Dong Wu Jie (« 5ᵉ rue est »), dans le quartier diplomatique de Sanlitun, district de Chaoyang — zone qui concentre la majorité des ambassades étrangères à Pékin depuis les années 1960. La juridiction de l'ambassade couvre également la Mongolie. Depuis le 21 juin 2021, l'ambassadeur en poste est Sabino Vaca Narvaja. Téléphone : +86 10 6532 1406 / 6532 2090 / 6532 4755 / 6532 2281. Site officiel : echin.cancilleria.gob.ar."
+        }
+      ]
+    },
+    "AU": {
+      "name": "Australia",
+      "flag": "au",
+      "current": {
+        "chancery": "21 Dongzhimenwai Dajie, Sanlitun, District de Chaoyang, Pékin 100600",
+        "residence": "21 Dongzhimenwai Dajie, Sanlitun, District de Chaoyang, Pékin 100600 (sur le campus diplomatique)"
+      },
+      "addresses": [
+        {
+          "from": "1941",
+          "to": "1946",
+          "address": "Chongqing (Chungking), capitale de guerre de la République de Chine — adresse exacte non établie",
+          "kind": "legation",
+          "lat": 29.563,
+          "lon": 106.5516,
+          "note": "Première mission diplomatique australienne en Chine, ouverte le 28 octobre 1941 à Chongqing (alors capitale de guerre de la République de Chine nationaliste), troisième poste extérieur de l'Australie après Washington et Tokyo. Sir Frederic Eggleston est nommé ministre résident ; son homologue chinois, Dr Hsu Mo (徐謨), prend ses fonctions à Canberra en septembre 1941. Eggleston dirige la légation jusqu'en 1944, puis Keith Officer assure la charge d'affaires jusqu'en octobre 1945, date à laquelle l'économiste Douglas Copland est nommé ministre. Charles Lee (1913–1996), premier diplomate sino-australien, fait partie du personnel. La légation transfère à Nankin en avril 1946, à la suite du retour du gouvernement nationaliste dans sa capitale d'avant-guerre."
+        },
+        {
+          "from": "1946",
+          "to": "1948",
+          "address": "34 Peiping Road (北平路34號), Nankin (Nanjing), Jiangsu",
+          "kind": "legation",
+          "lat": 32.052,
+          "lon": 118.779,
+          "note": "La légation australienne transfère à Nankin en avril 1946 sous la conduite du ministre Douglas Copland. Une chancellerie est ouverte au 34 Peiping Road dès juin 1946. La légation suit le retour à Nankin du gouvernement nationaliste du Kuomintang après la victoire alliée de 1945. Cette adresse est abandonnée début 1948 lors du déménagement vers Yihe Road."
+        },
+        {
+          "from": "1948",
+          "to": "1949",
+          "address": "26 Yihe Road (頤和路26號), Nankin (Nanjing), Jiangsu",
+          "kind": "embassy",
+          "lat": 32.049,
+          "lon": 118.801,
+          "note": "La légation est élevée au rang d'ambassade en 1948 ; Keith Officer revient à Nankin comme premier ambassadeur australien en Chine. Le siège se déplace vers Yihe Road, dans le quartier résidentiel diplomatique à l'est du centre-ville. À l'automne 1949, à l'approche des forces communistes de l'Armée populaire de libération, le personnel est évacué vers Hong Kong. L'ambassade ferme ses portes fin 1949, après la proclamation de la République populaire de Chine le 1er octobre 1949 par Mao Zedong. L'Australie ne reconnaît pas immédiatement la RPC et n'y maintiendra plus de représentation jusqu'en 1973."
+        },
+        {
+          "from": "1973",
+          "to": "1992",
+          "address": "Sanlitun, District de Chaoyang, Pékin — locaux provisoires (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": 39.939,
+          "lon": 116.455,
+          "note": "À la suite de la reconnaissance de la RPC par le Premier ministre Gough Whitlam, actée par le communiqué conjoint signé à Paris le 21 décembre 1972 par Alan Renouf (ambassadeur australien en France) et Huang Chen (ambassadeur de la RPC en France), l'ambassade australienne à Pékin ouvre le 12 janvier 1973. Dr Stephen FitzGerald, premier ambassadeur australien auprès de la RPC, présente ses lettres de créance au président par intérim Dong Biwu le 24 avril 1973. En attendant l'achèvement de son propre compound diplomatique, l'ambassade s'installe dans des locaux provisoires dans le quartier de Sanlitun, le secteur diplomatique attribué aux nouvelles ambassades par les autorités chinoises. Les travaux du nouveau campus, conçu par Denton Corker Marshall, débutent au milieu des années 1980 sur le terrain du 21 Dongzhimenwai Dajie."
+        },
+        {
+          "from": "1992",
+          "to": null,
+          "address": "21 Dongzhimenwai Dajie, Sanlitun, District de Chaoyang, Pékin 100600",
+          "building": "Campus diplomatique australien — Denton Corker Marshall / Rankin & Hill / Ove Arup, achevé 1992",
+          "kind": "chancery",
+          "lat": 39.942,
+          "lon": 116.4443,
+          "current": true,
+          "note": "Le campus diplomatique australien, dessiné par le cabinet d'architectes Denton Corker Marshall avec les ingénieurs Rankin & Hill et Ove Arup, est achevé en 1992. Le compound s'inspire de la maison à cour traditionnelle pékinoise (四合院, sìhéyuàn) : planification axiale, disposition hiérarchique des volumes, matériaux et techniques de construction locaux. L'ensemble, ceint d'un mur d'enceinte rappelant les cités historiques chinoises, regroupe une chancellerie sur trois niveaux, la résidence de l'ambassadeur (chef de mission) sur deux niveaux avec salons de réception, et trente-cinq appartements pour le personnel diplomatique, tous organisés autour d'une vaste cour verdoyante. L'orientation nord-sud maximise l'ensoleillement et protège des vents d'hiver. Les quartiers résidentiels évoquent les maisons à jardins et balcons des banlieues de Sydney et Melbourne. La structure, bâtie par la 5ᵉ société de construction de la capitale (首都第五建筑公司), résiste aux séismes jusqu'au degré 8 de l'échelle de Richter."
+        },
+        {
+          "from": "1992",
+          "to": null,
+          "address": "21 Dongzhimenwai Dajie, Sanlitun, District de Chaoyang, Pékin 100600 (résidence dans le campus diplomatique)",
+          "building": "Résidence du chef de mission — Denton Corker Marshall, 1992",
+          "kind": "residence",
+          "lat": 39.942,
+          "lon": 116.4443,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur (chef de mission) est intégrée au campus diplomatique du 21 Dongzhimenwai Dajie et non séparée de la chancellerie. Elle occupe un bâtiment distinct de deux niveaux doté de salons de réception officiels, dans l'esprit des maisons australiennes à galeries et jardins, tout en s'insérant dans la composition d'ensemble à cour de style pékinois."
+        }
+      ]
+    },
+    "BR": {
+      "name": "Brazil",
+      "flag": "br",
+      "current": {
+        "chancery": "27 Guang Hua Lu, Jianguomenwai, Chaoyang District, Beijing 100600",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1974",
+          "to": null,
+          "address": "27 Guang Hua Lu, Jianguomenwai, Chaoyang District, Beijing 100600",
+          "kind": "chancery",
+          "lat": 39.9124,
+          "lon": 116.431,
+          "current": true,
+          "note": "Le Brésil reconnaît la République populaire de Chine le 15 août 1974 par un communiqué conjoint signé à Pékin, sous la présidence d'Ernesto Geisel et avec le ministre des Affaires étrangères Antonio Francisco Azeredo da Silveira. Le Brésil reconnaît la politique d'une seule Chine et rompt ses liens avec la République de Chine (Taïwan), avec laquelle il entretenait des relations depuis 1912. Le Brésil est l'un des premiers pays d'Amérique latine à reconnaître la RPC, devançant les États-Unis (janvier 1979) de cinq ans. La chancellerie est installée au 27 Guang Hua Lu dans le quartier diplomatique de Jianguomenwai, arrondissement de Chaoyang. L'ambassade est également accréditée auprès de la Mongolie. Contacts : +86 10 6532 2881 ; brasemb.pequim@itamaraty.gov.br ; site : pequim.itamaraty.gov.br."
+        }
+      ]
+    },
+    "CA": {
+      "name": "Canada",
+      "flag": "ca",
+      "current": {
+        "chancery": "19 Dongzhimenwai Dajie, Chaoyang District, Beijing 100600",
+        "residence": "adresse non publiée (périmètre diplomatique de Sanlitun, Chaoyang District)"
+      },
+      "addresses": [
+        {
+          "from": "1971",
+          "to": null,
+          "address": "19 Dongzhimenwai Dajie, Chaoyang District, Beijing 100600",
+          "kind": "chancery",
+          "lat": 39.9418,
+          "lon": 116.4497,
+          "current": true,
+          "note": "Le Canada reconnaît la République populaire de Chine le 13 octobre 1970, à l'issue de vingt-deux mois de négociations secrètes menées à Stockholm. La formule retenue — le Canada « prend note » de la position de Pékin sur Taïwan sans l'approuver ni la contester — deviendra la « formule canadienne », reprise par l'Australie, le Japon, l'Allemagne et d'autres pays lors de leur propre reconnaissance. Le gouvernement de Pierre Elliott Trudeau inaugure l'ambassade au 19 Dongzhimenwai Dajie le 10 juin 1971, dans un bâtiment du quartier diplomatique de Sanlitun alors mis à disposition par les autorités chinoises. Ralph Edgar Collins, sous-secrétaire d'État aux Affaires extérieures en exercice, est nommé premier ambassadeur du Canada en RPC ; il présente ses lettres de créance à Pékin à l'été 1971. Le Canada est alors parmi les premiers pays occidentaux majeurs à établir une présence diplomatique à Pékin, précédé seulement par la France (1964), la Grande-Bretagne (représentation de facto antérieure), la Suisse et les pays nordiques. L'adresse au 19 Dongzhimenwai Dajie est occupée sans interruption depuis 1971 ; la chancellerie actuelle est un bâtiment de bureau construit dans la zone diplomatique de Chaoyang."
+        }
+      ]
+    },
+    "DE": {
+      "name": "Germany",
+      "flag": "de",
+      "current": {
+        "chancery": "17 Dongzhimenwai Dajie, District de Chaoyang, Pékin 100600",
+        "residence": "17 Dongzhimenwai Dajie, District de Chaoyang, Pékin 100600 (dans l'enceinte de l'ambassade)"
+      },
+      "addresses": [
+        {
+          "from": "1861",
+          "to": "1900",
+          "address": "Dongjiaomin Xiang (东交民巷), Quartier des Légations, Dongcheng District, Pékin",
+          "kind": "legation",
+          "lat": 39.9029,
+          "lon": 116.4016,
+          "note": "Suite à l'expédition Eulenburg (1859–1862), la Prusse — représentant l'ensemble du Zollverein allemand — signe le 2 septembre 1861 un traité de commerce et d'amitié avec la Chine qing à Tianjin, puis établit une légation permanente à Pékin dans le Quartier des légations de Dongjiaomin Xiang (anciennement Dong Jiangmi Xiang, « ruelle du riz du fleuve de l'Est »). Après la fondation du Deuxième Reich (1871), la légation prussienne devient légation de l'Empire allemand. Elle occupe un composé dans la partie centrale du quartier, qui héberge également les légations de onze autres puissances étrangères, à l'est immédiat de la place Tiananmen."
+        },
+        {
+          "from": "1900",
+          "to": "1900",
+          "address": "Dongjiaomin Xiang, Pékin — et rue impériale (Hatamen Street / Chongwenmen Dajie), Pékin",
+          "kind": "legation",
+          "lat": 39.9029,
+          "lon": 116.4016,
+          "note": "Le 20 juin 1900, au début du siège des légations par les Boxers et les troupes impériales chinoises, le ministre plénipotentiaire allemand Clemens von Ketteler est assassiné à l'arme à feu à l'ouest de Xizongbu Hutong, à environ un pâté de maisons du Zongli Yamen (ministère des Affaires étrangères), alors qu'il se rendait en chaise à porteurs pour y négocier l'évacuation des étrangers. C'est le seul chef de mission diplomatique tué durant ce conflit. La légation allemande participe au siège de 55 jours. Un arc commémoratif dit « Monument Ketteler » (克林德碑) est érigé en 1903 sur Hatamen Street à l'endroit de l'assassinat ; démonté en 1918 après la défaite allemande, il est déplacé au parc Zhongshan et rebaptisé successivement « Porte de la victoire de la Justice » (1919) puis « Porte pour la protection de la paix » (1953)."
+        },
+        {
+          "from": "1901",
+          "to": "1937",
+          "address": "Dongjiaomin Xiang (东交民巷), Quartier des Légations, Dongcheng District, Pékin",
+          "kind": "legation",
+          "lat": 39.9029,
+          "lon": 116.4016,
+          "note": "Après la levée du siège par les forces alliées (14 août 1900) et la signature du Protocole Boxer (7 septembre 1901), la légation impériale allemande est reconstruite et renforcée dans le Quartier des légations. Avec la fin de la Première Guerre mondiale et l'abdication du Kaiser (1918), la légation devient représentation de la République de Weimar, puis du Troisième Reich à partir de 1933. Elle est fermée lors de l'invasion japonaise de 1937 ; la Chine déclare la guerre à l'Allemagne en décembre 1941."
+        },
+        {
+          "from": "1950",
+          "to": "1990",
+          "address": "3 Sanlitun Dongsanjie (三里屯东三街3号), District de Chaoyang, Pékin",
+          "kind": "embassy",
+          "lat": 39.933,
+          "lon": 116.453,
+          "note": "La République démocratique allemande (RDA/DDR) établit des relations diplomatiques avec la République populaire de Chine le 27 octobre 1949, soit seulement quelques semaines après la proclamation de la RPC par Mao Zedong (1er octobre 1949) et la fondation de la RDA (7 octobre 1949). La RDA est représentée par un ambassadeur à Pékin dès 1950. L'ambassade de la RDA est installée à Sanlitun Dongsanjie, dans le périmètre diplomatique du nord-est de Pékin, à environ 500 m de la future ambassade de la RFA. Après la réunification allemande du 3 octobre 1990, ce bâtiment est intégré au patrimoine de l'ambassade d'Allemagne unifiée sous le nom de « Maison 2 », abritant les services consulaires, le département économique et des logements de service."
+        },
+        {
+          "from": "1972",
+          "to": "1998",
+          "address": "Dongzhimenwai Dajie (东直门外大街), District de Chaoyang, Pékin",
+          "kind": "embassy",
+          "lat": 39.941,
+          "lon": 116.449,
+          "note": "La République fédérale d'Allemagne (RFA) établit des relations diplomatiques avec la République populaire de Chine le 11 octobre 1972 ; le ministre des Affaires étrangères Walter Scheel se rend à Pékin et rencontre le Premier ministre Zhou Enlai. Simultanément, la RFA rompt ses relations avec la République de Chine (Taïwan), reconnaissant la politique d'« une seule Chine ». Un premier bâtiment d'ambassade est mis à disposition de la RFA sur Dongzhimenwai Dajie (à l'est du site actuel). La RFA et la RDA coexistent donc à Pékin de 1972 à la réunification de 1990."
+        },
+        {
+          "from": "1998",
+          "to": null,
+          "address": "17 Dongzhimenwai Dajie (东直门外大街17号), angle Xindong Lu, District de Chaoyang, Pékin 100600",
+          "building": "Chancellerie KBK Architekten (Belz Lutz), 1998",
+          "kind": "chancery",
+          "lat": 39.9413,
+          "lon": 116.4515,
+          "current": true,
+          "note": "La nouvelle chancellerie, conçue par le cabinet d'architectes hambourgeois KBK Architekten (Belz Lutz) et inaugurée fin 1998 après dix ans de conception, est un bâtiment carré de trois étages avec un atrium intérieur. Le projet, dont le coût s'élève à 51 millions d'euros, regroupe chancellerie, résidence de l'ambassadeur (deux étages, ouverture sur jardin), logements de service sur Xindong Lu et parking en sous-sol. Les architectes ont reçu pour directive de concevoir un bâtiment « sobre, diplomatique et représentatif, sans être trop à la mode ». Le complexe adapte les motifs de la structure pavillonnaire chinoise traditionnelle aux exigences d'une ambassade moderne. L'ambassade de Canada et celle d'Australie sont mitoyennes. Entrée principale : Dongzhimenwai Dajie ; entrée consulaire et visas : Sanlitun Xiwujie / Xindong Lu."
+        },
+        {
+          "from": "1998",
+          "to": null,
+          "address": "17 Dongzhimenwai Dajie, District de Chaoyang, Pékin 100600 (dans l'enceinte)",
+          "building": "Résidence de l'ambassadeur, dans l'enceinte de la chancellerie",
+          "kind": "residence",
+          "lat": 39.9413,
+          "lon": 116.4515,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur d'Allemagne est intégrée dans l'enceinte de l'ambassade au 17 Dongzhimenwai Dajie. Elle est de plain-pied avec les salons de réception au rez-de-chaussée, qui s'ouvrent sur une terrasse et un jardin. La résidence est donc à la même adresse que la chancellerie, mais constitue un bâtiment distinct au sein du composé diplomatique. L'ambassadrice Patricia Hildegard Flor occupe le poste depuis 2022."
+        }
+      ]
+    },
+    "FR": {
+      "name": "France",
+      "flag": "fr",
+      "current": {
+        "chancery": "60 Tianze Lu, Sanlitun, District de Chaoyang, Pékin 100600",
+        "residence": "60 Tianze Lu, Sanlitun, District de Chaoyang, Pékin 100600 (sur le campus diplomatique)"
+      },
+      "addresses": [
+        {
+          "from": "1861",
+          "to": "1937",
+          "address": "15 Dongjiaomin Xiang (东交民巷15号), Quartier des Légations, Pékin",
+          "kind": "legation",
+          "lat": 39.9015,
+          "lon": 116.4065,
+          "note": "Légation française établie en 1861 dans l'ancien palais du prince An (An Qinwangfu), cédé par le prince Gong à la suite du Traité de Pékin (25 octobre 1860) clôturant la seconde guerre de l'opium. Premier ministre résident : Alphonse de Bourboulon. Le domaine, caractérisé par des toits en tuiles vernissées, un portail rouge et or, des cours pavées de marbre et de nombreux pavillons, est l'une des légations les plus vastes du Quartier de Dongjiaomin Xiang. Pendant le siège des Boxers (55 jours, juin–août 1900), la légation française sert de refuge pour les diplomates et des milliers de chrétiens chinois ; elle est défendue par des marins et des volontaires dont les noms sont gravés sur des plaques de bronze redécouvertes en 2011. La légation est élevée au rang d'ambassade en 1936. En 1937, l'ambassadeur Émile Naggiar transfère sa résidence à Nankin (Nanjing) puis Shanghai, en suivant le gouvernement nationaliste du Kuomintang ; les locaux de Pékin continuent à abriter une partie des services. Après 1949, le composé est récupéré par le Ministère des Affaires étrangères de la République populaire de Chine."
+        },
+        {
+          "from": "1937",
+          "to": "1946",
+          "address": "Nankin (Nanjing) puis Chongqing — adresse exacte non établie",
+          "kind": "embassy",
+          "lat": 32.0603,
+          "lon": 118.7969,
+          "note": "À partir de 1937 l'ambassadeur Émile Naggiar choisit de résider à Nankin, siège du gouvernement nationaliste, puis à Shanghai avant la chute de la ville. Pendant la Seconde Guerre mondiale, la représentation française est fragmentée entre Pékin (services maintenus), Nankin (siège du gouvernement fantoche pro-japonais de Wang Jingwei, auprès duquel la France de Vichy maintient un contact), Chongqing (bureau diplomatique du gouvernement de Chiang Kaï-chek en exil) et Shanghai. Situation diplomatique complexe liée à la dualité Vichy / France libre."
+        },
+        {
+          "from": "1946",
+          "to": "1949",
+          "address": "Nankin (Nanjing) — adresse exacte non établie",
+          "kind": "embassy",
+          "lat": 32.0603,
+          "lon": 118.7969,
+          "note": "Dès le début de 1946, Nankin — siège du gouvernement nationaliste de Chiang Kaï-chek après la victoire alliée — devient le siège officiel et principal de l'ambassade de France en Chine. En avril 1949, les forces communistes de l'Armée populaire de libération entrent dans Nankin ; l'ambassade cesse ses activités sur place. Une partie du personnel, dont le chargé d'affaires Roux, assure la transition depuis Shanghai jusqu'en 1949-1950."
+        },
+        {
+          "from": "1949",
+          "to": "1964",
+          "address": "Taipei (Taïwan) — consulat puis ambassade de France en Chine à Taipei",
+          "kind": "embassy",
+          "lat": 25.033,
+          "lon": 121.5654,
+          "note": "Après la retraite du gouvernement nationaliste ROC à Taipei, un consulat français est ouvert en juin 1949. Dès le 1ᵉʳ décembre 1952, après la suppression définitive des services de l'ambassade réfugiée à Hong Kong, le consulat de Taipei est transformé en bureau détaché puis prend officiellement la dénomination « Ambassade de France en Chine à Taipei ». La France reconnaît ainsi le gouvernement ROC comme seul représentant légal de la Chine jusqu'au 27 janvier 1964. À cette date, le général de Gaulle annonce la reconnaissance de la République populaire de Chine : le gouvernement ROC rompt alors les relations diplomatiques et rappelle son ambassadeur. La France est l'un des premiers pays occidentaux à opérer ce changement de reconnaissance."
+        },
+        {
+          "from": "1964",
+          "to": "2011",
+          "address": "Sanlitun, District de Chaoyang, Pékin (deux bâtiments loués, adresse précise Sanlitun Beizhonglu)",
+          "kind": "embassy",
+          "lat": 39.939,
+          "lon": 116.455,
+          "note": "Après la reconnaissance de la RPC par le général de Gaulle le 27 janvier 1964, le premier ambassadeur Lucien Paye (ancien ministre de l'Éducation nationale) s'installe fin avril 1964 dans le quartier de Sanlitun, l'ancien hôtel particulier du Quartier des Légations étant inaccessible (mis sous séquestre par les autorités chinoises). L'ambassade occupe pendant quarante-six ans deux bâtiments loués à titre provisoire sur Sanlitun Beizhonglu. Les plaques commémoratives de la défense de 1900 sont redécouvertes dans les garages de ces locaux lors du déménagement en 2011."
+        },
+        {
+          "from": "2011",
+          "to": null,
+          "address": "60 Tianze Lu, Sanlitun, District de Chaoyang, Pékin 100600",
+          "building": "Campus diplomatique de l'ambassade de France (SAREA – Alain Sarfati Architecture)",
+          "kind": "chancery",
+          "lat": 39.9525,
+          "lon": 116.4684,
+          "current": true,
+          "note": "Nouveau campus diplomatique inauguré le 28 octobre 2011, situé au croisement des rues Liangmaqiao et Tianze dans le quartier de Sanlitun. Conçu par l'architecte Alain Sarfati (agence SAREA), il regroupe sur 19 500 m² la chancellerie (9 713 m²), le consulat général (6 614 m²) et la résidence de l'ambassadeur (3 173 m²), chacun doté de son propre accès, organisés autour d'un jardin central évoquant un cloître. La façade extérieure en granit bossagé confère au bâtiment une allure solide et protectrice ; côté jardin, une façade habillée d'un drapé plissé et ondulant de verre sérigraphié doré renvoie à la haute couture française — synthèse surnommée « Descartes et Dior » par l'architecte. Une tour de huit étages abritant les services consulaires marque l'axe urbain. Surnommé le « Faubourg Saint-Honoré de Pékin », le complexe est salué comme l'une des plus importantes réalisations de l'architecture diplomatique française à l'étranger. Coût : environ 24 millions d'euros HT."
+        }
+      ]
+    },
+    "GB": {
+      "name": "United Kingdom",
+      "flag": "gb",
+      "current": {
+        "chancery": "11 Guang Hua Lu, Jianguomenwai, Chaoyang District, Beijing 100600",
+        "residence": "11 Guang Hua Lu, Jianguomenwai, Chaoyang District, Beijing 100600 (même enceinte que la chancellerie ; nouveau bâtiment en attente d'autorisation, projet Eric Parry Architects)"
+      },
+      "addresses": [
+        {
+          "from": "1861",
+          "to": "1866",
+          "address": "Dongjiaomin Xiang (東交民巷), Quartier des Légations, Dongcheng District, Pékin",
+          "building": "Palais du duc I-liang (Yi-liang Gongfu)",
+          "kind": "legation",
+          "lat": 39.9029,
+          "lon": 116.4016,
+          "note": "Le 26 mars 1861, à la suite des accords mettant fin à la Seconde guerre de l'opium (convention de Pékin, 1860), la Grande-Bretagne établit sa légation à Pékin dans le palais du duc mandchou I-liang, situé au sud-est de la Cité interdite sur l'actuelle Dongjiaomin Xiang. Sir Frederick Bruce devient le premier envoyé extraordinaire et ministre plénipotentiaire résidant à Pékin. Un loyer annuel de 1 000 taëls est convenu, les travaux de remise en état tenant lieu des deux premières années de loyer."
+        },
+        {
+          "from": "1866",
+          "to": "1959",
+          "address": "Dongjiaomin Xiang (東交民巷), Quartier des Légations, Dongcheng District, Pékin",
+          "building": "Liang Gongfu (梁公府) — palais du duc de Liang",
+          "kind": "legation",
+          "lat": 39.9029,
+          "lon": 116.4016,
+          "note": "En 1866 la légation est transférée au Liang Gongfu (梁公府), palais d'un duc mandchou tombé dans la misère, situé lui aussi dans le Quartier des Légations. Un loyer de 500 livres par an est versé annuellement par convoi de chars au Zongli Yamen jusqu'en 1900. En juin-août 1900, lors du soulèvement des Boxers, la légation britannique — la plus grande du quartier — devient le principal réduit de résistance des 473 civils étrangers et 409 militaires de huit nationalités durant le siège de 55 jours ; le ministre Claude Maxwell MacDonald commande la défense. En 1935 (17 mai) la légation est élevée au rang d'ambassade par consentement mutuel. En 1936-1937, l'ambassade suit le gouvernement nationaliste à Nankin, laissant un consulat général à Pékin. Au retour des forces nationalistes en 1945, l'ambassade rouvre à Nankin jusqu'en 1950. En janvier 1959, les autorités chinoises réclament la restitution du Liang Gongfu — nécessaire pour la construction du Tribunal populaire suprême —, rappelant que la Grande-Bretagne n'en possédait pas de titres de propriété et n'avait plus acquitté de loyer depuis 50 ans. Le compound est rendu le 28 septembre 1959. Le site est aujourd'hui occupé par le Bureau de la sécurité publique de Pékin."
+        },
+        {
+          "from": "1936",
+          "to": "1950",
+          "address": "Hujubei Lu (虎踞北路), Nanjing, Jiangsu",
+          "kind": "embassy",
+          "lat": 32.0667,
+          "lon": 118.7833,
+          "note": "Lorsque le gouvernement du Kuomintang fixe définitivement sa capitale à Nankin (Nanjing), l'ambassade britannique s'y installe en 1936-1937 ; la résidence du consul général est adaptée en résidence de l'ambassadeur. Lors de la guerre sino-japonaise (1937-1945), l'ambassade suit le gouvernement nationaliste d'abord à Hankou puis à Chongqing. En 1945, après la victoire alliée, l'ambassade retourne à Nankin. Le 6 janvier 1950, le Royaume-Uni reconnaît la République populaire de Chine (RPC) — devenant ainsi le premier grand pays occidental à le faire — et retire sa reconnaissance à la République de Chine réfugiée à Taïwan ; l'ambassade de Nankin ferme."
+        },
+        {
+          "from": "1954",
+          "to": "1972",
+          "address": "11 Guang Hua Lu, Jianguomenwai, Chaoyang District, Pékin",
+          "building": "Bureau du chargé d'affaires (代办处), bâtiments construits par les autorités chinoises (1959)",
+          "kind": "legation",
+          "lat": 39.9134,
+          "lon": 116.4486,
+          "note": "Après la reconnaissance de la RPC en janvier 1950, la Grande-Bretagne maintient d'abord un simple chargé d'affaires à Pékin. Le 17 juin 1954, à la suite d'un accord entre le ministre des Affaires étrangères Anthony Eden et le Premier ministre Zhou Enlai à Genève, les deux pays établissent formellement des relations diplomatiques au niveau chargé d'affaires. En échange de la restitution du Liang Gongfu en 1959, les autorités chinoises construisent et remettent à la Grande-Bretagne deux bâtiments de deux étages sur des parcelles adjacentes d'environ 1,5 acre à Jianguomenwai, dans le premier quartier diplomatique de Pékin (près des missions albanaise et finlandaise). Ces édifices, conçus par un architecte chinois formé à Liverpool grâce à une bourse du British Council, sont occupés à partir du 8 septembre 1959. Le 22 août 1967, lors de la Révolution culturelle, des Gardes rouges storment la représentation, en incendient la chancellerie et les véhicules et blessent le chargé d'affaires Donald Hopson ; c'est l'un des incidents diplomatiques les plus graves de la guerre froide en Chine. En mars 1971, Zhou Enlai présente des excuses formelles au gouvernement britannique."
+        },
+        {
+          "from": "1972",
+          "to": null,
+          "address": "11 Guang Hua Lu, Jianguomenwai, Chaoyang District, Pékin 100600",
+          "building": "Chancellerie britannique (bâtiments de 1959, remaniés)",
+          "kind": "chancery",
+          "lat": 39.9134,
+          "lon": 116.4486,
+          "current": true,
+          "note": "Le 13 mars 1972, la Grande-Bretagne et la RPC élèvent leurs relations au niveau ambassadorial. Sir John Mansfield Addis devient le premier ambassadeur britannique auprès de la République populaire de Chine. La chancellerie reste au 11 Guanghua Road (光华路11号) dans le périmètre diplomatique de Jianguomenwai, Chaoyang District. C'est l'une des plus grandes ambassades britanniques dans le monde. Les services consulaires, débordant du site, sont aujourd'hui partiellement hébergés au Kerry Centre voisin. Un projet de nouvelle résidence de l'ambassadeur, confié à Eric Parry Architects (lauréat 2016), est bloqué depuis 2021 en raison de tensions diplomatiques réciproques entre Londres et Pékin."
+        },
+        {
+          "from": "1959",
+          "to": null,
+          "address": "11 Guang Hua Lu, Jianguomenwai, Chaoyang District, Pékin 100600",
+          "building": "Résidence de l'ambassadeur (même enceinte que la chancellerie)",
+          "kind": "residence",
+          "lat": 39.9134,
+          "lon": 116.4486,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur (ou du chargé d'affaires avant 1972) occupe depuis 1959 le même enclos que la chancellerie au 11 Guanghua Road, sur la parcelle adjacente (anciennement désignée no 15). Le bâtiment résidentiel, comme la chancellerie, a été édifié par les autorités chinoises et remis à la Grande-Bretagne en compensation de la restitution du Liang Gongfu dans le Quartier des Légations. Un concours architectural pour la construction d'une nouvelle résidence a été lancé vers 2016 (Eric Parry Architects désigné lauréat) ; le projet demeure suspendu en raison d'un blocage diplomatique sino-britannique lié à la réciprocité des droits de construction pour l'ambassade de Chine à Londres."
+        }
+      ]
+    },
+    "ID": {
+      "name": "Indonesia",
+      "flag": "id",
+      "current": {
+        "chancery": "4 Dongzhimenwai Dajie, Chaoyang District, Beijing 100600",
+        "residence": "Quartier diplomatique de Sanlitun / Dongzhimenwai, Chaoyang District, Beijing"
+      },
+      "addresses": [
+        {
+          "from": "1950",
+          "to": "1967",
+          "address": "Lishi Hutong, Dongcheng District, Pékin",
+          "kind": "legation",
+          "lat": 39.906,
+          "lon": 116.408,
+          "note": "L'Indonésie et la République populaire de Chine établissent leurs relations diplomatiques le 13 avril 1950 — l'Indonésie est le premier pays d'Asie du Sud-Est à reconnaître la RPC. Isak Mahdi, délégué venu de l'ambassade indonésienne de Bangkok, est envoyé à Pékin pour ouvrir la mission, élevée ensuite au rang de légation puis d'ambassade. Le premier ambassadeur d'Indonésie accrédité à Pékin est Arnold Mononutu (1953–1955). La légation est installée dans Lishi Hutong, dans le quartier historique de Dongcheng, à proximité des autres missions diplomatiques d'alors. Sous la présidence de Sukarno, les relations connaissent une période de rapprochement nourrie par la solidarité anti-impérialiste et l'esprit de la conférence de Bandung (1955). L'année 1963 marque un point de basculement : Sukarno s'oppose à la création de la fédération malaisienne, tandis que la Chine apporte son soutien politique au Parti communiste indonésien (PKI). Après le coup manqué du 30 septembre 1965 et l'arrivée au pouvoir du général Suharto, l'Indonésie accuse Pékin d'avoir soutenu le PKI. La mission est fermée et les relations diplomatiques sont officiellement suspendues le 30 octobre 1967."
+        },
+        {
+          "from": "1990",
+          "to": "2004",
+          "address": "Bâtiment B, Sanlitun Diplomatic Office Building, Chaoyang District, Beijing",
+          "kind": "chancery",
+          "lat": 39.9344,
+          "lon": 116.4551,
+          "note": "Après vingt-trois ans d'interruption, le ministre des Affaires étrangères indonésien Ali Alatas se rend à Pékin le 3 juillet 1990 et les deux parties publient un communiqué de rétablissement des relations diplomatiques. Le 8 août 1990, les ministres des Affaires étrangères des deux pays signent le Mémorandum sur la reprise des relations diplomatiques, effective à compter de cette date. À cette occasion, le Premier ministre chinois Li Peng effectue une visite officielle en Indonésie (6 août 1990). L'ambassade indonésienne (KBRI Beijing) rouvre dans le bâtiment B du complexe diplomatique de Sanlitun, zone regroupant de nombreuses chancelleries à Chaoyang. Cette localisation est provisoire, dans l'attente de la construction d'un bâtiment dédié."
+        },
+        {
+          "from": "2004",
+          "to": null,
+          "address": "4 Dongzhimenwai Dajie, Chaoyang District, Beijing 100600",
+          "kind": "chancery",
+          "lat": 39.9409,
+          "lon": 116.4489,
+          "current": true,
+          "note": "En juillet 2004, l'ambassade d'Indonésie (Kedutaan Besar Republik Indonesia / KBRI Beijing) emménage dans ses locaux définitifs au 4 Dongzhimenwai Dajie, dans le district de Chaoyang. L'adresse s'inscrit dans le corridor diplomatique s'étendant de Jianguomenwai à Dongzhimenwai, où se concentre la majorité des représentations étrangères à Pékin. La chancellerie est accréditée auprès de la RPC et, de manière concomitante, de la Mongolie. Depuis le rétablissement des relations en 1990, les échanges bilatéraux n'ont cessé de s'approfondir : partenariat stratégique en 2005, partenariat stratégique global en 2013. Les deux pays célèbrent le 75e anniversaire de leurs relations diplomatiques en 2025."
+        },
+        {
+          "from": "1990",
+          "to": null,
+          "address": "Quartier diplomatique Sanlitun / Dongzhimenwai, Chaoyang District, Beijing",
+          "kind": "residence",
+          "lat": 39.9409,
+          "lon": 116.4489,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur d'Indonésie (Wisma Duta) est implantée dans le périmètre diplomatique de Chaoyang, à proximité de la chancellerie du 4 Dongzhimenwai Dajie. L'adresse précise de la résidence n'est pas publiée dans les sources ouvertes disponibles."
+        }
+      ]
+    },
+    "IL": {
+      "name": "Israel",
+      "flag": "il",
+      "current": {
+        "chancery": "17 Tianze Lu (天泽路), Liangmaqiao, Chaoyang District, Beijing 100600",
+        "residence": "17 Tianze Lu (天泽路), Liangmaqiao, Chaoyang District, Beijing 100600 (dans l'enceinte du compound)"
+      },
+      "addresses": [
+        {
+          "from": "1990",
+          "to": "1992",
+          "address": "Pékin (adresse exacte du bureau de liaison non établie dans les sources publiques)",
+          "kind": "legation",
+          "lat": 39.9075,
+          "lon": 116.3972,
+          "note": "En l'absence de relations diplomatiques formelles, Israël ouvre en 1990 un bureau de liaison dissimulé sous le nom de « Bureau de liaison de l'Académie des sciences et humanités d'Israël » (Israel Academy of Sciences and Humanities Liaison Office). Ce dispositif, initié par le directeur général du ministère des Affaires étrangères Reuven Merhav, permet d'établir un canal de communication direct avec Pékin sans compromettre les relations d'Israël avec les pays arabes. Zev Sufott, ancien ambassadeur aux Pays-Bas, est nommé conseiller spécial du bureau dès 1991 et orchestre les négociations préparatoires à la normalisation."
+        },
+        {
+          "from": "1992",
+          "to": "2004",
+          "address": "Pékin, Chaoyang District (locaux provisoires, adresse exacte non établie dans les sources publiques)",
+          "kind": "embassy",
+          "lat": 39.9416,
+          "lon": 116.4463,
+          "note": "Le 24 janvier 1992, les ministres des Affaires étrangères David Levy (Israël) et Qian Qichen (Chine) signent à Pékin le communiqué conjoint établissant les relations diplomatiques. L'ambassade d'Israël est ouverte dans la foulée, Zev Sufott devenant le premier ambassadeur d'Israël en République populaire de Chine. Il est l'auteur d'un récit de cette période, A China Diary : Towards the Establishment of China-Israel Diplomatic Relations (1997). Dans un premier temps l'ambassade fonctionne dans des locaux provisoires dans le quartier diplomatique de Chaoyang avant l'édification du compound permanent sur Tianze Lu."
+        },
+        {
+          "from": "2004",
+          "to": null,
+          "address": "17 Tianze Lu (天泽路), Liangmaqiao, Chaoyang District, Beijing 100600",
+          "building": "Compound israélien, bâtiment en fer à cheval à deux niveaux (2004)",
+          "kind": "chancery",
+          "lat": 39.9416,
+          "lon": 116.4463,
+          "current": true,
+          "note": "Le compound permanent de l'ambassade d'Israël est inauguré en 2004 pour un coût d'environ 12,5 millions de dollars. Il est conçu selon un plan en fer à cheval à deux niveaux encerclant une cour intérieure, dont l'architecture est qualifiée de « style israélien ». L'adresse postale est le no 17 Tianze Lu (天泽路), dans le quartier diplomatique de Liangmaqiao, à proximité immédiate de la station de métro éponyme (ligne 10). Le compound abrite à la fois la chancellerie et la résidence officielle de l'ambassadeur, dans une configuration communautaire regroupant le personnel diplomatique et ses familles. Téléphone : +86 10 8532 0500 ; courriel : info@beijing.mfa.gov.il."
+        }
+      ]
+    },
+    "IN": {
+      "name": "India",
+      "flag": "in",
+      "current": {
+        "chancery": "5 Liang Ma Qiao Bei Jie, Chaoyang District, Beijing 100600",
+        "residence": "Chaoyang District, Beijing 100600"
+      },
+      "addresses": [
+        {
+          "from": "1950",
+          "to": "c.1959",
+          "address": "Dongjiaomin Xiang (東交民巷), Quartier des Légations, Dongcheng District, Pékin",
+          "kind": "legation",
+          "lat": 39.9029,
+          "lon": 116.4016,
+          "note": "L'Inde est l'un des tout premiers pays non communistes à reconnaître la République populaire de Chine : la reconnaissance formelle date du 30 décembre 1949, et les relations diplomatiques sont officiellement établies le 1er avril 1950 — faisant de l'Inde le premier État non socialiste à entretenir des relations diplomatiques avec la RPC. K. M. Panikkar, historien et diplomate de renom, est nommé premier ambassadeur et présente ses lettres de créance à Mao Zedong en mai 1950. La mission indienne est d'abord installée dans l'ancien Quartier des Légations (Dongjiaomin Xiang), héritage des traités inégaux du XIXe siècle que le gouvernement de la RPC avait formellement repris en main après 1949. Dans les années 1950, sous le slogan « Hindi-Chini bhai-bhai » (« Indiens et Chinois sont frères »), les deux pays développent des relations chaleureuses et co-patronnent les Cinq Principes de la Coexistence Pacifique (Panchsheel, 1954). Les missions diplomatiques sont transférées hors du Quartier des Légations vers 1959, date à laquelle le gouvernement chinois redistribue ces locaux à des administrations d'État."
+        },
+        {
+          "from": "c.1959",
+          "to": "1962",
+          "address": "Secteur diplomatique de Sanlitun / Jianguomenwai, Chaoyang District, Pékin",
+          "kind": "embassy",
+          "lat": 39.9282,
+          "lon": 116.4552,
+          "note": "À la suite du transfert des missions étrangères hors du Quartier des Légations vers 1959, l'ambassade de l'Inde est relogée dans la zone diplomatique de Sanlitun / Jianguomenwai. La guerre sino-indienne d'octobre-novembre 1962 marque une rupture brutale : après l'offensive chinoise en Aksai Chin et dans l'ANEF (Arunachal Pradesh), les deux pays rappellent leurs ambassadeurs respectifs. De 1962 à 1976, la mission indienne à Pékin est maintenue au niveau de chargé d'affaires ad interim, sans ambassadeur accrédité."
+        },
+        {
+          "from": "1969",
+          "to": "2012",
+          "address": "1 Ritan Dong Lu, Chaoyang District, Pékin 100600",
+          "kind": "chancery",
+          "lat": 39.9168,
+          "lon": 116.4564,
+          "note": "En 1969, la mission indienne déménage dans un bâtiment en bois de deux étages situé au 1 Ritan Dong Lu (日坛东路), à proximité du parc Ritan (Temple du Soleil). La période est marquée par une forte tension : la Révolution culturelle (1966–1976) provoque en 1967 une série d'incidents graves — des gardes rouges assiègent la mission, le chargé d'affaires Ram Sathe est harcelé, et des diplomates indiens sont molestés à l'aéroport de Pékin lors de leur expulsion. En juillet 1976, les deux pays rétablissent l'échange d'ambassadeurs, mettant fin à quatorze ans de gel diplomatique. K. R. Narayanan — futur président de l'Inde (1997–2002) — est accrédité comme premier ambassadeur post-1962. En 1977 reprennent les échanges commerciaux directs ; en 1979, le ministre des Affaires étrangères Atal Bihari Vajpayee effectue une visite historique à Pékin. L'Inde achète en 1989 un terrain à bail de 90 ans (pour environ 1 million USD) à Liang Ma Qiao afin d'y construire un nouveau complexe diplomatique, dont la réalisation s'étend sur plus de vingt ans."
+        },
+        {
+          "from": "2012",
+          "to": null,
+          "address": "5 Liang Ma Qiao Bei Jie, Chaoyang District, Pékin 100600",
+          "kind": "chancery",
+          "lat": 39.9534,
+          "lon": 116.4682,
+          "current": true,
+          "note": "Le nouveau complexe diplomatique de l'Inde est inauguré le 8 février 2012. Acquis en 1989 pour un bail emphytéotique de 90 ans, le site de 13 500 m² a nécessité un investissement d'environ 10 millions USD. L'ensemble, situé dans le secteur diplomatique de Liangmaqiao (Chaoyang District), borde les ambassades des États-Unis et d'Israël. Il regroupe la chancellerie, le Centre culturel Swami Vivekananda et les services consulaires. La résidence officielle de l'ambassadeur se trouve dans le même district."
+        }
+      ]
+    },
+    "IT": {
+      "name": "Italy",
+      "flag": "it",
+      "current": {
+        "chancery": "2 Sanlitun Dong'erjie (三里屯东二街2号), Chaoyang District, Beijing 100600",
+        "residence": "2 Sanlitun Dong'erjie (三里屯东二街2号), Chaoyang District, Beijing 100600"
+      },
+      "addresses": [
+        {
+          "from": "c.1866",
+          "to": "c.1889",
+          "address": "Shanghai (adresse précise non établie)",
+          "kind": "legation",
+          "lat": 31.2304,
+          "lon": 121.4737,
+          "note": "Le Royaume d'Italie signe un traité d'amitié et de commerce avec la Chine des Qing le 16 octobre 1866, établissant les premières relations diplomatiques formelles italo-chinoises. Ferdinando de Luca est le premier représentant diplomatique italien accrédité à siéger en Chine même, établissant la légation à Shanghai. Ses prédécesseurs, dont le comte Vittorio Sallier de la Tour nommé en 1867 puis Alessandro Fè d'Ostiani, résidaient principalement au Japon. L'adresse précise de la légation à Shanghai n'a pas pu être établie avec certitude."
+        },
+        {
+          "from": "c.1889",
+          "to": "1900",
+          "address": "Quartier des Légations, Dong Jiaomin Xiang (东交民巷), Pékin",
+          "kind": "legation",
+          "lat": 39.9017,
+          "lon": 116.3975,
+          "note": "À la fin des années 1880, la légation royale d'Italie est transférée de Shanghai à Pékin et installée dans le Quartier des Légations (东交民巷, Dong Jiaomin Xiang), secteur diplomatique créé à la suite des accords mettant fin à la Seconde Guerre de l'opium (Convention de Pékin, 1860). En mars 1899, un incident diplomatique éclate lorsque l'Italie tente d'obtenir une concession à Sanmen Bay (baie de Sanmén) — les Qing refusent l'ultimatum, renvoyant Pékin le ministre Martino. C'est la première tentative coloniale italienne en Chine, avortée sous la pression chinoise soutenue par les autres puissances."
+        },
+        {
+          "from": "1900",
+          "to": "1901",
+          "address": "Quartier des Légations, Pékin (siège détruit)",
+          "kind": "legation",
+          "lat": 39.9017,
+          "lon": 116.3975,
+          "note": "Lors du Siège des Légations (20 juin – 14 août 1900) pendant la révolte des Boxers, la légation italienne — bâtiment isolé à l'angle nord-est du Quartier des Légations — est incendiée et rasée dans les premiers jours des combats. Le contingent italien de 41 hommes abandonne le bâtiment intenable et se replie vers la légation austro-hongroise, puis collabore avec le détachement japonais. L'Italie participe à l'Alliance des Huit Nations (avec l'Autriche-Hongrie, la France, l'Allemagne, le Royaume-Uni, le Japon, la Russie et les États-Unis) qui délivre Pékin le 14 août 1900."
+        },
+        {
+          "from": "1901",
+          "to": "1928",
+          "address": "Quartier des Légations (nouvelle parcelle), Dong Jiaomin Xiang, Pékin",
+          "kind": "legation",
+          "lat": 39.9017,
+          "lon": 116.3975,
+          "note": "Par le Protocole de Boxer (7 septembre 1901), l'Italie obtient une nouvelle parcelle dans le Quartier des Légations de Pékin, avec droit d'extraterritorialité et de garnison. Simultanément, le même protocole cède au Royaume d'Italie une concession de 46 hectares sur la rive gauche du Haihe à Tianjin (Tientsin), formalisée par contrat le 7 juin 1902 — seule possession coloniale italienne en Asie. La légation royale italienne est reconstruite dans le Quartier des Légations. Le gouverneur de la concession de Tianjin relève de la légation de Pékin."
+        },
+        {
+          "from": "1928",
+          "to": "1937",
+          "address": "Quartier des Légations, Pékin / Nanjing (double présence)",
+          "kind": "legation",
+          "lat": 39.9017,
+          "lon": 116.3975,
+          "note": "L'Italie fasciste reconnaît le gouvernement nationaliste du Kuomintang et signe un nouveau traité de commerce le 27 novembre 1928 à Nanjing, supplantant le traité de 1866. Après le transfert de la capitale chinoise à Nanjing (1928), les diplomates en poste à Pékin (rebaptisée Beiping) résistent à la délocalisation, naviguant entre les deux villes. L'Italie maintient à la fois une présence dans l'ancien Quartier des Légations à Beiping et une représentation à Nanjing."
+        },
+        {
+          "from": "1937",
+          "to": "1943",
+          "address": "Quartier des Légations, Pékin / Shanghai",
+          "kind": "legation",
+          "lat": 39.9017,
+          "lon": 116.3975,
+          "note": "L'Italie fasciste de Mussolini, liée au Japon par le Pacte Anti-Komintern (novembre 1937), reconnaît l'État fantoche du Mandchoukouo le 29 novembre 1937. Après le déclenchement de la guerre sino-japonaise (juillet 1937), Rome navigue entre Chiang Kai-shek et les intérêts japonais. Le 1er juillet 1941, l'Italie et l'Allemagne reconnaissent le Gouvernement réorganisé de la République de Chine de Wang Jingwei (gouvernement collaborationniste de Nankin, soutenu par Tokyo) — les ambassadeurs italiens résidant cependant encore à Shanghai. Le 24 juillet 1943, l'Italie fasciste cède sa présence diplomatique dans le Settlement international de Shanghai au régime Wang Jingwei."
+        },
+        {
+          "from": "1943",
+          "to": "1943",
+          "address": "Quartier des Légations, Pékin (siège du combat de septembre 1943)",
+          "kind": "legation",
+          "lat": 39.9017,
+          "lon": 116.3975,
+          "note": "Le 8 septembre 1943, l'Italie signe l'armistice de Cassibile avec les Alliés, rompant avec l'Axe. Dès le 9 septembre 1943, les forces japonaises assiègent la légation italienne dans le Quartier des Légations à Pékin, défendue par une centaine de soldats armés de petites armes face à environ 1 000 Japonais. Les Italiens résistent plus de 24 heures sous le commandement du lieutenant-colonel Giovanni Mareschin, infligeant de lourdes pertes à l'adversaire sans subir de pertes propres, avant de se rendre. La plupart des soldats rallient ensuite la République sociale italienne (RSI, gouvernement fantoche de Mussolini) pour éviter l'internement ; les autres sont détenus dans des camps en Corée sous occupation japonaise, en Mandchourie et au Japon. En juillet 1944, la RSI restitue formellement la concession de Tianjin au gouvernement Wang Jingwei."
+        },
+        {
+          "from": "1947",
+          "to": "1970",
+          "address": "(représentation interrompue)",
+          "kind": "legation",
+          "lat": 39.9075,
+          "lon": 116.3972,
+          "note": "Par le Traité de Paris (10 février 1947), l'Italie renonce officiellement à toutes ses concessions et positions en Chine, y compris la concession de Tianjin et la parcelle du Quartier des Légations à Pékin. La République italienne maintient ses relations diplomatiques avec le gouvernement de la République de Chine (Kuomintang) après la victoire communiste et la proclamation de la République populaire de Chine (1er octobre 1949). En 1964, des bureaux commerciaux sont ouverts à Rome et à Pékin, fonctionnant de facto comme quasi-ambassades sans normalisation formelle. La reconnaissance de la RPC est retardée notamment en raison des pressions américaines et de la position de l'Italie au sein de l'OTAN."
+        },
+        {
+          "from": "1970",
+          "to": null,
+          "address": "2 Sanlitun Dong'erjie (三里屯东二街2号), District de Chaoyang, Pékin 100600",
+          "kind": "chancery",
+          "lat": 39.9363,
+          "lon": 116.46,
+          "current": true,
+          "note": "La République italienne reconnaît la République populaire de Chine le 6 novembre 1970 : un communiqué conjoint est publié simultanément à Rome et à Pékin à 16 h (heure italienne), l'Italie reconnaissant la RPC comme seul gouvernement légal de la Chine. C'est l'une des premières grandes démocraties occidentales à normaliser ses relations avec Pékin, près de cinq ans avant l'ouverture des relations CE-RPC (6 mai 1975). L'échange d'ambassadeurs intervient en février 1971. La chancellerie est installée dans le quartier diplomatique de Sanlitun (三里屯), district de Chaoyang, au 2 Sanlitun Dong'erjie (2ᵉ Rue Est de Sanlitun) — adresse qui demeure l'adresse officielle de l'ambassade. La résidence de l'ambassadeur est également située dans l'enceinte du complexe diplomatique au même 2 Sanlitun Dong'erjie."
+        }
+      ]
+    },
+    "JP": {
+      "name": "Japan",
+      "flag": "jp",
+      "current": {
+        "chancery": "1 Liangmaqiao Dongjie, Chaoyang District, Beijing 100600",
+        "residence": "1 Liangmaqiao Dongjie, Chaoyang District, Beijing 100600"
+      },
+      "addresses": [
+        {
+          "from": "1873",
+          "to": "1894",
+          "address": "21 Dongjiaomin Xiang (東交民巷), Quartier des Légations, Dongcheng District, Pékin",
+          "building": "Légation impériale du Japon (architecte Katayama Tōkuma, 1886)",
+          "kind": "legation",
+          "lat": 39.9011,
+          "lon": 116.4043,
+          "note": "Le Japon ouvre sa légation à Pékin en 1872–1873, d'abord dans une résidence privée acquise dans le hutong Dongsi Liujiao, puis dans le Quartier des Légations (Dongjiaomin Xiang). En 1884, le ministère des Affaires étrangères japonais confie à l'architecte Katayama Tōkuma la conception d'un bâtiment neuf ; les travaux débutent en mai 1885 et s'achèvent en août 1886. Ce bâtiment est le plus ancien encore existant du Quartier des Légations et le seul édifice du XIXe siècle qui y ait survécu. Lors de la première guerre sino-japonaise (1894–1895), marquée par la victoire du Japon sur la Chine impériale et le traité de Shimonoseki (17 avril 1895), les activités diplomatiques sont suspendues."
+        },
+        {
+          "from": "1895",
+          "to": "1937",
+          "address": "21 Dongjiaomin Xiang (東交民巷), Quartier des Légations, Dongcheng District, Pékin",
+          "building": "Légation impériale du Japon (bâtiment Katayama 1886)",
+          "kind": "legation",
+          "lat": 39.9011,
+          "lon": 116.4043,
+          "note": "Après le traité de Shimonoseki (1895), la légation japonaise reprend ses activités dans le Quartier des Légations. Lors du siège des Légations en 1900 (révolte des Boxeurs), le secrétaire Sugiyama Akira est assassiné, et un détachement japonais sous les ordres du colonel Shiba Gorō se distingue dans la défense du Fu pendant 55 jours ; le contingent japonais subit de lourdes pertes (86 % mis hors de combat). Le Protocole Boxer de 1901 garantit ensuite à chaque puissance le droit d'entretenir une garde permanente. La légation est élevée au rang d'ambassade en 1936. Lors de l'escalade de la guerre sino-japonaise à la suite de l'incident du pont Marco Polo (juillet 1937), le personnel diplomatique est rapatrié et les locaux fermés."
+        },
+        {
+          "from": "1973",
+          "to": "2012",
+          "address": "7 Ritan Lu (日坛路), Jianguomenwai, Chaoyang District, Pékin 100600",
+          "kind": "embassy",
+          "lat": 39.9167,
+          "lon": 116.4458,
+          "note": "À la suite de la visite du Premier ministre Tanaka Kakuei à Pékin (25–30 septembre 1972) et de la signature du Communiqué conjoint nippo-chinois le 29 septembre 1972 par Tanaka et Zhou Enlai — qui normalise les relations diplomatiques, reconnaît la RPC comme seul gouvernement légal de la Chine et entraîne la rupture des relations avec Taipei —, l'ambassade du Japon ouvre officiellement le 11 janvier 1973 dans les locaux du 7 Ritan Lu, dans le périmètre diplomatique de Jianguomenwai. Ce bâtiment demeurera le siège de l'ambassade pendant près de quarante ans, jusqu'à la fermeture définitive le 24 février 2012."
+        },
+        {
+          "from": "2012",
+          "to": null,
+          "address": "1 Liangmaqiao Dongjie (亮馬橋東街), Chaoyang District, Pékin 100600",
+          "building": "Chancellerie japonaise, 7 étages, 2012",
+          "kind": "chancery",
+          "lat": 39.9527,
+          "lon": 116.4722,
+          "current": true,
+          "note": "La construction de la nouvelle chancellerie au 1 Liangmaqiao Dongjie débute le 24 septembre 2006 ; le bâtiment (6 étages hors sol et 1 sous-sol, environ 14 000 m²) est achevé en août 2011 et inauguré le 17 mars 2012. L'ancienne chancellerie de Ritan Lu ferme le 24 février 2012. Le site s'inscrit dans le nouveau pôle diplomatique de Liangmaqiao, à Chaoyang District."
+        }
+      ]
+    },
+    "KR": {
+      "name": "South Korea",
+      "flag": "kr",
+      "current": {
+        "chancery": "20 Dongfang Donglu, 3rd Embassy District, Chaoyang District, Beijing 100600",
+        "residence": "3rd Embassy District, Chaoyang District, Beijing 100600"
+      },
+      "addresses": [
+        {
+          "from": "1992",
+          "to": "2006",
+          "address": "Jianguomenwai / Guanghua Lu, Chaoyang District, Pékin (adresse exacte non établie avec certitude)",
+          "kind": "embassy",
+          "lat": 39.9083,
+          "lon": 116.4441,
+          "note": "L'ambassade de la République de Corée à Pékin ouvre officiellement le 27 août 1992, trois jours après la signature du communiqué conjoint de normalisation diplomatique sino-sud-coréen du 24 août 1992 — premier établissement de relations officielles entre Séoul et la République populaire de Chine depuis la fondation de celle-ci en 1949. Durant la Guerre froide, la RPC avait soutenu la Corée du Nord lors de la guerre de Corée (1950–1953) et reconnu Pyongyang comme seul gouvernement coréen légitime ; la Corée du Sud maintenait de son côté des relations avec la République de Chine (Taïwan). La rupture avec Taipei intervient la veille, le 23 août 1992 — la Corée du Sud était alors le dernier pays asiatique à entretenir des relations diplomatiques formelles avec Taïwan. La normalisation s'inscrit dans la Nordpolitik du président Roh Tae-woo et fait suite à l'établissement de relations avec Moscou (30 septembre 1990) et à l'adhésion simultanée des deux Corées à l'ONU (1991). Avant 1992, les seuls contacts économiques bilatéraux passaient par le bureau de la KOTRA (Korea Trade-Investment Promotion Agency) à Pékin. L'adresse exacte de la première chancellerie (1992–2006), dans le périmètre diplomatique de Jianguomenwai / Guanghua Lu, n'a pas pu être établie avec certitude à partir des sources publiques disponibles."
+        },
+        {
+          "from": "2006",
+          "to": null,
+          "address": "20 Dongfang Donglu (东方东路20号), 3rd Embassy District, Chaoyang District, Pékin 100600",
+          "kind": "chancery",
+          "lat": 39.9532,
+          "lon": 116.4645,
+          "current": true,
+          "note": "Le 13 octobre 2006, l'ambassade s'installe dans ses locaux actuels au 20 Dongfang Donglu (« rue Est-Est »), dans le 3e secteur des ambassades du district de Chaoyang, à environ 500 m de la station de métro Liangmaqiao. Le complexe comprend la chancellerie principale et les sections consulaires. La Corée du Sud y gère les affaires diplomatiques pour Pékin, Tianjin, le Hebei, le Shanxi, le Qinghai, la Mongolie-Intérieure, le Xinjiang et le Tibet. Contact : tél. +86-10-8531-0700, fax +86-10-8531-0726, courriel chinaconsul@mofa.go.kr."
+        }
+      ]
+    },
+    "MX": {
+      "name": "Mexico",
+      "flag": "mx",
+      "current": {
+        "chancery": "5 Sanlitun Dongwujie, District de Chaoyang, Pékin 100600",
+        "residence": "District de Chaoyang, Pékin (adresse exacte non publiée)"
+      },
+      "addresses": [
+        {
+          "from": "1972",
+          "to": "1972",
+          "address": "Beijing Hotel (北京饭店), Dongchangan Jie, District de Dongcheng, Pékin",
+          "kind": "embassy",
+          "lat": 39.9058,
+          "lon": 116.4093,
+          "note": "Après la signature du communiqué conjoint établissant les relations diplomatiques entre le Mexique et la République populaire de Chine le 14 février 1972 à New York, l'ambassade est ouverte en mai 1972. À l'instar de nombreuses missions étrangères nouvellement établies dans la RPC, les premiers services diplomatiques mexicains sont provisoirement hébergés au Beijing Hotel dans l'attente de l'attribution d'un emplacement permanent dans le quartier diplomatique de Sanlitun."
+        },
+        {
+          "from": "1972",
+          "to": null,
+          "address": "5 Sanlitun Dongwujie (三里屯东五街5号), District de Chaoyang, Pékin 100600",
+          "kind": "chancery",
+          "lat": 39.9439,
+          "lon": 116.459,
+          "current": true,
+          "note": "La chancellerie mexicaine est établie au 5 Sanlitun Dongwujie dans le quartier diplomatique de Sanlitun, conformément aux attributions de parcelles aux missions étrangères dans ce secteur développé à partir de la fin des années 1950 pour remplacer l'ancien Quartier des Légations de Dongjiaomin Xiang. Le premier ambassadeur mexicain à présenter ses lettres de créance fut Eugenio Anguiano Roch, le 9 août 1972. En 2025, la relation bilatérale est portée au niveau de « partenariat stratégique global ». Le Mexique fut le deuxième pays d'Amérique latine à reconnaître la RPC, après le Chili. La SRE (Secretaría de Relaciones Exteriores) exploite le site embamex.sre.gob.mx/china. Coordonnées : tél. +86 10 8532 8300."
+        }
+      ]
+    },
+    "RU": {
+      "name": "Russia",
+      "flag": "ru",
+      "current": {
+        "chancery": "4 Dongzhimennei Beizhongjie, Dongcheng District, Pékin 100600",
+        "residence": "dans l'enceinte du complexe de Dongzhimennei Beizhongjie, Dongcheng District, Pékin 100600"
+      },
+      "addresses": [
+        {
+          "from": "1715",
+          "to": "1861",
+          "address": "Beiguan (北馆, Enclos du Nord), quartier nord-est de Pékin, près de la porte Dongzhimen",
+          "building": "Mission orthodoxe russe de Pékin (Русская духовная миссия в Пекине)",
+          "kind": "legation",
+          "lat": 39.944,
+          "lon": 116.4285,
+          "note": "La Mission orthodoxe russe de Pékin — dite Beiguan (北館, « Enclos du Nord ») — est fondée officiellement par oukase de Pierre Ier en 1715, sous la direction de l'archimandrite Hilarion Lejaiski. Elle fait suite à la présence des Albaniens (descendants des prisonniers de la forteresse d'Albazine capturés en 1685), installés à Pékin dès la fin du XVIIe siècle dans ce même enclos nord-est, au voisinage de la porte Dongzhimen. La mission est directement subordonnée au ministère des Affaires étrangères de Russie et remplit, pendant un siècle et demi, les fonctions d'une représentation diplomatique permanente — la seule tolérée à Pékin avant l'ouverture forcée de 1860. Elle regroupe église, bibliothèque sinologique et école bilingue. En 1727, le traité de Kiakhta en confirme le statut et l'organise en relèves périodiques (13 rotations de 1715 à 1860). Le terrain de Beiguan deviendra, deux siècles et demi plus tard, l'assiette du complexe diplomatique soviétique puis russe."
+        },
+        {
+          "from": "1861",
+          "to": "1901",
+          "address": "Dongjiaomin Xiang (東交民巷), Quartier des Légations, Dongcheng District, Pékin",
+          "kind": "legation",
+          "lat": 39.903,
+          "lon": 116.401,
+          "note": "À la suite de la Convention de Pékin (1860) mettant fin à la Seconde Guerre de l'Opium, la Russie — qui avait négocié séparément le Traité de Pékin le 14 novembre 1860 avec la Chine — installe sa légation permanente en 1861 dans la ruelle Dongjiaomin Xiang, au cœur du Quartier des Légations (东交民巷). C'est la première légation étrangère de rang officiel que la Russie ouvre à Pékin. La Russie bénéficiait déjà d'un avantage singulier : sa mission orthodoxe de Beiguan lui assurait une présence continue depuis 1715. Durant le siège des Légations de 1900 (Révolte des Boxeurs), le quartier est encerclé 55 jours. Après la levée du siège et la signature du Protocole Boxer (7 septembre 1901), la légation russe est transférée à Beiguan."
+        },
+        {
+          "from": "1901",
+          "to": "1949",
+          "address": "Beiguan (北館), Dongzhimennei Beizhongjie, Dongcheng District, Pékin",
+          "building": "Anciens terrains de la Mission orthodoxe russe",
+          "kind": "legation",
+          "lat": 39.944,
+          "lon": 116.4285,
+          "note": "Après la Révolte des Boxeurs et le Protocole Boxer de 1901, la légation de l'Empire russe quitte Dongjiaomin Xiang et s'installe à Beiguan, sur les terrains de l'ancienne Mission orthodoxe. Après la Révolution russe de 1917, l'ambassadeur tsariste continue à occuper les bâtiments jusqu'en 1920, date à laquelle le gouvernement de la République de Chine lui retire la reconnaissance diplomatique. Les relations diplomatiques sino-soviétiques sont rétablies en 1924 ; la légation soviétique s'installe alors à Beiguan. La légation est élevée au rang d'ambassade en 1941. À la proclamation de la République populaire de Chine par Mao Zedong le 1er octobre 1949, l'Union soviétique la reconnaît dès le lendemain, le 2 octobre 1949 — devenant ainsi le premier État au monde à établir des relations diplomatiques avec la RPC."
+        },
+        {
+          "from": "1949",
+          "to": "1959",
+          "address": "Beiguan (北館), Dongzhimennei Beizhongjie, Dongcheng District, Pékin",
+          "building": "Ambassade de l'URSS (bâtiments provisoires)",
+          "kind": "embassy",
+          "lat": 39.944,
+          "lon": 116.4285,
+          "note": "Dès le 2 octobre 1949, l'URSS reconnaît officiellement la République populaire de Chine — un jour après sa proclamation —, inaugurant l'ère de l'amitié sino-soviétique. L'ambassade soviétique demeure à Beiguan dans les bâtiments existants, en attendant la construction d'un nouveau complexe. En 1956 la Mission orthodoxe, fermée faute de moyens et de fidèles, est dissoute. Entre 1956 et 1959, la quasi-totalité de ses bâtiments religieux est démolie pour préparer le chantier : le clocher est abattu en 1956, l'église des Saints-Martyrs rasée en 1957. L'église de la Dormition de la Vierge, plus modeste, est épargnée et subsiste dans l'enceinte de l'ambassade (servant ultérieurement de garage)."
+        },
+        {
+          "from": "1959",
+          "to": null,
+          "address": "4 Dongzhimennei Beizhongjie, Dongcheng District, Pékin 100600",
+          "building": "Complexe diplomatique soviétique puis russe (1959), anciens terrains de la Mission orthodoxe (Beiguan)",
+          "kind": "chancery",
+          "lat": 39.9447,
+          "lon": 116.429,
+          "current": true,
+          "note": "En 1959, le nouveau complexe diplomatique soviétique, construit sur le terrain historique de Beiguan (Nord-Est de Pékin, district de Dongcheng), est inauguré. Le compound (~16 hectares) est l'un des plus vastes complexes diplomatiques russes dans le monde, voire le plus grand. Il comprend la chancellerie principale, des immeubles de bureaux, des résidences de diplomates, une école, un club et divers services. L'église de la Dormition de la Vierge (唯一保存下来的教堂), seul vestige de la Mission orthodoxe, y est conservée dans l'enceinte — elle fut longtemps transformée en garage avant de retrouver un usage liturgique partiel. La résidence de l'ambassadeur se trouve dans le même périmètre. C'est l'une des deux seules ambassades de Pékin situées hors du district diplomatique de Sanlitun / Jianguomenwai (avec celle du Luxembourg). Après la dissolution de l'URSS (1991), l'ambassade est reprise par la Fédération de Russie."
+        }
+      ]
+    },
+    "SA": {
+      "name": "Saudi Arabia",
+      "flag": "sa",
+      "current": {
+        "chancery": "No. 1 Beixiaojie, Sanlitun, Chaoyang District, Beijing 100600",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1990",
+          "to": null,
+          "address": "No. 1 Beixiaojie, Sanlitun, Chaoyang District, Beijing 100600",
+          "kind": "chancery",
+          "lat": 39.9393,
+          "lon": 116.4606,
+          "current": true,
+          "note": "L'Arabie saoudite était le dernier État arabe à ne pas avoir reconnu la République populaire de Chine, entretenant jusqu'en 1990 des relations diplomatiques officielles avec la République de Chine (Taïwan), avec laquelle elle avait établi des liens en 1957. Le 21 juillet 1990, le prince Bandar bin Sultan, ambassadeur saoudien aux États-Unis, se rend à Pékin pour signer l'accord établissant les relations diplomatiques entre les deux pays ; en contrepartie, l'Arabie saoudite rétrograde son ambassade à Taipei au rang de bureau commercial. Le ministre des Affaires étrangères chinois Qian Qichen se rend à Riyad pour contresigner le communiqué. L'ambassade saoudienne est installée au No. 1 Beixiaojie (北小街 1 号), dans le quartier diplomatique de Sanlitun (三里屯), arrondissement de Chaoyang — zone aménagée depuis la fin des années 1950 pour accueillir les missions étrangères à Pékin. Téléphone : (+86-10) 6532-4825 / 6532-5325 / 6532-4818 / 6532-6555 ; courriel : cnembasy@mfa.gov.sa."
+        }
+      ]
+    },
+    "TR": {
+      "name": "Turkey",
+      "flag": "tr",
+      "current": {
+        "chancery": "9 Sanlitun Dongwujie (三里屯东五街9号), District de Chaoyang, Pékin 100600",
+        "residence": "District de Chaoyang, Pékin (adresse exacte non publiée)"
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": "1971",
+          "address": "Taipei (République de Chine, Taïwan)",
+          "kind": "embassy",
+          "lat": 25.033,
+          "lon": 121.5654,
+          "note": "À la suite de la proclamation de la République populaire de Chine le 1er octobre 1949, la Turquie maintient sa reconnaissance diplomatique de la République de Chine (ROC) installée à Taïwan, conformément à la position de ses alliés de l'OTAN. Une ambassade turque fonctionne à Taipei pendant toute cette période. Le 25 octobre 1971, la Turquie est l'un des 76 États membres à voter en faveur de la résolution 2758 de l'Assemblée générale des Nations unies, qui transfère le siège chinois à l'ONU de la ROC à la RPC."
+        },
+        {
+          "from": "1971",
+          "to": "1972",
+          "address": "Pékin (période de transition avant ouverture de la chancellerie)",
+          "kind": "embassy",
+          "lat": 39.9042,
+          "lon": 116.4074,
+          "note": "Le 4 août 1971, la République de Turquie et la République populaire de Chine établissent formellement leurs relations diplomatiques, la Turquie reconnaissant la RPC comme seul représentant légal de la Chine. L'ambassade turque à Taipei est fermée. Pendant la période de transition, avant l'installation dans la chancellerie permanente, les services diplomatiques turcs à Pékin sont provisoirement hébergés en attente de l'attribution d'un emplacement dans le quartier diplomatique de Sanlitun."
+        },
+        {
+          "from": "1972",
+          "to": null,
+          "address": "9 Sanlitun Dongwujie (三里屯东五街9号), District de Chaoyang, Pékin 100600",
+          "kind": "chancery",
+          "lat": 39.9438,
+          "lon": 116.4548,
+          "current": true,
+          "note": "La chancellerie de l'ambassade de Turquie est installée au 9 Sanlitun Dongwujie depuis le 3 juillet 1972, dans le quartier diplomatique de Sanlitun (district de Chaoyang), développé à partir de la fin des années 1950 pour accueillir les missions étrangères en remplacement de l'ancien Quartier des Légations de Dongjiaomin Xiang. La rue Sanlitun Dongwujie regroupe plusieurs chancelleries voisines : Danemark (no 1), Nigéria (no 2), Suisse (no 3), Congo (no 6), Cameroun (no 7), Portugal (no 8). La Turquie fut l'un des premiers États de l'OTAN à reconnaître la RPC, avant les États-Unis. En 2010, les deux pays ont élevé leurs relations au niveau de « partenariat stratégique de coopération ». En juin 2023, la Turquie a ouvert un consulat général à Chengdu, portant à cinq le nombre de ses représentations consulaires en Chine (Hong Kong, Shanghai, Guangzhou, Chengdu, Xi'an). Coordonnées estimées par interpolation à partir des adresses voisines (Portugal no 8 : 39,9438 / 116,4554 ; Mexique no 5 : 39,9439 / 116,4590). Tél. : +86 10 6532 1715 / 6532 2490 ; fax : +86 10 6532 5480 ; courriel : embassy.beijing@mfa.gov.tr."
+        }
+      ]
+    },
+    "US": {
+      "name": "United States",
+      "flag": "us",
+      "current": {
+        "chancery": "55 Anjialou Lu, Chaoyang District, Beijing 100600",
+        "residence": "17 Guang Hua Lu, Jianguomenwai, Chaoyang District, Beijing 100600"
+      },
+      "addresses": [
+        {
+          "from": "1862",
+          "to": "1937",
+          "address": "Dongjiaomin Xiang (東交民巷), Quartier des Légations, Dongcheng District, Pékin",
+          "kind": "legation",
+          "lat": 39.9029,
+          "lon": 116.4016,
+          "note": "La légation américaine est établie en 1862 dans les locaux du sinologue Samuel Wells Williams, premier secrétaire de la légation, à la suite du traité de Tianjin (1858) qui autorise pour la première fois les puissances occidentales à maintenir des représentations diplomatiques permanentes à Pékin. Le compound américain occupe la partie occidentale du Quartier des Légations, sur l'actuelle Dongjiaomin Xiang (anciennement Legation Street). Lors du siège des légations de 1900, la légation américaine joue un rôle central dans la résistance des forces étrangères durant 55 jours. Le Protocole Boxer de 1901 consacre l'autonomie administrative du quartier. La légation est élevée au rang d'ambassade le 18 juin 1935 ; elle demeure à Pékin jusqu'à la guerre sino-japonaise en 1937. Le bâtiment de l'ancienne légation est aujourd'hui utilisé par le comité d'administration de la place Tiananmen."
+        },
+        {
+          "from": "1935",
+          "to": "1937",
+          "address": "82 Shanghai Road (路), Nanjing, Jiangsu",
+          "kind": "embassy",
+          "lat": 32.0581,
+          "lon": 118.7964,
+          "note": "Lorsque le gouvernement nationaliste du Kuomintang fixe sa capitale à Nankin (Nanjing) en 1928, les États-Unis maintiennent leur légation à Pékin tout en ouvrant des bureaux de sous-ambassade à Nankin pour le contact diplomatique courant. Le 18 juin 1935, la légation est élevée au rang d'ambassade et transférée à Nankin ; la chancellerie est installée au 82 Shanghai Road. Lors du déclenchement de la guerre sino-japonaise en 1937, l'ambassadeur s'installe à Hankou dès novembre 1937, puis l'ambassade suit le gouvernement nationaliste à Chongqing."
+        },
+        {
+          "from": "1946",
+          "to": "1950",
+          "address": "33 Xikang Road (西康路), Nanjing, Jiangsu",
+          "kind": "embassy",
+          "lat": 32.0612,
+          "lon": 118.773,
+          "note": "Après la victoire alliée en 1945, le gouvernement de la République de Chine retourne à Nankin. L'ambassade américaine rouvre en avril 1946 au 33 Xikang Road (anciennement no 18), dans un ensemble de trois bâtiments occidentaux de deux étages à sous-sol (chacun d'environ 936 m²), formant un plan en « U », accompagnés de trois résidences en briques et bois pour le personnel. L'ambassadeur John Leighton Stuart quitte Nankin en août 1949, peu après la proclamation de la République populaire de Chine par Mao Zedong. Le dernier diplomate américain, P. B. Peck, quitte Nankin le 18 février 1950. Le site est aujourd'hui l'hôtel Xikang."
+        },
+        {
+          "from": "1953",
+          "to": "1979",
+          "address": "18 Zhongshan North Road, Section 2 (中山北路二段), Zhongshan District, Taipei, Taiwan",
+          "kind": "embassy",
+          "lat": 25.0534,
+          "lon": 121.5233,
+          "note": "Après la retraite du gouvernement nationaliste à Taïwan en décembre 1949, les États-Unis continuent de reconnaître la République de Chine (ROC) comme le gouvernement légitime de la Chine. L'ambassade est rouverte à Taipei en 1953, succédant à l'ambassade de Nankin. Elle s'installe au 18, section 2 de Zhongshan North Road, dans le district de Zhongshan — un bâtiment qui sert également de résidence officielle à l'ambassadeur. Plusieurs ambassadeurs s'y succèdent : Karl L. Rankin, Everett F. Drumright, Alan G. Kirk, Jerauld Wright, Walter P. McConaughy et Leonard Unger. Richard Nixon y séjourna quelques nuits lors de sa visite à Taïwan en 1964. Les États-Unis transfèrent leur reconnaissance diplomatique à la RPC le 1er janvier 1979 sous le président Carter ; l'ambassade ferme le 28 février 1979. Le bâtiment, classé monument historique en 1997, abrite aujourd'hui la Taipei Film House (SPOT)."
+        },
+        {
+          "from": "1973",
+          "to": "1979",
+          "address": "Xiu Shui Bei Jie, Jianguomenwai, Chaoyang District, Pékin",
+          "kind": "legation",
+          "lat": 39.9082,
+          "lon": 116.4418,
+          "note": "À la suite de la visite historique de Nixon en Chine (février 1972) et des communiqués de Shanghai, les États-Unis et la RPC ouvrent mutuellement des bureaux de liaison le 1er mai 1973. Le Bureau de liaison américain (USLO) est installé dans un modeste bâtiment de deux étages à Xiushui Bei Jie, dans le périmètre diplomatique de Jianguomenwai. Des personnalités de premier plan en dirigent successivement : David K. E. Bruce (1973–1974), George H. W. Bush (1974–1975), Thomas S. Gates Jr. (1976) et Leonard Woodcock (1977–1979). Ce bureau assure toutes les fonctions diplomatiques sauf les aspects formels des relations d'État à État."
+        },
+        {
+          "from": "1979",
+          "to": "2008",
+          "address": "No. 3 Xiu Shui Bei Jie, Jianguomenwai, Chaoyang District, Pékin 100600",
+          "kind": "chancery",
+          "lat": 39.9082,
+          "lon": 116.4418,
+          "note": "À la suite de la normalisation des relations diplomatiques entre les États-Unis et la RPC au 1er janvier 1979 (annoncée par le président Carter le 15 décembre 1978), le Bureau de liaison américain est converti en ambassade. La cérémonie d'inauguration de l'ambassade a lieu le 1er mars 1979 — le drapeau américain est ainsi le premier à flotter officiellement sur une ambassade en Chine depuis le 24 décembre 1949. La chancellerie demeure dans les locaux de Xiushui Bei Jie, dans une installation modeste de deux étages, jusqu'à la construction du nouveau complexe diplomatique."
+        },
+        {
+          "from": "2008",
+          "to": null,
+          "address": "55 Anjialou Lu, Chaoyang District, Pékin 100600",
+          "building": "Chancery SOM (Skidmore, Owings & Merrill), 2008",
+          "kind": "chancery",
+          "lat": 39.9549,
+          "lon": 116.4679,
+          "current": true,
+          "note": "Le nouveau complexe diplomatique américain est inauguré le 8 août 2008 par le président George W. Bush, coïncidant avec l'ouverture des Jeux olympiques de Pékin. Conçu par le cabinet d'architectes Skidmore, Owings & Merrill (SOM), le campus de 10 acres (environ 4 hectares) constitue le deuxième plus grand chantier diplomatique de l'histoire du département d'État américain. Il regroupe environ 46 500 m² de surfaces répartis en cinq bâtiments (chancellerie principale de huit étages, immeuble de bureaux, pavillon consulaire, caserne des marines et parking), reliés par des cheminements intérieurs et extérieurs, des jardins de lotus, des cours et des ponts en bois. Le design intègre des références aux traditions architecturales chinoises et occidentales. Le complexe dispose notamment d'un système de récupération des eaux de pluie alimentant un bassin de lotus."
+        },
+        {
+          "from": "1973",
+          "to": null,
+          "address": "17 Guang Hua Lu, Jianguomenwai, Chaoyang District, Pékin 100600",
+          "building": "Résidence de l'ambassadeur, dite « Bush House » depuis 2023",
+          "kind": "residence",
+          "lat": 39.9083,
+          "lon": 116.4441,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur des États-Unis est située au 17 Guanghua Road (光华路), dans le périmètre diplomatique de Jianguomenwai. George H. W. Bush, chef du Bureau de liaison américain à partir d'octobre 1974, fut l'un des premiers occupants notables de cette demeure. En octobre 2023, lors du 49e anniversaire de l'arrivée de Bush à Pékin, les occupants actuels lui ont dédié la résidence sous le nom de « Bush House » en hommage au président George H. W. Bush et à son épouse Barbara. Le bâtiment a fait l'objet d'une importante rénovation de ses espaces de réception en 1989, en collaboration avec le designer Robert Hatfield Ellsworth."
+        }
+      ]
+    },
+    "ZA": {
+      "name": "South Africa",
+      "flag": "za",
+      "current": {
+        "chancery": "5 Dongzhimenwai Dajie, Chaoyang District, Beijing 100600",
+        "residence": "non établie avec précision dans les sources publiques disponibles"
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": "1967",
+          "address": "Taipei, Taiwan (République de Chine) — adresse précise non établie",
+          "kind": "consulate",
+          "lat": 25.0478,
+          "lon": 121.5319,
+          "note": "L'Union sud-africaine reconnaît la République de Chine (ROC/Taipei) dès 1949, à la suite de l'installation du gouvernement nationaliste à Taïwan après la victoire communiste sur le continent. Une représentation consulaire est ouverte à Taipei ; l'adresse précise de cette période n'a pas pu être établie à partir des sources disponibles."
+        },
+        {
+          "from": "1967",
+          "to": "1970",
+          "address": "Taipei, Taiwan (République de Chine) — adresse précise non établie",
+          "kind": "consulate",
+          "lat": 25.0478,
+          "lon": 121.5319,
+          "note": "En 1967, l'Afrique du Sud ouvre un consulat général résidant à Taipei, première représentation consulaire formelle auprès de la République de Chine. L'adresse précise n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "1970",
+          "to": "1976",
+          "address": "Taipei, Taiwan (République de Chine) — adresse précise non établie",
+          "kind": "consulate",
+          "lat": 25.0478,
+          "lon": 121.5319,
+          "note": "Le consulat général est maintenu à Taipei. Durant cette période, les deux pays, tous deux isolés diplomatiquement — l'Afrique du Sud en raison de l'apartheid, Taiwan depuis son éviction de l'ONU en 1971 —, renforcent leur coopération économique et militaire."
+        },
+        {
+          "from": "1976",
+          "to": "1998",
+          "address": "205 Dunhua North Road, Songshan District, Taipei 105, Taiwan (République de Chine) — adresse approximative",
+          "kind": "embassy",
+          "lat": 25.0612,
+          "lon": 121.5497,
+          "note": "En 1976, les deux consulats généraux respectifs sont élevés au rang d'ambassade, concrétisant une relation diplomatique pleine et entière entre l'Afrique du Sud (sous le régime d'apartheid) et la République de Chine. Taiwan était alors le sixième partenaire commercial de l'Afrique du Sud et l'un de ses premiers investisseurs étrangers. En 1993, Taiwan aurait versé dix millions de dollars américains à la campagne électorale de l'ANC, mais cet investissement ne suffit pas à maintenir la relation. En novembre 1996, le président Nelson Mandela annonce que l'Afrique du Sud transfèrera sa reconnaissance diplomatique de Taipei à Pékin au 1er janvier 1998. L'ambassade ferme ses portes le 31 décembre 1997."
+        },
+        {
+          "from": "c.1993",
+          "to": "1997",
+          "address": "Pékin (Beijing), République populaire de Chine — adresse précise non établie",
+          "kind": "legation",
+          "lat": 39.9042,
+          "lon": 116.4074,
+          "note": "En préfiguration des relations diplomatiques formelles, l'Afrique du Sud et la RPC ouvrent mutuellement des centres culturels : le « South African Centre for Chinese Studies » à Pékin et le « Chinese Centre for South African Studies » à Pretoria. Ces structures, dirigées par un directeur de rang diplomatique, n'arborent ni titre officiel ni drapeau national, mais leur personnel voyage avec des passeports diplomatiques, leurs véhicules portent des plaques diplomatiques et elles assurent des services consulaires limités. Ces centres constituent en pratique des bureaux de liaison officieux, précurseurs de l'ambassade formelle ouverte en 1998."
+        },
+        {
+          "from": "1998",
+          "to": null,
+          "address": "5 Dongzhimenwai Dajie, Chaoyang District, Beijing 100600",
+          "kind": "chancery",
+          "lat": 39.942,
+          "lon": 116.4443,
+          "current": true,
+          "note": "Le 1er janvier 1998, l'Afrique du Sud transfère sa reconnaissance diplomatique de Taipei à Pékin, conformément au principe « d'une seule Chine ». C'est la dernière grande puissance africaine à opérer ce changement, dans un contexte post-apartheid marqué par la volonté du gouvernement Mandela de s'intégrer pleinement dans le concert des nations. La chancellerie de l'ambassade est installée au 5 Dongzhimenwai Dajie, dans le quartier diplomatique de Sanlitun (arrondissement de Chaoyang), à proximité immédiate de nombreuses autres ambassades. En 2023, l'Afrique du Sud et la RPC ont célébré le 25e anniversaire de leurs relations diplomatiques. La section consulaire partage les locaux de la chancellerie. Téléphone : +86 10 8532 0000 ; courriel consulaire : beijingconsular@dirco.gov.za."
+        }
+      ]
+    }
+  }
+}
