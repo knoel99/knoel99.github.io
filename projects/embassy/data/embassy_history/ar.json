@@ -1,0 +1,758 @@
+{
+  "host": {
+    "code": "AR",
+    "name": "Argentina",
+    "capital": "Buenos Aires"
+  },
+  "note": "Adresses géocodées à la précision de la rue. Hôte partiel : ID, IL, IN, SA, TR, ZA en attente.",
+  "embassies": {
+    "AU": {
+      "name": "Australia",
+      "flag": "au",
+      "current": {
+        "chancery": "Villanueva 1400, C1426BMJ Buenos Aires (Belgrano)"
+      },
+      "addresses": [
+        {
+          "from": "1964",
+          "to": null,
+          "address": "Villanueva 1400, C1426BMJ Buenos Aires",
+          "kind": "chancery",
+          "lat": -34.5646,
+          "lon": -58.4437,
+          "current": true,
+          "note": "L'Australie et l'Argentine établissent des relations diplomatiques en décembre 1959, les deux pays s'accordant en principe pour ouvrir des missions résidentes. La première ambassade australienne à Buenos Aires ouvre en 1964 : le premier ambassadeur résidant présente ses lettres de créance cette année-là. Le bâtiment actuel de la chancellerie est situé au 1400 de la rue Villanueva, dans le quartier de Belgrano (commune 13), à proximité de l'Université de Belgrano. L'adresse des locaux successifs avant l'installation à Villanueva 1400 n'a pas pu être établie avec certitude à partir des sources disponibles."
+        }
+      ]
+    },
+    "BR": {
+      "name": "Brazil",
+      "flag": "br",
+      "current": {
+        "chancery": "Cerrito 1350, C1010ABB, Recoleta, Buenos Aires",
+        "residence": "Arroyo 1130, Recoleta, Buenos Aires (Palacio Pereda)"
+      },
+      "addresses": [
+        {
+          "from": "1823",
+          "to": "1889",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "L'Argentine est le premier pays à reconnaître l'indépendance du Brésil : l'envoyé argentin Valentín Gómez présente ses lettres de créance à Rio de Janeiro le 5 août 1823 ; Dom Pedro Ier le reçoit le 11 août. La légation impériale du Brésil à Buenos Aires est ouverte dans la foulée. Les relations sont interrompues par la guerre de la Cisplatine (1825-1828) puis reprises après le traité préliminaire de Montevideo du 27 août 1828, qui entérine l'indépendance de l'Uruguay comme État tampon. La légation fonctionne à Buenos Aires tout au long de la période impériale ; l'adresse exacte de ses locaux successifs au XIXe siècle n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1889",
+          "to": "1944",
+          "address": "Avenida Callao 1500, Buenos Aires",
+          "kind": "embassy",
+          "lat": -34.5891,
+          "lon": -58.3933,
+          "note": "Après la proclamation de la République brésilienne (15 novembre 1889), la légation est élevée au rang d'ambassade. Les services diplomatiques s'installent dans un immeuble situé Avenida Callao 1500 (angle Las Heras), qui reste le siège de l'ambassade jusqu'à l'acquisition du Palacio Pereda en 1944. Ce bâtiment est ultérieurement cédé aux héritiers de la famille Pereda dans le cadre de l'échange foncier ayant permis l'acquisition du Palacio Pereda."
+        },
+        {
+          "from": "1944",
+          "to": null,
+          "address": "Arroyo 1130, Recoleta, Buenos Aires",
+          "building": "Palacio Pereda (Léonard Louis Martin / Jules Dormal, 1919-1936)",
+          "kind": "residence",
+          "lat": -34.5918,
+          "lon": -58.3834,
+          "current": true,
+          "note": "Le Palacio Pereda est construit entre 1919 et 1936 pour le médecin et grand propriétaire foncier Celedonio Tomás Pereda (1860-1941) et son épouse María Justina Girado (1865-1942), sur les plans de l'architecte français Léonard Louis Martin inspirés du musée Jacquemart-André de Paris. À la mort de Jules Dormal (1924), un de ses disciples achève les travaux. Les plafonds des salons de réception sont ornés de cinq peintures marouflées de Josep Maria Sert expédiées d'Europe en 1932 (« Les équilibristes », « La toilette de Don Quichotte », « La toile d'araignée », « Le trou céleste », « Diane chasseresse »). L'ambassadeur João Batista Luzardo, séduit par l'édifice peu après son inauguration, convainc le gouvernement brésilien de l'acquérir. Le contrat de vente est signé le 6 juillet 1945 : en contrepartie, le Brésil cède aux héritiers Pereda son ancienne ambassade de l'Avenida Callao 1500 et une quantité considérable de barres de fer déposées au port de Rio de Janeiro. Depuis 1945, le palais est la résidence officielle de l'ambassadeur du Brésil et accueille l'espace culturel de l'ambassade. Des restaurations ont été effectuées en 1989 et en 2015. Le pape François, lors d'une visite, aurait déclaré à l'ambassadeur brésilien : « Tu vis dans la meilleure maison de Buenos Aires. »"
+        },
+        {
+          "from": "1989",
+          "to": null,
+          "address": "Cerrito 1350, C1010ABB, Recoleta, Buenos Aires",
+          "building": "Chancellerie de l'ambassade du Brésil (Olavo Redig de Campos / SEPRA, 1989)",
+          "kind": "chancery",
+          "lat": -34.5957,
+          "lon": -58.3829,
+          "current": true,
+          "note": "La chancellerie actuelle est un édifice brutaliste à grands balcons en jardins suspendus, inauguré en 1989. L'avant-projet est signé par l'architecte brésilien Olavo Redig de Campos (1906-1984), qui conçut également les ambassades brésiliennes à Washington et à Lima ; la direction du projet et la maîtrise d'œuvre sont assurées par le cabinet argentin SEPRA. Le bâtiment, d'une superficie totale de 4 400 m², est divisé en deux blocs : le bloc A avec entrée sur Cerrito et le bloc B situé en sous-sol, sous les jardins de la résidence de l'Arroyo. Le hall de réception permanent est orné d'une œuvre de l'artiste brésilien Athos Bulcão. Avant la construction de cet édifice, le terrain accueillait une résidence conçue en 1910 par Eduardo María Lanús et Paul Hary."
+        }
+      ]
+    },
+    "CA": {
+      "name": "Canada",
+      "flag": "ca",
+      "current": {
+        "chancery": "Tagle 2828, C1425EEH Buenos Aires (Palermo Chico)",
+        "residence": "adresse non publiée"
+      },
+      "addresses": [
+        {
+          "from": "1911",
+          "to": "1940",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "consulate",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "En 1911, le Canada ouvre à Buenos Aires son premier bureau commercial en Amérique du Sud, confié au délégué commercial H. R. Poussette. Ce bureau du Service des délégués commerciaux précède de trois décennies l'établissement de relations diplomatiques formelles et constitue le premier jalon de la présence officielle canadienne en Argentine. L'adresse exacte du bureau n'a pas pu être établie à partir des sources disponibles."
+        },
+        {
+          "from": "1941",
+          "to": "1949",
+          "address": "Bartolomé Mitre 430, Buenos Aires (Microcentro)",
+          "building": "Palacio de la Reconquista",
+          "kind": "legation",
+          "lat": -34.6049,
+          "lon": -58.3759,
+          "note": "Les relations diplomatiques Canada–Argentine sont établies le 14 novembre 1940. La légation canadienne est ouverte le 13 novembre 1941 dans le Palacio de la Reconquista, édifice académiste construit pour la Banco Anglo Sudamericana (architectes Paul Bell Chambers et Louis Newbery Thomas, 1912-1920) situé à l'angle des rues Bartolomé Mitre et Reconquista, à quelques centaines de mètres de la Plaza de Mayo. William Ferdinand Alphonse Turgeon est nommé premier ministre canadien en Argentine le 31 juillet 1941. La légation est élevée au rang d'ambassade le 1er octobre 1945 ; Warwick Chipman en devient le premier ambassadeur (1945-1949). L'ambassade demeure dans ce bâtiment jusqu'en 1949. Source : compte officiel @EmbCanArgentina."
+        },
+        {
+          "from": "1949",
+          "to": null,
+          "address": "Tagle 2828, C1425EEH Buenos Aires (Palermo Chico)",
+          "kind": "chancery",
+          "lat": -34.5798,
+          "lon": -58.3976,
+          "current": true,
+          "note": "La chancellerie canadienne s'installe à Tagle 2828 dans le quartier de Palermo Chico, zone résidentielle et diplomatique de Buenos Aires. La rue Tagle, parallèle à l'Avenida del Libertador, est connue pour la concentration d'ambassades et de palais qu'elle abrite. La date précise de l'installation à cette adresse est établie à 1949 d'après les sources disponibles sur la succession des locaux de la mission ; elle n'a pu être vérifiée que par recoupement. L'ambassade est également accréditée au Paraguay."
+        }
+      ]
+    },
+    "CN": {
+      "name": "China",
+      "flag": "cn",
+      "current": {
+        "chancery": "Avenida Crisólogo Larralde 5349, C1431CXC, Saavedra / Villa Urquiza, Buenos Aires",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1972",
+          "to": null,
+          "address": "Avenida Crisólogo Larralde 5349, C1431CXC, Saavedra / Villa Urquiza, Buenos Aires",
+          "kind": "chancery",
+          "lat": -34.5628,
+          "lon": -58.4959,
+          "current": true,
+          "note": "La République populaire de Chine et l'Argentine établissent leurs relations diplomatiques le 19 février 1972 par un communiqué conjoint signé à Budapest le 16 février 1972 ; l'Argentine reconnaît la RPC comme seul gouvernement légal de la Chine et rompt ses liens avec la République de Chine (Taïwan, rupture formalisée en juillet 1972). L'ambassade ouvre le 1er septembre 1972 ; Zheng Weizhi prend ses fonctions de premier ambassadeur le 16 septembre 1972 et présente ses lettres de créance au président de facto Alejandro Agustín Lanusse le 26 septembre 1972. La chancellerie est installée sur l'Avenida Crisólogo Larralde 5349, dans le secteur nord de Buenos Aires (arrondissement Comuna 12, à la frontière des quartiers Saavedra et Villa Urquiza). L'adresse exacte de la première implantation de 1972 n'a pas pu être distinguée de l'adresse actuelle à partir des sources disponibles."
+        }
+      ]
+    },
+    "DE": {
+      "name": "Germany",
+      "flag": "de",
+      "current": {
+        "chancery": "Villanueva 1055, C1426BMC Buenos Aires (Belgrano)",
+        "residence": "Villanueva 1055, C1426BMC Buenos Aires (Belgrano)"
+      },
+      "addresses": [
+        {
+          "from": "1871",
+          "to": "1944",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "L'Empire allemand établit une légation à Buenos Aires : le premier envoyé allemand en Argentine est accrédité le 7 mai 1871, peu après l'unification du Reich. Hamburg avait été le premier État allemand à entretenir des relations avec l'Argentine dès 1829 ; un traité d'amitié, de commerce et de navigation avait été signé entre le Zollverein allemand et la Confédération Argentine le 4 mai 1857. La communauté germano-argentine constitue l'une des plus importantes d'Amérique du Sud, concentrée notamment à Buenos Aires, avec des écoles, hôpitaux, théâtres et banques propres. Sous la République de Weimar puis sous le IIIe Reich, la légation reste active, l'Argentine maintenant sa neutralité pendant la Première Guerre mondiale et la majeure partie de la Seconde. En décembre 1941, l'ambassadeur Edmund von Thermann est déclaré persona non grata. Le 26 janvier 1944, l'Argentine rompt officiellement ses relations diplomatiques avec l'Allemagne et le Japon, sous pression alliée ; elle déclare la guerre à l'Allemagne le 27 mars 1945. La légation est fermée. L'adresse précise des locaux successifs de la légation n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1944",
+          "to": "1951",
+          "address": null,
+          "kind": "legation",
+          "lat": null,
+          "lon": null,
+          "note": "Rupture des relations diplomatiques entre l'Argentine et l'Allemagne le 26 janvier 1944. La légation allemande est fermée. L'Argentine déclare la guerre à l'Allemagne le 27 mars 1945, peu avant la capitulation du Reich. Aucune représentation allemande n'est maintenue à Buenos Aires pendant la période d'occupation alliée (1945-1949) ni dans les premières années de la République fédérale (1949-1951)."
+        },
+        {
+          "from": "1951",
+          "to": "1972",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Les relations diplomatiques entre l'Argentine et la République fédérale d'Allemagne sont rétablies le 30 décembre 1951. Une ambassade est ouverte à Buenos Aires. Dans les années 1960, le gouvernement de la RFA mandate l'architecte Walter Gropius (accompagné de son associé Alexander Cvijanovic de The Architects Collaborative, et de l'architecte argentin Amancio Williams comme collaborateur local) pour concevoir la nouvelle chancellerie et la résidence de l'ambassadeur sur le terrain acquis à Belgrano. Gropius, âgé de 85 ans, se rend à Buenos Aires pour travailler avec Williams ; cinq avant-projets et un projet final sont élaborés. Ce projet reste cependant sans suite en raison de bouleversements politiques en Argentine. L'adresse des locaux provisoires de l'ambassade entre 1951 et l'acquisition du terrain Tornquist n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1972",
+          "to": "1983",
+          "address": "Villanueva 1055 (angle Luis María Campos, Maure et Olleros), C1426BMC Buenos Aires, Belgrano",
+          "building": "Terrain de la Quinta de los Ombúes (Villa Ombúes, ancienne propriété Tornquist) — en cours de construction",
+          "kind": "embassy",
+          "lat": -34.5676,
+          "lon": -58.4399,
+          "note": "Le terrain acquis par la RFA correspond à l'ancienne Quinta de los Ombúes, propriété achetée le 7 décembre 1872 par l'industriel Ernesto Tornquist et sur laquelle son beau-frère l'architecte Carlos Altgelt (selon certaines sources : Carlos Nordmann, architecte né à Hambourg en 1858) avait érigé un petit château de style Tudor à tours crénelées et vitraux. Le paysagisme de la quinta avait été réalisé par Carlos Thays. Villa Ombúes est désoccupée dans les années 1960 et vendue vers 1972 à l'ambassade de la République fédérale d'Allemagne. Le château est démoli en 1972 ; seuls sont conservés l'arborisation d'origine, les portails et la grille de fer forgé de la clôture périphérique. La RFA commande la conception du nouveau complexe diplomatique à l'architecte allemand Dieter Oesterlen, qui intègre la végétation existante dans son parti architectural. Les travaux de la nouvelle chancellerie et de la résidence de l'ambassadeur débutent en 1980."
+        },
+        {
+          "from": "1983",
+          "to": null,
+          "address": "Villanueva 1055, C1426BMC Buenos Aires, Belgrano",
+          "building": "Chancellerie et résidence de l'ambassadeur (Dieter Oesterlen, 1980-1983)",
+          "kind": "chancery",
+          "lat": -34.5676,
+          "lon": -58.4399,
+          "current": true,
+          "note": "La chancellerie et la résidence de l'ambassadeur sont construites entre 1980 et 1983 sur le terrain de l'ancienne Quinta de los Ombúes, pour un coût d'environ 21,6 millions de Deutsche Mark. Le complexe, inauguré en 1984 en présence du président argentin Raúl Alfonsín, offre quelque 2 900 m² de surface utile. Il comprend trois corps de bâtiment reliés : la chancellerie (immeuble de bureaux de trois niveaux brisé deux fois à 45°, avec bureau des visas et parking souterrain), la résidence de l'ambassadeur (bâtiment de deux niveaux brisé une fois à 45°) et des dépendances. L'architecte Dieter Oesterlen (1911-1994), auteur notamment de la reconstruction de la Marktkirche de Hanovre, a tenu compte de l'arborisation existante dans la composition du plan en angles obliques, caractéristique qui distingue l'ensemble du tissu urbain environnant en îlots réguliers. C'est l'une des deux seules réalisations d'Oesterlen hors d'Allemagne. La propriété conserve les portails et la grille de fer forgé de l'ancienne quinta Tornquist. Ambassadeur en poste (2023) : S.E. Dieter Lamlé, accrédité depuis le 17 août 2023."
+        },
+        {
+          "from": "1983",
+          "to": null,
+          "address": "Villanueva 1055, C1426BMC Buenos Aires, Belgrano",
+          "building": "Résidence de l'ambassadeur (Dieter Oesterlen, 1980-1983)",
+          "kind": "residence",
+          "lat": -34.5676,
+          "lon": -58.4399,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur d'Allemagne est intégrée dans le même complexe architectural que la chancellerie, sur le terrain de l'ancienne Quinta de los Ombúes. Bâtiment de deux étages à plan brisé à 45°, conçu par Dieter Oesterlen et achevé en 1983."
+        }
+      ]
+    },
+    "FR": {
+      "name": "France",
+      "flag": "fr",
+      "current": {
+        "chancery": "Cerrito 1399, C1010ABA Buenos Aires (Palacio Ortiz Basualdo)"
+      },
+      "addresses": [
+        {
+          "from": "1828",
+          "to": "c.1841",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "consulate",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Jean-Baptiste Washington de Mendeville, inspecteur général du commerce français, ouvre la chancellerie consulaire à Buenos Aires en 1827 et se présente officiellement aux autorités argentines en octobre 1828. Consul général à partir de 1828, il représente la France dans la période de la reconnaissance de l'indépendance argentine par Louis-Philippe (fin 1830) et jusqu'à la signature du premier traité de commerce franco-argentin le 18 mai 1834. La France mène un blocus du port de Buenos Aires de 1838 à 1840 en raison de différends avec le gouverneur Rosas. Les archives du Quai d'Orsay (FR MAE 133PO/1, Buenos Aires, consulat, 1841-1971) attestent d'une présence consulaire continue à partir de 1841."
+        },
+        {
+          "from": "c.1841",
+          "to": "c.1923",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Une légation française est établie à Buenos Aires dans les décennies suivant la reconnaissance de l'indépendance argentine (1830) et la signature du traité de commerce de 1834. Elle est distincte du consulat général (série archivistique FR MAE 133PO/1). L'élévation au rang d'ambassade intervient vers 1923, comme l'attestent les archives diplomatiques françaises (FR MAE 132PO/3, Buenos Aires, ambassade, 1923-1945). L'adresse exacte des locaux successifs de la légation n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "c.1923",
+          "to": "1939",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "La légation française est élevée au rang d'ambassade vers 1923, comme l'atteste la série archivistique FR MAE 132PO/3 (Buenos Aires, ambassade, 1923-1945). Les locaux occupés par l'ambassade entre cette élévation et l'acquisition du Palacio Ortiz Basualdo en 1939 n'ont pas pu être établis avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1939",
+          "to": null,
+          "address": "Cerrito 1399 (angle Arroyo), C1010ABA Buenos Aires, Recoleta",
+          "building": "Palacio Ortiz Basualdo (Paul Pater, 1912-1918)",
+          "kind": "chancery",
+          "lat": -34.5916,
+          "lon": -58.3832,
+          "current": true,
+          "note": "Le Palacio Ortiz Basualdo est un chef-d'œuvre Beaux-Arts conçu en 1912 par l'architecte français Paul Eugène Pater (dit Pablo Pater, 1879-1966, ancien élève de l'École des Beaux-Arts de Paris, auteur également du Tigre Club) pour Daniel Ortiz Basualdo et son épouse Mercedes Zapiola Eastman. Les travaux s'achèvent en 1918-1919. Le bâtiment, de quatre niveaux (basamento, piano nobile, étage de chambres privées, mansarde), est une réélaboration savante de l'hôtel particulier français ; le Salon Doré est inspiré de la Galerie des Glaces de Versailles et le Salon de Bal Chinois présente un décor exceptionnel. À la mort de Daniel Ortiz Basualdo en 1939, son épouse vend le palais au gouvernement de la République française, qui y installe la chancellerie de son ambassade. Le bâtiment est inscrit au registre des monuments historiques nationaux argentins (BIHN). L'adresse officielle de la chancellerie est Cerrito 1399, C1010ABA Buenos Aires ; le bâtiment occupe l'angle de Cerrito et d'Arroyo (Arroyo 1060/96). Depuis 2023, l'ambassadeur est Romain Nadal."
+        }
+      ]
+    },
+    "GB": {
+      "name": "United Kingdom",
+      "flag": "gb",
+      "current": {
+        "chancery": "Dr Luis Agote 2412, C1425EOF Recoleta, Buenos Aires",
+        "residence": "Av. General Gelly y Obes 2333, Recoleta, Buenos Aires"
+      },
+      "addresses": [
+        {
+          "from": "1823",
+          "to": "c.1879",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "La Grande-Bretagne reconnaît informellement l'indépendance de l'Argentine le 15 décembre 1823 en tant que « province de Buenos Aires », puis formellement le 2 février 1825 par le Traité d'amitié, de commerce et de navigation signé par Woodbine Parish, consul général depuis octobre 1823 (promu chargé d'affaires le 24 mai 1825). C'est l'une des toutes premières reconnaissances de l'indépendance argentine. La légation britannique est l'une des premières missions diplomatiques permanentes étrangères à Buenos Aires. L'adresse exacte des locaux de la légation pendant ses premières décennies n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "c.1879",
+          "to": "c.1920",
+          "address": "395 Calle Florida, Buenos Aires",
+          "kind": "legation",
+          "lat": -34.6032,
+          "lon": -58.3741,
+          "note": "Une photographie de 1879 conservée à la New York Public Library montre un panorama de Buenos Aires pris depuis l'azotée de la légation britannique au 395 Calle Florida. Ce bâtiment sert de chancellerie de la légation à la fin du XIXe siècle."
+        },
+        {
+          "from": "c.1920",
+          "to": "1938",
+          "address": "Edificio Británico, angle Reconquista et Sarmiento, Buenos Aires",
+          "building": "Edificio Británico (Paul Bell Chambers & Louis Newbery Thomas, 1917)",
+          "kind": "legation",
+          "lat": -34.6089,
+          "lon": -58.3717,
+          "note": "À partir d'environ 1920, la légation et le consulat général sont tous deux installés aux étages supérieurs de l'Edificio Británico, immeuble édouardien de la Royal Mail Steam Packet Company sis à l'angle des rues Reconquista et Sarmiento, inauguré en 1917 en présence du ministre Reginald Tower. La légation est élevée au rang d'ambassade en 1927."
+        },
+        {
+          "from": "1924",
+          "to": "1938",
+          "address": "Avenida Alvear 1845, Recoleta, Buenos Aires",
+          "kind": "residence",
+          "lat": -34.5857,
+          "lon": -58.3837,
+          "note": "En 1924, la propriété du 1845 Avenida Alvear est acquise pour environ £50 000 auprès des Messrs Drysdale Bros et Mme Mackinnon pour servir de résidence à l'ambassadeur. En 1934 un étage supplémentaire y est ajouté et le chauffage central installé, mais la résidence ne donne pas entière satisfaction, principalement par manque de jardin."
+        },
+        {
+          "from": "1927",
+          "to": "1938",
+          "address": "Edificio Británico, angle Reconquista et Sarmiento, Buenos Aires",
+          "building": "Edificio Británico",
+          "kind": "embassy",
+          "lat": -34.6089,
+          "lon": -58.3717,
+          "note": "En 1927, la légation britannique est élevée au rang d'ambassade ; les bureaux restent dans l'Edificio Británico jusqu'à l'acquisition du terrain de la rue Dr Luis Agote en 1938."
+        },
+        {
+          "from": "1938",
+          "to": "1968",
+          "address": "Dr Luis Agote 2412 (anciennement Calle Anchorena), Recoleta, Buenos Aires",
+          "kind": "embassy",
+          "lat": -34.5857,
+          "lon": -58.3955,
+          "note": "En 1938, un terrain de 9 000 m² au 2412 Calle Dr Luis Agote (anciennement Calle Anchorena) est acheté pour £63 000 auprès des héritiers de Donna Maria Manuella Pearson. Il contient une vieille maison aux associations anciennes avec les Britanniques en Argentine, dans laquelle s'installe l'ambassadeur dans l'attente de plans futurs. En décembre 1945, la propriété mitoyenne au 2333 Calle General Gelly y Obes est achetée à la famille Madero pour environ £125 000 : il s'agit d'une grande demeure détachée de quatre étages achevée en 1917, conçue dans un style classique dilué par le cabinet d'architectes britannique Bassett, Smith et Colcatt pour Carlos María Madero et Sara Unzué Baudrix. Après d'importantes adaptations, l'ambassadeur y prend ses quartiers en 1946 (ancienne résidence de l'Avenida Alvear vendue la même année). En 1966, le prince Philip pose la première pierre du nouveau bâtiment de chancellerie à l'angle sud du terrain de la rue Pearson."
+        },
+        {
+          "from": "1946",
+          "to": null,
+          "address": "Av. General Gelly y Obes 2333, Recoleta, Buenos Aires",
+          "building": "Palacio Madero-Unzué (Bassett Smith & Collcutt, 1917)",
+          "kind": "residence",
+          "lat": -34.5867,
+          "lon": -58.3945,
+          "current": true,
+          "note": "La résidence de l'ambassadeur britannique est installée depuis 1946 dans cette demeure édouardienne à éléments néo-palladiens du XVIIIe siècle anglais, construite entre 1913 et 1917 par les architectes britanniques Walter B. Bassett Smith et Bertie Hawkins Collcutt pour la famille Madero-Unzué. Le bâtiment a été classé monument historique national argentin. Il est considéré comme l'une des plus belles résidences diplomatiques britanniques dans le monde. En 2017, l'ambassade a célébré le centenaire de la résidence."
+        },
+        {
+          "from": "1968",
+          "to": "1982",
+          "address": "Dr Luis Agote 2412, Recoleta, Buenos Aires",
+          "kind": "chancery",
+          "lat": -34.5857,
+          "lon": -58.3955,
+          "note": "Le nouveau bâtiment de chancellerie est occupé en 1968 sur le terrain acquis en 1938. L'architecte responsable en Grande-Bretagne est A. J. Truscott (Ministry of Public Building and Works) et l'architecte local à Buenos Aires est Sydney G. Follett FRIBA. Les relations diplomatiques sont rompues le 2 avril 1982 à la suite de l'invasion des îles Malouines par l'Argentine. Pendant la rupture, la Suisse représente les intérêts britanniques en Argentine, et le Brésil représente les intérêts argentins en Grande-Bretagne."
+        },
+        {
+          "from": "1990",
+          "to": null,
+          "address": "Dr Luis Agote 2412, C1425EOF Recoleta, Buenos Aires",
+          "kind": "chancery",
+          "lat": -34.5857,
+          "lon": -58.3955,
+          "current": true,
+          "note": "Les relations diplomatiques entre le Royaume-Uni et l'Argentine sont rétablies le 15 février 1990 ; les ambassades de Buenos Aires et de Londres rouvrent officiellement le 26 février 1990, huit ans après la rupture consécutive à la guerre des Malouines (2 avril – 14 juin 1982). Le différend de souveraineté sur les Malouines demeure non résolu. Les bureaux de la chancellerie retrouvent leur siège au 2412 Dr Luis Agote, dans le bâtiment inauguré en 1968."
+        }
+      ]
+    },
+    "IN": {
+      "name": "India",
+      "flag": "in",
+      "current": {
+        "chancery": "Torre Madero, piso 19, Avenida Eduardo Madero 942, C1106ACW, Retiro, Buenos Aires"
+      },
+      "addresses": [
+        {
+          "from": "1943",
+          "to": "1949",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "consulate",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Le gouvernement britannique des Indes ouvre une Commission commerciale (Trade Commission) à Buenos Aires en 1943, représentant l'Inde coloniale. C'est la première présence officielle indienne en Argentine, établie avant l'indépendance de l'Inde (15 août 1947). L'adresse exacte des locaux de cette commission n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1949-02-03",
+          "to": null,
+          "address": "Buenos Aires (adresse des premières décennies non établie avec certitude)",
+          "kind": "embassy",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "La Commission commerciale est élevée au rang d'ambassade le 3 février 1949, faisant de la représentation de Buenos Aires l'une des toutes premières ambassades de l'Inde indépendante en Amérique du Sud. Le ministre argentin des Affaires étrangères et le consul général de l'Inde signent l'accord établissant les relations diplomatiques formelles à cette date. M. Aftab Rai est nommé premier consul général de l'Inde le 19 avril 1949. L'ambassade est également accréditée auprès de l'Uruguay et du Paraguay. Les deux pays célèbrent le 75e anniversaire de leurs relations diplomatiques le 3 février 2024, occasion à laquelle un livre commémoratif intitulé « India-Argentina : 75 Años de Relaciones Diplomáticas » est publié le 19 décembre 2024."
+        },
+        {
+          "from": null,
+          "to": null,
+          "address": "Avenida Córdoba 950, piso 4, C1054AAV, Buenos Aires",
+          "kind": "chancery",
+          "lat": -34.5991,
+          "lon": -58.3807,
+          "note": "La chancellerie de l'ambassade d'Inde est installée à l'Avenida Córdoba 950, 4e étage (certaines sources mentionnent le 5e étage), dans le quartier de San Nicolás. Le code postal C1054AAV correspond à ce tronçon de l'avenue. Les dates exactes d'occupation de cette adresse n'ont pas pu être établies avec certitude à partir des sources disponibles. L'ambassade y reçoit à la fois des visiteurs pour les services consulaires (visas, passeports, OCI) et des délégations officielles."
+        },
+        {
+          "from": null,
+          "to": null,
+          "address": "Torre Madero, piso 19, Avenida Eduardo Madero 942, C1106ACW, Retiro, Buenos Aires",
+          "building": "Torre Madero (Catalinas Norte, inaugurée c. 1980)",
+          "kind": "chancery",
+          "lat": -34.5965,
+          "lon": -58.3707,
+          "current": true,
+          "note": "La chancellerie est actuellement installée au 19e étage de la Torre Madero, immeuble de grande hauteur situé dans le complexe Catalinas Norte du quartier de Retiro, à Buenos Aires. La Torre Madero, inaugurée vers 1980, est un édifice de bureaux moderne en verre et acier. L'adresse postale complète est : Avenida Eduardo Madero 942, C1106ACW Buenos Aires. La date exacte du déménagement depuis l'Avenida Córdoba n'a pas pu être établie avec certitude à partir des sources disponibles."
+        }
+      ]
+    },
+    "IT": {
+      "name": "Italy",
+      "flag": "it",
+      "current": {
+        "chancery": "Billinghurst 2577, C1425DTL Buenos Aires (Palacio Alvear)",
+        "residence": "Avenida del Libertador 2100 / Billinghurst 2577, C1425DTL Buenos Aires (Palacio Alvear)"
+      },
+      "addresses": [
+        {
+          "from": "1836",
+          "to": "1861",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Le royaume de Sardaigne est le premier État de la péninsule italienne à reconnaître l'Argentine, en mai 1836. Un traité d'amitié, de commerce et de navigation est signé en 1855. La présence diplomatique sarde à Buenos Aires – sous forme de légation ou de consul accrédité – précède l'unification italienne. L'adresse exacte n'a pas pu être établie avec certitude."
+        },
+        {
+          "from": "1861",
+          "to": "1924",
+          "address": "Buenos Aires (adresse précise non établie — ancienne chancellerie rue Basavilbaso)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Après l'unification italienne (17 mars 1861), le royaume d'Italie reprend les relations diplomatiques avec l'Argentine et établit formellement une légation à Buenos Aires vers 1864. Pendant plusieurs décennies, la légation occupe des locaux successifs dans le centre de Buenos Aires, dont des bureaux rue Basavilbaso mentionnés comme siège jugé insuffisant à la veille de l'élévation en ambassade (1924). L'immigration italienne en Argentine connaît une ampleur exceptionnelle : entre 1850 et 1950, environ 3,5 millions d'Italiens s'installent en Argentine, formant la plus grande communauté italienne d'Amérique du Sud et la principale source d'immigration du pays. Les Italiens constituent le groupe étranger le plus nombreux à Buenos Aires dès 1895. La légation joue un rôle crucial pour cette communauté considérable."
+        },
+        {
+          "from": "1924",
+          "to": "1927",
+          "address": "Buenos Aires (adresse transitoire non établie avec certitude)",
+          "kind": "embassy",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "La légation italienne est élevée au rang d'ambassade en 1924, dans le contexte de la montée en puissance de l'Italie fasciste et de l'intensification des relations italo-argentines. L'ancien siège de la rue Basavilbaso est jugé indigne du nouveau statut. L'ambassadeur Alberto Martin-Franklin et son épouse, la comtesse Herminia Miniscalchi Erizzo, négocient l'acquisition du Palacio Alvear pour en faire la résidence officielle. La vente est formalisée le 12 janvier 1927 par l'acte notarié du notaire Hoeffner."
+        },
+        {
+          "from": "1927",
+          "to": null,
+          "address": "Avenida del Libertador 2100 / Billinghurst 2577, C1425DTL Buenos Aires, Palermo",
+          "building": "Palacio Alvear (ex-résidence Alvear Ortiz Basualdo, c. 1920-1923)",
+          "kind": "residence",
+          "lat": -34.5824,
+          "lon": -58.4029,
+          "current": true,
+          "note": "Le Palacio Alvear est une demeure de style néoclassique français conçue vers 1918-1920 par Federico de Alvear lui-même (passionné d'architecture, il dessine les maquettes d'étude et supervise les plans avec le concours de professionnels) sur le modèle de l'Hôtel de Biron à Paris (actuel musée Rodin). La construction s'achève vers 1923. Les Alvear Ortiz Basualdo, lourdement endettés, cèdent le palais — qu'ils n'habitent pour ainsi dire jamais — au gouvernement du royaume d'Italie : l'acte de vente est signé par le notaire Hoeffner le 12 janvier 1927. Le palais est déclaré Monument historique national argentin en 2018. Il demeure la résidence officielle de l'ambassadeur d'Italie. En 2024, lors du centenaire de l'ambassade, un ouvrage « La Embajada de Italia en Buenos Aires – El libro de los 100 años » retrace l'histoire du lieu."
+        },
+        {
+          "from": "1927",
+          "to": null,
+          "address": "Billinghurst 2577, C1425DTL Buenos Aires, Palermo",
+          "building": "Palacio Alvear — chancellerie",
+          "kind": "chancery",
+          "lat": -34.5824,
+          "lon": -58.4029,
+          "current": true,
+          "note": "La chancellerie de l'ambassade d'Italie est installée dans les dépendances du Palacio Alvear, à l'angle de l'Avenida del Libertador et de la rue Billinghurst, dans le quartier de Palermo. Le complexe abrite à la fois les bureaux diplomatiques et la résidence officielle de l'ambassadeur. L'adresse postale officielle retenue pour la chancellerie est Billinghurst 2577, C1425DTL Buenos Aires."
+        },
+        {
+          "from": "1927",
+          "to": "1929",
+          "address": "Carlos Pellegrini 1060, Buenos Aires",
+          "kind": "consulate",
+          "lat": -34.6012,
+          "lon": -58.3854,
+          "note": "Le consulat général d'Italie à Buenos Aires est créé officiellement le 23 octobre 1927 sous le royaume d'Italie, puis confirmé le 18 avril 1947 par décret du chef d'État provisoire Enrico De Nicola. Jusqu'en 1929, son siège est situé Carlos Pellegrini 1060 ; cet immeuble est démoli lors de la construction de l'Avenida 9 de Julio."
+        },
+        {
+          "from": "1929",
+          "to": "2006",
+          "address": "Buenos Aires (adresse précise non établie — secteur Microcentro)",
+          "kind": "consulate",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Après la démolition de l'immeuble de Carlos Pellegrini 1060, le consulat général s'installe dans des locaux successifs du Microcentro de Buenos Aires dont les adresses exactes n'ont pas pu être établies avec certitude à partir des sources disponibles. En juin 2003, l'État italien acquiert le bâtiment du 572 Reconquista ; les travaux de rénovation s'y déroulent de mars 2004 à mars 2006."
+        },
+        {
+          "from": "2006",
+          "to": null,
+          "address": "Reconquista 572, C1003ABJ Buenos Aires, Microcentro",
+          "kind": "consulate",
+          "lat": -34.5976,
+          "lon": -58.3738,
+          "current": true,
+          "note": "Le consulat général d'Italie à Buenos Aires est inauguré dans ses locaux définitifs au 572 Reconquista le 7 décembre 2006, après des travaux de rénovation menés de 2004 à 2006 dans un immeuble moderne de huit étages acquis en 2003. Sa circonscription couvre Buenos Aires et de nombreuses municipalités de la province de Buenos Aires. Il est l'un des consulats italiens les plus chargés du monde en raison de l'ampleur des demandes de citoyenneté italienne (jus sanguinis) : on estime que 25 à 30 millions d'Argentins ont des origines italiennes, soit environ 62 % de la population."
+        }
+      ]
+    },
+    "JP": {
+      "name": "Japan",
+      "flag": "jp",
+      "current": {
+        "chancery": "Bouchard 547, Piso 17, C1106ABG Buenos Aires",
+        "residence": "Virrey del Pino 3437, Belgrano, Buenos Aires"
+      },
+      "addresses": [
+        {
+          "from": "1898",
+          "to": "1902",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Le traité d'amitié, de commerce et de navigation entre l'Empire du Japon et la République Argentine est signé le 3 février 1898 : il établit des relations diplomatiques formelles au niveau de légation. Le traité entre en vigueur en septembre 1901. Dans un premier temps, le Japon ne dispose pas d'un ministre résident à Buenos Aires ; en 1902, Tokyo désigne un représentant concurrent (non résident) pour l'Argentine, depuis d'autres postes diplomatiques en Amérique du Sud."
+        },
+        {
+          "from": "1902",
+          "to": "1940",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Une légation japonaise résidente est progressivement mise en place à Buenos Aires au cours des années 1900. Les relations bilatérales sont principalement marquées par l'immigration japonaise en Argentine — surtout des travailleurs agricoles originaires d'Okinawa et de Kagoshima — et par les échanges commerciaux. L'Argentine avait par ailleurs accepté de vendre au Japon le croiseur Nisshin lors de la guerre russo-japonaise (1904-1905). La communauté nikkei d'Argentine, qui comptera à terme quelque 50 000 à 80 000 personnes, s'organise dès 1916 avec la fondation de l'Association japonaise en Argentine (AJA) et se dote en 1929 d'un premier immeuble propre à Finochietto 840, Buenos Aires. L'adresse exacte des locaux successifs de la légation n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1940",
+          "to": "1944",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "En 1940, la légation japonaise est élevée au rang d'ambassade dans le contexte d'un renforcement des liens commerciaux : le gouvernement japonais s'engage à acheter des marchandises argentines pour 30 millions de yens, compensant le déclin des échanges avec les partenaires européens. Akira Tomii est nommé premier ambassadeur extraordinaire et plénipotentiaire du Japon en Argentine ; Rodolfo Morena devient simultanément le premier ambassadeur argentin au Japon. Sous la pression des Alliés, l'Argentine rompt ses relations diplomatiques avec les puissances de l'Axe le 26 janvier 1944, mettant fin à l'activité de l'ambassade japonaise à Buenos Aires."
+        },
+        {
+          "from": "1952",
+          "to": null,
+          "address": "Buenos Aires (adresse précise non établie pour la période 1952 – années 1980)",
+          "kind": "embassy",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Le 27 mars 1945, par le décret n° 6945/45, l'Argentine avait déclaré la guerre à l'Empire du Japon et à l'Allemagne. À la suite du Traité de paix de San Francisco (signé le 8 septembre 1951, entré en vigueur le 28 avril 1952), les relations diplomatiques sont rétablies et l'ambassade rouvre à Buenos Aires. Les relations bilatérales se consolident progressivement : visite du président Arturo Frondizi au Japon en 1961, nouveau traité d'amitié, de commerce et de navigation en 1961, accord sur l'immigration en 1963, accords de coopération technique et culturelle en 1981. L'adresse exacte des locaux de l'ambassade avant son installation définitive dans la Torre Bouchard n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": null,
+          "to": null,
+          "address": "Bouchard 547, Piso 17, C1106ABG Buenos Aires",
+          "building": "Torre Bouchard",
+          "kind": "chancery",
+          "lat": -34.6015,
+          "lon": -58.3688,
+          "current": true,
+          "note": "La chancellerie de l'ambassade du Japon est installée au 17ᵉ étage de la Torre Bouchard, gratte-ciel de bureaux de 30 étages situé dans le quartier de Puerto Madero / Retiro, à proximité immédiate du Rio de la Plata. La date exacte d'emménagement dans ce bâtiment n'a pas pu être établie avec certitude à partir des sources disponibles. L'ambassade est joignable au +54 11 4318-8200 (taishikan@bn.mofa.go.jp) et ouvre du lundi au vendredi de 9 h à 17 h 45."
+        },
+        {
+          "from": null,
+          "to": null,
+          "address": "Virrey del Pino 3437, Belgrano, Buenos Aires",
+          "kind": "residence",
+          "lat": -34.5595,
+          "lon": -58.4595,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur du Japon est située au 3437, calle Virrey del Pino, dans le quartier résidentiel de Belgrano R, au nord de Buenos Aires. L'ambassadeur Yoshitaka Hoshino (en poste depuis novembre 2025) y réside. La propriété est documentée dans OpenStreetMap (way 437517856) sous le nom « Residence of the Japanese Ambassador »."
+        }
+      ]
+    },
+    "KR": {
+      "name": "South Korea",
+      "flag": "kr",
+      "current": {
+        "chancery": "Avenida del Libertador 2395, C1425AAE, Recoleta, Buenos Aires"
+      },
+      "addresses": [
+        {
+          "from": "1963",
+          "to": null,
+          "address": "Avenida del Libertador 2395, C1425AAE, Recoleta, Buenos Aires",
+          "kind": "embassy",
+          "lat": -34.5793,
+          "lon": -58.4052,
+          "current": true,
+          "note": "Les relations diplomatiques entre la République de Corée et la République Argentine sont établies le 15 février 1962. L'ambassade de Corée à Buenos Aires est inaugurée en décembre 1963 ; le premier ambassadeur, Bae Ui-hwan, prend ses fonctions en 1964. La chancellerie est installée au 2395, Avenida del Libertador, dans le quartier de Recoleta (code postal C1425AAE). Les coordonnées sont issues de Wikidata (Q55734507 : 34°34′45″ S, 58°24′19″ O), géocodage de précision rue confirmé par la recherche. L'ambassade est joignable au +54-11-4802-8865/8062, du lundi au vendredi de 9 h à 12 h 30 et de 14 h à 17 h 30."
+        }
+      ]
+    },
+    "MX": {
+      "name": "Mexico",
+      "flag": "mx",
+      "current": {
+        "chancery": "Arcos 1650, Belgrano, C1426BGL Buenos Aires"
+      },
+      "addresses": [
+        {
+          "from": "1888",
+          "to": "1893",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Les relations diplomatiques entre le Mexique et l'Argentine sont officiellement établies le 20 décembre 1888, date à laquelle l'Argentine accrédite Ramón Mendoza comme envoyé extraordinaire et ministre plénipotentiaire auprès du gouvernement mexicain. En 1888, Juan Sánchez Azcona (père, 1843-1894) est le premier représentant mexicain accrédité en Argentine, avec une double légation couvrant également le Brésil. En 1891, Juan Sánchez Azcona fils est envoyé en qualité de ministre plénipotentiaire à Buenos Aires. L'adresse exacte des locaux de la légation n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1893",
+          "to": "1902",
+          "address": null,
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Par décret du 29 avril 1893, le président Porfirio Díaz supprime les légations mexicaines en Argentine et au Brésil pour des raisons budgétaires. La représentation mexicaine est suspendue pendant près d'une décennie. Le 16 septembre 1902, Porfirio Díaz annonce au Congrès le rétablissement de deux légations pour les républiques sud-américaines : l'une pour les pays du Pacifique, l'autre pour ceux de l'Atlantique. Francisco León de la Barra est nommé ministre en Argentine (1902-1905), avec siège provisoire au Brésil jusqu'en 1906."
+        },
+        {
+          "from": "1910",
+          "to": "1927",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "La mission diplomatique mexicaine est définitivement réinstallée à Buenos Aires en 1910. Manuel J. de Lizardi avait occupé le poste de ministre plénipotentiaire depuis 1906 avec résidence fluctuante, puis Manuel Barreiro en 1911. La légation fonctionne de façon continue à partir de 1910. L'adresse exacte des locaux successifs de la légation entre 1910 et 1927 n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1927",
+          "to": "c.1960",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "En 1927, l'Argentine et le Mexique élèvent simultanément leurs missions diplomatiques respectives au rang d'ambassade. À partir de cette date, les représentants mexicains à Buenos Aires portent le titre d'ambassadeur extraordinaire et plénipotentiaire. L'adresse exacte des locaux de la chancellerie entre 1927 et l'acquisition de l'immeuble actuel n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "c.1960",
+          "to": null,
+          "address": "Arcos 1650, Belgrano, C1426BGL Buenos Aires",
+          "kind": "chancery",
+          "lat": -34.5647,
+          "lon": -58.4504,
+          "current": true,
+          "note": "Durant le sexennat du président Adolfo López Mateos (1958-1964), le gouvernement mexicain acquiert l'immeuble d'Arcos 1650, dans le quartier de Belgrano, qui sert d'abord de résidence officielle de l'ambassadeur avant de devenir le siège de la chancellerie. López Mateos effectue en janvier 1960 la première visite d'État d'un président mexicain en Argentine. Le bâtiment, situé entre les rues Virrey del Pino et José Hernández, abrite aujourd'hui la chancellerie et la section consulaire de l'ambassade du Mexique. Site officiel : embamex.sre.gob.mx/argentina. Téléphone : (54-11) 77000180."
+        }
+      ]
+    },
+    "RU": {
+      "name": "Russia",
+      "flag": "ru",
+      "current": {
+        "chancery": "Rodríguez Peña 1741, C1021ABG Buenos Aires (Recoleta)",
+        "residence": "Rodríguez Peña 1741, C1021ABG Buenos Aires (Recoleta)"
+      },
+      "addresses": [
+        {
+          "from": "1866",
+          "to": "1885",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "consulate",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "La Russie impériale ouvre un consulat à Buenos Aires en 1866, première présence diplomatique russe en Argentine, antérieure de dix-neuf ans à l'établissement de relations officielles au niveau de légation."
+        },
+        {
+          "from": "1885",
+          "to": "1895",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Des relations diplomatiques formelles entre la République Argentine et l'Empire russe sont établies le 22 octobre 1885. La mission impériale russe, dont la compétence couvre l'Amérique du Sud, est d'abord exercée depuis Rio de Janeiro. En 1895, elle est transférée à Buenos Aires."
+        },
+        {
+          "from": "1895",
+          "to": "1898",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "La mission impériale russe est transférée de Rio de Janeiro à Buenos Aires en 1895. Elle est renvoyée à Rio de Janeiro en 1898, Buenos Aires étant à nouveau desservie depuis le Brésil."
+        },
+        {
+          "from": "1910",
+          "to": "1917",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "En 1910, la Russie impériale ouvre une mission résidente à Buenos Aires. Le premier ministre plénipotentiaire accrédité en Argentine (par intérim depuis 1885 : A. S. Ionine puis Alekseï Chpeïer à partir de 1900) est désormais en poste à Buenos Aires. En novembre 1917, à la suite de la révolution bolchevique, l'Argentine suspend ses relations diplomatiques avec la Russie ; la légation ferme ses portes."
+        },
+        {
+          "from": "1946",
+          "to": "1991",
+          "address": "Rodríguez Peña 1741, Buenos Aires (Recoleta)",
+          "kind": "embassy",
+          "lat": -34.5887,
+          "lon": -58.3904,
+          "note": "L'Argentine reconnaît l'Union soviétique en juin 1946, à l'initiative soviétique transmise par l'ambassadeur en poste à Montevideo. Le premier ambassadeur soviétique, Mikhaïl Sergueïev, est nommé le 12 juillet 1946 et présente ses lettres de créance le 12 septembre 1946. L'ambassade s'installe dans l'immeuble de Rodríguez Peña 1741, dans le quartier de Recoleta."
+        },
+        {
+          "from": "1992",
+          "to": null,
+          "address": "Rodríguez Peña 1741, C1021ABG Buenos Aires (Recoleta)",
+          "kind": "chancery",
+          "lat": -34.5887,
+          "lon": -58.3904,
+          "current": true,
+          "note": "À la dissolution de l'URSS le 25 décembre 1991, la Fédération de Russie succède automatiquement à l'Union soviétique dans ses droits et obligations diplomatiques. L'ambassade de la Fédération de Russie continue d'occuper les locaux de Rodríguez Peña 1741, dans le quartier de Recoleta, à Buenos Aires. L'adresse postale est C1021ABG. L'ambassadeur actuel (accrédité depuis 2018) est Dmitri Feoktistov. La chancellerie et la résidence de l'ambassadeur sont regroupées au même bâtiment."
+        }
+      ]
+    },
+    "US": {
+      "name": "United States",
+      "flag": "us",
+      "current": {
+        "chancery": "Avenida Colombia 4300, Palermo, C1425GMN Buenos Aires",
+        "residence": "Avenida del Libertador 3502, Palermo, Buenos Aires (Palacio Bosch)"
+      },
+      "addresses": [
+        {
+          "from": "1823",
+          "to": "1914",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Les États-Unis reconnaissent les Provinces-Unies du Río de la Plata le 27 janvier 1823 ; Caesar Augustus Rodney, premier ministre plénipotentiaire américain, présente ses lettres de créance le 27 décembre 1823 au gouverneur Rodríguez. Rodney décède en poste le 10 juin 1824. La légation demeure à Buenos Aires jusqu'à son élévation au rang d'ambassade en 1914. L'adresse exacte des locaux successifs de la légation au XIXe siècle n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1914",
+          "to": "1929",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "La légation est élevée au rang d'ambassade le 1er octobre 1914 ; Frederic Jesup Stimson présente ses lettres de créance le 8 janvier 1915 en tant que premier ambassadeur extraordinaire et plénipotentiaire des États-Unis en Argentine. Les locaux exacts de l'ambassade avant l'acquisition du Palacio Bosch en 1929 n'ont pas pu être établis avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1929",
+          "to": "1969",
+          "address": "Avenida del Libertador 3502, Palermo, Buenos Aires",
+          "building": "Palacio Bosch (René Sergent, 1917)",
+          "kind": "embassy",
+          "lat": -34.5739,
+          "lon": -58.4189,
+          "note": "Le Palacio Bosch est une demeure néoclassique française de 3 700 m² commandée en 1910 par Ernesto Bosch (ancien ambassadeur argentin en France) et son épouse Elisa, et achevée en 1917 sur les plans de l'architecte parisien René Sergent (décoration intérieure d'André Carlhian ; jardins d'Achille Duchêne et Charles Thays). En 1929, l'ambassadeur Robert Woods Bliss obtient l'accord du président Hoover pour acquérir le palais auprès de la famille Bosch pour environ 3 millions de dollars. Le bâtiment sert alors à la fois de chancellerie et de résidence officielle de l'ambassadeur."
+        },
+        {
+          "from": "1929",
+          "to": null,
+          "address": "Avenida del Libertador 3502, Palermo, Buenos Aires",
+          "building": "Palacio Bosch (René Sergent, 1917) — résidence de l'ambassadeur",
+          "kind": "residence",
+          "lat": -34.5739,
+          "lon": -58.4189,
+          "current": true,
+          "note": "Après l'inauguration de la nouvelle chancellerie dans le quartier de Palermo en 1969, le Palacio Bosch est rédédié exclusivement à la résidence officielle de l'ambassadeur des États-Unis. Le bâtiment a été classé monument historique national argentin. Il est inscrit au Registre des propriétés culturellement significatives du secrétaire d'État américain."
+        },
+        {
+          "from": "1969",
+          "to": "1992",
+          "address": "Avenida Colombia 4300, Palermo, Buenos Aires",
+          "kind": "chancery",
+          "lat": -34.5768,
+          "lon": -58.4184,
+          "note": "Une nouvelle chancellerie est construite sur l'Avenida Colombia 4300, à quelques centaines de mètres du Palacio Bosch, et inaugurée en 1969. Le Palacio Bosch cesse alors d'abriter les services diplomatiques pour ne plus servir qu'à la résidence de l'ambassadeur."
+        },
+        {
+          "from": "1992",
+          "to": null,
+          "address": "Avenida Colombia 4300, Palermo, C1425GMN Buenos Aires",
+          "kind": "chancery",
+          "lat": -34.5768,
+          "lon": -58.4184,
+          "current": true,
+          "note": "Le bâtiment actuel de la chancellerie, édifice sécurisé de style moderniste sobre situé sur l'Avenida Colombia 4300 dans le quartier de Palermo, est documenté sous sa forme définitive en 1992. L'ambassade et le consulat général des États-Unis y sont regroupés. Le site jouxte le Parque Tres de Febrero et se trouve à proximité immédiate du Palacio Bosch."
+        }
+      ]
+    }
+  }
+}
