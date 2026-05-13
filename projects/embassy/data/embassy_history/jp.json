@@ -1,0 +1,912 @@
+{
+  "host": {
+    "code": "JP",
+    "name": "Japan",
+    "capital": "Tokyo"
+  },
+  "note": "Historique des ambassades et légations étrangères accréditées auprès du Japon, classé par pays d'origine.",
+  "embassies": {
+    "TR": {
+      "name": "Turkey",
+      "flag": "tr",
+      "current": {
+        "chancery": "2-33-6 Jingumae, Shibuya-ku, Tokyo 150-0001"
+      },
+      "addresses": [
+        {
+          "from": "1925",
+          "to": "1945",
+          "address": "2-33-6 Jingumae, Shibuya-ku, Tokyo",
+          "kind": "embassy",
+          "lat": 35.673278,
+          "lon": 139.708556,
+          "note": "L'ambassade de la République de Turquie est ouverte à Tokyo en 1925, un an après l'établissement des relations diplomatiques entre le Japon et la jeune République turque (7 juillet 1924). Hulusi Fuat Tugay en est le premier titulaire avec le grade de chargé d'affaires (1925-1929), puis Cevat Ezine devient le premier ambassadeur titulaire (1929-1931). Les relations diplomatiques sont rompues le 6 janvier 1945 lorsque la Turquie déclare la guerre au Japon."
+        },
+        {
+          "from": "1945",
+          "to": "1952",
+          "address": "sans objet — relations diplomatiques rompues",
+          "kind": "embassy",
+          "lat": null,
+          "lon": null,
+          "note": "Rupture des relations diplomatiques pendant la Seconde Guerre mondiale. La Turquie déclare la guerre au Japon et à l'Allemagne le 23 février 1945. Le traité de San Francisco (8 septembre 1951, entré en vigueur le 28 avril 1952) met fin à l'état de guerre. La Grande Assemblée nationale turque ratifie le traité le 14 mai 1952, rétablissant formellement les relations diplomatiques."
+        },
+        {
+          "from": "1952",
+          "to": null,
+          "address": "2-33-6 Jingumae, Shibuya-ku, Tokyo 150-0001",
+          "building": "Bâtiment conçu par l'architecte Kenzō Tange (Pritzker 1987)",
+          "kind": "chancery",
+          "lat": 35.673278,
+          "lon": 139.708556,
+          "current": true,
+          "note": "L'ambassade est rouverte en 1952 ; İzzet Aksalur est le premier ambassadeur d'après-guerre. Le bâtiment actuel de la chancellerie, situé dans le quartier de Jingumae (arrondissement de Shibuya), est l'œuvre de l'architecte Kenzō Tange, lauréat du prix Pritzker en 1987, figure majeure du métabolisme et de l'architecture moderniste japonaise. Un consulat général est également installé à Nagoya. Site : tokyo-be.mfa.gov.tr."
+        }
+      ]
+    },
+    "GB": {
+      "name": "United Kingdom",
+      "flag": "gb",
+      "current": {
+        "chancery": "1 Ichiban-cho, Chiyoda-ku, Tokyo 102-8388"
+      },
+      "addresses": [
+        {
+          "from": "1859",
+          "to": "c.1862",
+          "address": "Temple Tōzen-ji, Takanawa, Edo (actuel Minato-ku, Tokyo)",
+          "kind": "legation",
+          "lat": 35.6370,
+          "lon": 139.7420,
+          "note": "Première légation britannique au Japon, ouverte en 1859 au temple bouddhiste Tōzen-ji après la signature du traité d'amitié et de commerce anglo-japonais de 1858. Sir Rutherford Alcock, premier ministre résident, y réside. En juillet 1861, des partisans du mouvement Sonnō jōi (« révérer l'empereur, expulser les barbares ») attaquent la légation ; Alcock est gravement blessé. L'insécurité persistante conduit au transfert vers Yokohama."
+        },
+        {
+          "from": "c.1862",
+          "to": "1871",
+          "address": "Concession étrangère de Yokohama",
+          "kind": "legation",
+          "lat": 35.4438,
+          "lon": 139.6380,
+          "note": "La légation est repliée à Yokohama après les attaques de 1861-1862. En janvier 1863, Takasugi Shinsaku met le feu au chantier de construction d'une nouvelle légation à Gotenyama (Shinagawa), rendant le site inutilisable. Sir Harry Smith Parkes, nommé ministre plénipotentiaire en 1865, utilise temporairement le temple Sengaku-ji à Edo avant d'obtenir en 1872 un terrain à Ichiban-cho, face à la porte Hanzōmon du palais impérial."
+        },
+        {
+          "from": "1875",
+          "to": "1929",
+          "address": "1 Ichiban-cho, Kōjimachi-ku (actuel Chiyoda-ku), Tokyo",
+          "building": "Résidence en brique rouge (Thomas Waters, 1874-1875)",
+          "kind": "legation",
+          "lat": 35.6864,
+          "lon": 139.7444,
+          "note": "Terrain acquis en mai 1872 par bail emphytéotique perpétuel auprès du gouvernement japonais, sur d'anciens terrains de daimyō libérés après l'abolition du système han. La résidence en brique rouge est conçue par l'architecte Thomas Waters, connu pour la reconstruction du quartier de Ginza. Le site de 35 000 m², achevé fin 1874 et occupé en 1875, comprend la résidence du ministre, les bureaux de la chancellerie et des logements pour le personnel. En 1905, après les victoires japonaises sur la Chine et la Russie, la légation est élevée au rang d'ambassade. Le séisme du Grand Kantō de 1923 endommage gravement la chancellerie."
+        },
+        {
+          "from": "1929",
+          "to": "1941",
+          "address": "1 Ichiban-cho, Chiyoda-ku, Tokyo",
+          "building": "Nouvelle chancellerie (Ministry of Works, 1929)",
+          "kind": "embassy",
+          "lat": 35.6864,
+          "lon": 139.7444,
+          "note": "Nouvelle chancellerie construite après les dommages causés par le séisme de 1923 par le Ministry of Works britannique. Ce bâtiment, toujours en place aujourd'hui, constitue la chancellerie actuelle de l'ambassade."
+        },
+        {
+          "from": "1941",
+          "to": "1952",
+          "address": "sans objet — relations diplomatiques rompues",
+          "kind": "embassy",
+          "lat": null,
+          "lon": null,
+          "note": "Rupture des relations diplomatiques au début de la guerre du Pacifique en décembre 1941. L'ambassade est fermée. Après l'occupation du Japon en 1945, le compound devient un établissement côtier de la Royal Navy sous le nom de HMS Return. La British Liaison Mission à Tokyo assure les fonctions diplomatiques entre 1946 et 1952. Le traité de San Francisco, entré en vigueur le 28 avril 1952, permet la réouverture de l'ambassade."
+        },
+        {
+          "from": "1952",
+          "to": null,
+          "address": "1 Ichiban-cho, Chiyoda-ku, Tokyo 102-8388",
+          "building": "Chancellerie de 1929 ; ensemble du compound rénové",
+          "kind": "chancery",
+          "lat": 35.6864,
+          "lon": 139.7444,
+          "current": true,
+          "note": "L'ambassade britannique rouvre ses portes en avril 1952. Le compound d'environ 35 000 m², à l'ouest du palais impérial et séparé de ce dernier par des douves, occupe le même site depuis 1875. La chancellerie de 1929 reste le bâtiment principal. Le Royaume-Uni dispose également d'un consulat général à Ōsaka."
+        }
+      ]
+    },
+    "IL": {
+      "name": "Israel",
+      "flag": "il",
+      "current": {
+        "chancery": "3 Nibancho, Chiyoda-ku, Tokyo 102-0084"
+      },
+      "addresses": [
+        {
+          "from": "1952",
+          "to": "1963",
+          "address": "3 Nibancho, Chiyoda-ku, Tokyo",
+          "kind": "legation",
+          "lat": 35.685972,
+          "lon": 139.737611,
+          "note": "Le Japon reconnaît l'État d'Israël le 15 mai 1952 et une légation israélienne est ouverte à Tokyo. Joseph Ivor Linton est le premier ministre (envoyé extraordinaire et ministre plénipotentiaire). La légation fonctionne dans le quartier de Nibancho, dans l'arrondissement de Chiyoda, non loin du palais impérial."
+        },
+        {
+          "from": "1963",
+          "to": null,
+          "address": "3 Nibancho, Chiyoda-ku, Tokyo 102-0084",
+          "kind": "embassy",
+          "lat": 35.685972,
+          "lon": 139.737611,
+          "current": true,
+          "note": "Les relations diplomatiques sont élevées au rang d'ambassade en 1963. Mordechai Shneerson est le premier ambassadeur accrédité. L'ambassade se trouve toujours au même emplacement à Nibancho, quartier diplomatique de Chiyoda-ku. L'accès se fait par la sortie n°6 de la station Kojimachi (ligne Yūrakuchō). Un bureau commercial pour l'Ouest du Japon a été ouvert à Osaka en 2015, rattaché à la division économique de l'ambassade."
+        }
+      ]
+    },
+    "US": {
+      "name": "United States",
+      "flag": "us",
+      "current": {
+        "chancery": "1-10-5 Akasaka, Minato-ku, Tokyo 107-8420",
+        "residence": "1-10-5 Akasaka, Minato-ku, Tokyo 107-8420 (résidence de l'ambassadeur, même terrain)"
+      },
+      "addresses": [
+        {
+          "from": "1856",
+          "to": "1859",
+          "address": "Temple Gyokusen-ji, Shimoda, préfecture de Shizuoka",
+          "building": "Gyokusen-ji (玉泉寺)",
+          "kind": "consulate",
+          "lat": 34.6529,
+          "lon": 138.9477,
+          "note": "Premier consulat américain au Japon, ouvert par Townsend Harris après l'arrivée de l'escadre de Perry (1853-1854). Le temple Gyokusen-ji sert à la fois de consulate et de lieu de culte ; il abrite encore aujourd'hui un petit cimetière de marins américains décédés durant l'expédition."
+        },
+        {
+          "from": "1859",
+          "to": "1875",
+          "address": "Temple Zenpuku-ji, Moto-Azabu, Edo (actuel Minato-ku, Tokyo)",
+          "building": "Zenpuku-ji (善福寺)",
+          "kind": "legation",
+          "lat": 35.6537,
+          "lon": 139.7265,
+          "note": "Première légation américaine à Edo, installée dans le temple bouddhiste Zenpuku-ji sous Townsend Harris. Le traité d'amitié et de commerce (1858) y est voisin — signé au temple Ryōsen-ji à Shimoda. La légation occupe les lieux jusqu'en 1875."
+        },
+        {
+          "from": "1875",
+          "to": "1890",
+          "address": "Rive du fleuve Sumida, près de Tsukiji, Tokyo",
+          "kind": "legation",
+          "lat": 35.6695,
+          "lon": 139.7745,
+          "note": "La légation est transférée dans le quartier de Tsukiji, zone désignée pour les résidents étrangers non employés par le gouvernement japonais. Le site est aujourd'hui occupé par le complexe St. Luke's Garden."
+        },
+        {
+          "from": "1890",
+          "to": "1931",
+          "address": "1-10-5 Akasaka, Minato-ku, Tokyo",
+          "kind": "legation",
+          "lat": 35.6686,
+          "lon": 139.7433,
+          "note": "Installation sur le site actuel d'Akasaka, près du quartier de Nagatachō (Diète nationale et résidence du Premier ministre). Le terrain d'environ 13 000 m² est loué au gouvernement japonais à partir de 1896. En janvier 1906, après la guerre russo-japonaise, la légation est élevée au rang d'ambassade."
+        },
+        {
+          "from": "1931",
+          "to": "1941",
+          "address": "1-10-5 Akasaka, Minato-ku, Tokyo",
+          "building": "Chancellerie Magonigle-Raymond (1931)",
+          "kind": "embassy",
+          "lat": 35.6686,
+          "lon": 139.7433,
+          "note": "Nouveau bâtiment conçu par Harold Van Buren Magonigle et Antonin Raymond, inauguré en 1931. La résidence de l'ambassadeur, construite simultanément, est l'un des premiers édifices spécialement conçus comme résidence ambassadoriale américaine. C'est là que l'empereur Shōwa rencontre le général MacArthur le 27 septembre 1945."
+        },
+        {
+          "from": "1941",
+          "to": "1952",
+          "address": "sans objet — relations diplomatiques rompues",
+          "kind": "embassy",
+          "lat": null,
+          "lon": null,
+          "note": "Fermeture de l'ambassade après l'attaque de Pearl Harbor (7 décembre 1941). L'ambassadeur Joseph Grew et le personnel sont internés sur place jusqu'en juin 1942, puis rapatriés via l'Afrique orientale portugaise. Pendant l'occupation alliée, la représentation diplomatique est assurée par la section diplomatique du SCAP (ordre général n° 18, 18 avril 1946). L'ambassade rouvre le 28 avril 1952, jour de l'entrée en vigueur du traité de San Francisco. Robert D. Murphy arrive comme ambassadeur."
+        },
+        {
+          "from": "1952",
+          "to": "1976",
+          "address": "1-10-5 Akasaka, Minato-ku, Tokyo",
+          "building": "Bâtiment Magonigle-Raymond (réutilisé)",
+          "kind": "chancery",
+          "lat": 35.6686,
+          "lon": 139.7433,
+          "note": "Réouverture de l'ambassade dans les bâtiments d'avant-guerre, restaurés après les dommages subis pendant les bombardements alliés. Le bail foncier avec le gouvernement japonais est maintenu."
+        },
+        {
+          "from": "1976",
+          "to": null,
+          "address": "1-10-5 Akasaka, Minato-ku, Tokyo 107-8420",
+          "building": "Chancellerie César Pelli & Norma Merrick Sklarek (1976)",
+          "kind": "chancery",
+          "lat": 35.6686,
+          "lon": 139.7433,
+          "current": true,
+          "note": "Bâtiment actuel conçu par César Pelli et Norma Merrick Sklarek, achevé en 1976. La résidence de l'ambassadeur (1931), classée bien culturel important par le Département d'État en janvier 2001, est conservée sur le même terrain. Le bail foncier, renouvelé en 2007, court jusqu'en 2027."
+        }
+      ]
+    },
+    "RU": {
+      "name": "Russia",
+      "flag": "ru",
+      "current": {
+        "chancery": "2-1-1 Azabudai, Minato-ku, Tokyo 106-0041"
+      },
+      "addresses": [
+        {
+          "from": "1858",
+          "to": "c.1871",
+          "address": "Hakodate, Hokkaidō",
+          "building": "Premier consulat de Russie au Japon",
+          "kind": "consulate",
+          "lat": 41.7602,
+          "lon": 140.7219,
+          "note": "Premier consulat russe au Japon, ouvert à Hakodate en vertu du traité d'amitié et de commerce de 1858 (traité de Edo). Iossif Gochkevitch, membre de l'expédition de E.V. Pouiatine, en est le premier titulaire. Le bâtiment consulaire est achevé en 1860."
+        },
+        {
+          "from": "c.1876",
+          "to": "1904",
+          "address": "Tokyo, légation tsariste (emplacement d'origine)",
+          "kind": "legation",
+          "lat": null,
+          "lon": null,
+          "note": "Première légation permanente russe à Tokyo, dont la construction débute en 1876 sur les plans de l'architecte britannique Smeedley. Evgueni Boutsov, consul général et chargé d'affaires à partir de 1871, puis Kirill Strouvé, premier envoyé extraordinaire et ministre plénipotentiaire (1874), y résident. Fermée en février 1904 lors du déclenchement de la guerre russo-japonaise."
+        },
+        {
+          "from": "1904",
+          "to": "1905",
+          "address": "sans objet — relations diplomatiques rompues",
+          "kind": "embassy",
+          "lat": null,
+          "lon": null,
+          "note": "Rupture des relations diplomatiques pendant la guerre russo-japonaise (février 1904 – septembre 1905). Le traité de Portsmouth, signé le 5 septembre 1905 sous médiation américaine, met fin au conflit et permet la reprise des relations."
+        },
+        {
+          "from": "1905",
+          "to": "1928",
+          "address": "Tokyo, légation russe (même bâtiment d'origine)",
+          "kind": "legation",
+          "lat": null,
+          "lon": null,
+          "note": "Réouverture de la légation après le traité de Portsmouth, dans le même bâtiment. La révolution d'Octobre 1917 renverse le gouvernement tsariste ; la légation devient une « ambassade sans gouvernement » pendant plusieurs années, les diplomates tsaristes conservant leurs fonctions sans gouvernement légitime. Le Japon reconnaît l'URSS en janvier 1925 par la convention de base soviéto-japonaise."
+        },
+        {
+          "from": "1928",
+          "to": "1945",
+          "address": "Azabu-Mamina-chō (actuel Azabudai 2-chōme, Minato-ku, Tokyo)",
+          "kind": "embassy",
+          "lat": 35.6598,
+          "lon": 139.7407,
+          "note": "L'ambassade soviétique s'installe à son emplacement actuel en 1928 dans un bâtiment en béton armé de deux étages. L'ancien nom du quartier, Mamina-chō (狸穴町, « tanière du tanuki »), donne à l'ambassade son surnom diplomatique : « Mamina ». Les relations sont rompues le 9 août 1945, lorsque l'URSS déclare la guerre au Japon et envahit la Mandchourie et les îles Kouriles."
+        },
+        {
+          "from": "1945",
+          "to": "1956",
+          "address": "sans objet — relations diplomatiques rompues",
+          "kind": "embassy",
+          "lat": null,
+          "lon": null,
+          "note": "Rupture consécutive à l'entrée en guerre de l'URSS contre le Japon (9 août 1945), à l'occupation soviétique des îles Kouriles et des Kouriles du Sud (qui demeurent sous administration russe, objet d'un différend territorial persistant). La déclaration conjointe nippo-soviétique du 19 octobre 1956 restaure les relations diplomatiques ; aucun traité de paix n'est toutefois conclu à ce jour."
+        },
+        {
+          "from": "1956",
+          "to": null,
+          "address": "2-1-1 Azabudai, Minato-ku, Tokyo 106-0041",
+          "building": "Bâtiment actuel (1976, Obayashi-gumi ; architectes D.I. Bourdine, V.A. Klimov, M.M. Aroutchian)",
+          "kind": "chancery",
+          "lat": 35.6598,
+          "lon": 139.7407,
+          "current": true,
+          "note": "Relations restaurées par la déclaration conjointe de Moscou (1956). Le bâtiment actuel, achevé en 1976 par l'entreprise Obayashi-gumi sur les plans des architectes soviétiques Bourdine, Klimov et Aroutchian, remplace l'édifice de 1928. Après la dissolution de l'URSS (1991), la Fédération de Russie reprend les locaux, mais le titre foncier reste inscrit au nom de l'Union soviétique en raison du différend avec l'Ukraine sur les avoirs de l'ex-URSS."
+        }
+      ]
+    },
+    "MX": {
+      "name": "Mexico",
+      "flag": "mx",
+      "current": {
+        "chancery": "2-15-1 Nagata-cho, Chiyoda-ku, Tokyo 100-0014"
+      },
+      "addresses": [
+        {
+          "from": "1888",
+          "to": "1941",
+          "address": "Nagata-cho, Chiyoda-ku, Tokyo",
+          "kind": "legation",
+          "lat": 35.6769,
+          "lon": 139.7395,
+          "note": "Le traité d'amitié, de commerce et de navigation signé le 30 janvier 1888 entre Matías Romero et Mutsu Munemitsu est le premier traité « égalitaire » conclu par le Japon avec une puissance étrangère — il ne concède aucune juridiction extraterritoriale au Mexique. En signe de gratitude, le gouvernement japonais attribue à la légation mexicaine un emplacement d'exception à Nagata-cho, jouxtant la résidence officielle du Premier ministre, dans un quartier réservé aux plus hauts dignitaires de l'État. Un consulat mexicain fonctionne également à Yokohama."
+        },
+        {
+          "from": "1941",
+          "to": "1952",
+          "address": "sans objet — relations diplomatiques rompues",
+          "kind": "embassy",
+          "lat": null,
+          "lon": null,
+          "note": "Le Mexique ferme sa légation à Tokyo et son consulat à Yokohama après l'attaque de Pearl Harbor (décembre 1941). En mai 1942, le Mexique déclare la guerre aux puissances de l'Axe, dont le Japon. L'Escuadrón 201 de la force aérienne expéditionnaire mexicaine participe aux combats de la campagne des Philippines contre le Japon impérial. Après la guerre, le Mexique est le deuxième pays (après le Royaume-Uni) à ratifier le traité de San Francisco le 7 avril 1952, mettant fin à l'état de guerre."
+        },
+        {
+          "from": "1952",
+          "to": null,
+          "address": "2-15-1 Nagata-cho, Chiyoda-ku, Tokyo 100-0014",
+          "kind": "chancery",
+          "lat": 35.6769,
+          "lon": 139.7395,
+          "current": true,
+          "note": "Réouverture de l'ambassade après la ratification du traité de San Francisco. Le Mexique retrouve son emplacement privilégié à Nagata-cho, à proximité immédiate de la résidence officielle du Premier ministre et de la Diète nationale. La chancellerie actuelle occupe le même terrain alloué en 1888 en reconnaissance du premier traité égalitaire du Japon."
+        }
+      ]
+    },
+    "KR": {
+      "name": "South Korea",
+      "flag": "kr",
+      "current": {
+        "chancery": "1-7-32 Minami-Azabu, Minato-ku, Tokyo 106-0047",
+        "residence": "1-2-5 Minami-Azabu, Minato-ku, Tokyo 106-0047"
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": "c.1951",
+          "address": "4ᵉ étage, bâtiment Hattori (Wako), 4-chōme Ginza, Chūō-ku, Tokyo",
+          "building": "Bâtiment Hattori / Wako (和光ビルディング)",
+          "kind": "legation",
+          "lat": 35.6717,
+          "lon": 139.7629,
+          "note": "En janvier 1949, la représentation coréenne au Japon (주일본 한국대표부) ouvre ses portes au 4ᵉ étage de l'emblématique bâtiment Hattori — le magasin Wako au carrefour de Ginza 4-chōme. Le financement de l'installation est en grande partie assuré par des résidents coréens au Japon, notamment Cho Gyu-hun, qui aurait versé 10 millions de yens au titre du loyer et 3 millions pour le logement du personnel."
+        },
+        {
+          "from": "c.1951",
+          "to": "1965",
+          "address": "Minami-Azabu, Minato-ku, Tokyo",
+          "kind": "legation",
+          "lat": 35.6519,
+          "lon": 139.7328,
+          "note": "En octobre 1951, la représentation déménage de Ginza vers le quartier résidentiel de Minami-Azabu (arrondissement de Minato). Le terrain avait appartenu à la famille de Matsukata Masayoshi (松方正義), deux fois Premier ministre sous l'ère Meiji ; après la Seconde Guerre mondiale, il servit de résidence au ministre du Danemark au Japon. L'acquisition fut rendue possible grâce aux efforts de résidents coréens au Japon, en particulier Seo Gap-ho (徐甲虎), dirigeant de Sakamoto Spinning à Ōsaka, qui fit don du terrain et du bâtiment au gouvernement de la République de Corée en novembre 1962."
+        },
+        {
+          "from": "1965",
+          "to": "1979",
+          "address": "1-2-5 Minami-Azabu, Minato-ku, Tokyo",
+          "kind": "embassy",
+          "lat": 35.6519,
+          "lon": 139.7328,
+          "note": "Le 18 décembre 1965, après l'entrée en vigueur du Traité sur les relations fondamentales entre le Japon et la République de Corée, la représentation est élevée au rang d'ambassade. Kim Dong-jo (金東祚), dernier chef de la représentation, devient le premier ambassadeur extraordinaire et plénipotentiaire. Les relations diplomatiques formelles entre les deux pays étaient attendues depuis la fondation de la République de Corée en 1948 ; leur établissement avait été retardé par les différends liés à la période coloniale (1910-1945)."
+        },
+        {
+          "from": "1979",
+          "to": "2013",
+          "address": "1-2-5 Minami-Azabu, Minato-ku, Tokyo",
+          "building": "Chancellerie et résidence de 1979",
+          "kind": "embassy",
+          "lat": 35.6519,
+          "lon": 139.7328,
+          "note": "En septembre 1979, un nouveau bâtiment de chancellerie et une nouvelle résidence de l'ambassadeur sont inaugurés sur le même terrain de Minami-Azabu, remplaçant les anciennes constructions héritées de l'époque de la représentation."
+        },
+        {
+          "from": "2013",
+          "to": null,
+          "address": "1-7-32 Minami-Azabu, Minato-ku, Tokyo 106-0047",
+          "building": "Nouvelle chancellerie (2013, 7 étages)",
+          "kind": "chancery",
+          "lat": 35.6519,
+          "lon": 139.7328,
+          "current": true,
+          "note": "En juin 2013, la chancellerie est transférée dans un nouveau bâtiment moderne de sept étages en surface et un sous-sol, érigé sur un terrain de 10 218 m². L'adresse de la chancellerie est 1-7-32 Minami-Azabu ; la résidence de l'ambassadeur et l'entrée principale demeurent au 1-2-5 Minami-Azabu. Le Centre culturel coréen (한국문화원) se trouve séparément à Yotsuya, dans l'arrondissement de Shinjuku."
+        }
+      ]
+    },
+    "SA": {
+      "name": "Saudi Arabia",
+      "flag": "sa",
+      "current": {
+        "chancery": "1-8-4 Roppongi, Minato-ku, Tokyo 106-0032"
+      },
+      "addresses": [
+        {
+          "from": "1955",
+          "to": null,
+          "address": "1-8-4 Roppongi, Minato-ku, Tokyo 106-0032",
+          "kind": "embassy",
+          "lat": 35.6639,
+          "lon": 139.7292,
+          "current": true,
+          "note": "Ambassade du Royaume d'Arabie saoudite au Japon. Les relations diplomatiques sont établies en 1955. L'ambassade est située dans le quartier de Roppongi, l'un des principaux districts diplomatiques de Tokyo. Le bâtiment actuel est visible sur une photographie Wikimedia Commons."
+        }
+      ]
+    },
+    "ZA": {
+      "name": "South Africa",
+      "flag": "za",
+      "current": {
+        "chancery": "Hanzomon First Building, 4th Floor, 1-4 Kojimachi, Chiyoda-ku, Tokyo 102-0083"
+      },
+      "addresses": [
+        {
+          "from": "1992",
+          "to": null,
+          "address": "Hanzomon First Building, 4e étage, 1-4 Kojimachi, Chiyoda-ku, Tokyo 102-0083",
+          "building": "Hanzomon First Building",
+          "kind": "embassy",
+          "lat": 35.6910,
+          "lon": 139.7363,
+          "current": true,
+          "note": "Les relations diplomatiques complètes entre l'Afrique du Sud et le Japon sont établies le 13 janvier 1992, marquant la fin d'une longue période de représentation limitée liée à l'apartheid. L'ambassade s'installe dans le bâtiment Hanzomon First, immeuble de bureaux du quartier de Kojimachi, à proximité immédiate de la station Hanzomon (ligne Hanzomon). Contrairement à de nombreuses autres ambassades à Tokyo, l'Afrique du Sud ne dispose pas de chancellerie propre mais occupe le quatrième étage de cet immeuble. La résidence de l'ambassadeur est située à une adresse distincte."
+        }
+      ]
+    },
+    "IT": {
+      "name": "Italy",
+      "flag": "it",
+      "current": {
+        "chancery": "2-5-4 Mita, Minato-ku, Tokyo 108-0073",
+        "residence": "2-5-4 Mita, Minato-ku, Tokyo 108-0073"
+      },
+      "addresses": [
+        {
+          "from": "1866",
+          "to": "c.1872",
+          "address": "Yokohama / Edo — adresse précise non établie",
+          "kind": "legation",
+          "lat": 35.4437,
+          "lon": 139.638,
+          "note": "Le Traité d'amitié et de commerce entre le royaume d'Italie et le Japon est signé à Edo le 25 août 1866, à la suite de l'arrivée de la corvette Magenta dans le port de Yokohama le 27 mai 1866. Le capitaine Vittorio Arminjon conclut le traité au nom de l'Italie. Les premières années de la légation sont mal documentées ; le siège diplomatique occupe vraisemblablement des locaux provisoires dans le quartier étranger de Yokohama ou dans la région d'Edo. L'adresse précise n'a pas pu être établie."
+        },
+        {
+          "from": "c.1872",
+          "to": "1919",
+          "address": "Quartier de Toranomon, sud-ouest, Tokyo",
+          "kind": "legation",
+          "lat": 35.6644,
+          "lon": 139.7494,
+          "note": "En 1872, le siège diplomatique italien est définitivement fixé à Tokyo sur un terrain d'environ 7 600 m² au sud-ouest de Toranomon. Au cours des trois décennies suivantes, les bâtiments sont agrandis malgré des dommages répétés par incendies et typhons. Le comte Alessandro Fè d'Ostiani, ministre plénipotentiaire pour la Chine et le Japon à partir de 1870, accompagne la mission Iwakura lors de sa visite en Italie en 1873 et contribue au développement de la présence diplomatique italienne au Japon."
+        },
+        {
+          "from": "1922",
+          "to": "1923",
+          "address": "Kioichō, près du Palais impérial, Tokyo",
+          "building": "Ancienne ambassade d'Autriche-Hongrie",
+          "kind": "legation",
+          "lat": 35.6806,
+          "lon": 139.7369,
+          "note": "En 1919, les bâtiments de la légation à Toranomon sont gravement endommagés par un incendie. En 1922, le gouvernement italien obtient la propriété de l'ancienne ambassade d'Autriche-Hongrie à Kioichō, près du Palais impérial — terrain cédé à la suite de la dissolution de l'Empire austro-hongrois après la Première Guerre mondiale."
+        },
+        {
+          "from": "1923",
+          "to": "1932",
+          "address": "Quartier de Toranomon, Tokyo (retour)",
+          "kind": "legation",
+          "lat": 35.6644,
+          "lon": 139.7494,
+          "note": "Le grand séisme du Kantō (1er septembre 1923) inflige de graves dommages au bâtiment de Kioichō. Le gouvernement italien recouvre l'usage de l'ancien siège de Toranomon. Le gouvernement japonais propose un échange de propriétés dans le cadre du nouveau plan d'urbanisme ; de longues négociations aboutissent en décembre 1928 à l'offre à l'Italie de l'ancienne propriété du prince Masayoshi Matsukata, dans le quartier de Mita. L'ambassade s'y transfère en mars 1932."
+        },
+        {
+          "from": "1932",
+          "to": "1943",
+          "address": "2-5-4 Mita, Minato-ku, Tokyo",
+          "kind": "embassy",
+          "lat": 35.6503,
+          "lon": 139.7382,
+          "note": "L'ambassade s'installe en mars 1932 sur l'ancienne propriété du prince Masayoshi Matsukata, deux fois Premier ministre du Japon sous l'ère Meiji, d'une superficie de 20 000 m². Le jardin de l'ambassade, l'un des plus anciens de Tokyo, existait dès le XVIIᵉ siècle ; il aurait été dessiné par le moine bouddhiste Takuan Oshō (1573-1645). Le 4 février 1703, dix des quarante-sept rōnin s'y donnèrent la mort — événement commémoré par une stèle érigée en 1939. L'Italie et le Japon signent le Pacte tripartite le 27 septembre 1940, scellant leur alliance au sein de l'Axe."
+        },
+        {
+          "from": "1943",
+          "to": "1952",
+          "address": "(représentation interrompue)",
+          "kind": "embassy",
+          "lat": 35.6503,
+          "lon": 139.7382,
+          "note": "L'armistice de Cassibile (8 septembre 1943) rompt l'alliance italo-japonaise. Les forces japonaises saisissent les propriétés italiennes au Japon. Les Italiens restés fidèles à Mussolini et à la République sociale italienne sont incorporés aux forces japonaises ; les autres sont internés. La résidence de l'ambassadeur est détruite en 1945 lors des bombardements de Tokyo, et la chancellerie subit de graves dommages. Les relations diplomatiques reprennent après l'entrée en vigueur du traité de San Francisco (1951)."
+        },
+        {
+          "from": "1952",
+          "to": "2004",
+          "address": "2-5-4 Mita, Minato-ku, Tokyo",
+          "kind": "embassy",
+          "lat": 35.6503,
+          "lon": 139.7382,
+          "note": "La reprise des relations diplomatiques permet la reconstruction progressive du site de Mita. La résidence de l'ambassadeur est reconstruite d'après les plans de l'architecte Pier Francesco Borghese, en collaboration avec l'architecte japonais Masachika Murata (projet esquissé en 1959, approuvé en 1963, achevé en avril 1965). Le bâtiment en forme de « L » abrite le salon central, la grande salle à manger et le « Salon du Lac » donnant sur le jardin historique, avec un mobilier mêlant antiquités romaines, meubles de la Renaissance et œuvres d'art moderne italien (Fontana, Turcato, Pomodoro)."
+        },
+        {
+          "from": "2004",
+          "to": null,
+          "address": "2-5-4 Mita, Minato-ku, Tokyo 108-0073",
+          "building": "Chancellerie Gae Aulenti (2004)",
+          "kind": "chancery",
+          "lat": 35.6503,
+          "lon": 139.7382,
+          "current": true,
+          "note": "En juillet 2004, les bureaux de la chancellerie sont transférés dans un nouveau bâtiment conçu par l'architecte Gae Aulenti — le plus important investissement immobilier jamais réalisé par le ministère italien des Affaires étrangères à l'étranger. L'opération, menée à coût nul grâce à une formule juridique innovante, inclut construction, aménagements, déménagements et location des locaux provisoires. La chancellerie comprend quatre étages, dont un parking souterrain. La résidence de l'ambassadeur, reconstruite en 1965, demeure sur le même site."
+        }
+      ]
+    },
+    "DE": {
+      "name": "Germany",
+      "flag": "de",
+      "current": {
+        "chancery": "4-5-10 Minami-Azabu, Minato-ku, Tokyo 106-0047",
+        "residence": "4-5-10 Minami-Azabu, Minato-ku, Tokyo 106-0047"
+      },
+      "addresses": [
+        {
+          "from": "1863",
+          "to": "1872",
+          "address": "Yokohama puis temples Kogaku-in (Takanawa) et Shunto-in (Moto-Azabu), Edo/Tokyo",
+          "kind": "legation",
+          "lat": 35.6550,
+          "lon": 139.7270,
+          "note": "Max von Brandt prend ses fonctions le 1er janvier 1863 à Yokohama en tant que consul de Prusse. Pour ses séjours à Edo, le shogunat lui attribue des temples bouddhiques : le Kogaku-in à Takanawa (1865-1866), puis le Shunto-in à Moto-Azabu (1866-1872). En 1868, il est élevé au rang de consul général. Ces locaux provisoires n'avaient pas de caractère permanent."
+        },
+        {
+          "from": "1872",
+          "to": "1894",
+          "address": "Nagata-chō 2-14, Kōjimachi, Tokyo",
+          "building": "Ancienne résidence du daimyō Hosokawa, puis premier bâtiment neuf (1883)",
+          "kind": "legation",
+          "lat": 35.6760,
+          "lon": 139.7445,
+          "note": "Après la fondation de l'Empire allemand (1871), von Brandt — nommé ministre résident le 30 décembre 1871 — loue un terrain ayant appartenu au daimyō Hosokawa Yamashiro-no-kami, à proximité du centre politique. Les bâtiments en bois existants sont d'abord réutilisés, puis un premier bâtiment neuf est érigé en 1883 (le projet avait suscité des débats au Reichstag en raison de son coût). Détruit par le séisme de Meiji-Tokyo du 20 juin 1894 (magnitude 7,0). Le terrain était loué et non acquis, avec une clause de rétrocession en cas de besoin du propriétaire."
+        },
+        {
+          "from": "1897",
+          "to": "1914",
+          "address": "Nagata-chō 2-14, Kōjimachi, Tokyo",
+          "building": "Chancellerie Conder (1897)",
+          "kind": "legation",
+          "lat": 35.6760,
+          "lon": 139.7445,
+          "note": "Deuxième construction sur le même site, œuvre de l'architecte britannique Josiah Conder, figure majeure de l'architecture occidentale au Japon de l'ère Meiji. La légation est élevée au rang d'ambassade impériale en 1906. Les activités cessent le 23 août 1914 lorsque le Japon déclare la guerre à l'Allemagne ; le personnel est rapatrié."
+        },
+        {
+          "from": "1920",
+          "to": "1945",
+          "address": "Nagata-chō 2-14, Kōjimachi, Tokyo",
+          "building": "Bâtiment Conder restauré (1920), puis troisième chancellerie (1924)",
+          "kind": "embassy",
+          "lat": 35.6760,
+          "lon": 139.7445,
+          "note": "Reprise des relations diplomatiques après la Première Guerre mondiale. L'ambassadeur Wilhelm Solf (1920-1928) retrouve le terrain de Nagata-chō et le bâtiment Conder. Le grand séisme du Kantō (1er septembre 1923) détruit le bâtiment ; une troisième chancellerie est construite en 1924. À partir d'août 1944, l'ambassade est délocalisée au Fuji-View Hotel au lac Kawaguchi en raison des bombardements. Dans la nuit du 26 mai 1945, tous les bâtiments sont détruits lors d'un raid incendiaire. L'ambassade est fermée à la capitulation du Japon."
+        },
+        {
+          "from": "1952",
+          "to": "1960",
+          "address": "Roppongi 5-chome, Higashi Toriizaka n°5, Minato-ku, Tokyo",
+          "kind": "chancery",
+          "lat": 35.6615,
+          "lon": 139.7290,
+          "note": "Reprise des relations diplomatiques en avril 1952. La chancellerie est provisoirement installée à Toriizaka (Roppongi), car le gouvernement japonais fait valoir la clause de rétrocession de l'ancien terrain de Nagata-chō — aujourd'hui occupé par la Bibliothèque de la Diète nationale — pour y réaménager le quartier gouvernemental."
+        },
+        {
+          "from": "1952",
+          "to": "1957",
+          "address": "Igura Katamachi 26, Minato-ku, Tokyo",
+          "kind": "residence",
+          "lat": 35.6520,
+          "lon": 139.7290,
+          "note": "Résidence provisoire de l'ambassadeur dans le quartier d'Igura, distincte de la chancellerie de Roppongi faute de place suffisante sur un même site."
+        },
+        {
+          "from": "1957",
+          "to": null,
+          "address": "4-5-10 Minami-Azabu, Minato-ku, Tokyo 106-0047",
+          "kind": "residence",
+          "lat": 35.6504,
+          "lon": 139.7256,
+          "current": true,
+          "note": "Résidence de l'ambassadeur construite en 1956-1957 sur un terrain cédé par le gouvernement japonais pour un yen symbolique, assorti d'un paiement de 900 000 DM pour une enclave. Le terrain avait appartenu au journaliste et homme politique Koizumi Sakutarō (1872-1937), qui y avait aménagé un remarquable jardin paysager à l'époque Taishō. Le jardin de l'ambassade conserve un torii japonais, un pavillon de thé, un sanctuaire Inari antérieur à 1857 et une cloche de l'amitié nippo-allemande offerte en juillet 1959 par Yamaoka Magokichi, fondateur de Yanmar, portant une citation de Goethe."
+        },
+        {
+          "from": "1960",
+          "to": "c.2005",
+          "address": "4-5-10 Minami-Azabu, Minato-ku, Tokyo",
+          "building": "Cinquième chancellerie (1960)",
+          "kind": "chancery",
+          "lat": 35.6504,
+          "lon": 139.7256,
+          "note": "Cinquième bâtiment de chancellerie depuis 1872, inauguré le 1er juin 1960 sur le terrain de Minami-Azabu, mitoyen de la résidence de l'ambassadeur. L'ensemble est voisin des ambassades de France et de Finlande dans l'arrondissement de Minato."
+        },
+        {
+          "from": "c.2005",
+          "to": null,
+          "address": "4-5-10 Minami-Azabu, Minato-ku, Tokyo 106-0047",
+          "building": "Sixième chancellerie (Mahler Günster Fuchs, c.2005)",
+          "kind": "chancery",
+          "lat": 35.6504,
+          "lon": 139.7256,
+          "current": true,
+          "note": "Nouvelle chancellerie construite par le cabinet d'architectes stuttgartois Mahler Günster Fuchs, notamment pour répondre aux nouvelles normes parasismiques japonaises. Sixième bâtiment depuis l'origine. La résidence de l'ambassadeur, datant de 1957, est préservée au sein du même ensemble paysager."
+        }
+      ]
+    },
+    "IN": {
+      "name": "India",
+      "flag": "in",
+      "current": {
+        "chancery": "2-2-11 Kudan-Minami, Chiyoda-ku, Tokyo 102-0074"
+      },
+      "addresses": [
+        {
+          "from": "1947",
+          "to": "1952",
+          "address": "Tokyo — mission de liaison auprès du SCAP, adresse exacte non établie",
+          "kind": "legation",
+          "lat": 35.6762,
+          "lon": 139.6503,
+          "note": "L'Inde nouvellement indépendante ouvre une mission de liaison à Tokyo dès 1947, sous la direction de Benegal Rama Rau, en tant que représentant politique auprès du Commandant suprême des forces alliées (SCAP), le général MacArthur. Le Japon est encore sous occupation ; l'Inde est l'un des tout premiers pays asiatiques à établir une présence diplomatique. Birendra Narayan Chakraborty (1948-1949) puis K. K. Chettur (1950-1952) lui succèdent à la tête de la mission. L'adresse exacte des locaux de la mission de liaison n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1952",
+          "to": null,
+          "address": "2-2-11 Kudan-Minami, Chiyoda-ku, Tokyo 102-0074",
+          "kind": "embassy",
+          "lat": 35.6944,
+          "lon": 139.7489,
+          "current": true,
+          "note": "Le 28 avril 1952, après la signature du traité de paix nippo-indien — l'un des premiers traités que le Japon signe après la Seconde Guerre mondiale —, les relations diplomatiques formelles sont établies. L'Inde renonce à toutes ses demandes de réparations. K. K. Chettur, déjà chef de la mission de liaison, devient le premier ambassadeur le 7 mai 1952. L'ambassade s'installe dans le quartier de Kudan-Minami, dans l'arrondissement de Chiyoda-ku, à proximité du parc du palais impérial et du sanctuaire Yasukuni. Accessible par la station Kudanshita (lignes Hanzomon, Shinjuku et Tozai), la chancellerie occupe le même site depuis 1952, le bâtiment ayant été rénové et modernisé au fil des décennies. L'Inde entretient également des consulats généraux à Osaka-Kobe et à Fukuoka."
+        }
+      ]
+    },
+    "FR": {
+      "name": "France",
+      "flag": "fr",
+      "current": {
+        "chancery": "4-1-44 Minami-Azabu, Minato-ku, Tokyo 106-8514"
+      },
+      "addresses": [
+        {
+          "from": "1859", "to": "c.1866",
+          "address": "Temple Saikai-ji, Edo (actuel Minato-ku, Tokyo)",
+          "kind": "consulate",
+          "lat": 35.6462, "lon": 139.7395,
+          "note": "Premier consulat de France au Japon, ouvert en 1859 dans le temple bouddhiste Saikai-ji à Edo. Gustave Duchesne de Bellecourt en est le premier titulaire. La légation principale est alors installée à Yokohama, où les résidents étrangers sont confinés."
+        },
+        {
+          "from": "c.1866", "to": "1887",
+          "address": "Naka-Dōri, concession étrangère de Yokohama",
+          "kind": "legation",
+          "lat": 35.4426, "lon": 139.6380,
+          "note": "En 1866, un nouveau traité permet à la France d'implanter une légation à Yokohama. Un grand bâtiment de style colonial est érigé sur la rue Naka-Dōri, au sein de la concession étrangère."
+        },
+        {
+          "from": "1887", "to": "1923",
+          "address": "Iidamachi (actuel Iidabashi, Chiyoda-ku, Tokyo)",
+          "kind": "legation",
+          "lat": 35.6947, "lon": 139.7494,
+          "note": "Un traité signé en 1887 permet le transfert de la légation dans la capitale, près du palais impérial et des principales ambassades. Le bâtiment, déjà trop exigu, est endommagé puis détruit par les séismes de 1922 et 1923."
+        },
+        {
+          "from": "1930", "to": "1941",
+          "address": "4-1-44 Minami-Azabu, Minato-ku, Tokyo",
+          "kind": "legation",
+          "lat": 35.6478, "lon": 139.7264,
+          "note": "Propriété de 24 000 m² dans le quartier résidentiel de Minami-Azabu, vendue en 1930 par le marquis Tokugawa au gouvernement japonais qui la loue à la France. Les bâtiments d'origine sont détruits lors des bombardements alliés de la Seconde Guerre mondiale."
+        },
+        {
+          "from": "1941", "to": "1952",
+          "address": "sans objet — relations diplomatiques rompues",
+          "kind": "embassy",
+          "lat": null, "lon": null,
+          "note": "Rupture des relations diplomatiques pendant la Seconde Guerre mondiale. Le traité de San Francisco (1951, entré en vigueur le 28 avril 1952) met fin à l'état de guerre. Le général Zinovi Pechkoff rouvre la mission en 1946 comme chef de la mission de liaison ; il est accrédité comme ambassadeur à partir de mai 1952."
+        },
+        {
+          "from": "1952", "to": null,
+          "address": "4-1-44 Minami-Azabu, Minato-ku, Tokyo 106-8514",
+          "building": "Ambassade reconstruite (Jean Démaret et Belmont, années 1950) ; chancellerie reconstruite (PPP 2007)",
+          "kind": "chancery",
+          "lat": 35.6478, "lon": 139.7264,
+          "current": true,
+          "note": "Bâtiments actuels conçus dans les années 1950 par les architectes Jean Démaret et Belmont dans un style moderne rompant avec l'architecture néoclassique. L'État français acquiert le terrain en 1972. En 2007, un partenariat public-privé franco-japonais (Mitsui, Nomura, Takenaka, Aéroports de Paris Ingénierie) prévoit la reconstruction de la chancellerie en échange de la cession temporaire d'une partie du terrain — premier PPP conclu à l'étranger par la France."
+        }
+      ]
+    },
+    "ID": {
+      "name": "Indonesia",
+      "flag": "id",
+      "current": {
+        "chancery": "5-2-9 Higashi Gotanda, Shinagawa-ku, Tokyo 141-0022"
+      },
+      "addresses": [
+        {
+          "from": "c.1952",
+          "to": "1958",
+          "address": "Tokyo — consulat général, adresse précise non établie",
+          "kind": "consulate",
+          "lat": 35.6762,
+          "lon": 139.6503,
+          "note": "Après le traité de San Francisco (1951), l'Indonésie établit un consulat général à Tokyo. L'indépendance indonésienne avait été reconnue par les Pays-Bas en décembre 1949 ; les relations consulaires avec le Japon se développent au début des années 1950. L'adresse exacte de cette première représentation n'a pu être établie avec certitude."
+        },
+        {
+          "from": "1958",
+          "to": "2021",
+          "address": "5-2-9 Higashi Gotanda, Shinagawa-ku, Tokyo",
+          "kind": "embassy",
+          "lat": 35.6314,
+          "lon": 139.7214,
+          "note": "En avril 1958, le consulat général est élevé au rang d'ambassade à la suite de la signature du traité de paix et de l'établissement de relations diplomatiques formelles entre l'Indonésie et le Japon (traité signé le 20 janvier 1958). Rudolf Alexander Asmaun devient le premier ambassadeur extraordinaire et plénipotentiaire. La chancellerie s'installe dans le quartier de Higashi Gotanda, dans l'arrondissement de Shinagawa-ku, où elle restera pendant plus de soixante ans."
+        },
+        {
+          "from": "2021",
+          "to": "2023",
+          "address": "4-4-1 Yotsuya 4-chome, Shinjuku-ku, Tokyo (Yotsuya Kokusai Building)",
+          "kind": "embassy",
+          "lat": 35.6847,
+          "lon": 139.7285,
+          "note": "En mars 2021, l'ambassade déménage temporairement vers l'immeuble Yotsuya Kokusai (四谷国際ビル), dans l'arrondissement de Shinjuku-ku, pour permettre la reconstruction complète de la chancellerie d'Higashi Gotanda. Les services diplomatiques y assurent la continuité pendant toute la durée des travaux."
+        },
+        {
+          "from": "2023",
+          "to": null,
+          "address": "5-2-9 Higashi Gotanda, Shinagawa-ku, Tokyo 141-0022",
+          "kind": "chancery",
+          "lat": 35.6314,
+          "lon": 139.7214,
+          "current": true,
+          "note": "La nouvelle chancellerie, reconstruite sur le même site d'Higashi Gotanda, est inaugurée en décembre 2023. L'ambassade retrouve son adresse historique, dans un bâtiment moderne conçu pour accueillir les activités diplomatiques et les services consulaires. L'ambassade est également accréditée auprès des États fédérés de Micronésie."
+        }
+      ]
+    },
+    "CA": {
+      "name": "Canada",
+      "flag": "ca",
+      "current": {
+        "chancery": "7-3-38 Akasaka, Minato-ku, Tokyo 107-8503"
+      },
+      "addresses": [
+        {
+          "from": "1929",
+          "to": "c.1934",
+          "address": "Tokyo — locaux provisoires, adresse précise non établie",
+          "kind": "legation",
+          "lat": 35.6762,
+          "lon": 139.6503,
+          "note": "La légation du Canada ouvre à Tokyo in mai 1929 — troisième légation « étrangère » du Canada après Washington (1927) et Paris (1928). Sir Herbert Marler est nommé premier envoyé extraordinaire et ministre plénipotentiaire. La motivation principale est le contrôle de l'immigration japonaise vers la Colombie-Britannique ; le premier ministre Mackenzie King déclare que « notre seul moyen efficace de traiter la question japonaise est d'avoir notre propre ministre au Japon pour viser les passeports ». La légation occupe des locaux provisoires jusqu'à l'achèvement de la chancellerie en 1934. L'adresse exacte de ces locaux n'a pas pu être établie avec certitude."
+        },
+        {
+          "from": "c.1934",
+          "to": "1941",
+          "address": "7-3-38 Akasaka, Minato-ku, Tokyo",
+          "kind": "legation",
+          "lat": 35.6736,
+          "lon": 139.7283,
+          "note": "La construction de la première chancellerie canadienne s'achève vers 1934 dans le quartier d'Akasaka, dans l'arrondissement de Minato-ku. En 1938, le ministre Robert Randolph Bruce quitte le Japon sans être remplacé ; Edgar D'Arcy McGreer assure l'intérim comme chargé d'affaires. Le 7 décembre 1941, après l'attaque de Pearl Harbor, le Canada déclare la guerre au Japon (8 décembre). Le personnel de la légation est placé en état d'arrestation et n'est rapatrié qu'à la mi-1942. La légation est fermée pendant toute la durée du conflit."
+        },
+        {
+          "from": "1946",
+          "to": "1952",
+          "address": "Tokyo — auprès du SCAP",
+          "kind": "legation",
+          "lat": 35.6762,
+          "lon": 139.6503,
+          "note": "Après la Seconde Guerre mondiale, l'expert canadien du Japon E. Herbert Norman est affecté à la représentation canadienne auprès du Commandant suprême des forces alliées (SCAP), le général Douglas MacArthur, plutôt qu'auprès du gouvernement japonais. Arthur Redpath Menzies lui succède en 1950 dans les mêmes fonctions. La représentation diplomatique formelle avec le Japon reprend en 1952 après l'entrée en vigueur du traité de paix de San Francisco."
+        },
+        {
+          "from": "1952",
+          "to": "1991",
+          "address": "7-3-38 Akasaka, Minato-ku, Tokyo",
+          "kind": "embassy",
+          "lat": 35.6736,
+          "lon": 139.7283,
+          "note": "En 1952, la légation est élevée au rang d'ambassade à la suite de la normalisation des relations nippo-canadiennes. Robert W. Mayhew devient le premier ambassadeur du Canada au Japon. L'ambassade poursuit ses activités dans la chancellerie d'Akasaka construite en 1934, qui avait rouvert après la guerre. Les relations bilatérales se développent rapidement : commerce, culture et coopération technique se renforcent tout au long des décennies suivantes."
+        },
+        {
+          "from": "1991",
+          "to": null,
+          "address": "7-3-38 Akasaka, Minato-ku, Tokyo 107-8503",
+          "building": "Place Canada (Raymond Moriyama, 1991)",
+          "kind": "chancery",
+          "lat": 35.6736,
+          "lon": 139.7283,
+          "current": true,
+          "note": "Le Canada fait construire une nouvelle chancellerie sur le même site d'Akasaka, baptisée « Place Canada », conçue par l'architecte canado-japonais Raymond Moriyama et inaugurée en 1991. Le bâtiment de sept étages en béton et granite adopte le concept d'une « maison dans les arbres » : les étages supérieurs abritent l'ambassade, les étages inférieurs sont loués à des commerces (le financement est assuré par la Mitsubishi Trust). Un jardin zen en terrasse au quatrième étage, conçu par le prêtre Shunmyo Masuno, offre une vue sur les jardins du palais d'Akasaka. Le toit est incliné pour limiter l'ombre portée sur les jardins impériaux voisins. La porte principale et certaines fenêtres proviennent de l'ancienne chancellerie des années 1930. Le sous-sol abrite la galerie Prince Takamado, le théâtre Oscar Peterson (233 places) et la bibliothèque E.H. Norman (plus de 15 000 ouvrages)."
+        }
+      ]
+    },
+    "AR": {
+      "name": "Argentina",
+      "flag": "ar",
+      "current": {
+        "chancery": "2-14-14 Moto-Azabu, Minato-ku, Tokyo 106-0046"
+      },
+      "addresses": [
+        {
+          "from": "1903",
+          "to": "1944",
+          "address": "Tokyo (adresse précise non établie)",
+          "kind": "legation",
+          "lat": 35.6762,
+          "lon": 139.6503,
+          "note": "Le traité d'amitié, de commerce et de navigation entre la République Argentine et l'Empire du Japon est signé le 3 février 1898 (en vigueur depuis le 8 septembre 1901), établissant les relations diplomatiques formelles. En 1903, l'Argentine ouvre un consulat à Tokyo. En 1940, la légation est élevée au rang d'ambassade et Rodolfo Morena est nommé premier ambassadeur argentin au Japon (1941). L'Argentine rompt les relations diplomatiques sous la pression des Alliés le 26 janvier 1944. L'adresse exacte des locaux successifs de la légation puis de l'ambassade n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1952",
+          "to": null,
+          "address": "Tokyo (adresse précise non établie pour la période 1952 – années 1970)",
+          "kind": "embassy",
+          "lat": 35.6762,
+          "lon": 139.6503,
+          "note": "Le 27 mars 1945, par le décret n° 6945/45, l'Argentine avait déclaré la guerre à l'Empire du Japon. À la suite du Traité de paix de San Francisco (1951, en vigueur le 28 avril 1952), les relations diplomatiques sont rétablies et l'ambassade rouvre à Tokyo. Le gouvernement argentin envoie immédiatement le navire Río Iguazú avec des vivres et une aide humanitaire pour le Japon. Les relations bilatérales se consolident progressivement : visite du président Arturo Frondizi au Japon in 1961, accord sur l'immigration en 1963, traité d'amitié, de commerce et de navigation en 1967, accords de coopération technique et d'échange culturel en 1981. L'adresse exacte des locaux successifs de l'ambassade pour cette période n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": null,
+          "to": null,
+          "address": "2-14-14 Moto-Azabu, Minato-ku, Tokyo 106-0046",
+          "kind": "chancery",
+          "lat": 35.6527,
+          "lon": 139.7306,
+          "current": true,
+          "note": "La chancellerie de l'ambassade d'Argentine est installée dans le quartier de Moto-Azabu, dans l'arrondissement de Minato-ku, au cœur de Tokyo. L'ambassade occupe ces locaux depuis au moins l'an 2000 (attesté par les archives du Wayback Machine du site embargentina.or.jp). Jusqu'en août 2002, le consulat général d'Argentine à Tokyo était hébergé dans le même bâtiment. L'accès se fait depuis la station Hiroo (ligne Hibiya du métro de Tokyo, sortie n° 1). L'ambassade est joignable au +81 3 5420-7101 (ejapo@mrecic.gov.ar). En 2026, les deux pays ont célébré le 128ᵉ anniversaire de leurs relations diplomatiques."
+        }
+      ]
+    },
+    "AU": {
+      "name": "Australia",
+      "flag": "au",
+      "current": {
+        "chancery": "2-1-14 Mita, Minato-ku, Tokyo 108-8361",
+        "residence": "2-1-14 Mita, Minato-ku, Tokyo 108-8361"
+      },
+      "addresses": [
+        {
+          "from": "1952",
+          "to": "1990",
+          "address": "2-1-14 Mita, Minato-ku, Tokyo",
+          "building": "Ancienne résidence Hachisuka (1927)",
+          "kind": "embassy",
+          "lat": 35.6473,
+          "lon": 139.7355,
+          "note": "Les relations diplomatiques entre l'Australie et le Japon sont rétablies en 1952 à la suite de l'entrée en vigueur du traité de San Francisco (28 avril 1952). Le gouvernement australien fait l'acquisition d'un terrain de 13 000 m² dans le quartier de Mita, propriété de la famille Hachisuka depuis l'époque d'Edo. Le marquis Masaaki Hachisuka et son fils Masauji y avaient fait construire en 1927 une résidence de style occidental, inspirée de leurs années d'études à Cambridge. Ce bâtiment abrite à la fois la chancellerie et la résidence de l'ambassadeur jusqu'à sa démolition en 1988 dans le cadre de la reconstruction du site."
+        },
+        {
+          "from": "1990",
+          "to": null,
+          "address": "2-1-14 Mita, Minato-ku, Tokyo 108-8361",
+          "building": "Complexe de l'ambassade d'Australie (Denton Corker Marshall, 1990)",
+          "kind": "chancery",
+          "lat": 35.6473,
+          "lon": 139.7355,
+          "current": true,
+          "note": "La construction du nouveau complexe débute en 1988 après la démolition de l'ancienne résidence Hachisuka. Conçu par le cabinet australien Denton Corker Marshall, le bâtiment en plan en « E » est achevé en 1990 et regroupe la chancellerie, la résidence de l'ambassadeur et des logements du personnel. Le jardin japonais historique du site, qui remonte à plusieurs siècles, est partiellement conservé et intégré au nouvel ensemble, de même qu'un jardin de flore australienne."
+        }
+      ]
+    },
+    "BR": {
+      "name": "Brazil",
+      "flag": "br",
+      "current": {
+        "chancery": "2-11-12 Kita Aoyama, Minato-ku, Tokyo 107-8633"
+      },
+      "addresses": [
+        {
+          "from": "1897",
+          "to": "1942",
+          "address": "Tokyo (adresse précise non établie)",
+          "kind": "legation",
+          "lat": 35.6762,
+          "lon": 139.6503,
+          "note": "Les relations diplomatiques entre le Brésil et le Japon sont établies par le Traité d'amitié, de commerce et de navigation signé à Paris le 5 novembre 1895. La légation brésilienne ouvre à Tokyo en 1897, année de l'échange des ratifications. Les premières décennies sont dominées par la question de l'immigration japonaise au Brésil : en juin 1908, le navire Kasato Maru amène 790 immigrants japonais au port de Santos, premier contingent d'un flux qui comptera plus de 190 000 personnes d'ici 1941. Le Brésil rompt les relations diplomatiques avec le Japon le 28 janvier 1942, après l'attaque de Pearl Harbor, en rejoignant les Alliés. L'adresse exacte des locaux successifs de la légation n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1952",
+          "to": null,
+          "address": "Tokyo (adresse précise non établie pour la période 1952 – années 1960)",
+          "kind": "embassy",
+          "lat": 35.6762,
+          "lon": 139.6503,
+          "note": "Les relations diplomatiques sont rétablies en 1952 à la suite du Traité de paix de San Francisco (1951). La légation, élevée au rang d'ambassade, rouvre à Tokyo. Les relations bilatérales se consolident progressivement : visite du Premier ministre Nobusuke Kishi au Brésil en 1959, visite du président Ernesto Geisel au Japon en 1976. La communauté nikkei brésilienne, forte de plus de deux millions de personnes, constitue la plus grande diaspora japonaise hors du Japon."
+        },
+        {
+          "from": null,
+          "to": null,
+          "address": "2-11-12 Kita Aoyama, Minato-ku, Tokyo 107-8633",
+          "kind": "chancery",
+          "lat": 35.6689,
+          "lon": 139.7195,
+          "current": true,
+          "note": "La chancellerie de l'ambassade du Brésil est installée dans le quartier de Kita Aoyama, dans l'arrondissement de Minato-ku, au cœur de Tokyo. La date exacte d'emménagement dans ces locaux n'a pas pu être établie avec certitude à partir des sources disponibles. L'ambassade est joignable au +81 3 3404-5211. En 2015, les deux pays ont célébré le 120ᵉ anniversaire de leurs relations diplomatiques, et en 2025 le 130ᵉ anniversaire, déclaré « Année de l'échange et de l'amitié Brésil-Japon »."
+        }
+      ]
+    }
+  }
+}
