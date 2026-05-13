@@ -4,7 +4,7 @@
     "name": "Argentina",
     "capital": "Buenos Aires"
   },
-  "note": "Adresses géocodées à la précision de la rue. Hôte partiel : ID, IL, IN, SA, TR, ZA en attente.",
+  "note": "Adresses géocodées à la précision de la rue.",
   "embassies": {
     "AU": {
       "name": "Australia",
@@ -343,6 +343,76 @@
           "lon": -58.3955,
           "current": true,
           "note": "Les relations diplomatiques entre le Royaume-Uni et l'Argentine sont rétablies le 15 février 1990 ; les ambassades de Buenos Aires et de Londres rouvrent officiellement le 26 février 1990, huit ans après la rupture consécutive à la guerre des Malouines (2 avril – 14 juin 1982). Le différend de souveraineté sur les Malouines demeure non résolu. Les bureaux de la chancellerie retrouvent leur siège au 2412 Dr Luis Agote, dans le bâtiment inauguré en 1968."
+        }
+      ]
+    },
+    "ID": {
+      "name": "Indonesia",
+      "flag": "id",
+      "current": {
+        "chancery": "Mariscal Ramón Castilla 2901, Palermo, C1425 Buenos Aires",
+        "residence": "Mariscal Ramón Castilla 3000, Palermo, C1425 Buenos Aires"
+      },
+      "addresses": [
+        {
+          "from": "1957",
+          "to": null,
+          "address": "Mariscal Ramón Castilla 2901, Palermo, C1425 Buenos Aires",
+          "kind": "chancery",
+          "lat": -34.5793,
+          "lon": -58.4,
+          "current": true,
+          "note": "Les relations diplomatiques entre l'Indonésie et l'Argentine sont établies le 30 juillet 1956. L'ambassade indonésienne à Buenos Aires ouvre ses portes en avril 1957, devenant ainsi la première représentation diplomatique indonésienne en Amérique latine. La chancellerie est implantée dans le quartier de Palermo (Barrio Parque), secteur résidentiel huppé de Buenos Aires qui regroupe de nombreuses missions diplomatiques. L'ambassade est accréditée auprès de l'Argentine, de l'Uruguay et du Paraguay."
+        },
+        {
+          "from": "1957",
+          "to": null,
+          "address": "Mariscal Ramón Castilla 3000, Palermo, C1425 Buenos Aires",
+          "kind": "residence",
+          "lat": -34.579,
+          "lon": -58.3998,
+          "current": true,
+          "note": "Résidence officielle de l'ambassadeur d'Indonésie (Wisma Duta), située sur la même rue que la chancellerie, à quelques dizaines de mètres au nord. Le quartier de Palermo Chico / Barrio Parque, tracé par le paysagiste Carlos Thays à la fin du XIXe siècle avec ses rues sinueuses et ses villas, abrite de nombreuses résidences d'ambassadeurs."
+        }
+      ]
+    },
+    "IL": {
+      "name": "Israel",
+      "flag": "il",
+      "current": {
+        "chancery": "Avenida de Mayo 701, piso 10, C1084AAE Buenos Aires",
+        "residence": "non établie avec certitude à partir des sources disponibles"
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": "1950",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "L'Argentine reconnaît l'État d'Israël et établit des relations diplomatiques le 31 mai 1949, sous la présidence de Juan Domingo Perón. Jacob Tsur (Yaacov Tsur) est nommé premier envoyé diplomatique d'Israël en Argentine le 11 juin 1949 et reçu à la Casa Rosada le 1er août 1949. La mission israélienne fonctionne à Buenos Aires dès cette date, mais dans des locaux provisoires dont l'adresse exacte n'a pas pu être établie avec certitude avant l'ouverture de la chancellerie définitive en 1950."
+        },
+        {
+          "from": "1950",
+          "to": "1992",
+          "address": "Arroyo 910, angle Suipacha, Retiro, Buenos Aires",
+          "building": "Résidence Enrique Lastra (Alejandro Virasoro, 1925)",
+          "kind": "embassy",
+          "lat": -34.5945,
+          "lon": -58.3748,
+          "note": "Hôtel particulier néo-Tudor construit en 1925 par l'architecte Alejandro Virasoro pour l'aristocrate Enrique Lastra, puis acquis par la famille Mihanovich. En 1949–1950, un groupe de donateurs juifs argentins conduit par Elías Teubal et Simón Mirelman fait l'acquisition de la propriété et la remet à l'État d'Israël pour y établir sa première ambassade. Après rénovation, l'inauguration officielle a lieu le 23 avril 1950. Jacob Tsur, premier ambassadeur, juge l'édifice « l'une des plus belles ambassades israéliennes dans le monde ». Le bâtiment abrite à la fois la chancellerie, les services consulaires (au numéro 916 attenant) et, dans un premier temps, la résidence de l'ambassadeur. Le 17 mars 1992 à 14 h 45, un véhicule piégé (Ford F-100) conduit par un kamikaze détruit entièrement l'ambassade. L'attentat fait 29 morts — dont quatre membres de la mission israélienne — et 242 blessés ; il reste l'attaque la plus meurtrière jamais perpétrée contre une représentation diplomatique israélienne. La responsabilité en est attribuée au Hezbollah avec l'appui de l'Iran. Le site est aujourd'hui la Plaza Embajada de Israel (inaugurée en 2000), espace mémoriel aménagé par l'architecte Hugo Salama, où subsiste un pan du mur d'origine et une plaque avec les noms des victimes."
+        },
+        {
+          "from": "1992",
+          "to": null,
+          "address": "Avenida de Mayo 701, piso 10, C1084AAE Buenos Aires",
+          "building": "Torre La Buenos Aires — bureaux loués, 10ᵉ étage",
+          "kind": "chancery",
+          "lat": -34.6086,
+          "lon": -58.3766,
+          "current": true,
+          "note": "Après la destruction de l'ambassade le 17 mars 1992, la mission israélienne est relogée dans les locaux actuels situés au 10ᵉ étage d'un immeuble de bureaux sur l'Avenida de Mayo, axe symbolique du centre historique de Buenos Aires reliant la Plaza de Mayo au Palais du Congrès. L'adresse complète inclut le code postal C1084AAE. Le numéro de téléphone principal est le +54 11 3724 4500."
         }
       ]
     },
@@ -686,6 +756,93 @@
         }
       ]
     },
+    "SA": {
+      "name": "Saudi Arabia",
+      "flag": "sa",
+      "current": {
+        "chancery": "Alejandro M. de Aguado 2881, Palermo, C1425 Buenos Aires",
+        "residence": "Avenida del Libertador 2119, Palermo Chico, Buenos Aires (Palacio Acevedo)"
+      },
+      "addresses": [
+        {
+          "from": "1946",
+          "to": "1977",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "L'Argentine reconnaît le Royaume d'Arabie saoudite en 1946, devenant ainsi le premier pays d'Amérique latine à établir des relations diplomatiques avec le royaume. Une représentation diplomatique saoudienne est accréditée à Buenos Aires dès cette époque, d'abord sous la forme d'une légation non résidente ou d'une délégation à compétence régionale. L'adresse exacte des locaux de cette première représentation n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1976",
+          "to": null,
+          "address": "Avenida del Libertador 2119, Palermo Chico, Buenos Aires",
+          "building": "Palacio Acevedo (Acevedo, Becú y Moreno, 1932)",
+          "kind": "residence",
+          "lat": -34.57,
+          "lon": -58.4015,
+          "current": true,
+          "note": "Le Palacio Acevedo est un hôtel particulier néoclassique de 2 000 m², construit en 1928–1932 par les architectes Juan Manuel Acevedo, Alejandro Becú et Pablo Moreno pour la famille Acevedo Anchorena. Érigé en pierre de taille authentique (pierre de Brovillier), le palais évoque les hôtels particuliers parisiens du XVIIIᵉ siècle ; sa façade est scandée de trois arcades surmontées d'un fronton triangulaire. En 1976 l'ambassadeur saoudien Fuad Nazir, séduit par le pays, propose au gouvernement du Royaume d'acquérir la demeure. L'achat est conclu cette même année et le palais devient résidence officielle de l'ambassadeur d'Arabie saoudite à partir de 1979. L'ambassadeur Nazir demeurera vingt-deux ans à ce poste. Le bâtiment est classé Patrimoine culturel de la République argentine. Situé à l'angle de l'Av. del Libertador et de la rue Ortiz de Ocampo."
+        },
+        {
+          "from": "1977",
+          "to": null,
+          "address": "Alejandro M. de Aguado 2881, Palermo, C1425 Buenos Aires",
+          "kind": "chancery",
+          "lat": -34.5792,
+          "lon": -58.4022,
+          "current": true,
+          "note": "L'Arabie saoudite ouvre son ambassade à Buenos Aires en 1977. La chancellerie est établie au 2881 de la rue Alejandro M. de Aguado, dans le quartier de Palermo, à proximité du secteur dit Palermo Chico où se concentrent de nombreuses ambassades. Téléphone : (+54-11) 4802-3375 / 4303 / 0760 ; fax : (+54-11) 4806-1581 ; site : www.embajadasaudi.org. Ambassadeur accrédité depuis le 14 juillet 2025 : S.E. Hatem Ghormulla G. Alghamdi."
+        }
+      ]
+    },
+    "TR": {
+      "name": "Turkey",
+      "flag": "tr",
+      "current": {
+        "chancery": "11 de Septiembre de 1888 nº 1382, C1426BKN Buenos Aires (Belgrano)",
+        "residence": "Buenos Aires (adresse précise non établie publiquement)"
+      },
+      "addresses": [
+        {
+          "from": "1910",
+          "to": "1914",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "consulate",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Le 11 juin 1910, l'Empire ottoman et la République argentine signent un protocole d'entente consulaire ; l'accord est le premier instrument diplomatique bilatéral entre les deux États. Emin Arslan, auteur, journaliste et diplomate libano-druze, est nommé consul général ottoman à Buenos Aires et arrive le 29 octobre 1910, accueilli par une foule de quelque 4 000 sujets ottomans. À cette époque, plus de 140 000 immigrants originaires des provinces ottomanes de Syrie, du Liban et de Palestine se sont déjà établis en Argentine, enregistrés sous l'appellation générique de «  turcos » en raison de leur passeport ottoman. Des dizaines de milliers d'Arméniens, rescapés des massacres hamidiens de 1894-1896, font également partie de cette vague migratoire. En 1914, Arslan rompt avec le gouvernement Jeunes-Turcs en raison de son alliance avec l'Allemagne impériale et de son entrée en guerre ; la Porte le révoque, et la représentation des intérêts ottomans en Argentine est confiée au consul général allemand Rodolfo Bobrik. L'adresse exacte du consulat ottoman n'a pas pu être établie avec certitude."
+        },
+        {
+          "from": "1914",
+          "to": "1923",
+          "address": "Buenos Aires (intérêts représentés par l'Allemagne)",
+          "kind": "consulate",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Durant la Première Guerre mondiale et jusqu'à la proclamation de la République de Turquie (29 octobre 1923), les intérêts ottomans puis turcs en Argentine sont assurés par le consulat général allemand à Buenos Aires. Cette période coïncide avec le génocide arménien de 1915, événement qui marque durablement la communauté arménienne d'Argentine, forte d'environ 10 000 réfugiés entre 1909 et 1938. Emin Arslan dénonce publiquement les massacres depuis Buenos Aires dans la revue La Nota qu'il a fondée, en août 1915."
+        },
+        {
+          "from": "1926",
+          "to": "c.1960",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Après la proclamation de la République de Turquie (1923), un Traité d'amitié est signé à Rome en 1926 entre la Turquie kémaliste et l'Argentine, posant les bases de relations diplomatiques formelles entre les deux républiques. Une légation turque est ouverte à Buenos Aires dans ce contexte, succédant à la représentation consulaire ottomane. L'adresse exacte des locaux de la légation n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "c.1960",
+          "to": null,
+          "address": "11 de Septiembre de 1888 nº 1382, C1426BKN Buenos Aires (Belgrano)",
+          "kind": "chancery",
+          "lat": -34.562,
+          "lon": -58.4558,
+          "current": true,
+          "note": "La chancellerie de l'ambassade de Turquie est installée au 11 de Septiembre de 1888 nº 1382, dans le quartier résidentiel de Belgrano au nord de Buenos Aires (code postal C1426BKN). La rue doit son nom au soulèvement porteño anti-urquiciste du 11 septembre 1852, rebaptisée officiellement en «  11 de Septiembre de 1888 » en souvenir de la mort de Domingo Faustino Sarmiento. Les coordonnées géodésiques ont été calculées par interpolation sur le tronçon de rue concerné ; la date d'installation dans ces locaux n'a pas pu être précisée avec certitude à partir des sources publiques disponibles. L'ambassade est joignable au +54 11 4788-3239 / 4788-5106, courriel : embajada.buenosaires@mfa.gov.tr."
+        }
+      ]
+    },
     "US": {
       "name": "United States",
       "flag": "us",
@@ -751,6 +908,89 @@
           "lon": -58.4184,
           "current": true,
           "note": "Le bâtiment actuel de la chancellerie, édifice sécurisé de style moderniste sobre situé sur l'Avenida Colombia 4300 dans le quartier de Palermo, est documenté sous sa forme définitive en 1992. L'ambassade et le consulat général des États-Unis y sont regroupés. Le site jouxte le Parque Tres de Febrero et se trouve à proximité immédiate du Palacio Bosch."
+        }
+      ]
+    },
+    "ZA": {
+      "name": "South Africa",
+      "flag": "za",
+      "current": {
+        "chancery": "Marcelo T. de Alvear 590, piso 8, C1058AAF Buenos Aires (Retiro)",
+        "residence": "non établie dans les sources publiques disponibles"
+      },
+      "addresses": [
+        {
+          "from": "1938",
+          "to": "1947",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "consulate",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "L'Union sud-africaine ouvre un consulat à Buenos Aires en 1938, première présence diplomatique officielle dans le pays. Les relations bilatérales s'inscrivent dans un contexte de forte communauté afrikaner en Patagonie : dès juin 1902, quelque 600 à 650 colons boers s'étaient établis dans la province de Chubut (Colonia Boer / département Escalante) après leur refus de vivre sous domination britannique à l'issue de la Seconde Guerre des Boers. L'adresse exacte du consulat n'a pas pu être établie à partir des sources disponibles."
+        },
+        {
+          "from": "1947",
+          "to": "1948",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Le 10 septembre 1947, l'Argentine et l'Union sud-africaine établissent des relations diplomatiques officielles. La représentation prend la forme d'une légation accréditée à Buenos Aires, avant l'ouverture de la légation résidente l'année suivante."
+        },
+        {
+          "from": "1948",
+          "to": "1960",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "L'Union sud-africaine ouvre une légation résidente à Buenos Aires en 1948 ; l'Argentine ouvre en retour une légation à Pretoria en 1950. Les deux pays nouent des liens commerciaux et économiques significatifs. L'adresse exacte des locaux de la légation sud-africaine n'a pas pu être établie à partir des sources disponibles."
+        },
+        {
+          "from": "1960",
+          "to": "1961",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "En 1960, les deux légations sont mutuellement élevées au rang d'ambassade. Le 31 mai 1961, l'Union sud-africaine se transforme en République d'Afrique du Sud et se retire du Commonwealth. L'ambassade d'Afrique du Sud à Buenos Aires poursuit ses activités sans interruption malgré ce changement de statut constitutionnel."
+        },
+        {
+          "from": "1961",
+          "to": "1983",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Durant les années 1960–1970, les relations bilatérales restent actives malgré la politique d'apartheid. L'Argentine, alors régulièrement gouvernée par des juntes militaires, entretient des liens économiques et militaires avec Pretoria en marge des pressions internationales. Des accords commerciaux et techniques sont conclus au cours de cette période."
+        },
+        {
+          "from": "1983",
+          "to": "1986",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "Après le retour de la démocratie en Argentine (décembre 1983), le gouvernement Alfonsín réduit le niveau des relations diplomatiques en dessous du rang d'ambassadeur et suspend les vols directs entre les deux pays. L'ambassade reste ouverte mais à effectifs réduits."
+        },
+        {
+          "from": "1986",
+          "to": "1991",
+          "address": "Buenos Aires (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -34.6037,
+          "lon": -58.3816,
+          "note": "En 1986, l'Argentine rompt officiellement ses relations diplomatiques avec l'Afrique du Sud, invoquant « les actes répétés d'agression contre les nations voisines et l'occupation illégale de la Namibie », conformément aux orientations du Mouvement des non-alignés. C'est la seule interruption formelle des relations depuis leur établissement en 1947. En août 1991, à la suite des premières réformes démantèlement de l'apartheid initiées par le gouvernement De Klerk, les relations sont rétablies."
+        },
+        {
+          "from": "1991",
+          "to": null,
+          "address": "Marcelo T. de Alvear 590, piso 8, C1058AAF Buenos Aires (Retiro)",
+          "kind": "chancery",
+          "lat": -34.5955,
+          "lon": -58.3745,
+          "current": true,
+          "note": "Les relations diplomatiques sont rétablies en août 1991 et l'ambassade rouvre à Buenos Aires. Après les premières élections démocratiques sud-africaines d'avril 1994 et l'accession de Nelson Mandela à la présidence, les relations bilatérales entrent dans une nouvelle phase : le président Menem visite l'Afrique du Sud en 1995, et Mandela se rend en Argentine en juillet 1998 pour s'adresser au Congrès réuni en séance conjointe. La chancellerie est établie au 8ᵉ étage du Marcelo T. de Alvear 590, immeuble de bureaux du quartier de Retiro (également appelé San Nicolás), en bordure de la Plaza San Martín. L'ambassade est également accréditée au Paraguay et en Uruguay. Téléphone : +54 11 4317-2900 ; courriel : info.argentina@dirco.gov.za. Ambassadrice (2024–) : S.E. Zanele Makina."
         }
       ]
     }
