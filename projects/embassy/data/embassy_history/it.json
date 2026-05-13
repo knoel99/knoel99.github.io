@@ -1,0 +1,174 @@
+{
+  "host": {
+    "code": "IT",
+    "name": "Italy",
+    "capital": "Rome"
+  },
+  "note": "Coordonnées géocodées manuellement à la précision de la rue.",
+  "embassies": {
+    "AR": {
+      "name": "Argentina",
+      "flag": "ar",
+      "current": {
+        "chancery": "Piazza dell'Esquilino 2, 00185 Rome",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "c.1870",
+          "to": null,
+          "address": "Piazza dell'Esquilino 2, 00185 Rome (rione Esquilino)",
+          "kind": "chancery",
+          "lat": 41.8988,
+          "lon": 12.497,
+          "current": true,
+          "note": "Ambassade d'Argentine en République italienne, installée sur la place de l'Esquilin, face à l'obélisque esquilin et à l'abside de la basilique Sainte-Marie-Majeure. La place, aménagée après 1870 lors de l'urbanisation du quartier autour de la gare Termini, accueille également les bustes de Bartolomé Mitre et Manuel Belgrano, figures de l'indépendance argentine. Les dates précises d'installation à cette adresse et les éventuels démacements antérieurs n'ont pas pu être établis à partir des sources publiques consultées. Un consulat général argentin est également maintenu à Milan."
+        }
+      ],
+      "history": [
+        {
+          "from": "1836-05",
+          "to": null,
+          "kind": "legation",
+          "note": "Le royaume de Sardaigne reconnaît l'indépendance de l'Argentine et établit des relations diplomatiques formelles en mai 1836, premier État italien à le faire. En 1850, le roi Victor-Emmanuel II nomme un ambassadeur à Buenos Aires. Un traité d'amitié, de commerce et de navigation est signé en 1855."
+        },
+        {
+          "from": "c.1924",
+          "to": null,
+          "kind": "embassy",
+          "note": "La légation argentine à Rome est élevée au rang d'ambassade dans les années 1920, en parallèle de la promotion de la légation italienne à Buenos Aires en ambassade en 1924. L'ambassade exerce également une accréditation secondaire auprès de Saint-Marin. Site officiel : eital.cancilleria.gob.ar."
+        }
+      ]
+    },
+    "BR": {
+      "name": "Brazil",
+      "flag": "br",
+      "current": {
+        "chancery": "Piazza Navona 14, 00186 Rome",
+        "residence": "Piazza Navona 14, 00186 Rome (dans le Palazzo Pamphilj)"
+      },
+      "addresses": [
+        {
+          "from": "1861",
+          "to": "c.1870",
+          "address": "Turin, puis Florence (adresse exacte non établie)",
+          "kind": "legation",
+          "lat": 45.0703,
+          "lon": 7.6869,
+          "note": "L'empereur Pedro II reconnaît le Royaume d'Italie en 1861. Une légation brésilienne est ouverte auprès du royaume, suivant la capitale italienne de Turin (1861-1865) à Florence (1865-1871). L'adresse exacte n'a pas pu être établie à partir des sources disponibles."
+        },
+        {
+          "from": "c.1871",
+          "to": "1920",
+          "address": "Rome (adresse exacte non établie dans les sources publiques)",
+          "kind": "legation",
+          "lat": 41.9028,
+          "lon": 12.4964,
+          "note": "Après la prise de Rome (septembre 1870) et son incorporation comme capitale du royaume, la légation brésilienne s'installe à Rome. La représentation reste au statut de légation pendant l'Empire puis les premières décennies de la République brésilienne (proclamée en 1889). L'adresse exacte des locaux n'est pas documentée dans les sources accessibles."
+        },
+        {
+          "from": "1920",
+          "to": null,
+          "address": "Piazza Navona 14, 00186 Rome",
+          "building": "Palazzo Pamphilj",
+          "kind": "chancery",
+          "lat": 41.8983,
+          "lon": 12.4728,
+          "current": true,
+          "note": "Palais baroque construit entre 1644 et 1650 par l'architecte Girolamo Rainaldi pour la famille Pamphilj, dont le cardinal Giambattista Pamphilj devient le pape Innocent X en 1644. La longue galerie du piano nobile est ornée de fresques de Pietro da Cortona (1651-1654) représentant l'histoire d'Énée. Le Brésil loue le palais à partir de 1920 pour y installer son ambassade ; il en fait l'acquisition en octobre 1960, à l'issue d'une négociation conduite par l'ambassadeur Hugo Gouthier de Oliveira Gondim. Le palais abrite la chancellerie ainsi que la résidence de l'ambassadeur. La terrasse panoramique du toit est ouverte au public. L'ambassade est également accréditée auprès de Malte et de Saint-Marin. Les relations diplomatiques sont rompues d'août 1942 à 1944, lorsque le Brésil déclare la guerre à l'Italie et envoie un corps expéditionnaire engagé dans la campagne d'Italie."
+        }
+      ]
+    },
+    "CA": {
+      "name": "Canada",
+      "flag": "ca",
+      "current": {
+        "chancery": "Via Zara 30, 00198 Rome",
+        "residence": "Via Salaria 243, Rome"
+      },
+      "addresses": [
+        {
+          "from": "1947",
+          "to": null,
+          "address": "Via Salaria 243, Rome (quartiere Parioli)",
+          "building": "Villa Grazioli — casino nobile néo-gothique",
+          "kind": "residence",
+          "lat": 41.9223,
+          "lon": 12.5012,
+          "current": true,
+          "note": "Siège officiel de l'ambassade. Villa néo-gothique édifiée par la famille Grazioli Lante della Rovere à la fin du XIXe siècle sur les plans de l'architecte Riggi (1887), inspiré du gothique vénitien. Le casino nobile et l'ancienne portineria du domaine de Villa Grazioli accueillent la résidence de l'ambassadeur depuis l'ouverture de la légation en 1947. Le parc d'origine, loti dans les années 1920, a été en grande partie construit ; un petit jardin public subsiste entre via Panama et via Bruxelles."
+        },
+        {
+          "from": "1947",
+          "to": null,
+          "address": "Via Zara 30, 00198 Rome",
+          "kind": "chancery",
+          "lat": 41.9152,
+          "lon": 12.5089,
+          "current": true,
+          "note": "immeuble contemporain abritant la chancellerie, la section consulaire et la Mission permanente du Canada auprès des organisations internationales à Rome (FAO, PAM, FIDA). Le bâtiment, distinct de la villa de la Via Salaria, regroupe les services opérationnels de l'ambassade."
+        }
+      ],
+      "history": [
+        {
+          "from": "1947-10-13",
+          "to": "1948-06-26",
+          "kind": "legation",
+          "note": "Ouverture de la légation canadienne à Rome le 13 octobre 1947. Jean Désy, nommé le 13 août 1947, présente ses lettres de créance comme envoyé extraordinaire et ministre plénipotentiaire. Établie au lendemain de la Seconde Guerre mondiale, pendant laquelle le Canada avait déclaré la guerre à l'Italie (10 juin 1940) et participé à la campagne d'Italie (Sicile, Moro, Monte Cassino)."
+        },
+        {
+          "from": "1948-06-26",
+          "to": null,
+          "kind": "embassy",
+          "note": "La légation est élevée au rang d'ambassade le 26 juin 1948. Jean Désy devient le premier ambassadeur du Canada en Italie. L'ambassade exerce également une accréditation secondaire auprès de l'Albanie, de Malte et de Saint-Marin. Un consulat canadien est également maintenu à Milan."
+        }
+      ]
+    },
+    "CN": {
+      "name": "China",
+      "flag": "cn",
+      "current": {
+        "chancery": "Via Bruxelles 56, 00198 Roma"
+      },
+      "addresses": [
+        {
+          "from": "1881",
+          "to": "1902",
+          "address": "Rome (légation non résidente)",
+          "kind": "legation",
+          "lat": 41.9028,
+          "lon": 12.4964,
+          "note": "L'Empire Qing désigne son premier représentant diplomatique auprès du Royaume d'Italie en 1881. Li Fengbao (李凤苞), ministre accrédité auprès de l'Italie, des Pays-Bas et de l'Autriche-Hongrie, réside à Berlin puis dans d'autres capitales européennes. Les ministres Qing successifs —dont Kung Chao-Yuan, Xue Fucheng (薛福成) et Xu Jingcheng— visitent Rome périodiquement pour présenter leurs lettres de créance, mais aucun ne réside en permanence dans la capitale italienne. Onze grands ministres se succèdent entre 1881 et 1911 sans légation permanente à Rome."
+        },
+        {
+          "from": "1902",
+          "to": "1912",
+          "address": "Rome (adresse exacte non établie dans les sources publiques)",
+          "kind": "legation",
+          "lat": 41.9028,
+          "lon": 12.4964,
+          "note": "Une légation Qing permanente s'installe à Rome en 1902, onze ans après la première accréditation d'un ministre chinois auprès du royaume d'Italie. L'adresse précise des locaux n'a pas pu être établie à partir des sources accessibles. La légation fonctionne jusqu'à la chute de la dynastie Qing en 1912."
+        },
+        {
+          "from": "1912",
+          "to": "c.1941",
+          "address": "Rome (République de Chine)",
+          "kind": "legation",
+          "lat": 41.9028,
+          "lon": 12.4964,
+          "note": "La République de Chine reprend les locaux de la légation Qing après la chute de l'empire en 1912. L'Italie reconnaît la République de Chine de Sun Yat-sen en 1913 et signe un nouveau traité commercial à Nankin le 27 novembre 1928. Les relations diplomatiques sont rompues lorsque l'Italie fasciste reconnaît le Manchukuo fin 1937, puis le régime collaborateur de Wang Jingwei en 1941. La légation de la République de Chine à Rome est fermée pendant la Seconde Guerre mondiale."
+        },
+        {
+          "from": "1971",
+          "to": null,
+          "address": "Via Bruxelles 56, 00198 Roma",
+          "kind": "chancery",
+          "lat": 41.9206,
+          "lon": 12.5023,
+          "current": true,
+          "note": "L'Italie reconnaît la République populaire de Chine le 6 novembre 1970 — première reconnaissance de ce type à susciter un effet d'entraînement chez d'autres pays européens (Autriche, Belgique). Les ambassadeurs sont échangés en février 1971 ; Shen Ping (沈平) est le premier ambassadeur de la République populaire en Italie. La chancellerie s'installe Via Bruxelles, dans le quartier Parioli au nord-est du centre historique. L'ambassadeur actuel est Jia Guide (贾桂德), en poste depuis janvier 2023, accrédité également auprès de la République de Saint-Marin. La RPC maintient par ailleurs des consulats généraux à Florence et à Milan."
+        }
+      ]
+    }
+  }
+}

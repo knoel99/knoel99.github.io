@@ -1,0 +1,39 @@
+{
+  "name": "Australia",
+  "flag": "au",
+  "current": {
+    "chancery": "4 rue Jean-Rey, 75015 Paris",
+    "residence": "4 rue Jean-Rey, 75015 Paris (dernier étage du bâtiment chancellerie)"
+  },
+  "addresses": [
+    {
+      "from": "1945",
+      "to": "1948",
+      "address": "Paris (adresse exacte non établie dans les sources publiques)",
+      "kind": "legation",
+      "lat": 48.8566,
+      "lon": 2.3522,
+      "note": "Légation australienne ouverte en 1945, première représentation diplomatique officielle de l'Australie en France. Le colonel William Roy Hodgson en est le premier ministre plénipotentiaire. L'adresse précise des locaux de la légation n'est pas documentée dans les sources accessibles."
+    },
+    {
+      "from": "1948",
+      "to": "1977",
+      "address": "Paris (adresse exacte non établie dans les sources publiques)",
+      "kind": "embassy",
+      "lat": 48.8566,
+      "lon": 2.3522,
+      "note": "La légation est élevée au rang d'ambassade en 1948 ; Keith Officer devient le premier ambassadeur. L'emplacement des locaux provisoires avant l'inauguration du bâtiment Seidler n'est pas documenté dans les sources accessibles."
+    },
+    {
+      "from": "1977",
+      "to": null,
+      "address": "4 rue Jean-Rey, 75015 Paris",
+      "building": "Complexe Seidler–Breuer–Nervi",
+      "kind": "chancery",
+      "lat": 48.8551,
+      "lon": 2.2904,
+      "current": true,
+      "note": "Bâtiment conçu par l'architecte australien Harry Seidler, avec la collaboration de Marcel Breuer (États-Unis) et Pier Luigi Nervi (Italie). Terrain acquis en 1972 par le gouvernement McMahon ; construction de mars 1975 à octobre 1977 ; inauguration officielle en 1978. Le complexe comprend deux immeubles de neuf étages en quart-de-cercle formant un S, orientés sur les axes de la Tour Eiffel et du Champ-de-Mars. L'un abrite la chancellerie, la représentation à l'UNESCO et à l'OCDE ainsi que le logement de l'ambassadeur au dernier étage ; l'autre contient 34 appartements de personnel diplomatique. Structure en béton préfabriqué modulaire, parement granite et quartz."
+    }
+  ]
+}

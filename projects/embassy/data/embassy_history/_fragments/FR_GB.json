@@ -1,0 +1,52 @@
+{
+  "name": "United Kingdom",
+  "flag": "gb",
+  "current": {
+    "chancery": "35 rue du Faubourg Saint-Honoré, 75008 Paris",
+    "residence": "39 rue du Faubourg Saint-Honoré, 75008 Paris"
+  },
+  "addresses": [
+    {
+      "from": "1722",
+      "to": "1803",
+      "address": "39 rue du Faubourg Saint-Honoré (8ᵉ)",
+      "building": "Hôtel de Béthune-Charost",
+      "kind": "residence",
+      "lat": 48.8694,
+      "lon": 2.3180,
+      "note": "Hôtel particulier construit entre 1722 et 1725 par Antoine Mazin pour Armand de Béthune, 2ᵉ duc de Charost, premier courtisan de Louis XV. Les ambassadeurs britanniques à Paris louaient à cette époque leurs résidences à titre privé ; aucune adresse précise n'a pu être confirmée pour les légations du XVIIᵉ et début XVIIIᵉ siècle."
+    },
+    {
+      "from": "1803",
+      "to": "1814",
+      "address": "39 rue du Faubourg Saint-Honoré (8ᵉ)",
+      "building": "Hôtel de Charost (propriété de Pauline Borghese)",
+      "kind": "residence",
+      "lat": 48.8694,
+      "lon": 2.3180,
+      "note": "En 1803, la duchesse de Charost vend l'hôtel 300 000 francs à Pauline Bonaparte, sœur de Napoléon et princesse Borghese. Pauline y fait ajouter deux ailes au sud : l'une pour sa collection d'art, l'autre en salle à manger d'apparat. Ce n'est pas encore une propriété britannique."
+    },
+    {
+      "from": "1814",
+      "to": null,
+      "address": "39 rue du Faubourg Saint-Honoré (8ᵉ)",
+      "building": "Hôtel de Charost",
+      "kind": "residence",
+      "lat": 48.8694,
+      "lon": 2.3180,
+      "current": true,
+      "note": "En août 1814, le duc de Wellington, nommé ambassadeur de Grande-Bretagne auprès de la France restaurée, achète l'hôtel à Pauline Borghese pour 861 500 francs (environ 275 000 livres sterling), meubles Empire compris mais peintures Borghese exclues. Le contrat définitif est signé le 24 octobre 1814. C'est le premier bâtiment acquis à l'étranger par le gouvernement britannique pour usage diplomatique. Wellington n'y séjournera que cinq mois avant de partir pour le congrès de Vienne, puis pour Waterloo. La résidence reste ininterrompue depuis lors, à l'exception de la fermeture de juin 1940 à septembre 1944 (occupation allemande) : le gardien William Chrystie refusa l'entrée à Hermann Göring en 1941, invoquant l'extraterritorialité, et fut emprisonné cinq mois. Le consulat suisse assura la protection du bâtiment. L'ambassadeur Duff Cooper rouvrit officiellement l'ambassade le 13 septembre 1944."
+    },
+    {
+      "from": "1947",
+      "to": null,
+      "address": "35 rue du Faubourg Saint-Honoré (8ᵉ)",
+      "building": "Chancellerie",
+      "kind": "chancery",
+      "lat": 48.8693,
+      "lon": 2.3195,
+      "current": true,
+      "note": "Le bâtiment de la chancellerie, mitoyen de la résidence, est acquis par le gouvernement britannique en 1947. Il abrite les services diplomatiques et consulaires de l'ambassade du Royaume-Uni en France."
+    }
+  ]
+}

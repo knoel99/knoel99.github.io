@@ -1,0 +1,40 @@
+{
+  "name": "South Africa",
+  "flag": "za",
+  "current": {
+    "chancery": "59 quai d'Orsay, 75007 Paris",
+    "residence": "5 rue Cimarosa, 75016 Paris"
+  },
+  "addresses": [
+    {
+      "from": "1927",
+      "to": "1974",
+      "address": "51 avenue Hoche, 75008 Paris",
+      "kind": "legation",
+      "lat": 48.8773,
+      "lon": 2.3082,
+      "note": "L'Union sud-africaine crée un Département des Affaires étrangères en 1927 et ouvre des légations dans les principales capitales d'Europe occidentale. La représentation à Paris (légation, puis ambassade après la proclamation de la République le 31 mai 1961) est établie au 51 avenue Hoche (8ᵉ). Pendant toute cette période, l'Afrique du Sud reste dans le giron du Commonwealth britannique jusqu'en 1961. L'adresse de l'avenue Hoche est utilisée jusqu'à l'inauguration du nouveau bâtiment du quai d'Orsay en 1974."
+    },
+    {
+      "from": "1974",
+      "to": null,
+      "address": "59 quai d'Orsay, 75007 Paris",
+      "building": "Ambassade d'Afrique du Sud (Garet, Lambert, Thierrart, 1974)",
+      "kind": "chancery",
+      "lat": 48.8614,
+      "lon": 2.3178,
+      "current": true,
+      "note": "Bâtiment inauguré le 3 mai 1974 par Hilgard Muller, ministre sud-africain des Affaires étrangères. Conçu par les architectes Jean-Marie Garet, Gérard Lambert et Jean Thierrart, avec le bureau d'études L'Œuf, il s'élève sur 6 étages (21 m) et présente trois façades en mur-rideau de verre fumé partiellement masqué par des avancées moulées en fonte d'aluminium. Ces protections furent notamment conçues pour protéger les vitres des projectiles lors des nombreuses manifestations anti-apartheid devant l'ambassade. Le bâtiment est considéré comme un exemple représentatif de l'architecture parisienne des années 1970. Entrée consulaire accessible par la rue Henri-Moissan (face au nᵒ 4)."
+    },
+    {
+      "from": "1974",
+      "to": null,
+      "address": "5 rue Cimarosa, 75016 Paris",
+      "kind": "residence",
+      "lat": 48.8659,
+      "lon": 2.2934,
+      "current": true,
+      "note": "Résidence officielle de l'ambassadeur d'Afrique du Sud à Paris, dans le 16ᵉ arrondissement (quartier de Chaillot). La rue Cimarosa est nommée en l'honneur du compositeur napolitain Domenico Cimarosa (1749-1801)."
+    }
+  ]
+}

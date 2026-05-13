@@ -1,0 +1,61 @@
+{
+  "name": "Germany",
+  "flag": "de",
+  "current": {
+    "chancery": "13-15 avenue Franklin D. Roosevelt, 75008 Paris",
+    "residence": "78 rue de Lille, 75007 Paris"
+  },
+  "addresses": [
+    {
+      "from": "1818",
+      "to": "1871",
+      "address": "78 rue de Lille (7ᵉ)",
+      "building": "Hôtel de Beauharnais",
+      "kind": "legation",
+      "lat": 48.8610,
+      "lon": 2.3224,
+      "note": "Acquis le 6 février 1818 par le roi Frédéric-Guillaume III de Prusse pour 570 000 francs. Hôtel particulier construit par Germain Boffrand (1714), puis remanié dans le style Empire par le prince Eugène de Beauharnais à partir de 1803. Siège de la légation de Prusse jusqu'à la proclamation de l'Empire allemand. Bismarck y résida en 1862 avant d'être nommé ministre-président."
+    },
+    {
+      "from": "1871",
+      "to": "1940",
+      "address": "78 rue de Lille (7ᵉ)",
+      "building": "Hôtel de Beauharnais",
+      "kind": "embassy",
+      "lat": 48.8610,
+      "lon": 2.3224,
+      "note": "Ambassade du Reich allemand, puis de la République de Weimar (1919-1933) et du IIIᵉ Reich (1933-1940). Le statut passe de légation à ambassade à la demande de Bismarck lors de la création de l'Empire en 1871. L'ambassadeur Otto Abetz occupe les lieux jusqu'à la Libération (1944), après quoi la France confisque le bâtiment."
+    },
+    {
+      "from": "1963",
+      "to": null,
+      "address": "13-15 avenue Franklin D. Roosevelt (8ᵉ)",
+      "building": "Chancellerie de l'ambassade (construite 1960-1963)",
+      "kind": "chancery",
+      "lat": 48.8662,
+      "lon": 2.3096,
+      "current": true,
+      "note": "Terrain acquis par la République fédérale d'Allemagne en 1952. Bâtiment de huit étages conçu par des architectes allemands et français, construit entre 1960 et 1963 en face du Palais de la Découverte. Pendant les travaux de rénovation (à partir de 2015), les services ont été transférés provisoirement au 24 rue Marbeau (16ᵉ), l'ancienne ambassade de la RDA."
+    },
+    {
+      "from": "1968",
+      "to": null,
+      "address": "78 rue de Lille (7ᵉ)",
+      "building": "Hôtel de Beauharnais",
+      "kind": "residence",
+      "lat": 48.8610,
+      "lon": 2.3224,
+      "current": true,
+      "note": "Restitué à la RFA en 1961 lors des négociations préparant le traité de l'Élysée (1963), puis restauré dans son état Empire de 1803-1815 entre 1964 et 1968. Résidence officielle de l'ambassadeur d'Allemagne en France depuis 1968."
+    },
+    {
+      "from": "1973",
+      "to": "1990",
+      "address": "24 rue Marbeau (16ᵉ)",
+      "kind": "embassy",
+      "lat": 48.8747,
+      "lon": 2.2804,
+      "note": "Ambassade de la République démocratique allemande (RDA). Relations diplomatiques établies entre la RDA et la France par traité du 9 février 1973. Le bâtiment a été acquis pour 4,12 millions de francs. Fermée lors de la réunification allemande en 1990."
+    }
+  ]
+}

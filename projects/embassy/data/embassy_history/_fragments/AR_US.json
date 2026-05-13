@@ -1,0 +1,68 @@
+{
+  "name": "United States",
+  "flag": "us",
+  "current": {
+    "chancery": "Avenida Colombia 4300, Palermo, C1425GMN Buenos Aires",
+    "residence": "Avenida del Libertador 3502, Palermo, Buenos Aires (Palacio Bosch)"
+  },
+  "addresses": [
+    {
+      "from": "1823",
+      "to": "1914",
+      "address": "Buenos Aires (adresse précise non établie)",
+      "kind": "legation",
+      "lat": -34.6037,
+      "lon": -58.3816,
+      "note": "Les États-Unis reconnaissent les Provinces-Unies du Río de la Plata le 27 janvier 1823 ; Caesar Augustus Rodney, premier ministre plénipotentiaire américain, présente ses lettres de créance le 27 décembre 1823 au gouverneur Rodríguez. Rodney décède en poste le 10 juin 1824. La légation demeure à Buenos Aires jusqu'à son élévation au rang d'ambassade en 1914. L'adresse exacte des locaux successifs de la légation au XIXe siècle n'a pas pu être établie avec certitude à partir des sources disponibles."
+    },
+    {
+      "from": "1914",
+      "to": "1929",
+      "address": "Buenos Aires (adresse précise non établie)",
+      "kind": "embassy",
+      "lat": -34.6037,
+      "lon": -58.3816,
+      "note": "La légation est élevée au rang d'ambassade le 1er octobre 1914 ; Frederic Jesup Stimson présente ses lettres de créance le 8 janvier 1915 en tant que premier ambassadeur extraordinaire et plénipotentiaire des États-Unis en Argentine. Les locaux exacts de l'ambassade avant l'acquisition du Palacio Bosch en 1929 n'ont pas pu être établis avec certitude à partir des sources disponibles."
+    },
+    {
+      "from": "1929",
+      "to": "1969",
+      "address": "Avenida del Libertador 3502, Palermo, Buenos Aires",
+      "building": "Palacio Bosch (René Sergent, 1917)",
+      "kind": "embassy",
+      "lat": -34.5739,
+      "lon": -58.4189,
+      "note": "Le Palacio Bosch est une demeure néoclassique française de 3 700 m² commandée en 1910 par Ernesto Bosch (ancien ambassadeur argentin en France) et son épouse Elisa, et achevée en 1917 sur les plans de l'architecte parisien René Sergent (décoration intérieure d'André Carlhian ; jardins d'Achille Duchêne et Charles Thays). En 1929, l'ambassadeur Robert Woods Bliss obtient l'accord du président Hoover pour acquérir le palais auprès de la famille Bosch pour environ 3 millions de dollars. Le bâtiment sert alors à la fois de chancellerie et de résidence officielle de l'ambassadeur."
+    },
+    {
+      "from": "1929",
+      "to": null,
+      "address": "Avenida del Libertador 3502, Palermo, Buenos Aires",
+      "building": "Palacio Bosch (René Sergent, 1917) — résidence de l'ambassadeur",
+      "kind": "residence",
+      "lat": -34.5739,
+      "lon": -58.4189,
+      "current": true,
+      "note": "Après l'inauguration de la nouvelle chancellerie dans le quartier de Palermo en 1969, le Palacio Bosch est rédédié exclusivement à la résidence officielle de l'ambassadeur des États-Unis. Le bâtiment a été classé monument historique national argentin. Il est inscrit au Registre des propriétés culturellement significatives du secrétaire d'État américain."
+    },
+    {
+      "from": "1969",
+      "to": "1992",
+      "address": "Avenida Colombia 4300, Palermo, Buenos Aires",
+      "kind": "chancery",
+      "lat": -34.5768,
+      "lon": -58.4184,
+      "note": "Une nouvelle chancellerie est construite sur l'Avenida Colombia 4300, à quelques centaines de mètres du Palacio Bosch, et inaugurée en 1969. Le Palacio Bosch cesse alors d'abriter les services diplomatiques pour ne plus servir qu'à la résidence de l'ambassadeur."
+    },
+    {
+      "from": "1992",
+      "to": null,
+      "address": "Avenida Colombia 4300, Palermo, C1425GMN Buenos Aires",
+      "kind": "chancery",
+      "lat": -34.5768,
+      "lon": -58.4184,
+      "current": true,
+      "note": "Le bâtiment actuel de la chancellerie, édifice sécurisé de style moderniste sobre situé sur l'Avenida Colombia 4300 dans le quartier de Palermo, est documenté sous sa forme définitive en 1992. L'ambassade et le consulat général des États-Unis y sont regroupés. Le site jouxte le Parque Tres de Febrero et se trouve à proximité immédiate du Palacio Bosch."
+    }
+  ]
+}

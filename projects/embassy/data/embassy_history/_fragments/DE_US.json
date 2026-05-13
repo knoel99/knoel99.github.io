@@ -1,0 +1,97 @@
+{
+  "name": "United States",
+  "flag": "us",
+  "current": {
+    "chancery": "Pariser Platz 2, 10117 Berlin",
+    "residence": "Finkenstraße 21, 14195 Berlin-Dahlem"
+  },
+  "addresses": [
+    {
+      "from": "1797",
+      "to": "1801",
+      "address": "angle Friedrichstraße / Behrenstraße, Berlin",
+      "kind": "legation",
+      "lat": 52.5168,
+      "lon": 13.3889,
+      "note": "Première légation américaine à Berlin, sous le ministre John Quincy Adams, nommé par son père le président John Adams. Adams louait un appartement à cet angle de rues et y conduisait les affaires diplomatiques depuis sa résidence privée. La légation fut close au départ d'Adams en mai 1801 et ne fut rétablie qu'en 1835."
+    },
+    {
+      "from": "1835",
+      "to": "1871",
+      "address": "Berlin (Prusse / Confédération d'Allemagne du Nord)",
+      "kind": "legation",
+      "lat": 52.5200,
+      "lon": 13.4050,
+      "note": "Légation américaine auprès du Royaume de Prusse, rétablie en 1835 avec Henry Wheaton comme ministre. Durant cette période les diplomates américains occupaient des résidences louées successivement, sans bâtiment permanent. La légation couvrait progressivement les différents États allemands avant l'unification de 1871."
+    },
+    {
+      "from": "1871",
+      "to": "1893",
+      "address": "Berlin (Empire allemand)",
+      "kind": "legation",
+      "lat": 52.5200,
+      "lon": 13.4050,
+      "note": "Légation américaine auprès de l'Empire allemand unifié. L'adresse changeait à chaque nouveau ministre, la chancellerie se confondant souvent avec la résidence privée. Élevée au rang d'ambassade le 26 octobre 1893 sous Theodore Runyon, premier ambassadeur américain en Allemagne."
+    },
+    {
+      "from": "1893",
+      "to": "1930",
+      "address": "Bendlerstraße 39 (auj. Stauffenbergstraße), Berlin-Tiergarten",
+      "kind": "embassy",
+      "lat": 52.5072,
+      "lon": 13.3640,
+      "note": "L'ambassade, désormais élevée au rang d'ambassade en 1893, occupait une série d'adresses louées dans le quartier du Tiergarten. La dernière adresse temporaire connue était Bendlerstraße 39 (rebaptisée Stauffenbergstraße après-guerre). Sans bâtiment permanent jusqu'à l'achat du Palais Blücher en 1930."
+    },
+    {
+      "from": "1930",
+      "to": "1941",
+      "address": "Pariser Platz 2, Berlin",
+      "building": "Palais Blücher (Blücherpalais)",
+      "kind": "chancery",
+      "lat": 52.5163,
+      "lon": 13.3793,
+      "note": "Le Palais Blücher, construit en 1869-1870, est acheté par le gouvernement américain en 1930 comme siège permanent. Un incendie en avril 1931 retarde son aménagement ; la crise économique et les relations tendues avec le régime nazi ralentissent la reconstruction. La chancellerie n'est inaugurée qu'en avril 1939. L'ambassade ferme en décembre 1941 après la déclaration de guerre. Le palais, endommagé par les bombardements alliés, est démoli par la RDA en 1957."
+    },
+    {
+      "from": "1955",
+      "to": "1999",
+      "address": "Deichmannsaue 29-37, 53179 Bonn-Bad Godesberg",
+      "building": "Schloss Deichmannsaue et bâtiment moderne (1951)",
+      "kind": "embassy",
+      "lat": 50.6763,
+      "lon": 7.1617,
+      "note": "Siège de l'ambassade américaine en République fédérale d'Allemagne. Le domaine accueillait d'abord le Haut-Commissaire américain (1949-1955) ; un bâtiment moderne de 21 000 m² fut construit en 1951 à côté du château. Avec le déménagement de l'appareil gouvernemental de Bonn à Berlin, l'ambassade se transféra progressivement à Berlin à partir de septembre 1998 (« une ambassade, deux sites ») et ferma définitivement à Bonn en 2000."
+    },
+    {
+      "from": "1977",
+      "to": "2008",
+      "address": "Neustädtische Kirchstraße 4-5, 10117 Berlin",
+      "building": "Ancien Warenhaus für Armee und Marine (1886/87)",
+      "kind": "chancery",
+      "lat": 52.5190,
+      "lon": 13.3814,
+      "note": "Bâtiment construit en 1886/87 par les architectes Von der Hude & Hennicke pour les armées prussiennes. Depuis 1977, il abritait la chancellerie de l'ambassade américaine à Berlin-Ouest, distincte de l'ambassade à Bonn. Après le transfert de la mission diplomatique à Berlin en 1999, il continua à servir de chancellerie jusqu'à l'inauguration du nouveau bâtiment sur Pariser Platz en mai 2008. Il abrite désormais des bureaux du Bundestag."
+    },
+    {
+      "from": "1999",
+      "to": null,
+      "address": "Finkenstraße 21, 14195 Berlin-Dahlem",
+      "kind": "residence",
+      "lat": 52.4645,
+      "lon": 13.2860,
+      "current": true,
+      "note": "Résidence officielle de l'ambassadeur américain en Allemagne depuis le retour de l'ambassade à Berlin en 1999. Le bâtiment historique, ancienne résidence du commandant de la Brigade de Berlin (Berlin Brigade), a été rénové et agrandi par le Département d'État entre 1998 et 1999. Il est situé dans le quartier résidentiel de Dahlem, dans le sud-ouest de Berlin."
+    },
+    {
+      "from": "2008",
+      "to": null,
+      "address": "Pariser Platz 2, 10117 Berlin",
+      "building": "Neue Kanzlei (Moore Ruble Yudell Architects, 2008)",
+      "kind": "chancery",
+      "lat": 52.5163,
+      "lon": 13.3793,
+      "current": true,
+      "note": "Nouveau bâtiment de chancellerie inauguré le 4 juillet 2008 en présence de l'ancien président George H. W. Bush, sur le site historique de l'ambassade d'avant-guerre. Conçu par le cabinet Moore Ruble Yudell, le bâtiment occupe l'emplacement exact du Palais Blücher détruit en 1957, à quelques mètres de la Porte de Brandebourg. Coût supérieur à 100 millions de dollars. La section consulaire reste au Clayallee 170 à Berlin-Dahlem."
+    }
+  ]
+}

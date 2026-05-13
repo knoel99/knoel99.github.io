@@ -1,0 +1,58 @@
+{
+  "name": "Brazil",
+  "flag": "br",
+  "current": {
+    "chancery": "34 cours Albert-Iᵉʳ, 75008 Paris",
+    "residence": "5 rue de l'Amiral-d'Estaing, 75016 Paris"
+  },
+  "addresses": [
+    {
+      "from": "1825",
+      "to": "c.1900",
+      "address": "adresse non déterminée avec certitude, Paris",
+      "kind": "legation",
+      "lat": 48.8566,
+      "lon": 2.3522,
+      "note": "La France reconnaît l'indépendance du Brésil le 26 octobre 1825 (gouvernement de Charles X) ; une légation brésilienne est ouverte à Paris dans la foulée. L'adresse exacte des premières décennies n'a pas pu être établie avec certitude à partir des sources disponibles."
+    },
+    {
+      "from": "c.1900",
+      "to": "c.1920",
+      "address": "3 place Malesherbes (17ᵉ)",
+      "kind": "legation",
+      "lat": 48.8827,
+      "lon": 2.3189,
+      "note": "Dans les années 1900 la légation brésilienne est installée 3 place Malesherbes (17ᵉ arrondissement) ; sa chancellerie se trouve simultanément au 47 rue de Lisbonne (8ᵉ) et son consulat général au 51 rue Cambon (1ᵉʳ)."
+    },
+    {
+      "from": "c.1920",
+      "to": "1971",
+      "address": "17 rue Quentin-Bauchart, 75008 Paris",
+      "kind": "embassy",
+      "lat": 48.8714,
+      "lon": 2.3010,
+      "note": "Dans les années 1920 l'ambassade du Brésil s'installe au 17 rue Quentin-Bauchart (8ᵉ), à proximité des Champs-Élysées ; le consulat général occupe alors le 23 rue Drouot (9ᵉ). Le titre de la représentation passe de légation à ambassade après la proclamation de la République brésilienne (1889), bien que la promotion effective au rang d'ambassade date des années qui suivirent. Le bâtiment de la rue Quentin-Bauchart est utilisé jusqu'à l'acquisition de l'Hôtel Schneider en 1971."
+    },
+    {
+      "from": "1971",
+      "to": null,
+      "address": "34 cours Albert-Iᵉʳ, 75008 Paris",
+      "building": "Hôtel de La Ferronnays, dit Hôtel Schneider",
+      "kind": "chancery",
+      "lat": 48.8648,
+      "lon": 2.3052,
+      "current": true,
+      "note": "Hôtel particulier construit dans la première moitié du XIXᵉ siècle pour Arthur Louis Gibert (agent de change), passé en 1865 aux comtesses de La Ferronnays. Vendu en 1900 à l'industriel Eugène II Schneider (aciéries du Creusot), qui le fait réaménager par l'architecte Ernest Sanson (enfilade de salons de réception de style XVIIIᵉ, panneaux peints, grisailles sur les fables de La Fontaine). Le 16 juillet 1971 la famille Schneider cède l'hôtel au Brésil pour 14 millions de francs ; la chancellerie de l'ambassade y est aussitôt installée. Classé dans le périmètre de protection d'un monument historique et dans l'inventaire des sites urbains pittoresques de Paris."
+    },
+    {
+      "from": "1971",
+      "to": null,
+      "address": "5 rue de l'Amiral-d'Estaing, 75016 Paris",
+      "kind": "residence",
+      "lat": 48.8651,
+      "lon": 2.2964,
+      "current": true,
+      "note": "Résidence officielle de l'ambassadeur du Brésil à Paris, dans le 16ᵉ arrondissement. La rue est nommée en l'honneur de l'amiral Jean Baptiste Charles Henri Hector, comte d'Estaing (1729-1794), qui participa à la guerre d'Indépendance américaine."
+    }
+  ]
+}

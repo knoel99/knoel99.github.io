@@ -1,0 +1,121 @@
+{
+  "name": "France",
+  "flag": "fr",
+  "current": {
+    "chancery": "Pariser Platz 5, 10117 Berlin",
+    "residence": "Pariser Platz 5, 10117 Berlin (appartement au premier étage du bâtiment de Portzamparc)"
+  },
+  "addresses": [
+    {
+      "from": "1835",
+      "to": "1860",
+      "address": "Pariser Platz 5, Berlin (Prusse)",
+      "building": "Palais Beauvryé (location)",
+      "kind": "legation",
+      "lat": 52.5163,
+      "lon": 13.3789,
+      "note": "Dès 1835, la légation française loue des locaux au Palais Beauvryé, bâtiment baroque tardif construit entre 1735 et 1737 pour le major Bernhard von Beauvryé. La légation représentait la France auprès du Royaume de Prusse."
+    },
+    {
+      "from": "1860",
+      "to": "1871",
+      "address": "Pariser Platz 5, Berlin (Prusse)",
+      "building": "Palais Beauvryé (acquis par Napoléon III)",
+      "kind": "legation",
+      "lat": 52.5163,
+      "lon": 13.3789,
+      "note": "En septembre 1860, Napoléon III fait acquérir le Palais Beauvryé par son ambassadeur, le prince de La Tour d'Auvergne. Le bâtiment, légèrement remanié en 1840 par Friedrich August Stüler, devient propriété de l'État français. Relations diplomatiques rompues lors de la guerre franco-prussienne de 1870-1871."
+    },
+    {
+      "from": "1871",
+      "to": "1918",
+      "address": "Pariser Platz 5, Berlin (Empire allemand)",
+      "building": "Palais Beauvryé",
+      "kind": "embassy",
+      "lat": 52.5163,
+      "lon": 13.3789,
+      "note": "Après la défaite de 1871 et la paix de Francfort, la représentation française reprend sa place à Pariser Platz 5, désormais accréditée auprès du nouvel Empire allemand unifié. L'ambassade, en « terrain hostile », joue un rôle mondain de premier plan sous l'Empire wilhelmien. Renovation du palais en 1879-1883."
+    },
+    {
+      "from": "1918",
+      "to": "1933",
+      "address": "Pariser Platz 5, Berlin (République de Weimar)",
+      "building": "Palais Beauvryé",
+      "kind": "embassy",
+      "lat": 52.5163,
+      "lon": 13.3789,
+      "note": "Période de la République de Weimar. Une dernière campagne de travaux est conduite entre 1926 et 1934 sous la direction de Bernd Hase et Joseph Marrast, qui aménage notamment la chancellerie à l'extrémité de l'aile ouest."
+    },
+    {
+      "from": "1933",
+      "to": "1940",
+      "address": "Pariser Platz 5, Berlin (IIIe Reich)",
+      "building": "Palais Beauvryé",
+      "kind": "embassy",
+      "lat": 52.5163,
+      "lon": 13.3789,
+      "note": "L'ambassade demeure à Pariser Platz sous le régime national-socialiste. Les relations diplomatiques franco-allemandes s'interrompent après l'armistice de juin 1940 et l'installation du gouvernement de Vichy. Le palais reste sous séquestre allemand pendant l'Occupation."
+    },
+    {
+      "from": "1943",
+      "to": "1943",
+      "address": "Pariser Platz 5, Berlin",
+      "building": "Palais Beauvryé (détruit)",
+      "kind": "embassy",
+      "lat": 52.5163,
+      "lon": 13.3789,
+      "note": "Dans la nuit du 22 au 23 novembre 1943, le Palais Beauvryé brûle lors d'un bombardement allié. La maçonnerie et la façade subsistent quelques années avant que le bâtiment ne soit entièrement démoli, vers 1960, par les autorités de la RDA."
+    },
+    {
+      "from": "1949",
+      "to": "1955",
+      "address": "An der Marienkapelle 3 / Rheinstraße 52, 53179 Bonn-Rüngsdorf",
+      "building": "Rheinhotel Dreesen puis bâtiment de chancellerie (arch. Johannes Krahn, 1950-1952)",
+      "kind": "chancery",
+      "lat": 50.6725,
+      "lon": 7.1580,
+      "note": "Après la création de la République fédérale d'Allemagne, un Haut-Commissariat français est établi à Bonn en 1949. La chancellerie est d'abord hébergée au Rheinhotel Dreesen puis dans un bâtiment neuf construit par l'architecte francfortois Johannes Krahn en 1950-1952, sur un terrain entre Rheinstraße et An der Marienkapelle, au-dessus de l'hôtel, dans le quartier de Rüngsdorf."
+    },
+    {
+      "from": "1949",
+      "to": "1999",
+      "address": "Schloss Ernich, 53424 Remagen (Rhénanie-Palatinat)",
+      "building": "Schloss Ernich (arch. Ernst von Ihne, 1906-1908)",
+      "kind": "residence",
+      "lat": 50.5963,
+      "lon": 7.2047,
+      "note": "Château néo-baroque construit entre 1906 et 1908 par l'architecte prussien Ernst von Ihne. Requisitionné en 1949, il devient la résidence du Haut-Commissaire André François-Poncet puis, dès 1955, celle de l'ambassadeur de France en RFA. Propriété de l'État français à partir de 1956. Vendu en 2006 après le retour de l'ambassade à Berlin."
+    },
+    {
+      "from": "1955",
+      "to": "1999",
+      "address": "An der Marienkapelle 3 / Rheinstraße 52, 53179 Bonn-Rüngsdorf",
+      "building": "Chancellerie de l'ambassade (Johannes Krahn, 1950-1952)",
+      "kind": "embassy",
+      "lat": 50.6725,
+      "lon": 7.1580,
+      "note": "À l'entrée en vigueur des traités de Paris le 5 mai 1955, le Haut-Commissariat est transformé en ambassade ordinaire auprès de la République fédérale d'Allemagne. La chancellerie demeure au même emplacement de Bonn-Rüngsdorf jusqu'au transfert à Berlin. L'ambassade ferme le 30 juin 1999 ; le bâtiment est vendu à un promoteur immobilier en 2005 pour y créer 200 logements."
+    },
+    {
+      "from": "1973",
+      "to": "1990",
+      "address": "Unter den Linden 40, 10117 Berlin-Est (RDA)",
+      "building": "Immeuble de 1907-1908 (arch. Kurt Berndt, anciennement siège de la Compagnie Internationale des Wagons-Lits)",
+      "kind": "embassy",
+      "lat": 52.5170,
+      "lon": 13.3863,
+      "note": "La France reconnaît la République démocratique allemande le 9 février 1973, ce qui entraîne l'ouverture d'une ambassade distincte en RDA. Elle est installée au 40 Unter den Linden, dans un immeuble de 1907-1908 conçu par Kurt Berndt pour le siège berlinois de la Compagnie Internationale des Wagons-Lits. Les diplomates français y partagent les lieux avec leurs homologues italiens et des organismes de commerce extérieur de la RDA. L'ambassade ferme en 1990 lors de la réunification allemande."
+    },
+    {
+      "from": "1999",
+      "to": null,
+      "address": "Pariser Platz 5, 10117 Berlin",
+      "building": "Nouvelle chancellerie (arch. Christian de Portzamparc, inaugurée le 23 janvier 2003)",
+      "kind": "chancery",
+      "lat": 52.5163,
+      "lon": 13.3789,
+      "current": true,
+      "note": "Christian de Portzamparc remporte en 1997 le concours pour la reconstruction de l'ambassade sur le site historique de Pariser Platz 5, à quelques mètres de la porte de Brandebourg. Le bâtiment, occupé en octobre 2002 et inauguré officiellement le 23 janvier 2003 par le président Chirac et le chancelier Schröder — 40e anniversaire du traité de l'Élysée —, articule sept corps de bâtiment autour de deux cours intérieures sur une surface d'environ 8 500 m². Il abrite la chancellerie, le consulat, l'appartement de résidence de l'ambassadeur au premier étage, des salons de réception, un amphithéâtre et les services culturels. Très discuté à sa sortie, le projet a été comparé à une forteresse en raison de ses fenêtres étroites."
+    }
+  ]
+}

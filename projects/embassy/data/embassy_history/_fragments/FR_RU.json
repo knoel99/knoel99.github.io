@@ -1,0 +1,91 @@
+{
+  "name": "Russia",
+  "flag": "ru",
+  "current": {
+    "chancery": "40-50 boulevard Lannes, 75116 Paris",
+    "residence": "79 rue de Grenelle, 75007 Paris"
+  },
+  "addresses": [
+    {
+      "from": "1780",
+      "to": "1808",
+      "address": "30 rue de Gramont, angle boulevard des Italiens (2ᵉ)",
+      "building": "Hôtel de Lévis",
+      "kind": "legation",
+      "lat": 48.8706,
+      "lon": 2.3439,
+      "note": "Siège de la légation impériale russe vers 1780. Le tsarévitch Paul Ier et son épouse Maria Feodorovna y séjournent lors de leur visite à Paris en 1782. L'hôtel, construit en 1767 sur une partie de l'ancienne propriété des Gramont, a disparu au XIXᵉ siècle."
+    },
+    {
+      "from": "1808",
+      "to": "1811",
+      "address": "77 rue de Varenne (7ᵉ)",
+      "building": "Hôtel de Biron",
+      "kind": "embassy",
+      "lat": 48.8560,
+      "lon": 2.3156,
+      "note": "Sous le Premier Empire, l'ambassade de Russie s'installe à l'Hôtel de Biron, occupé successivement par le légat papal puis par le représentant du tsar. Le bâtiment deviendra le musée Rodin en 1919."
+    },
+    {
+      "from": "1814",
+      "to": "1826",
+      "address": "30 rue de Provence / rue de la Victoire (9ᵉ)",
+      "building": "Hôtel Thellusson",
+      "kind": "embassy",
+      "lat": 48.8765,
+      "lon": 2.3374,
+      "note": "Construit en 1778 par Claude-Nicolas Ledoux, l'hôtel Thellusson accueille l'ambassade de Russie après la Restauration. L'ambassadeur Pozzo di Borgo, représentant du tsar Alexandre Iᵉʳ, y organise des réceptions fastueuses. Le tsar Alexandre Iᵉʳ y séjourne en 1818. L'hôtel est démoli en 1826 lors du percement de la rue Laffitte."
+    },
+    {
+      "from": "1863",
+      "to": "1917",
+      "address": "79 rue de Grenelle (7ᵉ)",
+      "building": "Hôtel d'Estrées",
+      "kind": "embassy",
+      "lat": 48.8558,
+      "lon": 2.3183,
+      "note": "Acquis par le gouvernement impérial russe le 12 décembre 1863, sous l'initiative d'Alexandre II. L'hôtel particulier, construit par Robert de Cotte en 1711-1713 pour la duchesse d'Estrées, est redécoré dans le style Second Empire avant la visite d'Alexandre II à l'Exposition universelle de 1867. Nicolas II et l'impératrice Alexandra Feodorovna y séjournent lors de leur visite officielle d'octobre 1896. Ambassade principale de l'Empire russe jusqu'à la rupture des relations franco-russes en novembre 1917."
+    },
+    {
+      "from": "1917",
+      "to": "1924",
+      "address": "79 rue de Grenelle (7ᵉ)",
+      "building": "Hôtel d'Estrées",
+      "kind": "legation",
+      "lat": 48.8558,
+      "lon": 2.3183,
+      "note": "Après la révolution bolchevique de novembre 1917, la France rompt ses relations diplomatiques avec la Russie soviétique. L'hôtel est occupé par des représentants des Russes blancs émigrés. La France reconnaît officiellement l'URSS le 28 octobre 1924, sous le gouvernement Herriot."
+    },
+    {
+      "from": "1924",
+      "to": "1977",
+      "address": "79 rue de Grenelle (7ᵉ)",
+      "building": "Hôtel d'Estrées",
+      "kind": "embassy",
+      "lat": 48.8558,
+      "lon": 2.3183,
+      "note": "Le 14 décembre 1924, le drapeau soviétique est hissé sur l'hôtel d'Estrées. Le premier ambassadeur soviétique, Léonid Krassine, arrive à Paris le 4 décembre 1924. L'ambassade de l'URSS occupe l'édifice jusqu'au déménagement de la chancellerie vers le boulevard Lannes en 1977. Pendant la Seconde Guerre mondiale, le bâtiment est occupé par les Allemands."
+    },
+    {
+      "from": "1977",
+      "to": null,
+      "address": "40-50 boulevard Lannes (16ᵉ)",
+      "kind": "chancery",
+      "lat": 48.8664,
+      "lon": 2.2704,
+      "current": true,
+      "note": "Nouvelle chancellerie soviétique inaugurée le 22 juin 1977 par Leonid Brejnev, secrétaire général du PCUS, en présence du président Valéry Giscard d'Estaing. La Fédération de Russie reprend les locaux après la dissolution de l'URSS en décembre 1991. Chancellerie et services consulaires se trouvent à cette adresse dans le 16ᵉ arrondissement."
+    },
+    {
+      "from": "1977",
+      "to": null,
+      "address": "79 rue de Grenelle (7ᵉ)",
+      "building": "Hôtel d'Estrées",
+      "kind": "residence",
+      "lat": 48.8558,
+      "lon": 2.3183,
+      "current": true,
+      "note": "Après le transfert de la chancellerie au boulevard Lannes en 1977, l'Hôtel d'Estrées devient la résidence officielle de l'ambassadeur. L'immeuble est fermé pour quatre ans de restauration à partir de 1978, retrouvant son apparence du XIXᵉ siècle. Classé monument historique, il est toujours la résidence de l'ambassadeur de la Fédération de Russie en France."
+    }
+  ]
+}

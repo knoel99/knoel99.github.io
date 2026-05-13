@@ -1,0 +1,67 @@
+{
+  "name": "Canada",
+  "flag": "ca",
+  "current": {
+    "chancery": "130 rue du Faubourg Saint-Honoré, 75008 Paris",
+    "residence": "135 rue du Faubourg Saint-Honoré, 75008 Paris"
+  },
+  "addresses": [
+    {
+      "from": "1882",
+      "to": "1928",
+      "address": "Paris (adresse de bureau non précisée dans les sources consultées)",
+      "kind": "commission",
+      "lat": 48.8566,
+      "lon": 2.3522,
+      "note": "Depuis 1882, Hector Fabre représente le Canada à Paris à titre d'« Agent du Dominion » (commissaire général), sans statut diplomatique formel — la Grande-Bretagne ne reconnaissant pas encore au Canada le droit d'établir des relations diplomatiques propres. Il est remplacé par le sénateur Philippe Roy en 1911."
+    },
+    {
+      "from": "1928",
+      "to": "1944",
+      "address": "17-19 boulevard des Capucines, 75009 Paris",
+      "kind": "legation",
+      "lat": 48.8706,
+      "lon": 2.3337,
+      "note": "Le 31 janvier 1928, le bureau canadien est élevé au rang de légation ; Philippe Roy devient le premier ministre plénipotentiaire canadien en France et présente ses lettres de créance le 19 septembre 1928. Première mission diplomatique canadienne distincte de l'ambassade britannique en Europe. La légation ferme en juin 1940 lors de l'occupation allemande et est rétablie après la libération de Paris en août 1944."
+    },
+    {
+      "from": "1944",
+      "to": "1957",
+      "address": "Paris (adresse provisoire — chancellerie réinstallée après la Libération)",
+      "kind": "embassy",
+      "lat": 48.8566,
+      "lon": 2.3522,
+      "note": "Après la Libération de Paris (24 août 1944), la légation est élevée au rang d'ambassade. Le général Georges Vanier devient le premier ambassadeur résident du Canada en France, marquant la volonté canadienne d'une présence diplomatique indépendante en Europe à la fin de la Seconde Guerre mondiale."
+    },
+    {
+      "from": "1950",
+      "to": null,
+      "address": "135 rue du Faubourg Saint-Honoré, 75008 Paris",
+      "building": "Hôtel de Rigny",
+      "kind": "residence",
+      "lat": 48.8720,
+      "lon": 2.3128,
+      "current": true,
+      "note": "L'hôtel de Rigny, hôtel particulier du Second Empire construit vers 1867 pour la comtesse de Rigny, est acquis par le gouvernement du Canada en 1950 (acte de vente signé le 12 mai 1950) auprès de la duchesse de La Rochefoucauld, héritière du comte de Fels qui avait fait rénover l'immeuble en style Louis XV à la fin du XIXe siècle. Résidence officielle de l'ambassadeur du Canada en France depuis lors."
+    },
+    {
+      "from": "1957",
+      "to": "2018",
+      "address": "35 avenue Montaigne, 75008 Paris",
+      "kind": "chancery",
+      "lat": 48.8664,
+      "lon": 2.3042,
+      "note": "Chancellerie construite en 1957 pour le gouvernement canadien, sur les plans des architectes Antoine Monette (Montréal) et Yves Courcoux (Paris). Premier immeuble construit spécifiquement pour l'ambassade du Canada à Paris. Le bâtiment est vendu en 2017 à un promoteur privé britannique."
+    },
+    {
+      "from": "2018",
+      "to": null,
+      "address": "130 rue du Faubourg Saint-Honoré, 75008 Paris",
+      "kind": "chancery",
+      "lat": 48.8718,
+      "lon": 2.3120,
+      "current": true,
+      "note": "L'ambassade et le Centre culturel canadien sont réunis dans un immeuble haussmannien de 8 366 m² rénové par les architectes Jean-Paul Viguier & associés (Paris) avec la participation du cabinet Julian Smith Architects (Canada). Inauguration par le Premier ministre Justin Trudeau et l'ambassadrice Isabelle Hudon le 16 avril 2018 ; ouverture au public le 2 mai 2018."
+    }
+  ]
+}

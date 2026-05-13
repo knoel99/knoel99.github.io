@@ -1,0 +1,57 @@
+{
+  "name": "Germany",
+  "flag": "de",
+  "current": {
+    "chancery": "1 Waverley Street, Ottawa, ON K2P 0T8",
+    "residence": "290 Coltrin Road, Rockcliffe Park, Ottawa, ON K1M 0A6"
+  },
+  "addresses": [
+    {
+      "from": "1909",
+      "to": "1937",
+      "address": "Montréal, QC — adresse exacte non établie",
+      "kind": "consulate",
+      "lat": 45.5017,
+      "lon": -73.5673,
+      "note": "Le Consulat général d'Allemagne au Canada est établi à Montréal en 1909. Il constitue la principale représentation diplomatique allemande au Canada jusqu'en 1937."
+    },
+    {
+      "from": "1937",
+      "to": "1939",
+      "address": "Ottawa, ON — adresse exacte non établie",
+      "kind": "consulate",
+      "lat": 45.4215,
+      "lon": -75.6972,
+      "note": "En 1937, le Consulat général est transféré d'Ottawa à Montréal, bien qu'un consulat commercial reste actif à Montréal. La chancellerie consulaire à Ottawa ferme en septembre 1939 à la suite de la déclaration de guerre du Canada contre l'Allemagne nazie (10 septembre 1939)."
+    },
+    {
+      "from": "1951-02-13",
+      "to": "1951-11",
+      "address": "Ottawa, ON — adresse exacte non établie",
+      "kind": "consulate",
+      "lat": 45.4215,
+      "lon": -75.6972,
+      "note": "La République fédérale d'Allemagne ouvre un Consulat général à Ottawa le 13 février 1951. Werner Dankwort en est le premier consul général, marquant le rétablissement des relations diplomatiques germano-canadiennes après la Seconde Guerre mondiale."
+    },
+    {
+      "from": "1951-11",
+      "to": null,
+      "address": "1 Waverley Street, Ottawa, ON K2P 0T8",
+      "kind": "chancery",
+      "lat": 45.4185,
+      "lon": -75.6818,
+      "current": true,
+      "note": "Le Consulat général est élevé au rang d'ambassade en novembre 1951 (les sources indiquent le 6 ou le 8 novembre). Werner Dankwort devient le premier ambassadeur de la RFA au Canada (1951–1956). La chancellerie est installée au 1 Waverley Street, dans le quartier du Golden Triangle à Ottawa, non loin de la promenade Queen Elizabeth. Le bâtiment actuel, de style moderniste, abrite la chancellerie depuis au moins 1967. Suite à la réunification allemande (3 octobre 1990), la mission de la République démocratique allemande (ouverte en 1987) est dissoute et intégrée à l'ambassade de la RFA."
+    },
+    {
+      "from": "1951",
+      "to": null,
+      "address": "290 Coltrin Road, Rockcliffe Park, Ottawa, ON K1M 0A6",
+      "kind": "residence",
+      "lat": 45.4525,
+      "lon": -75.6762,
+      "current": true,
+      "note": "Résidence officielle de l'ambassadeur d'Allemagne au Canada, située dans le quartier diplomatique de Rockcliffe Park à Ottawa. En 2009, la propriété figurait parmi les dix résidences ambassadoriales les plus précieuses d'Ottawa, avec une valeur estimée à 5,59 millions de dollars canadiens."
+    }
+  ]
+}

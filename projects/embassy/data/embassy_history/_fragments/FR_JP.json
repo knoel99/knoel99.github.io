@@ -1,0 +1,90 @@
+{
+  "name": "Japan",
+  "flag": "jp",
+  "current": {
+    "chancery": "7 avenue Hoche, 75008 Paris",
+    "residence": "31 rue du Faubourg Saint-Honoré, 75008 Paris"
+  },
+  "addresses": [
+    {
+      "from": "1871", "to": "1880",
+      "address": "avenue Hoche (alors rue de la Reine-Hortense), 75008",
+      "kind": "legation",
+      "lat": 48.8770, "lon": 2.3020,
+      "note": "Première légation permanente du Japon à Paris, ouverte en 1871 sous la direction de Sameshima Naonobu, premier ministre résident du Japon en Europe. L'avenue portait alors le nom de rue de la Reine-Hortense ; le numéro exact du bâtiment initial n'est pas établi par les sources disponibles."
+    },
+    {
+      "from": "1880", "to": "1906",
+      "address": "avenue Marceau (alors rue Joséphine), 75008",
+      "kind": "legation",
+      "lat": 48.8653, "lon": 2.2991,
+      "note": "La légation déménage avenue Marceau, anciennement rue Joséphine. Elle y demeure jusqu'à l'acquisition du bâtiment de l'avenue Hoche en 1906."
+    },
+    {
+      "from": "1906", "to": "1919",
+      "address": "7 avenue Hoche, 75008",
+      "kind": "embassy",
+      "lat": 48.8773, "lon": 2.3042,
+      "note": "Le gouvernement japonais achète en 1906 l'immeuble au 7 avenue Hoche à Madame Vion-Whitcomb. La décoration intérieure est refaite dans le style japonais par la maison Mitsukoshi. La même année, la légation est élevée au rang d'ambassade à la suite de la victoire japonaise dans la guerre russo-japonaise (1905) ; Kurino Shinichiro devient le premier ambassadeur du Japon en France. L'annuaire diplomatique français de 1907 mentionne ce numéro."
+    },
+    {
+      "from": "1919", "to": "~1930",
+      "address": "rue La Pérouse, 75116",
+      "kind": "chancery",
+      "lat": 48.8689, "lon": 2.2944,
+      "note": "En 1919, les bureaux de la chancellerie sont transférés dans le 16ᵉ arrondissement, d'abord rue La Pérouse. Le numéro précis n'est pas établi par les sources disponibles. Le bâtiment de l'avenue Hoche devient alors résidence officielle de l'ambassadeur."
+    },
+    {
+      "from": "~1930", "to": "1940",
+      "address": "rue Greuze, 75116",
+      "kind": "chancery",
+      "lat": 48.8610, "lon": 2.2842,
+      "note": "La chancellerie se déplace rue Greuze (16ᵉ). Les sources mentionnent les numéros 6 et 8 comme adresses d'ambassade dans cette rue ; le numéro exact de la chancellerie japonaise n'est pas confirmé."
+    },
+    {
+      "from": "1906", "to": "1919",
+      "address": "7 avenue Hoche, 75008",
+      "kind": "residence",
+      "lat": 48.8773, "lon": 2.3042,
+      "note": "Résidence de l'ambassadeur dans le bâtiment acheté en 1906, avant que les bureaux ne soient transférés en 1919."
+    },
+    {
+      "from": "1919", "to": "1940",
+      "address": "7 avenue Hoche, 75008",
+      "kind": "residence",
+      "lat": 48.8773, "lon": 2.3042,
+      "note": "Après le transfert des bureaux rue La Pérouse puis rue Greuze, le bâtiment de l'avenue Hoche est conservé comme résidence officielle de l'ambassadeur."
+    },
+    {
+      "from": "1940", "to": "1952",
+      "address": "Paris / en province",
+      "kind": "embassy",
+      "lat": null, "lon": null,
+      "note": "Période de la Seconde Guerre mondiale. L'ambassade est déplacée plusieurs fois en région. Avec la libération de Paris en août 1944 et la reconnaissance internationale du Gouvernement provisoire de la République française (octobre 1944), la France entre en état de belligérance avec le Japon et les relations diplomatiques sont rompues de facto. Le traité de San Francisco (signé le 8 septembre 1951, entré en vigueur le 28 avril 1952, ratifié par la France par la loi n°52-393 du 11 avril 1952) met fin à l'état de guerre et rétablit les relations diplomatiques franco-japonaises."
+    },
+    {
+      "from": "1952", "to": "1969",
+      "address": "7 avenue Hoche, 75008",
+      "kind": "embassy",
+      "lat": 48.8773, "lon": 2.3042,
+      "note": "Réouverture de l'ambassade avenue Hoche après le rétablissement des relations diplomatiques. Chancellerie et résidence cohabitent à nouveau dans le bâtiment."
+    },
+    {
+      "from": "1965", "to": "1970",
+      "address": "31 rue du Faubourg Saint-Honoré, 75008",
+      "building": "Hôtel Pillet-Will (démoli 1967) / résidence Sakakura-Prouvé-Perriand",
+      "kind": "residence",
+      "lat": 48.8693, "lon": 2.3163,
+      "note": "L'ambassade acquiert en 1965 l'hôtel Pillet-Will (construit en 1718, acheté en 1887 par le comte Frédéric Pillet-Will). En 1967, l'hôtel est démoli pour laisser place à une construction moderne conçue par l'architecte japonais Junzo Sakakura ; les deux façades reçoivent des murs-rideaux dessinés par l'atelier Jean Prouvé et le mobilier est réalisé par Charlotte Perriand. La résidence est inaugurée en avril 1970, peu après la mort de Sakakura.",
+      "current": true
+    },
+    {
+      "from": "1970", "to": null,
+      "address": "7 avenue Hoche, 75008",
+      "kind": "chancery",
+      "lat": 48.8773, "lon": 2.3042,
+      "current": true,
+      "note": "Entre 1969 et 1970, la résidence de l'ambassadeur est transférée au 31 rue du Faubourg Saint-Honoré et les bureaux de la chancellerie retournent avenue Hoche. L'édifice original est remplacé par un bâtiment moderne. Adresse actuelle de la chancellerie."
+    }
+  ]
+}

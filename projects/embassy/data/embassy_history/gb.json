@@ -1,0 +1,709 @@
+{
+  "host": {
+    "code": "GB",
+    "name": "United Kingdom",
+    "capital": "London"
+  },
+  "note": "Coordonnées géocodées manuellement à la précision de la rue.",
+  "embassies": {
+    "CA": {
+      "name": "Canada",
+      "flag": "ca",
+      "current": {
+        "chancery": "Canada House, Trafalgar Square, Londres SW1Y 5BJ",
+        "residence": "3 Upper Brook Street, Mayfair, Londres W1K 7PL"
+      },
+      "addresses": [
+        {
+          "from": "1880",
+          "to": "1925",
+          "address": "Victoria Street, Westminster, Londres SW1",
+          "kind": "high_commission",
+          "lat": 51.4982,
+          "lon": -0.1359,
+          "note": "En 1880, le Canada est le premier pays du Commonwealth à établir un haut-commissariat à Londres — sa première mission diplomatique permanente à l'étranger. Sir Alexander Tilloch Galt est nommé premier haut-commissaire. Durant les décennies suivantes, les services canadiens sont dispersés dans plusieurs bureaux loués sur Victoria Street et dans les logements des hauts-commissaires successifs, soit quelque 200 employés au moment du déménagement à Canada House."
+        },
+        {
+          "from": "1925",
+          "to": null,
+          "address": "Canada House, Trafalgar Square, Londres SW1Y 5BJ",
+          "building": "Canada House (ancien Union Club / ancienne Royal College of Physicians, arch. Sir Robert Smirke, 1824-1827)",
+          "kind": "chancery",
+          "lat": 51.5079,
+          "lon": -0.1293,
+          "current": true,
+          "note": "Le bâtiment, de style néo-grec, est érigé entre 1824 et 1827 par l'architecte Sir Robert Smirke (également auteur du British Museum). Il abrite d'abord l'Union Club (aile ouest, côté Trafalgar Square) et le Royal College of Physicians (aile est, angle Cockspur Street). En 1923, le haut-commissaire Peter Charles Larkin achète l'aile de l'Union Club pour £ 223 000 ; des rénovations dirigées par l'architecte Septimus Warwick (1,3 M$ CAD) déplacent l'entrée principale de Trafalgar Square vers Cockspur Street. Le roi George V et la reine Mary inaugurent officiellement Canada House le 29 juin 1925. En 1993, le gouvernement canadien ferme le bâtiment envisageant de le vendre ; décision annulée après le changement de gouvernement, et des travaux de rénovation sont entrepris à partir de 1997 ; la reine Élisabeth II, en sa qualité de reine du Canada, le rouvre en mai 1998. En 2013, le Canada acquiert le bâtiment mitoyen 2-4 Cockspur Street (construit en 1926-1929 pour Sun Life Assurance, quartier général de l'armée canadienne pendant la Seconde Guerre mondiale) et y regroupe tous ses services diplomatiques en décembre 2014, après la vente de Macdonald House. La reine Élisabeth II inaugure les locaux rénovés et agrandis le 19 février 2015."
+        },
+        {
+          "from": "1948",
+          "to": null,
+          "address": "3 Upper Brook Street, Mayfair, Londres W1K 7PL",
+          "kind": "residence",
+          "lat": 51.5099,
+          "lon": -0.1543,
+          "current": true,
+          "note": "En 1948-1949, le gouvernement canadien fait largement reconstruire ce hôtel particulier de Mayfair pour en faire la résidence officielle du haut-commissaire. Les travaux, exécutés par Trollope and Colls Limited sur plans de l'architecte Thomas E. Scott, reconfigurent la façade en style néo-géorgien et réaménagent profondément les étages de réception. La résidence est distincte de la chancellerie et continue d'être utilisée après la consolidation de 2014 à Canada House."
+        },
+        {
+          "from": "1961",
+          "to": "2014",
+          "address": "1 Grosvenor Square (Macdonald House), Mayfair, Londres W1K 4AB",
+          "building": "Macdonald House (ancienne ambassade américaine, 1938-1960)",
+          "kind": "chancery",
+          "lat": 51.5122,
+          "lon": -0.151,
+          "note": "Le bâtiment du 1 Grosvenor Square avait abrité l'ambassade des États-Unis de 1938 à 1960 (voir GB_US). Le Canada l'acquiert et le rebaptise Macdonald House en l'honneur du premier Premier ministre canadien, Sir John A. Macdonald ; il est inauguré par le haut-commissariat le 1ᵉʳ juillet 1961 (Dominion Day). Le bâtiment accueille les fonctions culturelles, consulaires, commerciales et administratives du haut-commissariat, ainsi qu'un temps la résidence du haut-commissaire. En février 2013, le gouvernement canadien annonce la vente de Macdonald House au promoteur indien Lodha Group pour £ 306 millions (environ 530 M$ CAD), dans le cadre d'une consolidation diplomatique à Canada House. La vente est finalisée en mars 2014 ; le bâtiment est évacué en décembre 2014. Le promoteur démolit l'immeuble tout en reconstruisant sa façade néo-géorgienne dans un nouveau complexe résidentiel de luxe baptisé « No. 1 Grosvenor Square »."
+        }
+      ]
+    },
+    "CN": {
+      "name": "China",
+      "flag": "cn",
+      "current": {
+        "chancery": "49-51 Portland Place, Londres W1B 1JL",
+        "residence": "49-51 Portland Place, Londres W1B 1JL (résidence intégrée à la chancellerie)"
+      },
+      "addresses": [
+        {
+          "from": "1877",
+          "to": "1912",
+          "address": "49 Portland Place, Marylebone, Londres W1B",
+          "building": "Maison Adam (1785), légation impériale Qing",
+          "kind": "legation",
+          "lat": 51.5211,
+          "lon": -0.1459,
+          "note": "La première légation permanente de Chine à l'étranger est établie le 7 février 1877, lors de l'arrivée à Londres du premier ministre plénipotentiaire Guo Songtao à la tête d'une délégation de quarante personnes. Sa création découle de la convention de Chefoo (1876) : l'Empire Qing accepte d'envoyer un représentant présenter des excuses officielles à la reine Victoria pour l'assassinat du consul britannique Augustus Raymond Margary en 1875 au Yunnan. Les bâtiments du n° 49 avaient été construits en 1785 par les architectes Robert et James Adam. En octobre 1896, le révolutionnaire Sun Yat-sen est séquestré pendant douze jours par les agents de la légation, avant d'être libéré grâce à la pression exercée par son ami James Cantlie sur les autorités britanniques — cet épisode donne à Sun une célébrité internationale. En 1912, la fin de la dynastie Qing et l'avènement de la République de Chine ne modifient pas immédiatement l'adresse."
+        },
+        {
+          "from": "1912",
+          "to": "1926",
+          "address": "49 Portland Place, Marylebone, Londres W1B",
+          "building": "Légation de la République de Chine",
+          "kind": "legation",
+          "lat": 51.5211,
+          "lon": -0.1459,
+          "note": "Après la proclamation de la République de Chine en 1912, la légation reste au 49 Portland Place. Le Royaume-Uni reconnaît la République de Chine en 1913. La légation occupe le seul n° 49 jusqu'en 1926."
+        },
+        {
+          "from": "1926",
+          "to": "1935",
+          "address": "49-51 Portland Place, Marylebone, Londres W1B",
+          "building": "Légation de la République de Chine (double bâtiment Adam)",
+          "kind": "legation",
+          "lat": 51.5211,
+          "lon": -0.1459,
+          "note": "En 1926, le gouvernement chinois loue le n° 51 attenant et obtient un bail de 999 ans sur les deux immeubles (nos 49 et 51 Portland Place). La mission occupe ainsi deux maisons contiguës du XVIIIe siècle construites par Robert et James Adam. La légation est encore à ce stade de rang inférieur à une ambassade."
+        },
+        {
+          "from": "1935",
+          "to": "1950",
+          "address": "49-51 Portland Place, Marylebone, Londres W1B",
+          "building": "Ambassade de la République de Chine",
+          "kind": "embassy",
+          "lat": 51.5211,
+          "lon": -0.1459,
+          "note": "En 1935, le Royaume-Uni élève le niveau de la représentation diplomatique chinoise au rang d'ambassade, transformant la légation en ambassade de la République de Chine — une décision motivée par la volonté de protéger les intérêts commerciaux britanniques en Chine à l'heure où Tchang Kaï-chek et les communistes se disputent le contrôle du pays. Le 6 janvier 1950, le gouvernement britannique retire sa reconnaissance à la République de Chine (réfugiée à Taïwan depuis 1949) et reconnaît officiellement la République populaire de Chine, devenant ainsi la première grande puissance occidentale à le faire. La mission devient alors celle de la RPC."
+        },
+        {
+          "from": "1950",
+          "to": "1954",
+          "address": "49-51 Portland Place, Marylebone, Londres W1B",
+          "building": "Mission de la République populaire de Chine (chargé d'affaires)",
+          "kind": "legation",
+          "lat": 51.5211,
+          "lon": -0.1459,
+          "note": "Après la reconnaissance de la RPC par le Royaume-Uni le 6 janvier 1950, les deux pays n'élèvent pas immédiatement leurs missions au rang d'ambassade en raison des tensions liées à la guerre de Corée. J. C. Hutchison est nommé chargé d'affaires britannique à Pékin, et une représentation similaire à titre provisoire s'installe à Londres. Des relations au niveau chargé d'affaires sont officiellement établies le 17 juin 1954."
+        },
+        {
+          "from": "1954",
+          "to": "1972",
+          "address": "49-51 Portland Place, Marylebone, Londres W1B",
+          "building": "Mission diplomatique de la RPC (chargé d'affaires)",
+          "kind": "embassy",
+          "lat": 51.5211,
+          "lon": -0.1459,
+          "note": "À partir du 17 juin 1954, les relations sino-britanniques sont officiellement établies au niveau de chargé d'affaires. Malgré l'existence de cette représentation, le Royaume-Uni et la RPC n'échangent pas d'ambassadeurs avant 1972, notamment en raison des divergences sur la question de Taïwan et des séquelles de la guerre de Corée. En août 1967, lors de la Révolution culturelle, des gardes rouges mettent le feu à la chancellerie britannique à Pékin, et des manifestants attaquent la mission chinoise à Londres."
+        },
+        {
+          "from": "1972",
+          "to": "1980",
+          "address": "49-51 Portland Place, Marylebone, Londres W1B",
+          "building": "Ambassade de la RPC (bâtiment Adam original)",
+          "kind": "embassy",
+          "lat": 51.5211,
+          "lon": -0.1459,
+          "note": "Le 13 mars 1972, le Royaume-Uni et la République populaire de Chine élèvent leurs relations diplomatiques au niveau d'ambassadeur par un communiqué conjoint signé à Pékin — sous le gouvernement du Premier ministre Edward Heath (conservateur). Le premier ambassadeur britannique en RPC, sir John Mansfield Addis, présente ses lettres de créance au président par intérim Dong Biwu. Cette normalisation intervient dans le sillage de la visite historique de Nixon en Chine (février 1972). Dès 1973, les autorités britanniques acceptent la demande chinoise de démolir les deux maisons Adam classées (Grade II listed) pour les remplacer par un bâtiment unique. La démolition a lieu en 1980."
+        },
+        {
+          "from": "1983",
+          "to": null,
+          "address": "49-51 Portland Place, Marylebone, Londres W1B 1JL",
+          "building": "Ambassade de la RPC (bâtiment reconstruit 1983-1985)",
+          "kind": "chancery",
+          "lat": 51.5211,
+          "lon": -0.1459,
+          "current": true,
+          "note": "Après démolition des maisons Adam en 1980, un nouveau bâtiment unique est édifié sur les parcelles des nos 49 et 51 Portland Place entre 1983 et 1985 ; il entre en service en 1983 et est achevé en 1985. Le nouveau bâtiment s'efforce de respecter l'échelle et le style de Portland Place, conservant quelques éléments architecturaux (pilastres, une porte ancienne) en lieu et place des deux entrées d'origine. L'ambassade et la résidence de l'ambassadeur y sont toutes deux hébergées. La Chine détient un bail de 999 ans sur le site."
+        },
+        {
+          "from": "2018",
+          "to": null,
+          "address": "Royal Mint Court, EC3N 4QN, Tower Hill, London Borough of Tower Hamlets",
+          "building": "Futur campus diplomatique (David Chipperfield Architects) — en attente de construction",
+          "kind": "chancery",
+          "lat": 51.5097,
+          "lon": -0.0716,
+          "note": "En mai 2018, la Chine achète l'ensemble immobilier de Royal Mint Court (ancienne Monnaie royale, jouxtant la Tour de Londres, borough de Tower Hamlets) pour y établir une nouvelle « super-ambassade ». David Chipperfield Architects est désigné architecte en 2020. Le projet, estimé à 255 millions de livres sterling, prévoit un vaste campus diplomatique incorporant des fonctions culturelles et accessibles au public. La demande de permis de construire initiale est refusée par le conseil de Tower Hamlets le 9 décembre 2024 (comité de développement stratégique), notamment en raison de préoccupations liées à la sécurité (présence à proximité de la Tour de Londres et du Centre des opérations de la police métropolitaine), aux droits humains (répression des Ouïghours) et à l'échelle du projet. La secrétaire d'État à l'Aménagement Angela Rayner (puis Steve Reed) reprend le dossier en main (call-in, octobre 2024). En janvier 2025, la Police métropolitaine retire ses objections de sécurité. Le 20 janvier 2026, le secrétaire d'État au Logement et aux Communautés Steve Reed approuve le projet, suivant les conclusions de l'inspecteur de planification. Le permis est ainsi accordé malgré l'opposition du conseil de Tower Hamlets et de nombreux élus et militants (manifestations « Say No to China's Mega Embassy »). La construction n'a pas encore débuté au moment de la rédaction de cette notice."
+        }
+      ]
+    },
+    "DE": {
+      "name": "Germany",
+      "flag": "de",
+      "current": {
+        "chancery": "23 Belgrave Square / Chesham Place, London SW1X 8PZ",
+        "residence": "21 Belgrave Square (Schomberg House), London SW1X 8PZ"
+      },
+      "addresses": [
+        {
+          "from": "1842",
+          "to": "1849",
+          "address": "4 Carlton House Terrace, London SW1Y",
+          "kind": "legation",
+          "lat": 51.5059,
+          "lon": -0.1325,
+          "note": "La légation prussienne s'installe au 4 Carlton House Terrace en 1842 sous la conduite du ministre Christian Charles Josias von Bunsen. C'est la première représentation diplomatique permanente de la Prusse à Londres. L'élégant Carlto House Terrace, dessiné par John Nash, est alors l'adresse la plus prestigieuse de la capitale britannique."
+        },
+        {
+          "from": "1849",
+          "to": "1914",
+          "address": "9 Carlton House Terrace, London SW1Y 5AG",
+          "building": "Prussia House (9 Carlton House Terrace)",
+          "kind": "legation",
+          "lat": 51.5059,
+          "lon": -0.132,
+          "note": "En mars 1849 la légation déménage au 9 Carlton House Terrace, rebaptisé « Prussia House ». Son acquisition est autorisée par le Prussian Legation Act 1850. Le comte Bernstorff succède au baron von Bunsen en 1855 et prend le titre d'ambassadeur dès 1867, lors de la création de la Confédération de l'Allemagne du Nord. Après la proclamation du IIᵉ Reich en 1871, la mission devient l'ambassade d'Allemagne. La rupture diplomatique de la Première Guerre mondiale (août 1914) met fin à l'occupation ; entre 1916 et 1917, le bâtiment est occupé par l'ambassade des États-Unis (puissance protectrice), puis par la légation suisse (1918-1920)."
+        },
+        {
+          "from": "1921",
+          "to": "1939",
+          "address": "8-9 Carlton House Terrace, London SW1Y 5AG",
+          "building": "Prussia House étendu (8 et 9 Carlton House Terrace)",
+          "kind": "embassy",
+          "lat": 51.5059,
+          "lon": -0.1322,
+          "note": "La République de Weimar rétablit l'ambassade à Carlton House Terrace en 1921. En 1923, le n° 8 est adjoint au n° 9 pour former un bâtiment étendu, projet achevé en 1936. En 1937, l'ambassadeur Joachim von Ribbentrop inaugure les locaux rénovés (travaux estimés à 100 000 £). En septembre 1939, à l'annonce de la déclaration de guerre britannique, le personnel brûle ses archives et quitte les lieux. Les bâtiments sont saisis comme propriété ennemie ; ils abritent aujourd'hui la Royal Society (nos 6-9)."
+        },
+        {
+          "from": "1950",
+          "to": "1951",
+          "address": "23 Belgrave Square, London SW1X 8PZ",
+          "kind": "consulate",
+          "lat": 51.4981,
+          "lon": -0.1541,
+          "note": "Après la création de la République fédérale d'Allemagne (mai 1949), un consulat général de la RFA est ouvert à Londres en 1950 au 23 Belgrave Square, dans l'une des trois maisons géorgiennes construites vers 1825 par l'architecte George Basevi. C'est l'amorce du rétablissement des relations diplomatiques germano-britanniques."
+        },
+        {
+          "from": "1951",
+          "to": "1955",
+          "address": "23 Belgrave Square, London SW1X 8PZ",
+          "building": "23 Belgrave Square (George Basevi, v. 1825)",
+          "kind": "embassy",
+          "lat": 51.4981,
+          "lon": -0.1541,
+          "note": "En juin 1951 le consulat général est élevé au rang d'ambassade, marquant le plein rétablissement des relations diplomatiques entre la RFA et le Royaume-Uni. En 1953, la RFA prend à bail pour 99 ans les numéros 21-23 Belgrave Square. Les trois maisons georgiennes en rangée, classées Grade I depuis 1958, sont alors réunies en un seul édifice : les n° 21 et 22 constituent la résidence de l'ambassadeur, le n° 23 la chancellerie. L'ambassade est pleinement opérationnelle dans sa nouvelle configuration à partir de 1955."
+        },
+        {
+          "from": "1955",
+          "to": null,
+          "address": "23 Belgrave Square / Chesham Place, London SW1X 8PZ",
+          "building": "Chancellerie, 23 Belgrave Square + extension Chesham Place (1978)",
+          "kind": "chancery",
+          "lat": 51.4981,
+          "lon": -0.1541,
+          "current": true,
+          "note": "La chancellerie occupe le 23 Belgrave Square depuis 1955. Face à l'étroitesse des locaux dans les années 1970, une extension moderne est construite côté Chesham Place et inaugurée en 1978 ; l'entrée principale de l'ambassade se trouve désormais sur Chesham Place. Après la réunification allemande (3 octobre 1990), l'ex-ambassade de la RDA au 34 Belgrave Square est intégrée aux installations de l'ambassade unifiée. Le code postal SW1X 8PZ couvre l'ensemble du complexe."
+        },
+        {
+          "from": "1955",
+          "to": null,
+          "address": "21 Belgrave Square (Schomberg House), London SW1X 8PZ",
+          "building": "Schomberg House, 21 Belgrave Square (George Basevi, v. 1825)",
+          "kind": "residence",
+          "lat": 51.4983,
+          "lon": -0.1544,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur d'Allemagne occupe le 21 Belgrave Square, connu sous le nom de Schomberg House. Bâtiment classé Grade I, construit vers 1825 dans le style gréco-romain par George Basevi, il fait partie du bail de 99 ans conclu en 1953. La façade et les intérieurs ont fait l'objet d'une restauration complète en étroite collaboration avec Historic England, restituant l'état des années 1950 documenté par des photographies d'époque. La résidence sert à la fois de logement à l'ambassadeur et de lieu de réceptions officielles organisées par le gouvernement fédéral."
+        }
+      ]
+    },
+    "FR": {
+      "name": "France",
+      "flag": "fr",
+      "current": {
+        "chancery": "58 Knightsbridge (1 Albert Gate), London SW1X 7JT",
+        "residence": "11 Kensington Palace Gardens, London W8 4QP"
+      },
+      "addresses": [
+        {
+          "from": "c.1660",
+          "to": "c.1789",
+          "address": "diverses adresses, Londres (dont 23/26 Grosvenor Square)",
+          "building": "Derby House, 23/26 Grosvenor Square (XVIIIe siècle)",
+          "kind": "legation",
+          "lat": 51.5122,
+          "lon": -0.1518,
+          "note": "La France maintient une présence diplomatique permanente à Londres depuis le milieu du XVIIe siècle. Au XVIIIe siècle, la légation occupe successivement plusieurs hôtels particuliers du West End. Derby House, au 23/26 Grosvenor Square, est l'une des adresses notables des ambassadeurs français avant la Révolution. La place de Grosvenor Square, développée entre 1725 et 1731, est alors l'une des adresses les plus fashionables de Londres."
+        },
+        {
+          "from": "1789",
+          "to": "1794",
+          "address": "20 Portman Square, London W1H 7BG",
+          "building": "Home House (Robert Adam, 1775-1778)",
+          "kind": "embassy",
+          "lat": 51.5196,
+          "lon": -0.1548,
+          "note": "En 1789, le domaine de William Gale loue le 20 Portman Square à l'ambassadeur de France. Tout au long de la Révolution française, ce chef-d'œuvre néoclassique de Robert Adam sert de résidence à l'ambassadeur et d'ambassade. La mission diplomatique ferme en 1794 avec la déclaration de guerre entre la France révolutionnaire et la Grande-Bretagne. Le bâtiment, considéré comme le plus bel exemple londonien de l'œuvre d'Adam, est aujourd'hui un club privé."
+        },
+        {
+          "from": "1836",
+          "to": "1851",
+          "address": "Hertford House, Manchester Square, London W1U 3BN",
+          "building": "Manchester House / Hertford House (construit 1776-1778 pour le 4e duc de Manchester)",
+          "kind": "embassy",
+          "lat": 51.5168,
+          "lon": -0.1527,
+          "note": "Après la reprise des relations diplomatiques franco-britanniques sous la Monarchie de Juillet, l'ambassade de France s'installe à Hertford House (ancienne Manchester House, bâtie en 1776-1778), que les marquis de Hertford louent au gouvernement français entre 1836 et 1851, n'y résidant plus eux-mêmes. En 1853-1854, Grosvenor Square n° 25 est également utilisé brièvement comme résidence par l'ambassade en transition. Hertford House abrite aujourd'hui la Wallace Collection."
+        },
+        {
+          "from": "1853",
+          "to": null,
+          "address": "58 Knightsbridge (1 Albert Gate), London SW1X 7JT",
+          "building": "1 Albert Gate (Thomas Cubitt, 1843-1845)",
+          "kind": "chancery",
+          "lat": 51.5025,
+          "lon": -0.1581,
+          "current": true,
+          "note": "En 1853, sous l'ambassadeur Alexandre Walewski (fils naturel de Napoléon Iᵉʳ), la France loue le n° 1 Albert Gate à la Couronne pour 1 800 £ par an. L'édifice, construit par Thomas Cubitt en style palazzo italien (1843-1845), était alors la plus haute maison privée de Londres. La reine Victoria et le prince Albert y assistent à un Bal Costumé en 1854. En 1898, le gouvernement français achète le freehold à la Couronne. En 1899, à l'issue d'un bail emphytéotique de 999 ans accordé par les Ecclesiastical Commissioners, une extension de chancellerie est construite sur le terrain mitoyen, dessinée par Olivier Carré, architecte adjoint du ministère des Affaires étrangères, avec un salon de réception et une salle de bal à colonnes corinthiennes donnant sur Hyde Park. L'adresse postale est aujourd'hui 58 Knightsbridge, SW1X 7JT. Depuis 1947, l'ambassadeur ne réside plus dans ce bâtiment."
+        },
+        {
+          "from": "1947",
+          "to": null,
+          "address": "11 Kensington Palace Gardens, London W8 4QP",
+          "building": "No. 11 Kensington Palace Gardens (Sydney Smirke, 1852-1854)",
+          "kind": "residence",
+          "lat": 51.5081,
+          "lon": -0.191,
+          "current": true,
+          "note": "En 1946, l'ambassadeur René Massigli, premier ambassadeur de la France libérée, choisit le n° 11 Kensington Palace Gardens comme nouvelle résidence officielle, séparant ainsi résidence et chancellerie. Le bâtiment avait été construit en 1852-1854 par l'architecte Sydney Smirke pour Anselmo de Arroyave, marchand espagnol, et avait appartenu au 10e duc de Marlborough. Pendant la Seconde Guerre mondiale, il avait abrité des officiers de la Royal Air Force chargés du réseau de ballons de barrage protégeant Londres. La résidence est inaugurée officiellement en 1950. Un incendie la détruit presque entièrement en décembre 1992 (lors de travaux de réfection, sans mobilier) ; elle est entièrement reconstruite par des architectes et artisans français et britanniques et à nouveau inaugurée en 1997. Elle est meublée de pièces précieuses, de tapisseries des Gobelins et de Beauvais ainsi que de tapis de la Savonnerie des XVIIe et XVIIIe siècles. Kensington Palace Gardens est l'avenue la plus chère de la capitale britannique."
+        }
+      ]
+    },
+    "IN": {
+      "name": "India",
+      "flag": "in",
+      "current": {
+        "chancery": "India House, Aldwych, London WC2B 4NA",
+        "residence": "9 Kensington Palace Gardens, London W8 4QP"
+      },
+      "addresses": [
+        {
+          "from": "1920",
+          "to": "1930",
+          "address": "Adresse provisoire, Londres (locaux de l'India Office, Whitehall, SW1)",
+          "kind": "legation",
+          "lat": 51.5017,
+          "lon": -0.1266,
+          "note": "Par l'Order in Council du 13 août 1920 signé par le roi-empereur George V, un Haut-Commissaire pour l'Inde est institué à Londres, distinct de l'India Office dont il reprend les fonctions de représentation. L'Inde restant sous domination britannique directe, la mission n'est pas une ambassade au sens plein ; on parle alors techniquement de haut-commissariat (high commission), terme d'usage dans les relations entre membres du Commonwealth. Les premiers haut-commissaires opèrent depuis des locaux provisoires liés à l'India Office, Whitehall."
+        },
+        {
+          "from": "1930",
+          "to": null,
+          "address": "India House, Aldwych, London WC2B 4NA",
+          "building": "India House (Sir Herbert Baker & A. T. Scott, 1928–1930)",
+          "kind": "chancery",
+          "lat": 51.5127,
+          "lon": -0.1181,
+          "current": true,
+          "note": "India House est proposé en 1925 par le Haut-Commissaire Sir Atul Chandra Chatterjee, premier ressortissant indien à occuper ce poste (nommé fin 1924). L'édifice est conçu par Sir Herbert Baker en collaboration avec A. T. Scott et construit de 1928 à 1930 : sept étages, style baroque édouardien agrémenté d'éléments décoratifs indiens — chapiteaux ashokan, écrans en jaali, fresques d'artistes indiens formés spécialement à Londres et Rome. Il est inauguré solennellement le 8 juillet 1930 par le roi-empereur George V. Lors de l'indépendance de l'Inde (15 août 1947), l'India Office est dissous et India House devient le siège du Haut-Commissariat de l'Inde indépendante ; le terme « haut-commissariat » (et non ambassade) est maintenu parce que l'Inde et le Royaume-Uni sont membres du Commonwealth. En 1949, la Déclaration de Londres permet à l'Inde de devenir une République (26 janvier 1950) tout en restant membre à part entière du Commonwealth, le roi étant reconnu comme symbole de la libre association des nations membres : India House demeure ainsi le siège du Haut-Commissariat. Classé Grade II au titre du patrimoine historique depuis 1981."
+        },
+        {
+          "from": "c.1930",
+          "to": null,
+          "address": "9 Kensington Palace Gardens, London W8 4QP",
+          "kind": "residence",
+          "lat": 51.504,
+          "lon": -0.1878,
+          "current": true,
+          "note": "Résidence officielle du Haut-Commissaire de l'Inde au Royaume-Uni, située au n° 9 de Kensington Palace Gardens, avenue privée de la Couronne dont les deux extrémités sont gardées par la police diplomatique. La maison avait été la résidence londonienne de Sir Frederick Wills, 1er baronnet (1838–1909), de la famille Wills du tabac. Kensington Palace Gardens accueille depuis le milieu du XXe siècle un grand nombre de résidences diplomatiques et d'ambassades, lui valant le surnom de « Ambassadors' Row »."
+        }
+      ]
+    },
+    "IT": {
+      "name": "Italy",
+      "flag": "it",
+      "current": {
+        "chancery": "14 Three Kings' Yard, London W1K 4EH",
+        "residence": "4 Grosvenor Square, London W1K 6AN"
+      },
+      "addresses": [
+        {
+          "from": "1720",
+          "to": "1861",
+          "address": "53–54 Lincoln's Inn Fields (chapelle sur Duke Street, rebaptisée Sardinia Street), Westminster, Londres WC2A",
+          "building": "Chapelle de l'ambassade de Sardaigne (Sardinian Embassy Chapel)",
+          "kind": "legation",
+          "lat": 51.5155,
+          "lon": -0.1189,
+          "note": "La légation du Royaume de Sardaigne à Londres est établie à Lincoln's Inn Fields depuis 1720, en même temps que la formation du Royaume de Sardaigne sous Victor-Amédée II de Savoie (Traité de La Haye, 1720). Elle dispose d'une chapelle à l'angle de Duke Street et de Lincoln's Inn Fields. La rue Duke Street est ultérieurement rebaptisée Sardinia Street en souvenir de cette présence diplomatique. Sous Cavour, les relations entre Turin et Londres se renforcent considérablement, la Grande-Bretagne apportant un soutien moral et diplomatique au Risorgimento. La chapelle est démolie en 1909 lors du percement de Kingsway."
+        },
+        {
+          "from": "1861",
+          "to": "1863",
+          "address": "adresse non déterminée avec certitude, Londres",
+          "kind": "legation",
+          "lat": 51.5074,
+          "lon": -0.1278,
+          "note": "Lors de la proclamation du Royaume d'Italie le 17 mars 1861, la légation sarde à Londres est automatiquement convertie en légation du Royaume d'Italie auprès de la Cour de Saint-James. L'adresse exacte des premiers mois après l'unification n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1863",
+          "to": "1868",
+          "address": "49 Grosvenor Street, Mayfair, Londres W1K",
+          "kind": "legation",
+          "lat": 51.5118,
+          "lon": -0.148,
+          "note": "La légation italienne s'installe au 49 Grosvenor Street, dans le quartier de Mayfair. C'est la première adresse connue avec certitude de la mission diplomatique italienne après l'unification."
+        },
+        {
+          "from": "1875",
+          "to": "1876",
+          "address": "25 Grosvenor Street, Mayfair, Londres W1K",
+          "kind": "legation",
+          "lat": 51.5122,
+          "lon": -0.1492,
+          "note": "La légation italienne occupe brièvement le 25 Grosvenor Street avant de déménager vers Grosvenor Square. L'adresse de 1868 à 1875 n'a pas pu être établie avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1887",
+          "to": "1931",
+          "address": "19–20 Grosvenor Square, Mayfair, Londres W1K",
+          "kind": "embassy",
+          "lat": 51.5119,
+          "lon": -0.151,
+          "note": "La légation italienne s'installe au 19–20 Grosvenor Square en 1887. Elle est élevée au rang d'ambassade à cette période. L'ambassadeur Imperiali, dont la correspondance avec le Premier ministre britannique est conservée aux archives du Parlement, opère depuis cette adresse lors de la Première Guerre mondiale. Le bâtiment est démoli en 1933, après le déménagement de l'ambassade au n° 4 de la même place."
+        },
+        {
+          "from": "1931",
+          "to": null,
+          "address": "4 Grosvenor Square, Mayfair, Londres W1K 6AN",
+          "building": "Ambassade d'Italie (résidence de l'ambassadeur)",
+          "kind": "residence",
+          "lat": 51.5118,
+          "lon": -0.1498,
+          "current": true,
+          "note": "Le 25 mars 1931, Hugh Grosvenor, 2e duc de Westminster, accorde à l'État italien un bail de 200 ans pour £ 35 000 et £ 350 par an. La maison d'angle, construite vers 1728 par la famille Grosvenor lors du développement de Grosvenor Square, achevée en 1728 (façade reconstruite en 1865-1868 par l'entrepreneur C. J. Freake sur dessin de Thomas Cundy III), appartenait à l'époque au 7e comte Fitzwilliam, qui restitue le bail aux Grosvenors en 1931. L'intérieur est entièrement remanié en 1931-1934 par Lord Gerald Wellesley (cabinet Wellesley & Wills) pour accueillir l'ambassade. La résidence officielle de l'ambassadeur se trouve dans cet immeuble classé. En 2025, les intérieurs sont rénovés par le designer Nick Vinson en collaboration avec Avanti Architects, mettant en valeur le design et le mobilier italiens (Molteni, BB Italia, Flos)."
+        },
+        {
+          "from": "1931",
+          "to": null,
+          "address": "14 Three Kings' Yard, Mayfair, Londres W1K 4EH",
+          "building": "Chancellerie de l'ambassade d'Italie (bâtiment néo-georgien, 1931-1932)",
+          "kind": "chancery",
+          "lat": 51.5119,
+          "lon": -0.1493,
+          "current": true,
+          "note": "L'entrée de la chancellerie est située au fond d'une impasse privée, Three Kings' Yard, donnant sur Davies Street. Les anciennes écuries du n° 4 Grosvenor Square sont remplacées en 1931-1932 par un élégant bâtiment néo-georgien érigé comme chancellerie de l'ambassade d'Italie, pour un coût d'environ £ 21 250. Ce bâtiment constitue l'entrée administrative de l'ambassade, tandis que la résidence de l'ambassadeur reste au n° 4 Grosvenor Square. Depuis la proclamation de la République italienne en juin 1946, l'ambassade représente l'État républicain auprès de la Cour de Saint-James."
+        }
+      ]
+    },
+    "JP": {
+      "name": "Japan",
+      "flag": "jp",
+      "current": {
+        "chancery": "101-104 Piccadilly, London W1J 7JT",
+        "residence": "23 Kensington Palace Gardens, London W8 4QQ"
+      },
+      "addresses": [
+        {
+          "from": "1862",
+          "to": "1872",
+          "address": "adresse non établie avec certitude, Londres (West End)",
+          "kind": "legation",
+          "lat": 51.5085,
+          "lon": -0.1257,
+          "note": "La première mission officielle japonaise en Europe arrive à Londres en mai 1862, accueillie au Claridge's Hotel. Il s'agit alors d'une délégation temporaire shogunale, non d'une légation résidente permanente. À partir de 1869-1870, le Japon de Meiji envoie ses premiers représentants de façon semi-permanente en Grande-Bretagne. L'adresse exacte des premières années n'est pas documentée dans les sources publiques accessibles."
+        },
+        {
+          "from": "1872",
+          "to": "c.1900",
+          "address": "adresse non établie avec certitude, Londres (West End)",
+          "kind": "legation",
+          "lat": 51.5085,
+          "lon": -0.1257,
+          "note": "En 1872, le Japon ouvre sa première légation résidente permanente à Londres — l'une des toutes premières en Europe — dans le cadre de la politique d'ouverture et de modernisation de l'ère Meiji. Terashima Munenori (1832-1893) est le premier ministre résident, en poste en 1872-1873. Le gouvernement Meiji recherche activement l'établissement de relations diplomatiques avec les grandes puissances industrielles, et la Grande-Bretagne, première puissance navale mondiale, occupe une place centrale dans cette stratégie. La légation est l'une des premières ouvertes par le Japon en Europe, aux côtés de celles de Paris et Berlin. L'adresse précise dans le West End londonien des premières années n'a pu être déterminée dans les sources publiques."
+        },
+        {
+          "from": "c.1900",
+          "to": "1905",
+          "address": "4 Grosvenor Gardens, London SW1W 0DH",
+          "kind": "legation",
+          "lat": 51.4971,
+          "lon": -0.1501,
+          "note": "Au tournant du XXe siècle, la légation japonaise est installée au 4 Grosvenor Gardens, dans le quartier de Belgravia. C'est depuis cette adresse que le vicomte Hayashi Tadasu, ministre plénipotentiaire de 1900 à 1905, contribue à la négociation de l'Alliance anglo-japonaise signée le 30 janvier 1902 à Lansdowne House — premier traité d'alliance militaire en temps de paix conclu par la Grande-Bretagne, et premier accord de ce type entre une puissance européenne et une puissance asiatique. En décembre 1905, à la suite de la victoire japonaise dans la guerre russo-japonaise, la légation est élevée au rang d'ambassade, et Hayashi devient le premier ambassadeur japonais à la Cour de Saint-James."
+        },
+        {
+          "from": "1905",
+          "to": "1913",
+          "address": "4 Grosvenor Gardens, London SW1W 0DH",
+          "kind": "embassy",
+          "lat": 51.4971,
+          "lon": -0.1501,
+          "note": "La légation est élevée au rang d'ambassade en décembre 1905, le vicomte Hayashi Tadasu devenant le premier ambassadeur japonais en Grande-Bretagne. L'ambassade demeure à Grosvenor Gardens jusqu'au déménagement à Grosvenor Square vers 1913. L'Alliance anglo-japonaise, renouvelée en 1905 et en 1911, reste le pilier de la politique étrangère des deux pays en Asie. Lors de la Première Guerre mondiale (1914-1918), le Japon entre en guerre aux côtés de la Grande-Bretagne conformément aux engagements de l'Alliance."
+        },
+        {
+          "from": "1913",
+          "to": "1937",
+          "address": "10 Grosvenor Square, London W1K 6JP",
+          "kind": "embassy",
+          "lat": 51.5113,
+          "lon": -0.1514,
+          "note": "L'ambassade s'installe au 10 Grosvenor Square, l'une des plus prestigieuses adresses de Mayfair. L'Alliance anglo-japonaise, non renouvelée en 1923 sous pression américaine lors de la Conférence de Washington, prend fin. Les relations bilatérales se refroidissent progressivement au cours des années 1930 avec l'expansionnisme japonais en Mandchourie (1931) et en Chine (1937). L'ambassade quitte Grosvenor Square en 1937, le bâtiment accueille aujourd'hui le London Marriott Hotel."
+        },
+        {
+          "from": "1937",
+          "to": "1941",
+          "address": "adresse non établie avec certitude, Londres",
+          "kind": "embassy",
+          "lat": 51.5085,
+          "lon": -0.1257,
+          "note": "Entre le départ de Grosvenor Square en 1937 et la rupture des relations diplomatiques le 8 décembre 1941 (lendemain de l'attaque de Pearl Harbor), l'ambassade japonaise occupe des locaux londoniens dont l'adresse n'a pu être confirmée dans les sources accessibles. La Grande-Bretagne déclare la guerre au Japon le 8 décembre 1941 ; l'ambassade est fermée et le personnel diplomatique est interné puis rapatrié."
+        },
+        {
+          "from": "1952",
+          "to": "1989",
+          "address": "adresse non établie avec certitude, Londres",
+          "kind": "embassy",
+          "lat": 51.5085,
+          "lon": -0.1257,
+          "note": "Les relations diplomatiques entre le Japon et le Royaume-Uni sont rétablies avec l'entrée en vigueur du Traité de paix de San Francisco le 28 avril 1952, qui met officiellement fin à l'état de guerre. Une ambassade est rouverte à Londres. L'adresse exacte des locaux utilisés entre 1952 et l'installation définitive à Piccadilly en 1989 n'a pu être établie dans les sources publiques disponibles."
+        },
+        {
+          "from": "1989",
+          "to": null,
+          "address": "101-104 Piccadilly, London W1J 7JT",
+          "building": "Ancien Junior Constitutional Club (Colonel Robert William Edis, 1890)",
+          "kind": "chancery",
+          "lat": 51.5054,
+          "lon": -0.1461,
+          "current": true,
+          "note": "En 1989, l'ambassade du Japon s'installe dans l'ancien Junior Constitutional Club, un imposant édifice victorien achevé en 1890 sur les plans de l'architecte Colonel Robert William Edis, face à Green Park. Il fut le premier bâtiment de Londres à avoir sa façade entièrement revêtue de marbre. Le club lui-même ferma en 1941 après les dommages causés par la Seconde Guerre mondiale. Le bâtiment est classé Grade II. Il se distingue par ses grandes salles de réception et sa façade en marbre blanc caractéristique sur Piccadilly, à l'angle de White Horse Street."
+        },
+        {
+          "from": "c.1965",
+          "to": null,
+          "address": "23 Kensington Palace Gardens, London W8 4QQ",
+          "kind": "residence",
+          "lat": 51.5076,
+          "lon": -0.1921,
+          "current": true,
+          "note": "La résidence officielle de l'ambassadeur du Japon est établie au 23 Kensington Palace Gardens, avenue privée bordée de platanes au cœur de Kensington, où se concentrent de nombreuses résidences d'ambassadeurs. Le bâtiment, construit vers 1965 dans un style moderniste, contraste avec les demeures victoriennes voisines. Kensington Palace Gardens est l'artère la plus chère du Royaume-Uni."
+        }
+      ]
+    },
+    "RU": {
+      "name": "Russia",
+      "flag": "ru",
+      "current": {
+        "chancery": "6/7 Kensington Palace Gardens, London W8 4QP",
+        "residence": "13 Kensington Palace Gardens (Harrington House), London W8 4QX"
+      },
+      "addresses": [
+        {
+          "from": "1707",
+          "to": "c.1762",
+          "address": "adresses diverses, Londres (Westminster et City)",
+          "kind": "legation",
+          "lat": 51.5074,
+          "lon": -0.1278,
+          "note": "La Russie envoie son premier représentant permanent à Londres en mai 1707 en la personne d'Andreï Artamonovitch Matveev, sur ordre de Pierre le Grand. Durant la première moitié du XVIIIe siècle, la légation impériale russe occupe plusieurs maisons de location dans la City et Westminster dont les adresses précises n'ont pas toutes pu être établies avec certitude."
+        },
+        {
+          "from": "c.1779",
+          "to": "c.1853",
+          "address": "36 Harley Street / 32 Welbeck Street, Marylebone, Londres W1G",
+          "kind": "legation",
+          "lat": 51.5206,
+          "lon": -0.1477,
+          "note": "En 1779, le Trésor impérial russe acquiert le 36 Harley Street pour £ 6 000, qui devient la résidence principale de l'ambassadeur. Une légation séparée est établie au 32 Welbeck Street, où une chapelle orthodoxe russe est également entretenue (rebâtie en 1864 par l'architecte James Thomson). C'est à Harley Street que réside le comte Semyon Romanovitch Vorontsov (1784–1806), le plus célèbre ambassadeur russe de l'époque : il restera à Londres même après sa retraite jusqu'à sa mort en 1832, acquérant une résidence de campagne à Richmond. Ses lettres sont adressées depuis Harley Street, Welbeck Street et Berners Street."
+        },
+        {
+          "from": "1853",
+          "to": "1917",
+          "address": "Chesham House, 30–31 Chesham Place, Belgravia, Londres SW1X 8DL",
+          "building": "Chesham House",
+          "kind": "embassy",
+          "lat": 51.4968,
+          "lon": -0.1553,
+          "note": "En 1852, les nos 30 et 31 de Chesham Place (Belgravia) sont réunis par le constructeur Cubitt en une vaste demeure — Chesham House — qui devient la résidence de l'ambassadeur impérial russe. À l'angle de Chesham Place et de Lyall Street, à quelques pas de Belgrave Square, ce bâtiment de style stucco victorien abrite l'ambassade de Russie pendant soixante-quatre ans. Après la révolution bolchevique d'octobre 1917, l'ambassade prend fait et cause pour les milieux blancs anti-bolcheviks et refuse d'obéir aux nouveaux maîtres de Moscou. Un drapeau impérial y est encore conservé, dont une section est aujourd'hui au musée de la guerre impériale (IWM)."
+        },
+        {
+          "from": "1924",
+          "to": "1927",
+          "address": "Chesham House, 30–31 Chesham Place, Belgravia, Londres SW1X 8DL",
+          "building": "Chesham House",
+          "kind": "embassy",
+          "lat": 51.4968,
+          "lon": -0.1553,
+          "note": "Le 1ᵉʳ février 1924, le gouvernement travailliste de Ramsay MacDonald accorde la reconnaissance de jure à l'URSS — premier État occidental de premier plan à le faire. L'Union soviétique prend le contrôle de Chesham House. La cohabitation tourne court : en mai 1927, le gouvernement conservateur de Stanley Baldwin ordonne la descente de police dans les locaux de la société commerciale soviétique ARCOS (All-Russian Co-operative Society) au 49 Moorgate, arguant d'espionnage prouvé par des télégrammes déchiffrés. Le Royaume-Uni rompt ses relations diplomatiques et consulaires avec l'URSS le 27 mai 1927. Chesham House est abandonnée."
+        },
+        {
+          "from": "1929",
+          "to": "1970",
+          "address": "5 Kensington Palace Gardens, Kensington, Londres W8 4QS",
+          "kind": "embassy",
+          "lat": 51.5078,
+          "lon": -0.1911,
+          "note": "Après la victoire travailliste aux élections de 1929, Ramsay MacDonald rétablit les relations diplomatiques avec l'URSS. Les Soviétiques quittent Chesham Place pour l'allée privée et arborée de Kensington Palace Gardens, surnommée « Millionnaires' Row ». En 1930, le gouvernement soviétique prend à bail le n° 13 (Harrington House) comme résidence de l'ambassadeur, en dépit des protestations des résidents. Les bâtiments de l'allée, construits entre 1844 et 1846 sur les plans de T. H. Wyatt et Brandon, sont d'imposantes villas de style italien. Pendant la Seconde Guerre mondiale, l'ambassade soviétique joue un rôle crucial dans la Grande Alliance (Churchill-Staline). La Guerre froide transforme l'ambassade en centre névralgique du renseignement soviétique à Londres."
+        },
+        {
+          "from": "1965",
+          "to": "1970",
+          "address": "site des nos 1–7 Kensington Palace Gardens (chantier), Kensington, Londres W8",
+          "kind": "chancery",
+          "lat": 51.5078,
+          "lon": -0.1911,
+          "note": "En 1965, dans le cadre de négociations immobilières réciproques URSS–Royaume-Uni, les Soviétiques acceptent un bail de 99 ans sur un vaste terrain d'environ 1,05 hectare couvrant les nos 1–7 de Kensington Palace Gardens. Une nouvelle chancellerie y est construite. En septembre 1971, dans le cadre de l'opération FOOT, le Premier ministre Edward Heath expulse 105 diplomates et agents soviétiques — la plus grande expulsion de services de renseignement par un seul gouvernement dans l'histoire. L'URSS réduit ses effectifs mais maintient l'ambassade."
+        },
+        {
+          "from": "1970",
+          "to": null,
+          "address": "6/7 Kensington Palace Gardens, Kensington, Londres W8 4QP",
+          "kind": "chancery",
+          "lat": 51.5078,
+          "lon": -0.1909,
+          "current": true,
+          "note": "Achevée en 1970, la nouvelle chancellerie soviétique aux nos 6–7 remplace l'ancienne occupation des bâtiments victoriens. Le n° 5 accueille la section consulaire. En juillet 1985, la défection d'Oleg Gordievsky (chef de la résidence du KGB à Londres) entraîne l'expulsion de 25 agents soviétiques. Après la dissolution de l'URSS le 25 décembre 1991, la Fédération de Russie assume la continuité de l'État soviétique et hérite de l'ensemble des locaux diplomatiques. L'affaire Litvinenko (2006) et l'empoisonnement Skripal à Salisbury (mars 2018) provoquent de nouvelles expulsions mutuelles (23 diplomates russes renvoyés par le Royaume-Uni en 2018). L'ambassade reste opérationnelle à Kensington Palace Gardens."
+        },
+        {
+          "from": "1930",
+          "to": null,
+          "address": "13 Kensington Palace Gardens (Harrington House), Kensington, Londres W8 4QX",
+          "building": "Harrington House",
+          "kind": "residence",
+          "lat": 51.5071,
+          "lon": -0.1904,
+          "current": true,
+          "note": "Harrington House, construite en 1852, tire son nom des comtes de Harrington dont elle fut la demeure. En 1924, le millionnaire sud-africain Sir Lewis Richardson acquiert la propriété et la fait transformer par l'architecte Sidney Parvin (suppression du campanile, remplacement du toit en pente par un toit plat, pour £ 25 000). À partir de 1930, le gouvernement soviétique en prend possession comme résidence officielle de l'ambassadeur. L'inscription « Harrington House » au fronton est alors effacée et remplacée par le numéro 13. La résidence accueille les ambassadeurs soviétiques puis russes sans interruption depuis lors. En 1989, Margaret Thatcher et Mikhaïl Gorbatchev s'accordent pour que le Royaume-Uni conserve le 14 Morisa Toreza à Moscou comme résidence de l'ambassadeur britannique, en échange du maintien du n° 13 comme résidence de l'ambassadeur russe à Londres."
+        }
+      ]
+    },
+    "US": {
+      "name": "United States",
+      "flag": "us",
+      "current": {
+        "chancery": "33 Nine Elms Lane, London SW11 7US",
+        "residence": "Winfield House, Outer Circle, Regent's Park, London NW1 4RX"
+      },
+      "addresses": [
+        {
+          "from": "1785",
+          "to": "1788",
+          "address": "9 Grosvenor Square (angle Brook Street / Duke Street), Westminster, Londres W1K",
+          "building": "Maison d'angle Brook Street / Duke Street",
+          "kind": "legation",
+          "lat": 51.5122,
+          "lon": -0.1484,
+          "note": "John Adams, premier ministre plénipotentiaire des États-Unis auprès de la Cour de Saint-James, prend ses fonctions en mai 1785 et loue cette maison d'angle (bail signé pour le n° 8, devenu n° 9) sur Grosvenor Square. C'est la première légation américaine à Londres — et dans tout le Royaume-Uni. Adams résidera ici jusqu'en mars 1788 avant de rentrer aux États-Unis pour devenir vice-président puis second président. Cinq futurs présidents américains serviront en tout comme ministre à Londres (Adams, Monroe, J. Q. Adams, Van Buren, Buchanan). La maison subsiste toujours ; une plaque commémorative y a été posée en 1933 par la Colonial Dames of America."
+        },
+        {
+          "from": "c.1790",
+          "to": "c.1863",
+          "address": "Great Cumberland Place, puis Piccadilly, Londres",
+          "kind": "legation",
+          "lat": 51.5138,
+          "lon": -0.1628,
+          "note": "Durant la première moitié du XIXe siècle, la légation américaine occupe plusieurs adresses successives dans le West End londonien, dont Great Cumberland Place (près de Marble Arch) et une adresse sur Piccadilly. Les adresses précises et les dates exactes de chaque déménagement n'ont pas pu être établies avec certitude à partir des sources disponibles."
+        },
+        {
+          "from": "1863",
+          "to": "1866",
+          "address": "98 Portland Place, Marylebone, Londres W1B",
+          "kind": "legation",
+          "lat": 51.5228,
+          "lon": -0.1454,
+          "note": "La légation américaine est installée au 98 Portland Place de 1863 à 1866, dans le quartier de Marylebone, à l'époque de la guerre de Sécession. L'ambassadeur Charles Francis Adams (fils de John Quincy Adams) œuvre depuis cet adresse pour prévenir la reconnaissance diplomatique de la Confédération par le Royaume-Uni."
+        },
+        {
+          "from": "1883",
+          "to": "1893",
+          "address": "123 Victoria Street, Westminster, Londres SW1E",
+          "kind": "legation",
+          "lat": 51.4985,
+          "lon": -0.1375,
+          "note": "La légation américaine est installée au 123 Victoria Street dans le quartier de Westminster à partir de 1883. Elle est élevée au rang d'ambassade en 1893, sous la présidence de Grover Cleveland : Thomas F. Bayard devient ainsi le premier ambassadeur américain à Londres, marquant l'élévation des relations anglo-américaines au plus haut niveau diplomatique. L'ambassade demeure à Victoria Street jusqu'en 1912."
+        },
+        {
+          "from": "1893",
+          "to": "1912",
+          "address": "123 Victoria Street, Westminster, Londres SW1E",
+          "kind": "embassy",
+          "lat": 51.4985,
+          "lon": -0.1375,
+          "note": "Après l'élévation de la légation en ambassade en 1893, les locaux de Victoria Street abritent la première ambassade américaine à Londres. Thomas F. Bayard, qui avait été secrétaire d'État sous Cleveland, présente ses lettres de créance à la reine Victoria le 17 septembre 1893 en tant que premier ambassadeur des États-Unis auprès de la Cour de Saint-James."
+        },
+        {
+          "from": "1912",
+          "to": "1938",
+          "address": "4 Grosvenor Gardens, Westminster, Londres SW1W",
+          "kind": "embassy",
+          "lat": 51.4965,
+          "lon": -0.148,
+          "note": "En 1912, l'ambassade quitte Victoria Street pour s'installer au 4 Grosvenor Gardens, dans le quartier de Westminster à proximité de Buckingham Palace. C'est à cette adresse qu'opèrent les ambassadeurs américains pendant la Première Guerre mondiale et les années de l'entre-deux-guerres, jusqu'au déménagement vers Grosvenor Square en 1938."
+        },
+        {
+          "from": "1938",
+          "to": "1960",
+          "address": "1 Grosvenor Square, Mayfair, Londres W1K 4AB",
+          "building": "Maison de Mayfair (aujourd'hui Macdonald House)",
+          "kind": "embassy",
+          "lat": 51.5122,
+          "lon": -0.151,
+          "note": "En 1938, l'ambassade s'installe au 1 Grosvenor Square, dans le quartier de Mayfair. L'ambassadeur Joseph P. Kennedy père (futur père du président John F. Kennedy) y réside avec sa famille. Pendant la Seconde Guerre mondiale, le quartier de Grosvenor Square accueille à la fois la chancellerie américaine et le quartier général du général Eisenhower — si bien que la place est surnommée « Little America ». Le bâtiment est revendu au Canada en 1961 et rebaptisé Macdonald House, siège du Haut-Commissariat canadien."
+        },
+        {
+          "from": "1960",
+          "to": "2017",
+          "address": "24 Grosvenor Square (façade ouest de la place), Mayfair, Londres W1A 2LQ",
+          "building": "Chancellerie Eero Saarinen (1960) — aujourd'hui The Chancery Rosewood",
+          "kind": "chancery",
+          "lat": 51.512,
+          "lon": -0.1532,
+          "note": "Une nouvelle chancellerie construite sur le côté ouest de Grosvenor Square est conçue par l'architecte finno-américain Eero Saarinen et inaugurée en 1960. Seul bâtiment de Saarinen au Royaume-Uni, cet édifice en pierre de Portland de dix étages est couronné d'un aigle en aluminium doré à l'envergure de 9,75 m (35 pieds), œuvre du sculpteur américain Theodore Roszak. C'est la plus grande ambassade américaine d'Europe occidentale à l'époque. En 2008, la décision est prise de quitter Grosvenor Square pour Nine Elms. L'ambassade y opère jusqu'en décembre 2017. Le bâtiment, racheté par QatarDiar, est transformé par David Chipperfield Architects en hôtel de luxe (The Chancery Rosewood), inauguré en 2025."
+        },
+        {
+          "from": "1955",
+          "to": null,
+          "address": "Winfield House, Outer Circle, Regent's Park, Londres NW1 4RX",
+          "building": "Winfield House (Barbara Hutton / gouvernement américain, 1936)",
+          "kind": "residence",
+          "lat": 51.5308,
+          "lon": -0.1644,
+          "current": true,
+          "note": "Winfield House est construite en 1936 pour la richissime héritière américaine Barbara Woolworth Hutton sur le domaine de Hertford-St. Dunstan dans Regent's Park. Pendant la Seconde Guerre mondiale, la Royal Air Force occupe la propriété. En 1946, Hutton la cède au gouvernement américain pour la somme symbolique d'un dollar. Après d'importants travaux de rénovation, elle devient la résidence officielle de l'ambassadeur américain à la Cour de Saint-James en 1955. Entourée de 4,9 hectares de jardins — le second plus grand jardin privé de Londres après celui de Buckingham Palace —, elle abrite depuis lors tous les ambassadeurs des États-Unis au Royaume-Uni."
+        },
+        {
+          "from": "2017",
+          "to": null,
+          "address": "33 Nine Elms Lane, Wandsworth, Londres SW11 7US",
+          "building": "Chancellerie KieranTimberlake (2017)",
+          "kind": "chancery",
+          "lat": 51.4828,
+          "lon": -0.1321,
+          "current": true,
+          "note": "En 2008, le gouvernement américain choisit un site à Nine Elms (London Borough of Wandsworth) au sud de la Tamise pour construire une nouvelle ambassade. Le cabinet d'architecture philadelphien KieranTimberlake remporte le concours en 2010. La construction débute en 2013. Cube de verre de douze étages habillé d'un réseau tridimensionnel de ETFE (éthylène tétrafluoroéthylène) et doté d'un bassin semi-circulaire sur sa façade sud, le bâtiment intègre de nombreuses technologies durables (cellules photovoltaïques, récupération des eaux de pluie, géothermie). L'ambassade ouvre ses portes au public le 13 décembre 2017 et est officiellement inaugurée le 16 janvier 2018 — le président Trump, qui avait initialement prévu d'assister à l'inauguration, annonce en janvier 2018 qu'il ne fera pas le déplacement, critiquant le coût du projet (environ un milliard de dollars) et l'éloignement du centre historique. C'est la plus grande ambassade américaine d'Europe occidentale, abritant quelque 800 agents et accueillant jusqu'à 1 000 visiteurs par jour."
+        }
+      ]
+    }
+  }
+}

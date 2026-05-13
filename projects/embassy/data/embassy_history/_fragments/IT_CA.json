@@ -1,0 +1,45 @@
+{
+  "name": "Canada",
+  "flag": "ca",
+  "current": {
+    "chancery": "Via Zara 30, 00198 Rome",
+    "residence": "Via Salaria 243, Rome"
+  },
+  "addresses": [
+    {
+      "from": "1947",
+      "to": null,
+      "address": "Via Salaria 243, Rome (quartiere Parioli)",
+      "building": "Villa Grazioli — casino nobile néo-gothique",
+      "kind": "residence",
+      "lat": 41.9223,
+      "lon": 12.5012,
+      "current": true,
+      "note": "Siège officiel de l'ambassade. Villa néo-gothique édifiée par la famille Grazioli Lante della Rovere à la fin du XIXe siècle sur les plans de l'architecte Riggi (1887), inspiré du gothique vénitien. Le casino nobile et l'ancienne portineria du domaine de Villa Grazioli accueillent la résidence de l'ambassadeur depuis l'ouverture de la légation en 1947. Le parc d'origine, loti dans les années 1920, a été en grande partie construit ; un petit jardin public subsiste entre via Panama et via Bruxelles."
+    },
+    {
+      "from": "1947",
+      "to": null,
+      "address": "Via Zara 30, 00198 Rome",
+      "kind": "chancery",
+      "lat": 41.9152,
+      "lon": 12.5089,
+      "current": true,
+      "note": "immeuble contemporain abritant la chancellerie, la section consulaire et la Mission permanente du Canada auprès des organisations internationales à Rome (FAO, PAM, FIDA). Le bâtiment, distinct de la villa de la Via Salaria, regroupe les services opérationnels de l'ambassade."
+    }
+  ],
+  "history": [
+    {
+      "from": "1947-10-13",
+      "to": "1948-06-26",
+      "kind": "legation",
+      "note": "Ouverture de la légation canadienne à Rome le 13 octobre 1947. Jean Désy, nommé le 13 août 1947, présente ses lettres de créance comme envoyé extraordinaire et ministre plénipotentiaire. Établie au lendemain de la Seconde Guerre mondiale, pendant laquelle le Canada avait déclaré la guerre à l'Italie (10 juin 1940) et participé à la campagne d'Italie (Sicile, Moro, Monte Cassino)."
+    },
+    {
+      "from": "1948-06-26",
+      "to": null,
+      "kind": "embassy",
+      "note": "La légation est élevée au rang d'ambassade le 26 juin 1948. Jean Désy devient le premier ambassadeur du Canada en Italie. L'ambassade exerce également une accréditation secondaire auprès de l'Albanie, de Malte et de Saint-Marin. Un consulat canadien est également maintenu à Milan."
+    }
+  ]
+}

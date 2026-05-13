@@ -1,0 +1,50 @@
+{
+  "name": "India",
+  "flag": "in",
+  "current": {
+    "chancery": "13-15 rue Alfred Dehodencq, 75016 Paris",
+    "residence": "9 avenue Charles-Floquet, 75007 Paris"
+  },
+  "addresses": [
+    {
+      "from": "1947",
+      "to": "1949",
+      "address": "Paris (adresse provisoire, 16ᵉ ou 7ᵉ)",
+      "kind": "legation",
+      "lat": 48.8600,
+      "lon": 2.2900,
+      "note": "Représentation diplomatique indienne provisoire ouverte peu après l'indépendance du 15 août 1947. La France est l'un des premiers pays à reconnaître la République de l'Inde. Adresse exacte non établie par les sources disponibles."
+    },
+    {
+      "from": "1949",
+      "to": null,
+      "address": "9 avenue Charles-Floquet (7ᵉ)",
+      "building": "Hôtel de Malborough",
+      "kind": "residence",
+      "lat": 48.8548,
+      "lon": 2.2985,
+      "current": true,
+      "note": "Hôtel particulier construit en 1912 par l'architecte René Sergent pour Jules Steinbach. En 1922, il devient la résidence de Consuelo Vanderbilt, duchesse de Marlborough. Acquis par l'Inde en 1949, il sert depuis lors de résidence officielle de l'ambassadeur indien à Paris. Le bâtiment est situé à l'angle de l'avenue Charles-Floquet et de la rue du Général-Lambert, à proximité de la tour Eiffel."
+    },
+    {
+      "from": "1949",
+      "to": null,
+      "address": "13-15 rue Alfred Dehodencq (16ᵉ)",
+      "kind": "chancery",
+      "lat": 48.8603,
+      "lon": 2.2702,
+      "current": true,
+      "note": "Chancellerie principale de l'ambassade de l'Inde, acquise dans les années 1940-1950 et occupée depuis le premier ambassadeur résident, Sardar H.S. Malik, nommé en octobre 1949. Le bâtiment est situé dans le 16ᵉ arrondissement, quartier diplomatique de Paris."
+    },
+    {
+      "from": "1949",
+      "to": null,
+      "address": "20-22 rue Albéric Magnard (16ᵉ)",
+      "kind": "consulate",
+      "lat": 48.8592,
+      "lon": 2.2745,
+      "current": true,
+      "note": "Section consulaire de l'ambassade de l'Inde, distincte de la chancellerie principale. Gère les visas, passeports et affaires consulaires (CPV). Depuis juillet 2025, les services consulaires sont traités directement par l'ambassade à cette adresse, VFS Global ayant cessé d'être le prestataire externalisé."
+    }
+  ]
+}
