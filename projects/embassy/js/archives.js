@@ -5,9 +5,9 @@
   var walkMarkers = window.EmbassyUtils.walkMarkers;
 
   function fmtRange(from, to) {
-    if (!to) return from + ' →';
+    if (!to) return from + ' \u2192';
     if (from === to) return from;
-    return from + '–' + to;
+    return from + '\u2013' + to;
   }
 
   function i18nDict() {
@@ -29,7 +29,6 @@
     });
   }
 
-  // Sorted-by-date navigation state, populated by renderPanel/buildMarkers.
   var ADDR_STATE = { sorted: [], markers: [], current: -1 };
 
   function sortedAddresses(emb) {
@@ -38,13 +37,13 @@
     });
   }
 
-  // Simple person silhouette — inline SVG renders identically across systems (no emoji font dependency).
   var PERSON_SVG = '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
                  + '<circle cx="8" cy="5" r="2.5" fill="currentColor"/>'
                  + '<path d="M2.8 14 C2.8 10.9, 5.1 8.8, 8 8.8 C10.9 8.8, 13.2 10.9, 13.2 14 Z" fill="currentColor"/>'
                  + '</svg>';
 
   var LAST_RENDER = { emb: null, hostName: null };
+
   function renderPanel(emb, hostName) {
     LAST_RENDER.emb = emb;
     LAST_RENDER.hostName = hostName;
@@ -62,7 +61,7 @@
     var titleTpl = t.archivesTitle || 'Two and a half centuries of <em>Parisian addresses</em>';
     html += '<h2 id="ap-title-h2" class="ap-title">' + titleTpl + '</h2>';
     var ledeTpl = t.archivesLede
-      || 'From the Hôtel de Valentinois where Benjamin Franklin signed the Franco-American alliance in 1778, to the chancery on Place de la Concorde — {n} successive addresses tell the story of American diplomacy in France.';
+      || 'From the H\u00f4tel de Valentinois where Benjamin Franklin signed the Franco-American alliance in 1778, to the chancery on Place de la Concorde \u2014 {n} successive addresses tell the story of American diplomacy in France.';
     html += '<p class="ap-lede">' + ledeTpl.replace('{n}', addrs.length) + '</p>';
     html += '<div class="ap-timeline">';
     addrs.forEach(function (e, i) {
@@ -80,7 +79,6 @@
     });
     html += '</div>';
     document.getElementById('ap-content').innerHTML = html;
-    // Wire click + keyboard on timeline entries
     document.querySelectorAll('#archives-panel .ap-entry').forEach(function (el) {
       el.addEventListener('click', function () {
         flyToIndex(parseInt(el.getAttribute('data-index'), 10));
@@ -116,8 +114,6 @@
       });
       var m = L.marker([e.lat, e.lon], { icon: icon, zIndexOffset: 800 });
       m.__archivesHistoric = true;
-      // No popup on historic markers — the side panel carries the full info, and an open popup
-      // hides the flag underneath. Clicking the marker just syncs the navigation cursor.
       m.on('click', function () {
         ADDR_STATE.current = i;
         updateNavCaption();
@@ -137,7 +133,6 @@
     var entry = document.querySelector('#archives-panel .ap-entry[data-index="' + ADDR_STATE.current + '"]');
     if (entry) {
       entry.classList.add('active');
-      // Scroll only the panel, not the document.
       var panel = document.getElementById('archives-panel');
       var er = entry.getBoundingClientRect();
       var pr = panel.getBoundingClientRect();
@@ -155,10 +150,10 @@
     var labelEl = nav.querySelector('.nc-label');
     if (addr) {
       dateEl.textContent = fmtRange(addr.from, addr.to);
-      labelEl.textContent = kindLabel(addr.kind) + ' · ' + (i + 1) + ' / ' + total;
+      labelEl.textContent = kindLabel(addr.kind) + ' \u00b7 ' + (i + 1) + ' / ' + total;
     } else {
-      dateEl.textContent = '—';
-      labelEl.textContent = total ? '— / ' + total : '—';
+      dateEl.textContent = '\u2014';
+      labelEl.textContent = total ? '\u2014 / ' + total : '\u2014';
     }
     nav.querySelector('.nav-first').disabled = i <= 0;
     nav.querySelector('.nav-prev').disabled = i <= 0;
@@ -190,51 +185,50 @@
     nav.querySelector('.nav-last').addEventListener('click', function () { flyToIndex(ADDR_STATE.sorted.length - 1); });
   }
 
-  function loadFr() {
-    if (ARCHIVES.data) return Promise.resolve(ARCHIVES.data);
-    if (typeof EMBASSY_HISTORY_FR !== 'undefined') {
-      ARCHIVES.data = EMBASSY_HISTORY_FR;
-      return Promise.resolve(ARCHIVES.data);
-    }
-    var inline = document.getElementById('embassy-history-fr');
-    if (inline && inline.textContent.trim()) {
-      try {
-        ARCHIVES.data = JSON.parse(inline.textContent);
-        return Promise.resolve(ARCHIVES.data);
-      } catch (e) {
-        console.warn('Inline embassy-history JSON parse failed, falling back to fetch:', e);
-      }
-    }
-    return fetch('data/embassy_history/fr.json')
+  var _fragmentCache = {};
+
+  function loadFragment(hostCode, guestCode) {
+    var key = hostCode + '_' + guestCode;
+    if (_fragmentCache[key]) return Promise.resolve(_fragmentCache[key]);
+    return fetch('data/embassy_history/_fragments/' + key + '.json')
       .then(function (r) {
-        if (!r.ok) throw new Error('fr.json HTTP ' + r.status);
+        if (!r.ok) throw new Error(key + '.json HTTP ' + r.status);
         return r.json();
       })
-      .then(function (j) { ARCHIVES.data = j; return j; });
+      .then(function (data) {
+        _fragmentCache[key] = data;
+        return data;
+      });
   }
 
-  window.__openArchives = function () {
-    loadFr().then(function (j) {
-      renderPanel(j.embassies.US, j.host.name);
-      var p = document.getElementById('archives-panel');
-      p.classList.add('open');
-      p.setAttribute('aria-hidden', 'false');
+  function getHostName(code) {
+    if (window.__manifestCountries && window.__manifestCountries[code]) {
+      return window.__manifestCountries[code].name;
+    }
+    return code;
+  }
+
+  window.__enterArchives = function (hostCode, guestCode, clickedMarker) {
+    if (ARCHIVES_MODE.active) exitArchivesMode();
+
+    var t = i18nDict();
+    var hostName = getHostName(hostCode);
+
+    var p = document.getElementById('archives-panel');
+    p.classList.add('open');
+    p.setAttribute('aria-hidden', 'false');
+    document.getElementById('ap-content').innerHTML =
+      '<p class="ap-eyebrow"><span class="stamp">' + escapeHtml(t.archives || 'Archives') + '</span><span>' + escapeHtml(t.loading || 'Loading\u2026') + '</span></p>';
+
+    loadFragment(hostCode, guestCode).then(function (frag) {
+      renderPanel(frag, hostName);
+      enterArchivesMode(clickedMarker, frag);
     }).catch(function (err) {
-      console.error('Archives load failed:', err);
-      var t = i18nDict();
+      console.error('Fragment load failed:', err);
       document.getElementById('ap-content').innerHTML =
         '<p class="ap-eyebrow"><span class="stamp">' + escapeHtml(t.archives || 'Archives') + '</span></p>' +
         '<p style="font-family:Fraunces,serif;color:#9e2b25">' + escapeHtml(t.dataUnavailable || 'Data unavailable') + ' (' + escapeHtml(err.message) + ').</p>';
-      document.getElementById('archives-panel').classList.add('open');
     });
-  };
-
-  // Re-render archives panel on language change (only if it has data).
-  window.__refreshArchives = function () {
-    if (!LAST_RENDER.emb) return;
-    renderPanel(LAST_RENDER.emb, LAST_RENDER.hostName);
-    updateNavCaption();
-    highlightActiveEntry();
   };
 
   window.__closeArchives = function () {
@@ -244,24 +238,14 @@
     exitArchivesMode();
   };
 
-  window.__toggleHistoric = function (on) {
-    var map = findMap();
-    if (!map) return;
-    loadFr().then(function (j) {
-      if (on) {
-        if (!ARCHIVES.layer) ARCHIVES.layer = buildMarkers(j.embassies.US);
-        ARCHIVES.layer.addTo(map);
-      } else if (ARCHIVES.layer) {
-        map.removeLayer(ARCHIVES.layer);
-      }
-    });
+  window.__refreshArchives = function () {
+    if (!LAST_RENDER.emb) return;
+    renderPanel(LAST_RENDER.emb, LAST_RENDER.hostName);
+    updateNavCaption();
+    highlightActiveEntry();
   };
 
-  // Archives MODE: dim other markers, surface historic flags, open panel.
-  // Entered by clicking the US-in-France marker; exited by closing the panel.
   var ARCHIVES_MODE = { active: false, dimmed: [], dimmedIcons: [] };
-
-  // Folium nests markers in FeatureGroups, so map.eachLayer doesn't see them directly. Walk recursively.
 
   function popupHtml(marker) {
     var p = marker.getPopup && marker.getPopup();
@@ -272,30 +256,26 @@
     return '';
   }
 
-  function enterArchivesMode(usMarker) {
+  function enterArchivesMode(clickedMarker, fragData) {
     if (ARCHIVES_MODE.active) return;
     ARCHIVES_MODE.active = true;
     var map = findMap();
     if (!map) return;
     walkMarkers(map, function (layer) {
-      if (layer === usMarker) return;
+      if (layer === clickedMarker) return;
       if (layer.__archivesHistoric) return;
       try {
         var prev = layer.options.opacity != null ? layer.options.opacity : 1;
         ARCHIVES_MODE.dimmed.push({ marker: layer, prev: prev });
         layer.setOpacity(0.22);
-        // divIcon markers (the embassy flag pins) don't honor setOpacity for inner HTML,
-        // so also tag their element for CSS desaturation.
         var el = layer.getElement && layer.getElement();
         if (el) { el.classList.add('archives-dimmed'); ARCHIVES_MODE.dimmedIcons.push(el); }
       } catch (e) {}
     });
-    if (usMarker) {
-      var usEl = usMarker.getElement && usMarker.getElement();
-      if (usEl) usEl.classList.add('archives-focused');
+    if (clickedMarker) {
+      var clickedEl = clickedMarker.getElement && clickedMarker.getElement();
+      if (clickedEl) clickedEl.classList.add('archives-focused');
     }
-    // Close any popup the click may have just opened (Folium's default G20-marker popup),
-    // and keep popups closed for the duration of archives mode so info bubbles never hide flags.
     map.closePopup();
     if (!map.__archivesPopupGuard) {
       map.__archivesPopupGuard = function (e) {
@@ -303,10 +283,12 @@
       };
       map.on('popupopen', map.__archivesPopupGuard);
     }
-    window.__toggleHistoric(true);
-    window.__openArchives();
-    // Default cursor: the current chancery; fall back to the latest entry. No auto-fly so the
-    // overview the user just landed on stays visible until they click prev/next or a timeline entry.
+
+    if (!ARCHIVES.layer && fragData) {
+      ARCHIVES.layer = buildMarkers(fragData);
+    }
+    if (ARCHIVES.layer) ARCHIVES.layer.addTo(map);
+
     setTimeout(function () {
       wireNavButtons();
       var idx = ADDR_STATE.sorted.findIndex(function (a) { return a.current && a.kind === 'chancery'; });
@@ -320,15 +302,12 @@
   }
 
   function exitArchivesMode() {
-    // Run unconditionally so a stale state from a previous session still gets cleaned up.
     ARCHIVES_MODE.active = false;
     ARCHIVES_MODE.dimmed.forEach(function (entry) {
       try { entry.marker.setOpacity(entry.prev); } catch (e) {}
     });
     ARCHIVES_MODE.dimmed = [];
     ARCHIVES_MODE.dimmedIcons = [];
-    // Belt-and-suspenders: sweep every leftover dimmed/focused element from the DOM, and
-    // re-walk the map to reset opacity on any marker whose tracking we may have missed.
     document.querySelectorAll('.archives-dimmed, .archives-focused').forEach(function (el) {
       el.classList.remove('archives-dimmed');
       el.classList.remove('archives-focused');
@@ -340,47 +319,20 @@
         try { m.setOpacity(1); } catch (e) {}
       });
     }
-    window.__toggleHistoric(false);
+    if (ARCHIVES.layer) {
+      var m = findMap();
+      if (m) m.removeLayer(ARCHIVES.layer);
+      ARCHIVES.layer = null;
+    }
     var nav = document.getElementById('archives-nav');
     if (nav) nav.classList.remove('visible');
     ADDR_STATE.current = -1;
   }
 
-  // Find the US embassy marker located in France (popup mentions "Embassy of United States" + "France (Paris)").
-  function findUsInFranceMarker() {
-    var map = findMap();
-    if (!map) return null;
-    var found = null;
-    walkMarkers(map, function (layer) {
-      if (found) return;
-      var html = popupHtml(layer);
-      if (html.indexOf('Embassy of United States') !== -1 &&
-          html.indexOf('France (Paris)') !== -1) {
-        found = layer;
-      }
-    });
-    return found;
-  }
-
-  function attachUsHandler() {
-    var marker = findUsInFranceMarker();
-    if (!marker || marker.__archivesBound) return marker;
-    marker.__archivesBound = true;
-    marker.on('click', function () { enterArchivesMode(marker); });
-    return marker;
-  }
-
-  // Surface the click target whenever France becomes the active host.
   var prevGoToCountry = window.goToCountry;
   window.goToCountry = function (lat, lon, name) {
+    if (ARCHIVES_MODE.active) window.__closeArchives();
     if (prevGoToCountry) prevGoToCountry.apply(this, arguments);
-    if (name === 'France') {
-      // Layer activation runs via input.click() in the existing helper — give it a tick.
-      setTimeout(attachUsHandler, 250);
-      setTimeout(attachUsHandler, 700);
-    } else {
-      window.__closeArchives();
-    }
   };
 
   document.addEventListener('keydown', function (e) {
