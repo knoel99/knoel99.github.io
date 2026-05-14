@@ -132,6 +132,18 @@ body {
   display: block;
   transition: transform 0.3s ease;
 }
+.project-preview.logo-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.project-preview.logo-preview img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
 .project-preview .js-badge {
   position: absolute;
   bottom: 10px;
@@ -267,8 +279,8 @@ body {
 
     <!-- Projet: DeepSeek V4 Paper Walkthrough -->
     <a class="project-card" href="projects/deepseek_v4_paper/">
-      <div class="project-preview">
-        <img src="https://image.thum.io/get/width/800/crop/450/noanimate/https://knoel99.github.io/projects/deepseek_v4_paper/" alt="Aperçu DeepSeek V4" loading="lazy">
+      <div class="project-preview logo-preview">
+        <img src="assets/deepseek-logo.svg" alt="DeepSeek V4" loading="lazy">
       </div>
       <div class="project-card-body">
         <div class="project-title">DeepSeek V4 - Paper Walkthrough FR</div>
@@ -288,7 +300,11 @@ body {
 
     <!-- Projet: JavaScript Guide -->
     <a class="project-card" href="projects/javascript/">
-      <div class="project-title">Comprendre JavaScript</div>
+      <div class="project-preview logo-preview">
+        <img src="assets/js-logo.svg" alt="JavaScript" loading="lazy">
+      </div>
+      <div class="project-card-body">
+        <div class="project-title">Comprendre JavaScript</div>
       <p class="project-desc">
         Guide profond des origines aux frameworks modernes. 10 chapitres progressifs avec contexte historique, diagrammes animes et tableaux comparatifs. Comprendre pourquoi, pas juste comment.
       </p>
@@ -297,12 +313,17 @@ body {
         <span class="tag">Concepts</span>
         <span class="tag">Frameworks</span>
         <span class="tag">Histoire</span>
+        </div>
       </div>
     </a>
 
     <!-- Projet: JavaScript Concepts -->
     <a class="project-card" href="projects/js-concepts/">
-      <div class="project-title">Les grands concepts de JavaScript</div>
+      <div class="project-preview logo-preview">
+        <img src="assets/js-logo.svg" alt="JavaScript" loading="lazy">
+      </div>
+      <div class="project-card-body">
+        <div class="project-title">Les grands concepts de JavaScript</div>
       <p class="project-desc">
         Guide interactif des concepts cles de JS (portees, closures, prototypes, event loop, async/await...)
         avec un executeur de code en ligne pour modifier et lancer chaque exemple dans le navigateur.
@@ -311,6 +332,7 @@ body {
         <span class="tag">JavaScript</span>
         <span class="tag">Interactif</span>
         <span class="tag">Pedagogie</span>
+        </div>
       </div>
     </a>
 
