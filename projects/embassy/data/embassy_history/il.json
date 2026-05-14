@@ -1,0 +1,406 @@
+{
+  "host": {
+    "code": "IL",
+    "name": "Israel",
+    "capital": "Jerusalem"
+  },
+  "note": "Diplomatic missions accredited to or located in Israel.",
+  "embassies": {
+    "AR": {
+      "name": "Argentina",
+      "flag": "ar",
+      "current": {
+        "chancery": "Suipacha 1351, 1011 Buenos Aires",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": null,
+          "address": "Suipacha 1351, 1011 Buenos Aires",
+          "kind": "embassy",
+          "lat": -34.6,
+          "lon": -58.38,
+          "current": true,
+          "note": "Israël établit des relations diplomatiques avec l'Argentine le 14 mai 1949, devenant le premier pays latino-américain à reconnaître l'État d'Israël. L'ambassade est ouverte à Buenos Aires. Les relations bilatérales sont marquées par l'attentat contre l'ambassade israélienne le 17 mars 1992, qui fait 29 morts, et l'attentat contre l'AMIA le 18 juillet 1994, qui fait 85 morts."
+        }
+      ]
+    },
+    "AU": {
+      "name": "Australia",
+      "flag": "au",
+      "current": {
+        "chancery": "6 Trelawney Street, Woolstonecraft, NSW 2065",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": null,
+          "address": "6 Trelawney Street, Woolstonecraft, NSW 2065",
+          "kind": "embassy",
+          "lat": -33.83,
+          "lon": 151.19,
+          "current": true,
+          "note": "L'Australie reconnaît l'État d'Israël en janvier 1949. L'ambassade israélienne est établie à Canberra. Les relations bilatérales portent notamment sur la coopération en matière de technologie, d'agriculture et de sécurité."
+        }
+      ]
+    },
+    "BR": {
+      "name": "Brazil",
+      "flag": "br",
+      "current": {
+        "chancery": "SES, Quadra 801, Lote 20, Brasília, DF 70200-010",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1951",
+          "to": "1960",
+          "address": "Rio de Janeiro (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -22.91,
+          "lon": -43.17,
+          "note": "Israël établit des relations diplomatiques avec le Brésil en 1949. La légation israélienne est d'abord établie à Rio de Janeiro, alors capitale du Brésil."
+        },
+        {
+          "from": "1960",
+          "to": null,
+          "address": "SES, Quadra 801, Lote 20, Brasília, DF 70200-010",
+          "kind": "embassy",
+          "lat": -15.8,
+          "lon": -47.88,
+          "current": true,
+          "note": "L'ambassade est transférée à Brasília après l'inauguration de la nouvelle capitale en 1960. Un consulat général fonctionne à São Paulo. Israël est l'un des premiers pays à ouvrir une ambassade dans la nouvelle capitale."
+        }
+      ]
+    },
+    "CA": {
+      "name": "Canada",
+      "flag": "ca",
+      "current": {
+        "chancery": "50 O'Connor Street, Suite 1005, Ottawa, ON K1P 6L2",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1953",
+          "to": null,
+          "address": "50 O'Connor Street, Suite 1005, Ottawa, ON K1P 6L2",
+          "kind": "embassy",
+          "lat": 45.42,
+          "lon": -75.69,
+          "current": true,
+          "note": "Le Canada reconnaît l'État d'Israël de facto en 1949 et de jure en 1953. L'ambassade israélienne est établie à Ottawa. Des consulats généraux fonctionnent à Montréal et à Toronto. Les relations bilatérales sont étroites dans les domaines commercial, technologique et culturel."
+        }
+      ]
+    },
+    "CN": {
+      "name": "China",
+      "flag": "cn",
+      "current": {
+        "chancery": "No. 14, Tianze Road, Liangmaqiao, Chaoyang District, Beijing 100600",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1992",
+          "to": null,
+          "address": "No. 14, Tianze Road, Liangmaqiao, Chaoyang District, Beijing 100600",
+          "kind": "embassy",
+          "lat": 39.95,
+          "lon": 116.47,
+          "current": true,
+          "note": "Israël établit des relations diplomatiques avec la République populaire de Chine le 24 janvier 1992. L'ambassade est ouverte à Pékin dans le quartier diplomatique de Liangmaqiao. Des consulats généraux fonctionnent à Chengdu, Guangzhou, Hong Kong et Shanghai. Les relations bilatérales se développent rapidement dans les domaines de la technologie, de l'agriculture et de la défense."
+        }
+      ]
+    },
+    "DE": {
+      "name": "Germany",
+      "flag": "de",
+      "current": {
+        "chancery": "Auguste-Viktoria-Straße 74, 14199 Berlin-Schmargendorf",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1965",
+          "to": "1966",
+          "address": "Ehrenfeld, Cologne",
+          "kind": "embassy",
+          "lat": 50.94,
+          "lon": 6.92,
+          "note": "Israël et la République fédérale d'Allemagne établissent des relations diplomatiques le 12 mai 1965. La première ambassade israélienne ouvre à Cologne dans le quartier d'Ehrenfeld le 24 août 1965."
+        },
+        {
+          "from": "1966",
+          "to": "1999",
+          "address": "Bad Godesberg, Bonn",
+          "kind": "embassy",
+          "lat": 50.68,
+          "lon": 7.16,
+          "note": "L'ambassade est transférée à Bonn, dans le quartier diplomatique de Bad Godesberg, en 1966. Israël maintient également un consulat général à Berlin-Ouest, Schinkelstraße 10, dans le quartier de Grunewald."
+        },
+        {
+          "from": "1999",
+          "to": null,
+          "address": "Auguste-Viktoria-Straße 74, 14199 Berlin-Schmargendorf",
+          "building": "Bâtiment de l'ambassade (Orit Willenberg-Giladi, 1999-2001)",
+          "kind": "embassy",
+          "lat": 52.4834,
+          "lon": 13.2887,
+          "current": true,
+          "note": "L'ambassade déménage à Berlin en août 1999, suite au transfert du siège du gouvernement allemand. Le bâtiment actuel, construit entre 1999 et 2001, est conçu par l'architecte israélienne Orit Willenberg-Giladi, fille de Samuel Willenberg, dernier survivant connu de la révolte de Treblinka d'août 1943. Un consulat général fonctionne à Munich. Coordonnées : 52°29′00″N 13°17′19″E."
+        }
+      ]
+    },
+    "FR": {
+      "name": "France",
+      "flag": "fr",
+      "current": {
+        "chancery": "3 rue Rabelais, 75008 Paris",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": null,
+          "address": "3 rue Rabelais, 75008 Paris",
+          "kind": "embassy",
+          "lat": 48.87,
+          "lon": 2.31,
+          "current": true,
+          "note": "La France reconnaît l'État d'Israël de facto en janvier 1949. L'ambassade est établie à Paris dans le 8ᵉ arrondissement. La France est un partenaire historique majeur d'Israël, ayant fourni un soutien militaire crucial dans les années 1950, notamment lors de la crise du canal de Suez en 1956 et dans le programme nucléaire de Dimona. L'ambassade est accréditée également auprès de Monaco."
+        }
+      ]
+    },
+    "GB": {
+      "name": "United Kingdom",
+      "flag": "gb",
+      "current": {
+        "chancery": "2 Palace Green, London W8 4QB",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": null,
+          "address": "2 Palace Green, London W8 4QB",
+          "building": "Maison Thackeray (1860-62)",
+          "kind": "embassy",
+          "lat": 51.5031,
+          "lon": -0.1894,
+          "current": true,
+          "note": "Le Royaume-Uni reconnaît l'État d'Israël de facto en janvier 1949. L'ambassade israélienne occupe une maison construite en 1860-62 pour l'écrivain William Makepeace Thackeray, en briques rouges à sa demande. Le bâtiment est classé Grade II* depuis 1969. Il est situé sur Kensington Palace Gardens, l'une des rues les plus sécurisées de Londres. Le 19 septembre 1972, un colis piégé tue le diplomate Ami Shachori. Le 3 juin 1982, l'ambassadeur Shlomo Argov est grièvement blessé par balles à la sortie du Dorchester Hotel. Le 26 juillet 1994, un attentat à la voiture piégée détruit partiellement la façade et blesse 20 personnes. Le consulat israélien est accessible par une entrée séparée au 15a Old Court Place. Coordonnées : 51°30′11″N 0°11′22″W."
+        }
+      ]
+    },
+    "IN": {
+      "name": "India",
+      "flag": "in",
+      "current": {
+        "chancery": "3 Aurangzeb Road, New Delhi 110003",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1992",
+          "to": null,
+          "address": "3 Aurangzeb Road, New Delhi 110003",
+          "kind": "embassy",
+          "lat": 28.6,
+          "lon": 77.21,
+          "current": true,
+          "note": "Israël et l'Inde établissent des relations diplomatiques complètes le 29 janvier 1992. L'ambassade israélienne est ouverte à New Delhi sur Aurangzeb Road, dans le quartier diplomatique de Lutyens' Delhi. Des consulats généraux fonctionnent à Bangalore et à Mumbai. Israël est accrédité également auprès du Bhoutan et du Sri Lanka. Les relations bilatérales se développent rapidement dans les domaines de la défense, de la technologie et de l'agriculture."
+        }
+      ]
+    },
+    "IT": {
+      "name": "Italy",
+      "flag": "it",
+      "current": {
+        "chancery": "Via Michele Mercati 14, 00197 Rome",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": null,
+          "address": "Via Michele Mercati 14, 00197 Rome",
+          "kind": "embassy",
+          "lat": 41.92,
+          "lon": 12.49,
+          "current": true,
+          "note": "L'Italie reconnaît l'État d'Israël en 1949. L'ambassade israélienne est établie à Rome. L'ambassade est accréditée également auprès de Saint-Marin et auprès de la FAO (Organisation des Nations unies pour l'alimentation et l'agriculture). Israël entretient également une ambassade auprès du Saint-Siège."
+        }
+      ]
+    },
+    "JP": {
+      "name": "Japan",
+      "flag": "jp",
+      "current": {
+        "chancery": "3-10-1, Nishi-Azabu, Minato-ku, Tokyo 106-0031",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1952",
+          "to": null,
+          "address": "3-10-1, Nishi-Azabu, Minato-ku, Tokyo 106-0031",
+          "kind": "embassy",
+          "lat": 35.66,
+          "lon": 139.72,
+          "current": true,
+          "note": "Le Japon reconnaît l'État d'Israël en mai 1952. L'ambassade israélienne est établie à Tokyo dans le quartier de Nishi-Azabu, dans l'arrondissement de Minato."
+        }
+      ]
+    },
+    "KR": {
+      "name": "South Korea",
+      "flag": "kr",
+      "current": {
+        "chancery": "33-4, Hannam-daero 49-gil, Yongsan-gu, Seoul 04430",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1962",
+          "to": null,
+          "address": "33-4, Hannam-daero 49-gil, Yongsan-gu, Seoul 04430",
+          "kind": "embassy",
+          "lat": 37.53,
+          "lon": 127.0,
+          "current": true,
+          "note": "Israël et la Corée du Sud établissent des relations diplomatiques le 9 avril 1962. L'ambassade israélienne est ouverte à Séoul dans le quartier de Hannam-dong, arrondissement de Yongsan."
+        }
+      ]
+    },
+    "MX": {
+      "name": "Mexico",
+      "flag": "mx",
+      "current": {
+        "chancery": "Sierra Tarahumara 475, Lomas de Chapultepec, Miguel Hidalgo, 11000 Ciudad de México",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1950",
+          "to": null,
+          "address": "Sierra Tarahumara 475, Lomas de Chapultepec, Miguel Hidalgo, 11000 Ciudad de México",
+          "kind": "embassy",
+          "lat": 19.43,
+          "lon": -99.2,
+          "current": true,
+          "note": "Le Mexique reconnaît l'État d'Israël en 1950. L'ambassade israélienne est établie à Mexico dans le quartier diplomatique de Lomas de Chapultepec. L'ambassade est accréditée également auprès des Bahamas et du Belize."
+        }
+      ]
+    },
+    "RU": {
+      "name": "Russia",
+      "flag": "ru",
+      "current": {
+        "chancery": "Bolshaya Ordynka Street 56, 119017 Moscow",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1991",
+          "to": null,
+          "address": "Bolshaya Ordynka Street 56, 119017 Moscow",
+          "kind": "embassy",
+          "lat": 55.73,
+          "lon": 37.62,
+          "current": true,
+          "note": "L'Union soviétique vote en faveur du plan de partition de la Palestine à l'ONU en 1947 et reconnaît l'État d'Israël en mai 1948, mais rompt les relations diplomatiques en février 1953 (rétablies en juillet 1953), puis les rompt à nouveau en juin 1967 après la guerre des Six Jours. Les relations ne sont rétablies qu'en octobre 1991, lorsque l'URSS reconnaît Israël à la veille de la conférence de Madrid. La fédération de Russie maintient l'ambassade à Moscou. Un consulat général fonctionne à Saint-Pétersbourg."
+        }
+      ]
+    },
+    "TR": {
+      "name": "Turkey",
+      "flag": "tr",
+      "current": {
+        "chancery": "Kırşakları Mahallesi, 389. Sokak No. 4, 06700 Çankaya, Ankara",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1949",
+          "to": null,
+          "address": "Kırşakları Mahallesi, 389. Sokak No. 4, 06700 Çankaya, Ankara",
+          "kind": "embassy",
+          "lat": 39.9,
+          "lon": 32.85,
+          "current": true,
+          "note": "La Turquie est le premier pays à majorité musulmane à reconnaître l'État d'Israël, en mars 1949. L'ambassade israélienne est établie à Ankara. Un consulat général fonctionne à Istanbul. Les relations bilatérales traversent des périodes de tension, notamment après l'incident de la flottille de Gaza en 2010, mais les liens diplomatiques sont maintenus."
+        }
+      ]
+    },
+    "US": {
+      "name": "United States",
+      "flag": "us",
+      "current": {
+        "chancery": "3514 International Drive NW, Washington, D.C. 20008",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1948",
+          "to": "1980",
+          "address": "Washington, D.C. (adresse précise non établie)",
+          "kind": "legation",
+          "lat": 38.9,
+          "lon": -77.04,
+          "note": "Les États-Unis sont le premier pays à reconnaître l'État d'Israël le 14 mai 1948, lorsque le président Harry S. Truman reconnaît le nouvel État onze minutes après sa proclamation. Une légation israélienne est établie à Washington."
+        },
+        {
+          "from": "1980",
+          "to": null,
+          "address": "3514 International Drive NW, Washington, D.C. 20008",
+          "kind": "embassy",
+          "lat": 38.9427,
+          "lon": -77.0684,
+          "current": true,
+          "note": "L'ambassade est inaugurée en décembre 1980, après la demande formulée par le premier ministre Menahem Begin en 1977 de s'installer sur Embassy Row. Begin accomplit lui-même le rituel juif de la mezouza lors de l'inauguration. Le 25 février 2024, le militaire Aaron Bushnell s'immole par le feu devant l'ambassade en protestation contre la guerre à Gaza. Le 21 mai 2025, deux employés sont tués dans une fusillade au Capital Jewish Museum. L'ambassade est accréditée également auprès de l'Organisation des États américains. Coordonnées : 38°56′33.8″N 77°4′6.3″W."
+        }
+      ]
+    },
+    "ZA": {
+      "name": "South Africa",
+      "flag": "za",
+      "current": {
+        "chancery": "326 Baileys Street, Arcadia, Pretoria 0083",
+        "residence": null
+      },
+      "addresses": [
+        {
+          "from": "1948",
+          "to": "1987",
+          "address": "Pretoria (adresse précise non établie)",
+          "kind": "legation",
+          "lat": -25.7479,
+          "lon": 28.2293,
+          "note": "Israël établit une légation à Pretoria peu après sa création en 1948. Les relations bilatérales sont discrètes mais actives durant la période de l'apartheid, notamment dans les domaines militaire et agricole."
+        },
+        {
+          "from": "1987",
+          "to": "1994",
+          "address": "Pretoria (adresse précise non établie)",
+          "kind": "embassy",
+          "lat": -25.7479,
+          "lon": 28.2293,
+          "note": "En 1987, Israël impose des sanctions à l'Afrique du Sud et réduit ses relations diplomatiques, tout en maintenant une présence à Pretoria."
+        },
+        {
+          "from": "1994",
+          "to": null,
+          "address": "326 Baileys Street, Arcadia, Pretoria 0083",
+          "kind": "embassy",
+          "lat": -25.746,
+          "lon": 28.221,
+          "current": true,
+          "note": "L'ambassade rouvre à plein niveau diplomatique après la transition démocratique de 1994. Israël est accrédité également auprès de l'Eswatini, du Lesotho, de Madagascar et de l'Île Maurice."
+        }
+      ]
+    }
+  }
+}
