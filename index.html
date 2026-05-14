@@ -98,19 +98,62 @@ body {
 }
 
 .project-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   background: var(--bg2);
   border: 1px solid rgba(0,0,0,0.08);
   border-radius: 12px;
-  padding: 28px;
   text-decoration: none;
   color: inherit;
   transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  overflow: hidden;
 }
 .project-card:hover {
   background: var(--bg3);
   border-color: rgba(0,0,0,0.15);
   transform: translateY(-2px);
+}
+.project-card:hover .project-preview img {
+  transform: scale(1.03);
+}
+.project-preview {
+  width: 100%;
+  height: 180px;
+  background: var(--bg3);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.project-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.project-preview .js-badge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  background: #F7DF1E;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  font-weight: 700;
+  font-size: 13px;
+  color: #000;
+  font-family: monospace;
+}
+.project-card-body {
+  padding: 20px 24px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .project-card .project-title {
@@ -185,46 +228,75 @@ body {
 
     <!-- Projet: Jobs / Exposition IA -->
     <a class="project-card" href="projects/jobs-fr/">
-      <div class="project-title">Exposition des metiers francais a l'IA</div>
-      <p class="project-desc">
-        Treemap interactif des 1 584 metiers du repertoire ROME, colories par exposition a l'IA, salaire, tension du marche et niveau d'etudes.
-        Inspire de karpathy.ai/jobs.
-      </p>
-      <div class="project-tags">
-        <span class="tag">Treemap</span>
-        <span class="tag">France Travail</span>
-        <span class="tag">IA</span>
-        <span class="tag">D3.js</span>
+      <div class="project-preview">
+        <img src="https://image.thum.io/get/width/800/crop/450/noanimate/https://knoel99.github.io/projects/jobs-fr/" alt="Aperçu Jobs-FR" loading="lazy">
+      </div>
+      <div class="project-card-body">
+        <div class="project-title">Exposition des metiers francais a l'IA</div>
+        <p class="project-desc">
+          Treemap interactif des 1 584 metiers du repertoire ROME, colories par exposition a l'IA, salaire, tension du marche et niveau d'etudes.
+          Inspire de karpathy.ai/jobs.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Treemap</span>
+          <span class="tag">France Travail</span>
+          <span class="tag">IA</span>
+          <span class="tag">D3.js</span>
+        </div>
       </div>
     </a>
 
     <!-- Projet: Embassy -->
     <a class="project-card" href="projects/embassy/">
-      <div class="project-title">G20 Embassy Distance Map</div>
-      <p class="project-desc">
-        Carte interactive des distances entre les ambassades des pays du G20 (+Israel) et les centres de pouvoir de chaque capitale. Navigation par drapeaux, gradient de couleur et classement.
-      </p>
-      <div class="project-tags">
-        <span class="tag">Carte interactive</span>
-        <span class="tag">Folium</span>
-        <span class="tag">Geopolitique</span>
-        <span class="tag">Python</span>
+      <div class="project-preview">
+        <img src="https://image.thum.io/get/width/800/crop/450/noanimate/https://knoel99.github.io/projects/embassy/" alt="Aperçu Embassy" loading="lazy">
+      </div>
+      <div class="project-card-body">
+        <div class="project-title">G20 Embassy Distance Map</div>
+        <p class="project-desc">
+          Carte interactive des distances entre les ambassades des pays du G20 (+Israel) et les centres de pouvoir de chaque capitale. Navigation par drapeaux, gradient de couleur et classement.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Carte interactive</span>
+          <span class="tag">Folium</span>
+          <span class="tag">Geopolitique</span>
+          <span class="tag">Python</span>
+        </div>
       </div>
     </a>
 
     <!-- Projet: DeepSeek V4 Paper Walkthrough -->
     <a class="project-card" href="projects/deepseek_v4_paper/">
-      <div class="project-title">DeepSeek V4 - Paper Walkthrough FR</div>
+      <div class="project-preview">
+        <img src="https://image.thum.io/get/width/800/crop/450/noanimate/https://knoel99.github.io/projects/deepseek_v4_paper/" alt="Aperçu DeepSeek V4" loading="lazy">
+      </div>
+      <div class="project-card-body">
+        <div class="project-title">DeepSeek V4 - Paper Walkthrough FR</div>
+        <p class="project-desc">
+          Lecture guidee du paper DeepSeek-V4 : PDF original a gauche, resume reformule en francais
+          pour ingenieurs generalistes a droite. Architecture MoE, attention hybride CSA/HCA,
+          optimiseur Muon, et pipeline de post-entrainement.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Paper</span>
+          <span class="tag">LLM</span>
+          <span class="tag">Resume FR</span>
+          <span class="tag">PDF.js</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Projet: JavaScript Guide -->
+    <a class="project-card" href="projects/javascript/">
+      <div class="project-title">Comprendre JavaScript</div>
       <p class="project-desc">
-        Lecture guidee du paper DeepSeek-V4 : PDF original a gauche, resume reformule en francais
-        pour ingenieurs generalistes a droite. Architecture MoE, attention hybride CSA/HCA,
-        optimiseur Muon, et pipeline de post-entrainement.
+        Guide profond des origines aux frameworks modernes. 10 chapitres progressifs avec contexte historique, diagrammes animes et tableaux comparatifs. Comprendre pourquoi, pas juste comment.
       </p>
       <div class="project-tags">
-        <span class="tag">Paper</span>
-        <span class="tag">LLM</span>
-        <span class="tag">Resume FR</span>
-        <span class="tag">PDF.js</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Concepts</span>
+        <span class="tag">Frameworks</span>
+        <span class="tag">Histoire</span>
       </div>
     </a>
 
@@ -233,15 +305,23 @@ body {
     Copier le bloc ci-dessous, decommenter, et remplir :
 
     <a class="project-card" href="projects/MON-PROJET/">
-      <div class="project-title">Titre du projet</div>
-      <p class="project-desc">
-        Description courte du projet.
-      </p>
-      <div class="project-tags">
-        <span class="tag">Tag1</span>
-        <span class="tag">Tag2</span>
+      <div class="project-preview">
+        <img src="https://image.thum.io/get/width/800/crop/450/noanimate/https://knoel99.github.io/projects/MON-PROJET/" alt="Aperçu" loading="lazy">
+      </div>
+      <div class="project-card-body">
+        <div class="project-title">Titre du projet</div>
+        <p class="project-desc">
+          Description courte du projet.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Tag1</span>
+          <span class="tag">Tag2</span>
+        </div>
       </div>
     </a>
+
+    Pour un projet JavaScript, ajouter le badge JS dans .project-preview :
+      <span class="js-badge">JS</span>
     -->
 
   </div>
