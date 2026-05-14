@@ -48,6 +48,7 @@
     LAST_RENDER.emb = emb;
     LAST_RENDER.hostName = hostName;
     var t = i18nDict();
+    var lang = (window.__getLang && window.__getLang()) || 'en';
     var addrs = sortedAddresses(emb);
     ADDR_STATE.sorted = addrs;
     var html = '';
@@ -78,7 +79,8 @@
            + '</div>';
       html += '<h3>' + escapeHtml(e.address) + '</h3>';
       if (e.building) html += '<p class="ap-building">' + escapeHtml(e.building) + '</p>';
-      html += '<p class="ap-note">' + escapeHtml(e.note) + '</p>';
+      var noteText = (e.note_i18n && e.note_i18n[lang]) || e.note || '';
+      html += '<p class="ap-note">' + escapeHtml(noteText) + '</p>';
       html += '</div>';
     });
     html += '</div>';

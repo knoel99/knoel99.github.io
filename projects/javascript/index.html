@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comprendre JavaScript — Des origines aux frameworks modernes</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0d1117;
+  --bg2: #161b22;
+  --bg3: #1c2333;
+  --bg4: #21283b;
+  --fg: #c9d1d9;
+  --fg2: #8b949e;
+  --fg3: #6e7681;
+  --accent: #f0db4f;
+  --accent2: #e8c840;
+  --blue: #79c0ff;
+  --green: #7ee787;
+  --red: #ff7b72;
+  --purple: #d2a8ff;
+  --orange: #ffa657;
+  --cyan: #a5d6ff;
+  --border: rgba(240,219,79,0.12);
+  --sidebar-w: 280px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.75;
+}
+
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+strong { color: #fff; }
+em { color: var(--orange); font-style: normal; }
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 100;
+  padding: 32px 0;
+}
+
+.sidebar .logo {
+  padding: 0 24px 24px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+}
+
+.sidebar .logo small {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--fg2);
+  margin-top: 4px;
+}
+
+.sidebar .back-link {
+  display: block;
+  padding: 0 24px 20px;
+  font-size: 13px;
+  color: var(--fg3);
+}
+
+.sidebar nav a {
+  display: block;
+  padding: 8px 24px;
+  font-size: 13px;
+  color: var(--fg2);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.sidebar nav a:hover {
+  color: var(--fg);
+  background: rgba(240,219,79,0.04);
+}
+
+.sidebar nav a.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: rgba(240,219,79,0.06);
+}
+
+.sidebar nav a .num {
+  display: inline-block;
+  width: 20px;
+  color: var(--fg3);
+  font-size: 11px;
+}
+
+.main {
+  margin-left: var(--sidebar-w);
+  max-width: 880px;
+  padding: 60px 48px 120px;
+}
+
+.chapter {
+  margin-bottom: 120px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.chapter.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.chapter-num {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.chapter h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.03em;
+  margin-bottom: 32px;
+  line-height: 1.2;
+}
+
+.chapter h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  margin: 40px 0 16px;
+  letter-spacing: -0.02em;
+}
+
+.chapter p {
+  margin-bottom: 20px;
+  max-width: 720px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 24px 0 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th {
+  background: var(--bg3);
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+td {
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  color: var(--fg);
+}
+
+tr:hover td { background: rgba(240,219,79,0.03); }
+
+.diagram {
+  margin: 32px 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  overflow-x: auto;
+}
+
+.diagram svg { width: 100%; height: auto; }
+
+.diagram-label {
+  text-align: center;
+  font-size: 12px;
+  color: var(--fg3);
+  margin-top: 12px;
+  font-style: italic;
+}
+
+.code-block {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 20px 0 28px;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.kw { color: var(--red); }
+.fn { color: var(--blue); }
+.str { color: var(--green); }
+.num { color: var(--purple); }
+.cm { color: var(--fg3); font-style: italic; }
+.op { color: var(--orange); }
+.var { color: var(--cyan); }
+.punc { color: var(--fg2); }
+
+code {
+  background: var(--bg3);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.88em;
+  color: var(--orange);
+}
+
+.callout {
+  background: rgba(240,219,79,0.06);
+  border-left: 3px solid var(--accent);
+  padding: 16px 20px;
+  margin: 24px 0 32px;
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+}
+
+.callout strong { color: var(--accent); }
+
+.timeline {
+  position: relative;
+  margin: 24px 0 32px;
+  padding-left: 32px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent), var(--blue), var(--purple));
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -28px; top: 8px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+}
+
+.timeline-item .year {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.timeline-item .event {
+  font-size: 14px;
+  color: var(--fg);
+}
+
+.timeline-item .detail {
+  font-size: 13px;
+  color: var(--fg2);
+  margin-top: 2px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes dashMove {
+  to { stroke-dashoffset: -20; }
+}
+
+.flow-arrow {
+  stroke-dasharray: 6 4;
+  animation: dashMove 1s linear infinite;
+}
+
+.pulse-node {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 16px; left: 16px;
+  z-index: 200;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 860px) {
+  .menu-toggle { display: flex; }
+  .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; padding: 60px 20px 80px; }
+  .chapter h2 { font-size: 24px; }
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0; left: var(--sidebar-w); right: 0;
+  height: 3px;
+  background: var(--bg2);
+  z-index: 99;
+}
+
+.progress-bar .fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--blue));
+  width: 0%;
+  transition: width 0.15s;
+}
+
+@media (max-width: 860px) {
+  .progress-bar { left: 0; }
+}
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+
+<aside class="sidebar">
+  <div class="logo">
+    Comprendre JavaScript
+    <small>Des origines aux frameworks modernes</small>
+  </div>
+  <a class="back-link" href="../../index.html">&larr; Retour aux projets</a>
+  <nav id="nav">
+    <a href="#ch0"><span class="num">00</span> Avant-propos</a>
+    <a href="#ch1"><span class="num">01</span> La Naissance (1995)</a>
+    <a href="#ch2"><span class="num">02</span> Le Moteur d'Ex&eacute;cution</a>
+    <a href="#ch3"><span class="num">03</span> Types &amp; Coercion</a>
+    <a href="#ch4"><span class="num">04</span> Les Fonctions</a>
+    <a href="#ch5"><span class="num">05</span> Le Scope</a>
+    <a href="#ch6"><span class="num">06</span> Objets &amp; Prototypes</a>
+    <a href="#ch7"><span class="num">07</span> Le this</a>
+    <a href="#ch8"><span class="num">08</span> L'Asynchrone</a>
+    <a href="#ch9"><span class="num">09</span> ES6+ : La Renaissance</a>
+    <a href="#ch10"><span class="num">10</span> Les Frameworks Modernes</a>
+  </nav>
+</aside>
+
+<div class="main">
+
+<!-- CH0 : AVANT-PROPOS -->
+<section class="chapter" id="ch0">
+  <div class="chapter-num">Avant-propos</div>
+  <h2>Pourquoi ce guide existe</h2>
+
+  <p>Ce document n'est pas un tutoriel. Vous trouverez partout des cheatsheets, des <em>"top 10 JS tips"</em>, et des bots IA qui crachent du code JavaScript a la demande. Ce n'est pas le propos ici. L'objectif est de <strong>comprendre pourquoi le langage est ce qu'il est</strong>, comment ses concepteurs ont pense chacun de ses mecanismes, et comment cette architecture a rendu possibles les frameworks qui dominent le developpement web en 2026.</p>
+
+  <p>Chaque concept est presente dans l'ordre ou il devient necessaire. On commence par l'histoire, parce qu'elle explique tout. Le typage dynamique n'est pas un bug, c'est un choix design de 1995. Le systeme de prototypes n'est pas une bizarrerie, c'est un heritage de Self. Le <code>this</code> n'est pas casse, il repond a une logique precise. L'asynchrone n'est pas un ajout, c'est le coeur du modele d'execution du navigateur.</p>
+
+  <p>Le chemin parcouru sera le suivant : on part de la creation du langage en 10 jours en 1995, on traverse l'age sombre d'Internet Explorer, la renaissance ES6 en 2015, et on arrive jusqu'aux choix architecturaux de React, Vue, Svelte et Angular. A la fin, vous comprendrez pourquoi chaque framework a pris les decisions qu'il a prises, et quels compromis chaque approche implique.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 3.5 L0 7z" fill="#f0db4f"/>
+        </marker>
+      </defs>
+
+      <rect x="20" y="60" width="120" height="70" rx="8" fill="rgba(240,219,79,0.1)" stroke="#f0db4f" stroke-width="1.5"/>
+      <text x="80" y="90" fill="#f0db4f" font-size="12" text-anchor="middle" font-weight="600">1995</text>
+      <text x="80" y="108" fill="#c9d1d9" font-size="10" text-anchor="middle">Naissance</text>
+
+      <line x1="140" y1="95" x2="200" y2="95" stroke="#f0db4f" stroke-width="1.2" marker-end="url(#arr)"/>
+
+      <rect x="200" y="60" width="120" height="70" rx="8" fill="rgba(121,192,255,0.1)" stroke="#79c0ff" stroke-width="1.5"/>
+      <text x="260" y="90" fill="#79c0ff" font-size="12" text-anchor="middle" font-weight="600">Fondations</text>
+      <text x="260" y="108" fill="#c9d1d9" font-size="10" text-anchor="middle">Types, Scope, Fonctions</text>
+
+      <line x1="320" y1="95" x2="380" y2="95" stroke="#79c0ff" stroke-width="1.2" marker-end="url(#arr)"/>
+
+      <rect x="380" y="60" width="120" height="70" rx="8" fill="rgba(210,168,255,0.1)" stroke="#d2a8ff" stroke-width="1.5"/>
+      <text x="440" y="90" fill="#d2a8ff" font-size="12" text-anchor="middle" font-weight="600">Maitrise</text>
+      <text x="440" y="108" fill="#c9d1d9" font-size="10" text-anchor="middle">Prototypes, this, Async</text>
+
+      <line x1="500" y1="95" x2="560" y2="95" stroke="#d2a8ff" stroke-width="1.2" marker-end="url(#arr)"/>
+
+      <rect x="560" y="60" width="180" height="70" rx="8" fill="rgba(126,231,135,0.1)" stroke="#7ee787" stroke-width="1.5"/>
+      <text x="650" y="90" fill="#7ee787" font-size="12" text-anchor="middle" font-weight="600">Frameworks</text>
+      <text x="650" y="108" fill="#c9d1d9" font-size="10" text-anchor="middle">React, Vue, Svelte, Angular</text>
+
+      <text x="380" y="28" fill="#6e7681" font-size="11" text-anchor="middle" font-style="italic">Le parcours : des origines aux frameworks modernes</text>
+    </svg>
+  </div>
+</section>
+
+<!-- CH1 : LA NAISSANCE -->
+<section class="chapter" id="ch1">
+  <div class="chapter-num">Chapitre 01</div>
+  <h2>La Naissance de JavaScript</h2>
+
+  <p>En mai 1995, <strong>Brendan Eich</strong> est recrute par Netscape avec une mission precise : integrer un langage de programmation dans le navigateur Netscape Navigator. Le Web est alors statique. Les pages HTML affichent du texte et des images, et c'est tout. Aucune interactivite. Netscape veut que les developpeurs puissent valider des formulaires, animer des elements, reagir aux clics, le tout sans aller-retour vers le serveur.</p>
+
+  <p>Le contexte est crucial. Netscape est en guerre contre Microsoft. La strategie est de rendre le navigateur indispensable, et pour ca, il faut une plateforme programmable. Le langage <strong>Scheme</strong> (un dialecte Lisp) est d'abord envisage, mais Netscape collabore avec Sun Microsystems pour promouvoir <strong>Java</strong>, et la direction exige un langage qui <em>ressemble</em> a Java pour des raisons marketing, tout en etant assez simple pour les web designers non-programmeurs.</p>
+
+  <p>Brendan Eich dispose de <strong>10 jours</strong>. En mai 1995, il ecrit le premier moteur JavaScript (alors appele Mocha, puis LiveScript). Le nom "JavaScript" est un choix marketing pour surfer sur la popularite de Java, malgre l'absence totale de lien technique entre les deux langages. Cette decision de nommage creera des decennies de confusion.</p>
+
+  <div class="callout">
+    <strong>Le paradoxe fondateur.</strong> JavaScript devait etre assez simple pour un web designer (typage dynamique, conversion automatique de types, syntaxe familiere) et assez puissant pour un developpeur (first-class functions, closures, prototypal inheritance). Cette tension entre accessibilite et puissance explique la plupart des etrangetes du langage.
+  </div>
+
+  <h3>L'heritage technique de trois langages</h3>
+
+  <p>JavaScript n'a pas ete invente ex nihilo. Eich a emprunte a trois traditions linguistiques differentes, et cette hybridation explique la personnalite unique du langage.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Influence</th><th>Langage source</th><th>Ce que JS en a tire</th><th>Pourquoi c'est important</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Java</strong></td>
+          <td>Syntaxe C-style</td>
+          <td><code>if</code>, <code>for</code>, <code>while</code>, accolades, points-virgules</td>
+          <td>Familiarite pour les developpeurs C/C++/Java. Le cote "visuel" du langage.</td>
+        </tr>
+        <tr>
+          <td><strong>Scheme</strong></td>
+          <td>Langage fonctionnel (Lisp)</td>
+          <td>First-class functions, closures, fonctions anonymes</td>
+          <td>Les fonctions sont des valeurs. C'est la cle de tout le modele asynchrone de JS.</td>
+        </tr>
+        <tr>
+          <td><strong>Self</strong></td>
+          <td>Prototypal OOP</td>
+          <td>Heritage par delegation via prototypes</td>
+          <td>Pas de classes a l'origine. Les objets heritent directement d'autres objets.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>La syntaxe vient de Java, l'ame fonctionnelle vient de Scheme, le modele objet vient de Self. Trois paradigmes cohabitent dans un meme langage concu en 10 jours. Ce n'est pas un bug, c'est l'ADN meme de JavaScript.</p>
+
+  <h3>La chronologie critique</h3>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="year">Mai 1995</div>
+      <div class="event">Brendan Eich ecrit Mocha en 10 jours chez Netscape</div>
+      <div class="detail">Le langage est rebaptise LiveScript, puis JavaScript pour le marketing. Le moteur est integre a Netscape Navigator 2.0.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">1996</div>
+      <div class="event">Microsoft reverse-engineer JavaScript pour creer JScript</div>
+      <div class="detail">Integre a Internet Explorer 3.0. Le debut de l'incompatibilite entre navigateurs. Les developpeurs doivent ecrire deux versions de chaque page.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">Juin 1997</div>
+      <div class="event">ECMAScript 1 est standardise par l'ECMA International</div>
+      <div class="detail">Netscape soumet JavaScript a la standardisation pour eviter que Microsoft ne controle le langage. Le nom "ECMAScript" est un compromis politique.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">1999</div>
+      <div class="event">ES3 : la base moderne du langage</div>
+      <div class="detail">Expressions rationnelles, <code>try/catch</code>, <code>switch</code>, <code>do/while</code>. C'est la version qui restera en production pendant 10 ans.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">2000-2008</div>
+      <div class="event">L'age sombre : ES4 est abandonne</div>
+      <div class="detail">Microsoft, Yahoo et Google ne s'accordent pas sur l'avenir du langage. ES4 (classes, modules, types statiques) est trop ambitieux et est abandonne. Le langage stagne.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">2005</div>
+      <div class="event">Ajax et la revolution du Web 2.0</div>
+      <div class="detail">Google Maps et Gmail demontrent que JavaScript peut creer des applications riches. Le langage passe de "script de validation de formulaires" a plateforme applicative serieuse.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">2008</div>
+      <div class="event">Google Chrome et le moteur V8</div>
+      <div class="detail">V8 compile JavaScript en code machine avec un JIT. Les performances explosent d'un facteur 10 a 100. Soudain, JS est rapide. Cela rend Node.js (2009) possible.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">2009</div>
+      <div class="event">ES5 : le compromis pragmatique</div>
+      <div class="detail"><code>Array.forEach</code>, <code>JSON.parse</code>, <code>Object.keys</code>, strict mode. Pas de revolution, mais une modernisation necessaire.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">2015</div>
+      <div class="event">ES6 (ES2015) : la Renaissance</div>
+      <div class="detail"><code>let/const</code>, arrow functions, <code>class</code>, <code>Promise</code>, modules, destructuring, generators, <code>Symbol</code>, template literals. La plus grande mise a jour de l'histoire du langage.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">2015-2026</div>
+      <div class="event">ESNext : evolution continue</div>
+      <div class="detail">Depuis ES6, une nouvelle version sort chaque annee. ES2017 apporte <code>async/await</code>. ES2020 ajoute optional chaining et nullish coalescing. Le langage evolue sans revolution.</div>
+    </div>
+  </div>
+
+  <h3>Pourquoi cette histoire importe pour comprendre le langage</h3>
+
+  <p>Chaque chapitre de cette histoire laisse une trace dans le langage tel qu'il existe aujourd'hui. Le typage dynamique vient du besoin de simplicite pour les web designers de 1995. Le systeme de prototypes vient du choix de Self plutot que de Java pour le modele objet. Les fonctions de premiere classe viennent de l'influence de Scheme. L'asynchrone vient du fait que JS est ne dans un navigateur, un environnement fondamentalement reactif aux evenements. Le hoisting de <code>var</code> vient d'un choix d'implementation pour simplifier l'ecriture de scripts courts.</p>
+
+  <p>Et si le langage a stagne entre 1999 et 2009, c'est precisement parce que la guerre des navigateurs a gele la standardisation. C'est aussi pour cela que des bibliotheques comme jQuery (2006) sont nees : elles palliaient les incoherences entre navigateurs que la guerre IE vs Netscape avait creees. Quand vous utilisez <code>Array.prototype.forEach</code> aujourd'hui, vous manipulez une API qui n'aurait pas du attendre 16 ans pour exister.</p>
+</section>
+
+<!-- CH2 : LE MOTEUR D'EXECUTION -->
+<section class="chapter" id="ch2">
+  <div class="chapter-num">Chapitre 02</div>
+  <h2>Le Moteur d'Execution</h2>
+
+  <p>JavaScript est <strong>single-threaded</strong>. Il n'y a qu'un seul fil d'execution. Pas de parallelisme au niveau du code utilisateur (pas de threads, pas de mutex, pas de conditions de course). Ce n'est pas une limitation technique, c'est un <em>choix de design</em> delibere.</p>
+
+  <p>Pourquoi ? Parce que JavaScript a ete concu pour manipuler le <strong>DOM</strong>, une structure d'arbre partagee mutable. Si deux threads pouvaient modifier le DOM simultanement, il faudrait des mecanismes de synchronisation (locks, mutex) que les web designers de 1995 n'auraient jamais pu gerer. Le modele single-threaded elimine toute une classe de bugs de concurrence.</p>
+
+  <p>Mais comment un langage single-threaded peut-il gerer des clics, des timers, des requetes reseau, des animations, sans jamais bloquer l'interface ? La reponse est l'<strong>Event Loop</strong> (boucle d'evenements), un pattern emprunte aux systemes evenementiels qui existe depuis les annees 1980.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr2" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 3.5 L0 7z" fill="#f0db4f"/>
+        </marker>
+        <marker id="arr2b" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 3.5 L0 7z" fill="#79c0ff"/>
+        </marker>
+        <marker id="arr2c" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 3.5 L0 7z" fill="#d2a8ff"/>
+        </marker>
+      </defs>
+
+      <text x="380" y="22" fill="#6e7681" font-size="11" text-anchor="middle" font-style="italic">L'Event Loop : comment JS gere la concurrence sans threads</text>
+
+      <!-- Call Stack -->
+      <rect x="40" y="50" width="180" height="340" rx="10" fill="rgba(240,219,79,0.06)" stroke="#f0db4f" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <text x="130" y="74" fill="#f0db4f" font-size="13" text-anchor="middle" font-weight="600">Call Stack</text>
+
+      <rect x="60" y="310" width="140" height="34" rx="5" fill="rgba(240,219,79,0.15)" stroke="#f0db4f" stroke-width="1"/>
+      <text x="130" y="332" fill="#f0db4f" font-size="11" text-anchor="middle">main()</text>
+
+      <rect x="60" y="268" width="140" height="34" rx="5" fill="rgba(240,219,79,0.15)" stroke="#f0db4f" stroke-width="1"/>
+      <text x="130" y="290" fill="#f0db4f" font-size="11" text-anchor="middle">fetchData()</text>
+
+      <rect x="60" y="226" width="140" height="34" rx="5" fill="rgba(240,219,79,0.15)" stroke="#f0db4f" stroke-width="1"/>
+      <text x="130" y="248" fill="#f0db4f" font-size="11" text-anchor="middle">callback()</text>
+
+      <text x="130" y="380" fill="#6e7681" font-size="9" text-anchor="middle">LIFO : dernier entre, premier sorti</text>
+
+      <!-- Event Loop (center) -->
+      <circle cx="400" cy="220" r="55" fill="none" stroke="#f0db4f" stroke-width="2" stroke-dasharray="8 4" class="pulse-node"/>
+      <text x="400" y="215" fill="#f0db4f" font-size="12" text-anchor="middle" font-weight="700">Event</text>
+      <text x="400" y="232" fill="#f0db4f" font-size="12" text-anchor="middle" font-weight="700">Loop</text>
+
+      <!-- Arrow: Event Loop -> Call Stack -->
+      <path d="M345 220 L225 220" fill="none" stroke="#f0db4f" stroke-width="1.5" marker-end="url(#arr2)" class="flow-arrow"/>
+      <text x="285" y="210" fill="#6e7681" font-size="9" text-anchor="middle">depile</text>
+
+      <!-- Task Queue -->
+      <rect x="530" y="50" width="190" height="140" rx="10" fill="rgba(121,192,255,0.06)" stroke="#79c0ff" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <text x="625" y="74" fill="#79c0ff" font-size="13" text-anchor="middle" font-weight="600">Task Queue</text>
+
+      <rect x="545" y="85" width="160" height="28" rx="4" fill="rgba(121,192,255,0.12)" stroke="#79c0ff" stroke-width="1"/>
+      <text x="625" y="104" fill="#79c0ff" font-size="10" text-anchor="middle">setTimeout(cb, 0)</text>
+
+      <rect x="545" y="120" width="160" height="28" rx="4" fill="rgba(121,192,255,0.12)" stroke="#79c0ff" stroke-width="1"/>
+      <text x="625" y="139" fill="#79c0ff" font-size="10" text-anchor="middle">click event</text>
+
+      <rect x="545" y="155" width="160" height="28" rx="4" fill="rgba(121,192,255,0.12)" stroke="#79c0ff" stroke-width="1"/>
+      <text x="625" y="174" fill="#79c0ff" font-size="10" text-anchor="middle">network response</text>
+
+      <!-- Microtask Queue -->
+      <rect x="530" y="210" width="190" height="120" rx="10" fill="rgba(210,168,255,0.06)" stroke="#d2a8ff" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <text x="625" y="234" fill="#d2a8ff" font-size="13" text-anchor="middle" font-weight="600">Microtask Queue</text>
+
+      <rect x="545" y="245" width="160" height="28" rx="4" fill="rgba(210,168,255,0.12)" stroke="#d2a8ff" stroke-width="1"/>
+      <text x="625" y="264" fill="#d2a8ff" font-size="10" text-anchor="middle">Promise.then()</text>
+
+      <rect x="545" y="280" width="160" height="28" rx="4" fill="rgba(210,168,255,0.12)" stroke="#d2a8ff" stroke-width="1"/>
+      <text x="625" y="299" fill="#d2a8ff" font-size="10" text-anchor="middle">queueMicrotask()</text>
+
+      <!-- Arrow: Queues -> Event Loop -->
+      <path d="M530 120 L460 200" fill="none" stroke="#79c0ff" stroke-width="1.5" marker-end="url(#arr2b)" class="flow-arrow"/>
+      <path d="M530 270 L460 230" fill="none" stroke="#d2a8ff" stroke-width="1.5" marker-end="url(#arr2c)" class="flow-arrow"/>
+
+      <!-- Priority note -->
+      <rect x="300" y="340" width="200" height="50" rx="6" fill="rgba(210,168,255,0.08)" stroke="#d2a8ff" stroke-width="1"/>
+      <text x="400" y="360" fill="#d2a8ff" font-size="10" text-anchor="middle" font-weight="600">Priorite : Microtaches > Taches</text>
+      <text x="400" y="377" fill="#6e7681" font-size="9" text-anchor="middle">Les microtaches vidangent la queue</text>
+      <text x="400" y="388" fill="#6e7681" font-size="9" text-anchor="middle">avant de passer a la tache suivante</text>
+
+      <!-- Web APIs -->
+      <rect x="280" y="50" width="240" height="50" rx="8" fill="rgba(126,231,135,0.06)" stroke="#7ee787" stroke-width="1.5"/>
+      <text x="400" y="72" fill="#7ee787" font-size="12" text-anchor="middle" font-weight="600">Web APIs (navigateur)</text>
+      <text x="400" y="88" fill="#6e7681" font-size="9" text-anchor="middle">DOM, fetch, setTimeout, setInterval, geolocation...</text>
+    </svg>
+  </div>
+
+  <p>Le fonctionnement est le suivant. Le moteur JS empile les appels de fonctions sur la <strong>Call Stack</strong> (pile d'appels). Quand une operation asynchrone est lancee (timer, requete reseau, evenement DOM), elle est deleguee aux <strong>Web APIs</strong> du navigateur, qui fonctionnent en dehors du thread JS. Quand l'operation est terminee, le callback associe est place dans une file d'attente. L'<strong>Event Loop</strong> verifie en permanence : la Call Stack est-elle vide ? Si oui, elle prend le prochain callback dans la file et l'empile pour execution.</p>
+
+  <p>La distinction entre <strong>macrotaches</strong> (setTimeout, setInterval, events DOM, I/O) et <strong>microtaches</strong> (Promises, MutationObserver) est fondamentale. Apres chaque macrotache, l'Event Loop vide <em>integralement</em> la queue des microtaches avant de passer a la macrotache suivante. C'est pourquoi un <code>Promise.then()</code> s'execute toujours avant un <code>setTimeout(cb, 0)</code>, meme si les deux ont ete enregistres au meme moment.</p>
+
+  <div class="code-block"><span class="cm">// Mecanisme de priorite des queues</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">'1 : synchrone'</span>);
+
+<span class="fn">setTimeout</span>(() <span class="op">=&gt;</span> <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">'2 : macrotache'</span>), <span class="num">0</span>);
+
+Promise.<span class="fn">resolve</span>().<span class="fn">then</span>(() <span class="op">=&gt;</span> <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">'3 : microtache'</span>));
+
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">'4 : synchrone'</span>);
+
+<span class="cm">// Sortie : 1, 4, 3, 2</span>
+<span class="cm">// Le synchrone s'execute en premier,</span>
+<span class="cm">// puis les microtaches vidangent la queue,</span>
+<span class="cm">// puis les macrotaches.</span></div>
+
+  <p>Ce modele a un avantage considerable : il garantit que le code JavaScript s'execute de maniere <em>atomique</em> entre deux ticks de l'Event Loop. Un callback ne peut pas etre interrompu par un autre callback. Cela elimine les conditions de course sans necessiter de primitives de synchronisation. La contrepartie est qu'une operation longue (boucle infinie, calcul lourd) bloque tout le thread, y compris le rendu de la page. C'est pourquoi les Web Workers existent depuis 2009 : ils permettent d'executer du code JS dans un thread separe, sans acces au DOM.</p>
+</section>
+
+<!-- CH3 : TYPES & COERCION -->
+<section class="chapter" id="ch3">
+  <div class="chapter-num">Chapitre 03</div>
+  <h2>Types &amp; Coercion</h2>
+
+  <p>JavaScript est un langage a <strong>typage dynamique</strong> et a <strong>typage faible</strong>. Dynamique signifie qu'une variable peut contenir n'importe quel type et changer de type au cours de sa vie. Faible signifie que le langage effectue des conversions automatiques de types (coercion) quand les types ne correspondent pas dans une operation.</p>
+
+  <p>Ce n'est pas un defaut. En 1995, la cible etait le web designer qui ecrivait <code>document.forms[0].age.value + 1</code>. La coercion permettait a cette expression de fonctionner sans conversion manuelle, meme si <code>value</code> retourne une chaine. Le langage etait concu pour etre <em>indulgent</em> (forgiving), pas strict.</p>
+
+  <h3>Les 8 types du langage</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Type</th><th>Categorie</th><th>Exemple</th><th>Particularite</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>undefined</code></td><td>Primitif</td><td><code>let x;</code></td><td>Absence accidentelle de valeur. Variable declaree mais non initialisee.</td></tr>
+        <tr><td><code>null</code></td><td>Primitif</td><td><code>let x = null;</code></td><td>Absence intentionnelle de valeur. Un bug historique fait que <code>typeof null === 'object'</code>.</td></tr>
+        <tr><td><code>boolean</code></td><td>Primitif</td><td><code>true / false</code></td><td>Seules valeurs : <code>true</code> et <code>false</code>. Mais tout est truthy ou falsy.</td></tr>
+        <tr><td><code>number</code></td><td>Primitif</td><td><code>42</code>, <code>3.14</code></td><td>IEEE 754 double precision. Il n'y a pas de separation int/float. <code>0.1 + 0.2 !== 0.3</code>.</td></tr>
+        <tr><td><code>bigint</code></td><td>Primitif</td><td><code>9007199254740991n</code></td><td>ES2020. Entiers de precision arbitraire. Necessaire car Number plafonne a 2^53 - 1.</td></tr>
+        <tr><td><code>string</code></td><td>Primitif</td><td><code>"hello"</code></td><td>Immuable. L'encodage interne est UTF-16 depuis 1995.</td></tr>
+        <tr><td><code>symbol</code></td><td>Primitif</td><td><code>Symbol('id')</code></td><td>ES6. Identifiants uniques. Sert de cle pour les proprietes "cachees" des objets.</td></tr>
+        <tr><td><code>object</code></td><td>Reference</td><td><code>{}</code>, <code>[]</code>, <code>function(){}</code></td><td>Tout ce qui n'est pas primitif. Les tableaux, fonctions, dates, regex sont des objets.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>La distinction primitif vs objet est essentielle. Les primitives sont copiees par valeur. Les objets sont partages par reference. Quand vous ecrivez <code>let a = "hello"; let b = a;</code>, <code>a</code> et <code>b</code> sont deux copies independantes. Mais <code>let a = {}; let b = a;</code> fait que <code>a</code> et <code>b</code> pointent vers le <em>mem</em> objet en memoire.</p>
+
+  <h3>La coercion : le mecanisme qui fait peur</h3>
+
+  <p>La coercion (conversion automatique de type) est le mecanisme le plus mal compris de JavaScript. Elle existe en deux variantes : la <strong>coercion explicite</strong> (quand le developpeur l'intentionnellement) et la <strong>coercion implicite</strong> (quand le langage decide seul). La coercion implicite est source de bugs, mais elle suit des regles precises et deterministes.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Expression</th><th>Resultat</th><th>Regle appliquee</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>"5" + 3</code></td><td><code>"53"</code></td><td>Si un operande est une chaine avec <code>+</code>, l'autre est converti en chaine et concatenation.</td></tr>
+        <tr><td><code>"5" - 3</code></td><td><code>2</code></td><td>Les operateurs <code>-</code>, <code>*</code>, <code>/</code> convertissent toujours en nombre.</td></tr>
+        <tr><td><code>"5" == 5</code></td><td><code>true</code></td><td>Double egal : coercion numerique. Les deux cotes sont convertis en nombre.</td></tr>
+        <tr><td><code>"5" === 5</code></td><td><code>false</code></td><td>Triple egal : pas de coercion. Types differents = false.</td></tr>
+        <tr><td><code>null == undefined</code></td><td><code>true</code></td><td>Regle speciale : <code>null</code> et <code>undefined</code> sont egaux entre eux avec <code>==</code> mais pas avec <code>===</code>.</td></tr>
+        <tr><td><code>!""</code></td><td><code>true</code></td><td>La chaine vide est falsy. <code>!</code> convertit en booleen puis inverse.</td></tr>
+        <tr><td><code>!0</code></td><td><code>true</code></td><td><code>0</code> est falsy. Les falsy : <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>.</td></tr>
+        <tr><td><code>Boolean([])</code></td><td><code>true</code></td><td>Tout objet est truthy, meme un tableau vide. Meme <code>Boolean(document.all)</code> est true.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>Regle pratique.</strong> Utilisez toujours <code>===</code> (strict equality) sauf si vous avez une raison explicite de vouloir la coercion. La regle <code>== null</code> est la seule exception courante : <code>x == null</code> attrape a la fois <code>null</code> et <code>undefined</code>, ce qui est pratique pour les parametres optionnels.
+  </div>
+
+  <p>Les valeurs <strong>falsy</strong> meritent une attention particuliere car elles creent des bugs subtils. En JavaScript, seules ces valeurs sont falsy : <code>false</code>, <code>0</code>, <code>-0</code>, <code>0n</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Tout le reste est truthy, y compris <code>"0"</code>, <code>"false"</code>, <code>[]</code>, <code>{}</code>, et <code>function(){}</code>. Cette liste fixe est un heritage direct de la periode 1995 ou le langage devait fonctionner de maniere "intuitive" pour les non-programmeurs.</p>
+</section>
+
+<!-- CH4 : LES FONCTIONS -->
+<section class="chapter" id="ch4">
+  <div class="chapter-num">Chapitre 04</div>
+  <h2>Les Fonctions : Citoyennes de Premiere Classe</h2>
+
+  <p>L'influence la plus profonde de Scheme sur JavaScript est que les <strong>fonctions sont des valeurs de premiere classe</strong>. Cela signifie qu'une fonction peut etre stockee dans une variable, passee en argument a une autre fonction, retournee par une fonction, et anonyme. En 1995, c'etait radical. Java (le langage dont JS portait le nom) n'avait rien de tel. Meme aujourd'hui, Java n'a des lambdas que depuis 2014.</p>
+
+  <p>Ce choix de design est la raison pour laquelle JavaScript peut gerer l'asynchrone avec des callbacks, modeliser la reactivite avec des observers, et implementer la programmation fonctionnelle avec <code>map</code>/<code>filter</code>/<code>reduce</code>. Sans fonctions de premiere classe, aucun de ces patterns ne serait possible.</p>
+
+  <h3>Les quatre formes de fonctions</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Forme</th><th>Syntaxe</th><th>Hoisting</th><th><code>this</code></th><th>Usage historique</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Declaration</td>
+          <td><code>function foo() {}</code></td>
+          <td>Oui (entier)</td>
+          <td>Dynamique</td>
+          <td>La forme originelle de 1995. Toujours disponible avant sa declaration dans le code.</td>
+        </tr>
+        <tr>
+          <td>Expression</td>
+          <td><code>const foo = function() {}</code></td>
+          <td>Non</td>
+          <td>Dynamique</td>
+          <td>Permet d'anonymiser, de passer en callback. Le <code>this</code> depend de l'appelant.</td>
+        </tr>
+        <tr>
+          <td>Arrow function</td>
+          <td><code>const foo = () =&gt; {}</code></td>
+          <td>Non</td>
+          <td><strong>Lexical</strong></td>
+          <td>ES6. Ne possede pas son propre <code>this</code>. Capture le <code>this</code> du scope englobant.</td>
+        </tr>
+        <tr>
+          <td>Methode</td>
+          <td><code>{ foo() {} }</code></td>
+          <td>Non</td>
+          <td>L'objet</td>
+          <td>Raccourci ES6. <code>this</code> fait reference a l'objet conteneur.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Les closures : le mecanisme le plus puissant du langage</h3>
+
+  <p>Une <strong>closure</strong> (fermeture) est une fonction qui "se souvient" des variables de son scope de creation, meme apres que ce scope a ete detruit. Ce mecanisme est une consequence directe de la facon dont JavaScript gere la portee lexicale (lexical scoping). Quand une fonction est definie, elle capture une reference vers son environnement lexical, c'est-a-dire l'ensemble des variables accessibles a l'endroit ou elle a ete ecrite.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+      <text x="350" y="22" fill="#6e7681" font-size="11" text-anchor="middle" font-style="italic">Anatomie d'une closure : la fonction capture son environnement lexical</text>
+
+      <rect x="30" y="40" width="640" height="240" rx="12" fill="rgba(121,192,255,0.04)" stroke="#79c0ff" stroke-width="1.5" stroke-dasharray="6 3"/>
+      <text x="55" y="62" fill="#79c0ff" font-size="12" font-weight="600">Scope global</text>
+
+      <rect x="60" y="75" width="380" height="185" rx="10" fill="rgba(210,168,255,0.06)" stroke="#d2a8ff" stroke-width="1.5"/>
+      <text x="85" y="97" fill="#d2a8ff" font-size="12" font-weight="600">createCounter()</text>
+
+      <rect x="85" y="108" width="150" height="30" rx="5" fill="rgba(210,168,255,0.12)" stroke="#d2a8ff" stroke-width="1"/>
+      <text x="160" y="128" fill="#d2a8ff" font-size="11" text-anchor="middle">let count = 0</text>
+
+      <rect x="85" y="150" width="330" height="95" rx="8" fill="rgba(240,219,79,0.06)" stroke="#f0db4f" stroke-width="1.5"/>
+      <text x="110" y="172" fill="#f0db4f" font-size="12" font-weight="600">function increment()</text>
+
+      <rect x="105" y="182" width="145" height="26" rx="4" fill="rgba(240,219,79,0.12)" stroke="#f0db4f" stroke-width="1"/>
+      <text x="177" y="200" fill="#f0db4f" font-size="10" text-anchor="middle">return ++count</text>
+
+      <path d="M160 150 L160 140" fill="none" stroke="#ff7b72" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="185" y="147" fill="#ff7b72" font-size="9">capture count</text>
+
+      <rect x="480" y="100" width="170" height="90" rx="8" fill="rgba(126,231,135,0.06)" stroke="#7ee787" stroke-width="1.5"/>
+      <text x="505" y="122" fill="#7ee787" font-size="12" font-weight="600">const counter</text>
+
+      <rect x="495" y="132" width="140" height="22" rx="4" fill="rgba(126,231,135,0.12)" stroke="#7ee787" stroke-width="1"/>
+      <text x="565" y="148" fill="#7ee787" font-size="10" text-anchor="middle">= increment (closure)</text>
+
+      <text x="565" y="174" fill="#6e7681" font-size="9" text-anchor="middle">Possede une reference</text>
+      <text x="565" y="185" fill="#6e7681" font-size="9" text-anchor="middle">vers count, meme si</text>
+      <text x="565" y="196" fill="#6e7681" font-size="9" text-anchor="middle">createCounter() est terminee</text>
+
+      <path d="M480 155 L415 155" fill="none" stroke="#7ee787" stroke-width="1.2" stroke-dasharray="4 3"/>
+    </svg>
+  </div>
+
+  <div class="code-block"><span class="kw">function</span> <span class="fn">createCounter</span>() {
+  <span class="kw">let</span> <span class="var">count</span> <span class="op">=</span> <span class="num">0</span>;          <span class="cm">// variable "privee"</span>
+  <span class="kw">return</span> <span class="kw">function</span> <span class="fn">increment</span>() {
+    <span class="kw">return</span> <span class="op">++</span><span class="var">count</span>;     <span class="cm">// capture `count` par reference</span>
+  };
+}
+
+<span class="kw">const</span> <span class="var">counter</span> <span class="op">=</span> <span class="fn">createCounter</span>();
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="fn">counter</span>());  <span class="cm">// 1</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="fn">counter</span>());  <span class="cm">// 2</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="fn">counter</span>());  <span class="cm">// 3</span>
+
+<span class="cm">// `count` n'est pas accessible directement depuis l'exterieur.</span>
+<span class="cm">// C'est l'encapsulation par closure : le seul moyen de modifier</span>
+<span class="cm">// count est d'appeler counter().</span></div>
+
+  <p>Les closures sont fondamentales pour comprendre JavaScript moderne. Avant ES6, les closures etaient le <em>seul</em> mecanisme d'encapsulation disponible. Le pattern <strong>module revelateur</strong> (revealing module pattern), les IIFE (Immediately Invoked Function Expressions), et les callbacks asynchrones reposent tous sur les closures. En 2026, les closures sont toujours utilisees par React pour implementer les hooks (chaque hook capture l'etat via une closure).</p>
+
+  <h3>L'IIFE : le module avant les modules</h3>
+
+  <p>Avant qu'ES6 n'introduise les modules natifs en 2015, JavaScript n'avait aucun systeme de modules. Les variables globales etaient le seul moyen de partage. L'<strong>IIFE</strong> (Immediately Invoked Function Expression) etait la solution : une fonction anonyme executee immediatement, creant un scope prive qui ne pollue pas l'espace global.</p>
+
+  <div class="code-block"><span class="cm">// Le pattern qui a construit l'ecosysteme JS (2006-2015)</span>
+(<span class="kw">function</span>() {
+  <span class="kw">const</span> <span class="var">prive</span> <span class="op">=</span> <span class="str">'invisible'</span>;
+
+  <span class="kw">function</span> <span class="fn">util</span>() {
+    <span class="kw">return</span> <span class="var">prive</span>.<span class="fn">toUpperCase</span>();
+  }
+
+  <span class="cm">// Exposer selectivement via l'objet global</span>
+  window.monModule <span class="op">=</span> { util };
+})();</div>
+
+  <p>Ce pattern est a la base de jQuery, d'Underscore.js, et de presque toutes les bibliotheques de l'ere pre-ES6. Il demontre que les closures ne sont pas juste une curiosite academique mais un outil d'architecture logicielle.</p>
+</section>
+
+<!-- CH5 : LE SCOPE -->
+<section class="chapter" id="ch5">
+  <div class="chapter-num">Chapitre 05</div>
+  <h2>Le Scope : Ou Vivent les Variables</h2>
+
+  <p>Le <strong>scope</strong> (portee) determine ou une variable est accessible dans le code. JavaScript utilise le <strong>lexical scoping</strong> (portee lexicale) : la portee d'une variable est definie par l'endroit ou elle est ecrite dans le code source, pas par l'endroit ou elle est appelee. C'est le modele de Scheme, pas celui de C ou Java.</p>
+
+  <p>Entre 1995 et 2015, JavaScript n'avait qu'un seul mot-cle pour declarer des variables : <code>var</code>. Le probleme est que <code>var</code> a une portee <strong>fonctionnelle</strong> (function scope), pas une portee de bloc. Cela signifie qu'une variable declaree dans un <code>if</code>, un <code>for</code> ou un <code>while</code> "fuit" en dehors de ce bloc et est visible dans toute la fonction englobante. Ce comportement a genere des decennies de bugs subtils.</p>
+
+  <div class="code-block"><span class="cm">// Le piege classique de var (avant ES6)</span>
+<span class="kw">for</span> (<span class="kw">var</span> <span class="var">i</span> <span class="op">=</span> <span class="num">0</span>; <span class="var">i</span> <span class="op">&lt;</span> <span class="num">3</span>; <span class="var">i</span><span class="op">++</span>) {
+  <span class="fn">setTimeout</span>(<span class="kw">function</span>() {
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="var">i</span>);
+  }, <span class="num">100</span>);
+}
+<span class="cm">// Affiche : 3, 3, 3 (et non 0, 1, 2)</span>
+<span class="cm">// Parce que var n'a qu'une seule variable `i` partagee</span>
+<span class="cm">// par toutes les iterations de la boucle.</span>
+<span class="cm">// Quand les callbacks s'executent, i vaut deja 3.</span></div>
+
+  <p>La solution avec <code>let</code> (ES6) cree une <em>nouvelle</em> variable <code>i</code> pour chaque iteration de la boucle. Chaque callback capture sa propre copie de <code>i</code> via closure.</p>
+
+  <div class="code-block"><span class="cm">// La meme boucle avec let (ES6)</span>
+<span class="kw">for</span> (<span class="kw">let</span> <span class="var">i</span> <span class="op">=</span> <span class="num">0</span>; <span class="var">i</span> <span class="op">&lt;</span> <span class="num">3</span>; <span class="var">i</span><span class="op">++</span>) {
+  <span class="fn">setTimeout</span>(() <span class="op">=&gt;</span> <span class="fn">console</span>.<span class="fn">log</span>(<span class="var">i</span>), <span class="num">100</span>);
+}
+<span class="cm">// Affiche : 0, 1, 2</span></div>
+
+  <h3>Le hoisting : montee mecanique des declarations</h3>
+
+  <p>Le <strong>hoisting</strong> (hissage) est un comportement ou le moteur JavaScript "deplace" les declarations de variables et de fonctions vers le haut de leur scope, <em>avant</em> l'execution du code. Ce n'est pas litteralement un deplacement du code, mais une phase de compilation ou le moteur enregistre toutes les declarations dans un environnement lexical.</p>
+
+  <p>Le hoisting de <code>var</code> est la source d'un bug classique : acceder a une variable avant sa declaration ne lance pas d'erreur, elle vaut <code>undefined</code>. Avec <code>let</code> et <code>const</code>, le moteur cree une <strong>Temporal Dead Zone</strong> (TDZ) : la variable existe des le debut du bloc, mais y acceder avant la declaration lance une <code>ReferenceError</code>.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg">
+      <text x="350" y="20" fill="#6e7681" font-size="11" text-anchor="middle" font-style="italic">Hoisting : var vs let/const — comment le moteur traite les declarations</text>
+
+      <text x="175" y="52" fill="#ff7b72" font-size="14" text-anchor="middle" font-weight="700">var</text>
+      <rect x="40" y="62" width="270" height="155" rx="8" fill="rgba(255,123,114,0.04)" stroke="#ff7b72" stroke-width="1.5"/>
+
+      <text x="60" y="85" fill="#6e7681" font-size="10" font-family="monospace">console.log(x);</text>
+      <text x="230" y="85" fill="#ff7b72" font-size="10">undefined</text>
+
+      <rect x="50" y="95" width="250" height="22" rx="3" fill="rgba(255,123,114,0.1)"/>
+      <text x="60" y="111" fill="#6e7681" font-size="10" font-family="monospace">var x = 42;</text>
+      <text x="60" y="130" fill="#6e7681" font-size="10" font-family="monospace">console.log(x);</text>
+      <text x="230" y="130" fill="#7ee787" font-size="10">42</text>
+
+      <text x="175" y="165" fill="#ff7b72" font-size="10" text-anchor="middle">Declaration hissee en haut</text>
+      <text x="175" y="180" fill="#ff7b72" font-size="10" text-anchor="middle">Initialisation reste en place</text>
+      <text x="175" y="200" fill="#6e7681" font-size="9" text-anchor="middle">Toujours "undefined" avant la ligne d'init</text>
+
+      <text x="525" y="52" fill="#7ee787" font-size="14" text-anchor="middle" font-weight="700">let / const</text>
+      <rect x="390" y="62" width="270" height="155" rx="8" fill="rgba(126,231,135,0.04)" stroke="#7ee787" stroke-width="1.5"/>
+
+      <text x="410" y="85" fill="#6e7681" font-size="10" font-family="monospace">console.log(y);</text>
+      <text x="590" y="85" fill="#ff7b72" font-size="10">ReferenceError!</text>
+
+      <rect x="400" y="95" width="250" height="22" rx="3" fill="rgba(126,231,135,0.1)"/>
+      <text x="410" y="111" fill="#6e7681" font-size="10" font-family="monospace">let y = 42;</text>
+      <text x="410" y="130" fill="#6e7681" font-size="10" font-family="monospace">console.log(y);</text>
+      <text x="590" y="130" fill="#7ee787" font-size="10">42</text>
+
+      <text x="525" y="165" fill="#7ee787" font-size="10" text-anchor="middle">Temporal Dead Zone (TDZ)</text>
+      <text x="525" y="180" fill="#7ee787" font-size="10" text-anchor="middle">Existe mais inaccessible</text>
+      <text x="525" y="200" fill="#6e7681" font-size="9" text-anchor="middle">Protege contre l'acces premature</text>
+    </svg>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th></th><th><code>var</code></th><th><code>let</code></th><th><code>const</code></th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Portee</strong></td><td>Fonction</td><td>Bloc</td><td>Bloc</td></tr>
+        <tr><td><strong>Hoisting</strong></td><td>Oui (vaut <code>undefined</code>)</td><td>Oui (TDZ)</td><td>Oui (TDZ)</td></tr>
+        <tr><td><strong>Reassignation</strong></td><td>Oui</td><td>Oui</td><td>Non</td></tr>
+        <tr><td><strong>Redeclaration</strong></td><td>Oui (silencieuse)</td><td>Non (SyntaxError)</td><td>Non (SyntaxError)</td></tr>
+        <tr><td><strong>Propriete globale</strong></td><td>Oui (<code>window.x</code>)</td><td>Non</td><td>Non</td></tr>
+        <tr><td><strong>Introduit en</strong></td><td>1995</td><td>ES6 (2015)</td><td>ES6 (2015)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CH6 : OBJETS & PROTOTYPES -->
+<section class="chapter" id="ch6">
+  <div class="chapter-num">Chapitre 06</div>
+  <h2>Objets &amp; Prototypes</h2>
+
+  <p>Le modele objet de JavaScript est unique parmi les langages mainstream. Il n'utilise pas l'heritage classique (classes avec heritage hierarchique) mais l'<strong>heritage prototypal</strong> (delegation entre objets). Ce choix vient directement du langage <strong>Self</strong>, un langage experimental des annees 1980 developpe a Xerox PARC et Stanford.</p>
+
+  <p>Pourquoi Self et pas Java ? Brendan Eich voulait un systeme plus simple et plus flexible. Dans l'heritage classique, vous definissez des classes (des plans) puis vous creez des instances. Dans l'heritage prototypal, vous clonez directement des objets existants. Pas de distinction entre classe et instance. Tout est objet, et chaque objet peut servir de prototype a d'autres objets.</p>
+
+  <p>La tension avec Java etait toujours la. En 1995, Eich a ajoute le mot-cle <code>new</code> et la syntaxe constructeur pour que JavaScript ressemble a Java. En 2015, ES6 a ajoute le mot-cle <code>class</code>. Mais sous le surface, le moteur ne cree jamais de classes. <code>class</code> est du <em>syntactic sugar</em> sur le systeme de prototypes.</p>
+
+  <h3>La chaine de prototypes</h3>
+
+  <p>Chaque objet JavaScript possede un lien interne vers un autre objet appele son <strong>prototype</strong>. Quand vous accedez a une propriete qui n'existe pas sur un objet, JavaScript remonte la chaine de prototypes pour la chercher. Ce processus se repete jusqu'a ce que la propriete soit trouvee ou que la chaine se termine sur <code>null</code>.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr6" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 3.5 L0 7z" fill="#f0db4f"/>
+        </marker>
+      </defs>
+
+      <text x="350" y="22" fill="#6e7681" font-size="11" text-anchor="middle" font-style="italic">La chaine de prototypes : recherche d'une propriete</text>
+
+      <!-- myDog object -->
+      <rect x="60" y="50" width="180" height="110" rx="8" fill="rgba(240,219,79,0.06)" stroke="#f0db4f" stroke-width="1.5"/>
+      <text x="150" y="72" fill="#f0db4f" font-size="13" font-weight="600" text-anchor="middle">myDog</text>
+      <text x="85" y="94" fill="#c9d1d9" font-size="11">name: "Rex"</text>
+      <text x="85" y="112" fill="#c9d1d9" font-size="11">breed: "Berger"</text>
+      <text x="85" y="130" fill="#6e7681" font-size="11">__proto__: &#8594;</text>
+
+      <!-- Dog.prototype -->
+      <rect x="60" y="200" width="220" height="110" rx="8" fill="rgba(121,192,255,0.06)" stroke="#79c0ff" stroke-width="1.5"/>
+      <text x="170" y="222" fill="#79c0ff" font-size="13" font-weight="600" text-anchor="middle">Dog.prototype</text>
+      <text x="85" y="244" fill="#c9d1d9" font-size="11">bark() {...}</text>
+      <text x="85" y="262" fill="#c9d1d9" font-size="11">fetch() {...}</text>
+      <text x="85" y="280" fill="#6e7681" font-size="11">__proto__: &#8594;</text>
+
+      <!-- Object.prototype -->
+      <rect x="400" y="200" width="220" height="110" rx="8" fill="rgba(210,168,255,0.06)" stroke="#d2a8ff" stroke-width="1.5"/>
+      <text x="510" y="222" fill="#d2a8ff" font-size="13" font-weight="600" text-anchor="middle">Object.prototype</text>
+      <text x="425" y="244" fill="#c9d1d9" font-size="11">toString() {...}</text>
+      <text x="425" y="262" fill="#c9d1d9" font-size="11">hasOwnProperty() {...}</text>
+      <text x="425" y="280" fill="#6e7681" font-size="11">__proto__: null</text>
+
+      <!-- Arrows -->
+      <path d="M150 160 L150 198" fill="none" stroke="#f0db4f" stroke-width="1.5" marker-end="url(#arr6)"/>
+      <text x="165" y="183" fill="#6e7681" font-size="9">__proto__</text>
+
+      <path d="M280 255 L398 255" fill="none" stroke="#79c0ff" stroke-width="1.5" marker-end="url(#arr6)" class="flow-arrow"/>
+      <text x="340" y="248" fill="#6e7681" font-size="9">__proto__</text>
+
+      <!-- Resolution example -->
+      <rect x="380" y="50" width="280" height="120" rx="8" fill="rgba(126,231,135,0.04)" stroke="#7ee787" stroke-width="1"/>
+      <text x="395" y="72" fill="#7ee787" font-size="12" font-weight="600">Resolution de myDog.toString()</text>
+      <text x="395" y="94" fill="#c9d1d9" font-size="11">1. myDog a toString ? Non</text>
+      <text x="395" y="114" fill="#c9d1d9" font-size="11">2. Dog.prototype a toString ? Non</text>
+      <text x="395" y="134" fill="#c9d1d9" font-size="11">3. Object.prototype a toString ? Oui!</text>
+      <text x="395" y="154" fill="#7ee787" font-size="11" font-weight="600">&#8594; Appelle Object.prototype.toString()</text>
+    </svg>
+  </div>
+
+  <p>Ce mecanisme de delegation est plus flexible que l'heritage classique. Il permet le partage dynamique de methodes : si vous modifiez <code>Dog.prototype.bark</code> apres avoir cree des instances, toutes les instances existantes verront la modification, car elles ne copient pas la methode, elles y deleguent.</p>
+
+  <h3>Trois facons de creer des objets avec heritage</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Approche</th><th>Code</th><th>Ere</th><th>Ce qui se passe reellement</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Object.create()</strong></td>
+          <td><code>Object.create(proto)</code></td>
+          <td>ES5 (2009)</td>
+          <td>Cree un objet vide dont le prototype est <code>proto</code>. Le plus explicite. Pas de constructeur, pas de <code>new</code>.</td>
+        </tr>
+        <tr>
+          <td><strong>Constructeur + new</strong></td>
+          <td><code>function Dog() {}<br>new Dog()</code></td>
+          <td>1995</td>
+          <td><code>new</code> cree un objet vide, lie son prototype a <code>Dog.prototype</code>, execute le constructeur avec <code>this</code> lie au nouvel objet, et retourne l'objet.</td>
+        </tr>
+        <tr>
+          <td><strong>class + extends</strong></td>
+          <td><code>class Dog extends Animal {}<br>new Dog()</code></td>
+          <td>ES6 (2015)</td>
+          <td>Syntactic sugar. En interne, <code>class</code> cree une fonction constructeur et configure <code>Dog.prototype</code> pour deleguer a <code>Animal.prototype</code>. Rien de nouveau sous le capot.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>Pourquoi <code>class</code> existe si les prototypes suffisent.</strong> L'industrie logicielle est dominee par des developpeurs formes a Java, C++ et C#, ou les classes sont le mecanisme central. Le mot-cle <code>class</code> de JavaScript est un pont de comprehension. Il ne change rien au modele sous-jacent, mais il rend le code plus lisible pour la majorite des developpeurs. Les frameworks comme Angular et React (avec les composants classe) ont largement contribue a populariser cette syntaxe.
+  </div>
+</section>
+
+<!-- CH7 : LE THIS -->
+<section class="chapter" id="ch7">
+  <div class="chapter-num">Chapitre 07</div>
+  <h2>Le <code>this</code> : Un Contexte Mobile</h2>
+
+  <p><code>this</code> est probablement le concept le plus deroutant de JavaScript pour les developpeurs venant d'autres langages. En Java ou Python, <code>this</code> (ou <code>self</code>) fait reference a l'instance courante de la classe, fixee au moment de la creation de l'objet. En JavaScript, <code>this</code> est determine <strong>au moment de l'appel</strong>, pas au moment de la definition. Sa valeur depend de <em>comment</em> la fonction est appelee, pas de ou elle est definie.</p>
+
+  <p>Pourquoi ? Parce que JavaScript a ete concu pour un environnement oriente evenements. Quand un callback est declenche par un clic, le moteur doit savoir quel element a ete clique. Le mecanisme <code>this</code> permet de passer implicitement le contexte de l'evenement. C'est un pattern delibere pour le DOM, pas une erreur de design.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Contexte d'appel</th><th>Valeur de <code>this</code></th><th>Exemple</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Appel simple</strong></td>
+          <td><code>undefined</code> (strict mode) ou <code>window</code> (sloppy mode)</td>
+          <td><code>foo()</code></td>
+        </tr>
+        <tr>
+          <td><strong>Methode d'objet</strong></td>
+          <td>L'objet avant le point</td>
+          <td><code>obj.foo()</code> : <code>this === obj</code></td>
+        </tr>
+        <tr>
+          <td><strong>Constructeur (<code>new</code>)</strong></td>
+          <td>Le nouvel objet cree</td>
+          <td><code>new Foo()</code> : <code>this</code> est l'instance fraiche</td>
+        </tr>
+        <tr>
+          <td><strong>Explicit binding</strong></td>
+          <td>L'argument passe</td>
+          <td><code>foo.call(ctx)</code>, <code>foo.apply(ctx)</code>, <code>foo.bind(ctx)</code></td>
+        </tr>
+        <tr>
+          <td><strong>Arrow function</strong></td>
+          <td>Le <code>this</code> du scope <em>englobant</em></td>
+          <td>Aucun de ce qui precede. L'arrow herite de <code>this</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="code-block"><span class="kw">const</span> <span class="var">user</span> <span class="op">=</span> {
+  <span class="var">name</span>: <span class="str">'Alice'</span>,
+  <span class="var">greet</span>() { <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">`Bonjour, je suis ${<span class="kw">this</span>.name}`</span>); },
+  <span class="var">greetArrow</span>: () <span class="op">=&gt;</span> <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">`Arrow: ${<span class="kw">this</span>.name}`</span>),
+  <span class="var">delayGreet</span>() {
+    <span class="fn">setTimeout</span>(<span class="kw">function</span>() {
+      <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">`Delayed: ${<span class="kw">this</span>.name}`</span>);
+    }, <span class="num">100</span>);
+  },
+  <span class="var">delayGreetFixed</span>() {
+    <span class="fn">setTimeout</span>(() <span class="op">=&gt;</span> {
+      <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">`Fixed: ${<span class="kw">this</span>.name}`</span>);
+    }, <span class="num">100</span>);
+  }
+};
+
+<span class="var">user</span>.<span class="fn">greet</span>();            <span class="cm">// "Bonjour, je suis Alice"     this = user</span>
+<span class="var">user</span>.<span class="fn">greetArrow</span>();      <span class="cm">// "Arrow: undefined"            this = window/Global</span>
+<span class="var">user</span>.<span class="fn">delayGreet</span>();       <span class="cm">// "Delayed: undefined"          this = window (callback)</span>
+<span class="var">user</span>.<span class="fn">delayGreetFixed</span>();  <span class="cm">// "Fixed: Alice"                this = user (arrow)</span></div>
+
+  <p>Le cas <code>delayGreet</code> illustre le probleme classique : quand vous passez une fonction classique en callback, elle perd son contexte. <code>setTimeout</code> appelle la fonction en mode simple (<code>callback()</code>), sans l'objet devant le point. Donc <code>this</code> devient <code>undefined</code> (en strict mode) ou <code>window</code>. L'arrow function dans <code>delayGreetFixed</code> resout ce probleme parce qu'elle capture le <code>this</code> de <code>delayGreetFixed</code>, qui est <code>user</code>.</p>
+
+  <div class="callout">
+    <strong>Regle d'or pour <code>this</code>.</strong> Si vous avez besoin du <code>this</code> dynamique (methode d'objet, constructeur, event handler DOM), utilisez une fonction classique ou une methode raccourcie. Si vous avez besoin du <code>this</code> du scope parent (callbacks, closures, hooks React), utilisez une arrow function. Ne melangez pas les deux sans raison.
+  </div>
+</section>
+
+<!-- CH8 : L'ASYNCHRONE -->
+<section class="chapter" id="ch8">
+  <div class="chapter-num">Chapitre 08</div>
+  <h2>L'Asynchrone : L'Art de Ne Pas Attendre</h2>
+
+  <p>L'asynchrone n'est pas un ajout tardif en JavaScript. C'est une consequence directe de l'environnement pour lequel le langage a ete concu : le navigateur web. Un navigateur doit gerer simultanement des dizaines d'operations : requetes reseau, timers, evenements utilisateur, animations, et rendu de la page. Le modele single-threaded impose que ces operations soient non-bloquantes. Des 1995, JavaScript utilise des callbacks pour gerer l'asynchrone.</p>
+
+  <p>L'evolution de l'asynchrone en JavaScript raconte l'histoire de la maturation du langage, de scripts de 50 lignes a des applications de 100 000 lignes.</p>
+
+  <h3>Generation 1 : Les Callbacks (1995)</h3>
+
+  <p>Le callback est la forme la plus simple d'asynchrone : passez une fonction qui sera appelee quand l'operation sera terminee. Simple pour un cas isole, catastrophique pour les chaines d'operations dependantes.</p>
+
+  <div class="code-block"><span class="cm">// Le "Callback Hell" ou "Pyramid of Doom"</span>
+<span class="fn">getUser</span>(<span class="num">1</span>, <span class="kw">function</span>(<span class="var">user</span>) {
+  <span class="fn">getOrders</span>(<span class="var">user</span>.id, <span class="kw">function</span>(<span class="var">orders</span>) {
+    <span class="fn">getOrderDetails</span>(<span class="var">orders</span>[<span class="num">0</span>].id, <span class="kw">function</span>(<span class="var">details</span>) {
+      <span class="fn">getProduct</span>(<span class="var">details</span>.productId, <span class="kw">function</span>(<span class="var">product</span>) {
+        <span class="fn">console</span>.<span class="fn">log</span>(<span class="var">product</span>.name);
+        <span class="cm">// Et si on doit gerer les erreurs a chaque niveau ?</span>
+      });
+    });
+  });
+});</div>
+
+  <p>Le callback hell n'est pas juste un probleme esthetique. Il rend la gestion d'erreurs tres difficile (chaque niveau doit gerer son propre <code>error</code>), le code est difficile a lire (inversion of control), et le debug est un cauchemar car les stack traces sont perdues a chaque callback.</p>
+
+  <h3>Generation 2 : Les Promises (ES6, 2015)</h3>
+
+  <p>Une <strong>Promise</strong> est un objet qui represente l'eventuel resultat (ou l'echec) d'une operation asynchrone. C'est un placeholder pour une valeur qui n'existe pas encore. L'idee n'est pas nouvelle (elle existe en theorie de la programmation depuis les annees 1970 sous le nom de "futures" ou "deferreds"), mais sa standardisation en JavaScript a transforme la facon dont on ecrit du code asynchrone.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr8g" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 3.5 L0 7z" fill="#7ee787"/>
+        </marker>
+        <marker id="arr8r" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 3.5 L0 7z" fill="#ff7b72"/>
+        </marker>
+      </defs>
+
+      <text x="350" y="20" fill="#6e7681" font-size="11" text-anchor="middle" font-style="italic">La machine d'etats d'une Promise : trois etats, deux transitions possibles</text>
+
+      <!-- Pending -->
+      <circle cx="120" cy="120" r="55" fill="rgba(240,219,79,0.08)" stroke="#f0db4f" stroke-width="2"/>
+      <text x="120" y="115" fill="#f0db4f" font-size="14" text-anchor="middle" font-weight="700">Pending</text>
+      <text x="120" y="133" fill="#6e7681" font-size="10" text-anchor="middle">en attente</text>
+
+      <!-- Fulfilled -->
+      <circle cx="450" cy="70" r="55" fill="rgba(126,231,135,0.08)" stroke="#7ee787" stroke-width="2"/>
+      <text x="450" y="65" fill="#7ee787" font-size="14" text-anchor="middle" font-weight="700">Fulfilled</text>
+      <text x="450" y="83" fill="#6e7681" font-size="10" text-anchor="middle">resolue (valeur)</text>
+
+      <!-- Rejected -->
+      <circle cx="450" cy="170" r="55" fill="rgba(255,123,114,0.08)" stroke="#ff7b72" stroke-width="2"/>
+      <text x="450" y="165" fill="#ff7b72" font-size="14" text-anchor="middle" font-weight="700">Rejected</text>
+      <text x="450" y="183" fill="#6e7681" font-size="10" text-anchor="middle">rejetee (erreur)</text>
+
+      <!-- Transitions -->
+      <path d="M175 105 L390 75" fill="none" stroke="#7ee787" stroke-width="2" marker-end="url(#arr8g)"/>
+      <text x="280" y="75" fill="#7ee787" font-size="10" text-anchor="middle">resolve(value)</text>
+
+      <path d="M175 135 L390 165" fill="none" stroke="#ff7b72" stroke-width="2" marker-end="url(#arr8r)"/>
+      <text x="280" y="165" fill="#ff7b72" font-size="10" text-anchor="middle">reject(error)</text>
+
+      <!-- Then/Catch -->
+      <text x="570" y="66" fill="#c9d1d9" font-size="10">.then() retourne une nouvelle Promise</text>
+      <text x="570" y="166" fill="#c9d1d9" font-size="10">.catch() recupere l'erreur</text>
+
+      <rect x="540" y="110" width="140" height="30" rx="6" fill="rgba(240,219,79,0.06)" stroke="#f0db4f" stroke-width="1"/>
+      <text x="610" y="130" fill="#f0db4f" font-size="10" text-anchor="middle">Immuables une fois settled</text>
+    </svg>
+  </div>
+
+  <p>La force des Promises est le <strong>chainage</strong>. Chaque <code>.then()</code> retourne une nouvelle Promise, ce qui permet de chainer les operations asynchrones sans indentation pyramidale. La gestion d'erreurs est centralisee : un seul <code>.catch()</code> a la fin attrape n'importe quelle erreur dans la chaine.</p>
+
+  <div class="code-block"><span class="cm">// Le meme flux, avec des Promises</span>
+<span class="fn">getUser</span>(<span class="num">1</span>)
+  .<span class="fn">then</span>(<span class="var">user</span> <span class="op">=&gt;</span> <span class="fn">getOrders</span>(<span class="var">user</span>.id))
+  .<span class="fn">then</span>(<span class="var">orders</span> <span class="op">=&gt;</span> <span class="fn">getOrderDetails</span>(<span class="var">orders</span>[<span class="num">0</span>].id))
+  .<span class="fn">then</span>(<span class="var">details</span> <span class="op">=&gt;</span> <span class="fn">getProduct</span>(<span class="var">details</span>.productId))
+  .<span class="fn">then</span>(<span class="var">product</span> <span class="op">=&gt;</span> <span class="fn">console</span>.<span class="fn">log</span>(<span class="var">product</span>.name))
+  .<span class="fn">catch</span>(<span class="var">err</span> <span class="op">=&gt;</span> <span class="fn">console</span>.<span class="fn">error</span>(<span class="str">'Erreur:'</span>, <span class="var">err</span>));</div>
+
+  <h3>Generation 3 : async/await (ES2017)</h3>
+
+  <p><code>async/await</code> est du sucre syntaxique sur les Promises. Il permet d'ecrire du code asynchrone qui <em>ressemble</em> a du code synchrone. Une fonction <code>async</code> retourne toujours une Promise. Le mot-cle <code>await</code> suspend l'execution de la fonction jusqu'a ce que la Promise soit resolue, sans bloquer le thread principal. Pendant ce temps, l'Event Loop continue de traiter d'autres taches.</p>
+
+  <div class="code-block"><span class="cm">// Le meme flux, avec async/await</span>
+<span class="kw">async</span> <span class="kw">function</span> <span class="fn">getProductName</span>() {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> <span class="var">user</span>    <span class="op">=</span> <span class="kw">await</span> <span class="fn">getUser</span>(<span class="num">1</span>);
+    <span class="kw">const</span> <span class="var">orders</span>  <span class="op">=</span> <span class="kw">await</span> <span class="fn">getOrders</span>(<span class="var">user</span>.id);
+    <span class="kw">const</span> <span class="var">details</span> <span class="op">=</span> <span class="kw">await</span> <span class="fn">getOrderDetails</span>(<span class="var">orders</span>[<span class="num">0</span>].id);
+    <span class="kw">const</span> <span class="var">product</span> <span class="op">=</span> <span class="kw">await</span> <span class="fn">getProduct</span>(<span class="var">details</span>.productId);
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="var">product</span>.name);
+  } <span class="kw">catch</span> (<span class="var">err</span>) {
+    <span class="fn">console</span>.<span class="fn">error</span>(<span class="str">'Erreur:'</span>, <span class="var">err</span>);
+  }
+}</div>
+
+  <p>L'avantage d'async/await n'est pas fonctionnel (les Promises faisaient deja tout) mais cognitif. Le cerveau humain est bien meilleur pour raisonner sur du code sequentiel que sur des chaines de callbacks. Les stack traces sont aussi meilleures. Et le <code>try/catch</code> standard fonctionne naturellement avec async/await, alors qu'il ne fonctionne pas avec les callbacks.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Epoque</th><th>Mecanisme</th><th>Probleme resolu</th><th>Probleme restant</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1995-2010</td><td>Callbacks</td><td>Execution non-bloquante</td><td>Callback hell, pas de gestion d'erreurs centralisee</td></tr>
+        <tr><td>2010-2015</td><td>Callbacks + libs (Q, Bluebird)</td><td>Chainage, erreurs centralisees</td><td>API non standardisee, verbose</td></tr>
+        <tr><td>2015</td><td>Promise native (ES6)</td><td>Standardisation, chainage natif</td><td>Toujours verbeux pour les sequences</td></tr>
+        <tr><td>2017</td><td>async/await (ES2017)</td><td>Lisibilite, try/catch naturel</td><td>Parallelisme necessite Promise.all()</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CH9 : ES6+ LA RENAISSANCE -->
+<section class="chapter" id="ch9">
+  <div class="chapter-num">Chapitre 09</div>
+  <h2>ES6+ : La Renaissance</h2>
+
+  <p>ES6 (publie en juin 2015 sous le nom ES2015) est la plus grande mise a jour de l'histoire de JavaScript. Le langage est passe d'un outil de scripts de validation de formulaires a un langage capable de supporter des applications de plusieurs centaines de milliers de lignes. Cette mise a jour etait en preparation depuis l'abandon d'ES4 en 2008, et elle a introduit simultanement des dizaines de fonctionnalites qui se completent mutuellement.</p>
+
+  <p>Depuis 2015, le TC39 (le comite qui standardise JavaScript) publie une nouvelle specification chaque annee. Le processus est maintenant incremental : au lieu d'une revolution tous les 10 ans, le langage evolue en petites etapes annuelles.</p>
+
+  <h3>Les modules : le chainon manquant depuis 20 ans</h3>
+
+  <p>JavaScript est le seul langage mainstream qui a existe pendant 20 ans sans systeme de modules natif. En 1995, les scripts etaient des fichiers de 50 lignes inclus via des balises <code>&lt;script&gt;</code>. En 2015, les applications faisaient 100 000 lignes et avaient desesperement besoin de decoupage en modules.</p>
+
+  <p>La communaute a d'abord cree des systemes ad hoc : CommonJS (Node.js, 2009), AMD/RequireJS (navigateur, 2010). ES6 a finalement standardise les modules avec <code>import</code>/<code>export</code>.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Systeme</th><th>Syntaxe</th><th>Chargement</th><th>Analyse statique</th><th>Tree-shaking</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>CommonJS</strong> (Node)</td>
+          <td><code>require()</code> / <code>module.exports</code></td>
+          <td>Synchrone</td>
+          <td>Non</td>
+          <td>Non</td>
+        </tr>
+        <tr>
+          <td><strong>ES Modules</strong></td>
+          <td><code>import</code> / <code>export</code></td>
+          <td>Asynchrone</td>
+          <td><strong>Oui</strong></td>
+          <td><strong>Oui</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>L'avantage cle des ES Modules est l'<strong>analyse statique</strong>. Parce que les imports sont declaratifs (pas des appels de fonction), un outil comme Webpack, Rollup ou Vite peut analyser le graphe de dependances sans executer le code. Cela permet le <strong>tree-shaking</strong> : eliminer du bundle final tout code qui n'est jamais importe. C'est ce qui permet a une application qui importe lodash entierement de ne livrer que les 3 fonctions effectivement utilisees.</p>
+
+  <h3>Destructuring, Spread et Rest</h3>
+
+  <p>Le destructuring et les operateurs spread/rest sont des ajouts syntaxiques qui changent la facon dont on extrait et compose les donnees. Avant ES6, extraire des proprietes d'un objet necessitait une ligne par propriete. Avec le destructuring, c'est une seule expression declarative.</p>
+
+  <div class="code-block"><span class="cm">// Destructuring : extraction declarative</span>
+<span class="kw">const</span> { <span class="var">name</span>, <span class="var">age</span>, <span class="var">address</span>: { <span class="var">city</span> } } <span class="op">=</span> <span class="var">user</span>;
+
+<span class="cm">// Spread : composition sans mutation</span>
+<span class="kw">const</span> <span class="var">newUser</span> <span class="op">=</span> { ...<span class="var">user</span>, <span class="var">age</span>: <span class="num">30</span> }; <span class="cm">// copie + surcharge</span>
+
+<span class="cm">// Rest : collecte des arguments restants</span>
+<span class="kw">function</span> <span class="fn">log</span>(<span class="var">first</span>, ...<span class="var">rest</span>) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="var">first</span>, <span class="var">rest</span>); <span class="cm">// rest est un vrai Array</span>
+}</div>
+
+  <p>L'impact sur les frameworks est direct. React utilise le spread pour passer des props : <code>&lt;Component {...props} /&gt;</code>. Redux utilise le spread pour l'immutable updates : <code>{ ...state, user: newUser }</code>. Cette syntaxe rend le pattern d'immutabilite naturel en JavaScript.</p>
+
+  <h3>Proxy et Reflect : intercepter tout</h3>
+
+  <p>Le <strong>Proxy</strong> (ES6) est un mecanisme qui permet de creer un objet "proxy" qui intercepte et personnalise les operations fondamentales sur un autre objet : lecture de propriete, ecriture, suppression, enumeration, et plus encore. C'est un mecanisme de <strong>metaprogrammation</strong>.</p>
+
+  <p>Pourquoi c'est important pour les frameworks ? Parce que Vue 3 utilise Proxy pour implementer son systeme de reactivite. Quand vous modifiez une propriete d'un objet reactif, le Proxy intercepte l'ecriture et declenche automatiquement le re-rendu des composants qui dependent de cette propriete. C'est egalement utilise par MobX, Svelte 5 (runes), et de nombreux ORM.</p>
+
+  <div class="code-block"><span class="cm">// Comment Vue 3 utilise Proxy (simplifie)</span>
+<span class="kw">const</span> <span class="var">reactive</span> <span class="op">=</span> (<span class="var">target</span>) <span class="op">=&gt;</span> {
+  <span class="kw">return new</span> <span class="fn">Proxy</span>(<span class="var">target</span>, {
+    <span class="fn">get</span>(<span class="var">obj</span>, <span class="var">prop</span>) {
+      <span class="fn">track</span>(<span class="var">obj</span>, <span class="var">prop</span>); <span class="cm">// Enregistrer qui lit cette propriete</span>
+      <span class="kw">return</span> <span class="var">obj</span>[<span class="var">prop</span>];
+    },
+    <span class="fn">set</span>(<span class="var">obj</span>, <span class="var">prop</span>, <span class="var">value</span>) {
+      <span class="var">obj</span>[<span class="var">prop</span>] <span class="op">=</span> <span class="var">value</span>;
+      <span class="fn">trigger</span>(<span class="var">obj</span>, <span class="var">prop</span>); <span class="cm">// Prevenir les abonnes du changement</span>
+      <span class="kw">return</span> <span class="kw">true</span>;
+    }
+  });
+};</div>
+
+  <h3>Generators et Iterators : produire a la demande</h3>
+
+  <p>Les <strong>generators</strong> (ES6) sont des fonctions qui peuvent etre mises en pause et reprises. Elles utilisent le mot-cle <code>yield</code> pour produire des valeurs une par une, a la demande. Un generator implemente le <strong>protocole d'iteration</strong> : il retourne un objet iterateur avec une methode <code>next()</code> qui retourne <code>{ value, done }</code>.</p>
+
+  <p>Ce mecanisme est utilise par Redux Saga pour gerer les effets de bord de maniere declarative, par des bibliotheques comme <code>co</code> pour implementer async/await avant sa standardisation, et par le protocole d'iteration asynchrone (<code>for await...of</code>) pour consommer des flux de donnees asynchrones.</p>
+
+  <div class="code-block"><span class="kw">function</span>* <span class="fn">range</span>(<span class="var">start</span>, <span class="var">end</span>) {
+  <span class="kw">for</span> (<span class="kw">let</span> <span class="var">i</span> <span class="op">=</span> <span class="var">start</span>; <span class="var">i</span> <span class="op">&lt;</span> <span class="var">end</span>; <span class="var">i</span><span class="op">++</span>) {
+    <span class="kw">yield</span> <span class="var">i</span>;
+  }
+}
+
+<span class="kw">const</span> <span class="var">gen</span> <span class="op">=</span> <span class="fn">range</span>(<span class="num">0</span>, <span class="num">3</span>);
+<span class="var">gen</span>.<span class="fn">next</span>(); <span class="cm">// { value: 0, done: false }</span>
+<span class="var">gen</span>.<span class="fn">next</span>(); <span class="cm">// { value: 1, done: false }</span>
+<span class="var">gen</span>.<span class="fn">next</span>(); <span class="cm">// { value: 2, done: false }</span>
+<span class="var">gen</span>.<span class="fn">next</span>(); <span class="cm">// { value: undefined, done: true }</span>
+
+<span class="cm">// Consommation via for...of</span>
+<span class="kw">for</span> (<span class="kw">const</span> <span class="var">n</span> <span class="kw">of</span> <span class="fn">range</span>(<span class="num">0</span>, <span class="num">5</span>)) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="var">n</span>); <span class="cm">// 0, 1, 2, 3, 4</span>
+}</div>
+</section>
+
+<!-- CH10 : LES FRAMEWORKS MODERNES -->
+<section class="chapter" id="ch10">
+  <div class="chapter-num">Chapitre 10</div>
+  <h2>Les Frameworks Modernes : Pourquoi Ils Sont Differents</h2>
+
+  <p>Tous les frameworks modernes de frontend repondent au meme probleme fondamental : <strong>synchroniser l'interface utilisateur avec l'etat de l'application</strong>. Le DOM est imperatif, verbeux et error-prone. Modifier manuellement des elements DOM en reponse a des changements d'etat est la principale source de bugs dans les applications front-end. Chaque framework propose une abstraction differente pour ce probleme, et cette difference se comprend a travers les concepts que nous avons explores.</p>
+
+  <h3>Le probleme fondamental : l'imperatif vs le declaratif</h3>
+
+  <div class="code-block"><span class="cm">// Imperatif (vanilla JS) : decrivez COMMENT faire etape par etape</span>
+<span class="kw">const</span> <span class="var">countEl</span> <span class="op">=</span> document.<span class="fn">getElementById</span>(<span class="str">'count'</span>);
+<span class="kw">let</span> <span class="var">count</span> <span class="op">=</span> <span class="num">0</span>;
+
+document.<span class="fn">getElementById</span>(<span class="str">'btn'</span>).<span class="fn">addEventListener</span>(<span class="str">'click'</span>, () <span class="op">=&gt;</span> {
+  <span class="var">count</span><span class="op">++</span>;
+  <span class="var">countEl</span>.textContent <span class="op">=</span> <span class="var">count</span>;        <span class="cm">// mise a jour manuelle</span>
+  document.title <span class="op">=</span> <span class="str">`Count: ${<span class="var">count</span>}`</span>; <span class="cm">// autre mise a jour manuelle</span>
+  <span class="kw">if</span> (<span class="var">count</span> <span class="op">&gt;</span> <span class="num">10</span>) {
+    <span class="var">countEl</span>.classList.<span class="fn">add</span>(<span class="str">'warning'</span>); <span class="cm">// encore une autre</span>
+  }
+});</div>
+
+  <p>En imperatif, vous devez traquer chaque endroit ou l'etat <code>count</code> est utilise et mettre a jour manuellement chaque element concerne. Dans une application reelle, un etat peut etre reflété dans des dizaines d'endroits. Oublier une seule mise a jour cree un bug visuel. L'approche declarative inverse le probleme : vous decrivez <em>ce que l'UI doit etre</em> en fonction de l'etat, et le framework se charge de mettre a jour le DOM.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr10b" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 3.5 L0 7z" fill="#79c0ff"/>
+        </marker>
+        <marker id="arr10g" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 3.5 L0 7z" fill="#7ee787"/>
+        </marker>
+        <marker id="arr10p" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 3.5 L0 7z" fill="#d2a8ff"/>
+        </marker>
+        <marker id="arr10o" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 3.5 L0 7z" fill="#ffa657"/>
+        </marker>
+      </defs>
+
+      <text x="380" y="22" fill="#6e7681" font-size="11" text-anchor="middle" font-style="italic">Les 4 approches de reactivite : comment chaque framework resout le probleme</text>
+
+      <!-- React -->
+      <rect x="20" y="45" width="165" height="270" rx="10" fill="rgba(97,218,251,0.06)" stroke="#61dafb" stroke-width="1.5"/>
+      <text x="102" y="68" fill="#61dafb" font-size="13" text-anchor="middle" font-weight="700">React</text>
+      <text x="102" y="84" fill="#6e7681" font-size="9" text-anchor="middle">Re-rendre tout, smartly</text>
+
+      <rect x="35" y="95" width="135" height="28" rx="4" fill="rgba(97,218,251,0.12)" stroke="#61dafb" stroke-width="1"/>
+      <text x="102" y="113" fill="#61dafb" font-size="9" text-anchor="middle">State change</text>
+      <line x1="102" y1="123" x2="102" y2="140" stroke="#61dafb" stroke-width="1.2" marker-end="url(#arr10b)"/>
+      <rect x="35" y="140" width="135" height="28" rx="4" fill="rgba(97,218,251,0.12)" stroke="#61dafb" stroke-width="1"/>
+      <text x="102" y="158" fill="#61dafb" font-size="9" text-anchor="middle">Re-render (Virtual DOM)</text>
+      <line x1="102" y1="168" x2="102" y2="185" stroke="#61dafb" stroke-width="1.2" marker-end="url(#arr10b)"/>
+      <rect x="35" y="185" width="135" height="28" rx="4" fill="rgba(97,218,251,0.12)" stroke="#61dafb" stroke-width="1"/>
+      <text x="102" y="203" fill="#61dafb" font-size="9" text-anchor="middle">Diff (reconciliation)</text>
+      <line x1="102" y1="213" x2="102" y2="230" stroke="#61dafb" stroke-width="1.2" marker-end="url(#arr10b)"/>
+      <rect x="35" y="230" width="135" height="28" rx="4" fill="rgba(97,218,251,0.12)" stroke="#61dafb" stroke-width="1"/>
+      <text x="102" y="248" fill="#61dafb" font-size="9" text-anchor="middle">Patch DOM (minimal)</text>
+
+      <text x="102" y="285" fill="#6e7681" font-size="8" text-anchor="middle">Concepts JS utilises :</text>
+      <text x="102" y="297" fill="#61dafb" font-size="8" text-anchor="middle">Closures, Immutabilite,</text>
+      <text x="102" y="309" fill="#61dafb" font-size="8" text-anchor="middle">Fonctions pures, Hooks</text>
+
+      <!-- Vue -->
+      <rect x="205" y="45" width="165" height="270" rx="10" fill="rgba(126,231,135,0.06)" stroke="#7ee787" stroke-width="1.5"/>
+      <text x="287" y="68" fill="#7ee787" font-size="13" text-anchor="middle" font-weight="700">Vue</text>
+      <text x="287" y="84" fill="#6e7681" font-size="9" text-anchor="middle">Observe et re-render selectif</text>
+
+      <rect x="220" y="95" width="135" height="28" rx="4" fill="rgba(126,231,135,0.12)" stroke="#7ee787" stroke-width="1"/>
+      <text x="287" y="113" fill="#7ee787" font-size="9" text-anchor="middle">Proxy intercepte set</text>
+      <line x1="287" y1="123" x2="287" y2="140" stroke="#7ee787" stroke-width="1.2" marker-end="url(#arr10g)"/>
+      <rect x="220" y="140" width="135" height="28" rx="4" fill="rgba(126,231,135,0.12)" stroke="#7ee787" stroke-width="1"/>
+      <text x="287" y="158" fill="#7ee787" font-size="9" text-anchor="middle">Notifier les watchers</text>
+      <line x1="287" y1="168" x2="287" y2="185" stroke="#7ee787" stroke-width="1.2" marker-end="url(#arr10g)"/>
+      <rect x="220" y="185" width="135" height="28" rx="4" fill="rgba(126,231,135,0.12)" stroke="#7ee787" stroke-width="1"/>
+      <text x="287" y="203" fill="#7ee787" font-size="9" text-anchor="middle">Queue async update</text>
+      <line x1="287" y1="213" x2="287" y2="230" stroke="#7ee787" stroke-width="1.2" marker-end="url(#arr10g)"/>
+      <rect x="220" y="230" width="135" height="28" rx="4" fill="rgba(126,231,135,0.12)" stroke="#7ee787" stroke-width="1"/>
+      <text x="287" y="248" fill="#7ee787" font-size="9" text-anchor="middle">Patch DOM (targeted)</text>
+
+      <text x="287" y="285" fill="#6e7681" font-size="8" text-anchor="middle">Concepts JS utilises :</text>
+      <text x="287" y="297" fill="#7ee787" font-size="8" text-anchor="middle">Proxy, Getters/Setters,</text>
+      <text x="287" y="309" fill="#7ee787" font-size="8" text-anchor="middle">Event Loop (nextTick)</text>
+
+      <!-- Svelte -->
+      <rect x="390" y="45" width="165" height="270" rx="10" fill="rgba(255,166,87,0.06)" stroke="#ffa657" stroke-width="1.5"/>
+      <text x="472" y="68" fill="#ffa657" font-size="13" text-anchor="middle" font-weight="700">Svelte</text>
+      <text x="472" y="84" fill="#6e7681" font-size="9" text-anchor="middle">Compiler, pas de runtime</text>
+
+      <rect x="405" y="95" width="135" height="28" rx="4" fill="rgba(255,166,87,0.12)" stroke="#ffa657" stroke-width="1"/>
+      <text x="472" y="113" fill="#ffa657" font-size="9" text-anchor="middle">Compile-time analysis</text>
+      <line x1="472" y1="123" x2="472" y2="140" stroke="#ffa657" stroke-width="1.2" marker-end="url(#arr10o)"/>
+      <rect x="405" y="140" width="135" height="28" rx="4" fill="rgba(255,166,87,0.12)" stroke="#ffa657" stroke-width="1"/>
+      <text x="472" y="158" fill="#ffa657" font-size="9" text-anchor="middle">Genere du JS imperatif</text>
+      <line x1="472" y1="168" x2="472" y2="185" stroke="#ffa657" stroke-width="1.2" marker-end="url(#arr10o)"/>
+      <rect x="405" y="185" width="135" height="28" rx="4" fill="rgba(255,166,87,0.12)" stroke="#ffa657" stroke-width="1"/>
+      <text x="472" y="203" fill="#ffa657" font-size="9" text-anchor="middle">Signaux (runes)</text>
+      <line x1="472" y1="213" x2="472" y2="230" stroke="#ffa657" stroke-width="1.2" marker-end="url(#arr10o)"/>
+      <rect x="405" y="230" width="135" height="28" rx="4" fill="rgba(255,166,87,0.12)" stroke="#ffa657" stroke-width="1"/>
+      <text x="472" y="248" fill="#ffa657" font-size="9" text-anchor="middle">DOM update direct</text>
+
+      <text x="472" y="285" fill="#6e7681" font-size="8" text-anchor="middle">Concepts JS utilises :</text>
+      <text x="472" y="297" fill="#ffa657" font-size="8" text-anchor="middle">Compilation AST,</text>
+      <text x="472" y="309" fill="#ffa657" font-size="8" text-anchor="middle">Zero virtual DOM</text>
+
+      <!-- Angular -->
+      <rect x="575" y="45" width="165" height="270" rx="10" fill="rgba(210,168,255,0.06)" stroke="#d2a8ff" stroke-width="1.5"/>
+      <text x="657" y="68" fill="#d2a8ff" font-size="13" text-anchor="middle" font-weight="700">Angular</text>
+      <text x="657" y="84" fill="#6e7681" font-size="9" text-anchor="middle">Framework complet, opinionated</text>
+
+      <rect x="590" y="95" width="135" height="28" rx="4" fill="rgba(210,168,255,0.12)" stroke="#d2a8ff" stroke-width="1"/>
+      <text x="657" y="113" fill="#d2a8ff" font-size="9" text-anchor="middle">Zone.js detecte changements</text>
+      <line x1="657" y1="123" x2="657" y2="140" stroke="#d2a8ff" stroke-width="1.2" marker-end="url(#arr10p)"/>
+      <rect x="590" y="140" width="135" height="28" rx="4" fill="rgba(210,168,255,0.12)" stroke="#d2a8ff" stroke-width="1"/>
+      <text x="657" y="158" fill="#d2a8ff" font-size="9" text-anchor="middle">Change Detection</text>
+      <line x1="657" y1="168" x2="657" y2="185" stroke="#d2a8ff" stroke-width="1.2" marker-end="url(#arr10p)"/>
+      <rect x="590" y="185" width="135" height="28" rx="4" fill="rgba(210,168,255,0.12)" stroke="#d2a8ff" stroke-width="1"/>
+      <text x="657" y="203" fill="#d2a8ff" font-size="9" text-anchor="middle">Verifie l'arbre de composants</text>
+      <line x1="657" y1="213" x2="657" y2="230" stroke="#d2a8ff" stroke-width="1.2" marker-end="url(#arr10p)"/>
+      <rect x="590" y="230" width="135" height="28" rx="4" fill="rgba(210,168,255,0.12)" stroke="#d2a8ff" stroke-width="1"/>
+      <text x="657" y="248" fill="#d2a8ff" font-size="9" text-anchor="middle">Patch DOM (templates)</text>
+
+      <text x="657" y="285" fill="#6e7681" font-size="8" text-anchor="middle">Concepts JS utilises :</text>
+      <text x="657" y="297" fill="#d2a8ff" font-size="8" text-anchor="middle">Classes, Decorators (TS),</text>
+      <text x="657" y="309" fill="#d2a8ff" font-size="8" text-anchor="middle">DI, Zones (monkey-patch)</text>
+    </svg>
+  </div>
+
+  <h3>React : la reactivite par le re-rendu</h3>
+
+  <p>React adopte une philosophie contre-intuitive : quand l'etat change, <strong>re-rendre tout le composant</strong>. Pas besoin de traquer quelles proprietes ont change. Pas besoin d'observer. On re-execute la fonction du composant entierement et on compare le resultat avec le rendu precedent via le <strong>Virtual DOM</strong>. Seules les differences (le "diff") sont appliquees au vrai DOM.</p>
+
+  <p>Ce choix repose directement sur les <strong>closures</strong>. Un composant React est une fonction qui capture l'etat via closures. Chaque hook (<code>useState</code>, <code>useEffect</code>) est un mecanisme de closure qui attache des donnees a un appel de fonction specifique. C'est pourquoi les regles des hooks sont si strictes : elles garantissent que les closures capturent le bon etat au bon moment.</p>
+
+  <p>L'immutabilite est centrale dans React parce que la comparaison du Virtual DOM est basee sur l'egalite de reference. Si vous mutez un objet existant, React ne detectera pas le changement (la reference est la meme). Si vous creez un nouvel objet (via spread), React detecte le changement (nouvelle reference). C'est pourquoi le spread operator est si important dans l'ecosysteme React.</p>
+
+  <h3>Vue : la reactivite par Proxy</h3>
+
+  <p>Vue prend l'approche opposee : au lieu de re-rendre tout, <strong>observe precisement ce qui change</strong>. Vue 3 utilise le <code>Proxy</code> natif de JavaScript pour intercepter chaque lecture et ecriture sur les objets reactifs. Quand un composant lit une propriete, Vue enregistre cette dependance. Quand la propriete change, Vue re-rend uniquement les composants concernes.</p>
+
+  <p>Ce systeme est plus performant que React en theorie (pas de diff sur l'arbre entier) mais plus complexe a implementer. Il necessite de comprendre la difference entre les getters/setters (Vue 2) et les Proxies (Vue 3), et d'accepter que certains patterns (ajout dynamique de proprietes, reassignment de variables primitives) ne sont pas reactifs sans syntaxe speciale.</p>
+
+  <h3>Svelte : le framework qui disparait</h3>
+
+  <p>Svelte prend une approche radicalement differente : il <strong>compile les composants en JavaScript imperatif</strong> au moment du build. Pas de Virtual DOM, pas de runtime de reactivite, pas de Proxy. Le compilateur Svelte analyse le code source, identifie quelles variables influencent quelles parties du DOM, et genere du code JavaScript qui met a jour directement les elements DOM concernes.</p>
+
+  <p>Le resultat est du code plus petit (pas de runtime framework) et plus rapide (pas de diff, pas d'observation). La contrepartie est que Svelte necessite une etape de compilation et que certains patterns dynamiques (code totalement dynamique, meta-programmation) sont plus difficiles a exprimer. Svelte 5 introduit les "runes", un systeme de signaux compile qui unifie la reactivite.</p>
+
+  <h3>Angular : le framework enterprise</h3>
+
+  <p>Angular prend l'approche la plus complete et la plus opinionated. C'est un framework qui inclut tout : routage, formulaires, HTTP, tests, injection de dependances, et un systeme de detection de changements. Angular utilise <strong>Zone.js</strong>, une bibliotheque qui monkey-patche toutes les API asynchrones du navigateur (setTimeout, Promise, addEventListener) pour detecter automatiquement quand un evenement a pu modifier l'etat de l'application.</p>
+
+  <p>Angular mise sur <strong>TypeScript</strong> et les classes pour structurer le code. Les decorators (<code>@Component</code>, <code>@Injectable</code>) sont des metadonnees qui configurent le framework. L'injection de dependances est inspiree de Java (Spring) et utilise les prototypes et les closures en interne. Le systeme de templates est compile en instructions DOM optimisees, similaire a Svelte mais avec un runtime plus lourd.</p>
+
+  <h3>Comparaison finale : les compromis de chaque approche</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th></th><th>React</th><th>Vue</th><th>Svelte</th><th>Angular</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Strategie de reactivite</strong></td>
+          <td>Re-rendre + diff (Virtual DOM)</td>
+          <td>Proxy + observation fine</td>
+          <td>Compilation en code imperatif</td>
+          <td>Zone.js + change detection</td>
+        </tr>
+        <tr>
+          <td><strong>Concept JS central</strong></td>
+          <td>Closures (hooks), Immutabilite</td>
+          <td>Proxy, Getters/Setters</td>
+          <td>Compilation AST</td>
+          <td>Classes, Decorators, Zones</td>
+        </tr>
+        <tr>
+          <td><strong>Runtime</strong></td>
+          <td>Moyen (lib React + reconciler)</td>
+          <td>Moyen (runtime reactivite)</td>
+          <td>Minimal (code genere)</td>
+          <td>Lourd (framework complet)</td>
+        </tr>
+        <tr>
+          <td><strong>Paradigme</strong></td>
+          <td>Fonctionnel (composants fonction)</td>
+          <td>Reactif (declaratif + options/composition)</td>
+          <td>Declaratif (compile en imperatif)</td>
+          <td>Orienté objet (classes, DI)</td>
+        </tr>
+        <tr>
+          <td><strong>Complexite mentale</strong></td>
+          <td>Moyenne (regles des hooks)</td>
+          <td>Faible (intuitif pour les debutants)</td>
+          <td>Tres faible (syntaxe proche du vanilla)</td>
+          <td>Elevee (beaucoup de concepts a apprendre)</td>
+        </tr>
+        <tr>
+          <td><strong>Annee de creation</strong></td>
+          <td>2013 (Facebook)</td>
+          <td>2014 (Evan You)</td>
+          <td>2016 (Rich Harris)</td>
+          <td>2016 (Google, rewrite d'AngularJS)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Aucun framework n'est objectivement superieur. React domine par l'ecosysteme et l'emploi. Vue excelle en accessibilite et performance. Svelte brille par la simplicite du code genere. Angular reste le choix pour les grandes equipes enterprise qui veulent un cadre impose. Chacun exploite differemment les mecanismes fondamentaux de JavaScript que nous avons explores : closures, prototypes, Proxy, asynchrone, modules. Comprendre ces mecanismes, c'est comprendre les choix de chaque framework.</p>
+
+  <div class="callout">
+    <strong>La lecon finale.</strong> JavaScript n'est pas un langage mal concu. C'est un langage concu en 10 jours pour un contexte precis, qui a du evoluer pendant 30 ans pour supporter des use cases que personne n'imaginait en 1995. Chaque bizarrerie a une explication historique. Chaque ajout moderne repond a un besoin concret. Et chaque framework exploite les mecanismes du langage d'une maniere qui reflete une philosophie differente. Comprendre le langage, c'est avoir la liberte de choisir le bon outil pour le bon probleme, au lieu de suivre aveuglement la mode du moment.
+  </div>
+</section>
+
+</div><!-- /.main -->
+
+<script>
+// Intersection Observer for scroll animations
+const chapters = document.querySelectorAll('.chapter');
+const navLinks = document.querySelectorAll('#nav a');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+chapters.forEach(ch => observer.observe(ch));
+
+// Active nav link tracking
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-80px 0px -60% 0px' });
+
+chapters.forEach(ch => navObserver.observe(ch));
+
+// Progress bar
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('progressFill').style.width = progress + '%';
+});
+
+// Close sidebar on nav click (mobile)
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.remove('open');
+  });
+});
+</script>
+
+</body>
+</html>
