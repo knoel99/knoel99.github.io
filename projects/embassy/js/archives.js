@@ -192,19 +192,36 @@
   }
 
   var _fragmentCache = {};
+  var _hostCache = {};
 
   function loadFragment(hostCode, guestCode) {
     var key = hostCode + '_' + guestCode;
     if (_fragmentCache[key]) return Promise.resolve(_fragmentCache[key]);
-    return fetch('data/embassy_history/_fragments/' + key + '.json')
-      .then(function (r) {
-        if (!r.ok) throw new Error(key + '.json HTTP ' + r.status);
+
+    var hostLower = hostCode.toLowerCase();
+    var hostPromise = _hostCache[hostLower] || (_hostCache[hostLower] =
+      fetch('data/embassy_history/' + hostLower + '.json').then(function (r) {
+        if (!r.ok) return null;
         return r.json();
-      })
-      .then(function (data) {
+      }).catch(function () { return null; })
+    );
+
+    return hostPromise.then(function (hostData) {
+      if (hostData && hostData.embassies && hostData.embassies[guestCode]) {
+        var data = hostData.embassies[guestCode];
         _fragmentCache[key] = data;
         return data;
-      });
+      }
+      return fetch('data/embassy_history/_fragments/' + key + '.json')
+        .then(function (r) {
+          if (!r.ok) throw new Error(key + '.json HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function (data) {
+          _fragmentCache[key] = data;
+          return data;
+        });
+    });
   }
 
   function getHostName(code) {

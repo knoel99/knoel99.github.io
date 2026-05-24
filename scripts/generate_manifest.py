@@ -16,7 +16,8 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EMBASSY_JS = os.path.join(ROOT, "projects", "embassy", "data", "embassies.js")
-FRAGMENTS_DIR = os.path.join(ROOT, "projects", "embassy", "data", "embassy_history", "_fragments")
+HISTORY_DIR = os.path.join(ROOT, "projects", "embassy", "data", "embassy_history")
+FRAGMENTS_DIR = os.path.join(HISTORY_DIR, "_fragments")
 OUTPUT = os.path.join(ROOT, "projects", "embassy", "data", "manifest.json")
 
 
@@ -38,6 +39,33 @@ def discover_fragments(fragments_dir):
             stem = fname[:-5]
             if "_" in stem:
                 available.add(stem)
+    return available
+
+
+def discover_consolidated_pairs(history_dir):
+    available = set()
+    if not os.path.isdir(history_dir):
+        return available
+    for fname in os.listdir(history_dir):
+        if not fname.endswith(".json") or fname.startswith("_"):
+            continue
+        host_code = fname[:-5].upper()
+        if len(host_code) != 2:
+            continue
+        try:
+            with open(os.path.join(history_dir, fname), "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except (OSError, json.JSONDecodeError):
+            continue
+        embassies = data.get("embassies") if isinstance(data, dict) else None
+        if not isinstance(embassies, dict):
+            continue
+        for guest_code, entry in embassies.items():
+            if not isinstance(entry, dict):
+                continue
+            if not entry.get("addresses"):
+                continue
+            available.add(host_code + "_" + guest_code.upper())
     return available
 
 
@@ -80,9 +108,15 @@ def main():
 
     print("Scanning fragments...")
     fragments = discover_fragments(FRAGMENTS_DIR)
-    print(f"  Found {len(fragments)} fragments")
+    print(f"  Found {len(fragments)} legacy fragment files")
 
-    manifest = build_manifest(embassy_data, fragments)
+    consolidated = discover_consolidated_pairs(HISTORY_DIR)
+    print(f"  Found {len(consolidated)} pairs in consolidated host files")
+
+    all_pairs = fragments | consolidated
+    print(f"  Total unique pairs: {len(all_pairs)}")
+
+    manifest = build_manifest(embassy_data, all_pairs)
 
     with open(OUTPUT, "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, separators=(",", ":"))
