@@ -235,6 +235,8 @@
       kindLegation: 'legasi', kindEmbassy: 'kedutaan', kindChancery: 'kanselir', kindConsulate: 'konsulat', kindResidence: 'kediaman',
       languageLabel: 'Bahasa',
       collapsePanel: 'Lipat / buka panel',
+      countries: 'Negara',
+      toggleCountries: 'Tampilkan / sembunyikan negara',
       showHideLegend: 'Tampilkan / sembunyikan keterangan',
       closeArchives: 'Tutup arsip',
       navFirst: 'Alamat pertama (tertua)', navPrev: 'Alamat sebelumnya', navNext: 'Alamat berikutnya', navLast: 'Alamat terakhir (terbaru)',

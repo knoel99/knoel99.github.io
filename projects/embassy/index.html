@@ -23,7 +23,7 @@
 </head>
 <body>
         
-    <div id="info-panel">
+    <div id="info-panel" class="collapsed">
         <button id="info-panel-toggle"
             onclick="document.getElementById('info-panel').classList.toggle('collapsed')"
             data-i18n-title="collapsePanel"
@@ -198,7 +198,18 @@
         </div>
     </div>
     
-    <div id="nav-panel">
+    <div id="nav-panel" class="collapsed">
+        <button id="nav-panel-toggle"
+            type="button"
+            onclick="document.getElementById('nav-panel').classList.toggle('collapsed')"
+            data-i18n-title="toggleCountries"
+            data-i18n-aria="toggleCountries"
+            aria-label="Afficher / masquer les pays"
+            title="Afficher / masquer les pays">
+            <span class="np-icon" aria-hidden="true">&#127760;</span>
+            <span class="np-label" data-i18n="countries">Pays</span>
+            <span class="np-chevron" aria-hidden="true">&#9662;</span>
+        </button>
         <div id="flag-bar">
         <button onclick="goToCountry(-34.6083,-58.3712,'Argentina')"
             class="flag-btn">
