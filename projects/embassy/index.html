@@ -42,6 +42,21 @@
             View Distance Matrix Table
         </a>
         <div class="info-extras">
+        <details open class="howto-details">
+            <summary class="summary-heading" data-i18n="howToTitle">
+                How to use
+            </summary>
+            <ul class="howto-list">
+                <li>
+                    <span class="howto-icon" aria-hidden="true">&#127760;</span>
+                    <span data-i18n="howToCountries">Open the country menu at the top, then click a country flag to zoom in. Click the same country again to zoom out.</span>
+                </li>
+                <li>
+                    <span class="howto-icon" aria-hidden="true"><img src="https://flagcdn.com/w20/fr.png" width="14" alt=""></span>
+                    <span data-i18n="howToMarkers">Click a flag marker on the map to see the embassy details and browse the timeline of past addresses.</span>
+                </li>
+            </ul>
+        </details>
         <details>
             <summary class="summary-heading" data-i18n="avgRanking">
                 Average Distance Ranking
@@ -334,6 +349,24 @@
         <span aria-hidden="true">&#127760;</span>
     </button>
     <div id="lang-menu" role="listbox" aria-labelledby="lang-fab"></div>
+
+    <div id="hints-toast" role="status" aria-live="polite" hidden>
+        <button class="hints-close" type="button"
+            data-i18n-aria="dismissHints"
+            aria-label="Fermer les astuces"
+            title="Fermer">&times;</button>
+        <p class="hints-title" data-i18n="hintsTitle">Quick tips</p>
+        <ul class="hints-list">
+            <li>
+                <span class="hints-icon" aria-hidden="true">&#127760;</span>
+                <span data-i18n="hintsCountries">Open the country menu at the top, then tap a country to zoom in. Tap it again to zoom out.</span>
+            </li>
+            <li>
+                <span class="hints-icon" aria-hidden="true"><img src="https://flagcdn.com/w20/fr.png" width="14" alt=""></span>
+                <span data-i18n="hintsMarkers">Tap an embassy flag on the map to open its history timeline.</span>
+            </li>
+        </ul>
+    </div>
 </body>
 <script src="js/utils.js"></script>
 <script src="js/map.js"></script>
