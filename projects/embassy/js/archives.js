@@ -231,6 +231,45 @@
     return code;
   }
 
+  var MOBILE_STATES = ['state-min', 'state-half', 'state-full'];
+  var BODY_STATES = ['archives-state-min', 'archives-state-half', 'archives-state-full'];
+
+  function isMobile() {
+    return window.matchMedia && window.matchMedia('(max-width: 640px)').matches;
+  }
+  function setSheetState(idx) {
+    var p = document.getElementById('archives-panel');
+    if (!p) return;
+    MOBILE_STATES.forEach(function (c, i) {
+      p.classList.toggle(c, i === idx);
+      document.body.classList.toggle(BODY_STATES[i], i === idx);
+    });
+  }
+  function clearSheetState() {
+    var p = document.getElementById('archives-panel');
+    if (p) MOBILE_STATES.forEach(function (c) { p.classList.remove(c); });
+    BODY_STATES.forEach(function (c) { document.body.classList.remove(c); });
+  }
+  function currentStateIdx() {
+    var p = document.getElementById('archives-panel');
+    if (!p) return 1;
+    for (var i = 0; i < MOBILE_STATES.length; i++) {
+      if (p.classList.contains(MOBILE_STATES[i])) return i;
+    }
+    return 1;
+  }
+  function wireGrip() {
+    var p = document.getElementById('archives-panel');
+    if (!p) return;
+    var grip = p.querySelector('.ap-grip');
+    if (!grip || grip.__wired) return;
+    grip.__wired = true;
+    grip.addEventListener('click', function () {
+      if (!isMobile()) return;
+      setSheetState((currentStateIdx() + 1) % MOBILE_STATES.length);
+    });
+  }
+
   window.__enterArchives = function (hostCode, guestCode, clickedMarker) {
     if (ARCHIVES_MODE.active) exitArchivesMode();
 
@@ -240,6 +279,8 @@
     var p = document.getElementById('archives-panel');
     p.classList.add('open');
     p.setAttribute('aria-hidden', 'false');
+    wireGrip();
+    if (isMobile()) setSheetState(1); /* default: half */
     document.getElementById('ap-content').innerHTML =
       '<p class="ap-eyebrow"><span class="stamp">' + escapeHtml(t.archives || 'Archives') + '</span><span>' + escapeHtml(t.loading || 'Loading\u2026') + '</span></p>';
 
@@ -258,6 +299,7 @@
     var p = document.getElementById('archives-panel');
     p.classList.remove('open');
     p.setAttribute('aria-hidden', 'true');
+    clearSheetState();
     exitArchivesMode();
   };
 

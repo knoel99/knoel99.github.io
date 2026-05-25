@@ -344,6 +344,10 @@ html, body {
 }
 #archives-panel .ap-inner { position: relative; padding: 28px 32px 80px; }
 
+#archives-panel .ap-grip {
+  display: none;
+}
+
 #archives-panel .ap-close {
   position: absolute;
   top: 14px;
@@ -745,9 +749,63 @@ html, body {
 #hints-toast .hints-close:focus-visible { outline: 2px solid #0066cc; outline-offset: 2px; }
 
 @media (max-width: 640px) {
-  #archives-panel { width: 100vw; }
-  #archives-panel .ap-inner { padding: 18px 16px 88px; }
-  #archives-panel .ap-close { width: 28px; height: 28px; top: 10px; right: 10px; font-size: 16px; }
+  /* Bottom-sheet: panel slides up from the bottom instead of from the right. */
+  #archives-panel {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100vw;
+    height: 50vh;
+    border-left: none;
+    border-top: 1px solid rgba(40, 30, 15, 0.12);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    box-shadow: 0 -8px 32px rgba(40, 30, 15, 0.18);
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                height 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  #archives-panel.open { transform: translateY(0); }
+  #archives-panel.state-min { height: 52px; }
+  #archives-panel.state-half { height: 50vh; }
+  #archives-panel.state-full { height: 90vh; }
+
+  /* Grip handle (centered horizontal line) sits at the top of the sheet. */
+  #archives-panel .ap-grip {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 3;
+  }
+  #archives-panel .ap-grip-line {
+    display: block;
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(40, 30, 15, 0.28);
+    transition: background 0.15s ease, width 0.15s ease;
+  }
+  #archives-panel .ap-grip:hover .ap-grip-line,
+  #archives-panel .ap-grip:focus-visible .ap-grip-line { background: rgba(40, 30, 15, 0.5); width: 48px; }
+  #archives-panel .ap-grip:focus-visible { outline: none; }
+
+  /* In min state: hide inner content, keep grip + close button visible. */
+  #archives-panel.state-min .ap-inner { padding: 0; height: 100%; overflow: hidden; }
+  #archives-panel.state-min #ap-content { display: none; }
+
+  /* Inner padding: leave room at the top for the grip and at the bottom for the nav bar. */
+  #archives-panel .ap-inner { padding: 30px 16px 72px; }
+  #archives-panel .ap-close { width: 30px; height: 30px; top: 4px; right: 8px; font-size: 18px; z-index: 4; }
   #archives-panel .ap-eyebrow { font-size: 10px; margin-bottom: 10px; }
   #archives-panel h2.ap-title { font-size: 25px; line-height: 1.1; }
   #archives-panel .ap-lede {
@@ -768,13 +826,18 @@ html, body {
   #archives-panel .ap-note { font-size: 12.5px; line-height: 1.5; }
   #archives-panel .ap-kind { font-size: 8.5px; padding: 1px 4px; }
 
+  /* Chronological nav floats above the panel so it stays visible in every state. */
   #archives-nav {
     bottom: 12px;
     gap: 2px;
     padding: 5px 6px;
     border-radius: 12px;
     max-width: 96vw;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), bottom 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
+  body.archives-state-min #archives-nav { bottom: 62px; }
+  body.archives-state-half #archives-nav { bottom: calc(50vh + 10px); }
+  body.archives-state-full #archives-nav { bottom: calc(90vh + 10px); }
   #archives-nav button { width: 30px; height: 30px; font-size: 12px; border-radius: 7px; }
   #archives-nav .nav-current { width: 130px; padding: 0 6px; }
   #archives-nav .nc-date { font-size: 11px; }
