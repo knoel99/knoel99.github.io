@@ -641,3 +641,43 @@ html, body {
   left: -16px;
   top: 14px;
 }
+
+@media (max-width: 640px) {
+  #archives-panel { width: 100vw; }
+  #archives-panel .ap-inner { padding: 18px 16px 88px; }
+  #archives-panel .ap-close { width: 28px; height: 28px; top: 10px; right: 10px; font-size: 16px; }
+  #archives-panel .ap-eyebrow { font-size: 10px; margin-bottom: 10px; }
+  #archives-panel h2.ap-title { font-size: 25px; line-height: 1.1; }
+  #archives-panel .ap-lede {
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 10px 0 18px;
+    padding: 10px 0;
+  }
+  #archives-panel .ap-timeline { padding-left: 20px; }
+  #archives-panel .ap-timeline::before { left: 6px; }
+  #archives-panel .ap-entry { margin-bottom: 20px; }
+  #archives-panel .ap-entry::before { left: -17px; width: 9px; height: 9px; }
+  #archives-panel .ap-entry.active { padding: 6px 8px; margin-left: -8px; }
+  #archives-panel .ap-entry.active::before { left: -13px; top: 12px; }
+  #archives-panel .ap-date { font-size: 10px; }
+  #archives-panel .ap-entry h3 { font-size: 15px; line-height: 1.25; }
+  #archives-panel .ap-building { font-size: 12px; }
+  #archives-panel .ap-note { font-size: 12.5px; line-height: 1.5; }
+  #archives-panel .ap-kind { font-size: 8.5px; padding: 1px 4px; }
+
+  #archives-nav {
+    bottom: 12px;
+    gap: 2px;
+    padding: 5px 6px;
+    border-radius: 12px;
+    max-width: 96vw;
+  }
+  #archives-nav button { width: 30px; height: 30px; font-size: 12px; border-radius: 7px; }
+  #archives-nav .nav-current { width: 130px; padding: 0 6px; }
+  #archives-nav .nc-date { font-size: 11px; }
+  #archives-nav .nc-label { font-size: 8px; letter-spacing: 0.14em; }
+
+  .historic-flag-icon .hfi-flag { width: 24px; height: 17px; }
+  .historic-flag-icon .hfi-date { font-size: 8.5px; padding: 1px 4px; margin-top: 10px; }
+}
