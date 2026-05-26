@@ -10,6 +10,7 @@ Site portfolio personnel - [knoel99.github.io](https://knoel99.github.io/)
 | [embassy](https://knoel99.github.io/projects/embassy/) | Carte interactive des distances entre les ambassades des pays du G20 et les centres de pouvoir de chaque capitale | Folium, Python, Geopolitique |
 | [deepseek-v4-paper](https://knoel99.github.io/projects/deepseek_v4_paper/) | Lecture guidee du paper DeepSeek-V4 : PDF original a gauche, resume reformule en francais a droite | PDF.js, MoE, LLM |
 | [javascript](https://knoel99.github.io/projects/javascript/) | Guide profond de JavaScript : 10 chapitres des origines (1995) aux frameworks modernes, avec contexte historique, diagrammes SVG animes et tableaux comparatifs | Vanilla JS, SVG |
+| [gpu](https://knoel99.github.io/projects/gpu/) | Inside an AI Chip : 11 schemas statiques et animes tires de la conversation Dwarkesh x Reiner Pope (MatX). AND gates, multiplieur de Dadda, systolic arrays, pipeline registers, LUTs, floorplans CPU/GPU/TPU. Bilingue FR/EN | Vanilla JS, SVG anime |
 
 ## Structure
 
@@ -27,6 +28,10 @@ projects/
     sections/                       # Sections HTML du resume
   javascript/                       # Guide JavaScript : origines aux frameworks
     index.html
+  gpu/                              # Inside an AI Chip : schemas interactifs FR/EN
+    index.html
+    transcript.md                   # Transcription EN (Dwarkesh x Reiner Pope)
+    transcript_fr.md                # Transcription FR
 ```
 
 ## Ajouter un projet
