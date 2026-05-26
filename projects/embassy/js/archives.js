@@ -29,6 +29,279 @@
     });
   }
 
+  /* Pick a translation for the entry's note in the requested language.
+     If the slot exists but contains the French original (untranslated),
+     fall back to English. If even English is the French original, fall
+     back to the original French. */
+  function pickNote(entry, lang) {
+    var fr = entry.note || '';
+    var ni = entry.note_i18n || {};
+    if (lang === 'fr') return fr;
+    var t = ni[lang];
+    if (t && t !== fr) return t;
+    var en = ni.en;
+    if (en && en !== fr) return en;
+    return fr;
+  }
+
+  /* Common French descriptive phrases that appear in the (untranslated)
+     `address` and `building` fields. Translated at render time so the
+     timeline shows in the user's language. Proper nouns (street names,
+     building names) are left alone. */
+  var FIELD_PHRASES = {
+    en: {
+      "adresse précise non établie dans les sources publiques": "exact address not established in public sources",
+      "adresse exacte non établie dans les sources publiques": "exact address not established in public sources",
+      "adresse exacte non établie dans les sources consultées": "exact address not established in consulted sources",
+      "adresse des premières décennies non établie avec certitude": "address of the early decades not established with certainty",
+      "adresse transitoire non établie avec certitude": "transitional address not established with certainty",
+      "locaux provisoires, adresse précise non établie": "temporary premises, exact address not established",
+      "siège provisoire, adresse précise non établie": "temporary headquarters, exact address not established",
+      "adresse précise non établie": "exact address not established",
+      "adresse exacte non établie": "exact address not established",
+      "adresse précise non déterminée": "exact address not determined",
+      "résidence dans l'enceinte de l'ambassade": "residence within the embassy compound",
+      "locaux provisoires non identifiés": "temporary premises not identified",
+      "adresses historiques non établies": "historic addresses not established",
+      "représentation interrompue": "representation interrupted",
+      "Chancellerie de l'ambassade": "Chancery of the embassy",
+      "Résidence de l'ambassadeur": "Ambassador's residence"
+    },
+    es: {
+      "adresse précise non établie dans les sources publiques": "dirección exacta no establecida en fuentes públicas",
+      "adresse exacte non établie dans les sources publiques": "dirección exacta no establecida en fuentes públicas",
+      "adresse exacte non établie dans les sources consultées": "dirección exacta no establecida en las fuentes consultadas",
+      "adresse des premières décennies non établie avec certitude": "dirección de las primeras décadas no establecida con certeza",
+      "adresse transitoire non établie avec certitude": "dirección transitoria no establecida con certeza",
+      "locaux provisoires, adresse précise non établie": "sede provisional, dirección exacta no establecida",
+      "siège provisoire, adresse précise non établie": "sede provisional, dirección exacta no establecida",
+      "adresse précise non établie": "dirección exacta no establecida",
+      "adresse exacte non établie": "dirección exacta no establecida",
+      "adresse précise non déterminée": "dirección exacta no determinada",
+      "résidence dans l'enceinte de l'ambassade": "residencia dentro del recinto de la embajada",
+      "locaux provisoires non identifiés": "sede provisional no identificada",
+      "adresses historiques non établies": "direcciones históricas no establecidas",
+      "représentation interrompue": "representación interrumpida",
+      "Chancellerie de l'ambassade": "Cancillería de la embajada",
+      "Résidence de l'ambassadeur": "Residencia del embajador"
+    },
+    pt: {
+      "adresse précise non établie dans les sources publiques": "endereço exato não estabelecido em fontes públicas",
+      "adresse exacte non établie dans les sources publiques": "endereço exato não estabelecido em fontes públicas",
+      "adresse exacte non établie dans les sources consultées": "endereço exato não estabelecido nas fontes consultadas",
+      "adresse des premières décennies non établie avec certitude": "endereço das primeiras décadas não estabelecido com certeza",
+      "adresse transitoire non établie avec certitude": "endereço transitório não estabelecido com certeza",
+      "locaux provisoires, adresse précise non établie": "sede provisória, endereço exato não estabelecido",
+      "siège provisoire, adresse précise non établie": "sede provisória, endereço exato não estabelecido",
+      "adresse précise non établie": "endereço exato não estabelecido",
+      "adresse exacte non établie": "endereço exato não estabelecido",
+      "adresse précise non déterminée": "endereço exato não determinado",
+      "résidence dans l'enceinte de l'ambassade": "residência no recinto da embaixada",
+      "locaux provisoires non identifiés": "sede provisória não identificada",
+      "adresses historiques non établies": "endereços históricos não estabelecidos",
+      "représentation interrompue": "representação interrompida",
+      "Chancellerie de l'ambassade": "Chancelaria da embaixada",
+      "Résidence de l'ambassadeur": "Residência do embaixador"
+    },
+    de: {
+      "adresse précise non établie dans les sources publiques": "genaue Adresse in öffentlichen Quellen nicht ermittelt",
+      "adresse exacte non établie dans les sources publiques": "genaue Adresse in öffentlichen Quellen nicht ermittelt",
+      "adresse exacte non établie dans les sources consultées": "genaue Adresse in den eingesehenen Quellen nicht ermittelt",
+      "adresse des premières décennies non établie avec certitude": "Adresse der ersten Jahrzehnte nicht sicher ermittelt",
+      "adresse transitoire non établie avec certitude": "Übergangsadresse nicht sicher ermittelt",
+      "locaux provisoires, adresse précise non établie": "provisorische Räumlichkeiten, genaue Adresse nicht ermittelt",
+      "siège provisoire, adresse précise non établie": "vorläufiger Sitz, genaue Adresse nicht ermittelt",
+      "adresse précise non établie": "genaue Adresse nicht ermittelt",
+      "adresse exacte non établie": "genaue Adresse nicht ermittelt",
+      "adresse précise non déterminée": "genaue Adresse nicht bestimmt",
+      "résidence dans l'enceinte de l'ambassade": "Residenz auf dem Botschaftsgelände",
+      "locaux provisoires non identifiés": "provisorische Räumlichkeiten nicht identifiziert",
+      "adresses historiques non établies": "historische Adressen nicht ermittelt",
+      "représentation interrompue": "Vertretung unterbrochen",
+      "Chancellerie de l'ambassade": "Kanzlei der Botschaft",
+      "Résidence de l'ambassadeur": "Residenz des Botschafters"
+    },
+    it: {
+      "adresse précise non établie dans les sources publiques": "indirizzo preciso non stabilito nelle fonti pubbliche",
+      "adresse exacte non établie dans les sources publiques": "indirizzo esatto non stabilito nelle fonti pubbliche",
+      "adresse exacte non établie dans les sources consultées": "indirizzo esatto non stabilito nelle fonti consultate",
+      "adresse des premières décennies non établie avec certitude": "indirizzo dei primi decenni non stabilito con certezza",
+      "adresse transitoire non établie avec certitude": "indirizzo transitorio non stabilito con certezza",
+      "locaux provisoires, adresse précise non établie": "sede provvisoria, indirizzo preciso non stabilito",
+      "siège provisoire, adresse précise non établie": "sede provvisoria, indirizzo preciso non stabilito",
+      "adresse précise non établie": "indirizzo preciso non stabilito",
+      "adresse exacte non établie": "indirizzo esatto non stabilito",
+      "adresse précise non déterminée": "indirizzo preciso non determinato",
+      "résidence dans l'enceinte de l'ambassade": "residenza all'interno del complesso dell'ambasciata",
+      "locaux provisoires non identifiés": "sede provvisoria non identificata",
+      "adresses historiques non établies": "indirizzi storici non stabiliti",
+      "représentation interrompue": "rappresentanza interrotta",
+      "Chancellerie de l'ambassade": "Cancelleria dell'ambasciata",
+      "Résidence de l'ambassadeur": "Residenza dell'ambasciatore"
+    },
+    ru: {
+      "adresse précise non établie dans les sources publiques": "точный адрес не установлен в открытых источниках",
+      "adresse exacte non établie dans les sources publiques": "точный адрес не установлен в открытых источниках",
+      "adresse exacte non établie dans les sources consultées": "точный адрес не установлен в использованных источниках",
+      "adresse des premières décennies non établie avec certitude": "адрес первых десятилетий не установлен с уверенностью",
+      "adresse transitoire non établie avec certitude": "временный адрес не установлен с уверенностью",
+      "locaux provisoires, adresse précise non établie": "временные помещения, точный адрес не установлен",
+      "siège provisoire, adresse précise non établie": "временная штаб-квартира, точный адрес не установлен",
+      "adresse précise non établie": "точный адрес не установлен",
+      "adresse exacte non établie": "точный адрес не установлен",
+      "adresse précise non déterminée": "точный адрес не определён",
+      "résidence dans l'enceinte de l'ambassade": "резиденция на территории посольства",
+      "locaux provisoires non identifiés": "временные помещения не идентифицированы",
+      "adresses historiques non établies": "исторические адреса не установлены",
+      "représentation interrompue": "представительство прервано",
+      "Chancellerie de l'ambassade": "Канцелярия посольства",
+      "Résidence de l'ambassadeur": "Резиденция посла"
+    },
+    zh: {
+      "adresse précise non établie dans les sources publiques": "公开来源中未确定确切地址",
+      "adresse exacte non établie dans les sources publiques": "公开来源中未确定确切地址",
+      "adresse exacte non établie dans les sources consultées": "在所查阅来源中未确定确切地址",
+      "adresse des premières décennies non établie avec certitude": "早期数十年的地址未能确定",
+      "adresse transitoire non établie avec certitude": "过渡时期地址未能确定",
+      "locaux provisoires, adresse précise non établie": "临时馆址，确切地址未确定",
+      "siège provisoire, adresse précise non établie": "临时总部，确切地址未确定",
+      "adresse précise non établie": "确切地址未确定",
+      "adresse exacte non établie": "确切地址未确定",
+      "adresse précise non déterminée": "确切地址未定",
+      "résidence dans l'enceinte de l'ambassade": "大使馆院内的官邸",
+      "locaux provisoires non identifiés": "未识别的临时馆址",
+      "adresses historiques non établies": "历史地址未确定",
+      "représentation interrompue": "代表关系中断",
+      "Chancellerie de l'ambassade": "大使馆办公处",
+      "Résidence de l'ambassadeur": "大使官邸"
+    },
+    ja: {
+      "adresse précise non établie dans les sources publiques": "公開資料からは正確な住所を特定できず",
+      "adresse exacte non établie dans les sources publiques": "公開資料からは正確な住所を特定できず",
+      "adresse exacte non établie dans les sources consultées": "参照資料からは正確な住所を特定できず",
+      "adresse des premières décennies non établie avec certitude": "初期数十年間の住所は確実に特定できず",
+      "adresse transitoire non établie avec certitude": "過渡的な住所は確実に特定できず",
+      "locaux provisoires, adresse précise non établie": "仮設施設、正確な住所は特定できず",
+      "siège provisoire, adresse précise non établie": "仮本部、正確な住所は特定できず",
+      "adresse précise non établie": "正確な住所は特定できず",
+      "adresse exacte non établie": "正確な住所は特定できず",
+      "adresse précise non déterminée": "正確な住所未確定",
+      "résidence dans l'enceinte de l'ambassade": "大使館敷地内の公邸",
+      "locaux provisoires non identifiés": "未確認の仮設施設",
+      "adresses historiques non établies": "歴史的な住所は特定できず",
+      "représentation interrompue": "代表部の中断",
+      "Chancellerie de l'ambassade": "大使館事務所",
+      "Résidence de l'ambassadeur": "大使公邸"
+    },
+    ko: {
+      "adresse précise non établie dans les sources publiques": "공개 자료에서 정확한 주소 확인 불가",
+      "adresse exacte non établie dans les sources publiques": "공개 자료에서 정확한 주소 확인 불가",
+      "adresse exacte non établie dans les sources consultées": "참조 자료에서 정확한 주소 확인 불가",
+      "adresse des premières décennies non établie avec certitude": "초기 수십 년간의 주소를 확실히 확인할 수 없음",
+      "adresse transitoire non établie avec certitude": "과도기 주소를 확실히 확인할 수 없음",
+      "locaux provisoires, adresse précise non établie": "임시 공관, 정확한 주소 확인 불가",
+      "siège provisoire, adresse précise non établie": "임시 본부, 정확한 주소 확인 불가",
+      "adresse précise non établie": "정확한 주소 확인 불가",
+      "adresse exacte non établie": "정확한 주소 확인 불가",
+      "adresse précise non déterminée": "정확한 주소 미확인",
+      "résidence dans l'enceinte de l'ambassade": "대사관 부지 내 관저",
+      "locaux provisoires non identifiés": "확인되지 않은 임시 공관",
+      "adresses historiques non établies": "역사적 주소 미확인",
+      "représentation interrompue": "공관 활동 중단",
+      "Chancellerie de l'ambassade": "대사관 사무처",
+      "Résidence de l'ambassadeur": "대사 관저"
+    },
+    hi: {
+      "adresse précise non établie dans les sources publiques": "सार्वजनिक स्रोतों में सटीक पता निर्धारित नहीं",
+      "adresse exacte non établie dans les sources publiques": "सार्वजनिक स्रोतों में सटीक पता निर्धारित नहीं",
+      "adresse exacte non établie dans les sources consultées": "देखे गए स्रोतों में सटीक पता निर्धारित नहीं",
+      "adresse des premières décennies non établie avec certitude": "प्रारंभिक दशकों का पता निश्चितता के साथ निर्धारित नहीं",
+      "adresse transitoire non établie avec certitude": "अस्थायी पता निश्चितता के साथ निर्धारित नहीं",
+      "locaux provisoires, adresse précise non établie": "अस्थायी परिसर, सटीक पता निर्धारित नहीं",
+      "siège provisoire, adresse précise non établie": "अस्थायी मुख्यालय, सटीक पता निर्धारित नहीं",
+      "adresse précise non établie": "सटीक पता निर्धारित नहीं",
+      "adresse exacte non établie": "सटीक पता निर्धारित नहीं",
+      "adresse précise non déterminée": "सटीक पता निश्चित नहीं",
+      "résidence dans l'enceinte de l'ambassade": "दूतावास परिसर के भीतर निवास",
+      "locaux provisoires non identifiés": "अस्थायी परिसर अनिर्दिष्ट",
+      "adresses historiques non établies": "ऐतिहासिक पते निर्धारित नहीं",
+      "représentation interrompue": "प्रतिनिधित्व बाधित",
+      "Chancellerie de l'ambassade": "दूतावास कार्यालय",
+      "Résidence de l'ambassadeur": "राजदूत का निवास"
+    },
+    ar: {
+      "adresse précise non établie dans les sources publiques": "العنوان الدقيق غير محدد في المصادر العامة",
+      "adresse exacte non établie dans les sources publiques": "العنوان الدقيق غير محدد في المصادر العامة",
+      "adresse exacte non établie dans les sources consultées": "العنوان الدقيق غير محدد في المصادر التي تم الرجوع إليها",
+      "adresse des premières décennies non établie avec certitude": "عنوان العقود الأولى غير محدد بشكل مؤكد",
+      "adresse transitoire non établie avec certitude": "العنوان الانتقالي غير محدد بشكل مؤكد",
+      "locaux provisoires, adresse précise non établie": "مقر مؤقت، العنوان الدقيق غير محدد",
+      "siège provisoire, adresse précise non établie": "مقر رئيسي مؤقت، العنوان الدقيق غير محدد",
+      "adresse précise non établie": "العنوان الدقيق غير محدد",
+      "adresse exacte non établie": "العنوان الدقيق غير محدد",
+      "adresse précise non déterminée": "العنوان الدقيق غير محدد",
+      "résidence dans l'enceinte de l'ambassade": "مقر إقامة داخل مجمع السفارة",
+      "locaux provisoires non identifiés": "مقر مؤقت غير محدد",
+      "adresses historiques non établies": "العناوين التاريخية غير محددة",
+      "représentation interrompue": "تمثيل منقطع",
+      "Chancellerie de l'ambassade": "ديوان السفارة",
+      "Résidence de l'ambassadeur": "مقر إقامة السفير"
+    },
+    tr: {
+      "adresse précise non établie dans les sources publiques": "kesin adres kamuya açık kaynaklarda belirlenememiş",
+      "adresse exacte non établie dans les sources publiques": "kesin adres kamuya açık kaynaklarda belirlenememiş",
+      "adresse exacte non établie dans les sources consultées": "kesin adres incelenen kaynaklarda belirlenememiş",
+      "adresse des premières décennies non établie avec certitude": "ilk on yılların adresi kesin olarak belirlenememiş",
+      "adresse transitoire non établie avec certitude": "geçiş adresi kesin olarak belirlenememiş",
+      "locaux provisoires, adresse précise non établie": "geçici tesis, kesin adres belirlenememiş",
+      "siège provisoire, adresse précise non établie": "geçici merkez, kesin adres belirlenememiş",
+      "adresse précise non établie": "kesin adres belirlenememiş",
+      "adresse exacte non établie": "kesin adres belirlenememiş",
+      "adresse précise non déterminée": "kesin adres tespit edilememiş",
+      "résidence dans l'enceinte de l'ambassade": "büyükelçilik yerleşkesi içindeki ikametgah",
+      "locaux provisoires non identifiés": "tanımlanamayan geçici tesis",
+      "adresses historiques non établies": "tarihî adresler belirlenememiş",
+      "représentation interrompue": "temsilcilik kesintiye uğradı",
+      "Chancellerie de l'ambassade": "Büyükelçilik şansölyeliği",
+      "Résidence de l'ambassadeur": "Büyükelçi ikametgahı"
+    },
+    id: {
+      "adresse précise non établie dans les sources publiques": "alamat tepat tidak ditetapkan dalam sumber publik",
+      "adresse exacte non établie dans les sources publiques": "alamat tepat tidak ditetapkan dalam sumber publik",
+      "adresse exacte non établie dans les sources consultées": "alamat tepat tidak ditetapkan dalam sumber yang dirujuk",
+      "adresse des premières décennies non établie avec certitude": "alamat dekade-dekade awal tidak ditetapkan dengan pasti",
+      "adresse transitoire non établie avec certitude": "alamat transisi tidak ditetapkan dengan pasti",
+      "locaux provisoires, adresse précise non établie": "lokasi sementara, alamat tepat tidak ditetapkan",
+      "siège provisoire, adresse précise non établie": "markas sementara, alamat tepat tidak ditetapkan",
+      "adresse précise non établie": "alamat tepat tidak ditetapkan",
+      "adresse exacte non établie": "alamat tepat tidak ditetapkan",
+      "adresse précise non déterminée": "alamat tepat tidak ditentukan",
+      "résidence dans l'enceinte de l'ambassade": "kediaman di dalam kompleks kedutaan",
+      "locaux provisoires non identifiés": "lokasi sementara tidak teridentifikasi",
+      "adresses historiques non établies": "alamat historis tidak ditetapkan",
+      "représentation interrompue": "perwakilan terhenti",
+      "Chancellerie de l'ambassade": "Kanselari kedutaan besar",
+      "Résidence de l'ambassadeur": "Kediaman duta besar"
+    }
+  };
+
+  function translateField(text, lang) {
+    if (!text || lang === 'fr') return text;
+    var subs = FIELD_PHRASES[lang];
+    if (!subs) {
+      /* For languages without a substitution table, fall back to English so
+         the user does not see French descriptive phrases mixed in. */
+      subs = FIELD_PHRASES.en;
+    }
+    var out = text;
+    /* Apply longest keys first so 'adresse exacte non établie dans les
+       sources publiques' wins over 'adresse exacte non établie'. */
+    Object.keys(subs).sort(function (a, b) { return b.length - a.length; }).forEach(function (k) {
+      out = out.split(k).join(subs[k]);
+    });
+    return out;
+  }
+
   var ADDR_STATE = { sorted: [], markers: [], current: -1 };
 
   function sortedAddresses(emb) {
@@ -77,9 +350,9 @@
            + '<span>' + escapeHtml(fmtRange(e.from, e.to)) + '</span>'
            + (e.kind ? '<span class="ap-kind">' + escapeHtml(kindLabel(e.kind)) + '</span>' : '')
            + '</div>';
-      html += '<h3>' + escapeHtml(e.address) + '</h3>';
-      if (e.building) html += '<p class="ap-building">' + escapeHtml(e.building) + '</p>';
-      var noteText = (e.note_i18n && e.note_i18n[lang]) || e.note || '';
+      html += '<h3>' + escapeHtml(translateField(e.address, lang)) + '</h3>';
+      if (e.building) html += '<p class="ap-building">' + escapeHtml(translateField(e.building, lang)) + '</p>';
+      var noteText = pickNote(e, lang);
       html += '<p class="ap-note">' + escapeHtml(noteText) + '</p>';
       html += '</div>';
     });

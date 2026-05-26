@@ -295,6 +295,12 @@
             }
           });
         }
+        /* Close the expanded panel when the user clicks/taps anywhere outside it. */
+        document.addEventListener('click', function (e) {
+          if (!container.classList.contains('leaflet-control-layers-expanded')) return;
+          if (container.contains(e.target)) return;
+          lc.collapse();
+        });
       })();
     })
     .catch(function (err) {

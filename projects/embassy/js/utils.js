@@ -64,3 +64,26 @@ window.EmbassyUtils = {
     init();
   }
 })();
+
+/* ============================================================
+   Close the country nav-panel when the user clicks outside it,
+   or picks a flag button (after navigation finishes).
+   ============================================================ */
+(function () {
+  function onClick(e) {
+    var p = document.getElementById('nav-panel');
+    if (!p || p.classList.contains('collapsed')) return;
+    if (p.contains(e.target)) {
+      if (e.target.closest('.flag-btn')) p.classList.add('collapsed');
+      return;
+    }
+    p.classList.add('collapsed');
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      document.addEventListener('click', onClick);
+    });
+  } else {
+    document.addEventListener('click', onClick);
+  }
+})();
