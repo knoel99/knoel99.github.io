@@ -1,9 +1,1673 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>GPU</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inside an AI Chip — Schémas interactifs</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0e1116;
+  --bg2: #161b22;
+  --bg3: #1f2630;
+  --line: #2a3340;
+  --fg: #e6edf3;
+  --fg2: #8b96a3;
+  --accent: #58a6ff;
+  --accent2: #79c0ff;
+  --wire: #6e7681;
+  --wire-on: #ffa657;
+  --gate: #2ea043;
+  --reg: #d2a8ff;
+  --mux: #f78166;
+  --mac: #58a6ff;
+  --hbm: #f85149;
+  --max-w: 980px;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #ffffff;
+    --bg2: #f5f5f7;
+    --bg3: #eaeaef;
+    --line: #d1d5db;
+    --fg: #1d1d1f;
+    --fg2: #6e6e73;
+    --accent: #0066cc;
+    --accent2: #004499;
+    --wire: #9ca3af;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-text-size-adjust: 100%;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Header ---------- */
+.topbar {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 16px clamp(16px, 4vw, 32px) 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.topbar .back {
+  font-size: 13px;
+  color: var(--fg2);
+}
+.lang-switch {
+  display: inline-flex;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.lang-switch button {
+  background: transparent;
+  border: 0;
+  color: var(--fg2);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+  min-height: 32px;
+  -webkit-tap-highlight-color: transparent;
+}
+.lang-switch button[aria-pressed="true"] {
+  background: var(--accent);
+  color: #fff;
+}
+
+.header {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 40px) clamp(16px, 4vw, 32px) 24px;
+}
+.header h1 {
+  font-size: clamp(26px, 5vw, 38px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+  line-height: 1.15;
+}
+.header .sub {
+  font-size: clamp(14px, 2.5vw, 16px);
+  color: var(--fg2);
+  max-width: 700px;
+}
+.header .meta {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--fg2);
+}
+.header .meta a { color: var(--accent); }
+
+/* ---------- TOC ---------- */
+.toc {
+  max-width: var(--max-w);
+  margin: 0 auto 32px;
+  padding: 0 clamp(16px, 4vw, 32px);
+}
+.toc ol {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  counter-reset: toc;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+.toc li {
+  counter-increment: toc;
+  font-size: 14px;
+}
+.toc li::before {
+  content: counter(toc, decimal-leading-zero) "  ";
+  color: var(--fg2);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.toc a { color: var(--fg); }
+@media (min-width: 640px) {
+  .toc ol { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- Sections ---------- */
+section.diagram {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 24px clamp(16px, 4vw, 32px);
+  scroll-margin-top: 20px;
+}
+section.diagram h2 {
+  font-size: clamp(20px, 3.5vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+section.diagram .tagline {
+  font-size: 13px;
+  color: var(--fg2);
+  font-family: var(--mono);
+  margin-bottom: 16px;
+}
+section.diagram p {
+  font-size: 15px;
+  margin-bottom: 14px;
+  color: var(--fg);
+}
+section.diagram p.note {
+  font-size: 13px;
+  color: var(--fg2);
+  border-left: 2px solid var(--line);
+  padding-left: 12px;
+}
+
+.fig {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  overflow-x: auto;
+}
+.fig svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+.fig figcaption {
+  font-size: 12px;
+  color: var(--fg2);
+  margin-top: 10px;
+  text-align: center;
+  font-family: var(--mono);
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  align-items: center;
+}
+button.ctrl, label.ctrl {
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  color: var(--fg);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+button.ctrl:hover, label.ctrl:hover { background: var(--line); }
+button.ctrl:active { transform: translateY(1px); }
+button.ctrl.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+button.ctrl.primary:hover { background: var(--accent2); border-color: var(--accent2); }
+.ctrl input[type="range"] {
+  vertical-align: middle;
+  accent-color: var(--accent);
+}
+.ctrl .val {
+  font-family: var(--mono);
+  color: var(--accent);
+  min-width: 2.5em;
+  text-align: right;
+}
+
+/* SVG common */
+.wire { stroke: var(--wire); stroke-width: 2; fill: none; }
+.wire-on { stroke: var(--wire-on); stroke-width: 2.5; fill: none; }
+.label { font-family: var(--mono); font-size: 11px; fill: var(--fg); }
+.label-dim { font-family: var(--mono); font-size: 10px; fill: var(--fg2); }
+.label-big { font-family: var(--mono); font-size: 13px; fill: var(--fg); font-weight: 600; }
+.gate-fill { fill: var(--bg3); stroke: var(--gate); stroke-width: 1.5; }
+.reg-fill { fill: var(--bg3); stroke: var(--reg); stroke-width: 1.5; }
+.mux-fill { fill: var(--bg3); stroke: var(--mux); stroke-width: 1.5; }
+.mac-fill { fill: var(--bg3); stroke: var(--mac); stroke-width: 1.5; }
+.cell-bg { fill: var(--bg3); stroke: var(--line); stroke-width: 1; }
+.cell-active { fill: var(--accent); fill-opacity: 0.15; stroke: var(--accent); stroke-width: 1.5; }
+.cell-done { fill: var(--gate); fill-opacity: 0.12; stroke: var(--gate); stroke-width: 1; }
+
+/* Bit table */
+.bits-row text { font-family: var(--mono); font-size: 14px; fill: var(--fg); text-anchor: middle; }
+.bits-row .crossed { text-decoration: line-through; opacity: 0.35; }
+
+/* Footer */
+.footer {
+  max-width: var(--max-w);
+  margin: 40px auto 0;
+  padding: 24px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--fg2);
+  border-top: 1px solid var(--line);
+}
+
+.takeaway {
+  background: linear-gradient(135deg, rgba(88,166,255,0.08), rgba(88,166,255,0.02));
+  border: 1px solid var(--accent);
+  border-left-width: 3px;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.takeaway strong { color: var(--accent); }
+
+.truth-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 13px;
+  margin: 10px 0;
+}
+.truth-tbl th, .truth-tbl td {
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  text-align: center;
+}
+.truth-tbl th { background: var(--bg3); color: var(--fg2); font-weight: 500; }
+.truth-tbl tr.hi td { background: rgba(88,166,255,0.15); }
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+@media (min-width: 640px) {
+  .compare { grid-template-columns: 1fr 1fr; }
+}
+.compare > div {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.compare h4 {
+  font-size: 14px;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-family: var(--mono);
+}
+.compare p { font-size: 13px; color: var(--fg); margin-bottom: 6px; }
+.compare ul { font-size: 13px; padding-left: 18px; }
+.compare li { margin-bottom: 4px; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+.clock-pulse { animation: pulse 1.2s ease-in-out infinite; }
+
+@keyframes flow {
+  0% { stroke-dashoffset: 30; }
+  100% { stroke-dashoffset: 0; }
+}
+.flowing {
+  stroke: var(--wire-on);
+  stroke-width: 2.5;
+  stroke-dasharray: 6 4;
+  animation: flow 0.6s linear infinite;
+  fill: none;
+}
+</style>
 </head>
 <body>
+
+<div class="topbar">
+  <a class="back" href="../../" data-i18n="back">← Retour aux projets</a>
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button id="btn-fr" aria-pressed="true">FR</button>
+    <button id="btn-en" aria-pressed="false">EN</button>
+  </div>
+</div>
+
+<header class="header">
+  <h1 data-i18n="title">Inside an AI Chip</h1>
+  <p class="sub" data-i18n="sub">
+    Schémas interactifs accompagnant la conversation entre Reiner Pope (CEO MatX) et Dwarkesh Patel.
+    Du gate logique jusqu'à l'organisation des SMs et MXUs, en passant par les multiplieurs de Dadda,
+    les systolic arrays et le pipeline registers.
+  </p>
+  <p class="meta">
+    <span data-i18n="transcripts">Transcriptions</span> :
+    <a href="transcript.md">EN</a> · <a href="transcript_fr.md">FR</a>
+  </p>
+</header>
+
+<nav class="toc">
+  <ol>
+    <li><a href="#s1" data-i18n="toc.1">AND gate &amp; full adder</a></li>
+    <li><a href="#s2" data-i18n="toc.2">Long multiplication 4×4</a></li>
+    <li><a href="#s3" data-i18n="toc.3">Multiplieur de Dadda</a></li>
+    <li><a href="#s4" data-i18n="toc.4">Scaling FP4 vs FP8</a></li>
+    <li><a href="#s5" data-i18n="toc.5">Mux &amp; coût du data movement</a></li>
+    <li><a href="#s6" data-i18n="toc.6">Systolic array</a></li>
+    <li><a href="#s7" data-i18n="toc.7">Horloge &amp; pipeline registers</a></li>
+    <li><a href="#s8" data-i18n="toc.8">LUT d'un FPGA</a></li>
+    <li><a href="#s9" data-i18n="toc.9">Cache vs scratchpad</a></li>
+    <li><a href="#s10" data-i18n="toc.10">CPU / GPU / TPU floorplans</a></li>
+    <li><a href="#s11" data-i18n="toc.11">Switching power</a></li>
+  </ol>
+</nav>
+
+<!-- 1 -->
+<section class="diagram" id="s1">
+  <h2 data-i18n="s1.h">1 · AND gate &amp; full adder</h2>
+  <p class="tagline" data-i18n="s1.t">Les deux briques primitives à partir desquelles tout est construit.</p>
+  <p data-i18n-html="s1.p">
+    Toute l'arithmétique d'une puce IA est faite de deux portes logiques : <strong>AND</strong> (la plus petite)
+    et <strong>full adder</strong> (la plus grande couramment utilisée). Le full adder additionne <em>trois bits</em>
+    de la même colonne et produit deux bits — somme et retenue. On l'appelle aussi <strong>3→2 compressor</strong>.
+  </p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 520 220" role="img" aria-label="AND gate and full adder">
+      <g transform="translate(20,20)">
+        <text class="label-big" x="80" y="0">AND gate</text>
+        <g id="and-inputs">
+          <text class="label" x="-10" y="50" text-anchor="end">A</text>
+          <text class="label" x="-10" y="90" text-anchor="end">B</text>
+          <line class="wire" id="and-wA" x1="0" y1="46" x2="50" y2="46"/>
+          <line class="wire" id="and-wB" x1="0" y1="86" x2="50" y2="86"/>
+        </g>
+        <path d="M50 30 L50 102 L80 102 A36 36 0 0 0 80 30 Z" class="gate-fill"/>
+        <line class="wire" id="and-wY" x1="116" y1="66" x2="170" y2="66"/>
+        <text class="label" x="180" y="70">Y</text>
+        <text id="and-Y" class="label-big" x="180" y="92" fill="var(--accent)">0</text>
+        <g id="and-btnA" style="cursor:pointer">
+          <rect x="-40" y="36" width="22" height="22" rx="4" class="cell-bg"/>
+          <text id="and-A" x="-29" y="51" text-anchor="middle" class="label-big">0</text>
+        </g>
+        <g id="and-btnB" style="cursor:pointer">
+          <rect x="-40" y="76" width="22" height="22" rx="4" class="cell-bg"/>
+          <text id="and-B" x="-29" y="91" text-anchor="middle" class="label-big">0</text>
+        </g>
+        <text class="label-dim" x="-40" y="125">tap to toggle</text>
+      </g>
+
+      <g transform="translate(260,20)">
+        <text class="label-big" x="80" y="0">Full adder (3→2)</text>
+        <g id="fa-inputs">
+          <text class="label" x="-10" y="35" text-anchor="end">x</text>
+          <text class="label" x="-10" y="65" text-anchor="end">y</text>
+          <text class="label" x="-10" y="95" text-anchor="end">cin</text>
+          <line class="wire" id="fa-wX" x1="0" y1="31" x2="60" y2="31"/>
+          <line class="wire" id="fa-wY" x1="0" y1="61" x2="60" y2="61"/>
+          <line class="wire" id="fa-wC" x1="0" y1="91" x2="60" y2="91"/>
+        </g>
+        <rect x="60" y="20" width="80" height="86" rx="8" class="gate-fill"/>
+        <text class="label" x="100" y="58" text-anchor="middle">FA</text>
+        <text class="label-dim" x="100" y="75" text-anchor="middle">x+y+cin</text>
+        <line class="wire" id="fa-wS" x1="140" y1="80" x2="200" y2="80"/>
+        <text class="label" x="210" y="84">sum</text>
+        <text id="fa-S" class="label-big" x="210" y="106" fill="var(--accent)">0</text>
+        <line class="wire" id="fa-wCo" x1="140" y1="40" x2="200" y2="40"/>
+        <text class="label" x="210" y="44">cout</text>
+        <text id="fa-Co" class="label-big" x="210" y="22" fill="var(--accent)">0</text>
+        <g id="fa-btnX" style="cursor:pointer">
+          <rect x="-40" y="21" width="22" height="22" rx="4" class="cell-bg"/>
+          <text id="fa-X" x="-29" y="36" text-anchor="middle" class="label-big">0</text>
+        </g>
+        <g id="fa-btnY" style="cursor:pointer">
+          <rect x="-40" y="51" width="22" height="22" rx="4" class="cell-bg"/>
+          <text id="fa-Y" x="-29" y="66" text-anchor="middle" class="label-big">0</text>
+        </g>
+        <g id="fa-btnC" style="cursor:pointer">
+          <rect x="-40" y="81" width="22" height="22" rx="4" class="cell-bg"/>
+          <text id="fa-C" x="-29" y="96" text-anchor="middle" class="label-big">0</text>
+        </g>
+      </g>
+
+      <text class="label-dim" x="260" y="200" text-anchor="middle">3 bits in → 2 bits out · sum stays in column, carry shifts left.</text>
+    </svg>
+    <figcaption data-i18n="s1.cap">Touchez les bits pour basculer 0/1 — observez la sortie en temps réel.</figcaption>
+  </figure>
+
+  <table class="truth-tbl">
+    <thead><tr><th>x</th><th>y</th><th>cin</th><th>cout</th><th>sum</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+      <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+      <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+      <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+      <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 2 -->
+<section class="diagram" id="s2">
+  <h2 data-i18n="s2.h">2 · Long multiplication 4×4 + accumulateur 8 bits</h2>
+  <p class="tagline" data-i18n="s2.t">16 produits partiels générés par 16 AND gates.</p>
+  <p data-i18n-html="s2.p">
+    L'objectif : calculer <code>A × B + C</code> avec A, B sur 4 bits et C sur 8 bits — c'est exactement le
+    <strong>multiply-accumulate</strong> qui apparaît à chaque itération d'un produit matriciel.
+    Chaque produit partiel <code>A<sub>i</sub> · B<sub>j</sub></code> est une simple AND.
+  </p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 360" role="img" aria-label="Long multiplication">
+      <g transform="translate(40,30)">
+        <g class="bits-row">
+          <text x="-30" y="0" class="label">A =</text>
+          <text x="20" y="0">1</text><text x="50" y="0">0</text><text x="80" y="0">0</text><text x="110" y="0">1</text>
+        </g>
+        <g class="bits-row" transform="translate(0,30)">
+          <text x="-30" y="0" class="label">B =</text>
+          <text x="20" y="0">1</text><text x="50" y="0">0</text><text x="80" y="0">1</text><text x="110" y="0">0</text>
+        </g>
+        <line x1="-30" y1="40" x2="320" y2="40" stroke="var(--line)" stroke-width="1"/>
+      </g>
+
+      <g id="pp-area" transform="translate(40,90)">
+        <g class="pp-row" data-row="0" opacity="0.25">
+          <text class="label-dim" x="-30" y="0">×b₀</text>
+          <g class="bits-row"><text x="20" y="0">0</text><text x="50" y="0">0</text><text x="80" y="0">0</text><text x="110" y="0">0</text></g>
+        </g>
+        <g class="pp-row" data-row="1" transform="translate(-30,28)" opacity="0.25">
+          <text class="label-dim" x="0" y="0">×b₁</text>
+          <g class="bits-row"><text x="20" y="0">1</text><text x="50" y="0">0</text><text x="80" y="0">0</text><text x="110" y="0">1</text></g>
+        </g>
+        <g class="pp-row" data-row="2" transform="translate(-60,56)" opacity="0.25">
+          <text class="label-dim" x="0" y="0">×b₂</text>
+          <g class="bits-row"><text x="20" y="0">0</text><text x="50" y="0">0</text><text x="80" y="0">0</text><text x="110" y="0">0</text></g>
+        </g>
+        <g class="pp-row" data-row="3" transform="translate(-90,84)" opacity="0.25">
+          <text class="label-dim" x="0" y="0">×b₃</text>
+          <g class="bits-row"><text x="20" y="0">1</text><text x="50" y="0">0</text><text x="80" y="0">0</text><text x="110" y="0">1</text></g>
+        </g>
+        <g class="pp-row" data-row="4" transform="translate(-90,112)" opacity="0.25">
+          <text class="label-dim" x="0" y="0">+C</text>
+          <g class="bits-row">
+            <text x="20" y="0">0</text><text x="50" y="0">1</text><text x="80" y="0">1</text><text x="110" y="0">0</text>
+            <text x="140" y="0">1</text><text x="170" y="0">1</text><text x="200" y="0">0</text><text x="230" y="0">1</text>
+          </g>
+        </g>
+
+        <line x1="-100" y1="130" x2="320" y2="130" stroke="var(--line)" stroke-width="1"/>
+
+        <g class="bits-row" id="pp-result" transform="translate(-90,156)" opacity="0">
+          <text class="label" x="0" y="0" fill="var(--accent)">=</text>
+          <g>
+            <text x="20" y="0" fill="var(--accent)">1</text><text x="50" y="0" fill="var(--accent)">0</text>
+            <text x="80" y="0" fill="var(--accent)">1</text><text x="110" y="0" fill="var(--accent)">1</text>
+            <text x="140" y="0" fill="var(--accent)">1</text><text x="170" y="0" fill="var(--accent)">1</text>
+            <text x="200" y="0" fill="var(--accent)">1</text><text x="230" y="0" fill="var(--accent)">0</text>
+          </g>
+          <text class="label-dim" x="260" y="0">(= 9 × 10 + 109 = 199)</text>
+        </g>
+      </g>
+
+      <text id="pp-caption" class="label" x="320" y="345" text-anchor="middle" fill="var(--fg2)">Click Next step</text>
+    </svg>
+    <figcaption>9 (1001) × 10 (1010) + 109 (01101101) = 199 (11000111)</figcaption>
+  </figure>
+
+  <div class="controls">
+    <button class="ctrl primary" id="pp-step" data-i18n="btn.next">Étape suivante</button>
+    <button class="ctrl" id="pp-reset" data-i18n="btn.reset">Reset</button>
+  </div>
+
+  <div class="takeaway" data-i18n-html="s2.k">
+    <strong>p × q AND gates suffisent</strong> pour générer tous les produits partiels. Le reste — additionner ces 16 bits — est le travail des full adders.
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="diagram" id="s3">
+  <h2 data-i18n="s3.h">3 · Multiplieur de Dadda — compression colonne par colonne</h2>
+  <p class="tagline" data-i18n="s3.t">Standard "area-efficient" : exactement p×q full adders.</p>
+  <p data-i18n-html="s3.p">
+    Au lieu de retenir mentalement les retenues comme un humain, le multiplieur de Dadda
+    <em>écrit</em> chaque retenue. À chaque pas, un triplet de bits dans une colonne est remplacé par
+    une somme (même colonne) et une retenue (colonne suivante à gauche). On élimine un bit par full adder.
+  </p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 260" role="img" aria-label="Dadda compression">
+      <g id="dadda-grid" transform="translate(40,30)"></g>
+      <text id="dadda-step" class="label" x="320" y="240" text-anchor="middle" fill="var(--accent)">Step 0 / 16</text>
+      <text id="dadda-stat" class="label-dim" x="320" y="220" text-anchor="middle">24 bits remaining</text>
+    </svg>
+    <figcaption data-i18n="s3.cap">Chaque point = un bit à additionner. La barre dorée = full adder qui écrase 3 bits en 2.</figcaption>
+  </figure>
+
+  <div class="controls">
+    <button class="ctrl primary" id="dadda-play" data-i18n="btn.play">▶ Lancer</button>
+    <button class="ctrl" id="dadda-step-btn" data-i18n="btn.step">Pas à pas</button>
+    <button class="ctrl" id="dadda-reset" data-i18n="btn.reset">Reset</button>
+    <label class="ctrl"><span data-i18n="lbl.speed">vitesse</span> <input type="range" id="dadda-speed" min="200" max="1500" value="700"></label>
+  </div>
+
+  <div class="takeaway" data-i18n-html="s3.k">
+    <strong>Comptage des gates :</strong> on entre avec p·q + (p+q) bits, on sort avec p+q bits.
+    Chaque full adder retire un bit → <code>p·q</code> full adders exactement. Combiné aux <code>p·q</code> ANDs des produits partiels, ce <strong>scaling quadratique</strong> en bit-width est la raison fondamentale pour laquelle FP4 explose en performance.
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="diagram" id="s4">
+  <h2 data-i18n="s4.h">4 · Scaling quadratique : aire ∝ bit-width²</h2>
+  <p class="tagline" data-i18n="s4.t">Pourquoi NVIDIA devrait annoncer 4× et pas 3× pour FP4.</p>
+  <p data-i18n-html="s4.p">
+    Faites varier la précision et observez l'aire occupée par le multiplieur. Une cellule = un gate (AND ou full adder).
+    Diviser la précision par 2 divise l'aire par <strong>4</strong>, pas par 2.
+  </p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 280" role="img" aria-label="Quadratic scaling FP4 vs FP8">
+      <g id="scaling-fp" transform="translate(40,30)"></g>
+      <text class="label" x="320" y="260" text-anchor="middle" id="scaling-caption" fill="var(--accent)">8 bits → 64 gates</text>
+    </svg>
+    <figcaption data-i18n="s4.cap">Aire = p² gates (côté ALU). Doubler la précision quadruple le silicium.</figcaption>
+  </figure>
+
+  <div class="controls">
+    <label class="ctrl"><span data-i18n="lbl.precision">précision</span> <input type="range" id="scaling-bits" min="2" max="16" value="8" step="1"> <span class="val" id="scaling-bits-val">8</span> bits</label>
+  </div>
+
+  <div class="takeaway" data-i18n-html="s4.k">
+    À iso-aire : <strong>FP4 ≈ 4× plus de throughput que FP8</strong>. Le ratio annoncé par NVIDIA (3× sur B300) sous-estime encore le gain théorique — d'autres contraintes (data movement, packaging mémoire) entrent en jeu.
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="diagram" id="s5">
+  <h2 data-i18n="s5.h">5 · Mux &amp; le coût caché du data movement</h2>
+  <p class="tagline" data-i18n="s5.t">Avant les Tensor Cores : 7/8 du silicium servait juste à déplacer des bits.</p>
+  <p data-i18n-html="s5.p">
+    Un CUDA core classique lit 3 registres, fait un MAC, écrit le résultat. La sélection « registre n° i »
+    est réalisée par un <strong>multiplexeur</strong> (mux). Choisissez le registre source ci-dessous —
+    le chemin doré illustre la masse de portes logiques utilisées <em>juste pour acheminer la donnée</em>.
+  </p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 380" role="img" aria-label="Register file, mux, MAC">
+      <g transform="translate(20,30)">
+        <text class="label-big" x="0" y="-8">Register file (8 entries)</text>
+        <g id="regfile"></g>
+      </g>
+      <g transform="translate(200,30)">
+        <g id="mux1" transform="translate(0,30)">
+          <polygon points="0,0 60,15 60,55 0,70" class="mux-fill"/>
+          <text class="label" x="30" y="40" text-anchor="middle">mux</text>
+          <text class="label-dim" x="30" y="-6" text-anchor="middle">A</text>
+        </g>
+        <g id="mux2" transform="translate(0,120)">
+          <polygon points="0,0 60,15 60,55 0,70" class="mux-fill"/>
+          <text class="label" x="30" y="40" text-anchor="middle">mux</text>
+          <text class="label-dim" x="30" y="-6" text-anchor="middle">B</text>
+        </g>
+        <g id="mux3" transform="translate(0,210)">
+          <polygon points="0,0 60,15 60,55 0,70" class="mux-fill"/>
+          <text class="label" x="30" y="40" text-anchor="middle">mux</text>
+          <text class="label-dim" x="30" y="-6" text-anchor="middle">C</text>
+        </g>
+      </g>
+      <g transform="translate(360,90)">
+        <rect x="0" y="0" width="120" height="160" rx="10" class="mac-fill"/>
+        <text class="label-big" x="60" y="70" text-anchor="middle">MAC</text>
+        <text class="label-dim" x="60" y="90" text-anchor="middle">A·B+C</text>
+      </g>
+      <g transform="translate(360,90)">
+        <path id="wb-path" class="wire" d="M120 80 L150 80 L150 -50 L-280 -50 L-280 30"/>
+        <text class="label-dim" x="-130" y="-56" text-anchor="middle">writeback</text>
+      </g>
+      <g id="mux-wires"></g>
+      <g transform="translate(20,330)">
+        <rect x="0" y="0" width="14" height="14" fill="var(--mux)" opacity="0.5"/>
+        <text class="label" x="20" y="11">data movement (≈ 87%)</text>
+        <rect x="200" y="0" width="14" height="14" fill="var(--mac)" opacity="0.5"/>
+        <text class="label" x="220" y="11">useful compute (≈ 13%)</text>
+      </g>
+    </svg>
+    <figcaption data-i18n="s5.cap">Sélectionnez la source pour chaque mux : observez le wire actif s'illuminer.</figcaption>
+  </figure>
+
+  <div class="controls">
+    <label class="ctrl">A = R<input type="range" id="mux-a" min="0" max="7" value="0"> <span class="val" id="mux-a-val">0</span></label>
+    <label class="ctrl">B = R<input type="range" id="mux-b" min="0" max="7" value="3"> <span class="val" id="mux-b-val">3</span></label>
+    <label class="ctrl">C = R<input type="range" id="mux-c" min="0" max="7" value="5"> <span class="val" id="mux-c-val">5</span></label>
+  </div>
+
+  <div class="takeaway" data-i18n-html="s5.k">
+    <strong>3 × n × p AND gates pour le data movement</strong> contre <code>p × q</code> pour le calcul.
+    Avec n=8, ça représente <strong>~87% du silicium gaspillé en routage</strong>. C'est ce problème que les Tensor Cores et systolic arrays résolvent.
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="diagram" id="s6">
+  <h2 data-i18n="s6.h">6 · Systolic array — matrice × vecteur en hardware</h2>
+  <p class="tagline" data-i18n="s6.t">Quadratique en compute, linéaire en communication.</p>
+  <p data-i18n-html="s6.p">
+    Les poids restent fixés dans les cellules. Le vecteur entre par le haut et descend cycle par cycle.
+    Les sommes partielles s'accumulent verticalement. Pour une matrice n×n, n² MACs s'exécutent en parallèle,
+    mais seulement n entrées traversent la frontière du tableau.
+  </p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 380" role="img" aria-label="Systolic array animation">
+      <g id="systolic" transform="translate(140,30)"></g>
+      <text id="sys-cycle" class="label-big" x="320" y="360" text-anchor="middle" fill="var(--accent)">cycle 0</text>
+    </svg>
+    <figcaption data-i18n="s6.cap">Matrice 3×3 fixée localement. Vecteur (1,2,3) entrant par le haut, dot products sortant par le bas.</figcaption>
+  </figure>
+
+  <div class="controls">
+    <button class="ctrl primary" id="sys-play" data-i18n="btn.animate">▶ Animer</button>
+    <button class="ctrl" id="sys-step" data-i18n="btn.cycle">Cycle suivant</button>
+    <button class="ctrl" id="sys-reset" data-i18n="btn.reset">Reset</button>
+  </div>
+
+  <div class="takeaway" data-i18n-html="s6.k">
+    <strong>Pourquoi ça marche :</strong> en IA, la matrice (les poids) reste constante pour des milliers de vecteurs (les activations).
+    On amortit le coût du data movement sur tout le tableau. C'est la brique fondamentale des MXUs des TPUs et des Tensor Cores des GPUs.
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="diagram" id="s7">
+  <h2 data-i18n="s7.h">7 · Horloge globale &amp; pipeline registers</h2>
+  <p class="tagline" data-i18n="s7.t">Doubler la fréquence en coupant le nuage de logique en deux.</p>
+  <p data-i18n-html="s7.p">
+    Un registre = une bascule qui capture l'état présent sur son fil à chaque coup d'horloge.
+    Entre deux registres, un nuage de portes calcule. Le délai à travers ce nuage fixe la fréquence maximale.
+    Insérer un registre au milieu coupe le délai en deux → <strong>2× fréquence</strong>.
+  </p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 280" role="img" aria-label="Pipeline register insertion">
+      <g transform="translate(20,30)">
+        <text class="label-big" x="0" y="0">Before — 1 GHz · 1 trip</text>
+        <rect x="0" y="20" width="20" height="60" rx="3" class="reg-fill"/>
+        <text class="label-dim" x="10" y="56" text-anchor="middle" fill="var(--reg)">R</text>
+        <line class="wire" x1="20" y1="50" x2="60" y2="50"/>
+        <ellipse cx="200" cy="50" rx="140" ry="30" fill="var(--bg3)" stroke="var(--gate)" stroke-width="1.5"/>
+        <text class="label" x="200" y="46" text-anchor="middle">combinational logic (cloud)</text>
+        <text class="label-dim" x="200" y="60" text-anchor="middle">delay ≈ 1 ns</text>
+        <line class="wire" x1="340" y1="50" x2="380" y2="50"/>
+        <rect x="380" y="20" width="20" height="60" rx="3" class="reg-fill"/>
+        <text class="label-dim" x="390" y="56" text-anchor="middle" fill="var(--reg)">R</text>
+        <circle id="clk1" cx="10" cy="100" r="6" fill="var(--accent)"/>
+        <circle cx="390" cy="100" r="6" fill="var(--accent)" class="clock-pulse"/>
+        <text class="label-dim" x="200" y="105" text-anchor="middle">clk = 1 GHz</text>
+      </g>
+
+      <g transform="translate(20,160)">
+        <text class="label-big" x="0" y="0">After — 2 GHz · 2 trips (pipeline register in the middle)</text>
+        <rect x="0" y="20" width="20" height="60" rx="3" class="reg-fill"/>
+        <text class="label-dim" x="10" y="56" text-anchor="middle" fill="var(--reg)">R</text>
+        <line class="wire" x1="20" y1="50" x2="60" y2="50"/>
+        <ellipse cx="130" cy="50" rx="70" ry="25" fill="var(--bg3)" stroke="var(--gate)" stroke-width="1.5"/>
+        <text class="label" x="130" y="48" text-anchor="middle">cloud / 2</text>
+        <text class="label-dim" x="130" y="60" text-anchor="middle">0.5 ns</text>
+        <line class="wire" x1="200" y1="50" x2="220" y2="50"/>
+        <rect x="220" y="20" width="20" height="60" rx="3" class="reg-fill"/>
+        <text class="label-dim" x="230" y="56" text-anchor="middle" fill="var(--reg)">R</text>
+        <line class="wire" x1="240" y1="50" x2="260" y2="50"/>
+        <ellipse cx="330" cy="50" rx="70" ry="25" fill="var(--bg3)" stroke="var(--gate)" stroke-width="1.5"/>
+        <text class="label" x="330" y="48" text-anchor="middle">cloud / 2</text>
+        <text class="label-dim" x="330" y="60" text-anchor="middle">0.5 ns</text>
+        <line class="wire" x1="400" y1="50" x2="420" y2="50"/>
+        <rect x="420" y="20" width="20" height="60" rx="3" class="reg-fill"/>
+        <text class="label-dim" x="430" y="56" text-anchor="middle" fill="var(--reg)">R</text>
+      </g>
+    </svg>
+    <figcaption data-i18n="s7.cap">Trade-off : aire supplémentaire (le registre intermédiaire) contre throughput doublé.</figcaption>
+  </figure>
+
+  <p class="note" data-i18n-html="s7.note">
+    Limite : dans une boucle de feedback (accumulateur), insérer un registre <em>change la sémantique</em> du calcul
+    (on obtient deux sommes entrelacées sur bits pairs/impairs). C'est ce qui fixe la fréquence d'horloge réelle des chips.
+  </p>
+</section>
+
+<!-- 8 -->
+<section class="diagram" id="s8">
+  <h2 data-i18n="s8.h">8 · LUT — la "porte logique programmable" d'un FPGA</h2>
+  <p class="tagline" data-i18n="s8.t">16 entrées de table de vérité = n'importe quelle fonction 4→1.</p>
+  <p data-i18n-html="s8.p">
+    Un LUT à 4 entrées est un mux 16:1 où les 16 valeurs sont stockées en SRAM de configuration.
+    Modifiez la table de vérité pour reproduire un AND, un XOR, un majoritaire, etc.
+  </p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 320" role="img" aria-label="LUT 4 to 1">
+      <g id="lut-inputs" transform="translate(30,40)"></g>
+      <g transform="translate(180,30)">
+        <rect x="0" y="0" width="160" height="260" rx="10" fill="var(--bg3)" stroke="var(--mux)" stroke-width="1.5"/>
+        <text class="label-big" x="80" y="20" text-anchor="middle">mux 16:1</text>
+        <text class="label-dim" x="80" y="34" text-anchor="middle">(SRAM truth table)</text>
+        <g id="lut-table"></g>
+      </g>
+      <g transform="translate(360,150)">
+        <line class="wire" x1="0" y1="0" x2="40" y2="0"/>
+        <text class="label" x="48" y="4">Y</text>
+        <text id="lut-Y" class="label-big" x="48" y="26" fill="var(--accent)">0</text>
+      </g>
+      <text class="label-dim" x="500" y="50">presets:</text>
+    </svg>
+    <figcaption data-i18n="s8.cap">Tap sur une ligne de la SRAM pour basculer le bit. Cliquez sur les entrées A,B,C,D pour changer l'adresse lue.</figcaption>
+  </figure>
+
+  <div class="controls">
+    <button class="ctrl" data-lut="and">AND4</button>
+    <button class="ctrl" data-lut="or">OR4</button>
+    <button class="ctrl" data-lut="xor">XOR4</button>
+    <button class="ctrl" data-lut="maj" data-i18n="lut.maj">Majoritaire</button>
+    <button class="ctrl" data-lut="zero" data-i18n="lut.zero">Tout 0</button>
+  </div>
+
+  <div class="takeaway" data-i18n-html="s8.k">
+    <strong>Pourquoi un FPGA coûte ~10× plus cher qu'un ASIC :</strong> un AND à 4 entrées = 3 gates en ASIC,
+    mais ~32 gates en passant par un LUT. La flexibilité du tape-out à 10k$ se paie en silicium permanent.
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="diagram" id="s9">
+  <h2 data-i18n="s9.h">9 · Cache (CPU) vs scratchpad (TPU)</h2>
+  <p class="tagline" data-i18n="s9.t">Hardware decides vs software decides.</p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 280" role="img" aria-label="Cache vs scratchpad">
+      <g transform="translate(20,20)">
+        <text class="label-big" x="140" y="0" text-anchor="middle">CPU</text>
+        <rect x="60" y="20" width="160" height="60" rx="6" fill="var(--bg3)" stroke="var(--accent)" stroke-width="1.5"/>
+        <text class="label" x="140" y="56" text-anchor="middle">core</text>
+        <line class="wire" x1="140" y1="80" x2="140" y2="110"/>
+        <rect x="60" y="110" width="160" height="50" rx="6" fill="var(--bg3)" stroke="var(--gate)" stroke-width="1.5"/>
+        <text class="label" x="140" y="135" text-anchor="middle">Cache (hardware-decided)</text>
+        <text class="label-dim" x="140" y="150" text-anchor="middle">hit ? miss ? non-deterministic</text>
+        <line class="wire" x1="140" y1="160" x2="140" y2="190"/>
+        <rect x="60" y="190" width="160" height="40" rx="6" fill="var(--bg3)" stroke="var(--hbm)" stroke-width="1.5"/>
+        <text class="label" x="140" y="215" text-anchor="middle">DDR (off-chip)</text>
+        <text class="label-dim" x="140" y="252" text-anchor="middle">1 load instr → ?</text>
+      </g>
+
+      <g transform="translate(360,20)">
+        <text class="label-big" x="140" y="0" text-anchor="middle">TPU</text>
+        <rect x="60" y="20" width="160" height="60" rx="6" fill="var(--bg3)" stroke="var(--accent)" stroke-width="1.5"/>
+        <text class="label" x="140" y="56" text-anchor="middle">MXU + vector</text>
+        <line class="wire" x1="100" y1="80" x2="100" y2="110"/>
+        <line class="wire" x1="180" y1="80" x2="180" y2="190"/>
+        <rect x="20" y="110" width="160" height="50" rx="6" fill="var(--bg3)" stroke="var(--gate)" stroke-width="1.5"/>
+        <text class="label" x="100" y="135" text-anchor="middle">Scratchpad (SRAM)</text>
+        <text class="label-dim" x="100" y="150" text-anchor="middle">instr A → always 1 ns</text>
+        <rect x="120" y="190" width="160" height="40" rx="6" fill="var(--bg3)" stroke="var(--hbm)" stroke-width="1.5"/>
+        <text class="label" x="200" y="215" text-anchor="middle">HBM (off-chip)</text>
+        <text class="label-dim" x="200" y="252" text-anchor="middle">instr B → dev's call</text>
+      </g>
+    </svg>
+    <figcaption data-i18n="s9.cap">Sur TPU, deux opcodes distincts ciblent scratchpad ou HBM — le compilateur choisit, le hardware exécute.</figcaption>
+  </figure>
+
+  <div class="compare">
+    <div>
+      <h4 data-i18n="s9.cpu.h">Cache (CPU/GPU)</h4>
+      <ul>
+        <li data-i18n-html="s9.cpu.1">Décision : <strong>hardware</strong> (transparent)</li>
+        <li data-i18n="s9.cpu.2">Latence : variable selon hit/miss</li>
+        <li data-i18n="s9.cpu.3">Avantage : 100× plus rapide que DDR sans effort dev</li>
+        <li data-i18n="s9.cpu.4">Coût : non-déterminisme, complexité (prédicteurs, cohérence)</li>
+      </ul>
+    </div>
+    <div>
+      <h4 data-i18n="s9.tpu.h">Scratchpad (TPU/Groq)</h4>
+      <ul>
+        <li data-i18n-html="s9.tpu.1">Décision : <strong>software</strong> (compilateur/dev)</li>
+        <li data-i18n="s9.tpu.2">Latence : déterministe</li>
+        <li data-i18n="s9.tpu.3">Avantage : simplicité hardware, débogabilité, scheduling exact</li>
+        <li data-i18n="s9.tpu.4">Coût : burden sur le compilateur, programme moins portable</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="diagram" id="s10">
+  <h2 data-i18n="s10.h">10 · Floorplans CPU / GPU / TPU</h2>
+  <p class="tagline" data-i18n="s10.t">Un GPU = un grand nombre de petits TPUs.</p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 260" role="img" aria-label="Floorplans CPU GPU TPU">
+      <g transform="translate(20,20)">
+        <text class="label-big" x="90" y="0" text-anchor="middle">CPU</text>
+        <rect x="0" y="14" width="180" height="220" rx="8" fill="var(--bg3)" stroke="var(--line)"/>
+        <rect x="10" y="24" width="160" height="60" fill="var(--gate)" fill-opacity="0.25"/>
+        <text class="label" x="90" y="58" text-anchor="middle">L3 cache (≈40%)</text>
+        <rect x="10" y="94" width="80" height="40" fill="var(--mux)" fill-opacity="0.3"/>
+        <text class="label-dim" x="50" y="118" text-anchor="middle">branch pred.</text>
+        <rect x="100" y="94" width="34" height="40" fill="var(--accent)" fill-opacity="0.3"/>
+        <rect x="138" y="94" width="34" height="40" fill="var(--accent)" fill-opacity="0.3"/>
+        <text class="label-dim" x="135" y="118" text-anchor="middle">core</text>
+        <rect x="10" y="144" width="160" height="80" fill="var(--reg)" fill-opacity="0.2"/>
+        <text class="label" x="90" y="180" text-anchor="middle">register file</text>
+        <text class="label-dim" x="90" y="200" text-anchor="middle">ALU ≈ 5%</text>
+      </g>
+
+      <g transform="translate(230,20)">
+        <text class="label-big" x="90" y="0" text-anchor="middle">GPU</text>
+        <rect x="0" y="14" width="180" height="220" rx="8" fill="var(--bg3)" stroke="var(--line)"/>
+        <g id="gpu-sms"></g>
+        <rect x="10" y="120" width="160" height="14" fill="var(--gate)" fill-opacity="0.3"/>
+        <text class="label-dim" x="90" y="131" text-anchor="middle">L2</text>
+        <text class="label-dim" x="90" y="250" text-anchor="middle">SM = streaming multiproc.</text>
+      </g>
+
+      <g transform="translate(440,20)">
+        <text class="label-big" x="90" y="0" text-anchor="middle">TPU</text>
+        <rect x="0" y="14" width="180" height="220" rx="8" fill="var(--bg3)" stroke="var(--line)"/>
+        <rect x="20" y="30" width="140" height="70" fill="var(--mac)" fill-opacity="0.4"/>
+        <text class="label" x="90" y="70" text-anchor="middle">MXU</text>
+        <rect x="20" y="110" width="140" height="30" fill="var(--mux)" fill-opacity="0.3"/>
+        <text class="label-dim" x="90" y="129" text-anchor="middle">vector unit</text>
+        <rect x="20" y="150" width="140" height="70" fill="var(--mac)" fill-opacity="0.4"/>
+        <text class="label" x="90" y="190" text-anchor="middle">MXU</text>
+        <text class="label-dim" x="90" y="250" text-anchor="middle">few large units</text>
+      </g>
+    </svg>
+    <figcaption data-i18n="s10.cap">Même surface ; granularité radicalement différente. Le GPU laisse de la flexibilité, le TPU maximise l'efficacité par MM.</figcaption>
+  </figure>
+
+  <div class="takeaway" data-i18n-html="s10.k">
+    <strong>Trade-off final :</strong> grandes unités (TPU) = meilleur amortissement du register file, mais data movement contraint à 2 lignes de périmètre. Petites unités (GPU) = bande passante riche entre vector et matrix au sein d'un SM, mais coûteuse <em>entre</em> SMs.
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="diagram" id="s11">
+  <h2 data-i18n="s11.h">11 · Dynamic / switching power</h2>
+  <p class="tagline" data-i18n="s11.t">Chaque bit qui flip = un condensateur qui se charge puis se vide.</p>
+  <p data-i18n-html="s11.p">
+    L'énergie totale d'une puce est dominée par les transitions. Ralentir l'horloge 1000× baisse la
+    consommation 1000×, mais l'énergie <em>par opération</em> reste identique — pas un gain d'efficacité.
+  </p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 220" role="img" aria-label="Switching power">
+      <g transform="translate(20,30)">
+        <text class="label-big" x="0" y="0">Clock signal</text>
+        <path id="clk-wave" d="M0 30 L20 30 L20 10 L60 10 L60 30 L100 30 L100 10 L140 10 L140 30 L180 30 L180 10 L220 10 L220 30 L260 30 L260 10 L300 10 L300 30 L340 30 L340 10 L380 10 L380 30 L420 30 L420 10 L460 10 L460 30 L500 30 L500 10 L540 10 L540 30 L580 30" stroke="var(--accent)" stroke-width="2" fill="none"/>
+      </g>
+      <g transform="translate(20,110)">
+        <text class="label-big" x="0" y="0">Capacitor charge state</text>
+        <rect x="0" y="20" width="580" height="40" rx="4" fill="var(--bg3)" stroke="var(--line)"/>
+        <rect id="cap-fill" x="0" y="20" width="0" height="40" rx="4" fill="var(--wire-on)" opacity="0.6"/>
+        <text class="label-dim" id="cap-state" x="290" y="46" text-anchor="middle">bit = 0 (discharged)</text>
+        <text class="label-dim" x="290" y="80" text-anchor="middle">↑ each flip dissipates energy</text>
+      </g>
+    </svg>
+    <figcaption data-i18n="s11.cap">Le condensateur stocke le bit. La transition 0→1 ou 1→0 dépose ou évacue de la charge — c'est là que va l'énergie.</figcaption>
+  </figure>
+
+  <div class="controls">
+    <button class="ctrl primary" id="power-toggle" data-i18n="btn.start">▶ Démarrer</button>
+    <label class="ctrl"><span data-i18n="lbl.freq">fréquence</span> <input type="range" id="power-freq" min="100" max="2000" value="800"> <span class="val" id="power-freq-val">800</span> ms</label>
+  </div>
+</section>
+
+<footer class="footer" data-i18n-html="footer">
+  Schémas réalisés à partir de la conversation Dwarkesh × Reiner Pope. SVG vanilla, mobile-friendly. <a href="../../">retour</a>
+</footer>
+
+<script>
+/* =========================================================
+   i18n — FR is default in HTML, EN dictionary below
+   ========================================================= */
+const EN = {
+  'back': '← Back to projects',
+  'title': 'Inside an AI Chip',
+  'sub': 'Interactive diagrams accompanying the conversation between Reiner Pope (CEO MatX) and Dwarkesh Patel. From logic gates up to the organisation of SMs and MXUs, through Dadda multipliers, systolic arrays and pipeline registers.',
+  'transcripts': 'Transcripts',
+  'toc.1': 'AND gate & full adder',
+  'toc.2': '4×4 long multiplication',
+  'toc.3': 'Dadda multiplier',
+  'toc.4': 'FP4 vs FP8 scaling',
+  'toc.5': 'Mux & data-movement cost',
+  'toc.6': 'Systolic array',
+  'toc.7': 'Clock & pipeline registers',
+  'toc.8': 'FPGA lookup table',
+  'toc.9': 'Cache vs scratchpad',
+  'toc.10': 'CPU / GPU / TPU floorplans',
+  'toc.11': 'Switching power',
+
+  'btn.next': 'Next step',
+  'btn.reset': 'Reset',
+  'btn.play': '▶ Play',
+  'btn.step': 'Step',
+  'btn.animate': '▶ Animate',
+  'btn.cycle': 'Next cycle',
+  'btn.start': '▶ Start',
+  'lbl.speed': 'speed',
+  'lbl.precision': 'precision',
+  'lbl.freq': 'freq',
+  'lut.maj': 'Majority',
+  'lut.zero': 'All 0',
+
+  's1.h': '1 · AND gate & full adder',
+  's1.t': 'The two primitive bricks everything is built from.',
+  's1.p': 'All arithmetic inside an AI chip is made of two logic gates: <strong>AND</strong> (the smallest) and <strong>full adder</strong> (the largest commonly used). The full adder sums <em>three bits</em> in the same column and produces two bits — sum and carry. Also known as a <strong>3→2 compressor</strong>.',
+  's1.cap': 'Tap the bits to toggle 0/1 — watch the output update in real time.',
+
+  's2.h': '2 · 4×4 long multiplication + 8-bit accumulator',
+  's2.t': '16 partial products generated by 16 AND gates.',
+  's2.p': 'The goal: compute <code>A × B + C</code> with A,B on 4 bits and C on 8 bits — exactly the <strong>multiply-accumulate</strong> that appears at every iteration of a matrix product. Each partial product <code>A<sub>i</sub> · B<sub>j</sub></code> is a single AND.',
+  's2.k': '<strong>p × q AND gates suffice</strong> to generate every partial product. The rest — summing those 16 bits — is the full adders\' job.',
+
+  's3.h': '3 · Dadda multiplier — column-by-column compression',
+  's3.t': 'The standard "area-efficient" design: exactly p×q full adders.',
+  's3.p': 'Instead of mentally carrying like a human does, the Dadda multiplier <em>writes out</em> every carry. At each step, a triplet of bits in one column is replaced by a sum (same column) and a carry (next column to the left). Each full adder removes one bit.',
+  's3.cap': 'Each dot = one bit to add. The gold highlight = a full adder compressing 3 bits into 2.',
+  's3.k': '<strong>Gate count:</strong> we enter with p·q + (p+q) bits, we exit with p+q bits. Each full adder removes one bit → exactly <code>p·q</code> full adders. Combined with <code>p·q</code> ANDs for partial products, this <strong>quadratic scaling</strong> in bit-width is the fundamental reason FP4 explodes in performance.',
+
+  's4.h': '4 · Quadratic scaling: area ∝ bit-width²',
+  's4.t': 'Why NVIDIA should be advertising 4× and not 3× for FP4.',
+  's4.p': 'Vary the precision and watch the multiplier\'s area. One cell = one gate (AND or full adder). Halving the precision divides the area by <strong>4</strong>, not 2.',
+  's4.cap': 'Area = p² gates (ALU side). Doubling precision quadruples silicon.',
+  's4.k': 'At iso-area: <strong>FP4 ≈ 4× more throughput than FP8</strong>. NVIDIA\'s advertised ratio (3× on B300) still underestimates the theoretical gain — other constraints (data movement, memory packaging) get in the way.',
+
+  's5.h': '5 · Mux & the hidden cost of data movement',
+  's5.t': 'Before Tensor Cores: 7/8 of the silicon was just shuffling bits.',
+  's5.p': 'A classic CUDA core reads 3 registers, does a MAC, writes the result back. The "register n° i" selection is performed by a <strong>multiplexer</strong> (mux). Pick the source register below — the gold path shows the mass of logic gates used <em>just to route the data</em>.',
+  's5.cap': 'Select each mux\'s source: the active wire lights up.',
+  's5.k': '<strong>3 × n × p AND gates for data movement</strong> vs <code>p × q</code> for compute. With n=8, that\'s <strong>~87% of the silicon wasted on routing</strong>. This is the problem Tensor Cores and systolic arrays solve.',
+
+  's6.h': '6 · Systolic array — matrix × vector in hardware',
+  's6.t': 'Quadratic in compute, linear in communication.',
+  's6.p': 'The weights stay pinned inside the cells. The vector enters at the top and propagates downward cycle by cycle. Partial sums accumulate vertically. For an n×n matrix, n² MACs run in parallel, but only n inputs cross the array boundary.',
+  's6.cap': '3×3 matrix held locally. Vector (1,2,3) entering at top, dot products exiting at bottom.',
+  's6.k': '<strong>Why it works:</strong> in AI, the matrix (weights) stays constant across thousands of vectors (activations). The data-movement cost is amortised across the whole array. This is the fundamental building block of TPU MXUs and GPU Tensor Cores.',
+
+  's7.h': '7 · Global clock & pipeline registers',
+  's7.t': 'Double the frequency by splitting the logic cloud in two.',
+  's7.p': 'A register = a flip-flop that captures whatever sits on its wire at each clock edge. Between two registers, a cloud of gates computes. The delay through that cloud sets the maximum frequency. Insert a register in the middle and you cut the delay in half → <strong>2× frequency</strong>.',
+  's7.cap': 'Trade-off: extra area (the middle register) for doubled throughput.',
+  's7.note': 'Limitation: in a feedback loop (an accumulator), inserting a register <em>changes the semantics</em> (you end up with two interleaved sums on even/odd bits). This constraint sets the real-world clock speed of a chip.',
+
+  's8.h': '8 · LUT — the FPGA\'s "programmable logic gate"',
+  's8.t': '16 truth-table entries = any 4→1 function.',
+  's8.p': 'A 4-input LUT is a 16:1 mux where the 16 values are stored in configuration SRAM. Edit the truth table to reproduce an AND, an XOR, a majority gate, etc.',
+  's8.cap': 'Tap an SRAM row to flip the bit. Tap A,B,C,D inputs to change the address read.',
+  's8.k': '<strong>Why an FPGA costs ~10× more than an ASIC:</strong> a 4-input AND = 3 gates in an ASIC, but ~32 gates routed through a LUT. The flexibility of a $10k "tape-out" is paid in permanent silicon overhead.',
+
+  's9.h': '9 · Cache (CPU) vs scratchpad (TPU)',
+  's9.t': 'Hardware decides vs software decides.',
+  's9.cap': 'On a TPU, two distinct opcodes target scratchpad or HBM — the compiler chooses, the hardware executes.',
+  's9.cpu.h': 'Cache (CPU/GPU)',
+  's9.cpu.1': 'Decision: <strong>hardware</strong> (transparent)',
+  's9.cpu.2': 'Latency: variable, depends on hit/miss',
+  's9.cpu.3': 'Upside: 100× faster than DDR with no dev effort',
+  's9.cpu.4': 'Cost: non-determinism, complexity (predictors, coherence)',
+  's9.tpu.h': 'Scratchpad (TPU/Groq)',
+  's9.tpu.1': 'Decision: <strong>software</strong> (compiler/dev)',
+  's9.tpu.2': 'Latency: deterministic',
+  's9.tpu.3': 'Upside: simpler hardware, debuggable, exact scheduling',
+  's9.tpu.4': 'Cost: burden on the compiler, less portable code',
+
+  's10.h': '10 · CPU / GPU / TPU floorplans',
+  's10.t': 'A GPU = a large number of tiny TPUs.',
+  's10.cap': 'Same area; radically different granularity. GPU keeps flexibility, TPU maximises matmul efficiency.',
+  's10.k': '<strong>Final trade-off:</strong> large units (TPU) = better register-file amortisation, but data movement bottlenecked by 2 perimeter lines. Small units (GPU) = high bandwidth between vector and matrix units inside an SM, but expensive <em>across</em> SMs.',
+
+  's11.h': '11 · Dynamic / switching power',
+  's11.t': 'Each bit flip = a capacitor charging then discharging.',
+  's11.p': 'A chip\'s total energy is dominated by transitions. Slowing the clock 1000× cuts consumption 1000×, but the energy <em>per operation</em> stays the same — not an efficiency gain.',
+  's11.cap': 'The capacitor stores the bit. The 0→1 or 1→0 transition deposits or drains charge — that\'s where the energy goes.',
+
+  'footer': 'Diagrams built from the Dwarkesh × Reiner Pope conversation. Vanilla SVG, mobile-friendly. <a href="../../">back</a>',
+};
+
+(function(){
+  // Capture the default (FR) text on load
+  const defaults = {};
+  document.querySelectorAll('[data-i18n], [data-i18n-html]').forEach(el => {
+    const key = el.dataset.i18n || el.dataset.i18nHtml;
+    if(el.dataset.i18nHtml) defaults[key] = el.innerHTML;
+    else defaults[key] = el.textContent;
+  });
+
+  function applyLang(lang){
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.dataset.i18n;
+      const t = lang === 'en' ? EN[k] : defaults[k];
+      if(t !== undefined) el.textContent = t;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const k = el.dataset.i18nHtml;
+      const t = lang === 'en' ? EN[k] : defaults[k];
+      if(t !== undefined) el.innerHTML = t;
+    });
+    document.getElementById('btn-fr').setAttribute('aria-pressed', lang === 'fr');
+    document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+    try { localStorage.setItem('gpu-lang', lang); } catch(e){}
+  }
+
+  document.getElementById('btn-fr').addEventListener('click', () => applyLang('fr'));
+  document.getElementById('btn-en').addEventListener('click', () => applyLang('en'));
+
+  let saved = 'fr';
+  try { saved = localStorage.getItem('gpu-lang') || (navigator.language && navigator.language.startsWith('en') ? 'en' : 'fr'); } catch(e){}
+  if(saved === 'en') applyLang('en');
+})();
+
+/* =========================================================
+   1. AND gate + Full adder interactivity
+   ========================================================= */
+(function(){
+  let A=0, B=0;
+  function updAnd(){
+    document.getElementById('and-A').textContent=A;
+    document.getElementById('and-B').textContent=B;
+    const Y = A & B;
+    document.getElementById('and-Y').textContent=Y;
+    document.getElementById('and-wA').classList.toggle('wire-on', A===1);
+    document.getElementById('and-wA').classList.toggle('wire', A===0);
+    document.getElementById('and-wB').classList.toggle('wire-on', B===1);
+    document.getElementById('and-wB').classList.toggle('wire', B===0);
+    document.getElementById('and-wY').classList.toggle('wire-on', Y===1);
+    document.getElementById('and-wY').classList.toggle('wire', Y===0);
+  }
+  document.getElementById('and-btnA').addEventListener('click', ()=>{A^=1; updAnd();});
+  document.getElementById('and-btnB').addEventListener('click', ()=>{B^=1; updAnd();});
+  updAnd();
+
+  let X=0, Y2=0, Cin=0;
+  function updFa(){
+    document.getElementById('fa-X').textContent=X;
+    document.getElementById('fa-Y').textContent=Y2;
+    document.getElementById('fa-C').textContent=Cin;
+    const s = X+Y2+Cin;
+    const sum = s & 1;
+    const cout = s >> 1;
+    document.getElementById('fa-S').textContent=sum;
+    document.getElementById('fa-Co').textContent=cout;
+    document.getElementById('fa-wX').classList.toggle('wire-on', X===1);
+    document.getElementById('fa-wX').classList.toggle('wire', X===0);
+    document.getElementById('fa-wY').classList.toggle('wire-on', Y2===1);
+    document.getElementById('fa-wY').classList.toggle('wire', Y2===0);
+    document.getElementById('fa-wC').classList.toggle('wire-on', Cin===1);
+    document.getElementById('fa-wC').classList.toggle('wire', Cin===0);
+    document.getElementById('fa-wS').classList.toggle('wire-on', sum===1);
+    document.getElementById('fa-wS').classList.toggle('wire', sum===0);
+    document.getElementById('fa-wCo').classList.toggle('wire-on', cout===1);
+    document.getElementById('fa-wCo').classList.toggle('wire', cout===0);
+
+    const idx = (X<<2)|(Y2<<1)|Cin;
+    document.querySelectorAll('.truth-tbl tbody tr').forEach((tr,i)=>tr.classList.toggle('hi', i===idx));
+  }
+  document.getElementById('fa-btnX').addEventListener('click', ()=>{X^=1; updFa();});
+  document.getElementById('fa-btnY').addEventListener('click', ()=>{Y2^=1; updFa();});
+  document.getElementById('fa-btnC').addEventListener('click', ()=>{Cin^=1; updFa();});
+  updFa();
+})();
+
+/* =========================================================
+   2. Long multiplication animation (caption is bilingual)
+   ========================================================= */
+(function(){
+  let step = 0;
+  const rows = document.querySelectorAll('#pp-area .pp-row');
+  const result = document.getElementById('pp-result');
+  const cap = document.getElementById('pp-caption');
+  const captionsFR = [
+    "Cliquez sur Étape suivante",
+    "PP₀ = A × b₀ = 1001 × 0 = 0000",
+    "PP₁ = A × b₁ = 1001 × 1 = 1001 (shift 1)",
+    "PP₂ = A × b₂ = 1001 × 0 = 0000 (shift 2)",
+    "PP₃ = A × b₃ = 1001 × 1 = 1001 (shift 3)",
+    "+ accumulateur C (8 bits)",
+    "Somme finale via Dadda → 11000111"
+  ];
+  const captionsEN = [
+    "Click Next step",
+    "PP₀ = A × b₀ = 1001 × 0 = 0000",
+    "PP₁ = A × b₁ = 1001 × 1 = 1001 (shift 1)",
+    "PP₂ = A × b₂ = 1001 × 0 = 0000 (shift 2)",
+    "PP₃ = A × b₃ = 1001 × 1 = 1001 (shift 3)",
+    "+ accumulator C (8 bits)",
+    "Final sum via Dadda → 11000111"
+  ];
+  function render(){
+    rows.forEach((r,i)=>{
+      r.style.opacity = i < step ? '1' : '0.25';
+    });
+    result.style.opacity = step >= 6 ? '1' : '0';
+    const arr = document.documentElement.lang === 'en' ? captionsEN : captionsFR;
+    cap.textContent = arr[Math.min(step, arr.length-1)];
+  }
+  document.getElementById('pp-step').addEventListener('click', ()=>{ step = Math.min(step+1, 6); render(); });
+  document.getElementById('pp-reset').addEventListener('click', ()=>{ step = 0; render(); });
+  // Re-render on lang change
+  document.getElementById('btn-fr').addEventListener('click', render);
+  document.getElementById('btn-en').addEventListener('click', render);
+  render();
+})();
+
+/* =========================================================
+   3. Dadda compression
+   ========================================================= */
+(function(){
+  const grid = document.getElementById('dadda-grid');
+  const NS='http://www.w3.org/2000/svg';
+  let cols = [];
+  const NCOLS = 8;
+  function lab(en, fr){ return document.documentElement.lang === 'en' ? en : fr; }
+  function init(){
+    grid.innerHTML='';
+    cols = [];
+    for(let i=0;i<NCOLS;i++){
+      let count = 0;
+      for(let a=0;a<4;a++)for(let b=0;b<4;b++) if(a+b===i) count++;
+      if(i<8) count += 1;
+      const colObj = {x: 560 - i*65, dots: []};
+      for(let k=0;k<count;k++){
+        const c = document.createElementNS(NS,'circle');
+        c.setAttribute('cx', colObj.x);
+        c.setAttribute('cy', 30 + k*16);
+        c.setAttribute('r', 5);
+        c.setAttribute('fill', 'var(--accent)');
+        c.setAttribute('opacity', '0.85');
+        grid.appendChild(c);
+        colObj.dots.push({el:c, alive:true});
+      }
+      cols.push(colObj);
+    }
+    for(let i=0;i<NCOLS;i++){
+      const t = document.createElementNS(NS,'text');
+      t.setAttribute('x', cols[i].x);
+      t.setAttribute('y', 180);
+      t.setAttribute('text-anchor','middle');
+      t.setAttribute('class','label-dim');
+      t.textContent = '2^'+i;
+      grid.appendChild(t);
+    }
+    stepIdx = 0;
+    updateStat();
+  }
+  let stepIdx = 0;
+  function liveCount(){ return cols.reduce((s,c)=>s+c.dots.filter(d=>d.alive).length,0); }
+  function updateStat(){
+    document.getElementById('dadda-step').textContent = lab('Step ','Étape ') + stepIdx + ' / 16';
+    document.getElementById('dadda-stat').textContent = liveCount() + lab(' bits remaining',' bits restants');
+  }
+  function doStep(){
+    for(let i=0;i<NCOLS;i++){
+      const alive = cols[i].dots.filter(d=>d.alive);
+      if(alive.length >= 3){
+        const taken = alive.slice(0,3);
+        taken.forEach(d=>{ d.el.setAttribute('fill','var(--wire-on)'); });
+        setTimeout(()=>{
+          taken[0].alive = false; taken[0].el.style.opacity = '0.15';
+          taken[1].alive = false; taken[1].el.style.opacity = '0.15';
+          taken[2].el.setAttribute('fill','var(--gate)');
+          if(i+1 < NCOLS){
+            const c = document.createElementNS(NS,'circle');
+            const ny = 30 + cols[i+1].dots.length*16;
+            c.setAttribute('cx', cols[i+1].x);
+            c.setAttribute('cy', ny);
+            c.setAttribute('r', 5);
+            c.setAttribute('fill', 'var(--reg)');
+            c.setAttribute('opacity', '0.85');
+            grid.appendChild(c);
+            cols[i+1].dots.push({el:c, alive:true});
+          }
+          stepIdx++;
+          updateStat();
+        }, 250);
+        return true;
+      }
+    }
+    for(let i=0;i<NCOLS-1;i++){
+      const alive = cols[i].dots.filter(d=>d.alive);
+      if(alive.length === 2){
+        const taken = alive;
+        taken.forEach(d=>{ d.el.setAttribute('fill','var(--wire-on)'); });
+        setTimeout(()=>{
+          taken[0].alive=false; taken[0].el.style.opacity='0.15';
+          taken[1].el.setAttribute('fill','var(--gate)');
+          if(i+1 < NCOLS){
+            const c = document.createElementNS(NS,'circle');
+            const ny = 30 + cols[i+1].dots.length*16;
+            c.setAttribute('cx', cols[i+1].x);
+            c.setAttribute('cy', ny);
+            c.setAttribute('r', 5);
+            c.setAttribute('fill', 'var(--reg)');
+            grid.appendChild(c);
+            cols[i+1].dots.push({el:c, alive:true});
+          }
+          stepIdx++;
+          updateStat();
+        },250);
+        return true;
+      }
+    }
+    return false;
+  }
+  let playing = false;
+  function loop(){
+    if(!playing) return;
+    if(!doStep()){ playing=false; document.getElementById('dadda-play').textContent = lab('▶ Play','▶ Lancer'); return; }
+    setTimeout(loop, +document.getElementById('dadda-speed').value);
+  }
+  document.getElementById('dadda-play').addEventListener('click', ()=>{
+    playing = !playing;
+    document.getElementById('dadda-play').textContent = playing ? (lab('⏸ Pause','⏸ Pause')) : (lab('▶ Play','▶ Lancer'));
+    if(playing) loop();
+  });
+  document.getElementById('dadda-step-btn').addEventListener('click', ()=>{ doStep(); });
+  document.getElementById('dadda-reset').addEventListener('click', ()=>{ playing=false; document.getElementById('dadda-play').textContent = lab('▶ Play','▶ Lancer'); init(); });
+  document.getElementById('btn-fr').addEventListener('click', updateStat);
+  document.getElementById('btn-en').addEventListener('click', updateStat);
+  init();
+})();
+
+/* =========================================================
+   4. Quadratic scaling
+   ========================================================= */
+(function(){
+  const NS='http://www.w3.org/2000/svg';
+  const g = document.getElementById('scaling-fp');
+  const slider = document.getElementById('scaling-bits');
+  const val = document.getElementById('scaling-bits-val');
+  const cap = document.getElementById('scaling-caption');
+  function render(){
+    const p = +slider.value;
+    val.textContent = p;
+    g.innerHTML = '';
+    const cellSize = Math.min(200/16, 200/p);
+    const side = cellSize * p;
+    const offsetX = 280 - side/2;
+    const offsetY = 0;
+    for(let i=0;i<p;i++){
+      for(let j=0;j<p;j++){
+        const r = document.createElementNS(NS,'rect');
+        r.setAttribute('x', offsetX + j*cellSize);
+        r.setAttribute('y', offsetY + i*cellSize);
+        r.setAttribute('width', cellSize-1);
+        r.setAttribute('height', cellSize-1);
+        r.setAttribute('fill', 'var(--mac)');
+        r.setAttribute('fill-opacity', 0.4 + 0.4*((i+j)/(2*p)));
+        g.appendChild(r);
+      }
+    }
+    if(p>4){
+      const r = document.createElementNS(NS,'rect');
+      r.setAttribute('x', offsetX);
+      r.setAttribute('y', offsetY);
+      r.setAttribute('width', cellSize*4);
+      r.setAttribute('height', cellSize*4);
+      r.setAttribute('fill', 'none');
+      r.setAttribute('stroke', 'var(--wire-on)');
+      r.setAttribute('stroke-width', 2);
+      r.setAttribute('stroke-dasharray', '4 3');
+      g.appendChild(r);
+      const t = document.createElementNS(NS,'text');
+      t.setAttribute('x', offsetX);
+      t.setAttribute('y', offsetY-4);
+      t.setAttribute('class','label-dim');
+      t.setAttribute('fill','var(--wire-on)');
+      t.textContent = 'FP4 ref';
+      g.appendChild(t);
+    }
+    cap.textContent = p+' bits → '+(p*p)+' gates ('+ (p===4?'1×':( (p*p)/16 +'× FP4'))+')';
+  }
+  slider.addEventListener('input', render);
+  render();
+})();
+
+/* =========================================================
+   5. Mux & data movement
+   ========================================================= */
+(function(){
+  const NS='http://www.w3.org/2000/svg';
+  const rf = document.getElementById('regfile');
+  const mw = document.getElementById('mux-wires');
+  for(let i=0;i<8;i++){
+    const r = document.createElementNS(NS,'rect');
+    r.setAttribute('x',0); r.setAttribute('y',i*32);
+    r.setAttribute('width',140); r.setAttribute('height',26);
+    r.setAttribute('rx',4);
+    r.setAttribute('class','reg-fill');
+    rf.appendChild(r);
+    const t = document.createElementNS(NS,'text');
+    t.setAttribute('x',70); t.setAttribute('y',i*32+18);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('class','label');
+    t.textContent = 'R'+i+'  [data]';
+    rf.appendChild(t);
+  }
+  function drawWires(){
+    mw.innerHTML='';
+    const a = +document.getElementById('mux-a').value;
+    const b = +document.getElementById('mux-b').value;
+    const c = +document.getElementById('mux-c').value;
+    document.getElementById('mux-a-val').textContent = a;
+    document.getElementById('mux-b-val').textContent = b;
+    document.getElementById('mux-c-val').textContent = c;
+    const targets = [
+      {idx:a, mY: 30+35},
+      {idx:b, mY: 120+35},
+      {idx:c, mY: 210+35},
+    ];
+    for(let i=0;i<8;i++){
+      for(const tgt of targets){
+        const path = document.createElementNS(NS,'path');
+        const startX = 160, startY = 30 + i*32 + 13;
+        const endX = 200, endY = tgt.mY;
+        path.setAttribute('d', `M${startX} ${startY} C ${startX+10} ${startY}, ${endX-10} ${endY}, ${endX} ${endY}`);
+        path.setAttribute('class', tgt.idx===i ? 'flowing' : 'wire');
+        path.setAttribute('opacity', tgt.idx===i ? '1' : '0.25');
+        mw.appendChild(path);
+      }
+    }
+    targets.forEach((tgt,i)=>{
+      const p = document.createElementNS(NS,'path');
+      p.setAttribute('d', `M260 ${tgt.mY} L360 ${90 + i*40 + 30}`);
+      p.setAttribute('class','flowing');
+      mw.appendChild(p);
+    });
+  }
+  ['mux-a','mux-b','mux-c'].forEach(id=>{
+    document.getElementById(id).addEventListener('input', drawWires);
+  });
+  drawWires();
+})();
+
+/* =========================================================
+   6. Systolic array
+   ========================================================= */
+(function(){
+  const NS='http://www.w3.org/2000/svg';
+  const root = document.getElementById('systolic');
+  const N = 3;
+  const W = [[1,2,3],[0,1,4],[2,0,1]];
+  const vec = [1,2,3];
+  let cycle = 0;
+  let playing = false;
+  let timer;
+
+  function lab(en, fr){ return document.documentElement.lang === 'en' ? en : fr; }
+  function init(){
+    root.innerHTML='';
+    for(let j=0;j<N;j++){
+      const t = document.createElementNS(NS,'text');
+      t.setAttribute('x', j*90+45); t.setAttribute('y', -10);
+      t.setAttribute('text-anchor','middle');
+      t.setAttribute('class','label-dim');
+      t.textContent = 'v'+j+'='+vec[j];
+      root.appendChild(t);
+    }
+    for(let i=0;i<N;i++){
+      for(let j=0;j<N;j++){
+        const g = document.createElementNS(NS,'g');
+        g.setAttribute('transform', `translate(${j*90},${i*90+10})`);
+        g.setAttribute('id', `cell-${i}-${j}`);
+        const r = document.createElementNS(NS,'rect');
+        r.setAttribute('x',0); r.setAttribute('y',0);
+        r.setAttribute('width',80); r.setAttribute('height',80);
+        r.setAttribute('rx',6);
+        r.setAttribute('class','mac-fill');
+        g.appendChild(r);
+        const wt = document.createElementNS(NS,'text');
+        wt.setAttribute('x',40); wt.setAttribute('y',32);
+        wt.setAttribute('text-anchor','middle'); wt.setAttribute('class','label-dim');
+        wt.textContent = 'W='+W[i][j];
+        g.appendChild(wt);
+        const acc = document.createElementNS(NS,'text');
+        acc.setAttribute('x',40); acc.setAttribute('y',56);
+        acc.setAttribute('text-anchor','middle'); acc.setAttribute('class','label-big');
+        acc.setAttribute('id', `acc-${i}-${j}`);
+        acc.textContent = '0';
+        g.appendChild(acc);
+        root.appendChild(g);
+      }
+    }
+    for(let j=0;j<N;j++){
+      const t = document.createElementNS(NS,'text');
+      t.setAttribute('x', j*90+45); t.setAttribute('y', N*90+30);
+      t.setAttribute('text-anchor','middle');
+      t.setAttribute('class','label');
+      t.setAttribute('id','out-'+j);
+      t.textContent = 'y'+j+'=?';
+      root.appendChild(t);
+    }
+    cycle = 0;
+    updCycle();
+  }
+  function updCycle(){
+    document.getElementById('sys-cycle').textContent = 'cycle '+cycle;
+  }
+  function stepCycle(){
+    if(cycle >= N){
+      for(let j=0;j<N;j++){
+        let s = 0;
+        for(let i=0;i<N;i++) s += W[i][j]*vec[i];
+        const o = document.getElementById('out-'+j);
+        o.textContent = 'y'+j+'='+s;
+        o.setAttribute('fill','var(--accent)');
+      }
+      cycle++;
+      updCycle();
+      return;
+    }
+    for(let i=0;i<=cycle;i++){
+      const vi = cycle - i;
+      if(vi >= N) continue;
+      for(let j=0;j<N;j++){
+        const cell = document.getElementById(`cell-${i}-${j}`);
+        const acc = document.getElementById(`acc-${i}-${j}`);
+        const cur = +acc.textContent;
+        const newAcc = cur + W[i][j]*vec[vi];
+        acc.textContent = newAcc;
+        cell.querySelector('rect').setAttribute('fill','rgba(255,166,87,0.25)');
+        setTimeout(()=>{ cell.querySelector('rect').setAttribute('fill','var(--bg3)'); }, 350);
+      }
+    }
+    cycle++;
+    updCycle();
+  }
+  document.getElementById('sys-play').addEventListener('click', ()=>{
+    playing = !playing;
+    document.getElementById('sys-play').textContent = playing ? '⏸ Pause' : lab('▶ Animate','▶ Animer');
+    if(playing){
+      timer = setInterval(()=>{
+        if(cycle > N){ playing=false; document.getElementById('sys-play').textContent = lab('▶ Animate','▶ Animer'); clearInterval(timer); return; }
+        stepCycle();
+      }, 800);
+    } else { clearInterval(timer); }
+  });
+  document.getElementById('sys-step').addEventListener('click', stepCycle);
+  document.getElementById('sys-reset').addEventListener('click', ()=>{ playing=false; clearInterval(timer); document.getElementById('sys-play').textContent = lab('▶ Animate','▶ Animer'); init(); });
+  init();
+})();
+
+/* =========================================================
+   8. LUT 4-input
+   ========================================================= */
+(function(){
+  const NS='http://www.w3.org/2000/svg';
+  let tt = new Array(16).fill(0);
+  let inputs = [0,0,0,0];
+  const inputsG = document.getElementById('lut-inputs');
+  const tableG = document.getElementById('lut-table');
+
+  function buildInputs(){
+    inputsG.innerHTML='';
+    ['A','B','C','D'].forEach((name,i)=>{
+      const y = i*45;
+      const t = document.createElementNS(NS,'text');
+      t.setAttribute('x',0); t.setAttribute('y',y+18); t.setAttribute('class','label');
+      t.textContent = name; inputsG.appendChild(t);
+      const btn = document.createElementNS(NS,'g');
+      btn.style.cursor='pointer';
+      const r = document.createElementNS(NS,'rect');
+      r.setAttribute('x',20); r.setAttribute('y',y); r.setAttribute('width',26); r.setAttribute('height',26);
+      r.setAttribute('rx',4); r.setAttribute('class','cell-bg');
+      btn.appendChild(r);
+      const v = document.createElementNS(NS,'text');
+      v.setAttribute('x',33); v.setAttribute('y',y+18); v.setAttribute('text-anchor','middle');
+      v.setAttribute('class','label-big'); v.setAttribute('id','lut-in-'+i);
+      v.textContent = inputs[i]; btn.appendChild(v);
+      btn.addEventListener('click', ()=>{ inputs[i]^=1; render(); });
+      inputsG.appendChild(btn);
+      const line = document.createElementNS(NS,'line');
+      line.setAttribute('x1',46); line.setAttribute('y1',y+13);
+      line.setAttribute('x2',150); line.setAttribute('y2',y+13);
+      line.setAttribute('id','lut-w-'+i); line.setAttribute('class','wire');
+      inputsG.appendChild(line);
+    });
+  }
+  function buildTable(){
+    tableG.innerHTML='';
+    for(let i=0;i<16;i++){
+      const col = i % 2;
+      const row = Math.floor(i/2);
+      const x = 10 + col*75;
+      const y = 50 + row*26;
+      const g = document.createElementNS(NS,'g');
+      g.style.cursor='pointer';
+      g.setAttribute('id','tt-'+i);
+      const r = document.createElementNS(NS,'rect');
+      r.setAttribute('x',x); r.setAttribute('y',y);
+      r.setAttribute('width',70); r.setAttribute('height',22);
+      r.setAttribute('rx',3); r.setAttribute('class','cell-bg');
+      g.appendChild(r);
+      const t = document.createElementNS(NS,'text');
+      t.setAttribute('x',x+5); t.setAttribute('y',y+15);
+      t.setAttribute('class','label-dim');
+      t.textContent = i.toString(2).padStart(4,'0');
+      g.appendChild(t);
+      const v = document.createElementNS(NS,'text');
+      v.setAttribute('x',x+58); v.setAttribute('y',y+15);
+      v.setAttribute('class','label-big'); v.setAttribute('id','tt-v-'+i);
+      v.textContent = tt[i];
+      g.appendChild(v);
+      g.addEventListener('click', ()=>{ tt[i]^=1; render(); });
+      tableG.appendChild(g);
+    }
+  }
+  function render(){
+    inputs.forEach((v,i)=>{
+      document.getElementById('lut-in-'+i).textContent = v;
+      document.getElementById('lut-w-'+i).setAttribute('class', v ? 'wire-on' : 'wire');
+    });
+    for(let i=0;i<16;i++){
+      document.getElementById('tt-v-'+i).textContent = tt[i];
+      const cell = document.getElementById('tt-'+i).querySelector('rect');
+      cell.setAttribute('class','cell-bg');
+    }
+    const addr = (inputs[0]<<3)|(inputs[1]<<2)|(inputs[2]<<1)|inputs[3];
+    document.getElementById('tt-'+addr).querySelector('rect').setAttribute('class','cell-active');
+    document.getElementById('lut-Y').textContent = tt[addr];
+  }
+  document.querySelectorAll('[data-lut]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const m = b.dataset.lut;
+      for(let i=0;i<16;i++){
+        const bits = [(i>>3)&1,(i>>2)&1,(i>>1)&1,i&1];
+        if(m==='and') tt[i] = bits.every(x=>x===1) ? 1 : 0;
+        else if(m==='or') tt[i] = bits.some(x=>x===1) ? 1 : 0;
+        else if(m==='xor') tt[i] = bits.reduce((a,b)=>a^b,0);
+        else if(m==='maj') tt[i] = bits.reduce((a,b)=>a+b,0) >= 3 ? 1 : 0;
+        else if(m==='zero') tt[i] = 0;
+      }
+      render();
+    });
+  });
+  buildInputs(); buildTable(); render();
+})();
+
+/* =========================================================
+   10. GPU SM grid
+   ========================================================= */
+(function(){
+  const NS='http://www.w3.org/2000/svg';
+  const g = document.getElementById('gpu-sms');
+  const cols=6, rowsTop=4, rowsBot=4;
+  function draw(yOffset, nrows){
+    for(let i=0;i<nrows;i++){
+      for(let j=0;j<cols;j++){
+        const r = document.createElementNS(NS,'rect');
+        r.setAttribute('x', 10 + j*27);
+        r.setAttribute('y', yOffset + i*22);
+        r.setAttribute('width', 24);
+        r.setAttribute('height', 19);
+        r.setAttribute('fill','var(--mac)');
+        r.setAttribute('fill-opacity', 0.3);
+        r.setAttribute('stroke','var(--accent)');
+        r.setAttribute('stroke-width',0.5);
+        g.appendChild(r);
+      }
+    }
+  }
+  draw(24, rowsTop);
+  draw(140, rowsBot);
+})();
+
+/* =========================================================
+   11. Switching power
+   ========================================================= */
+(function(){
+  let on = false;
+  let bit = 0;
+  let timer;
+  const btn = document.getElementById('power-toggle');
+  const freq = document.getElementById('power-freq');
+  const freqVal = document.getElementById('power-freq-val');
+  const fill = document.getElementById('cap-fill');
+  const state = document.getElementById('cap-state');
+  function lab(en, fr){ return document.documentElement.lang === 'en' ? en : fr; }
+  freq.addEventListener('input', ()=>{ freqVal.textContent = freq.value; if(on){ stop(); start(); } });
+  function tick(){
+    bit ^= 1;
+    fill.setAttribute('width', bit ? 580 : 0);
+    state.textContent = bit ? lab('bit = 1 (charged) · energy deposited','bit = 1 (charged) · énergie déposée') : lab('bit = 0 (discharged) · energy drained','bit = 0 (discharged) · énergie évacuée');
+    state.setAttribute('fill', bit ? 'var(--wire-on)' : 'var(--fg2)');
+  }
+  function start(){ timer = setInterval(tick, +freq.value); }
+  function stop(){ clearInterval(timer); }
+  btn.addEventListener('click', ()=>{
+    on = !on;
+    btn.textContent = on ? '⏸ Pause' : lab('▶ Start','▶ Démarrer');
+    if(on) start(); else stop();
+  });
+})();
+</script>
+
 </body>
 </html>
