@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anonymisation chiffrée (FHE) — reproduction du démo Zama</title>
+<meta name="description" content="Reproduction interactive du Space Hugging Face zama-fhe/encrypted-anonymization : anonymiser un texte sur données chiffrées avec le chiffrement totalement homomorphe (FHE), pour interroger un LLM sans révéler les données personnelles.">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #ffffff;
+  --bg2: #f6f6f4;
+  --bg3: #eeeee9;
+  --line: #e2e2da;
+  --fg: #16160f;
+  --fg2: #6b6b5f;
+  --accent: #0b0b0b;
+  --zama: #ffd208;       /* Zama yellow */
+  --zama-deep: #f3b700;
+  --ink: #111014;
+  --ok: #1f9d55;
+  --max-w: 920px;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* entity colors */
+  --e-person: #7c3aed;
+  --e-location: #1f9d55;
+  --e-org: #2563eb;
+  --e-email: #ea580c;
+  --e-phone: #0891b2;
+  --e-date: #db2777;
+  --e-money: #b8860b;
+  --e-id: #dc2626;
+  --e-url: #0d9488;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e0e0c;
+    --bg2: #16160f;
+    --bg3: #1e1e16;
+    --line: #2c2c20;
+    --fg: #f3f1e6;
+    --fg2: #a3a08c;
+    --accent: #ffffff;
+    --ink: #0a0a08;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.65;
+  min-height: 100vh;
+  -webkit-text-size-adjust: 100%;
+}
+a { color: inherit; }
+
+/* ---------- Topbar ---------- */
+.topbar {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 16px clamp(16px, 4vw, 28px) 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.topbar .back { font-size: 13px; color: var(--fg2); text-decoration: none; }
+.topbar .back:hover { color: var(--fg); }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.src-link {
+  font-size: 12px; color: var(--fg2); text-decoration: none;
+  border: 1px solid var(--line); border-radius: 7px; padding: 6px 10px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.src-link:hover { color: var(--fg); border-color: var(--fg2); }
+.lang-switch {
+  display: inline-flex; background: var(--bg2);
+  border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+}
+.lang-switch button {
+  background: transparent; border: 0; color: var(--fg2);
+  font-family: var(--mono); font-size: 12px; padding: 6px 12px;
+  cursor: pointer; min-height: 32px; -webkit-tap-highlight-color: transparent;
+}
+.lang-switch button[aria-pressed="true"] { background: var(--zama); color: #16160f; font-weight: 700; }
+
+/* ---------- Layout ---------- */
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(16px, 4vw, 28px); }
+
+.hero { padding: clamp(28px, 5vw, 52px) 0 8px; }
+.hero .kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--fg2);
+  background: var(--bg2); border: 1px solid var(--line);
+  padding: 5px 11px; border-radius: 100px; margin-bottom: 18px;
+}
+.hero .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--zama); box-shadow: 0 0 0 3px rgba(255,210,8,.25); }
+.hero h1 {
+  font-size: clamp(30px, 6vw, 50px); font-weight: 800;
+  letter-spacing: -0.035em; line-height: 1.07; margin-bottom: 18px;
+}
+.hero h1 .hl {
+  background: linear-gradient(180deg, transparent 62%, var(--zama) 62%);
+  padding: 0 2px;
+}
+.hero .lede { font-size: clamp(15px, 2.4vw, 18px); color: var(--fg2); max-width: 660px; }
+.hero .lede strong { color: var(--fg); font-weight: 600; }
+
+.disclaimer {
+  margin: 22px 0 6px; font-size: 13px; line-height: 1.6;
+  background: var(--bg2); border: 1px solid var(--line);
+  border-left: 3px solid var(--zama-deep);
+  border-radius: 8px; padding: 12px 15px; color: var(--fg2);
+}
+.disclaimer b { color: var(--fg); }
+
+/* ---------- Section ---------- */
+.section { padding: clamp(30px, 5vw, 48px) 0 0; }
+.section-h {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--fg2);
+  margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 10px;
+}
+.section-h .num {
+  font-family: var(--mono); color: #16160f; background: var(--zama);
+  border-radius: 6px; padding: 2px 8px; font-size: 11px;
+}
+.section > p.intro { color: var(--fg2); font-size: 15px; max-width: 680px; margin-bottom: 18px; }
+
+/* ---------- Architecture diagram ---------- */
+.arch { width: 100%; height: auto; display: block; background: var(--bg2); border: 1px solid var(--line); border-radius: 14px; }
+
+/* ---------- Demo ---------- */
+.demo-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 780px) { .demo-grid { grid-template-columns: 1fr 1fr; } }
+
+.panel {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 14px; padding: 18px; display: flex; flex-direction: column;
+}
+.panel h3 {
+  font-size: 13px; font-weight: 700; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px;
+}
+.panel .hint { font-size: 12px; color: var(--fg2); margin-bottom: 12px; }
+
+textarea {
+  width: 100%; min-height: 150px; resize: vertical;
+  background: var(--bg); color: var(--fg);
+  border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 14px; font-size: 14px; line-height: 1.6;
+  font-family: inherit;
+}
+textarea:focus { outline: 2px solid var(--zama); outline-offset: 0; border-color: transparent; }
+
+.example-row { display: flex; gap: 8px; margin: 10px 0 0; flex-wrap: wrap; }
+.chip {
+  font-size: 12px; padding: 6px 11px; border-radius: 100px;
+  border: 1px solid var(--line); background: var(--bg);
+  color: var(--fg2); cursor: pointer;
+}
+.chip:hover { color: var(--fg); border-color: var(--fg2); }
+
+/* ---------- Pipeline steps ---------- */
+.steps { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+.step {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 13px; border: 1px solid var(--line);
+  border-radius: 11px; background: var(--bg);
+  opacity: .55; transition: opacity .3s, border-color .3s, background .3s;
+}
+.step.active { opacity: 1; border-color: var(--zama-deep); }
+.step.done { opacity: 1; }
+.step .ico {
+  flex-shrink: 0; width: 30px; height: 30px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg3); font-size: 15px;
+}
+.step.active .ico { background: var(--zama); }
+.step.done .ico { background: rgba(31,157,85,.15); }
+.step .body { flex: 1; min-width: 0; }
+.step .t { font-size: 13px; font-weight: 600; }
+.step .d { font-size: 12px; color: var(--fg2); }
+.step .state { font-size: 11px; font-family: var(--mono); color: var(--fg2); white-space: nowrap; }
+.step.done .state { color: var(--ok); }
+.spin { display: inline-block; width: 12px; height: 12px; border: 2px solid var(--line); border-top-color: var(--zama-deep); border-radius: 50%; animation: spin .7s linear infinite; vertical-align: -1px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* cipher viz */
+.cipher {
+  margin-top: 6px; font-family: var(--mono); font-size: 11px; line-height: 1.5;
+  color: var(--zama-deep); word-break: break-all; max-height: 0; overflow: hidden;
+  transition: max-height .4s ease; opacity: .85;
+}
+.cipher.show { max-height: 80px; }
+
+/* buttons */
+.btn-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+button.action {
+  flex: 1; min-width: 160px; cursor: pointer;
+  background: var(--zama); color: #16160f; font-weight: 700; font-size: 14px;
+  border: 1px solid var(--zama-deep); border-radius: 10px; padding: 12px 16px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  transition: filter .15s, transform .1s;
+}
+button.action:hover { filter: brightness(1.04); }
+button.action:active { transform: translateY(1px); }
+button.action:disabled { opacity: .5; cursor: not-allowed; filter: none; }
+button.ghost {
+  background: var(--bg); color: var(--fg); border: 1px solid var(--line); font-weight: 600;
+}
+button.ghost:hover { border-color: var(--fg2); }
+
+/* output highlighted text */
+.output {
+  min-height: 110px; background: var(--bg); border: 1px solid var(--line);
+  border-radius: 10px; padding: 13px 15px; font-size: 14px; line-height: 1.85;
+}
+.output .placeholder-text { color: var(--fg2); font-style: italic; }
+mark.ent {
+  border-radius: 5px; padding: 1px 5px; color: #fff; font-weight: 600;
+  font-size: 12.5px; white-space: nowrap; cursor: default;
+}
+.tok {
+  display: inline-block; border-radius: 5px; padding: 1px 6px;
+  font-family: var(--mono); font-size: 12px; font-weight: 700;
+  border: 1px dashed currentColor; margin: 0 1px;
+}
+
+/* mapping table */
+.map-wrap { margin-top: 14px; }
+table.map { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.map th, table.map td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+table.map th { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg2); font-weight: 600; }
+table.map td.ph { font-family: var(--mono); font-weight: 700; }
+table.map .badge { font-size: 10px; padding: 2px 7px; border-radius: 100px; color: #fff; font-weight: 700; }
+.empty-note { font-size: 13px; color: var(--fg2); padding: 10px 0; }
+
+.stat-row { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; font-size: 12px; color: var(--fg2); }
+.stat-row b { color: var(--fg); font-family: var(--mono); }
+
+/* legend */
+.legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.legend span { font-size: 11px; display: inline-flex; align-items: center; gap: 6px; color: var(--fg2); }
+.legend i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+
+/* LLM box */
+.llm-q { display: flex; gap: 10px; margin-top: 4px; }
+.llm-q input {
+  flex: 1; background: var(--bg); color: var(--fg);
+  border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; font-size: 14px; font-family: inherit;
+}
+.llm-q input:focus { outline: 2px solid var(--zama); border-color: transparent; }
+.bubble {
+  margin-top: 12px; border: 1px solid var(--line); border-radius: 12px;
+  padding: 13px 15px; background: var(--bg); font-size: 14px; line-height: 1.7;
+}
+.bubble .who { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg2); margin-bottom: 6px; display: flex; align-items: center; gap: 7px; }
+.bubble.sent .who::before { content: "🔒"; }
+.bubble.recv .who::before { content: "🤖"; }
+.bubble.restored { border-color: var(--zama-deep); }
+.bubble.restored .who::before { content: "🔓"; }
+.restored-ent { background: var(--zama); color: #16160f; border-radius: 4px; padding: 0 4px; font-weight: 600; }
+
+/* explainer cards */
+.cards { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 680px) { .cards { grid-template-columns: 1fr 1fr; } }
+.card { background: var(--bg2); border: 1px solid var(--line); border-radius: 13px; padding: 18px; }
+.card h4 { font-size: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 9px; }
+.card .emoji { font-size: 18px; }
+.card p { font-size: 13.5px; color: var(--fg2); }
+.card code { font-family: var(--mono); font-size: 12px; background: var(--bg3); padding: 1px 5px; border-radius: 4px; color: var(--fg); }
+
+.faq details {
+  border: 1px solid var(--line); border-radius: 11px; padding: 0 16px;
+  background: var(--bg2); margin-bottom: 10px;
+}
+.faq summary { cursor: pointer; padding: 14px 0; font-weight: 600; font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--fg2); font-size: 20px; font-weight: 400; }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { font-size: 13.5px; color: var(--fg2); padding: 0 0 16px; }
+.faq a { color: var(--e-org); }
+
+footer.foot {
+  max-width: var(--max-w); margin: 0 auto; padding: 40px clamp(16px,4vw,28px) 60px;
+  border-top: 1px solid var(--line); margin-top: 50px; font-size: 13px; color: var(--fg2);
+}
+footer.foot a { color: var(--e-org); text-decoration: none; }
+footer.foot a:hover { text-decoration: underline; }
+footer.foot .links { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 10px; }
+
+[data-lang="en"] .fr, [data-lang="fr"] .en { display: none; }
+.nowrap { white-space: nowrap; }
+</style>
+</head>
+<body data-lang="fr">
+
+<div class="topbar">
+  <a class="back" href="../../">← <span class="fr">Retour aux projets</span><span class="en">Back to projects</span></a>
+  <div class="topbar-right">
+    <a class="src-link" href="https://huggingface.co/spaces/zama-fhe/encrypted-anonymization" target="_blank" rel="noopener">
+      🤗 <span class="fr">Démo originale</span><span class="en">Original Space</span>
+    </a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button data-set-lang="fr" aria-pressed="true">FR</button>
+      <button data-set-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</div>
+
+<header class="hero wrap">
+  <span class="kicker"><span class="dot"></span> Zama · Concrete ML · FHE</span>
+  <h1>
+    <span class="fr">Anonymisation sur <span class="hl">données chiffrées</span></span>
+    <span class="en">Anonymization on <span class="hl">encrypted data</span></span>
+  </h1>
+  <p class="lede">
+    <span class="fr">Reproduction interactive du Space Hugging Face <strong>zama-fhe/encrypted-anonymization</strong>. Le principe : envoyer un texte à un serveur qui <strong>retire les données personnelles sans jamais voir le texte en clair</strong>, grâce au chiffrement totalement homomorphe (FHE). On peut alors interroger un LLM comme ChatGPT en préservant la confidentialité.</span>
+    <span class="en">Interactive reproduction of the Hugging Face Space <strong>zama-fhe/encrypted-anonymization</strong>. The idea: send text to a server that <strong>strips personal data without ever seeing the plaintext</strong>, using Fully Homomorphic Encryption (FHE). You can then query an LLM such as ChatGPT while preserving privacy.</span>
+  </p>
+  <div class="disclaimer">
+    <span class="fr"><b>Note pédagogique.</b> GitHub Pages est un hébergement statique : impossible d'exécuter le vrai FHE (qui tourne côté serveur avec <a href="https://github.com/zama-ai/concrete-ml" target="_blank" rel="noopener" style="color:var(--e-org)">Concrete ML</a>). Cette page <b>simule fidèlement le flux et l'interface</b> du démo (clés → chiffrement → inférence FHE → déchiffrement) ; la détection d'entités s'exécute dans votre navigateur. Aucune donnée ne quitte votre machine.</span>
+    <span class="en"><b>Educational note.</b> GitHub Pages is static hosting: it cannot run real FHE (which runs server-side with <a href="https://github.com/zama-ai/concrete-ml" target="_blank" rel="noopener" style="color:var(--e-org)">Concrete ML</a>). This page <b>faithfully simulates the flow and UI</b> of the demo (keys → encryption → FHE inference → decryption); entity detection runs in your browser. No data leaves your machine.</span>
+  </div>
+</header>
+
+<!-- ====== HOW IT WORKS ====== -->
+<section class="section wrap">
+  <div class="section-h"><span class="num">01</span> <span class="fr">Comment ça marche</span><span class="en">How it works</span></div>
+  <p class="intro">
+    <span class="fr">Le modèle d'anonymisation tourne sur le serveur, mais sur des <em>chiffrés</em>. Le client garde la clé secrète ; le serveur ne reçoit que des octets aléatoires et renvoie un résultat lui aussi chiffré.</span>
+    <span class="en">The anonymization model runs on the server, but over <em>ciphertexts</em>. The client keeps the secret key; the server only ever sees random-looking bytes and returns an equally encrypted result.</span>
+  </p>
+  <svg class="arch" viewBox="0 0 920 250" role="img" aria-label="FHE architecture">
+    <defs>
+      <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#a3a08c"/></marker>
+    </defs>
+    <!-- client -->
+    <rect x="14" y="40" width="250" height="170" rx="14" fill="rgba(255,210,8,.10)" stroke="#f3b700" stroke-width="1.5"/>
+    <text x="139" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">CLIENT</text>
+    <text x="139" y="84" text-anchor="middle" font-size="10.5" fill="#a3a08c" class="i18n" data-fr="votre navigateur · clé secrète" data-en="your browser · secret key">votre navigateur · clé secrète</text>
+    <rect x="34" y="100" width="210" height="34" rx="8" fill="var(--bg)" stroke="#e2e2da"/>
+    <text x="139" y="121" text-anchor="middle" font-size="11" fill="currentColor" class="i18n" data-fr="📝 texte en clair (PII)" data-en="📝 plaintext (PII)">📝 texte en clair (PII)</text>
+    <rect x="34" y="150" width="210" height="34" rx="8" fill="var(--bg)" stroke="#e2e2da"/>
+    <text x="139" y="171" text-anchor="middle" font-size="11" fill="currentColor" class="i18n" data-fr="🔑 génère clés → chiffre" data-en="🔑 keygen → encrypt">🔑 génère clés → chiffre</text>
+
+    <!-- server -->
+    <rect x="656" y="40" width="250" height="170" rx="14" fill="rgba(37,99,235,.08)" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="781" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">SERVEUR (Zama)</text>
+    <text x="781" y="84" text-anchor="middle" font-size="10.5" fill="#a3a08c" class="i18n" data-fr="ne voit jamais le clair" data-en="never sees plaintext">ne voit jamais le clair</text>
+    <rect x="676" y="100" width="210" height="84" rx="8" fill="var(--bg)" stroke="#e2e2da"/>
+    <text x="781" y="128" text-anchor="middle" font-size="11" fill="currentColor" class="i18n" data-fr="⚙️ modèle d'anonymisation" data-en="⚙️ anonymization model">⚙️ modèle d'anonymisation</text>
+    <text x="781" y="148" text-anchor="middle" font-size="10.5" fill="#a3a08c" class="i18n" data-fr="régression logistique en FHE" data-en="logistic regression in FHE">régression logistique en FHE</text>
+    <text x="781" y="168" text-anchor="middle" font-size="10.5" fill="#a3a08c" class="i18n" data-fr="calcule sur les chiffrés" data-en="computes on ciphertexts">calcule sur les chiffrés</text>
+
+    <!-- arrows -->
+    <line x1="264" y1="120" x2="652" y2="120" stroke="#a3a08c" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="5 4"/>
+    <text x="458" y="110" text-anchor="middle" font-size="11" font-weight="600" fill="#f3b700" class="i18n" data-fr="🔒 chiffrés envoyés →" data-en="🔒 ciphertexts sent →">🔒 chiffrés envoyés →</text>
+    <line x1="652" y1="165" x2="266" y2="165" stroke="#a3a08c" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="5 4"/>
+    <text x="458" y="158" text-anchor="middle" font-size="11" font-weight="600" fill="#f3b700" class="i18n" data-fr="← résultat chiffré" data-en="← encrypted result">← résultat chiffré</text>
+    <text x="458" y="205" text-anchor="middle" font-size="10.5" fill="#a3a08c" class="i18n" data-fr="le client déchiffre puis remplace les entités par des jetons" data-en="client decrypts, then replaces entities with tokens">le client déchiffre puis remplace les entités par des jetons</text>
+  </svg>
+</section>
+
+<!-- ====== DEMO ====== -->
+<section class="section wrap">
+  <div class="section-h"><span class="num">02</span> <span class="fr">Le démo</span><span class="en">The demo</span></div>
+
+  <div class="demo-grid">
+    <!-- INPUT -->
+    <div class="panel">
+      <h3>📝 <span class="fr">Texte à anonymiser</span><span class="en">Text to anonymize</span></h3>
+      <p class="hint"><span class="fr">Saisissez un texte contenant des données personnelles, ou chargez un exemple.</span><span class="en">Enter text containing personal data, or load an example.</span></p>
+      <textarea id="input" spellcheck="false"></textarea>
+      <div class="example-row">
+        <span class="chip" data-ex="biz"><span class="fr">💼 Email pro</span><span class="en">💼 Business email</span></span>
+        <span class="chip" data-ex="med"><span class="fr">🏥 Note médicale</span><span class="en">🏥 Medical note</span></span>
+        <span class="chip" data-ex="clear"><span class="fr">🧹 Vider</span><span class="en">🧹 Clear</span></span>
+      </div>
+
+      <div class="steps" id="steps">
+        <div class="step" data-step="keys">
+          <div class="ico">🔑</div>
+          <div class="body"><div class="t"><span class="fr">1. Génération des clés</span><span class="en">1. Key generation</span></div><div class="d"><span class="fr">clé secrète (client) + clé d'évaluation (serveur)</span><span class="en">secret key (client) + evaluation key (server)</span></div></div>
+          <div class="state" data-state>—</div>
+        </div>
+        <div class="step" data-step="encrypt">
+          <div class="ico">🔒</div>
+          <div class="body"><div class="t"><span class="fr">2. Chiffrement & tokenisation</span><span class="en">2. Encrypt & tokenize</span></div><div class="d"><span class="fr">chaque mot → vecteur → chiffré</span><span class="en">each word → vector → ciphertext</span></div>
+            <div class="cipher" data-cipher></div>
+          </div>
+          <div class="state" data-state>—</div>
+        </div>
+        <div class="step" data-step="infer">
+          <div class="ico">⚙️</div>
+          <div class="body"><div class="t"><span class="fr">3. Inférence FHE (serveur)</span><span class="en">3. FHE inference (server)</span></div><div class="d"><span class="fr">classe chaque jeton : entité ? laquelle ?</span><span class="en">classifies each token: entity? which type?</span></div></div>
+          <div class="state" data-state>—</div>
+        </div>
+        <div class="step" data-step="decrypt">
+          <div class="ico">🔓</div>
+          <div class="body"><div class="t"><span class="fr">4. Déchiffrement (client)</span><span class="en">4. Decrypt (client)</span></div><div class="d"><span class="fr">le client lit les prédictions et masque les entités</span><span class="en">client reads predictions and masks entities</span></div></div>
+          <div class="state" data-state>—</div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="action" id="run">🔒 <span class="fr">Anonymiser sur données chiffrées</span><span class="en">Anonymize on encrypted data</span></button>
+      </div>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="panel">
+      <h3>✨ <span class="fr">Résultat anonymisé</span><span class="en">Anonymized result</span></h3>
+      <p class="hint"><span class="fr">Les données personnelles sont remplacées par des jetons réversibles, conservés <em>uniquement</em> côté client.</span><span class="en">Personal data is replaced by reversible tokens, kept <em>only</em> on the client side.</span></p>
+      <div class="output" id="output">
+        <span class="placeholder-text"><span class="fr">Le texte anonymisé apparaîtra ici après l'exécution.</span><span class="en">The anonymized text will appear here after running.</span></span>
+      </div>
+
+      <div class="stat-row" id="stats" hidden>
+        <span><span class="fr">Entités détectées</span><span class="en">Entities found</span> : <b id="stat-ent">0</b></span>
+        <span><span class="fr">Jetons chiffrés</span><span class="en">Encrypted tokens</span> : <b id="stat-tok">0</b></span>
+        <span><span class="fr">Fuite vers le serveur</span><span class="en">Leaked to server</span> : <b style="color:var(--ok)">0 o</b></span>
+      </div>
+
+      <div class="legend" id="legend"></div>
+
+      <div class="map-wrap">
+        <table class="map" id="mapTable" hidden>
+          <thead><tr>
+            <th><span class="fr">Jeton</span><span class="en">Token</span></th>
+            <th>Type</th>
+            <th><span class="fr">Donnée d'origine (client only)</span><span class="en">Original (client only)</span></th>
+          </tr></thead>
+          <tbody id="mapBody"></tbody>
+        </table>
+        <div class="empty-note" id="mapEmpty" hidden><span class="fr">Aucune donnée personnelle détectée dans ce texte.</span><span class="en">No personal data detected in this text.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== LLM ====== -->
+<section class="section wrap" id="llmSection" hidden>
+  <div class="section-h"><span class="num">03</span> <span class="fr">Interroger un LLM, en privé</span><span class="en">Query an LLM, privately</span></div>
+  <p class="intro">
+    <span class="fr">Le texte anonymisé ne contient plus de PII : on peut l'envoyer à ChatGPT. La réponse revient avec les jetons, que le client <strong>dé-anonymise</strong> localement. <em>(Réponse simulée — pas d'appel réseau réel.)</em></span>
+    <span class="en">The anonymized text no longer contains PII: it can safely go to ChatGPT. The answer comes back with tokens, which the client <strong>de-anonymizes</strong> locally. <em>(Simulated answer — no real network call.)</em></span>
+  </p>
+  <div class="panel">
+    <div class="llm-q">
+      <input id="llmQ" type="text" placeholder="">
+      <button class="action" id="askLlm" style="flex:0 0 auto;min-width:150px">🤖 <span class="fr">Demander</span><span class="en">Ask</span></button>
+    </div>
+    <div id="llmOut"></div>
+  </div>
+</section>
+
+<!-- ====== EXPLAINER ====== -->
+<section class="section wrap">
+  <div class="section-h"><span class="num">04</span> <span class="fr">Le FHE en bref</span><span class="en">FHE in a nutshell</span></div>
+  <div class="cards">
+    <div class="card">
+      <h4><span class="emoji">🧮</span> <span class="fr">Calculer sans déchiffrer</span><span class="en">Compute without decrypting</span></h4>
+      <p><span class="fr">Le chiffrement totalement homomorphe permet d'effectuer additions et multiplications <em>directement sur les chiffrés</em>. <code>Enc(a) ⊕ Enc(b) = Enc(a+b)</code>. Le serveur calcule un résultat correct sans jamais accéder aux valeurs.</span><span class="en">Fully Homomorphic Encryption lets you run additions and multiplications <em>directly on ciphertexts</em>. <code>Enc(a) ⊕ Enc(b) = Enc(a+b)</code>. The server computes a correct result without ever accessing the values.</span></p>
+    </div>
+    <div class="card">
+      <h4><span class="emoji">🤖</span> <span class="fr">Un classifieur, en FHE</span><span class="en">A classifier, in FHE</span></h4>
+      <p><span class="fr">Chaque mot est transformé en vecteur (embedding), puis une <strong>régression logistique</strong> compilée avec Concrete ML prédit son type d'entité (personne, lieu, organisation…). Le tout s'exécute sur les chiffrés.</span><span class="en">Each word becomes a vector (embedding), then a <strong>logistic regression</strong> compiled with Concrete ML predicts its entity type (person, location, organization…). All of it runs over ciphertexts.</span></p>
+    </div>
+    <div class="card">
+      <h4><span class="emoji">🔑</span> <span class="fr">Le client garde le contrôle</span><span class="en">The client stays in control</span></h4>
+      <p><span class="fr">La clé secrète ne quitte jamais le navigateur. Le serveur reçoit la clé d'<em>évaluation</em> (qui ne déchiffre rien) et les chiffrés. Seul le client peut lire le résultat.</span><span class="en">The secret key never leaves the browser. The server gets the <em>evaluation</em> key (which decrypts nothing) and the ciphertexts. Only the client can read the result.</span></p>
+    </div>
+    <div class="card">
+      <h4><span class="emoji">💬</span> <span class="fr">Pourquoi anonymiser ?</span><span class="en">Why anonymize?</span></h4>
+      <p><span class="fr">Pour profiter d'un LLM dans le cloud sans lui confier vos noms, emails ou numéros. On masque les PII côté chiffré, on envoie le texte neutralisé au LLM, puis on restaure les vraies valeurs en local.</span><span class="en">To use a cloud LLM without handing it your names, emails or numbers. PII is masked on the encrypted side, the neutralized text goes to the LLM, then the real values are restored locally.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FAQ ====== -->
+<section class="section wrap faq">
+  <div class="section-h"><span class="num">05</span> <span class="fr">Questions</span><span class="en">FAQ</span></div>
+
+  <details>
+    <summary><span class="fr">En quoi est-ce différent du démo Hugging Face ?</span><span class="en">How does this differ from the Hugging Face demo?</span></summary>
+    <p><span class="fr">Le démo Zama exécute un <em>vrai</em> pipeline FHE côté serveur (génération de clés, chiffrement, inférence Concrete ML, déchiffrement) sur des embeddings de mots. Ici, l'hébergement statique impose une <em>simulation</em> : la détection d'entités tourne dans le navigateur via des règles et dictionnaires, mais l'interface et l'enchaînement des étapes reproduisent l'expérience originale.</span><span class="en">The Zama demo runs a <em>real</em> server-side FHE pipeline (keygen, encryption, Concrete ML inference, decryption) over word embeddings. Here, static hosting forces a <em>simulation</em>: entity detection runs in the browser via rules and dictionaries, but the UI and step sequence reproduce the original experience.</span></p>
+  </details>
+  <details>
+    <summary><span class="fr">La détection d'entités est-elle parfaite ?</span><span class="en">Is the entity detection perfect?</span></summary>
+    <p><span class="fr">Non — c'est une heuristique légère (regex pour emails/téléphones/IBAN/dates/montants + dictionnaires de noms, lieux et organisations + détection des séquences capitalisées). Comme tout système de reconnaissance d'entités, il peut manquer ou sur-détecter. Le vrai modèle Zama, entraîné, est nettement plus robuste.</span><span class="en">No — it's a lightweight heuristic (regex for emails/phones/IBAN/dates/amounts + name, place and organization dictionaries + capitalized-sequence detection). Like any NER system it can miss or over-detect. Zama's trained model is far more robust.</span></p>
+  </details>
+  <details>
+    <summary><span class="fr">Le FHE est-il vraiment sûr ?</span><span class="en">Is FHE really secure?</span></summary>
+    <p><span class="fr">Le FHE repose sur le problème <em>Learning With Errors</em> (LWE), réputé résistant même aux ordinateurs quantiques. Tant que la clé secrète reste côté client, le serveur ne voit que du bruit. Le coût : le calcul sur chiffrés est plus lent qu'en clair, d'où l'intérêt de modèles compacts comme la régression logistique.</span><span class="en">FHE is based on the <em>Learning With Errors</em> (LWE) problem, believed to resist even quantum computers. As long as the secret key stays client-side, the server only sees noise. The trade-off: computing on ciphertexts is slower than in the clear, hence the use of compact models like logistic regression.</span></p>
+  </details>
+  <details>
+    <summary><span class="fr">Où trouver le vrai code ?</span><span class="en">Where is the real code?</span></summary>
+    <p><span class="fr">Le Space original : <a href="https://huggingface.co/spaces/zama-fhe/encrypted-anonymization" target="_blank" rel="noopener">huggingface.co/spaces/zama-fhe/encrypted-anonymization</a>. Le framework : <a href="https://github.com/zama-ai/concrete-ml" target="_blank" rel="noopener">github.com/zama-ai/concrete-ml</a>.</span><span class="en">The original Space: <a href="https://huggingface.co/spaces/zama-fhe/encrypted-anonymization" target="_blank" rel="noopener">huggingface.co/spaces/zama-fhe/encrypted-anonymization</a>. The framework: <a href="https://github.com/zama-ai/concrete-ml" target="_blank" rel="noopener">github.com/zama-ai/concrete-ml</a>.</span></p>
+  </details>
+</section>
+
+<footer class="foot">
+  <div><span class="fr">Reproduction pédagogique du Space</span><span class="en">Educational reproduction of the Space</span> <a href="https://huggingface.co/spaces/zama-fhe/encrypted-anonymization" target="_blank" rel="noopener">zama-fhe/encrypted-anonymization</a>. <span class="fr">Concepts et marque appartenant à</span><span class="en">Concepts and branding belong to</span> <a href="https://www.zama.org" target="_blank" rel="noopener">Zama</a>.</div>
+  <div class="links">
+    <a href="https://huggingface.co/spaces/zama-fhe/encrypted-anonymization" target="_blank" rel="noopener">🤗 Hugging Face Space</a>
+    <a href="https://github.com/zama-ai/concrete-ml" target="_blank" rel="noopener">⚙️ Concrete ML</a>
+    <a href="https://www.zama.org/introduction-to-homomorphic-encryption" target="_blank" rel="noopener">📖 FHE explained</a>
+    <a href="../../">← <span class="fr">Tous les projets</span><span class="en">All projects</span></a>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+/* ============================================================
+   i18n
+   ============================================================ */
+const langButtons = document.querySelectorAll('[data-set-lang]');
+function setLang(l) {
+  document.body.setAttribute('data-lang', l);
+  document.documentElement.lang = l;
+  langButtons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.setLang === l)));
+  document.querySelectorAll('.i18n').forEach(el => { el.textContent = el.dataset[l] || el.textContent; });
+  // refresh dynamic placeholders
+  document.getElementById('llmQ').placeholder = T().llmPlaceholder;
+}
+langButtons.forEach(b => b.addEventListener('click', () => setLang(b.dataset.setLang)));
+function lang() { return document.body.getAttribute('data-lang'); }
+function T() { return STR[lang()]; }
+
+const STR = {
+  fr: {
+    llmPlaceholder: "Ex : Résume cette demande et indique les actions à mener.",
+    you: "Vous → ChatGPT (texte anonymisé)",
+    gpt: "ChatGPT (ne voit aucune PII)",
+    restored: "Réponse dé-anonymisée (côté client)",
+    thinking: "ChatGPT réfléchit…",
+    llmAnswer: (ents) => `Bien reçu. Voici un résumé de la demande de ${ents.PERSON||'la personne concernée'} : il s'agit d'une opération impliquant ${ents.ORGANIZATION||"l'organisation citée"}${ents.LOCATION? ' à '+ents.LOCATION:''}. Je recommande de vérifier les coordonnées (${ents.EMAIL||'email'}${ents.PHONE? ', '+ents.PHONE:''}) puis de confirmer la transaction${ents.MONEY? ' de '+ents.MONEY:''}${ents.DATE? ' datée du '+ents.DATE:''}. Aucune donnée personnelle n'a été nécessaire pour produire cette réponse.`,
+    needRun: "Lancez d'abord l'anonymisation ci-dessus.",
+    states: { wait: "en attente", run: "en cours", ok: "ok" },
+  },
+  en: {
+    llmPlaceholder: "E.g.: Summarize this request and list the actions to take.",
+    you: "You → ChatGPT (anonymized text)",
+    gpt: "ChatGPT (sees no PII)",
+    restored: "De-anonymized answer (client side)",
+    thinking: "ChatGPT is thinking…",
+    llmAnswer: (ents) => `Got it. Here is a summary of the request from ${ents.PERSON||'the person involved'}: it concerns an operation involving ${ents.ORGANIZATION||'the cited organization'}${ents.LOCATION? ' in '+ents.LOCATION:''}. I recommend verifying the contact details (${ents.EMAIL||'email'}${ents.PHONE? ', '+ents.PHONE:''}) and then confirming the transaction${ents.MONEY? ' of '+ents.MONEY:''}${ents.DATE? ' dated '+ents.DATE:''}. No personal data was needed to produce this answer.`,
+    needRun: "Run the anonymization above first.",
+    states: { wait: "queued", run: "running", ok: "ok" },
+  }
+};
+
+/* ============================================================
+   Examples
+   ============================================================ */
+const EXAMPLES = {
+  biz: {
+    fr: `Bonjour, je m'appelle David Mitchell, data scientist senior chez Northwind Financial à Londres. Vous pouvez me joindre à david.mitchell@northwind.com ou au +44 7700 900123. Le 14 mars 2024, j'ai viré 12 500 € depuis le compte GB29 NWBK 6016 1331 9268 19 vers un fournisseur basé à Berlin. Ma collègue Sarah Chen a finalisé le contrat avec Siemens.`,
+    en: `Hello, my name is David Mitchell, a senior data scientist at Northwind Financial in London. You can reach me at david.mitchell@northwind.com or on +44 7700 900123. On March 14, 2024, I transferred €12,500 from account GB29 NWBK 6016 1331 9268 19 to a supplier based in Berlin. My colleague Sarah Chen finalized the contract with Siemens.`
+  },
+  med: {
+    fr: `Compte rendu : la patiente Marie Lefebvre, née le 3 février 1981, a consulté le Dr. Anh Nguyen à l'Hôpital Saint-Louis de Paris. Tension 13/8. Contact : marie.lefebvre@gmail.com, 06 12 34 56 78. Carte vitale 1 81 02 75 113 042 18.`,
+    en: `Report: patient Marie Lefebvre, born February 3, 1981, was seen by Dr. Anh Nguyen at Saint-Louis Hospital in Paris. Blood pressure 130/80. Contact: marie.lefebvre@gmail.com, +33 6 12 34 56 78. Insurance ID 1 81 02 75 113 042 18.`
+  }
+};
+
+const input = document.getElementById('input');
+document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+  const k = c.dataset.ex;
+  if (k === 'clear') { input.value = ''; return; }
+  input.value = EXAMPLES[k][lang()];
+}));
+
+/* ============================================================
+   Entity detection (browser-side simulation of the FHE model)
+   ============================================================ */
+const ENT_META = {
+  PERSON:        { color: 'var(--e-person)',   fr: 'Personne',     en: 'Person' },
+  LOCATION:      { color: 'var(--e-location)', fr: 'Lieu',         en: 'Location' },
+  ORGANIZATION:  { color: 'var(--e-org)',      fr: 'Organisation', en: 'Organization' },
+  EMAIL:         { color: 'var(--e-email)',    fr: 'Email',        en: 'Email' },
+  PHONE:         { color: 'var(--e-phone)',    fr: 'Téléphone',    en: 'Phone' },
+  DATE:          { color: 'var(--e-date)',     fr: 'Date',         en: 'Date' },
+  MONEY:         { color: 'var(--e-money)',    fr: 'Montant',      en: 'Amount' },
+  ID:            { color: 'var(--e-id)',       fr: 'Identifiant',  en: 'ID' },
+  URL:          { color: 'var(--e-url)',       fr: 'URL',          en: 'URL' },
+};
+
+const LOCATIONS = new Set(['London','Londres','Paris','Berlin','Madrid','Rome','Lyon','Marseille','Tokyo','New York','Beijing','Geneva','Genève','Brussels','Bruxelles','Amsterdam','Dublin','Lisbon','Lisbonne','Vienna','Vienne','Munich','Frankfurt','Francfort','Zurich','Milan','Barcelona','Barcelone','France','Germany','Allemagne','Spain','Espagne','Italy','Italie','England','Angleterre','Europe','California','Californie','Texas','Boston','Chicago','Seattle','Toronto','Montreal','Montréal','Singapore','Singapour','Dubai','Dubaï']);
+const KNOWN_ORGS = new Set(['Siemens','Northwind','Google','Microsoft','Amazon','Apple','Meta','OpenAI','Zama','Nvidia','Intel','Airbus','Renault','Tesla','Oracle','Spotify','Netflix','BNP','Paribas','HSBC','Deloitte','Accenture','Bosch','Volkswagen','Sony','Samsung','IBM','SAP','Nestlé','Nestle']);
+const ORG_TOKENS = new Set(['Financial','Bank','Banque','Inc','Inc.','Ltd','Ltd.','LLC','GmbH','Corp','Corp.','Corporation','Group','Groupe','Technologies','Systems','Solutions','Consulting','Partners','Industries','Holdings','AG','SA','SAS','SARL','Hospital','Hôpital','Université','University','Clinic','Clinique']);
+const FIRST_NAMES = new Set(['David','Sarah','Marie','Anh','John','Jane','Paul','Pierre','Jean','Sophie','Emma','Lucas','Chen','Nguyen','Mitchell','Lefebvre','Martin','Dubois','Smith','Johnson','Williams','Brown','Garcia','Kim','Noel','Anna','Thomas','Laura','Julien','Camille','Nicolas','Maxime','Léa','Hugo','Chloé','Ahmed','Fatima','Wei','Yuki','Carlos','Maria','Olivier','Antoine']);
+const TITLES = /^(Dr|Dr\.|Mr|Mr\.|Mrs|Mrs\.|Ms|Ms\.|M|M\.|Mme|Mlle|Prof|Prof\.)$/;
+const STOP_CAP = new Set(['I','The','A','An','On','In','At','My','Your','His','Her','Our','Their','You','We','They','He','She','It','This','That','Le','La','Les','Un','Une','Je','Tu','Il','Elle','Nous','Vous','Ils','Mon','Ma','Mes','Son','Sa','Bonjour','Hello','Hi','Compte','Report','Contact','Tension','Bien','Note','Ex','Vous']);
+
+// regex detectors (structured PII)
+const REGEXES = [
+  ['URL',   /\bhttps?:\/\/[^\s]+|\bwww\.[^\s,;]+/gi],
+  ['EMAIL', /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g],
+  ['ID',    /\b[A-Z]{2}\d{2}(?:\s?[A-Z0-9]{2,4}){2,8}\b/g],                 // IBAN
+  ['ID',    /\b(?:\d[ .]?){10,16}\d\b/g],                                    // long numeric ID / card / insurance
+  ['PHONE', /(?:\+\d{1,3}[\s.\-]?)?(?:\(?\d{1,4}\)?[\s.\-]?){3,5}\d{2,4}/g], // phones (run before generic numbers handled above via occupancy)
+  ['MONEY', /(?:[€£$]|USD|EUR|GBP)\s?\d[\d  .,]*\d|\b\d[\d  .,]*\d\s?(?:[€£$]|euros?|dollars?|EUR|USD|GBP)\b/gi],
+  ['DATE',  /\b\d{1,2}\s+(?:janvier|février|fevrier|mars|avril|mai|juin|juillet|août|aout|septembre|octobre|novembre|décembre|decembre)\s+\d{4}\b/gi],
+  ['DATE',  /\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:,?\s+\d{4})?\b/gi],
+  ['DATE',  /\b\d{1,2}[\/.]\d{1,2}[\/.]\d{2,4}\b/g],
+];
+
+function detectEntities(text) {
+  const occupied = new Array(text.length).fill(false);
+  const found = [];
+
+  function claim(start, end, type, value) {
+    for (let i = start; i < end; i++) if (occupied[i]) return false;
+    for (let i = start; i < end; i++) occupied[i] = true;
+    found.push({ start, end, type, value });
+    return true;
+  }
+
+  // 1) structured regex (priority order)
+  for (const [type, re] of REGEXES) {
+    re.lastIndex = 0;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      const v = m[0].trim();
+      const start = m.index + (m[0].length - m[0].trimStart().length);
+      const end = start + v.length;
+      if (v.length >= 4) claim(start, end, type, v);
+      if (m.index === re.lastIndex) re.lastIndex++;
+    }
+  }
+
+  // 2) capitalized sequences → PERSON / LOCATION / ORGANIZATION
+  const capRe = /\b[A-ZÀ-Ý][\wÀ-ÿ.'’-]*(?:\s+(?:de|du|des|la|le|of|the|van|von|del)?\s*[A-ZÀ-Ý][\wÀ-ÿ.'’-]*)*/g;
+  let cm;
+  while ((cm = capRe.exec(text)) !== null) {
+    let seq = cm[0].trim();
+    let start = cm.index + (cm[0].length - cm[0].trimStart().length);
+    let words = seq.split(/\s+/);
+
+    // strip leading title (Dr., Mr.) but keep it out of the entity
+    if (words.length > 1 && TITLES.test(words[0])) {
+      const skip = seq.indexOf(words[1]);
+      start += skip; seq = seq.slice(skip); words = seq.split(/\s+/);
+    }
+    const end = start + seq.length;
+    if (seq.length < 2) continue;
+
+    // skip single capitalized stop-words (sentence starts, pronouns)
+    const isKnownLoc = LOCATIONS.has(seq) || words.some(w => LOCATIONS.has(w));
+    const isKnownOrg = KNOWN_ORGS.has(seq) || words.some(w => KNOWN_ORGS.has(w)) || words.some(w => ORG_TOKENS.has(w));
+    const hasKnownName = words.some(w => FIRST_NAMES.has(w));
+
+    if (words.length === 1 && STOP_CAP.has(words[0]) && !isKnownLoc && !isKnownOrg) continue;
+    if (words.length === 1 && !isKnownLoc && !isKnownOrg && !hasKnownName) continue; // lone capitalized word: too risky unless known
+
+    let type;
+    if (isKnownLoc) type = 'LOCATION';
+    else if (isKnownOrg) type = 'ORGANIZATION';
+    else if (hasKnownName || words.length >= 2) type = 'PERSON';
+    else continue;
+
+    claim(start, end, type, seq);
+  }
+
+  found.sort((a, b) => a.start - b.start);
+  return found;
+}
+
+/* ============================================================
+   Pipeline orchestration
+   ============================================================ */
+const runBtn = document.getElementById('run');
+const stepsEl = document.getElementById('steps');
+const output = document.getElementById('output');
+let lastMapping = null; // {placeholder -> {value,type}} and reverse
+
+function hex(n) { let s = ''; const c = '0123456789abcdef'; for (let i=0;i<n;i++) s += c[(Math.random()*16)|0]; return s; }
+function setStep(name, st) {
+  const el = stepsEl.querySelector(`[data-step="${name}"]`);
+  const state = el.querySelector('[data-state]');
+  el.classList.remove('active','done');
+  const S = T().states;
+  if (st === 'run') { el.classList.add('active'); state.innerHTML = `<span class="spin"></span> ${S.run}`; }
+  else if (st === 'done') { el.classList.add('done'); state.textContent = '✓ ' + S.ok; }
+  else { state.textContent = S.wait; }
+}
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+async function runPipeline() {
+  const text = input.value.trim();
+  if (!text) { input.focus(); return; }
+  runBtn.disabled = true;
+  ['keys','encrypt','infer','decrypt'].forEach(s => setStep(s, 'wait'));
+  output.innerHTML = '<span class="placeholder-text">…</span>';
+  document.getElementById('mapTable').hidden = true;
+  document.getElementById('mapEmpty').hidden = true;
+  document.getElementById('stats').hidden = true;
+
+  // detect now (so token counts are real) but reveal progressively
+  const ents = detectEntities(text);
+  const tokens = text.split(/\s+/).filter(Boolean);
+
+  // 1. keygen
+  setStep('keys','run'); await sleep(700); setStep('keys','done');
+
+  // 2. encrypt
+  setStep('encrypt','run');
+  const cipherEl = stepsEl.querySelector('[data-step="encrypt"] [data-cipher]');
+  cipherEl.classList.add('show');
+  for (let i = 0; i < 6; i++) { cipherEl.textContent = `tok[${Math.min(i*Math.ceil(tokens.length/6),tokens.length)}/${tokens.length}] → ` + hex(40); await sleep(110); }
+  cipherEl.textContent = `${tokens.length} ` + (lang()==='fr'?'jetons chiffrés ✓':'tokens encrypted ✓');
+  await sleep(250); setStep('encrypt','done');
+
+  // 3. FHE inference
+  setStep('infer','run'); await sleep(60);
+  const infMs = 600 + tokens.length * 22;
+  await sleep(Math.min(infMs, 2200)); setStep('infer','done');
+
+  // 4. decrypt + mask
+  setStep('decrypt','run'); await sleep(550);
+  renderResult(text, ents);
+  setStep('decrypt','done');
+
+  runBtn.disabled = false;
+  document.getElementById('stats').hidden = false;
+}
+
+runBtn.addEventListener('click', runPipeline);
+
+/* ============================================================
+   Rendering
+   ============================================================ */
+function esc(s){ return s.replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+function renderResult(text, ents) {
+  // build placeholders, reuse same token for identical (value,type)
+  const counters = {};
+  const valueToPh = new Map();
+  const mapping = {}; // ph -> {value,type}
+  ents.forEach(e => {
+    const key = e.type + '::' + e.value.toLowerCase();
+    if (!valueToPh.has(key)) {
+      counters[e.type] = (counters[e.type] || 0) + 1;
+      const ph = `[${e.type}_${counters[e.type]}]`;
+      valueToPh.set(key, ph);
+      mapping[ph] = { value: e.value, type: e.type };
+    }
+    e.ph = valueToPh.get(key);
+  });
+  lastMapping = mapping;
+
+  // render highlighted anonymized text: show token in place of entity, with original on hover
+  let html = '';
+  let cur = 0;
+  ents.forEach(e => {
+    html += esc(text.slice(cur, e.start));
+    const col = ENT_META[e.type].color;
+    html += `<span class="tok" style="color:${col};background:${col}1a" title="${esc(e.value)}">${esc(e.ph)}</span>`;
+    cur = e.end;
+  });
+  html += esc(text.slice(cur));
+  output.innerHTML = html || '<span class="placeholder-text">—</span>';
+
+  // stats
+  document.getElementById('stat-ent').textContent = ents.length;
+  document.getElementById('stat-tok').textContent = text.split(/\s+/).filter(Boolean).length;
+
+  // legend (types present)
+  const legend = document.getElementById('legend');
+  const present = [...new Set(ents.map(e=>e.type))];
+  legend.innerHTML = present.map(t => `<span><i style="background:${ENT_META[t].color}"></i>${ENT_META[t][lang()]}</span>`).join('');
+
+  // mapping table
+  const body = document.getElementById('mapBody');
+  const table = document.getElementById('mapTable');
+  const empty = document.getElementById('mapEmpty');
+  const phs = Object.keys(mapping);
+  if (phs.length === 0) { table.hidden = true; empty.hidden = false; }
+  else {
+    empty.hidden = true; table.hidden = false;
+    body.innerHTML = phs.map(ph => {
+      const { value, type } = mapping[ph];
+      const col = ENT_META[type].color;
+      return `<tr>
+        <td class="ph" style="color:${col}">${esc(ph)}</td>
+        <td><span class="badge" style="background:${col}">${ENT_META[type][lang()]}</span></td>
+        <td>${esc(value)}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // reveal LLM section
+  document.getElementById('llmSection').hidden = false;
+}
+
+/* ============================================================
+   Simulated private LLM round-trip
+   ============================================================ */
+const llmQ = document.getElementById('llmQ');
+const llmOut = document.getElementById('llmOut');
+document.getElementById('askLlm').addEventListener('click', askLlm);
+llmQ.addEventListener('keydown', e => { if (e.key === 'Enter') askLlm(); });
+
+async function askLlm() {
+  if (!lastMapping) { llmOut.innerHTML = `<div class="bubble"><div class="who">⚠️</div>${T().needRun}</div>`; return; }
+  const anonText = output.textContent;
+  const q = llmQ.value.trim() || (lang()==='fr' ? 'Résume cette demande.' : 'Summarize this request.');
+
+  // sent bubble (anonymized — what the LLM actually receives)
+  llmOut.innerHTML = `<div class="bubble sent"><div class="who">${T().you}</div>${esc(q)}<br><span style="color:var(--fg2)">— ${esc(anonText)}</span></div>`
+    + `<div class="bubble recv" id="thinking"><div class="who">${T().gpt}</div><span class="spin"></span> ${T().thinking}</div>`;
+
+  await sleep(900);
+
+  // pick first placeholder of each type for the templated answer
+  const byType = {};
+  for (const [ph, info] of Object.entries(lastMapping)) {
+    if (!byType[info.type]) byType[info.type] = ph;
+  }
+  const answerAnon = T().llmAnswer(byType);
+
+  document.getElementById('thinking').outerHTML =
+    `<div class="bubble recv"><div class="who">${T().gpt}</div>${esc(answerAnon)}</div>`;
+
+  await sleep(500);
+
+  // de-anonymize: replace placeholders by real values, highlighted
+  let restored = esc(answerAnon);
+  for (const [ph, info] of Object.entries(lastMapping)) {
+    const col = ENT_META[info.type].color;
+    restored = restored.split(esc(ph)).join(`<span class="restored-ent" title="${ENT_META[info.type][lang()]}">${esc(info.value)}</span>`);
+  }
+  llmOut.insertAdjacentHTML('beforeend',
+    `<div class="bubble restored"><div class="who">${T().restored}</div>${restored}</div>`);
+}
+
+/* ============================================================
+   Init
+   ============================================================ */
+input.value = EXAMPLES.biz.fr;
+setLang('fr');
+</script>
+</body>
+</html>
