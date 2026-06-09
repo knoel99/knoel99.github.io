@@ -6,7 +6,7 @@ Site portfolio personnel - [knoel99.github.io](https://knoel99.github.io/)
 
 | Projet | Description | Stack |
 |---|---|---|
-| [vivatech-2026](https://knoel99.github.io/projects/vivatech-2026/) | Le programme de VivaTech 2026 (17-20 juin, Paris) reorganise en un calendrier visuel clair : grille horaire par scene, filtres par theme, recherche et vue liste | Vanilla JS, Data viz |
+| [vivatech-2026](https://knoel99.github.io/projects/vivatech-2026/) | Le programme officiel de VivaTech 2026 (124 sessions reelles du 17 juin) reorganise en un calendrier visuel clair : grille horaire par scene, filtres par theme/track, recherche et vue liste | Vanilla JS, Data viz |
 | [jobs-fr](https://knoel99.github.io/projects/jobs-fr/) | Treemap interactif des 1 584 metiers du repertoire ROME, colores par exposition a l'IA | D3.js, France Travail API |
 | [embassy](https://knoel99.github.io/projects/embassy/) | Carte interactive des distances entre les ambassades des pays du G20 et les centres de pouvoir de chaque capitale | Folium, Python, Geopolitique |
 | [deepseek-v4-paper](https://knoel99.github.io/projects/deepseek_v4_paper/) | Lecture guidee du paper DeepSeek-V4 : PDF original a gauche, resume reformule en francais a droite | PDF.js, MoE, LLM |

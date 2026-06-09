@@ -19,7 +19,7 @@
   --accent: #0066cc;
   --radius: 12px;
   --gutter: 60px;
-  --slot-h: 30px;        /* hauteur d'un créneau de 30 min */
+  --slot-h: 6px;         /* hauteur d'un créneau de 5 min */
 }
 
 body {
@@ -244,10 +244,25 @@ h1 {
 .cal-grid {
   display: grid;
   grid-template-columns: var(--gutter) repeat(var(--ncols), minmax(0, 1fr));
-  grid-auto-rows: var(--slot-h);
   position: relative;
 }
-/* lignes horaires (gutter) */
+/* fond de colonne (séparateurs verticaux) */
+.col-bg {
+  border-left: 1px solid var(--line2);
+  z-index: 0;
+}
+/* ligne horaire pleine largeur */
+.hour-line {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--line);
+  z-index: 0;
+}
+.half-line {
+  grid-column: 2 / -1;
+  border-top: 1px dashed var(--line2);
+  z-index: 0;
+}
+/* labels horaires (gutter) */
 .time-label {
   grid-column: 1;
   font-size: 11px;
@@ -256,14 +271,8 @@ h1 {
   padding-right: 8px;
   transform: translateY(-7px);
   white-space: nowrap;
+  z-index: 1;
 }
-/* cellules de fond pour les lignes de la grille */
-.bg-cell {
-  border-top: 1px solid var(--line2);
-  border-left: 1px solid var(--line2);
-}
-.bg-cell.hour { border-top-color: var(--line); }
-.bg-cell.col1 { border-left: 0; }
 
 .event {
   position: relative;
@@ -358,14 +367,14 @@ h1 {
     <span class="badge">17 – 20 juin · Paris</span>
   </div>
   <p class="subtitle">
-    Le programme de la 10ᵉ édition réorganisé en un <strong>calendrier visuel clair</strong> :
+    Le <strong>programme officiel</strong> de la 10ᵉ édition réorganisé en un <strong>calendrier visuel clair</strong> :
     une grille par scène pour voir toute la journée d'un coup d'œil, des filtres par thème et une recherche —
-    plutôt qu'une <a href="https://vivatech.com/sessions" target="_blank" rel="noopener">liste paginée</a> où il faut tourner les pages.
+    plutôt qu'une <a href="https://vivatech.com/sessions" target="_blank" rel="noopener">liste paginée sur 7 pages</a>.
   </p>
   <p class="disclaimer">
-    ⚠️ <strong>Programme illustratif.</strong> Les dates (17–20 juin), les scènes, les thèmes et les
-    intervenants annoncés sont réels ; les horaires précis de chaque session reconstituent le format de
-    l'événement et sont à confirmer sur
+    ✅ <strong>Données officielles.</strong> Les <strong>124 sessions du mercredi 17 juin</strong> sont issues du programme
+    officiel publié par VivaTech (titres, horaires, scènes, intervenants, thèmes). Les 18, 19 et 20 juin seront ajoutés
+    au fur et à mesure de leur publication sur
     <a href="https://vivatech.com/sessions" target="_blank" rel="noopener" style="color:var(--accent)">vivatech.com/sessions</a>.
   </p>
 </header>
@@ -415,10 +424,11 @@ h1 {
   const toMin = (hhmm) => { const [h, m] = hhmm.split(":").map(Number); return h * 60 + m; };
   const fmt = (hhmm) => hhmm;
 
-  // bornes journée (08:30 → 19:30 pour de la marge)
-  const DAY_START = toMin("08:30");
-  const DAY_END   = toMin("19:30");
-  const TOTAL_SLOTS = (DAY_END - DAY_START) / 30;
+  // bornes journée + granularité (créneaux de 5 min pour des horaires précis)
+  const SLOT_MIN = 5;
+  const DAY_START = toMin("09:00");
+  const DAY_END   = toMin("18:30");
+  const TOTAL_SLOTS = (DAY_END - DAY_START) / SLOT_MIN;
 
   /* ---------- rendu des contrôles ---------- */
   function renderDays() {
@@ -482,25 +492,35 @@ h1 {
     const grid = document.createElement("div");
     grid.className = "cal-grid";
     grid.style.setProperty("--ncols", ncols);
+    grid.style.gridTemplateRows = "repeat(" + TOTAL_SLOTS + ", var(--slot-h))";
 
-    // cellules de fond + labels horaires
+    // fonds de colonnes (séparateurs verticaux)
+    for (let c = 0; c < ncols; c++) {
+      const bg = document.createElement("div");
+      bg.className = "col-bg";
+      bg.style.gridColumn = (c + 2);
+      bg.style.gridRow = "1 / -1";
+      grid.appendChild(bg);
+    }
+
+    // lignes + labels (heures pleines et demi-heures)
     for (let slot = 0; slot < TOTAL_SLOTS; slot++) {
-      const isHour = (DAY_START + slot * 30) % 60 === 0;
-      if (isHour) {
-        const min = DAY_START + slot * 30;
+      const min = DAY_START + slot * SLOT_MIN;
+      if (min % 60 === 0) {
+        const line = document.createElement("div");
+        line.className = "hour-line";
+        line.style.gridRow = (slot + 1);
+        grid.appendChild(line);
         const label = document.createElement("div");
         label.className = "time-label";
-        label.style.gridRow = (slot + 1) + " / span 2";
-        label.style.gridColumn = "1";
+        label.style.gridRow = (slot + 1);
         label.textContent = String(Math.floor(min / 60)).padStart(2, "0") + ":00";
         grid.appendChild(label);
-      }
-      for (let c = 0; c < ncols + 1; c++) {
-        const cell = document.createElement("div");
-        cell.className = "bg-cell" + (isHour ? " hour" : "") + (c === 0 ? " col1" : "");
-        cell.style.gridRow = (slot + 1);
-        cell.style.gridColumn = (c + 1);
-        grid.appendChild(cell);
+      } else if (min % 30 === 0) {
+        const half = document.createElement("div");
+        half.className = "half-line";
+        half.style.gridRow = (slot + 1);
+        grid.appendChild(half);
       }
     }
 
@@ -508,8 +528,8 @@ h1 {
     daySessions().forEach(s => {
       const colIdx = STAGES.indexOf(s.stage);
       if (colIdx < 0) return;
-      const startSlot = Math.round((toMin(s.start) - DAY_START) / 30);
-      const span = Math.max(1, Math.round((toMin(s.end) - toMin(s.start)) / 30));
+      const startSlot = Math.round((toMin(s.start) - DAY_START) / SLOT_MIN);
+      const span = Math.max(2, Math.round((toMin(s.end) - toMin(s.start)) / SLOT_MIN));
       const ev = document.createElement("div");
       ev.className = "event" + (matches(s) ? "" : " dim");
       ev.style.gridColumn = (colIdx + 2);
@@ -578,6 +598,12 @@ h1 {
 
     const view = $("#view");
     view.innerHTML = "";
+    if (daySessions().length === 0) {
+      view.innerHTML = `<div class="empty">Le programme du ${day.full} n'est pas encore publié.<br>` +
+        `Consultez-le sur <a href="https://vivatech.com/sessions?days=${day.id}" target="_blank" rel="noopener" style="color:var(--accent)">vivatech.com/sessions</a> ` +
+        `— il sera ajouté ici dès sa parution.</div>`;
+      return;
+    }
     view.appendChild(state.view === "cal" ? renderCalendar() : renderList());
   }
 
