@@ -1,0 +1,52 @@
+name: Build VivaTech sessions.js
+
+# Régénère projects/vivatech-2026/sessions.js à partir des pages HTML
+# officielles VivaTech committées (officialprogram.html, partners.html,
+# side-events.html), via build_sessions.py.
+#
+# Pourquoi à partir des fichiers committés plutôt qu'en récupérant le site ?
+# vivatech.com est protégé par Cloudflare et renvoie 403 aux clients non
+# navigateur (y compris les runners GitHub) et n'expose pas d'API publique.
+# Le flux fiable est donc : déposer des exports .html à jour dans le dossier,
+# ce workflow reconstruit et committe sessions.js automatiquement.
+
+on:
+  push:
+    paths:
+      - "projects/vivatech-2026/*.html"
+      - "projects/vivatech-2026/build_sessions.py"
+      - ".github/workflows/vivatech-sessions.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vivatech-sessions-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Régénérer sessions.js
+        working-directory: projects/vivatech-2026
+        run: python3 build_sessions.py
+
+      - name: Committer si modifié
+        run: |
+          if git diff --quiet -- projects/vivatech-2026/sessions.js; then
+            echo "sessions.js déjà à jour — rien à committer."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add projects/vivatech-2026/sessions.js
+            git commit -m "chore: régénère VivaTech sessions.js depuis les pages HTML [skip ci]"
+            git push
+          fi
