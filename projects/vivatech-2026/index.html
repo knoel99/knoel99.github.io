@@ -518,6 +518,15 @@ h1 {
 .event .e-fav.on { display: inline-flex; background: #f59e0b; color: #fff; }
 .event.is-fav { box-shadow: 0 0 0 2px #f59e0b, 0 1px 3px rgba(0,0,0,0.12); }
 .wevent.is-fav { box-shadow: 0 0 0 2px #f59e0b; }
+.event.conflict { box-shadow: 0 0 0 2px #dc2626, 0 1px 3px rgba(0,0,0,0.12); }
+.wevent.conflict { box-shadow: 0 0 0 2px #dc2626; }
+.lr-conflict {
+  display: inline-block; font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.03em; border-radius: 5px; padding: 1px 6px; margin-left: 6px;
+  background: #fee2e2; color: #b91c1c; vertical-align: middle;
+}
+.dh-warn { color: #b91c1c; font-weight: 600; }
+.mini-btn.copied { background: #dcfce7; border-color: #86efac; color: #166534; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 720px) {
@@ -599,6 +608,10 @@ h1 {
               <span id="favToggleLabel">Mes sessions</span>
             </button>
             <button class="mini-btn" id="themesAll">Tout</button>
+            <button class="mini-btn" id="shareBtn" title="Copier un lien vers cette vue et ma sélection">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+              <span id="shareLabel">Partager</span>
+            </button>
             <button class="mini-btn accent" id="exportBtn" title="Télécharger la sélection au format iCalendar (.ics)">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
               Importer dans mon agenda
@@ -712,14 +725,57 @@ h1 {
   /* ---------- favoris ---------- */
   const favKey = (s) => s.day + "|" + s.start + "|" + s.stage + "|" + s.title;
   const isFav = (s) => state.favs.has(favKey(s));
+  function saveFavs() { try { localStorage.setItem(FAV_KEY, JSON.stringify([...state.favs])); } catch (e) { /* quota / privé */ } }
   function toggleFav(s) {
     const k = favKey(s);
     if (state.favs.has(k)) state.favs.delete(k); else state.favs.add(k);
-    try { localStorage.setItem(FAV_KEY, JSON.stringify([...state.favs])); } catch (e) { /* quota / privé */ }
+    saveFavs();
   }
   const passFav = (s) => !state.favOnly || isFav(s);
   function favSessions() {
     return store.sessions.filter(isFav).sort((a, b) => a.day.localeCompare(b.day) || toMin(a.start) - toMin(b.start));
+  }
+  // Chevauchements horaires au sein de « Mes sessions » (même jour, plages qui se recoupent).
+  function favConflictSet() {
+    const conf = new Set(), byDay = {};
+    favSessions().forEach(s => { (byDay[s.day] = byDay[s.day] || []).push(s); });
+    Object.values(byDay).forEach(arr => {
+      arr.sort((a, b) => toMin(a.start) - toMin(b.start));
+      for (let i = 0; i < arr.length; i++)
+        for (let j = i + 1; j < arr.length; j++)
+          if (toMin(arr[j].start) < toMin(arr[i].end)) { conf.add(favKey(arr[i])); conf.add(favKey(arr[j])); }
+    });
+    return conf;
+  }
+  let favConflicts = new Set();
+  const inConflict = (s) => favConflicts.has(favKey(s));
+
+  /* ---------- état partageable via l'URL (#view=…&day=…&fav=1&sel=…) ---------- */
+  function hashStr(str) { let h = 0; for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0; return h.toString(36); }
+  const shortId = (s) => hashStr(favKey(s));
+  function applyHash() {
+    const h = new URLSearchParams((location.hash || "").replace(/^#/, ""));
+    const v = h.get("view");
+    if (v && ["day", "week", "agenda"].includes(v)) state.view = v;
+    const dy = h.get("day");
+    if (dy && store.days.some(d => d.id === dy)) state.day = dy;
+    const sel = h.get("sel");
+    if (sel) {
+      const want = new Set(sel.split(".").filter(Boolean));
+      const favs = new Set();
+      store.sessions.forEach(s => { if (want.has(shortId(s))) favs.add(favKey(s)); });
+      if (favs.size) { state.favs = favs; state.favOnly = true; saveFavs(); }
+    }
+    if (h.get("fav") === "1") state.favOnly = true;
+  }
+  function syncURL() {
+    const p = new URLSearchParams();
+    p.set("view", state.view);
+    if (state.view !== "week") p.set("day", state.day);
+    if (state.favOnly) p.set("fav", "1");
+    const ids = store.sessions.filter(isFav).map(shortId);
+    if (ids.length) p.set("sel", ids.join("."));
+    history.replaceState(null, "", location.pathname + location.search + "#" + p.toString());
   }
 
   /* ---------- filtres ---------- */
@@ -951,7 +1007,7 @@ h1 {
       const endSlot = Math.min(Math.round((toMin(s.end) - DAY_START) / SLOT_MIN), TOTAL_SLOTS);
       const span = Math.max(2, endSlot - startSlot);
       const ev = document.createElement("div");
-      ev.className = "event" + (matches(s) ? "" : " dim") + (isFav(s) ? " is-fav" : "");
+      ev.className = "event" + (matches(s) ? "" : " dim") + (isFav(s) ? " is-fav" : "") + (isFav(s) && inConflict(s) ? " conflict" : "");
       ev.style.gridColumn = (colIdx + 2);
       ev.style.gridRow = (startSlot + 1) + " / span " + span;
       ev.style.background = THEMES[s.theme]?.color || "#666";
@@ -1024,7 +1080,7 @@ h1 {
         const h = Math.max(14, (Math.min(toMin(s.end), END) - toMin(s.start)) * PXMIN - 1);
         const w = 100 / s._ncol;
         const ev = document.createElement("div");
-        ev.className = "wevent" + (matches(s) ? "" : " dim") + (isFav(s) ? " is-fav" : "");
+        ev.className = "wevent" + (matches(s) ? "" : " dim") + (isFav(s) ? " is-fav" : "") + (isFav(s) && inConflict(s) ? " conflict" : "");
         ev.style.top = top + "px"; ev.style.height = h + "px";
         ev.style.left = (s._col * w) + "%"; ev.style.width = "calc(" + w + "% - 2px)";
         ev.style.background = THEMES[s.theme]?.color || "#666";
@@ -1087,10 +1143,11 @@ h1 {
         const row = document.createElement("div");
         row.className = "list-row";
         const kindBadge = s.kind === "side" ? `<span class="lr-kind">Side event</span>` : "";
+        const confBadge = (isFav(s) && inConflict(s)) ? `<span class="lr-conflict">⚠ conflit</span>` : "";
         row.innerHTML =
           `<div class="lr-when">${s.start}–${s.end}<span class="stage-pill"></span></div>` +
           `<div>` +
-            `<div class="lr-title"><span class="tdot" style="background:${color}"></span><span class="lr-t"></span>${kindBadge}</div>` +
+            `<div class="lr-title"><span class="tdot" style="background:${color}"></span><span class="lr-t"></span>${kindBadge}${confBadge}</div>` +
             (s.speakers && s.speakers.length ? `<div class="lr-people"></div>` : "") +
           `</div>` +
           `<button class="star-btn lr-star${isFav(s) ? " on" : ""}" title="Ajouter / retirer de Mes sessions">${isFav(s) ? "★" : "☆"}</button>`;
@@ -1186,7 +1243,13 @@ h1 {
   }
 
   /* ---------- rendu global ---------- */
+  function conflictNote() {
+    if (!state.favOnly || !favConflicts.size) return "";
+    const n = favConflicts.size;
+    return ` · <span class="dh-warn">⚠ ${n} session${n > 1 ? "s" : ""} en conflit horaire</span>`;
+  }
   function render() {
+    favConflicts = favConflictSet();
     renderDays();
     renderThemes();
     renderRooms();
@@ -1202,8 +1265,9 @@ h1 {
 
     if (state.view === "week") {
       const total = store.sessions.filter(fullyVisible).length;
-      $("#dayHead").innerHTML = `<strong>Semaine du 14 au 20 juin</strong> · ${total} session${total > 1 ? "s" : ""} affichée${total > 1 ? "s" : ""}`;
+      $("#dayHead").innerHTML = `<strong>Semaine du 14 au 20 juin</strong> · ${total} session${total > 1 ? "s" : ""} affichée${total > 1 ? "s" : ""}` + conflictNote();
       view.appendChild(renderWeek());
+      syncURL();
       return;
     }
 
@@ -1214,15 +1278,17 @@ h1 {
     const count = state.view === "day"
       ? daySessions().filter(s => fullyVisible(s) && isArena(s) && toMin(s.start) < 20 * 60).length
       : daySessions().filter(fullyVisible).length;
-    $("#dayHead").innerHTML = `<strong>${day.full}</strong> · ${day.hours} · ${count} session${count > 1 ? "s" : ""} affichée${count > 1 ? "s" : ""}`;
+    $("#dayHead").innerHTML = `<strong>${day.full}</strong> · ${day.hours} · ${count} session${count > 1 ? "s" : ""} affichée${count > 1 ? "s" : ""}` + conflictNote();
 
     if (daySessions().length === 0) {
       view.innerHTML = `<div class="empty">Le programme du ${day.full} n'est pas encore publié.<br>` +
         `Consultez-le sur <a href="https://vivatech.com/sessions?days=${day.id}" target="_blank" rel="noopener" style="color:var(--accent)">vivatech.com/sessions</a> ` +
         `— il sera ajouté ici dès sa parution.</div>`;
+      syncURL();
       return;
     }
     view.appendChild(state.view === "day" ? renderCalendar() : renderList());
+    syncURL();
   }
 
   /* ---------- événements UI ---------- */
@@ -1254,6 +1320,21 @@ h1 {
       : state.view === "week" ? "VivaTech 2026 — sélection"
       : "VivaTech 2026 — " + (store.days.find(d => d.id === state.day) || {}).full;
     downloadICS(sel, name);
+  });
+
+  // partage : copie un lien reprenant la vue + la sélection (favoris)
+  $("#shareBtn").addEventListener("click", async () => {
+    syncURL();
+    const url = location.href;
+    const label = $("#shareLabel"), btn = $("#shareBtn");
+    const ok = () => { label.textContent = "Lien copié !"; btn.classList.add("copied"); setTimeout(() => { label.textContent = "Partager"; btn.classList.remove("copied"); }, 1800); };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) { await navigator.clipboard.writeText(url); ok(); }
+      else throw new Error("no clipboard");
+    } catch (e) {
+      // repli : sélection manuelle via prompt
+      window.prompt("Copiez ce lien vers votre sélection :", url);
+    }
   });
 
   // fermeture du modal
@@ -1463,6 +1544,8 @@ h1 {
     setStatus("live", override.size);
   }
 
+  // restaure l'état partagé (vue / jour / sélection) depuis l'URL, puis rendu
+  applyHash();
   render();
 
   // Tentative de rafraîchissement en direct, sans bloquer l'affichage initial.
