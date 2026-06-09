@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VivaTech 2026 — Calendrier clair</title>
+<meta name="description" content="Le programme de VivaTech 2026 (17–20 juin, Paris) réorganisé en un calendrier visuel clair : grille par scène, filtres par thème et recherche.">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #ffffff;
+  --bg2: #f5f5f7;
+  --bg3: #eaeaef;
+  --fg: #1d1d1f;
+  --fg2: #6e6e73;
+  --line: rgba(0,0,0,0.08);
+  --line2: rgba(0,0,0,0.05);
+  --accent: #0066cc;
+  --radius: 12px;
+  --gutter: 60px;
+  --slot-h: 30px;        /* hauteur d'un créneau de 30 min */
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+/* ---------- Header ---------- */
+.top {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 20px 20px;
+}
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--fg2);
+  text-decoration: none;
+  margin-bottom: 22px;
+}
+.back:hover { color: var(--fg); }
+
+.title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+h1 {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #7c3aed, #0066cc);
+  padding: 4px 11px;
+  border-radius: 100px;
+}
+.subtitle {
+  margin-top: 12px;
+  font-size: 15px;
+  color: var(--fg2);
+  max-width: 720px;
+}
+.subtitle a { color: var(--accent); text-decoration: none; }
+.subtitle a:hover { text-decoration: underline; }
+
+.disclaimer {
+  margin-top: 16px;
+  font-size: 12.5px;
+  color: var(--fg2);
+  background: #fff8e6;
+  border: 1px solid #f3e0a8;
+  border-radius: 10px;
+  padding: 10px 14px;
+  max-width: 720px;
+}
+
+/* ---------- Controls ---------- */
+.controls {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 8px 20px 0;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 30;
+}
+.controls-inner {
+  padding: 16px 0 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.days {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.day-tab {
+  border: 1px solid var(--line);
+  background: var(--bg2);
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  font-family: inherit;
+  line-height: 1.2;
+}
+.day-tab:hover { background: var(--bg3); }
+.day-tab.active {
+  background: var(--fg);
+  border-color: var(--fg);
+  color: #fff;
+}
+.day-tab .d-label { font-size: 14px; font-weight: 600; display: block; }
+.day-tab .d-note  { font-size: 11px; opacity: 0.7; }
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.search {
+  flex: 1;
+  min-width: 180px;
+  position: relative;
+}
+.search input {
+  width: 100%;
+  font-size: 14px;
+  font-family: inherit;
+  padding: 9px 12px 9px 34px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg2);
+  color: var(--fg);
+  outline: none;
+}
+.search input:focus { border-color: var(--accent); background: #fff; }
+.search svg {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--fg2);
+}
+
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.view-toggle button {
+  border: 0;
+  background: var(--bg2);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg2);
+  padding: 9px 14px;
+  cursor: pointer;
+}
+.view-toggle button.active { background: var(--fg); color: #fff; }
+
+/* thèmes (légende + filtres) */
+.themes {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.theme-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 5px 11px;
+  border-radius: 100px;
+  border: 1px solid var(--line);
+  background: var(--bg2);
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.15s, background 0.15s;
+}
+.theme-chip .dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.theme-chip.off { opacity: 0.35; }
+
+/* ---------- Stage / calendar ---------- */
+.stage {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px 20px 60px;
+}
+.day-head {
+  font-size: 13px;
+  color: var(--fg2);
+  margin-bottom: 14px;
+}
+.day-head strong { color: var(--fg); font-weight: 600; }
+
+/* --- vue calendrier --- */
+.cal-wrap { overflow-x: auto; }
+.cal {
+  min-width: 760px;
+}
+.cal-header {
+  display: grid;
+  grid-template-columns: var(--gutter) repeat(var(--ncols), minmax(0, 1fr));
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.cal-header .col-h {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--fg);
+  padding: 10px 8px;
+  text-align: center;
+  background: var(--bg2);
+  border-left: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.cal-header .col-h:first-child { border-left: 0; background: var(--bg); }
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: var(--gutter) repeat(var(--ncols), minmax(0, 1fr));
+  grid-auto-rows: var(--slot-h);
+  position: relative;
+}
+/* lignes horaires (gutter) */
+.time-label {
+  grid-column: 1;
+  font-size: 11px;
+  color: var(--fg2);
+  text-align: right;
+  padding-right: 8px;
+  transform: translateY(-7px);
+  white-space: nowrap;
+}
+/* cellules de fond pour les lignes de la grille */
+.bg-cell {
+  border-top: 1px solid var(--line2);
+  border-left: 1px solid var(--line2);
+}
+.bg-cell.hour { border-top-color: var(--line); }
+.bg-cell.col1 { border-left: 0; }
+
+.event {
+  position: relative;
+  z-index: 2;
+  margin: 1px 3px;
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-size: 11.5px;
+  color: #fff;
+  overflow: hidden;
+  cursor: default;
+  border-left: 3px solid rgba(255,255,255,0.5);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  transition: opacity 0.15s, transform 0.12s;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.event:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
+.event .e-time { font-size: 10px; opacity: 0.92; font-weight: 600; }
+.event .e-title { font-weight: 600; line-height: 1.25; }
+.event .e-people { font-size: 10px; opacity: 0.9; line-height: 1.2; }
+.event.dim { opacity: 0.12; }
+
+/* --- vue liste --- */
+.list { display: flex; flex-direction: column; gap: 22px; }
+.list-block .lb-time {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--fg);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 10px;
+  position: sticky;
+  top: 0;
+}
+.list-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 14px;
+  padding: 10px 4px;
+  border-radius: 8px;
+}
+.list-row + .list-row { border-top: 1px solid var(--line2); }
+.list-row:hover { background: var(--bg2); }
+.lr-when { font-size: 12.5px; color: var(--fg2); }
+.lr-when .stage-pill {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 10.5px;
+  color: var(--fg2);
+  background: var(--bg3);
+  border-radius: 6px;
+  padding: 1px 7px;
+}
+.lr-title {
+  font-size: 14px; font-weight: 600;
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.lr-title .tdot { width: 9px; height: 9px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.lr-people { font-size: 12.5px; color: var(--fg2); margin-top: 2px; }
+.list-row.dim { display: none; }
+
+.empty { font-size: 14px; color: var(--fg2); padding: 30px 4px; text-align: center; }
+
+.footer {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 20px 50px;
+  font-size: 12px;
+  color: var(--fg2);
+  border-top: 1px solid var(--line2);
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  h1 { font-size: 24px; }
+  .list-row { grid-template-columns: 1fr; gap: 4px; }
+  .lr-when { display: flex; gap: 8px; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="back" href="../../">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Tous les projets
+  </a>
+  <div class="title-row">
+    <h1>VivaTech 2026</h1>
+    <span class="badge">17 – 20 juin · Paris</span>
+  </div>
+  <p class="subtitle">
+    Le programme de la 10ᵉ édition réorganisé en un <strong>calendrier visuel clair</strong> :
+    une grille par scène pour voir toute la journée d'un coup d'œil, des filtres par thème et une recherche —
+    plutôt qu'une <a href="https://vivatech.com/sessions" target="_blank" rel="noopener">liste paginée</a> où il faut tourner les pages.
+  </p>
+  <p class="disclaimer">
+    ⚠️ <strong>Programme illustratif.</strong> Les dates (17–20 juin), les scènes, les thèmes et les
+    intervenants annoncés sont réels ; les horaires précis de chaque session reconstituent le format de
+    l'événement et sont à confirmer sur
+    <a href="https://vivatech.com/sessions" target="_blank" rel="noopener" style="color:var(--accent)">vivatech.com/sessions</a>.
+  </p>
+</header>
+
+<div class="controls">
+  <div class="controls-inner">
+    <div class="days" id="days"></div>
+    <div class="tools">
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="search" type="search" placeholder="Rechercher une session, un intervenant…">
+      </div>
+      <div class="view-toggle" id="viewToggle">
+        <button data-view="cal" class="active">Calendrier</button>
+        <button data-view="list">Liste</button>
+      </div>
+    </div>
+    <div class="themes" id="themes"></div>
+  </div>
+</div>
+
+<main class="stage">
+  <div class="day-head" id="dayHead"></div>
+  <div id="view"></div>
+</main>
+
+<footer class="footer">
+  Réorganisation visuelle du programme public · <a href="https://knoel99.github.io" style="color:var(--accent);text-decoration:none">knoel99.github.io</a>
+</footer>
+
+<script src="sessions.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  const $ = (s, el = document) => el.querySelector(s);
+
+  // état
+  let state = {
+    day: DAYS[0].id,
+    view: "cal",
+    query: "",
+    themesOff: new Set(),   // thèmes désactivés
+  };
+
+  // helpers temps
+  const toMin = (hhmm) => { const [h, m] = hhmm.split(":").map(Number); return h * 60 + m; };
+  const fmt = (hhmm) => hhmm;
+
+  // bornes journée (08:30 → 19:30 pour de la marge)
+  const DAY_START = toMin("08:30");
+  const DAY_END   = toMin("19:30");
+  const TOTAL_SLOTS = (DAY_END - DAY_START) / 30;
+
+  /* ---------- rendu des contrôles ---------- */
+  function renderDays() {
+    const wrap = $("#days");
+    wrap.innerHTML = "";
+    DAYS.forEach(d => {
+      const b = document.createElement("button");
+      b.className = "day-tab" + (d.id === state.day ? " active" : "");
+      b.innerHTML = `<span class="d-label">${d.label}</span><span class="d-note">${d.note}</span>`;
+      b.onclick = () => { state.day = d.id; render(); };
+      wrap.appendChild(b);
+    });
+  }
+
+  function renderThemes() {
+    const wrap = $("#themes");
+    wrap.innerHTML = "";
+    Object.entries(THEMES).forEach(([key, t]) => {
+      const c = document.createElement("button");
+      c.className = "theme-chip" + (state.themesOff.has(key) ? " off" : "");
+      c.innerHTML = `<span class="dot" style="background:${t.color}"></span>${t.label}`;
+      c.onclick = () => {
+        if (state.themesOff.has(key)) state.themesOff.delete(key);
+        else state.themesOff.add(key);
+        render();
+      };
+      wrap.appendChild(c);
+    });
+  }
+
+  /* ---------- filtrage ---------- */
+  function matches(s) {
+    if (state.themesOff.has(s.theme)) return false;
+    const q = state.query.trim().toLowerCase();
+    if (!q) return true;
+    const hay = (s.title + " " + (s.speakers || []).join(" ") + " " + s.stage).toLowerCase();
+    return hay.includes(q);
+  }
+
+  function daySessions() {
+    return SESSIONS.filter(s => s.day === state.day);
+  }
+
+  /* ---------- vue calendrier ---------- */
+  function renderCalendar() {
+    const ncols = STAGES.length;
+    const root = document.createElement("div");
+    root.className = "cal-wrap";
+    const cal = document.createElement("div");
+    cal.className = "cal";
+    cal.style.setProperty("--ncols", ncols);
+
+    // en-tête
+    const header = document.createElement("div");
+    header.className = "cal-header";
+    header.style.setProperty("--ncols", ncols);
+    header.innerHTML = `<div class="col-h"></div>` + STAGES.map(s => `<div class="col-h">${s}</div>`).join("");
+    cal.appendChild(header);
+
+    // grille
+    const grid = document.createElement("div");
+    grid.className = "cal-grid";
+    grid.style.setProperty("--ncols", ncols);
+
+    // cellules de fond + labels horaires
+    for (let slot = 0; slot < TOTAL_SLOTS; slot++) {
+      const isHour = (DAY_START + slot * 30) % 60 === 0;
+      if (isHour) {
+        const min = DAY_START + slot * 30;
+        const label = document.createElement("div");
+        label.className = "time-label";
+        label.style.gridRow = (slot + 1) + " / span 2";
+        label.style.gridColumn = "1";
+        label.textContent = String(Math.floor(min / 60)).padStart(2, "0") + ":00";
+        grid.appendChild(label);
+      }
+      for (let c = 0; c < ncols + 1; c++) {
+        const cell = document.createElement("div");
+        cell.className = "bg-cell" + (isHour ? " hour" : "") + (c === 0 ? " col1" : "");
+        cell.style.gridRow = (slot + 1);
+        cell.style.gridColumn = (c + 1);
+        grid.appendChild(cell);
+      }
+    }
+
+    // événements
+    daySessions().forEach(s => {
+      const colIdx = STAGES.indexOf(s.stage);
+      if (colIdx < 0) return;
+      const startSlot = Math.round((toMin(s.start) - DAY_START) / 30);
+      const span = Math.max(1, Math.round((toMin(s.end) - toMin(s.start)) / 30));
+      const ev = document.createElement("div");
+      ev.className = "event" + (matches(s) ? "" : " dim");
+      ev.style.gridColumn = (colIdx + 2);
+      ev.style.gridRow = (startSlot + 1) + " / span " + span;
+      const color = THEMES[s.theme]?.color || "#666";
+      ev.style.background = color;
+      ev.style.borderLeftColor = "rgba(255,255,255,0.55)";
+      ev.title = `${s.start}–${s.end} · ${s.title}\n${s.stage}\n${(s.speakers||[]).join(", ")}`;
+      ev.innerHTML =
+        `<span class="e-time">${s.start}–${s.end}</span>` +
+        `<span class="e-title">${s.title}</span>` +
+        (s.speakers && s.speakers.length ? `<span class="e-people">${s.speakers.join(", ")}</span>` : "");
+      grid.appendChild(ev);
+    });
+
+    cal.appendChild(grid);
+    root.appendChild(cal);
+    return root;
+  }
+
+  /* ---------- vue liste ---------- */
+  function renderList() {
+    const sessions = daySessions().slice().sort((a, b) => toMin(a.start) - toMin(b.start) || a.stage.localeCompare(b.stage));
+    const visible = sessions.filter(matches);
+    const wrap = document.createElement("div");
+    wrap.className = "list";
+
+    if (!visible.length) {
+      wrap.innerHTML = `<div class="empty">Aucune session ne correspond à ces filtres.</div>`;
+      return wrap;
+    }
+
+    // groupe par créneau de départ
+    const groups = {};
+    visible.forEach(s => { (groups[s.start] = groups[s.start] || []).push(s); });
+
+    Object.keys(groups).sort((a, b) => toMin(a) - toMin(b)).forEach(start => {
+      const block = document.createElement("div");
+      block.className = "list-block";
+      block.innerHTML = `<div class="lb-time">${start}</div>`;
+      groups[start].forEach(s => {
+        const color = THEMES[s.theme]?.color || "#666";
+        const row = document.createElement("div");
+        row.className = "list-row";
+        row.innerHTML =
+          `<div class="lr-when">${s.start}–${s.end}<span class="stage-pill">${s.stage}</span></div>` +
+          `<div>` +
+            `<div class="lr-title"><span class="tdot" style="background:${color}"></span><span>${s.title}</span></div>` +
+            (s.speakers && s.speakers.length ? `<div class="lr-people">${s.speakers.join(", ")}</div>` : "") +
+          `</div>`;
+        block.appendChild(row);
+      });
+      wrap.appendChild(block);
+    });
+    return wrap;
+  }
+
+  /* ---------- rendu global ---------- */
+  function render() {
+    renderDays();
+    renderThemes();
+
+    const day = DAYS.find(d => d.id === state.day);
+    const count = daySessions().filter(matches).length;
+    $("#dayHead").innerHTML = `<strong>${day.full}</strong> · ${day.hours} · ${count} session${count > 1 ? "s" : ""} affichée${count > 1 ? "s" : ""}`;
+
+    const view = $("#view");
+    view.innerHTML = "";
+    view.appendChild(state.view === "cal" ? renderCalendar() : renderList());
+  }
+
+  /* ---------- événements UI ---------- */
+  $("#search").addEventListener("input", e => { state.query = e.target.value; render(); });
+  $("#viewToggle").addEventListener("click", e => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+    state.view = btn.dataset.view;
+    $("#viewToggle").querySelectorAll("button").forEach(b => b.classList.toggle("active", b === btn));
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
