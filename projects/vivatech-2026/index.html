@@ -311,10 +311,11 @@ h1 {
 }
 .list-row {
   display: grid;
-  grid-template-columns: 110px 1fr;
+  grid-template-columns: 110px 1fr auto;
   gap: 14px;
   padding: 10px 4px;
   border-radius: 8px;
+  align-items: start;
 }
 .list-row + .list-row { border-top: 1px solid var(--line2); }
 .list-row:hover { background: var(--bg2); }
@@ -495,6 +496,28 @@ h1 {
 .act-btn:hover { background: var(--bg3); }
 .act-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
 .act-btn.primary:hover { filter: brightness(1.08); }
+.act-btn.fav.on { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+
+/* ---------- favoris (Mes sessions) ---------- */
+.mini-btn.fav-toggle.on { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+.star-btn {
+  border: 0; background: transparent; cursor: pointer; padding: 0; line-height: 1;
+  color: var(--fg2); flex-shrink: 0; width: 26px; height: 26px;
+  display: inline-flex; align-items: center; justify-content: center; border-radius: 6px;
+}
+.star-btn:hover { background: var(--bg3); }
+.star-btn.on { color: #f59e0b; }
+.lr-star { align-self: start; margin-top: 1px; }
+.event .e-fav {
+  position: absolute; top: 2px; right: 2px; width: 18px; height: 18px;
+  border: 0; border-radius: 5px; cursor: pointer; padding: 0; line-height: 1;
+  background: rgba(255,255,255,0.18); color: #fff; font-size: 11px;
+  display: none; align-items: center; justify-content: center;
+}
+.event:hover .e-fav { display: inline-flex; }
+.event .e-fav.on { display: inline-flex; background: #f59e0b; color: #fff; }
+.event.is-fav { box-shadow: 0 0 0 2px #f59e0b, 0 1px 3px rgba(0,0,0,0.12); }
+.wevent.is-fav { box-shadow: 0 0 0 2px #f59e0b; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 720px) {
@@ -515,8 +538,9 @@ h1 {
 }
 @media (max-width: 560px) {
   h1 { font-size: 21px; }
-  .list-row { grid-template-columns: 1fr; gap: 4px; }
+  .list-row { grid-template-columns: 1fr; gap: 4px; position: relative; padding-right: 30px; }
   .lr-when { display: flex; gap: 8px; align-items: center; }
+  .lr-star { position: absolute; top: 8px; right: 0; }
   .rooms-grid { grid-template-columns: 1fr; }
   .badge { display: none; }
 }
@@ -536,7 +560,8 @@ h1 {
   <p class="subtitle">
     Le <strong>programme officiel</strong> de la 10ᵉ édition réorganisé en un <strong>calendrier visuel clair</strong> :
     vues <strong>Jour</strong>, <strong>Semaine</strong> et <strong>Agenda</strong>, choix des <strong>salles</strong> à afficher,
-    filtres par thème, recherche, et <strong>import dans votre agenda</strong> (Google, Apple, Outlook) —
+    filtres par thème, recherche, <strong>sélection personnelle</strong> (★ Mes sessions) et
+    <strong>import dans votre agenda</strong> (Google, Apple, Outlook) —
     plutôt qu'une <a href="https://vivatech.com/sessions" target="_blank" rel="noopener">liste paginée sur 7 pages</a>.
   </p>
   <p class="disclaimer">
@@ -569,6 +594,10 @@ h1 {
         <div class="filter-head">
           <span class="filter-label">Thématiques</span>
           <div class="mini-actions">
+            <button class="mini-btn fav-toggle" id="favToggle" title="N'afficher que les sessions que j'ai sélectionnées">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.3l-6.2 3.7 1.6-7-5.4-4.7 7.1-.6L12 2l2.9 6.7 7.1.6-5.4 4.7 1.6 7z"/></svg>
+              <span id="favToggleLabel">Mes sessions</span>
+            </button>
             <button class="mini-btn" id="themesAll">Tout</button>
             <button class="mini-btn accent" id="exportBtn" title="Télécharger la sélection au format iCalendar (.ics)">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
@@ -613,6 +642,10 @@ h1 {
     </div>
     <div class="modal-body">
       <div class="modal-actions">
+        <button class="act-btn fav" id="mFav">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.3l-6.2 3.7 1.6-7-5.4-4.7 7.1-.6L12 2l2.9 6.7 7.1.6-5.4 4.7 1.6 7z"/></svg>
+          <span id="mFavLabel">Ajouter à ma sélection</span>
+        </button>
         <a class="act-btn primary" id="mGcal" target="_blank" rel="noopener">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
           Google Agenda
@@ -656,6 +689,10 @@ h1 {
   const SIDE_GROUP = "Side events (hors site)";
   const isMobile = () => window.matchMedia("(max-width: 720px)").matches;
 
+  // favoris (« Mes sessions ») persistés dans le navigateur
+  const FAV_KEY = "vt2026.favs";
+  function loadFavs() { try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]")); } catch (e) { return new Set(); } }
+
   // état
   let state = {
     day: defaultDay,
@@ -663,12 +700,27 @@ h1 {
     query: "",
     themesOff: new Set(),   // thèmes masqués
     roomsOff: new Set(),    // salles / calendriers masqués (noms de scènes + SIDE_GROUP)
+    favs: loadFavs(),       // clés des sessions sélectionnées
+    favOnly: false,         // n'afficher que « Mes sessions »
   };
 
   // helpers temps
   const toMin = (hhmm) => { const [h, m] = hhmm.split(":").map(Number); return h * 60 + m; };
   const pad = (n) => String(n).padStart(2, "0");
   const SLOT_MIN = 5;
+
+  /* ---------- favoris ---------- */
+  const favKey = (s) => s.day + "|" + s.start + "|" + s.stage + "|" + s.title;
+  const isFav = (s) => state.favs.has(favKey(s));
+  function toggleFav(s) {
+    const k = favKey(s);
+    if (state.favs.has(k)) state.favs.delete(k); else state.favs.add(k);
+    try { localStorage.setItem(FAV_KEY, JSON.stringify([...state.favs])); } catch (e) { /* quota / privé */ }
+  }
+  const passFav = (s) => !state.favOnly || isFav(s);
+  function favSessions() {
+    return store.sessions.filter(isFav).sort((a, b) => a.day.localeCompare(b.day) || toMin(a.start) - toMin(b.start));
+  }
 
   /* ---------- filtres ---------- */
   const isArena = (s) => store.stages.indexOf(s.stage) >= 0;
@@ -682,7 +734,7 @@ h1 {
   }
   // « non atténué » dans les grilles (thème actif + recherche) ; les salles, elles, masquent.
   const matches = (s) => themeOn(s) && matchesQuery(s);
-  const fullyVisible = (s) => roomOn(s) && themeOn(s) && matchesQuery(s);
+  const fullyVisible = (s) => roomOn(s) && themeOn(s) && matchesQuery(s) && passFav(s);
 
   function daySessions() {
     return store.sessions.filter(s => s.day === state.day);
@@ -823,17 +875,18 @@ h1 {
 
   /* ---------- vue jour (scènes en colonnes) ---------- */
   function renderCalendar() {
-    // colonnes = scènes utilisées ce jour ET cochées dans le filtre Salles
-    const dayArena = daySessions().filter(s => isArena(s));
-    const usedToday = store.stages.filter(st => dayArena.some(s => s.stage === st));
-    const cols = usedToday.filter(st => !state.roomsOff.has(st));
-    const onGrid = dayArena.filter(s => cols.indexOf(s.stage) >= 0);
+    // colonnes = scènes utilisées ce jour, cochées (Salles) et passant le filtre favoris
+    const anyArena = daySessions().some(s => isArena(s));
+    const onGrid = daySessions().filter(s => isArena(s) && roomOn(s) && passFav(s));
+    const cols = store.stages.filter(st => onGrid.some(s => s.stage === st));
     if (!onGrid.length) {
       const note = document.createElement("div");
       note.className = "empty";
-      note.innerHTML = usedToday.length
-        ? `Aucune salle sélectionnée pour ce jour.<br>Cochez des scènes dans <strong>Salles &amp; calendriers</strong>, ou passez en <strong>Agenda</strong>.`
-        : `Aucune session sur les scènes principales ce jour-là — uniquement des <strong>side events</strong> hors site.<br>Basculez en <strong>Agenda</strong> pour les consulter.`;
+      note.innerHTML = !anyArena
+        ? `Aucune session sur les scènes principales ce jour-là — uniquement des <strong>side events</strong> hors site.<br>Basculez en <strong>Agenda</strong> pour les consulter.`
+        : state.favOnly
+          ? `Aucune session sélectionnée ce jour-là.<br>Cliquez l'étoile ☆ d'une session pour l'ajouter à <strong>Mes sessions</strong>.`
+          : `Aucune salle sélectionnée pour ce jour.<br>Cochez des scènes dans <strong>Salles &amp; calendriers</strong>, ou passez en <strong>Agenda</strong>.`;
       return note;
     }
     // bornes dynamiques (arrondies à la demi-heure). On plafonne à 20:00 pour
@@ -898,7 +951,7 @@ h1 {
       const endSlot = Math.min(Math.round((toMin(s.end) - DAY_START) / SLOT_MIN), TOTAL_SLOTS);
       const span = Math.max(2, endSlot - startSlot);
       const ev = document.createElement("div");
-      ev.className = "event" + (matches(s) ? "" : " dim");
+      ev.className = "event" + (matches(s) ? "" : " dim") + (isFav(s) ? " is-fav" : "");
       ev.style.gridColumn = (colIdx + 2);
       ev.style.gridRow = (startSlot + 1) + " / span " + span;
       ev.style.background = THEMES[s.theme]?.color || "#666";
@@ -907,9 +960,11 @@ h1 {
       ev.innerHTML =
         `<span class="e-time">${s.start}–${s.end}</span>` +
         `<span class="e-title"></span>` +
-        (s.speakers && s.speakers.length ? `<span class="e-people"></span>` : "");
+        (s.speakers && s.speakers.length ? `<span class="e-people"></span>` : "") +
+        `<button class="e-fav${isFav(s) ? " on" : ""}" title="Ajouter / retirer de Mes sessions">${isFav(s) ? "★" : "☆"}</button>`;
       ev.querySelector(".e-title").textContent = s.title;
       if (s.speakers && s.speakers.length) ev.querySelector(".e-people").textContent = s.speakers.join(", ");
+      ev.querySelector(".e-fav").addEventListener("click", (e) => { e.stopPropagation(); toggleFav(s); render(); });
       ev.addEventListener("click", () => openModal(s));
       grid.appendChild(ev);
     });
@@ -922,8 +977,8 @@ h1 {
   /* ---------- vue semaine (jours en colonnes, axe horaire partagé) ---------- */
   function renderWeek() {
     const PXMIN = 0.95, CAP = 20 * 60;
-    const days = store.days.filter(d => store.sessions.some(s => s.day === d.id && roomOn(s) && toMin(s.start) < CAP));
-    const vis = store.sessions.filter(s => roomOn(s) && toMin(s.start) < CAP && days.some(d => d.id === s.day));
+    const days = store.days.filter(d => store.sessions.some(s => s.day === d.id && roomOn(s) && passFav(s) && toMin(s.start) < CAP));
+    const vis = store.sessions.filter(s => roomOn(s) && passFav(s) && toMin(s.start) < CAP && days.some(d => d.id === s.day));
     if (!vis.length) {
       const note = document.createElement("div");
       note.className = "empty";
@@ -969,7 +1024,7 @@ h1 {
         const h = Math.max(14, (Math.min(toMin(s.end), END) - toMin(s.start)) * PXMIN - 1);
         const w = 100 / s._ncol;
         const ev = document.createElement("div");
-        ev.className = "wevent" + (matches(s) ? "" : " dim");
+        ev.className = "wevent" + (matches(s) ? "" : " dim") + (isFav(s) ? " is-fav" : "");
         ev.style.top = top + "px"; ev.style.height = h + "px";
         ev.style.left = (s._col * w) + "%"; ev.style.width = "calc(" + w + "% - 2px)";
         ev.style.background = THEMES[s.theme]?.color || "#666";
@@ -1037,10 +1092,12 @@ h1 {
           `<div>` +
             `<div class="lr-title"><span class="tdot" style="background:${color}"></span><span class="lr-t"></span>${kindBadge}</div>` +
             (s.speakers && s.speakers.length ? `<div class="lr-people"></div>` : "") +
-          `</div>`;
+          `</div>` +
+          `<button class="star-btn lr-star${isFav(s) ? " on" : ""}" title="Ajouter / retirer de Mes sessions">${isFav(s) ? "★" : "☆"}</button>`;
         row.querySelector(".stage-pill").textContent = s.stage;
         row.querySelector(".lr-t").textContent = s.title;
         if (s.speakers && s.speakers.length) row.querySelector(".lr-people").textContent = s.speakers.join(", ");
+        row.querySelector(".lr-star").addEventListener("click", (e) => { e.stopPropagation(); toggleFav(s); render(); });
         row.addEventListener("click", () => openModal(s));
         block.appendChild(row);
       });
@@ -1098,6 +1155,16 @@ h1 {
     $("#mGcal").href = gcalLink(s);
     $("#mIcs").onclick = () => downloadICS([s], s.title);
 
+    // bouton favori (Mes sessions)
+    const favBtn = $("#mFav");
+    const syncFav = () => {
+      const on = isFav(s);
+      favBtn.classList.toggle("on", on);
+      $("#mFavLabel").textContent = on ? "Retirer de ma sélection" : "Ajouter à ma sélection";
+    };
+    syncFav();
+    favBtn.onclick = () => { toggleFav(s); syncFav(); render(); };
+
     $("#modalOverlay").classList.add("open");
     document.body.style.overflow = "hidden";
   }
@@ -1124,6 +1191,9 @@ h1 {
     renderThemes();
     renderRooms();
     $("#viewToggle").querySelectorAll("button").forEach(b => b.classList.toggle("active", b.dataset.view === state.view));
+    const favN = state.favs.size;
+    $("#favToggle").classList.toggle("on", state.favOnly);
+    $("#favToggleLabel").textContent = favN ? `Mes sessions (${favN})` : "Mes sessions";
     // les onglets de jour ne servent qu'en vues Jour / Agenda
     $("#days").style.display = state.view === "week" ? "none" : "";
 
@@ -1164,6 +1234,9 @@ h1 {
     render();
   });
 
+  // « Mes sessions » : n'afficher que les favoris
+  $("#favToggle").addEventListener("click", () => { state.favOnly = !state.favOnly; render(); });
+
   // filtres : tout afficher (thèmes) / cocher / décocher (salles)
   $("#themesAll").addEventListener("click", () => { state.themesOff.clear(); render(); });
   $("#roomsAll").addEventListener("click", () => { state.roomsOff.clear(); render(); });
@@ -1177,7 +1250,8 @@ h1 {
   // export .ics de la sélection courante
   $("#exportBtn").addEventListener("click", () => {
     const sel = selectionForExport();
-    const name = state.view === "week" ? "VivaTech 2026 — sélection"
+    const name = state.favOnly ? "VivaTech 2026 — ma sélection"
+      : state.view === "week" ? "VivaTech 2026 — sélection"
       : "VivaTech 2026 — " + (store.days.find(d => d.id === state.day) || {}).full;
     downloadICS(sel, name);
   });
