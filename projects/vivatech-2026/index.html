@@ -417,10 +417,108 @@ h1 {
 .modal-desc { font-size: 14px; line-height: 1.6; color: var(--fg); white-space: pre-wrap; }
 .modal-desc.empty { color: var(--fg2); font-style: italic; }
 
+/* ---------- Filtres (thèmes + salles + export) ---------- */
+.filters { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+.filter-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+}
+.filter-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--fg2); }
+.mini-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.mini-btn {
+  font-family: inherit; font-size: 12px; font-weight: 600;
+  border: 1px solid var(--line); background: var(--bg2); color: var(--fg);
+  border-radius: 8px; padding: 6px 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+}
+.mini-btn:hover { background: var(--bg3); }
+.mini-btn.accent { background: var(--accent); border-color: var(--accent); color: #fff; }
+.mini-btn.accent:hover { filter: brightness(1.08); }
+
+/* panneau Salles (calendriers) — repliable */
+.rooms-box { border: 1px solid var(--line); border-radius: 10px; background: var(--bg2); }
+.rooms-box > summary {
+  list-style: none; cursor: pointer; padding: 10px 14px;
+  font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px;
+}
+.rooms-box > summary::-webkit-details-marker { display: none; }
+.rooms-box > summary .chev { transition: transform 0.15s; color: var(--fg2); }
+.rooms-box[open] > summary .chev { transform: rotate(90deg); }
+.rooms-box > summary .count { color: var(--fg2); font-weight: 500; font-size: 12px; }
+.rooms-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 2px 14px; padding: 4px 14px 14px;
+}
+.room-row { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 13px; }
+.room-row label { display: flex; align-items: center; gap: 8px; cursor: pointer; flex: 1; min-width: 0; }
+.room-row input { width: 15px; height: 15px; accent-color: var(--accent); flex-shrink: 0; }
+.room-row .r-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.room-row .r-count { color: var(--fg2); font-size: 11.5px; flex-shrink: 0; }
+.room-row .r-ics {
+  border: 1px solid var(--line); background: var(--bg); color: var(--fg2);
+  border-radius: 6px; width: 26px; height: 24px; cursor: pointer; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.room-row .r-ics:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ---------- vue semaine ---------- */
+.week-scroll { overflow-x: auto; }
+.week-head { display: flex; position: sticky; top: 0; z-index: 6; background: var(--bg); }
+.week-head .wh-gutter { width: 48px; flex-shrink: 0; }
+.week-head .wh-day {
+  flex: 1; min-width: 140px; text-align: center; padding: 8px 6px;
+  font-size: 12.5px; font-weight: 600; background: var(--bg2);
+  border-left: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.week-head .wh-day small { display: block; font-weight: 500; color: var(--fg2); font-size: 11px; }
+.week-body { display: flex; position: relative; }
+.week-gutter { width: 48px; flex-shrink: 0; position: relative; }
+.week-gutter .wg-hour {
+  position: absolute; right: 6px; font-size: 11px; color: var(--fg2);
+  transform: translateY(-7px); white-space: nowrap;
+}
+.week-col { flex: 1; min-width: 140px; position: relative; border-left: 1px solid var(--line2); }
+.wevent {
+  position: absolute; border-radius: 6px; padding: 3px 5px; color: #fff; overflow: hidden;
+  font-size: 10.5px; line-height: 1.2; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  border-left: 3px solid rgba(255,255,255,0.55);
+}
+.wevent .we-t { font-weight: 600; }
+.wevent .we-room { opacity: 0.9; font-size: 9.5px; }
+.wevent.dim { opacity: 0.16; }
+
+/* ---------- import dans le modal ---------- */
+.modal-actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 4px 0 20px; }
+.act-btn {
+  font-family: inherit; font-size: 13px; font-weight: 600; text-decoration: none;
+  border-radius: 9px; padding: 9px 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
+  border: 1px solid var(--line); background: var(--bg2); color: var(--fg);
+}
+.act-btn:hover { background: var(--bg3); }
+.act-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.act-btn.primary:hover { filter: brightness(1.08); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 720px) {
+  .top { padding: 26px 16px 14px; }
+  .controls { padding: 8px 16px 0; }
+  .stage { padding: 16px 12px 60px; }
+  h1 { font-size: 23px; }
+  .subtitle { font-size: 14px; }
+  .days { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+  .day-tab { flex-shrink: 0; }
+  .tools { gap: 8px; }
+  .view-toggle { width: 100%; }
+  .view-toggle button { flex: 1; }
+  .rooms-grid { grid-template-columns: 1fr 1fr; }
+  .modal-overlay { padding: 0; align-items: flex-end; }
+  .modal { max-width: 100%; max-height: 92vh; border-radius: 18px 18px 0 0; }
+  .week-head .wh-day, .week-col { min-width: 116px; }
+}
 @media (max-width: 560px) {
-  h1 { font-size: 24px; }
+  h1 { font-size: 21px; }
   .list-row { grid-template-columns: 1fr; gap: 4px; }
   .lr-when { display: flex; gap: 8px; align-items: center; }
+  .rooms-grid { grid-template-columns: 1fr; }
+  .badge { display: none; }
 }
 </style>
 </head>
@@ -437,7 +535,8 @@ h1 {
   </div>
   <p class="subtitle">
     Le <strong>programme officiel</strong> de la 10ᵉ édition réorganisé en un <strong>calendrier visuel clair</strong> :
-    une grille par scène pour voir toute la journée d'un coup d'œil, des filtres par thème et une recherche —
+    vues <strong>Jour</strong>, <strong>Semaine</strong> et <strong>Agenda</strong>, choix des <strong>salles</strong> à afficher,
+    filtres par thème, recherche, et <strong>import dans votre agenda</strong> (Google, Apple, Outlook) —
     plutôt qu'une <a href="https://vivatech.com/sessions" target="_blank" rel="noopener">liste paginée sur 7 pages</a>.
   </p>
   <p class="disclaimer">
@@ -459,11 +558,40 @@ h1 {
         <input id="search" type="search" placeholder="Rechercher une session, un intervenant…">
       </div>
       <div class="view-toggle" id="viewToggle">
-        <button data-view="cal" class="active">Calendrier</button>
-        <button data-view="list">Liste</button>
+        <button data-view="day" class="active">Jour</button>
+        <button data-view="week">Semaine</button>
+        <button data-view="agenda">Agenda</button>
       </div>
     </div>
-    <div class="themes" id="themes"></div>
+
+    <div class="filters">
+      <div>
+        <div class="filter-head">
+          <span class="filter-label">Thématiques</span>
+          <div class="mini-actions">
+            <button class="mini-btn" id="themesAll">Tout</button>
+            <button class="mini-btn accent" id="exportBtn" title="Télécharger la sélection au format iCalendar (.ics)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+              Importer dans mon agenda
+            </button>
+          </div>
+        </div>
+        <div class="themes" id="themes"></div>
+      </div>
+
+      <details class="rooms-box" id="roomsBox">
+        <summary>
+          <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          Salles &amp; calendriers
+          <span class="count" id="roomsCount"></span>
+        </summary>
+        <div class="mini-actions" style="padding:0 14px 8px">
+          <button class="mini-btn" id="roomsAll">Tout cocher</button>
+          <button class="mini-btn" id="roomsNone">Tout décocher</button>
+        </div>
+        <div class="rooms-grid" id="rooms"></div>
+      </details>
+    </div>
   </div>
 </div>
 
@@ -484,6 +612,16 @@ h1 {
       </button>
     </div>
     <div class="modal-body">
+      <div class="modal-actions">
+        <a class="act-btn primary" id="mGcal" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Google Agenda
+        </a>
+        <button class="act-btn" id="mIcs">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+          Télécharger .ics (Apple, Outlook…)
+        </button>
+      </div>
       <div id="mSpeakersWrap">
         <p class="modal-section-title">Intervenants</p>
         <ul class="modal-speakers" id="mSpeakers"></ul>
@@ -513,22 +651,108 @@ h1 {
   // pour ne pas ouvrir sur une grille vide (jours de side events uniquement).
   const defaultDay = (store.days.find(d => d.note !== "Side events") || store.days[0]).id;
 
+  // Regroupement « salle » utilisé par le filtre Calendriers : chaque scène/arène
+  // est un calendrier ; tous les lieux externes (side events) sont regroupés.
+  const SIDE_GROUP = "Side events (hors site)";
+  const isMobile = () => window.matchMedia("(max-width: 720px)").matches;
+
   // état
   let state = {
     day: defaultDay,
-    view: "cal",
+    view: isMobile() ? "agenda" : "day",   // mobile : agenda par défaut (plus lisible)
     query: "",
-    themesOff: new Set(),   // thèmes désactivés
+    themesOff: new Set(),   // thèmes masqués
+    roomsOff: new Set(),    // salles / calendriers masqués (noms de scènes + SIDE_GROUP)
   };
 
   // helpers temps
   const toMin = (hhmm) => { const [h, m] = hhmm.split(":").map(Number); return h * 60 + m; };
-  const fmt = (hhmm) => hhmm;
-
-  // granularité (créneaux de 5 min pour des horaires précis).
-  // Les bornes de la journée sont calculées dynamiquement selon les sessions
-  // réellement programmées (certains jours finissent tard, ex. soirées).
+  const pad = (n) => String(n).padStart(2, "0");
   const SLOT_MIN = 5;
+
+  /* ---------- filtres ---------- */
+  const isArena = (s) => store.stages.indexOf(s.stage) >= 0;
+  const roomKey = (s) => (isArena(s) ? s.stage : SIDE_GROUP);
+  const roomOn = (s) => !state.roomsOff.has(roomKey(s));
+  const themeOn = (s) => !state.themesOff.has(s.theme);
+  function matchesQuery(s) {
+    const q = state.query.trim().toLowerCase();
+    if (!q) return true;
+    return (s.title + " " + (s.speakers || []).join(" ") + " " + s.stage + " " + (s.desc || "")).toLowerCase().includes(q);
+  }
+  // « non atténué » dans les grilles (thème actif + recherche) ; les salles, elles, masquent.
+  const matches = (s) => themeOn(s) && matchesQuery(s);
+  const fullyVisible = (s) => roomOn(s) && themeOn(s) && matchesQuery(s);
+
+  function daySessions() {
+    return store.sessions.filter(s => s.day === state.day);
+  }
+
+  /* ============================================================================
+     Export calendrier : iCalendar (.ics, pour Apple/Outlook/Google) + lien
+     « Ajouter à Google Agenda ». Les horaires VivaTech sont en heure de Paris ;
+     en juin la France est en CEST (UTC+2), on convertit donc en UTC.
+     ========================================================================== */
+  function toUTC(day, hhmm) {
+    const [Y, M, D] = day.split("-").map(Number);
+    const [h, mn] = hhmm.split(":").map(Number);
+    return new Date(Date.UTC(Y, M - 1, D, h, mn) - 120 * 60000); // CEST = UTC+2
+  }
+  function stampUTC(dt) {
+    return dt.getUTCFullYear() + pad(dt.getUTCMonth() + 1) + pad(dt.getUTCDate()) +
+      "T" + pad(dt.getUTCHours()) + pad(dt.getUTCMinutes()) + "00Z";
+  }
+  function uidOf(s) {
+    const base = s.day + s.start + s.stage + s.title;
+    let h = 0; for (let i = 0; i < base.length; i++) h = (h * 31 + base.charCodeAt(i)) >>> 0;
+    return "vt2026-" + h.toString(36) + "@knoel99.github.io";
+  }
+  const icsEsc = (t) => String(t || "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+  function fold(line) { // pliage des lignes à 73 caractères (RFC 5545)
+    const out = []; let s = line;
+    while (s.length > 73) { out.push(s.slice(0, 73)); s = " " + s.slice(73); }
+    out.push(s); return out.join("\r\n");
+  }
+  function vevent(s) {
+    const det = [];
+    if (s.speakers && s.speakers.length) det.push("Intervenants : " + s.speakers.join(", "));
+    if (s.desc) det.push(s.desc);
+    det.push("Programme : https://vivatech.com/sessions?days=" + s.day);
+    const cat = (THEMES[s.theme] && THEMES[s.theme].label) || "VivaTech";
+    return [
+      "BEGIN:VEVENT", "UID:" + uidOf(s), "DTSTAMP:" + stampUTC(new Date()),
+      "DTSTART:" + stampUTC(toUTC(s.day, s.start)), "DTEND:" + stampUTC(toUTC(s.day, s.end)),
+      "SUMMARY:" + icsEsc(s.title), "LOCATION:" + icsEsc(s.venue || s.stage),
+      "DESCRIPTION:" + icsEsc(det.join("\n\n")), "CATEGORIES:" + icsEsc(cat), "END:VEVENT",
+    ].map(fold).join("\r\n");
+  }
+  function buildICS(sessions, name) {
+    return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//knoel99//VivaTech 2026//FR",
+      "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-CALNAME:" + icsEsc(name || "VivaTech 2026"),
+      "X-WR-TIMEZONE:Europe/Paris"]
+      .concat(sessions.map(vevent), ["END:VCALENDAR"]).join("\r\n");
+  }
+  function slug(t) { return (t || "vivatech").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "vivatech"; }
+  function downloadICS(sessions, name) {
+    if (!sessions.length) { alert("Aucune session à exporter avec les filtres actuels."); return; }
+    const blob = new Blob([buildICS(sessions, name)], { type: "text/calendar;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "vivatech-2026-" + slug(name) + ".ics";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+  function gcalLink(s) {
+    const det = [];
+    if (s.speakers && s.speakers.length) det.push("Intervenants : " + s.speakers.join(", "));
+    if (s.desc) det.push(s.desc);
+    const p = new URLSearchParams({
+      action: "TEMPLATE", text: s.title,
+      dates: stampUTC(toUTC(s.day, s.start)) + "/" + stampUTC(toUTC(s.day, s.end)),
+      details: det.join("\n\n"), location: s.venue || s.stage,
+    });
+    return "https://calendar.google.com/calendar/render?" + p.toString();
+  }
 
   /* ---------- rendu des contrôles ---------- */
   function renderDays() {
@@ -559,61 +783,86 @@ h1 {
     });
   }
 
-  /* ---------- filtrage ---------- */
-  function matches(s) {
-    if (state.themesOff.has(s.theme)) return false;
-    const q = state.query.trim().toLowerCase();
-    if (!q) return true;
-    const hay = (s.title + " " + (s.speakers || []).join(" ") + " " + s.stage + " " + (s.desc || "")).toLowerCase();
-    return hay.includes(q);
+  // Panneau « Salles & calendriers » : une case par scène + un groupe side events.
+  function renderRooms() {
+    const wrap = $("#rooms");
+    wrap.innerHTML = "";
+    const counts = {};
+    store.sessions.forEach(s => { const k = roomKey(s); counts[k] = (counts[k] || 0) + 1; });
+    const keys = store.stages.slice();
+    if (store.sessions.some(s => !isArena(s))) keys.push(SIDE_GROUP);
+
+    keys.forEach(k => {
+      const row = document.createElement("div");
+      row.className = "room-row";
+      const id = "room-" + slug(k);
+      const cb = document.createElement("input");
+      cb.type = "checkbox"; cb.id = id; cb.checked = !state.roomsOff.has(k);
+      cb.onchange = () => { if (cb.checked) state.roomsOff.delete(k); else state.roomsOff.add(k); render(); };
+      const label = document.createElement("label");
+      label.htmlFor = id;
+      const name = document.createElement("span");
+      name.className = "r-name"; name.textContent = k;
+      const cnt = document.createElement("span");
+      cnt.className = "r-count"; cnt.textContent = counts[k] || 0;
+      label.appendChild(cb); label.appendChild(name); label.appendChild(cnt);
+      const ics = document.createElement("button");
+      ics.className = "r-ics"; ics.title = "Importer le calendrier de « " + k + " » (.ics)";
+      ics.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>`;
+      ics.onclick = (e) => {
+        e.preventDefault();
+        const sel = store.sessions.filter(s => roomKey(s) === k).sort((a, b) => a.day.localeCompare(b.day) || toMin(a.start) - toMin(b.start));
+        downloadICS(sel, "VivaTech 2026 — " + k);
+      };
+      row.appendChild(label); row.appendChild(ics);
+      wrap.appendChild(row);
+    });
+    const shown = keys.filter(k => !state.roomsOff.has(k)).length;
+    $("#roomsCount").textContent = `(${shown}/${keys.length})`;
   }
 
-  function daySessions() {
-    return store.sessions.filter(s => s.day === state.day);
-  }
-
-  /* ---------- vue calendrier ---------- */
+  /* ---------- vue jour (scènes en colonnes) ---------- */
   function renderCalendar() {
-    // sessions du jour placées sur une scène/arène connue (colonne de la grille)
-    const onGrid = daySessions().filter(s => store.stages.indexOf(s.stage) >= 0);
+    // colonnes = scènes utilisées ce jour ET cochées dans le filtre Salles
+    const dayArena = daySessions().filter(s => isArena(s));
+    const usedToday = store.stages.filter(st => dayArena.some(s => s.stage === st));
+    const cols = usedToday.filter(st => !state.roomsOff.has(st));
+    const onGrid = dayArena.filter(s => cols.indexOf(s.stage) >= 0);
     if (!onGrid.length) {
       const note = document.createElement("div");
       note.className = "empty";
-      note.innerHTML = `Aucune session sur les scènes principales ce jour-là — ` +
-        `uniquement des <strong>side events</strong> hors site.<br>` +
-        `Basculez en <strong>vue Liste</strong> pour les consulter.`;
+      note.innerHTML = usedToday.length
+        ? `Aucune salle sélectionnée pour ce jour.<br>Cochez des scènes dans <strong>Salles &amp; calendriers</strong>, ou passez en <strong>Agenda</strong>.`
+        : `Aucune session sur les scènes principales ce jour-là — uniquement des <strong>side events</strong> hors site.<br>Basculez en <strong>Agenda</strong> pour les consulter.`;
       return note;
     }
     // bornes dynamiques (arrondies à la demi-heure). On plafonne à 20:00 pour
     // ne pas étirer la grille à cause d'une session isolée en soirée : ces
-    // sessions tardives restent visibles dans la vue Liste.
+    // sessions tardives restent visibles en vue Agenda.
     const CAP = 20 * 60;
     const placeable = onGrid.filter(s => toMin(s.start) < CAP);
     const DAY_START = Math.floor(Math.min(...placeable.map(s => toMin(s.start))) / 30) * 30;
     const DAY_END   = Math.min(Math.ceil(Math.max(...placeable.map(s => toMin(s.end))) / 30) * 30, CAP);
     const TOTAL_SLOTS = (DAY_END - DAY_START) / SLOT_MIN;
 
-    const ncols = store.stages.length;
+    const ncols = cols.length;
     const root = document.createElement("div");
     root.className = "cal-wrap";
     const cal = document.createElement("div");
     cal.className = "cal";
     cal.style.setProperty("--ncols", ncols);
 
-    // en-tête
     const header = document.createElement("div");
     header.className = "cal-header";
     header.style.setProperty("--ncols", ncols);
-    header.innerHTML = `<div class="col-h"></div>` + store.stages.map(s => `<div class="col-h">${s}</div>`).join("");
+    header.innerHTML = `<div class="col-h"></div>` + cols.map(s => `<div class="col-h">${s}</div>`).join("");
     cal.appendChild(header);
 
-    // grille
     const grid = document.createElement("div");
     grid.className = "cal-grid";
     grid.style.setProperty("--ncols", ncols);
     grid.style.gridTemplateRows = "repeat(" + TOTAL_SLOTS + ", var(--slot-h))";
 
-    // fonds de colonnes (séparateurs verticaux)
     for (let c = 0; c < ncols; c++) {
       const bg = document.createElement("div");
       bg.className = "col-bg";
@@ -622,7 +871,6 @@ h1 {
       grid.appendChild(bg);
     }
 
-    // lignes + labels (heures pleines et demi-heures)
     for (let slot = 0; slot < TOTAL_SLOTS; slot++) {
       const min = DAY_START + slot * SLOT_MIN;
       if (min % 60 === 0) {
@@ -633,7 +881,7 @@ h1 {
         const label = document.createElement("div");
         label.className = "time-label";
         label.style.gridRow = (slot + 1);
-        label.textContent = String(Math.floor(min / 60)).padStart(2, "0") + ":00";
+        label.textContent = pad(Math.floor(min / 60)) + ":00";
         grid.appendChild(label);
       } else if (min % 30 === 0) {
         const half = document.createElement("div");
@@ -643,11 +891,9 @@ h1 {
       }
     }
 
-    // événements
-    daySessions().forEach(s => {
-      const colIdx = store.stages.indexOf(s.stage);
-      if (colIdx < 0) return;
-      if (toMin(s.start) >= DAY_END) return;          // session tardive → vue Liste
+    onGrid.forEach(s => {
+      const colIdx = cols.indexOf(s.stage);
+      if (toMin(s.start) >= DAY_END) return;          // session tardive → vue Agenda
       const startSlot = Math.round((toMin(s.start) - DAY_START) / SLOT_MIN);
       const endSlot = Math.min(Math.round((toMin(s.end) - DAY_START) / SLOT_MIN), TOTAL_SLOTS);
       const span = Math.max(2, endSlot - startSlot);
@@ -655,8 +901,7 @@ h1 {
       ev.className = "event" + (matches(s) ? "" : " dim");
       ev.style.gridColumn = (colIdx + 2);
       ev.style.gridRow = (startSlot + 1) + " / span " + span;
-      const color = THEMES[s.theme]?.color || "#666";
-      ev.style.background = color;
+      ev.style.background = THEMES[s.theme]?.color || "#666";
       ev.style.borderLeftColor = "rgba(255,255,255,0.55)";
       ev.title = `${s.start}–${s.end} · ${s.title}\n${s.stage}\n${(s.speakers||[]).join(", ")}`;
       ev.innerHTML =
@@ -674,10 +919,98 @@ h1 {
     return root;
   }
 
-  /* ---------- vue liste ---------- */
+  /* ---------- vue semaine (jours en colonnes, axe horaire partagé) ---------- */
+  function renderWeek() {
+    const PXMIN = 0.95, CAP = 20 * 60;
+    const days = store.days.filter(d => store.sessions.some(s => s.day === d.id && roomOn(s) && toMin(s.start) < CAP));
+    const vis = store.sessions.filter(s => roomOn(s) && toMin(s.start) < CAP && days.some(d => d.id === s.day));
+    if (!vis.length) {
+      const note = document.createElement("div");
+      note.className = "empty";
+      note.innerHTML = `Aucune session à afficher.<br>Vérifiez les filtres <strong>Salles</strong> et <strong>Thématiques</strong>.`;
+      return note;
+    }
+    const START = Math.floor(Math.min(...vis.map(s => toMin(s.start))) / 30) * 30;
+    const END = Math.min(Math.ceil(Math.max(...vis.map(s => toMin(s.end))) / 30) * 30, CAP);
+    const H = (END - START) * PXMIN;
+    const hourPx = 60 * PXMIN;
+
+    const scroll = document.createElement("div");
+    scroll.className = "week-scroll";
+
+    // en-tête (jours)
+    const head = document.createElement("div");
+    head.className = "week-head";
+    head.innerHTML = `<div class="wh-gutter"></div>` +
+      days.map(d => `<div class="wh-day">${d.label}<small>${d.note === "Side events" ? "side events" : (d.id === defaultDay ? "ouverture" : "")}</small></div>`).join("");
+    scroll.appendChild(head);
+
+    // corps
+    const body = document.createElement("div");
+    body.className = "week-body"; body.style.height = H + "px";
+    const gutter = document.createElement("div");
+    gutter.className = "week-gutter"; gutter.style.height = H + "px";
+    for (let m = START; m <= END; m += 60) {
+      const lab = document.createElement("div");
+      lab.className = "wg-hour"; lab.style.top = ((m - START) * PXMIN) + "px";
+      lab.textContent = pad(m / 60 | 0) + ":00";
+      gutter.appendChild(lab);
+    }
+    body.appendChild(gutter);
+
+    const gridBg = `repeating-linear-gradient(to bottom, var(--line2) 0, var(--line2) 1px, transparent 1px, transparent ${hourPx}px)`;
+    days.forEach(d => {
+      const col = document.createElement("div");
+      col.className = "week-col"; col.style.background = gridBg;
+      const evs = vis.filter(s => s.day === d.id);
+      layoutLanes(evs);
+      evs.forEach(s => {
+        const top = (toMin(s.start) - START) * PXMIN;
+        const h = Math.max(14, (Math.min(toMin(s.end), END) - toMin(s.start)) * PXMIN - 1);
+        const w = 100 / s._ncol;
+        const ev = document.createElement("div");
+        ev.className = "wevent" + (matches(s) ? "" : " dim");
+        ev.style.top = top + "px"; ev.style.height = h + "px";
+        ev.style.left = (s._col * w) + "%"; ev.style.width = "calc(" + w + "% - 2px)";
+        ev.style.background = THEMES[s.theme]?.color || "#666";
+        ev.innerHTML = `<div class="we-t"></div><div class="we-room"></div>`;
+        ev.querySelector(".we-t").textContent = s.start + " " + s.title;
+        ev.querySelector(".we-room").textContent = s.stage;
+        ev.title = `${s.start}–${s.end} · ${s.title}\n${s.stage}`;
+        ev.addEventListener("click", () => openModal(s));
+        col.appendChild(ev);
+      });
+      body.appendChild(col);
+    });
+    scroll.appendChild(body);
+    return scroll;
+  }
+
+  // Répartit les événements qui se chevauchent en colonnes (lanes) par grappe.
+  function layoutLanes(evs) {
+    evs.sort((a, b) => toMin(a.start) - toMin(b.start) || toMin(a.end) - toMin(b.end));
+    let cluster = [], colsEnd = [], clusterEnd = -1;
+    const flush = () => {
+      const ncol = Math.max(...cluster.map(e => e._col)) + 1;
+      cluster.forEach(e => { e._ncol = ncol; });
+      cluster = []; colsEnd = []; clusterEnd = -1;
+    };
+    evs.forEach(e => {
+      if (cluster.length && toMin(e.start) >= clusterEnd) flush();
+      let placed = false;
+      for (let i = 0; i < colsEnd.length; i++) {
+        if (toMin(e.start) >= colsEnd[i]) { e._col = i; colsEnd[i] = toMin(e.end); placed = true; break; }
+      }
+      if (!placed) { e._col = colsEnd.length; colsEnd.push(toMin(e.end)); }
+      cluster.push(e); clusterEnd = Math.max(clusterEnd, toMin(e.end));
+    });
+    if (cluster.length) flush();
+  }
+
+  /* ---------- vue agenda (liste chronologique) ---------- */
   function renderList() {
     const sessions = daySessions().slice().sort((a, b) => toMin(a.start) - toMin(b.start) || a.stage.localeCompare(b.stage));
-    const visible = sessions.filter(matches);
+    const visible = sessions.filter(fullyVisible);
     const wrap = document.createElement("div");
     wrap.className = "list";
 
@@ -761,6 +1094,10 @@ h1 {
     if (s.desc && s.desc.trim()) { desc.textContent = s.desc; desc.classList.remove("empty"); }
     else { desc.textContent = "Aucune description fournie par VivaTech pour cette session."; desc.classList.add("empty"); }
 
+    // boutons d'import calendrier
+    $("#mGcal").href = gcalLink(s);
+    $("#mIcs").onclick = () => downloadICS([s], s.title);
+
     $("#modalOverlay").classList.add("open");
     document.body.style.overflow = "hidden";
   }
@@ -772,24 +1109,50 @@ h1 {
     return String(str).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
+  // Sessions actuellement « visibles » (pour l'export .ics de la sélection).
+  function selectionForExport() {
+    if (state.view === "week") {
+      return store.sessions.filter(fullyVisible)
+        .sort((a, b) => a.day.localeCompare(b.day) || toMin(a.start) - toMin(b.start));
+    }
+    return daySessions().filter(fullyVisible).sort((a, b) => toMin(a.start) - toMin(b.start));
+  }
+
   /* ---------- rendu global ---------- */
   function render() {
     renderDays();
     renderThemes();
-
-    const day = store.days.find(d => d.id === state.day);
-    const count = daySessions().filter(matches).length;
-    $("#dayHead").innerHTML = `<strong>${day.full}</strong> · ${day.hours} · ${count} session${count > 1 ? "s" : ""} affichée${count > 1 ? "s" : ""}`;
+    renderRooms();
+    $("#viewToggle").querySelectorAll("button").forEach(b => b.classList.toggle("active", b.dataset.view === state.view));
+    // les onglets de jour ne servent qu'en vues Jour / Agenda
+    $("#days").style.display = state.view === "week" ? "none" : "";
 
     const view = $("#view");
     view.innerHTML = "";
+
+    if (state.view === "week") {
+      const total = store.sessions.filter(fullyVisible).length;
+      $("#dayHead").innerHTML = `<strong>Semaine du 14 au 20 juin</strong> · ${total} session${total > 1 ? "s" : ""} affichée${total > 1 ? "s" : ""}`;
+      view.appendChild(renderWeek());
+      return;
+    }
+
+    const day = store.days.find(d => d.id === state.day) || store.days[0];
+    state.day = day.id;
+    // en vue Jour, on ne compte que les sessions réellement placées sur la grille
+    // (scènes cochées, hors soirées tardives) ; en Agenda, toutes les visibles.
+    const count = state.view === "day"
+      ? daySessions().filter(s => fullyVisible(s) && isArena(s) && toMin(s.start) < 20 * 60).length
+      : daySessions().filter(fullyVisible).length;
+    $("#dayHead").innerHTML = `<strong>${day.full}</strong> · ${day.hours} · ${count} session${count > 1 ? "s" : ""} affichée${count > 1 ? "s" : ""}`;
+
     if (daySessions().length === 0) {
       view.innerHTML = `<div class="empty">Le programme du ${day.full} n'est pas encore publié.<br>` +
         `Consultez-le sur <a href="https://vivatech.com/sessions?days=${day.id}" target="_blank" rel="noopener" style="color:var(--accent)">vivatech.com/sessions</a> ` +
         `— il sera ajouté ici dès sa parution.</div>`;
       return;
     }
-    view.appendChild(state.view === "cal" ? renderCalendar() : renderList());
+    view.appendChild(state.view === "day" ? renderCalendar() : renderList());
   }
 
   /* ---------- événements UI ---------- */
@@ -798,8 +1161,25 @@ h1 {
     const btn = e.target.closest("button");
     if (!btn) return;
     state.view = btn.dataset.view;
-    $("#viewToggle").querySelectorAll("button").forEach(b => b.classList.toggle("active", b === btn));
     render();
+  });
+
+  // filtres : tout afficher (thèmes) / cocher / décocher (salles)
+  $("#themesAll").addEventListener("click", () => { state.themesOff.clear(); render(); });
+  $("#roomsAll").addEventListener("click", () => { state.roomsOff.clear(); render(); });
+  $("#roomsNone").addEventListener("click", () => {
+    state.roomsOff.clear();
+    store.stages.forEach(st => state.roomsOff.add(st));
+    if (store.sessions.some(s => !isArena(s))) state.roomsOff.add(SIDE_GROUP);
+    render();
+  });
+
+  // export .ics de la sélection courante
+  $("#exportBtn").addEventListener("click", () => {
+    const sel = selectionForExport();
+    const name = state.view === "week" ? "VivaTech 2026 — sélection"
+      : "VivaTech 2026 — " + (store.days.find(d => d.id === state.day) || {}).full;
+    downloadICS(sel, name);
   });
 
   // fermeture du modal
