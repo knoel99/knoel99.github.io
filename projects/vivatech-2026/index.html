@@ -19,7 +19,7 @@
   --accent: #0066cc;
   --radius: 12px;
   --gutter: 60px;
-  --slot-h: 30px;        /* hauteur d'un créneau de 30 min */
+  --slot-h: 6px;         /* hauteur d'un créneau de 5 min */
 }
 
 body {
@@ -244,10 +244,25 @@ h1 {
 .cal-grid {
   display: grid;
   grid-template-columns: var(--gutter) repeat(var(--ncols), minmax(0, 1fr));
-  grid-auto-rows: var(--slot-h);
   position: relative;
 }
-/* lignes horaires (gutter) */
+/* fond de colonne (séparateurs verticaux) */
+.col-bg {
+  border-left: 1px solid var(--line2);
+  z-index: 0;
+}
+/* ligne horaire pleine largeur */
+.hour-line {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--line);
+  z-index: 0;
+}
+.half-line {
+  grid-column: 2 / -1;
+  border-top: 1px dashed var(--line2);
+  z-index: 0;
+}
+/* labels horaires (gutter) */
 .time-label {
   grid-column: 1;
   font-size: 11px;
@@ -256,14 +271,8 @@ h1 {
   padding-right: 8px;
   transform: translateY(-7px);
   white-space: nowrap;
+  z-index: 1;
 }
-/* cellules de fond pour les lignes de la grille */
-.bg-cell {
-  border-top: 1px solid var(--line2);
-  border-left: 1px solid var(--line2);
-}
-.bg-cell.hour { border-top-color: var(--line); }
-.bg-cell.col1 { border-left: 0; }
 
 .event {
   position: relative;
@@ -339,6 +348,75 @@ h1 {
   text-align: center;
 }
 
+/* événements cliquables */
+.event { cursor: pointer; }
+.list-row { cursor: pointer; }
+.lr-kind, .e-kind {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 5px;
+  padding: 1px 5px;
+  vertical-align: middle;
+}
+.lr-kind { background: #ede9fe; color: #6d28d9; margin-left: 6px; }
+
+/* ---------- Modal détail session ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+  backdrop-filter: blur(2px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--bg);
+  border-radius: 16px;
+  max-width: 620px;
+  width: 100%;
+  max-height: 86vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  animation: modalin 0.16s ease;
+}
+@keyframes modalin { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+.modal-head {
+  position: relative;
+  padding: 22px 52px 18px 22px;
+  border-bottom: 1px solid var(--line);
+}
+.modal-bar { height: 4px; border-radius: 4px; width: 46px; margin-bottom: 12px; }
+.modal-meta { font-size: 12.5px; color: var(--fg2); display: flex; flex-wrap: wrap; gap: 6px 14px; margin-bottom: 8px; }
+.modal-meta .mm { display: inline-flex; align-items: center; gap: 5px; }
+.modal h2 { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; }
+.modal-theme {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11.5px; font-weight: 600; margin-top: 10px;
+}
+.modal-theme .dot { width: 9px; height: 9px; border-radius: 50%; }
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 30px; height: 30px; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--bg2);
+  cursor: pointer; color: var(--fg2);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-close:hover { background: var(--bg3); color: var(--fg); }
+.modal-body { padding: 18px 22px 24px; }
+.modal-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--fg2); margin: 0 0 8px; }
+.modal-speakers { list-style: none; margin: 0 0 20px; display: flex; flex-direction: column; gap: 6px; }
+.modal-speakers li { font-size: 13.5px; }
+.modal-speakers .sp-co { color: var(--fg2); }
+.modal-desc { font-size: 14px; line-height: 1.6; color: var(--fg); white-space: pre-wrap; }
+.modal-desc.empty { color: var(--fg2); font-style: italic; }
+
 @media (max-width: 560px) {
   h1 { font-size: 24px; }
   .list-row { grid-template-columns: 1fr; gap: 4px; }
@@ -358,15 +436,17 @@ h1 {
     <span class="badge">17 – 20 juin · Paris</span>
   </div>
   <p class="subtitle">
-    Le programme de la 10ᵉ édition réorganisé en un <strong>calendrier visuel clair</strong> :
+    Le <strong>programme officiel</strong> de la 10ᵉ édition réorganisé en un <strong>calendrier visuel clair</strong> :
     une grille par scène pour voir toute la journée d'un coup d'œil, des filtres par thème et une recherche —
-    plutôt qu'une <a href="https://vivatech.com/sessions" target="_blank" rel="noopener">liste paginée</a> où il faut tourner les pages.
+    plutôt qu'une <a href="https://vivatech.com/sessions" target="_blank" rel="noopener">liste paginée sur 7 pages</a>.
   </p>
   <p class="disclaimer">
-    ⚠️ <strong>Programme illustratif.</strong> Les dates (17–20 juin), les scènes, les thèmes et les
-    intervenants annoncés sont réels ; les horaires précis de chaque session reconstituent le format de
-    l'événement et sont à confirmer sur
-    <a href="https://vivatech.com/sessions" target="_blank" rel="noopener" style="color:var(--accent)">vivatech.com/sessions</a>.
+    ✅ <strong>Données officielles.</strong> <strong>413 sessions</strong> extraites du programme officiel VivaTech
+    (programme principal, partenaires et side events). <strong>Cliquez sur une session</strong> pour lire son
+    descriptif complet, ses intervenants et son lieu. Les side events ont lieu hors site et apparaissent en
+    <strong>vue Liste</strong>. La page tente une <strong>synchronisation en direct</strong> avec
+    <a href="https://vivatech.com/sessions" target="_blank" rel="noopener" style="color:var(--accent)">vivatech.com/sessions</a>
+    au chargement (indicateur en haut à droite) ; à défaut, l'instantané embarqué est affiché.
   </p>
 </header>
 
@@ -392,6 +472,28 @@ h1 {
   <div id="view"></div>
 </main>
 
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
+  <div class="modal" id="modal">
+    <div class="modal-head">
+      <div class="modal-bar" id="mBar"></div>
+      <div class="modal-meta" id="mMeta"></div>
+      <h2 id="mTitle"></h2>
+      <span class="modal-theme" id="mTheme"></span>
+      <button class="modal-close" id="mClose" aria-label="Fermer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="mSpeakersWrap">
+        <p class="modal-section-title">Intervenants</p>
+        <ul class="modal-speakers" id="mSpeakers"></ul>
+      </div>
+      <p class="modal-section-title">Description</p>
+      <div class="modal-desc" id="mDesc"></div>
+    </div>
+  </div>
+</div>
+
 <footer class="footer">
   Réorganisation visuelle du programme public · <a href="https://knoel99.github.io" style="color:var(--accent);text-decoration:none">knoel99.github.io</a>
 </footer>
@@ -403,9 +505,17 @@ h1 {
 
   const $ = (s, el = document) => el.querySelector(s);
 
+  // Store de données mutable : initialisé avec l'instantané embarqué (sessions.js),
+  // puis remplacé si une mise à jour en direct depuis VivaTech réussit (voir liveRefresh).
+  const store = { days: DAYS.slice(), stages: STAGES.slice(), sessions: SESSIONS.slice() };
+
+  // jour par défaut : premier jour du programme principal (note ≠ side events),
+  // pour ne pas ouvrir sur une grille vide (jours de side events uniquement).
+  const defaultDay = (store.days.find(d => d.note !== "Side events") || store.days[0]).id;
+
   // état
   let state = {
-    day: DAYS[0].id,
+    day: defaultDay,
     view: "cal",
     query: "",
     themesOff: new Set(),   // thèmes désactivés
@@ -415,16 +525,16 @@ h1 {
   const toMin = (hhmm) => { const [h, m] = hhmm.split(":").map(Number); return h * 60 + m; };
   const fmt = (hhmm) => hhmm;
 
-  // bornes journée (08:30 → 19:30 pour de la marge)
-  const DAY_START = toMin("08:30");
-  const DAY_END   = toMin("19:30");
-  const TOTAL_SLOTS = (DAY_END - DAY_START) / 30;
+  // granularité (créneaux de 5 min pour des horaires précis).
+  // Les bornes de la journée sont calculées dynamiquement selon les sessions
+  // réellement programmées (certains jours finissent tard, ex. soirées).
+  const SLOT_MIN = 5;
 
   /* ---------- rendu des contrôles ---------- */
   function renderDays() {
     const wrap = $("#days");
     wrap.innerHTML = "";
-    DAYS.forEach(d => {
+    store.days.forEach(d => {
       const b = document.createElement("button");
       b.className = "day-tab" + (d.id === state.day ? " active" : "");
       b.innerHTML = `<span class="d-label">${d.label}</span><span class="d-note">${d.note}</span>`;
@@ -454,17 +564,36 @@ h1 {
     if (state.themesOff.has(s.theme)) return false;
     const q = state.query.trim().toLowerCase();
     if (!q) return true;
-    const hay = (s.title + " " + (s.speakers || []).join(" ") + " " + s.stage).toLowerCase();
+    const hay = (s.title + " " + (s.speakers || []).join(" ") + " " + s.stage + " " + (s.desc || "")).toLowerCase();
     return hay.includes(q);
   }
 
   function daySessions() {
-    return SESSIONS.filter(s => s.day === state.day);
+    return store.sessions.filter(s => s.day === state.day);
   }
 
   /* ---------- vue calendrier ---------- */
   function renderCalendar() {
-    const ncols = STAGES.length;
+    // sessions du jour placées sur une scène/arène connue (colonne de la grille)
+    const onGrid = daySessions().filter(s => store.stages.indexOf(s.stage) >= 0);
+    if (!onGrid.length) {
+      const note = document.createElement("div");
+      note.className = "empty";
+      note.innerHTML = `Aucune session sur les scènes principales ce jour-là — ` +
+        `uniquement des <strong>side events</strong> hors site.<br>` +
+        `Basculez en <strong>vue Liste</strong> pour les consulter.`;
+      return note;
+    }
+    // bornes dynamiques (arrondies à la demi-heure). On plafonne à 20:00 pour
+    // ne pas étirer la grille à cause d'une session isolée en soirée : ces
+    // sessions tardives restent visibles dans la vue Liste.
+    const CAP = 20 * 60;
+    const placeable = onGrid.filter(s => toMin(s.start) < CAP);
+    const DAY_START = Math.floor(Math.min(...placeable.map(s => toMin(s.start))) / 30) * 30;
+    const DAY_END   = Math.min(Math.ceil(Math.max(...placeable.map(s => toMin(s.end))) / 30) * 30, CAP);
+    const TOTAL_SLOTS = (DAY_END - DAY_START) / SLOT_MIN;
+
+    const ncols = store.stages.length;
     const root = document.createElement("div");
     root.className = "cal-wrap";
     const cal = document.createElement("div");
@@ -475,41 +604,53 @@ h1 {
     const header = document.createElement("div");
     header.className = "cal-header";
     header.style.setProperty("--ncols", ncols);
-    header.innerHTML = `<div class="col-h"></div>` + STAGES.map(s => `<div class="col-h">${s}</div>`).join("");
+    header.innerHTML = `<div class="col-h"></div>` + store.stages.map(s => `<div class="col-h">${s}</div>`).join("");
     cal.appendChild(header);
 
     // grille
     const grid = document.createElement("div");
     grid.className = "cal-grid";
     grid.style.setProperty("--ncols", ncols);
+    grid.style.gridTemplateRows = "repeat(" + TOTAL_SLOTS + ", var(--slot-h))";
 
-    // cellules de fond + labels horaires
+    // fonds de colonnes (séparateurs verticaux)
+    for (let c = 0; c < ncols; c++) {
+      const bg = document.createElement("div");
+      bg.className = "col-bg";
+      bg.style.gridColumn = (c + 2);
+      bg.style.gridRow = "1 / -1";
+      grid.appendChild(bg);
+    }
+
+    // lignes + labels (heures pleines et demi-heures)
     for (let slot = 0; slot < TOTAL_SLOTS; slot++) {
-      const isHour = (DAY_START + slot * 30) % 60 === 0;
-      if (isHour) {
-        const min = DAY_START + slot * 30;
+      const min = DAY_START + slot * SLOT_MIN;
+      if (min % 60 === 0) {
+        const line = document.createElement("div");
+        line.className = "hour-line";
+        line.style.gridRow = (slot + 1);
+        grid.appendChild(line);
         const label = document.createElement("div");
         label.className = "time-label";
-        label.style.gridRow = (slot + 1) + " / span 2";
-        label.style.gridColumn = "1";
+        label.style.gridRow = (slot + 1);
         label.textContent = String(Math.floor(min / 60)).padStart(2, "0") + ":00";
         grid.appendChild(label);
-      }
-      for (let c = 0; c < ncols + 1; c++) {
-        const cell = document.createElement("div");
-        cell.className = "bg-cell" + (isHour ? " hour" : "") + (c === 0 ? " col1" : "");
-        cell.style.gridRow = (slot + 1);
-        cell.style.gridColumn = (c + 1);
-        grid.appendChild(cell);
+      } else if (min % 30 === 0) {
+        const half = document.createElement("div");
+        half.className = "half-line";
+        half.style.gridRow = (slot + 1);
+        grid.appendChild(half);
       }
     }
 
     // événements
     daySessions().forEach(s => {
-      const colIdx = STAGES.indexOf(s.stage);
+      const colIdx = store.stages.indexOf(s.stage);
       if (colIdx < 0) return;
-      const startSlot = Math.round((toMin(s.start) - DAY_START) / 30);
-      const span = Math.max(1, Math.round((toMin(s.end) - toMin(s.start)) / 30));
+      if (toMin(s.start) >= DAY_END) return;          // session tardive → vue Liste
+      const startSlot = Math.round((toMin(s.start) - DAY_START) / SLOT_MIN);
+      const endSlot = Math.min(Math.round((toMin(s.end) - DAY_START) / SLOT_MIN), TOTAL_SLOTS);
+      const span = Math.max(2, endSlot - startSlot);
       const ev = document.createElement("div");
       ev.className = "event" + (matches(s) ? "" : " dim");
       ev.style.gridColumn = (colIdx + 2);
@@ -520,8 +661,11 @@ h1 {
       ev.title = `${s.start}–${s.end} · ${s.title}\n${s.stage}\n${(s.speakers||[]).join(", ")}`;
       ev.innerHTML =
         `<span class="e-time">${s.start}–${s.end}</span>` +
-        `<span class="e-title">${s.title}</span>` +
-        (s.speakers && s.speakers.length ? `<span class="e-people">${s.speakers.join(", ")}</span>` : "");
+        `<span class="e-title"></span>` +
+        (s.speakers && s.speakers.length ? `<span class="e-people"></span>` : "");
+      ev.querySelector(".e-title").textContent = s.title;
+      if (s.speakers && s.speakers.length) ev.querySelector(".e-people").textContent = s.speakers.join(", ");
+      ev.addEventListener("click", () => openModal(s));
       grid.appendChild(ev);
     });
 
@@ -554,12 +698,17 @@ h1 {
         const color = THEMES[s.theme]?.color || "#666";
         const row = document.createElement("div");
         row.className = "list-row";
+        const kindBadge = s.kind === "side" ? `<span class="lr-kind">Side event</span>` : "";
         row.innerHTML =
-          `<div class="lr-when">${s.start}–${s.end}<span class="stage-pill">${s.stage}</span></div>` +
+          `<div class="lr-when">${s.start}–${s.end}<span class="stage-pill"></span></div>` +
           `<div>` +
-            `<div class="lr-title"><span class="tdot" style="background:${color}"></span><span>${s.title}</span></div>` +
-            (s.speakers && s.speakers.length ? `<div class="lr-people">${s.speakers.join(", ")}</div>` : "") +
+            `<div class="lr-title"><span class="tdot" style="background:${color}"></span><span class="lr-t"></span>${kindBadge}</div>` +
+            (s.speakers && s.speakers.length ? `<div class="lr-people"></div>` : "") +
           `</div>`;
+        row.querySelector(".stage-pill").textContent = s.stage;
+        row.querySelector(".lr-t").textContent = s.title;
+        if (s.speakers && s.speakers.length) row.querySelector(".lr-people").textContent = s.speakers.join(", ");
+        row.addEventListener("click", () => openModal(s));
         block.appendChild(row);
       });
       wrap.appendChild(block);
@@ -567,17 +716,79 @@ h1 {
     return wrap;
   }
 
+  /* ---------- modal détail ---------- */
+  const KIND_LABEL = { official: "Programme officiel", partner: "Session partenaire", side: "Side event" };
+  function openModal(s) {
+    const color = THEMES[s.theme]?.color || "#666";
+    $("#mBar").style.background = color;
+    const meta = [];
+    const day = store.days.find(d => d.id === s.day);
+    meta.push(`<span class="mm">📅 ${day ? day.full : s.day}</span>`);
+    meta.push(`<span class="mm">🕒 ${s.start} – ${s.end}</span>`);
+    meta.push(`<span class="mm">📍 ${escapeHtml(s.venue || s.stage)}</span>`);
+    if (s.kind && KIND_LABEL[s.kind]) meta.push(`<span class="mm">🏷️ ${KIND_LABEL[s.kind]}</span>`);
+    $("#mMeta").innerHTML = meta.join("");
+    $("#mTitle").textContent = s.title;
+    const t = THEMES[s.theme];
+    $("#mTheme").innerHTML = t ? `<span class="dot" style="background:${t.color}"></span>${t.label}` : "";
+
+    const spWrap = $("#mSpeakersWrap");
+    const sp = $("#mSpeakers");
+    sp.innerHTML = "";
+    if (s.speakers && s.speakers.length) {
+      spWrap.style.display = "";
+      s.speakers.forEach(name => {
+        const li = document.createElement("li");
+        const m = name.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+        if (m) {
+          const strong = document.createElement("strong");
+          strong.textContent = m[1];
+          const co = document.createElement("span");
+          co.className = "sp-co";
+          co.textContent = " · " + m[2];
+          li.appendChild(strong);
+          li.appendChild(co);
+        } else {
+          li.textContent = name;
+        }
+        sp.appendChild(li);
+      });
+    } else {
+      spWrap.style.display = "none";
+    }
+
+    const desc = $("#mDesc");
+    if (s.desc && s.desc.trim()) { desc.textContent = s.desc; desc.classList.remove("empty"); }
+    else { desc.textContent = "Aucune description fournie par VivaTech pour cette session."; desc.classList.add("empty"); }
+
+    $("#modalOverlay").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal() {
+    $("#modalOverlay").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
   /* ---------- rendu global ---------- */
   function render() {
     renderDays();
     renderThemes();
 
-    const day = DAYS.find(d => d.id === state.day);
+    const day = store.days.find(d => d.id === state.day);
     const count = daySessions().filter(matches).length;
     $("#dayHead").innerHTML = `<strong>${day.full}</strong> · ${day.hours} · ${count} session${count > 1 ? "s" : ""} affichée${count > 1 ? "s" : ""}`;
 
     const view = $("#view");
     view.innerHTML = "";
+    if (daySessions().length === 0) {
+      view.innerHTML = `<div class="empty">Le programme du ${day.full} n'est pas encore publié.<br>` +
+        `Consultez-le sur <a href="https://vivatech.com/sessions?days=${day.id}" target="_blank" rel="noopener" style="color:var(--accent)">vivatech.com/sessions</a> ` +
+        `— il sera ajouté ici dès sa parution.</div>`;
+      return;
+    }
     view.appendChild(state.view === "cal" ? renderCalendar() : renderList());
   }
 
@@ -591,7 +802,218 @@ h1 {
     render();
   });
 
+  // fermeture du modal
+  $("#mClose").addEventListener("click", closeModal);
+  $("#modalOverlay").addEventListener("click", e => { if (e.target === $("#modalOverlay")) closeModal(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+  /* ============================================================================
+     Mise à jour en direct depuis VivaTech (best-effort)
+     ----------------------------------------------------------------------------
+     On tente de récupérer le programme directement sur vivatech.com et de le
+     parser dans le navigateur. VivaTech ne propose pas d'API publique CORS et
+     protège ses pages (Cloudflare) : l'accès direct échoue le plus souvent. On
+     essaie donc, dans l'ordre : fetch direct, puis des proxys CORS publics. En
+     cas d'échec (CORS, 403, hors-ligne), on conserve l'instantané embarqué.
+     Les pages VivaTech streament leur JSON dans des blocs self.__next_f.push.
+     ========================================================================== */
+  const ARENA = [
+    "Stage One", "VivaTech Theater", "Black Stage", "Purple Stage", "Red Stage",
+    "Founders Arena", "Business Redefined Arena", "Future of Industries Arena",
+    "Sovereignty Arena", "Executive Arena", "Investor Lounge", "Pitch Studio",
+    "Workshop A", "Workshop B", "Discovery Stage", "VivaLounge", "Business Plaza",
+  ];
+  const TRACK_THEME = {
+    "Artificial Intelligence": "ai", "Risk, Build, Scale": "scale",
+    "Energy, Greentech & Mobility": "energy", "Health & Longevity": "health",
+    "Productivity Reimagined": "productivity", "Tech Beyond the Obvious": "deeptech",
+    "Sovereignty & Ethics": "sovereignty", "Cybersecurity & Defense": "cyber",
+    "Creative Industries": "creative", "Tech Leaders Summit": "scale", "CMO Summit": "creative",
+  };
+  const TAG_THEME = {
+    "Artificial Intelligence & Robotics": "ai", "DeepTech": "deeptech",
+    "Sovereignty & GovTech": "sovereignty", "Growth & Startup & Investment": "scale",
+    "Fintech & Banking & Compliance": "scale", "Media & Entertainment & Creators Economy": "creative",
+    "Marketing & Advertising": "creative", "Luxury & Fashion & Cosmetics": "creative",
+    "Gaming & Sports & Esports": "creative", "HR & EdTech & Future of Work": "productivity",
+    "Healthcare & Wellness": "health", "Energy & Greentech": "energy",
+    "Mobility & Smart Cities": "energy", "Food & Agriculture": "energy",
+    "Cybersecurity & Defense": "cyber",
+  };
+  const WD_SHORT = ["Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam.", "Dim."];
+  const WD_FULL = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+  const MONTHS = { 6: "juin", 5: "mai", 7: "juillet" };
+
+  // Décode et concatène les chaînes JSON des blocs self.__next_f.push([1,"…"]).
+  function decodeNext(html) {
+    const out = [];
+    const marker = 'self.__next_f.push([1,';
+    let i = 0;
+    while (true) {
+      const j = html.indexOf(marker, i);
+      if (j < 0) break;
+      let k = j + marker.length;
+      while (k < html.length && html[k] !== '"') k++;
+      let m = k + 1, buf = "";
+      while (m < html.length) {
+        const c = html[m];
+        if (c === "\\") { buf += html[m] + html[m + 1]; m += 2; continue; }
+        if (c === '"') break;
+        buf += c; m++;
+      }
+      try { out.push(JSON.parse('"' + buf + '"')); } catch (e) { /* ignore */ }
+      i = m + 1;
+    }
+    return out.join("");
+  }
+
+  // Lit l'objet JSON équilibré (accolades, en respectant les chaînes) à partir de start.
+  function readObject(s, start) {
+    let depth = 0, inStr = false;
+    for (let i = start; i < s.length; i++) {
+      const c = s[i];
+      if (inStr) { if (c === "\\") { i++; continue; } if (c === '"') inStr = false; continue; }
+      if (c === '"') { inStr = true; continue; }
+      if (c === "{") depth++;
+      else if (c === "}") { depth--; if (depth === 0) { try { return JSON.parse(s.slice(start, i + 1)); } catch (e) { return null; } } }
+    }
+    return null;
+  }
+
+  function themeOf(o) {
+    if (o.tracks && o.tracks.length) return TRACK_THEME[o.tracks[0]] || "other";
+    for (const tg of (o.tags || [])) if (TAG_THEME[tg]) return TAG_THEME[tg];
+    return "other";
+  }
+  function kindOf(o) {
+    if (o.partner_session && !o.official_session) return "partner";
+    if (o.official_session) return "official";
+    return "side";
+  }
+
+  // Parse une page VivaTech -> tableau de sessions au format du store.
+  function parseRows(html) {
+    const full = decodeNext(html);
+    const re = /\{"id":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}","uid":"/g;
+    const seen = new Set(), rows = [];
+    let m;
+    while ((m = re.exec(full))) {
+      const o = readObject(full, m.index);
+      if (!o || !o.time || !o.time.startDate || seen.has(o.id)) continue;
+      seen.add(o.id);
+      const room = (o.time.room && o.time.room.name) || "—";
+      const sp = (o.speakers || []).slice(0, 6).filter(p => p && typeof p === "object").map(p => {
+        const nm = [(p.firstname || "").trim(), (p.lastname || "").trim()].filter(Boolean).join(" ");
+        const co = (p.company || "").trim();
+        return co ? `${nm} (${co})` : nm;
+      });
+      rows.push({
+        day: o.time.startDate.slice(0, 10), start: o.time.startDate.slice(11, 16),
+        end: o.time.endDate.slice(11, 16), stage: room, venue: room,
+        theme: themeOf(o), kind: kindOf(o), title: (o.title || "").trim(),
+        speakers: sp, desc: (o.description || "").replace(/\s+/g, " ").trim(),
+      });
+    }
+    return rows;
+  }
+
+  // Reconstruit store.days / store.stages / store.sessions à partir de lignes brutes.
+  function rebuildFromRows(rows) {
+    rows.sort((a, b) => a.day.localeCompare(b.day) || toMin(a.start) - toMin(b.start) || a.stage.localeCompare(b.stage));
+    const usedArena = new Set(rows.filter(r => ARENA.indexOf(r.stage) >= 0).map(r => r.stage));
+    const stages = ARENA.filter(s => usedArena.has(s));
+    const days = [];
+    [...new Set(rows.map(r => r.day))].sort().forEach(d => {
+      const dr = rows.filter(r => r.day === d);
+      const hasArena = dr.some(r => stages.indexOf(r.stage) >= 0);
+      const [y, mo, dd] = d.split("-").map(Number);
+      const wd = (new Date(Date.UTC(y, mo - 1, dd)).getUTCDay() + 6) % 7; // 0 = lundi
+      const mn = Math.min(...dr.map(r => toMin(r.start)));
+      const mx = Math.max(...dr.map(r => toMin(r.end)));
+      const pad = n => String(n).padStart(2, "0");
+      days.push({
+        id: d, label: `${WD_SHORT[wd]} ${dd}`, full: `${WD_FULL[wd]} ${dd} ${MONTHS[mo] || ""}`.trim(),
+        hours: `${pad((mn / 60) | 0)}:${pad(mn % 60)} – ${pad((mx / 60) | 0)}:${pad(mx % 60)}`,
+        note: hasArena ? "Programme officiel" : "Side events",
+      });
+    });
+    store.days = days; store.stages = stages; store.sessions = rows;
+  }
+
+  // Indicateur de fraîcheur des données (pilule dans l'en-tête).
+  function setStatus(kind, n) {
+    let el = $("#liveStatus");
+    if (!el) {
+      el = document.createElement("span");
+      el.id = "liveStatus";
+      el.style.cssText = "font-size:11px;font-weight:600;padding:3px 9px;border-radius:100px;border:1px solid var(--line);color:var(--fg2);background:var(--bg2);white-space:nowrap;";
+      const tr = document.querySelector(".title-row");
+      if (tr) tr.appendChild(el);
+    }
+    const map = {
+      loading: ["⏳ Synchronisation avec VivaTech…", "var(--fg2)"],
+      live: [`🟢 Mis à jour en direct (${n || ""} jour${n > 1 ? "s" : ""})`, "#16a34a"],
+      snapshot: ["📦 Données embarquées (instantané)", "var(--fg2)"],
+    };
+    const [txt, col] = map[kind] || map.snapshot;
+    el.textContent = txt;
+    el.style.color = col;
+  }
+
+  const PROXIES = [
+    u => u,                                                              // direct (si CORS autorisé)
+    u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u), // proxy CORS public
+    u => "https://corsproxy.io/?url=" + encodeURIComponent(u),
+  ];
+  async function fetchDay(dayId) {
+    const target = "https://vivatech.com/sessions?days=" + dayId;
+    for (const wrap of PROXIES) {
+      try {
+        const res = await fetch(wrap(target), { credentials: "omit" });
+        if (!res.ok) continue;
+        const html = await res.text();
+        const rows = parseRows(html);
+        if (rows.length) return rows;
+      } catch (e) { /* CORS / réseau : on tente le proxy suivant */ }
+    }
+    return null;
+  }
+
+  async function liveRefresh() {
+    setStatus("loading");
+    const dayIds = store.days.map(d => d.id);
+    const results = await Promise.allSettled(dayIds.map(fetchDay));
+
+    // Regroupe les lignes récupérées par date réelle.
+    const freshByDay = {};
+    results.forEach(r => {
+      if (r.status === "fulfilled" && r.value) {
+        r.value.forEach(row => { (freshByDay[row.day] = freshByDay[row.day] || []).push(row); });
+      }
+    });
+
+    // Les pages VivaTech sont paginées : une page peut être tronquée. On ne
+    // remplace un jour que si le direct est au moins aussi complet que
+    // l'instantané embarqué — jamais de régression silencieuse.
+    const snapCount = {};
+    store.sessions.forEach(s => { snapCount[s.day] = (snapCount[s.day] || 0) + 1; });
+    const override = new Set();
+    Object.keys(freshByDay).forEach(d => { if (freshByDay[d].length >= (snapCount[d] || 0)) override.add(d); });
+    if (!override.size) { setStatus("snapshot"); return; }
+
+    let merged = store.sessions.filter(s => !override.has(s.day));
+    override.forEach(d => { merged = merged.concat(freshByDay[d]); });
+    rebuildFromRows(merged);
+    if (!store.days.find(d => d.id === state.day)) state.day = defaultDay;
+    render();
+    setStatus("live", override.size);
+  }
+
   render();
+
+  // Tentative de rafraîchissement en direct, sans bloquer l'affichage initial.
+  setStatus("snapshot");
+  liveRefresh();
 })();
 </script>
 </body>
