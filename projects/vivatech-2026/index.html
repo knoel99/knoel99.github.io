@@ -443,7 +443,20 @@ h1 {
 .modal-desc.empty { color: var(--fg2); font-style: italic; }
 
 /* ---------- Filtres (thèmes + salles + export) ---------- */
-.filters { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+.filters {
+  display: flex; flex-direction: column; gap: 12px;
+  overflow: hidden;
+  max-height: 900px;
+  margin-top: 14px;
+  transition: max-height 0.3s ease, margin-top 0.3s ease, opacity 0.25s ease;
+  opacity: 1;
+}
+.filters.collapsed {
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+  pointer-events: none;
+}
 .filter-head {
   display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
 }
@@ -478,6 +491,16 @@ h1 {
 .kind-btn:hover { filter: brightness(0.92); }
 .kind-btn.off { opacity: 0.38; text-decoration: line-through; }
 .mini-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* bouton de rétraction du panneau filtres */
+.filters-btn { white-space: nowrap; }
+.filters-btn .ftchev { transition: transform 0.25s ease; }
+.filters-btn.open .ftchev { transform: rotate(90deg); }
+.filters-badge {
+  background: var(--accent); color: #fff;
+  font-size: 10px; font-weight: 700; border-radius: 100px;
+  padding: 1px 6px; line-height: 1.5;
+}
 .mini-btn {
   font-family: inherit; font-size: 12px; font-weight: 700;
   border: 2px solid var(--line); background: var(--bg2); color: var(--fg);
@@ -619,8 +642,9 @@ h1 {
   .days { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
   .day-tab { flex-shrink: 0; }
   .tools { gap: 8px; }
-  .view-toggle { width: 100%; }
+  .view-toggle { flex: 1; }
   .view-toggle button { flex: 1; }
+  .filters-btn { flex-shrink: 0; }
   .rooms-grid { grid-template-columns: 1fr 1fr; }
   .modal-overlay { padding: 0; align-items: flex-end; }
   .modal { max-width: 100%; max-height: 92vh; border-radius: 18px 18px 0 0; }
@@ -677,9 +701,14 @@ h1 {
         <button data-view="week">Semaine</button>
         <button data-view="agenda">Agenda</button>
       </div>
+      <button class="mini-btn filters-btn" id="filtersBtn" title="Afficher / masquer les filtres">
+        <svg class="ftchev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        Filtres
+        <span class="filters-badge" id="filtersBadge" style="display:none"></span>
+      </button>
     </div>
 
-    <div class="filters">
+    <div class="filters" id="filtersPanel">
       <div class="kinds-bar">
         <span class="kinds-label">Sources</span>
         <div class="kinds-group" id="kinds"></div>
@@ -1504,11 +1533,37 @@ h1 {
     const n = favConflicts.size;
     return ` · <span class="dh-warn">⚠ ${n} session${n > 1 ? "s" : ""} en conflit horaire</span>`;
   }
+  /* --- rétraction du panneau filtres --- */
+  const LS_FILTERS = "vt2026_filters_open";
+  function defaultFiltersOpen() { return !isMobile(); }
+  let filtersOpen = (() => {
+    const v = localStorage.getItem(LS_FILTERS);
+    return v !== null ? v === "1" : defaultFiltersOpen();
+  })();
+
+  function updateFiltersUI() {
+    const panel = $("#filtersPanel");
+    const btn   = $("#filtersBtn");
+    panel.classList.toggle("collapsed", !filtersOpen);
+    btn.classList.toggle("open", filtersOpen);
+    const n = state.kindsOff.size + state.themesOff.size;
+    const badge = $("#filtersBadge");
+    badge.textContent = n || "";
+    badge.style.display = n && !filtersOpen ? "" : "none";
+  }
+
+  $("#filtersBtn").addEventListener("click", () => {
+    filtersOpen = !filtersOpen;
+    localStorage.setItem(LS_FILTERS, filtersOpen ? "1" : "0");
+    updateFiltersUI();
+  });
+
   function render() {
     favConflicts = favConflictSet();
     renderDays();
     renderThemes();
     renderKinds();
+    updateFiltersUI();
     renderRooms();
     $("#viewToggle").querySelectorAll("button").forEach(b => b.classList.toggle("active", b.dataset.view === state.view));
     const favN = state.favs.size;
