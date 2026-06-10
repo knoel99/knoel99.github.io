@@ -462,34 +462,37 @@ h1 {
 }
 .filter-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--fg2); }
 
-/* --- filtre catégories (segmented multi-select) --- */
+/* --- choix du programme affiché (boutons radio, choix unique) --- */
 .kinds-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .kinds-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--fg2); white-space: nowrap; }
-.kinds-group {
-  display: inline-flex;
+.kinds-group { display: inline-flex; flex-wrap: wrap; gap: 7px; }
+.kind-radio {
   border: 2px solid var(--line);
-  border-radius: 10px;
-  overflow: hidden;
-}
-.kind-btn {
-  border: 0;
-  border-left: 2px solid var(--line);
   background: var(--bg);
   font-family: inherit;
   font-size: 13px;
   font-weight: 600;
   color: var(--fg);
-  padding: 7px 16px;
+  padding: 7px 14px;
+  border-radius: 100px;
   cursor: pointer;
-  transition: background 0.12s, color 0.12s, opacity 0.12s;
-  display: flex;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   white-space: nowrap;
 }
-.kind-btn:first-child { border-left: 0; }
-.kind-btn:hover { filter: brightness(0.92); }
-.kind-btn.off { opacity: 0.38; text-decoration: line-through; }
+.kind-radio:hover { border-color: var(--fg2); }
+.kind-radio.active { color: #fff; }
+.kind-radio .kr-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid; flex-shrink: 0;
+  display: inline-block; position: relative;
+}
+.kind-radio.active .kr-dot::after {
+  content: ""; position: absolute; inset: 2px;
+  border-radius: 50%; background: currentColor;
+}
 .mini-actions { display: flex; gap: 6px; flex-wrap: wrap; }
 
 /* bouton de rétraction du panneau filtres */
@@ -671,10 +674,10 @@ h1 {
   .view-toggle-mobile { display: inline-flex; width: 100%; }
   .view-toggle-mobile button { flex: 1; }
   .filters-btn { flex-shrink: 0; }
-  /* sources : retour à la ligne sur mobile */
-  .kinds-group { flex-wrap: wrap; overflow: visible; border: none; gap: 6px; }
-  .kind-btn { border: 2px solid var(--line); border-radius: 8px !important; }
-  .kind-btn:first-child { border-left: 2px solid var(--line); }
+  /* sources : retour à la ligne et pleine largeur sur mobile */
+  .kinds-bar { align-items: flex-start; }
+  .kinds-group { width: 100%; }
+  .kind-radio { flex: 1 1 calc(50% - 4px); justify-content: flex-start; }
   .rooms-grid { grid-template-columns: 1fr 1fr; }
   .modal-overlay { padding: 0; align-items: flex-end; }
   .modal { max-width: 100%; max-height: 92vh; border-radius: 18px 18px 0 0; }
@@ -895,7 +898,7 @@ h1 {
     view: "agenda",   // vue agenda par défaut (la plus lisible, mobile comme desktop)
     query: "",
     themesOff: new Set(),   // thèmes masqués
-    kindsOff: new Set(),    // catégories masquées (official / partner / side)
+    kindFilter: "official", // programme affiché : "official" | "partner" | "side" | "all" (officiel par défaut)
     roomsOff: new Set(),    // salles / calendriers masqués (noms de scènes + SIDE_GROUP)
     favs: loadFavs(),       // clés des sessions sélectionnées
     favOnly: false,         // n'afficher que « Mes sessions »
@@ -967,7 +970,7 @@ h1 {
   const roomKey = (s) => (isArena(s) ? s.stage : SIDE_GROUP);
   const roomOn = (s) => !state.roomsOff.has(roomKey(s));
   const themeOn = (s) => !state.themesOff.has(s.theme);
-  const kindOn  = (s) => !state.kindsOff.has(s.kind);
+  const kindOn  = (s) => state.kindFilter === "all" || s.kind === state.kindFilter;
   function matchesQuery(s) {
     const q = state.query.trim().toLowerCase();
     if (!q) return true;
@@ -1082,23 +1085,27 @@ h1 {
     { key: "side",     label: "Side Events", color: "#16a34a" },
   ];
 
+  // Choix du programme affiché : boutons radio (un seul actif à la fois).
+  // « Tout » = #64748b, sinon la couleur de la catégorie.
   function renderKinds() {
     const wrap = $("#kinds");
     wrap.innerHTML = "";
     const present = new Set(store.sessions.map(s => s.kind));
-    const visible = KINDS.filter(k => present.has(k.key));
-    visible.forEach(k => {
-      const active = !state.kindsOff.has(k.key);
+    const options = KINDS.filter(k => present.has(k.key))
+      .concat([{ key: "all", label: "Afficher tout", color: "#475569" }]);
+    options.forEach(k => {
+      const active = state.kindFilter === k.key;
       const btn = document.createElement("button");
-      btn.className = "kind-btn" + (active ? "" : " off");
-      btn.style.background = active ? k.color : "";
-      btn.style.color = active ? "#fff" : "";
-      btn.innerHTML = active
-        ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>${k.label}`
-        : k.label;
+      btn.className = "kind-radio" + (active ? " active" : "");
+      btn.setAttribute("role", "radio");
+      btn.setAttribute("aria-checked", active ? "true" : "false");
+      if (active) { btn.style.background = k.color; btn.style.borderColor = k.color; }
+      btn.innerHTML =
+        `<span class="kr-dot" style="${active ? "background:#fff;border-color:#fff" : "border-color:" + k.color}"></span>` +
+        `<span class="kr-label">${k.label}</span>`;
       btn.onclick = () => {
-        if (state.kindsOff.has(k.key)) state.kindsOff.delete(k.key);
-        else state.kindsOff.add(k.key);
+        if (state.kindFilter === k.key) return;
+        state.kindFilter = k.key;
         render();
       };
       wrap.appendChild(btn);
@@ -1609,7 +1616,7 @@ h1 {
     const btn   = $("#filtersBtn");
     panel.classList.toggle("collapsed", !filtersOpen);
     btn.classList.toggle("open", filtersOpen);
-    const n = state.kindsOff.size + state.themesOff.size;
+    const n = (state.kindFilter !== "all" ? 1 : 0) + state.themesOff.size;
     const badge = $("#filtersBadge");
     badge.textContent = n || "";
     badge.style.display = n && !filtersOpen ? "" : "none";
