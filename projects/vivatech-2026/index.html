@@ -342,6 +342,25 @@ h1 {
 .lr-people { font-size: 12.5px; color: var(--fg2); margin-top: 2px; }
 .list-row.dim { display: none; }
 
+/* --- sessions hors grille (stands partenaires / side events) en vue Jour --- */
+.offgrid { margin-top: 26px; padding-top: 20px; border-top: 2px solid var(--line); }
+.offgrid-h { font-size: 15px; font-weight: 700; color: var(--fg); }
+.offgrid-sub { font-size: 12.5px; color: var(--fg2); margin: 3px 0 16px; }
+.og-venue { margin-bottom: 18px; }
+.og-venue-name {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 700; color: var(--fg);
+  padding: 7px 10px; background: var(--bg2);
+  border: 1.5px solid var(--line); border-radius: 8px; margin-bottom: 4px;
+}
+.og-kdot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.og-venue-name .og-vn { flex: 1; }
+.og-venue-name .og-vc {
+  font-size: 11px; font-weight: 700; color: var(--fg2);
+  background: var(--bg3); border-radius: 100px; padding: 1px 9px;
+}
+.og-venue .list-row { grid-template-columns: 96px 1fr auto; }
+
 .empty { font-size: 14px; color: var(--fg2); padding: 30px 4px; text-align: center; }
 
 .footer {
@@ -1034,11 +1053,31 @@ h1 {
 
   /* ---------- vue jour (scènes en colonnes) ---------- */
   function renderCalendar() {
+    // bornes dynamiques (arrondies à la demi-heure). On plafonne à 20:00 pour
+    // ne pas étirer la grille à cause d'une session isolée en soirée : ces
+    // sessions tardives restent visibles en vue Agenda.
+    const CAP = 20 * 60;
+    const root = document.createElement("div");
+
+    // Sessions du jour non placées sur la grille des scènes principales :
+    // stands partenaires (Microsoft, Sanofi…), side events hors site, et
+    // sessions tardives (> 20:00). Calculé d'abord pour les afficher même
+    // quand aucune scène principale n'est retenue (ex. filtre « partenaires »).
+    const offGrid = daySessions()
+      .filter(s => fullyVisible(s) && !(isArena(s) && toMin(s.start) < CAP))
+      .sort((a, b) => (a.venue || "").localeCompare(b.venue || "") || toMin(a.start) - toMin(b.start));
+
     // colonnes = scènes utilisées ce jour, cochées (Salles) et passant le filtre favoris
     const anyArena = daySessions().some(s => isArena(s));
     const onGrid = daySessions().filter(s => isArena(s) && roomOn(s) && kindOn(s) && passFav(s));
     const cols = store.stages.filter(st => onGrid.some(s => s.stage === st));
     if (!onGrid.length) {
+      // pas de grille de scènes, mais il peut rester des sessions hors grille
+      // (stands partenaires, side events) : on les liste plutôt qu'un vide.
+      if (offGrid.length) {
+        root.appendChild(renderOffGrid(offGrid));
+        return root;
+      }
       const note = document.createElement("div");
       note.className = "empty";
       note.innerHTML = !anyArena
@@ -1048,18 +1087,14 @@ h1 {
           : `Aucune salle sélectionnée pour ce jour.<br>Cochez des scènes dans <strong>Salles &amp; calendriers</strong>, ou passez en <strong>Agenda</strong>.`;
       return note;
     }
-    // bornes dynamiques (arrondies à la demi-heure). On plafonne à 20:00 pour
-    // ne pas étirer la grille à cause d'une session isolée en soirée : ces
-    // sessions tardives restent visibles en vue Agenda.
-    const CAP = 20 * 60;
     const placeable = onGrid.filter(s => toMin(s.start) < CAP);
     const DAY_START = Math.floor(Math.min(...placeable.map(s => toMin(s.start))) / 30) * 30;
     const DAY_END   = Math.min(Math.ceil(Math.max(...placeable.map(s => toMin(s.end))) / 30) * 30, CAP);
     const TOTAL_SLOTS = (DAY_END - DAY_START) / SLOT_MIN;
 
     const ncols = cols.length;
-    const root = document.createElement("div");
-    root.className = "cal-wrap";
+    const wrap = document.createElement("div");
+    wrap.className = "cal-wrap";
     const cal = document.createElement("div");
     cal.className = "cal";
     cal.style.setProperty("--ncols", ncols);
@@ -1129,8 +1164,64 @@ h1 {
     });
 
     cal.appendChild(grid);
-    root.appendChild(cal);
+    wrap.appendChild(cal);
+    root.appendChild(wrap);
+
+    // Sessions hors grille (stands partenaires, side events, sessions tardives)
+    // listées sous la grille pour qu'aucun évènement ne « disparaisse ».
+    if (offGrid.length) root.appendChild(renderOffGrid(offGrid));
+
     return root;
+  }
+
+  // Liste des sessions « hors grille » d'un jour, groupées par lieu (stand /
+  // side event). Réutilise le style des lignes d'agenda.
+  function renderOffGrid(sessions) {
+    const sec = document.createElement("div");
+    sec.className = "offgrid";
+    const nPart = sessions.filter(s => s.kind === "partner").length;
+    const nSide = sessions.filter(s => s.kind === "side").length;
+    const bits = [];
+    if (nPart) bits.push(`${nPart} sur les stands partenaires`);
+    if (nSide) bits.push(`${nSide} side event${nSide > 1 ? "s" : ""}`);
+    sec.innerHTML =
+      `<div class="offgrid-h">Hors scènes principales · ${sessions.length} session${sessions.length > 1 ? "s" : ""}</div>` +
+      `<div class="offgrid-sub">${bits.join(" · ") || "Stands partenaires & side events"} — non placées sur la grille des scènes.</div>`;
+
+    const groups = {};
+    sessions.forEach(s => { (groups[s.venue || "—"] = groups[s.venue || "—"] || []).push(s); });
+    Object.keys(groups).sort((a, b) => a.localeCompare(b)).forEach(venue => {
+      const g = document.createElement("div");
+      g.className = "og-venue";
+      const color = THEMES[groups[venue][0].theme]?.color || "#666";
+      const kindKey = groups[venue][0].kind;
+      const kindColor = (KINDS.find(k => k.key === kindKey) || {}).color || "#666";
+      const name = document.createElement("div");
+      name.className = "og-venue-name";
+      name.innerHTML = `<span class="og-kdot" style="background:${kindColor}"></span><span class="og-vn"></span><span class="og-vc">${groups[venue].length}</span>`;
+      name.querySelector(".og-vn").textContent = venue;
+      g.appendChild(name);
+      groups[venue].sort((a, b) => toMin(a.start) - toMin(b.start)).forEach(s => {
+        const c = THEMES[s.theme]?.color || "#666";
+        const row = document.createElement("div");
+        row.className = "list-row";
+        const confBadge = (isFav(s) && inConflict(s)) ? `<span class="lr-conflict">⚠ conflit</span>` : "";
+        row.innerHTML =
+          `<div class="lr-when">${s.start}–${s.end}</div>` +
+          `<div>` +
+            `<div class="lr-title"><span class="tdot" style="background:${c}"></span><span class="lr-t"></span>${confBadge}</div>` +
+            (s.speakers && s.speakers.length ? `<div class="lr-people"></div>` : "") +
+          `</div>` +
+          `<button class="star-btn lr-star${isFav(s) ? " on" : ""}" title="Ajouter / retirer de Mes sessions">${isFav(s) ? "★" : "☆"}</button>`;
+        row.querySelector(".lr-t").textContent = s.title;
+        if (s.speakers && s.speakers.length) row.querySelector(".lr-people").textContent = s.speakers.join(", ");
+        row.querySelector(".lr-star").addEventListener("click", (e) => { e.stopPropagation(); toggleFav(s); render(); });
+        row.addEventListener("click", () => openModal(s));
+        g.appendChild(row);
+      });
+      sec.appendChild(g);
+    });
+    return sec;
   }
 
   /* ---------- vue semaine (jours en colonnes, axe horaire partagé) ---------- */
@@ -1439,11 +1530,9 @@ h1 {
 
     const day = store.days.find(d => d.id === state.day) || store.days[0];
     state.day = day.id;
-    // en vue Jour, on ne compte que les sessions réellement placées sur la grille
-    // (scènes cochées, hors soirées tardives) ; en Agenda, toutes les visibles.
-    const count = state.view === "day"
-      ? daySessions().filter(s => fullyVisible(s) && isArena(s) && toMin(s.start) < 20 * 60).length
-      : daySessions().filter(fullyVisible).length;
+    // Jour et Agenda affichent désormais toutes les sessions visibles (la grille
+    // des scènes + la liste « hors scènes » pour les stands / side events).
+    const count = daySessions().filter(fullyVisible).length;
     $("#dayHead").innerHTML = `<strong>${day.full}</strong> · ${day.hours} · ${count} session${count > 1 ? "s" : ""} affichée${count > 1 ? "s" : ""}` + conflictNote();
 
     if (daySessions().length === 0) {
