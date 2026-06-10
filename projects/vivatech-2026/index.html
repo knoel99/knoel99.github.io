@@ -697,9 +697,9 @@ h1 {
         <input id="search" type="search" placeholder="Rechercher une session, un intervenant…">
       </div>
       <div class="view-toggle" id="viewToggle">
-        <button data-view="day" class="active">Jour</button>
+        <button data-view="day">Jour</button>
         <button data-view="week">Semaine</button>
-        <button data-view="agenda">Agenda</button>
+        <button data-view="agenda" class="active">Agenda</button>
       </div>
       <button class="mini-btn filters-btn" id="filtersBtn" title="Afficher / masquer les filtres">
         <svg class="ftchev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
@@ -829,7 +829,7 @@ h1 {
   // état
   let state = {
     day: defaultDay,
-    view: isMobile() ? "agenda" : "day",   // mobile : agenda par défaut (plus lisible)
+    view: "agenda",   // vue agenda par défaut (la plus lisible, mobile comme desktop)
     query: "",
     themesOff: new Set(),   // thèmes masqués
     kindsOff: new Set(),    // catégories masquées (official / partner / side)
