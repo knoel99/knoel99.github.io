@@ -647,6 +647,7 @@ h1 {
           </div>
         </div>
         <div class="themes" id="themes"></div>
+        <div class="themes" id="kinds" style="margin-top:8px"></div>
       </div>
 
       <details class="rooms-box" id="roomsBox">
@@ -745,6 +746,7 @@ h1 {
     view: isMobile() ? "agenda" : "day",   // mobile : agenda par défaut (plus lisible)
     query: "",
     themesOff: new Set(),   // thèmes masqués
+    kindsOff: new Set(),    // catégories masquées (official / partner / side)
     roomsOff: new Set(),    // salles / calendriers masqués (noms de scènes + SIDE_GROUP)
     favs: loadFavs(),       // clés des sessions sélectionnées
     favOnly: false,         // n'afficher que « Mes sessions »
@@ -816,14 +818,15 @@ h1 {
   const roomKey = (s) => (isArena(s) ? s.stage : SIDE_GROUP);
   const roomOn = (s) => !state.roomsOff.has(roomKey(s));
   const themeOn = (s) => !state.themesOff.has(s.theme);
+  const kindOn  = (s) => !state.kindsOff.has(s.kind);
   function matchesQuery(s) {
     const q = state.query.trim().toLowerCase();
     if (!q) return true;
     return (s.title + " " + (s.speakers || []).join(" ") + " " + s.stage + " " + (s.desc || "")).toLowerCase().includes(q);
   }
   // « non atténué » dans les grilles (thème actif + recherche) ; les salles, elles, masquent.
-  const matches = (s) => themeOn(s) && matchesQuery(s);
-  const fullyVisible = (s) => roomOn(s) && themeOn(s) && matchesQuery(s) && passFav(s);
+  const matches = (s) => themeOn(s) && kindOn(s) && matchesQuery(s);
+  const fullyVisible = (s) => roomOn(s) && themeOn(s) && kindOn(s) && matchesQuery(s) && passFav(s);
 
   function daySessions() {
     return store.sessions.filter(s => s.day === state.day);
@@ -918,6 +921,29 @@ h1 {
       c.onclick = () => {
         if (state.themesOff.has(key)) state.themesOff.delete(key);
         else state.themesOff.add(key);
+        render();
+      };
+      wrap.appendChild(c);
+    });
+  }
+
+  const KINDS = [
+    { key: "official", label: "Programme officiel", color: "#0066cc" },
+    { key: "partner",  label: "Sessions partenaires", color: "#7c3aed" },
+    { key: "side",     label: "Side Events", color: "#16a34a" },
+  ];
+
+  function renderKinds() {
+    const wrap = $("#kinds");
+    wrap.innerHTML = "";
+    const present = new Set(store.sessions.map(s => s.kind));
+    KINDS.filter(k => present.has(k.key)).forEach(k => {
+      const c = document.createElement("button");
+      c.className = "theme-chip" + (state.kindsOff.has(k.key) ? " off" : "");
+      c.innerHTML = `<span class="dot" style="background:${k.color}"></span>${k.label}`;
+      c.onclick = () => {
+        if (state.kindsOff.has(k.key)) state.kindsOff.delete(k.key);
+        else state.kindsOff.add(k.key);
         render();
       };
       wrap.appendChild(c);
@@ -1347,6 +1373,7 @@ h1 {
     favConflicts = favConflictSet();
     renderDays();
     renderThemes();
+    renderKinds();
     renderRooms();
     $("#viewToggle").querySelectorAll("button").forEach(b => b.classList.toggle("active", b.dataset.view === state.view));
     const favN = state.favs.size;
@@ -1399,7 +1426,7 @@ h1 {
   $("#favToggle").addEventListener("click", () => { state.favOnly = !state.favOnly; render(); });
 
   // filtres : tout afficher (thèmes) / cocher / décocher (salles)
-  $("#themesAll").addEventListener("click", () => { state.themesOff.clear(); render(); });
+  $("#themesAll").addEventListener("click", () => { state.themesOff.clear(); state.kindsOff.clear(); render(); });
   $("#roomsAll").addEventListener("click", () => { state.roomsOff.clear(); render(); });
   $("#roomsNone").addEventListener("click", () => {
     state.roomsOff.clear();
