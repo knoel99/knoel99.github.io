@@ -146,9 +146,14 @@ def clean(s):
 
 
 def kind_for(o, src):
-    if "side" in src and not o.get("official_session"):
+    # Catégorie = page VivaTech d'origine d'où la session est extraite :
+    # officialprogram.html -> official, partners.html -> partner,
+    # side-events.html -> side. Les sessions présentes dans plusieurs pages
+    # sont dédupliquées en faveur de la première rencontrée (ordre alpha :
+    # officialprogram avant partners avant side-events).
+    if "side" in src:
         return "side"
-    if o.get("partner_session") and not o.get("official_session"):
+    if "partner" in src:
         return "partner"
     return "official"
 
