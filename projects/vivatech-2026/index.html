@@ -10,13 +10,13 @@
 
 :root {
   --bg: #ffffff;
-  --bg2: #f5f5f7;
-  --bg3: #eaeaef;
-  --fg: #1d1d1f;
-  --fg2: #6e6e73;
-  --line: rgba(0,0,0,0.08);
-  --line2: rgba(0,0,0,0.05);
-  --accent: #0066cc;
+  --bg2: #eaeaee;
+  --bg3: #d5d5dd;
+  --fg: #111111;
+  --fg2: #444450;
+  --line: rgba(0,0,0,0.18);
+  --line2: rgba(0,0,0,0.10);
+  --accent: #0055bb;
   --radius: 12px;
   --gutter: 60px;
   --slot-h: 6px;         /* hauteur d'un créneau de 5 min */
@@ -109,7 +109,7 @@ h1 {
   flex-wrap: wrap;
 }
 .day-tab {
-  border: 1px solid var(--line);
+  border: 2px solid var(--line);
   background: var(--bg2);
   border-radius: 10px;
   padding: 8px 14px;
@@ -118,6 +118,7 @@ h1 {
   transition: background 0.15s, border-color 0.15s, color 0.15s;
   font-family: inherit;
   line-height: 1.2;
+  font-weight: 500;
 }
 .day-tab:hover { background: var(--bg3); }
 .day-tab.active {
@@ -145,9 +146,9 @@ h1 {
   font-size: 14px;
   font-family: inherit;
   padding: 9px 12px 9px 34px;
-  border: 1px solid var(--line);
+  border: 2px solid var(--line);
   border-radius: 10px;
-  background: var(--bg2);
+  background: #fff;
   color: var(--fg);
   outline: none;
 }
@@ -162,7 +163,7 @@ h1 {
 
 .view-toggle {
   display: inline-flex;
-  border: 1px solid var(--line);
+  border: 2px solid var(--line);
   border-radius: 10px;
   overflow: hidden;
 }
@@ -171,7 +172,7 @@ h1 {
   background: var(--bg2);
   font-family: inherit;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--fg2);
   padding: 9px 14px;
   cursor: pointer;
@@ -190,19 +191,21 @@ h1 {
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  padding: 5px 11px;
+  font-weight: 600;
+  padding: 5px 12px;
   border-radius: 100px;
-  border: 1px solid var(--line);
-  background: var(--bg2);
+  border: 2px solid var(--line);
+  background: var(--bg);
   cursor: pointer;
   user-select: none;
-  transition: opacity 0.15s, background 0.15s;
+  transition: opacity 0.15s, background 0.15s, border-color 0.15s;
+  color: var(--fg);
 }
 .theme-chip .dot {
-  width: 9px; height: 9px; border-radius: 50%;
+  width: 10px; height: 10px; border-radius: 50%;
   flex-shrink: 0;
 }
-.theme-chip.off { opacity: 0.35; }
+.theme-chip.off { opacity: 0.3; filter: grayscale(1); }
 
 /* ---------- Stage / calendar ---------- */
 .stage {
@@ -295,7 +298,7 @@ h1 {
 .event .e-time { font-size: 10px; opacity: 0.92; font-weight: 600; }
 .event .e-title { font-weight: 600; line-height: 1.25; }
 .event .e-people { font-size: 10px; opacity: 0.9; line-height: 1.2; }
-.event.dim { opacity: 0.12; }
+.event.dim { opacity: 0.08; pointer-events: none; }
 
 /* --- vue liste --- */
 .list { display: flex; flex-direction: column; gap: 22px; }
@@ -317,17 +320,19 @@ h1 {
   border-radius: 8px;
   align-items: start;
 }
-.list-row + .list-row { border-top: 1px solid var(--line2); }
+.list-row + .list-row { border-top: 1.5px solid var(--line2); }
 .list-row:hover { background: var(--bg2); }
-.lr-when { font-size: 12.5px; color: var(--fg2); }
+.lr-when { font-size: 12.5px; font-weight: 600; color: var(--fg2); }
 .lr-when .stage-pill {
   display: inline-block;
   margin-top: 4px;
   font-size: 10.5px;
-  color: var(--fg2);
+  font-weight: 600;
+  color: var(--fg);
   background: var(--bg3);
   border-radius: 6px;
-  padding: 1px 7px;
+  padding: 2px 8px;
+  border: 1px solid var(--line2);
 }
 .lr-title {
   font-size: 14px; font-weight: 600;
@@ -424,10 +429,39 @@ h1 {
   display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
 }
 .filter-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--fg2); }
+
+/* --- filtre catégories (segmented multi-select) --- */
+.kinds-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.kinds-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--fg2); white-space: nowrap; }
+.kinds-group {
+  display: inline-flex;
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.kind-btn {
+  border: 0;
+  border-left: 2px solid var(--line);
+  background: var(--bg);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, opacity 0.12s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.kind-btn:first-child { border-left: 0; }
+.kind-btn:hover { filter: brightness(0.92); }
+.kind-btn.off { opacity: 0.38; text-decoration: line-through; }
 .mini-actions { display: flex; gap: 6px; flex-wrap: wrap; }
 .mini-btn {
-  font-family: inherit; font-size: 12px; font-weight: 600;
-  border: 1px solid var(--line); background: var(--bg2); color: var(--fg);
+  font-family: inherit; font-size: 12px; font-weight: 700;
+  border: 2px solid var(--line); background: var(--bg2); color: var(--fg);
   border-radius: 8px; padding: 6px 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
 }
 .mini-btn:hover { background: var(--bg3); }
@@ -627,6 +661,11 @@ h1 {
     </div>
 
     <div class="filters">
+      <div class="kinds-bar">
+        <span class="kinds-label">Sources</span>
+        <div class="kinds-group" id="kinds"></div>
+      </div>
+
       <div>
         <div class="filter-head">
           <span class="filter-label">Thématiques</span>
@@ -647,7 +686,6 @@ h1 {
           </div>
         </div>
         <div class="themes" id="themes"></div>
-        <div class="themes" id="kinds" style="margin-top:8px"></div>
       </div>
 
       <details class="rooms-box" id="roomsBox">
@@ -937,16 +975,22 @@ h1 {
     const wrap = $("#kinds");
     wrap.innerHTML = "";
     const present = new Set(store.sessions.map(s => s.kind));
-    KINDS.filter(k => present.has(k.key)).forEach(k => {
-      const c = document.createElement("button");
-      c.className = "theme-chip" + (state.kindsOff.has(k.key) ? " off" : "");
-      c.innerHTML = `<span class="dot" style="background:${k.color}"></span>${k.label}`;
-      c.onclick = () => {
+    const visible = KINDS.filter(k => present.has(k.key));
+    visible.forEach(k => {
+      const active = !state.kindsOff.has(k.key);
+      const btn = document.createElement("button");
+      btn.className = "kind-btn" + (active ? "" : " off");
+      btn.style.background = active ? k.color : "";
+      btn.style.color = active ? "#fff" : "";
+      btn.innerHTML = active
+        ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>${k.label}`
+        : k.label;
+      btn.onclick = () => {
         if (state.kindsOff.has(k.key)) state.kindsOff.delete(k.key);
         else state.kindsOff.add(k.key);
         render();
       };
-      wrap.appendChild(c);
+      wrap.appendChild(btn);
     });
   }
 
@@ -992,7 +1036,7 @@ h1 {
   function renderCalendar() {
     // colonnes = scènes utilisées ce jour, cochées (Salles) et passant le filtre favoris
     const anyArena = daySessions().some(s => isArena(s));
-    const onGrid = daySessions().filter(s => isArena(s) && roomOn(s) && passFav(s));
+    const onGrid = daySessions().filter(s => isArena(s) && roomOn(s) && kindOn(s) && passFav(s));
     const cols = store.stages.filter(st => onGrid.some(s => s.stage === st));
     if (!onGrid.length) {
       const note = document.createElement("div");
@@ -1092,8 +1136,8 @@ h1 {
   /* ---------- vue semaine (jours en colonnes, axe horaire partagé) ---------- */
   function renderWeek() {
     const PXMIN = 0.95, CAP = 20 * 60;
-    const days = store.days.filter(d => store.sessions.some(s => s.day === d.id && roomOn(s) && passFav(s) && toMin(s.start) < CAP));
-    const vis = store.sessions.filter(s => roomOn(s) && passFav(s) && toMin(s.start) < CAP && days.some(d => d.id === s.day));
+    const days = store.days.filter(d => store.sessions.some(s => s.day === d.id && roomOn(s) && kindOn(s) && passFav(s) && toMin(s.start) < CAP));
+    const vis = store.sessions.filter(s => roomOn(s) && kindOn(s) && passFav(s) && toMin(s.start) < CAP && days.some(d => d.id === s.day));
     if (!vis.length) {
       const note = document.createElement("div");
       note.className = "empty";
@@ -1265,11 +1309,11 @@ h1 {
   function buildSequence() {
     const byTime = (a, b) => toMin(a.start) - toMin(b.start) || a.stage.localeCompare(b.stage);
     if (state.view === "week") {
-      return store.sessions.filter(s => roomOn(s) && passFav(s) && toMin(s.start) < 20 * 60)
+      return store.sessions.filter(s => roomOn(s) && kindOn(s) && passFav(s) && toMin(s.start) < 20 * 60)
         .sort((a, b) => a.day.localeCompare(b.day) || byTime(a, b));
     }
     if (state.view === "day") {
-      return daySessions().filter(s => isArena(s) && roomOn(s) && passFav(s) && toMin(s.start) < 20 * 60).sort(byTime);
+      return daySessions().filter(s => isArena(s) && roomOn(s) && kindOn(s) && passFav(s) && toMin(s.start) < 20 * 60).sort(byTime);
     }
     return daySessions().filter(fullyVisible).sort(byTime);
   }
@@ -1426,7 +1470,7 @@ h1 {
   $("#favToggle").addEventListener("click", () => { state.favOnly = !state.favOnly; render(); });
 
   // filtres : tout afficher (thèmes) / cocher / décocher (salles)
-  $("#themesAll").addEventListener("click", () => { state.themesOff.clear(); state.kindsOff.clear(); render(); });
+  $("#themesAll").addEventListener("click", () => { state.themesOff.clear(); render(); });
   $("#roomsAll").addEventListener("click", () => { state.roomsOff.clear(); render(); });
   $("#roomsNone").addEventListener("click", () => {
     state.roomsOff.clear();
