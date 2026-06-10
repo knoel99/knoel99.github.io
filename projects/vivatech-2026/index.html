@@ -429,6 +429,35 @@ h1 {
   display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
 }
 .filter-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--fg2); }
+
+/* --- filtre catégories (segmented multi-select) --- */
+.kinds-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.kinds-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--fg2); white-space: nowrap; }
+.kinds-group {
+  display: inline-flex;
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.kind-btn {
+  border: 0;
+  border-left: 2px solid var(--line);
+  background: var(--bg);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, opacity 0.12s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.kind-btn:first-child { border-left: 0; }
+.kind-btn:hover { filter: brightness(0.92); }
+.kind-btn.off { opacity: 0.38; text-decoration: line-through; }
 .mini-actions { display: flex; gap: 6px; flex-wrap: wrap; }
 .mini-btn {
   font-family: inherit; font-size: 12px; font-weight: 700;
@@ -632,6 +661,11 @@ h1 {
     </div>
 
     <div class="filters">
+      <div class="kinds-bar">
+        <span class="kinds-label">Sources</span>
+        <div class="kinds-group" id="kinds"></div>
+      </div>
+
       <div>
         <div class="filter-head">
           <span class="filter-label">Thématiques</span>
@@ -652,7 +686,6 @@ h1 {
           </div>
         </div>
         <div class="themes" id="themes"></div>
-        <div class="themes" id="kinds" style="margin-top:8px"></div>
       </div>
 
       <details class="rooms-box" id="roomsBox">
@@ -942,20 +975,22 @@ h1 {
     const wrap = $("#kinds");
     wrap.innerHTML = "";
     const present = new Set(store.sessions.map(s => s.kind));
-    KINDS.filter(k => present.has(k.key)).forEach(k => {
+    const visible = KINDS.filter(k => present.has(k.key));
+    visible.forEach(k => {
       const active = !state.kindsOff.has(k.key);
-      const c = document.createElement("button");
-      c.className = "theme-chip" + (active ? "" : " off");
-      c.style.background = active ? k.color : "";
-      c.style.color = active ? "#fff" : "";
-      c.style.borderColor = active ? k.color : "";
-      c.innerHTML = `<span class="dot" style="background:${active ? "rgba(255,255,255,0.7)" : k.color}"></span>${k.label}`;
-      c.onclick = () => {
+      const btn = document.createElement("button");
+      btn.className = "kind-btn" + (active ? "" : " off");
+      btn.style.background = active ? k.color : "";
+      btn.style.color = active ? "#fff" : "";
+      btn.innerHTML = active
+        ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>${k.label}`
+        : k.label;
+      btn.onclick = () => {
         if (state.kindsOff.has(k.key)) state.kindsOff.delete(k.key);
         else state.kindsOff.add(k.key);
         render();
       };
-      wrap.appendChild(c);
+      wrap.appendChild(btn);
     });
   }
 
@@ -1435,7 +1470,7 @@ h1 {
   $("#favToggle").addEventListener("click", () => { state.favOnly = !state.favOnly; render(); });
 
   // filtres : tout afficher (thèmes) / cocher / décocher (salles)
-  $("#themesAll").addEventListener("click", () => { state.themesOff.clear(); state.kindsOff.clear(); render(); });
+  $("#themesAll").addEventListener("click", () => { state.themesOff.clear(); render(); });
   $("#roomsAll").addEventListener("click", () => { state.roomsOff.clear(); render(); });
   $("#roomsNone").addEventListener("click", () => {
     state.roomsOff.clear();
