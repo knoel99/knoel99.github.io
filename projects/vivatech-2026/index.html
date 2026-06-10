@@ -510,6 +510,30 @@ h1 {
 .mini-btn.accent { background: var(--accent); border-color: var(--accent); color: #fff; }
 .mini-btn.accent:hover { filter: brightness(1.08); }
 
+/* dropdown export calendrier */
+.export-wrap { position: relative; }
+.export-panel {
+  display: none;
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: 40;
+  background: var(--bg); border: 2px solid var(--line); border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+  min-width: 210px; overflow: hidden;
+}
+.export-panel.open { display: flex; flex-direction: column; }
+.export-panel button {
+  display: flex; align-items: center; gap: 9px;
+  padding: 10px 14px; border: 0; background: none;
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  color: var(--fg); cursor: pointer; text-align: left; white-space: nowrap;
+}
+.export-panel button + button { border-top: 1.5px solid var(--line2); }
+.export-panel button:hover { background: var(--bg2); }
+.export-panel .ep-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.export-panel .ep-sep {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--fg2); padding: 8px 14px 4px; pointer-events: none;
+}
+
 /* panneau Salles (calendriers) — repliable */
 .rooms-box { border: 1px solid var(--line); border-radius: 10px; background: var(--bg2); }
 .rooms-box > summary {
@@ -641,16 +665,26 @@ h1 {
   .subtitle { font-size: 14px; }
   .days { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
   .day-tab { flex-shrink: 0; }
+  /* sur mobile : search + bouton filtres seulement, pas de toggle vue ici */
   .tools { gap: 8px; }
-  .view-toggle { flex: 1; }
-  .view-toggle button { flex: 1; }
+  .view-toggle-desktop { display: none; }
+  .view-toggle-mobile { display: inline-flex; width: 100%; }
+  .view-toggle-mobile button { flex: 1; }
   .filters-btn { flex-shrink: 0; }
+  /* sources : retour à la ligne sur mobile */
+  .kinds-group { flex-wrap: wrap; overflow: visible; border: none; gap: 6px; }
+  .kind-btn { border: 2px solid var(--line); border-radius: 8px !important; }
+  .kind-btn:first-child { border-left: 2px solid var(--line); }
   .rooms-grid { grid-template-columns: 1fr 1fr; }
   .modal-overlay { padding: 0; align-items: flex-end; }
   .modal { max-width: 100%; max-height: 92vh; border-radius: 18px 18px 0 0; }
   .week-head .wh-day, .week-col { min-width: 116px; }
+  /* export dropdown : pleine largeur sur mobile */
+  .export-panel { right: auto; left: 0; min-width: 200px; }
 }
-@media (max-width: 560px) {
+@media (min-width: 721px) {
+  .view-toggle-mobile { display: none; }
+}
   h1 { font-size: 21px; }
   .list-row { grid-template-columns: 1fr; gap: 4px; position: relative; padding-right: 30px; }
   .lr-when { display: flex; gap: 8px; align-items: center; }
@@ -696,7 +730,7 @@ h1 {
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         <input id="search" type="search" placeholder="Rechercher une session, un intervenant…">
       </div>
-      <div class="view-toggle" id="viewToggle">
+      <div class="view-toggle view-toggle-desktop" id="viewToggle">
         <button data-view="day">Jour</button>
         <button data-view="week">Semaine</button>
         <button data-view="agenda" class="active">Agenda</button>
@@ -709,6 +743,13 @@ h1 {
     </div>
 
     <div class="filters" id="filtersPanel">
+      <!-- toggle vue affiché dans les filtres sur mobile uniquement -->
+      <div class="view-toggle view-toggle-mobile" id="viewToggleMobile">
+        <button data-view="day">Jour</button>
+        <button data-view="week">Semaine</button>
+        <button data-view="agenda" class="active">Agenda</button>
+      </div>
+
       <div class="kinds-bar">
         <span class="kinds-label">Sources</span>
         <div class="kinds-group" id="kinds"></div>
@@ -727,10 +768,32 @@ h1 {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
               <span id="shareLabel">Partager</span>
             </button>
-            <button class="mini-btn accent" id="exportBtn" title="Télécharger la sélection au format iCalendar (.ics)">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
-              Importer dans mon agenda
-            </button>
+            <div class="export-wrap">
+              <button class="mini-btn accent" id="exportBtn" title="Télécharger au format iCalendar (.ics)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+                Importer
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="export-panel" id="exportPanel">
+                <div class="ep-sep">Exporter en .ics</div>
+                <button id="exportAll">
+                  <span class="ep-dot" style="background:linear-gradient(135deg,#0055bb,#7c3aed,#16a34a)"></span>
+                  Tout le programme
+                </button>
+                <button id="exportOfficial">
+                  <span class="ep-dot" style="background:#0055bb"></span>
+                  Programme officiel
+                </button>
+                <button id="exportPartner">
+                  <span class="ep-dot" style="background:#7c3aed"></span>
+                  Sessions partenaires
+                </button>
+                <button id="exportSide">
+                  <span class="ep-dot" style="background:#16a34a"></span>
+                  Side Events
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="themes" id="themes"></div>
@@ -1565,7 +1628,10 @@ h1 {
     renderKinds();
     updateFiltersUI();
     renderRooms();
-    $("#viewToggle").querySelectorAll("button").forEach(b => b.classList.toggle("active", b.dataset.view === state.view));
+    // synchronise les deux toggles vue (desktop + mobile dans les filtres)
+    ["#viewToggle", "#viewToggleMobile"].forEach(sel => {
+      $(sel).querySelectorAll("button").forEach(b => b.classList.toggle("active", b.dataset.view === state.view));
+    });
     const favN = state.favs.size;
     $("#favToggle").classList.toggle("on", state.favOnly);
     $("#favToggleLabel").textContent = favN ? `Mes sessions (${favN})` : "Mes sessions";
@@ -1603,12 +1669,19 @@ h1 {
 
   /* ---------- événements UI ---------- */
   $("#search").addEventListener("input", e => { state.query = e.target.value; render(); });
-  $("#viewToggle").addEventListener("click", e => {
-    const btn = e.target.closest("button");
+  function onViewToggleClick(e) {
+    const btn = e.target.closest("button[data-view]");
     if (!btn) return;
     state.view = btn.dataset.view;
+    // fermer les filtres sur mobile après sélection d'une vue
+    if (isMobile() && filtersOpen) {
+      filtersOpen = false;
+      localStorage.setItem(LS_FILTERS, "0");
+    }
     render();
-  });
+  }
+  $("#viewToggle").addEventListener("click", onViewToggleClick);
+  $("#viewToggleMobile").addEventListener("click", onViewToggleClick);
 
   // « Mes sessions » : n'afficher que les favoris
   $("#favToggle").addEventListener("click", () => { state.favOnly = !state.favOnly; render(); });
@@ -1623,14 +1696,26 @@ h1 {
     render();
   });
 
-  // export .ics de la sélection courante
-  $("#exportBtn").addEventListener("click", () => {
-    const sel = selectionForExport();
-    const name = state.favOnly ? "VivaTech 2026 — ma sélection"
-      : state.view === "week" ? "VivaTech 2026 — sélection"
-      : "VivaTech 2026 — " + (store.days.find(d => d.id === state.day) || {}).full;
-    downloadICS(sel, name);
+  // dropdown export .ics par catégorie
+  const exportPanel = $("#exportPanel");
+  $("#exportBtn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    exportPanel.classList.toggle("open");
   });
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".export-wrap")) exportPanel.classList.remove("open");
+  });
+  function exportKind(kind, label) {
+    const sel = kind
+      ? store.sessions.filter(s => s.kind === kind).sort((a, b) => a.day.localeCompare(b.day) || toMin(a.start) - toMin(b.start))
+      : store.sessions.slice().sort((a, b) => a.day.localeCompare(b.day) || toMin(a.start) - toMin(b.start));
+    downloadICS(sel, "VivaTech 2026 — " + label);
+    exportPanel.classList.remove("open");
+  }
+  $("#exportAll").addEventListener("click",      () => exportKind(null,       "Tout le programme"));
+  $("#exportOfficial").addEventListener("click", () => exportKind("official", "Programme officiel"));
+  $("#exportPartner").addEventListener("click",  () => exportKind("partner",  "Sessions partenaires"));
+  $("#exportSide").addEventListener("click",     () => exportKind("side",     "Side Events"));
 
   // partage : copie un lien reprenant la vue + la sélection (favoris)
   $("#shareBtn").addEventListener("click", async () => {
