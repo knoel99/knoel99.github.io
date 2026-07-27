@@ -11,7 +11,7 @@ Chaque projet vit dans son propre dépôt GitHub Pages. Ce dépôt ne contient p
 | VivaTech 2026 | [vivatech-2026](https://github.com/knoel99/vivatech-2026) | [live](https://knoel99.github.io/vivatech-2026/) |
 | GPU | [gpu](https://github.com/knoel99/gpu) | [live](https://knoel99.github.io/gpu/) |
 | Exposition des métiers FR à l'IA | [jobs-fr](https://github.com/knoel99/jobs-fr) | [live](https://knoel99.github.io/jobs-fr/) |
-| G20 Embassy Distance Map | [embassy](https://github.com/knoel99/embassy) | [live](https://knoel99.github.io/embassy/) |
+| G20 Embassy Distance Map | [ambassy](https://github.com/knoel99/ambassy) | [live](https://knoel99.github.io/ambassy/) |
 | DeepSeek V4 Paper Walkthrough FR | [deepseek-v4-paper](https://github.com/knoel99/deepseek-v4-paper) | [live](https://knoel99.github.io/deepseek-v4-paper/) |
 | Comprendre JavaScript | [javascript-guide](https://github.com/knoel99/javascript-guide) | [live](https://knoel99.github.io/javascript-guide/) |
 | Concepts JavaScript | [js-concepts](https://github.com/knoel99/js-concepts) | [live](https://knoel99.github.io/js-concepts/) |
