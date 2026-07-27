@@ -1,48 +1,32 @@
 # knoel99.github.io
 
-Site portfolio personnel - [knoel99.github.io](https://knoel99.github.io/)
+Portfolio — [knoel99.github.io](https://knoel99.github.io/)
+
+Chaque projet vit dans son propre dépôt GitHub Pages. Ce dépôt ne contient plus que la landing et des redirects pour les anciennes URLs `/projects/...`.
 
 ## Projets
 
-| Projet | Description | Stack |
+| Projet | Repo | URL |
 |---|---|---|
-| [vivatech-2026](https://knoel99.github.io/projects/vivatech-2026/) | Le programme officiel de VivaTech 2026 (413 sessions reelles, 14-20 juin, programme + partenaires + side events) en calendrier clair facon Google Agenda : vues Jour / Semaine / Agenda, selection des salles (calendriers), filtres par theme, recherche, fiche detaillee au clic, selection personnelle partageable par URL (Mes sessions, detection de conflits horaires) et import .ics / Google Agenda. Responsive mobile. Genere depuis les pages VivaTech via build_sessions.py | Vanilla JS, Data viz |
-| [jobs-fr](https://knoel99.github.io/projects/jobs-fr/) | Treemap interactif des 1 584 metiers du repertoire ROME, colores par exposition a l'IA | D3.js, France Travail API |
-| [embassy](https://knoel99.github.io/projects/embassy/) | Carte interactive des distances entre les ambassades des pays du G20 et les centres de pouvoir de chaque capitale | Folium, Python, Geopolitique |
-| [deepseek-v4-paper](https://knoel99.github.io/projects/deepseek_v4_paper/) | Lecture guidee du paper DeepSeek-V4 : PDF original a gauche, resume reformule en francais a droite | PDF.js, MoE, LLM |
-| [javascript](https://knoel99.github.io/projects/javascript/) | Guide profond de JavaScript : 10 chapitres des origines (1995) aux frameworks modernes, avec contexte historique, diagrammes SVG animes et tableaux comparatifs | Vanilla JS, SVG |
-| [gpu](https://knoel99.github.io/projects/gpu/) | Inside an AI Chip : 11 schemas statiques et animes tires de la conversation Dwarkesh x Reiner Pope (MatX). AND gates, multiplieur de Dadda, systolic arrays, pipeline registers, LUTs, floorplans CPU/GPU/TPU. Bilingue FR/EN | Vanilla JS, SVG anime |
+| VivaTech 2026 | [vivatech-2026](https://github.com/knoel99/vivatech-2026) | [live](https://knoel99.github.io/vivatech-2026/) |
+| GPU | [gpu](https://github.com/knoel99/gpu) | [live](https://knoel99.github.io/gpu/) |
+| Exposition des métiers FR à l'IA | [jobs-fr](https://github.com/knoel99/jobs-fr) | [live](https://knoel99.github.io/jobs-fr/) |
+| G20 Embassy Distance Map | [embassy](https://github.com/knoel99/embassy) | [live](https://knoel99.github.io/embassy/) |
+| DeepSeek V4 Paper Walkthrough FR | [deepseek-v4-paper](https://github.com/knoel99/deepseek-v4-paper) | [live](https://knoel99.github.io/deepseek-v4-paper/) |
+| Comprendre JavaScript | [javascript-guide](https://github.com/knoel99/javascript-guide) | [live](https://knoel99.github.io/javascript-guide/) |
+| Concepts JavaScript | [js-concepts](https://github.com/knoel99/js-concepts) | [live](https://knoel99.github.io/js-concepts/) |
 
 ## Structure
 
 ```
-index.html                          # Landing page (bio + liste des projets)
-projects/
-  vivatech-2026/                    # Calendrier clair du programme VivaTech 2026
-    index.html                      # Grille calendrier + vue liste + filtres + fiche detail
-    sessions.js                     # Donnees generees (jours, scenes, themes, sessions, descriptifs)
-    build_sessions.py               # Regenere sessions.js depuis les pages HTML VivaTech
-    officialprogram.html            # Pages sources VivaTech (programme officiel)
-    partners.html                   #   "        "       (sessions partenaires)
-    side-events.html                #   "        "       (side events)
-  jobs-fr/                          # Treemap exposition IA des metiers francais
-    index.html
-    data.json
-  embassy/                          # Carte des ambassades G20
-    index.html
-    data/                           # Donnees historiques des ambassades (JSON)
-  deepseek_v4_paper/                # Paper walkthrough DeepSeek-V4
-    index.html
-    sections/                       # Sections HTML du resume
-  javascript/                       # Guide JavaScript : origines aux frameworks
-    index.html
-  gpu/                              # Inside an AI Chip : schemas interactifs FR/EN
-    index.html
-    transcript.md                   # Transcription EN (Dwarkesh x Reiner Pope)
-    transcript_fr.md                # Transcription FR
+index.html                 # Landing (bio + cartes)
+assets/                    # Logos des cartes
+projects/<ancien-slug>/    # Redirects vers les nouvelles routes
+  index.html
 ```
 
 ## Ajouter un projet
 
-1. Creer un dossier `projects/mon-projet/` avec un `index.html`
-2. Ajouter une carte dans `index.html` (un template commente est inclus dans le HTML)
+1. Créer un repo public `knoel99/<nom>` avec un `index.html` à la racine et un fichier `.nojekyll`
+2. Activer GitHub Pages (Settings → Pages → Deploy from branch `main` / root)
+3. Ajouter une carte dans `index.html` pointant vers `https://knoel99.github.io/<nom>/`
