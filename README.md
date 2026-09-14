@@ -2,12 +2,13 @@
 
 Portfolio — [knoel99.github.io](https://knoel99.github.io/)
 
-Chaque projet vit dans son propre dépôt GitHub Pages. Ce dépôt ne contient plus que la landing et des redirects pour les anciennes URLs `/projects/...`.
+La plupart des projets vivent dans leur propre dépôt GitHub Pages. Ce dépôt contient la landing, des redirects pour les anciennes URLs `/projects/...`, et une page autonome : [Architecture de Grok Bot](https://knoel99.github.io/projects/grok-bot/).
 
 ## Projets
 
 | Projet | Repo | URL |
 |---|---|---|
+| Architecture de Grok Bot | (ce dépôt, `projects/grok-bot/`) | [live](https://knoel99.github.io/projects/grok-bot/) |
 | VivaTech 2026 | [vivatech-2026](https://github.com/knoel99/vivatech-2026) | [live](https://knoel99.github.io/vivatech-2026/) |
 | GPU | [gpu](https://github.com/knoel99/gpu) | [live](https://knoel99.github.io/gpu/) |
 | Exposition des métiers FR à l'IA | [jobs-fr](https://github.com/knoel99/jobs-fr) | [live](https://knoel99.github.io/jobs-fr/) |
@@ -21,6 +22,7 @@ Chaque projet vit dans son propre dépôt GitHub Pages. Ce dépôt ne contient p
 ```
 index.html                 # Landing (bio + cartes)
 assets/                    # Logos des cartes
+projects/grok-bot/         # Page autonome (HTML + CSS inline)
 projects/<ancien-slug>/    # Redirects vers les nouvelles routes
   index.html
 ```
