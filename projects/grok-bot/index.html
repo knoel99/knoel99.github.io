@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture de Grok Bot — et ce qu’un harness classique ne fait pas</title>
+<meta name="description" content="Essai technique : Grok Bot comme agent avec ordinateur cloud persistant, versus les harness classiques (Claude Cowork, OpenAI Codex, GitHub Copilot coding agent).">
+<link rel="canonical" href="https://knoel99.github.io/projects/grok-bot/">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #ffffff;
+  --bg2: #f5f5f7;
+  --bg3: #eaeaef;
+  --fg: #1d1d1f;
+  --fg2: #6e6e73;
+  --accent: #0066cc;
+  --accent2: #004499;
+  --max-w: 860px;
+  --rule: rgba(0,0,0,0.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; color: var(--accent2); }
+
+.wrap {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.topnav {
+  padding: 28px 0 8px;
+  font-size: 14px;
+}
+.topnav a { color: var(--fg2); }
+.topnav a:hover { color: var(--fg); }
+
+header.hero {
+  padding: 32px 0 40px;
+}
+
+.kicker {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg2);
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: clamp(28px, 4.5vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.lede {
+  font-size: 18px;
+  color: var(--fg2);
+  max-width: 720px;
+  line-height: 1.7;
+}
+
+.meta {
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--fg2);
+}
+
+nav.toc {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: 0 0 48px;
+}
+nav.toc h2 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg2);
+  margin-bottom: 10px;
+  border: 0;
+  padding: 0;
+}
+nav.toc ol {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 15px;
+}
+nav.toc li { margin: 4px 0; }
+
+article { padding-bottom: 64px; }
+
+h2 {
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  margin: 52px 0 16px;
+  padding-top: 8px;
+  border-top: 1px solid var(--rule);
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 28px 0 10px;
+}
+
+p { margin-bottom: 1.05em; }
+
+ul, ol { margin: 0 0 1.15em 1.25em; }
+li { margin: 0.35em 0; }
+
+blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 4px 0 4px 16px;
+  margin: 0 0 1.2em;
+  color: var(--fg2);
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--bg2);
+  padding: 0.12em 0.38em;
+  border-radius: 5px;
+}
+
+.note {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 0 0 1.3em;
+  font-size: 15px;
+  color: var(--fg2);
+}
+.note strong { color: var(--fg); font-weight: 600; }
+
+.blocks {
+  display: grid;
+  gap: 12px;
+  margin: 8px 0 24px;
+}
+.block {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.block h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+.block p { margin: 0; font-size: 15px; color: var(--fg2); }
+
+figure.diagram {
+  margin: 8px 0 28px;
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 20px 16px 12px;
+  overflow-x: auto;
+}
+figure.diagram figcaption {
+  font-size: 13px;
+  color: var(--fg2);
+  margin-top: 8px;
+  text-align: center;
+}
+.diagram-svg { width: 100%; height: auto; display: block; min-width: 520px; }
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 8px 0 24px;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 640px;
+}
+th, td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+th {
+  background: var(--bg2);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg2);
+}
+tr:last-child td { border-bottom: 0; }
+td strong { font-weight: 600; }
+
+.use-list dt {
+  font-weight: 600;
+  margin-top: 14px;
+}
+.use-list dd {
+  margin: 4px 0 0;
+  color: var(--fg);
+}
+
+.sources { list-style: none; margin-left: 0; }
+.sources li {
+  margin: 0 0 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+}
+.sources li:last-child { border-bottom: 0; }
+.sources .src-title { font-weight: 600; display: block; }
+.sources .src-url {
+  display: block;
+  font-size: 13px;
+  word-break: break-all;
+  color: var(--accent);
+}
+
+footer.footer {
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding: 24px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--fg2);
+}
+
+@media (max-width: 639px) {
+  .diagram-svg { min-width: 480px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav"><a href="../../">← Accueil</a></nav>
+
+  <header class="hero">
+    <p class="kicker">Essai · architecture d’agents</p>
+    <h1>Grok Bot n’est pas un harness de coding. Voilà ce que ça change.</h1>
+    <p class="lede">
+      Cette page répond à une question précise&nbsp;: qu’est-ce qu’un
+      <em>harness</em> classique (Claude Cowork, OpenAI Codex, GitHub Copilot coding agent),
+      et en quoi l’architecture publique de Grok Bot s’en distingue — sans nier les recouvrements.
+    </p>
+    <p class="meta">Lecture guidée des docs publiques · septembre 2026</p>
+  </header>
+
+  <nav class="toc" aria-label="Sommaire">
+    <h2>Sommaire</h2>
+    <ol>
+      <li><a href="#question">La question</a></li>
+      <li><a href="#harness">Ce qu’est un harness classique</a></li>
+      <li><a href="#grok-bot">Les briques de Grok Bot</a></li>
+      <li><a href="#comparaison">Où ça se recouvre, où ça diverge</a></li>
+      <li><a href="#quand">Quand utiliser quoi</a></li>
+      <li><a href="#sources">Sources</a></li>
+    </ol>
+  </nav>
+
+  <article>
+    <h2 id="question">1. La question que cette page tranche</h2>
+    <p>
+      Les produits d’agents se ressemblent de loin. Tous enveloppent un modèle avec des outils,
+      une boucle de travail, et souvent un bac à sable. Dire «&nbsp;Grok Bot est un agent&nbsp;»
+      ne dit donc presque rien. La distinction utile est plus étroite&nbsp;:
+      <strong>qui tient la boucle, sur quelle machine, et pour quel objet de travail</strong>.
+    </p>
+    <p>
+      Les guides publics de x.ai décrivent Grok Bot comme un agent
+      <em>avec un ordinateur</em> dans le cloud — bureau, système de fichiers, terminal, applications —
+      que l’on interroge en chat, que l’on programme par routines, et que l’on peut chaîner
+      avec d’autres bots. Dans le cas du software engineering, ce bot n’est pas le runtime
+      qui écrit le code. Il prépare le prompt, puis délègue la construction à un
+      <em>Cursor cloud agent</em>. C’est une boucle externe autour d’un harness interne.
+    </p>
+    <p>
+      Cowork, Codex et Copilot coding agent restent, chacun à sa manière, des harness&nbsp;:
+      une session d’agent (parfois plusieurs sous-agents) centrée sur un dossier, un dépôt,
+      ou un ticket. Ils savent déjà beaucoup de choses que l’on attribue trop vite à Grok Bot
+      (MCP, skills, plannings). La différence n’est pas «&nbsp;l’un a des outils, les autres non&nbsp;».
+      C’est le <strong>produit d’organisation persistante</strong> — ordinateur partagé, flotte
+      de spécialistes, routines toujours allumées — versus le
+      <strong>runtime de tâche</strong>.
+    </p>
+    <p class="note">
+      <strong>Périmètre.</strong> Les affirmations ci-dessous s’appuient sur des pages publiques
+      (guides x.ai, docs Anthropic, OpenAI et GitHub). Pas de détails de cabinet privé,
+      pas de métriques internes présentées comme des faits de ce site.
+    </p>
+
+    <h2 id="harness">2. Ce qu’est un harness classique</h2>
+    <p>
+      Un harness, dans le vocabulaire des agents de coding, est le runtime qui entoure le modèle.
+      OpenAI le dit sans détour à propos de Codex&nbsp;: le harness gère l’état de conversation,
+      appelle les outils, applique le sandbox et la politique d’approbation, et enchaîne les tours
+      jusqu’à ce que la tâche soit considérée comme terminée. Ce n’est pas «&nbsp;le LLM&nbsp;».
+      C’est tout ce qui transforme un endpoint de génération en agent.
+    </p>
+    <p>Le motif partagé, chez Cowork, Codex et Copilot, ressemble à ceci&nbsp;:</p>
+    <ol>
+      <li>un objectif (prompt, issue, dossier, rapport à produire) ;</li>
+      <li>un contexte borné (repo, workspace, dossiers autorisés) ;</li>
+      <li>des outils (fichiers, shell, navigateur, MCP, skills) ;</li>
+      <li>un sandbox et des approvals ;</li>
+      <li>une boucle «&nbsp;raisonner → appeler un outil → observer → continuer&nbsp;» jusqu’à un livrable.</li>
+    </ol>
+    <p>
+      La session est en général <em>une</em> unité de travail. On peut paralléliser des sous-agents
+      ou lancer plusieurs jobs, mais le produit reste centré sur l’exécution d’une tâche,
+      pas sur une petite organisation qui vit toute la journée sur la même machine.
+    </p>
+
+    <figure class="diagram">
+      <svg class="diagram-svg" viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-classic-title fig-classic-desc">
+        <title id="fig-classic-title">Harness classique</title>
+        <desc id="fig-classic-desc">Une session unique enveloppe le modèle avec outils, sandbox, approvals et une boucle de tâche.</desc>
+        <rect x="8" y="16" width="744" height="168" rx="14" fill="#fff" stroke="rgba(0,0,0,0.08)"/>
+        <text x="28" y="48" font-size="12" font-weight="600" fill="#6e6e73" font-family="system-ui,sans-serif" letter-spacing="1.2">HARNESS CLASSIQUE</text>
+        <rect x="28" y="68" width="130" height="88" rx="10" fill="#f5f5f7"/>
+        <text x="93" y="108" text-anchor="middle" font-size="14" font-weight="600" fill="#1d1d1f" font-family="system-ui,sans-serif">Utilisateur</text>
+        <text x="93" y="128" text-anchor="middle" font-size="11" fill="#6e6e73" font-family="system-ui,sans-serif">objectif</text>
+        <path d="M168 112 H198" stroke="#0066cc" stroke-width="2"/>
+        <polygon points="206,112 196,107 196,117" fill="#0066cc"/>
+        <rect x="214" y="56" width="320" height="112" rx="12" fill="#fff" stroke="rgba(0,102,204,0.28)"/>
+        <text x="374" y="86" text-anchor="middle" font-size="14" font-weight="650" fill="#1d1d1f" font-family="system-ui,sans-serif">Une session d’agent</text>
+        <text x="374" y="108" text-anchor="middle" font-size="12" fill="#6e6e73" font-family="system-ui,sans-serif">modèle + outils + contexte</text>
+        <text x="374" y="128" text-anchor="middle" font-size="12" fill="#6e6e73" font-family="system-ui,sans-serif">sandbox · approvals · boucle</text>
+        <text x="374" y="148" text-anchor="middle" font-size="12" fill="#0066cc" font-family="system-ui,sans-serif">Codex · Copilot · Cowork</text>
+        <path d="M544 112 H574" stroke="#0066cc" stroke-width="2"/>
+        <polygon points="582,112 572,107 572,117" fill="#0066cc"/>
+        <rect x="590" y="68" width="140" height="88" rx="10" fill="#f5f5f7"/>
+        <text x="660" y="108" text-anchor="middle" font-size="14" font-weight="600" fill="#1d1d1f" font-family="system-ui,sans-serif">Livrable</text>
+        <text x="660" y="128" text-anchor="middle" font-size="11" fill="#6e6e73" font-family="system-ui,sans-serif">PR, fichier, rapport</text>
+      </svg>
+      <figcaption>Le harness classique enveloppe une session. Il n’est pas «&nbsp;moins agent&nbsp;» — il est borné à une tâche.</figcaption>
+    </figure>
+
+    <h3>Claude Cowork — agent de knowledge work</h3>
+    <p>
+      Cowork est le produit Anthropic pour déléguer du travail de connaissance, pas du software
+      engineering de premier ressort. La doc officielle le dit clairement&nbsp;: Claude Code
+      sert à écrire, déboguer et livrer du code&nbsp;; Cowork sert à la recherche, l’analyse,
+      la création de documents et les tâches multi-étapes hors coding. L’approche agentique
+      est la même que Claude Code, exposée dans l’app desktop (web et mobile en bêta).
+    </p>
+    <p>
+      Concrètement, tu donnes un objectif. Cowork travaille dans les dossiers et les outils
+      que tu as choisis, peut ouvrir un navigateur intégré, découper le travail en sous-agents,
+      et livrer un fichier à relire. Les tâches planifiées existent (horaire, quotidien, hebdo,
+      jours ouvrés, ou à la demande). MCP, skills et plugins font partie du même socle Claude.
+      Le laptop fermé, une tâche cloud peut continuer — mais l’accès aux dossiers locaux ou au
+      navigateur desktop suppose encore, selon l’aide Anthropic, que l’app desktop soit joignable
+      pour ces surfaces-là. Cowork n’est pas vendu comme une «&nbsp;org&nbsp;» de bots spécialistes
+      qui s’écrivent entre eux toute la journée. C’est un agent de knowledge work, éventuellement
+      assisté de sous-agents, sur un périmètre de fichiers et de connecteurs.
+    </p>
+
+    <h3>OpenAI Codex — harness de coding terminal / cloud</h3>
+    <p>
+      Codex est le coding agent d’OpenAI. Le CLI travaille contre le dépôt local&nbsp;: lire,
+      éditer, lancer les outils déjà installés, avec sandbox OS et politique d’approbation.
+      Codex Cloud exécute des tâches en arrière-plan dans un conteneur isolé, puis tu ramènes
+      le diff ou tu ouvres une PR. Le post
+      <em>Unrolling the Codex agent loop</em> décrit exactement le cœur du harness&nbsp;:
+      l’utilisateur, le modèle, et les outils (shell Codex, outils de l’API, MCP utilisateur)
+      dans une boucle de tours. OpenAI a même publié ce harness comme plateforme
+      (CLI, SDK, app-server). Skills, plugins, sous-agents, MCP et passage local → cloud
+      existent. L’unité reste le thread de coding, repo-centré, pas un ordinateur de bureau
+      persistant partagé par une flotte de personas.
+    </p>
+
+    <h3>GitHub Copilot coding agent — harness natif GitHub</h3>
+    <p>
+      GitHub documente désormais ce produit comme <em>Copilot cloud agent</em>
+      (l’ancien nom «&nbsp;coding agent&nbsp;» désigne le même geste&nbsp;: issue → agent
+      asynchrone → branche / pull request). L’agent tourne dans un environnement éphémère
+      alimenté par GitHub Actions. Tu l’assignes depuis une issue, VS Code, le panneau Agents,
+      ou une automatisation. Il explore le repo, planifie, code, lance tests et linters,
+      et ouvre une PR. MCP, custom agents, skills, hooks et instructions de repo sont prévus.
+      Copilot peut aussi travailler en mode agent dans l’IDE, en local et en synchrone.
+      C’est un harness de coding GitHub-natif. Il n’est pas un ordinateur cloud personnel
+      avec desktop et sessions web déjà connectées.
+    </p>
+
+    <h2 id="grok-bot">3. Les briques d’architecture de Grok Bot</h2>
+    <p>
+      Le guide <a href="https://x.ai/bot/guides/grok-bot-101">Grok Bot 101</a> (Matt Palmer)
+      pose la définition courte&nbsp;: <em>Grok Bot is an agent with a computer</em>.
+      Le guide <a href="https://x.ai/bot/guides/grok-bot-for-engineering">Grok Bot for Engineering</a>
+      (Lingxi Li) décrit comment une flotte de bots spécialistes pilote des Cursor cloud agents.
+      Les briques ci-dessous viennent de ces deux textes, pas d’un reverse-engineering.
+    </p>
+
+    <div class="blocks">
+      <div class="block">
+        <h3>Ordinateur cloud persistant</h3>
+        <p>
+          Desktop, filesystem, terminal, apps. On peut l’utiliser comme un bureau distant.
+          Le même ordinateur est joignable depuis le téléphone et le desktop. Les identifiants
+          survivent à la session&nbsp;: un bot Marketplace peut chercher sur Facebook parce que
+          Facebook est déjà connecté.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Persona et réglages</h3>
+        <p>
+          Un bot est un jeu d’instructions. Les settings publics se réduisent à trois champs
+          (nom, titre, description), plus le prompt de workflow. On le définit en chat ou
+          dans Settings. Palmer donne l’exemple d’un bot DevRel qui lit des bookmarks, rédige
+          un prompt, attend une approbation, puis lance un Cursor cloud agent.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Skills, plugins, connecteurs MCP</h3>
+        <p>
+          Grok Bot prend les mêmes MCP servers, plugins et skills que Cursor. Plusieurs comptes
+          par service sont possibles (mail perso et pro, plusieurs Slack). Ce n’est pas unique
+          à Grok Bot — Cowork, Codex et Copilot exposent aussi MCP / skills — mais c’est le
+          socle qui permet au bot de lire Slack, Notion, GitHub, le calendrier, etc.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Trois façons de parler au bot</h3>
+        <p>
+          Chat. Routines et déclencheurs (le bot pose son propre planning, ou écoute Slack /
+          une PR GitHub). Les autres bots&nbsp;: ils peuvent s’envoyer des messages et se
+          déclencher mutuellement.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Permissions et agent de revue</h3>
+        <p>
+          Un ordinateur déjà connecté à Amazon peut, en principe, acheter. Le garde-fou public
+          est un trio&nbsp;: permissions en langage naturel (Settings → Agent), un agent de
+          revue distinct qui autorise, bloque ou escalade, et des listes allow/block. Les règles
+          sont un prompt, pas du JSON. Le travail reste dans un environnement isolé. Palmer
+          insiste aussi sur le partage d’auth&nbsp;: si un bot se connecte à un site, les autres
+          y ont accès.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Chaînes multi-bots</h3>
+        <p>
+          Les bots sont traités comme des spécialistes, avec mémoire et contexte limités.
+          Ils se parlent, peuvent vivre dans un groupe, et une routine peut router une demande
+          jusqu’à ce que le travail soit fini. Le guide engineering ajoute un bot d’ops
+          (onboarding, postmortems, alignement quotidien) qui ne code pas.
+        </p>
+      </div>
+      <div class="block">
+        <h3>Handoff vers les coding cloud agents</h3>
+        <p>
+          Palmer&nbsp;: l’agent de boucle externe rassemble le contexte (Slack, Notion, GitHub,
+          docs), rédige le prompt propre, et l’envoie à un Cursor cloud agent pour la boucle
+          interne. «&nbsp;Grok Bot is not writing the code. It is creating the same prompts
+          I would, then sending them to a specialized coding harness that lives inside Cursor.&nbsp;»
+          Lingxi Li décrit la même séparation à l’échelle d’une flotte&nbsp;: chaque bot
+          ingénieur lance des cloud agents, lit les transcripts, exige des preuves
+          (screenshots avant/après), file des follow-ups, et peut viser un worker privé
+          (Mac mini, VPN, simulateur iOS).
+        </p>
+      </div>
+    </div>
+
+    <figure class="diagram">
+      <svg class="diagram-svg" viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig-outer-title fig-outer-desc">
+        <title id="fig-outer-title">Boucle externe Grok Bot et boucle interne Cursor</title>
+        <desc id="fig-outer-desc">Grok Bot prépare le contexte et le prompt, puis délègue le coding à un Cursor cloud agent qui renvoie PR et preuves.</desc>
+        <rect x="8" y="8" width="744" height="196" rx="14" fill="#fff" stroke="rgba(0,0,0,0.08)"/>
+        <text x="28" y="40" font-size="12" font-weight="600" fill="#6e6e73" font-family="system-ui,sans-serif" letter-spacing="1.2">BOUCLE EXTERNE · GROK BOT</text>
+        <text x="28" y="68" font-size="18" font-weight="700" fill="#1d1d1f" font-family="system-ui,sans-serif">Ordinateur cloud persistant</text>
+        <text x="28" y="92" font-size="13" fill="#6e6e73" font-family="system-ui,sans-serif">desktop · filesystem · terminal · apps déjà connectées</text>
+        <rect x="28" y="112" width="168" height="64" rx="10" fill="#f5f5f7"/>
+        <text x="112" y="140" text-anchor="middle" font-size="13" font-weight="600" fill="#1d1d1f" font-family="system-ui,sans-serif">Persona / skills</text>
+        <text x="112" y="158" text-anchor="middle" font-size="11" fill="#6e6e73" font-family="system-ui,sans-serif">MCP · plugins</text>
+        <rect x="208" y="112" width="168" height="64" rx="10" fill="#f5f5f7"/>
+        <text x="292" y="140" text-anchor="middle" font-size="13" font-weight="600" fill="#1d1d1f" font-family="system-ui,sans-serif">Routines</text>
+        <text x="292" y="158" text-anchor="middle" font-size="11" fill="#6e6e73" font-family="system-ui,sans-serif">chat · events · bots</text>
+        <rect x="388" y="112" width="168" height="64" rx="10" fill="#f5f5f7"/>
+        <text x="472" y="140" text-anchor="middle" font-size="13" font-weight="600" fill="#1d1d1f" font-family="system-ui,sans-serif">Spécialistes</text>
+        <text x="472" y="158" text-anchor="middle" font-size="11" fill="#6e6e73" font-family="system-ui,sans-serif">chaînes multi-bots</text>
+        <rect x="568" y="112" width="160" height="64" rx="10" fill="rgba(0,102,204,0.08)"/>
+        <text x="648" y="140" text-anchor="middle" font-size="13" font-weight="600" fill="#0066cc" font-family="system-ui,sans-serif">Revue</text>
+        <text x="648" y="158" text-anchor="middle" font-size="11" fill="#0066cc" font-family="system-ui,sans-serif">allow / block</text>
+        <path d="M380 204 V232" stroke="#0066cc" stroke-width="2"/>
+        <polygon points="380,242 374,230 386,230" fill="#0066cc"/>
+        <text x="396" y="228" font-size="11" fill="#0066cc" font-family="system-ui,sans-serif">prompt propre</text>
+        <rect x="8" y="248" width="744" height="130" rx="14" fill="#fff" stroke="rgba(0,102,204,0.28)"/>
+        <text x="28" y="280" font-size="12" font-weight="600" fill="#0066cc" font-family="system-ui,sans-serif" letter-spacing="1.2">BOUCLE INTERNE · HARNESS DE CODING</text>
+        <text x="28" y="308" font-size="18" font-weight="700" fill="#1d1d1f" font-family="system-ui,sans-serif">Cursor cloud agent</text>
+        <text x="28" y="332" font-size="13" fill="#6e6e73" font-family="system-ui,sans-serif">repo · outils · sandbox · tests · screenshots · pull request</text>
+        <text x="28" y="356" font-size="13" fill="#6e6e73" font-family="system-ui,sans-serif">Le bot relit le transcript, vérifie la preuve, relance ou interrompt.</text>
+      </svg>
+      <figcaption>Grok Bot orchestre. Le harness de coding (ici Cursor) exécute. Les deux boucles ne se confondent pas.</figcaption>
+    </figure>
+
+    <p>
+      Le guide engineering insiste sur la <strong>boucle de feedback fermée</strong>&nbsp;:
+      lancer l’agent ne suffit pas. Il faut un signal de «&nbsp;done&nbsp;» que le bot peut
+      juger tout seul (screenshot, preuve avant/après, CI, commentaires de review). Sans ça,
+      tu redeviens le dispatcher humain. Avec ça, le bot peut débloquer un run coincé,
+      exiger une correction visuelle, et ne te rendre le travail que lorsqu’il passe la barre
+      que tu as écrite.
+    </p>
+
+    <h2 id="comparaison">4. Recouvrement et différences</h2>
+    <p>
+      Si tu listes les features une par une, beaucoup se recoupent. MCP n’est pas un
+      distinguo. Les schedules non plus&nbsp;: Cowork a des tâches récurrentes, Copilot a
+      des automations, Codex a des surfaces planifiées. Les sous-agents et custom agents
+      existent chez Cowork et Copilot. Codex et Copilot savent ouvrir des PR. Grok Bot
+      lui-même s’appuie sur un harness de coding (Cursor) plutôt que de le remplacer.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>Cowork</th>
+            <th>Codex</th>
+            <th>Copilot coding agent</th>
+            <th>Grok Bot</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Objet</strong></td>
+            <td>Knowledge work (fichiers, docs, recherche)</td>
+            <td>Coding repo-centré (CLI / cloud / IDE)</td>
+            <td>Coding GitHub-natif (issue → PR)</td>
+            <td>Agent + ordinateur persistant&nbsp;; org de bots</td>
+          </tr>
+          <tr>
+            <td><strong>Machine</strong></td>
+            <td>Dossiers locaux et/ou session cloud&nbsp;; navigateur intégré</td>
+            <td>Workspace local sandboxé, ou conteneur cloud éphémère</td>
+            <td>Environnement Actions éphémère, un repo à la fois</td>
+            <td>Desktop cloud persistant, logins partagés entre bots</td>
+          </tr>
+          <tr>
+            <td><strong>Boucle</strong></td>
+            <td>Tâche multi-étapes, sous-agents possibles</td>
+            <td>Agent loop outils + sandbox + approvals</td>
+            <td>Session cloud asynchrone, custom agents possibles</td>
+            <td>Boucle externe (contexte, routines) + handoff interne</td>
+          </tr>
+          <tr>
+            <td><strong>Planning</strong></td>
+            <td>Oui (tâches récurrentes Cowork)</td>
+            <td>Oui sur certaines surfaces Codex / ChatGPT</td>
+            <td>Oui (automations Copilot)</td>
+            <td>Oui (routines, triggers, bots qui se réveillent)</td>
+          </tr>
+          <tr>
+            <td><strong>MCP / skills</strong></td>
+            <td>Oui</td>
+            <td>Oui</td>
+            <td>Oui</td>
+            <td>Oui (aligné Cursor)</td>
+          </tr>
+          <tr>
+            <td><strong>Multi-agent «&nbsp;org&nbsp;»</strong></td>
+            <td>Sous-agents dans une tâche, pas une flotte persistante</td>
+            <td>Sous-agents dans un thread de coding</td>
+            <td>Custom agents spécialisés, toujours repo/PR</td>
+            <td>Bots spécialistes qui se parlent, ops, revue séparée</td>
+          </tr>
+          <tr>
+            <td><strong>Qui code</strong></td>
+            <td>Pas le produit de coding (Claude Code à côté)</td>
+            <td>Le harness lui-même</td>
+            <td>Le harness lui-même</td>
+            <td>Le harness délégué (Cursor cloud agent)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Ce qui se recouvre</h3>
+    <p>
+      Tous sont des agents outillés. Tous (à des degrés divers) ont des connecteurs, des
+      instructions réutilisables, une politique d’accès, et une boucle jusqu’à un livrable.
+      Cowork et Grok Bot peuvent tous les deux travailler quand tu n’es pas devant l’écran,
+      et tous les deux savent planifier. Codex et Copilot sont tous les deux des harness
+      de coding cloud, comparables au <em>Cursor cloud agent</em> que Grok Bot appelle —
+      pas à Grok Bot lui-même. Copilot documente même des custom agents spécialisés
+      (frontend, docs, tests). Dire que «&nbsp;seul Grok Bot a des spécialistes&nbsp;»
+      serait faux.
+    </p>
+
+    <h3>Ce qui diverge vraiment</h3>
+    <p>
+      Trois écarts tiennent dans les docs, une fois les features listées mises de côté.
+    </p>
+    <p>
+      <strong>1. La machine n’est pas la même.</strong>
+      Codex et Copilot te donnent un sandbox de coding, souvent éphémère, borné au workspace
+      ou au repo. Cowork te donne des dossiers choisis, un navigateur à lui, parfois l’écran.
+      Grok Bot te donne un ordinateur cloud qui reste là, avec un vrai desktop et des sessions
+      web déjà authentifiées. Palmer le compare à envoyer un message à un collègue qui a
+      le même accès machine que toi.
+    </p>
+    <p>
+      <strong>2. L’unité de produit n’est pas la session, c’est l’org.</strong>
+      Cowork, Codex et Copilot savent déléguer à l’intérieur d’une tâche. Grok Bot est décrit
+      comme une collection de bots qui vivent en parallèle, se parlent, ont des domaines
+      (mobile, desktop, infra, harness), un ops bot, des 1:1 matinaux, des audits de nuit.
+      Ce n’est pas qu’un marketing de «&nbsp;team&nbsp;»&nbsp;: le guide engineering en fait
+      le mécanisme pour tenir plus de travail que ce qu’une fenêtre de contexte unique peut porter.
+    </p>
+    <p>
+      <strong>3. Grok Bot refuse d’être le harness de coding.</strong>
+      Palmer le formule comme une hygiène de contexte&nbsp;: si le même agent lit Slack,
+      débat du spec, puis code, il arrive dans la boucle interne avec un contexte sale.
+      La boucle externe prépare un prompt propre&nbsp;; le harness interne (Cursor) construit.
+      Codex et Copilot <em>sont</em> ce harness interne. On peut évidemment les piloter
+      depuis un autre agent, mais ce n’est pas le produit que vendent leurs pages d’accueil.
+    </p>
+
+    <h2 id="quand">5. Quand utiliser quoi</h2>
+    <dl class="use-list">
+      <dt>Codex CLI / Codex Cloud</dt>
+      <dd>
+        Le travail est un changement de code dans un dépôt, tu veux la boucle d’outils sous
+        les yeux (terminal) ou un job cloud dont tu récupères le diff. Sandbox et approvals
+        sont le sujet. Reste sur Codex.
+      </dd>
+      <dt>Copilot coding agent (cloud agent)</dt>
+      <dd>
+        Le travail est déjà une issue GitHub, tu veux une PR native, des logs Actions, et
+        que l’équipe review dans GitHub. Custom agents et automations suffisent si le
+        périmètre est un repo à la fois.
+      </dd>
+      <dt>Claude Cowork</dt>
+      <dd>
+        Le livrable n’est pas une PR&nbsp;: mémo, deck, tableur, revue de contrats, briefing
+        hebdo à partir de Drive et Slack. Tu veux borner Claude à des dossiers et des
+        connecteurs, avec un navigateur intégré. Claude Code reste le cousin pour le coding.
+      </dd>
+      <dt>Grok Bot</dt>
+      <dd>
+        Tu as besoin d’un ordinateur qui reste allumé, de workflows qui ne tiennent pas
+        dans une session (veille, CRM, ops, relances), de plusieurs spécialistes qui se
+        parlent, et — pour le software — d’une boucle externe qui nourrit des Cursor
+        cloud agents avec preuves. Le bot n’est pas un remplaçant de Codex ou Copilot&nbsp;;
+        c’est l’étage au-dessus du harness de coding que tu as choisi (ici, Cursor).
+      </dd>
+    </dl>
+    <p>
+      En pratique, ces produits se composent. Un ingénieur peut garder Copilot sur les
+      tickets GitHub, Cowork sur le reporting, et Grok Bot comme dispatcher qui prépare
+      les prompts Cursor. La question n’est pas «&nbsp;lequel est l’agent&nbsp;», c’est
+      <em>à quel étage tu places l’orchestration</em>.
+    </p>
+
+    <h2 id="sources">6. Sources</h2>
+    <p>
+      Tous les liens ci-dessous sont des pages publiques. Les formulations entre guillemets
+      anglaises sont celles des guides x.ai.
+    </p>
+    <ul class="sources">
+      <li>
+        <span class="src-title">Matt Palmer — Grok Bot 101</span>
+        Agent with a computer, anatomie d’un bot, routines, permissions / review agent,
+        chaînes multi-bots, boucle externe vers Cursor.
+        <a class="src-url" href="https://x.ai/bot/guides/grok-bot-101">https://x.ai/bot/guides/grok-bot-101</a>
+      </li>
+      <li>
+        <span class="src-title">Lingxi Li — Grok Bot for Engineering</span>
+        Flotte de bots ingénieurs, gestion de Cursor cloud agents, preuves visuelles,
+        worker privé, ops bot, routines de nuit et process d’urgence.
+        <a class="src-url" href="https://x.ai/bot/guides/grok-bot-for-engineering">https://x.ai/bot/guides/grok-bot-for-engineering</a>
+      </li>
+      <li>
+        <span class="src-title">Anthropic — Claude Cowork (produit)</span>
+        Knowledge-work agent, fichiers et outils choisis, navigateur intégré, tâches
+        planifiées, web / desktop / mobile.
+        <a class="src-url" href="https://claude.com/product/cowork">https://claude.com/product/cowork</a>
+      </li>
+      <li>
+        <span class="src-title">Anthropic — Cowork overview</span>
+        Même architecture agentique que Claude Code&nbsp;; connecteurs MCP, skills, plugins,
+        sous-agents.
+        <a class="src-url" href="https://claude.com/docs/cowork/overview">https://claude.com/docs/cowork/overview</a>
+      </li>
+      <li>
+        <span class="src-title">Anthropic — product guide Cowork</span>
+        Positionnement knowledge work versus Chat et Claude Code.
+        <a class="src-url" href="https://claude.com/blog/the-claude-cowork-product-guide">https://claude.com/blog/the-claude-cowork-product-guide</a>
+      </li>
+      <li>
+        <span class="src-title">Anthropic Help — scheduled tasks in Cowork</span>
+        Cadences (horaire, quotidien, hebdo, jours ouvrés, manuel).
+        <a class="src-url" href="https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork">https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork</a>
+      </li>
+      <li>
+        <span class="src-title">OpenAI — Unrolling the Codex agent loop</span>
+        Définition du harness&nbsp;: boucle utilisateur / modèle / outils.
+        <a class="src-url" href="https://openai.com/index/unrolling-the-codex-agent-loop/">https://openai.com/index/unrolling-the-codex-agent-loop/</a>
+      </li>
+      <li>
+        <span class="src-title">OpenAI — Codex CLI</span>
+        Agent terminal, sandbox, skills / plugins, MCP, délégation cloud.
+        <a class="src-url" href="https://developers.openai.com/codex/cli">https://developers.openai.com/codex/cli</a>
+      </li>
+      <li>
+        <span class="src-title">OpenAI — Codex Cloud</span>
+        Tâches de coding en arrière-plan dans un environnement cloud isolé.
+        <a class="src-url" href="https://developers.openai.com/codex/cloud">https://developers.openai.com/codex/cloud</a>
+      </li>
+      <li>
+        <span class="src-title">OpenAI — Codex as a platform</span>
+        Le harness open-source derrière CLI, app et IDE.
+        <a class="src-url" href="https://developers.openai.com/blog/codex-as-a-platform">https://developers.openai.com/blog/codex-as-a-platform</a>
+      </li>
+      <li>
+        <span class="src-title">GitHub Docs — About Copilot cloud agent</span>
+        Agent asynchrone, environnement Actions, issue / prompt → branche / PR,
+        custom agents, MCP, skills, automations. (Ancien nom&nbsp;: coding agent.)
+        <a class="src-url" href="https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent">https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent</a>
+      </li>
+      <li>
+        <span class="src-title">GitHub Docs — Using Copilot cloud agent on GitHub</span>
+        Assigner une issue, suivre la session, commenter <code>@copilot</code>.
+        <a class="src-url" href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/use-cloud-agent-on-github">https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/use-cloud-agent-on-github</a>
+      </li>
+    </ul>
+  </article>
+</div>
+
+<footer class="footer">
+  <a href="../../">knoel99.github.io</a>
+  · page autonome, HTML statique, sans tracking
+</footer>
+</body>
+</html>
