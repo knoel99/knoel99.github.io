@@ -10,6 +10,9 @@ La plupart des projets vivent dans leur propre dépôt GitHub Pages. Ce dépôt 
 |---|---|---|
 | Exposition des métiers FR à l'IA | [jobs-fr](https://github.com/knoel99/jobs-fr) | [live](https://knoel99.github.io/jobs-fr/) |
 | G20 Embassy Distance Map | [ambassy](https://github.com/knoel99/ambassy) | [live](https://knoel99.github.io/ambassy/) |
+| MScT LLGA | [polytechnique-llga](https://github.com/knoel99/polytechnique-llga) | [live](https://knoel99.github.io/polytechnique-llga/) |
+| Master MVA | [master-mva](https://github.com/knoel99/master-mva) | [live](https://knoel99.github.io/master-mva/) |
+| Infra de calcul | [mastering-compute-infrastructure](https://github.com/knoel99/mastering-compute-infrastructure) | [live](https://knoel99.github.io/mastering-compute-infrastructure/) |
 
 ## Structure
 
