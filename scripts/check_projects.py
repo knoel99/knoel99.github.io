@@ -12,8 +12,7 @@ TEXT_TOKENS = (
     "js-concepts",
 )
 
-# The bare word GPU is not a token, because the compute card may say GPU.
-GPU_URLS = (
+BOUNDED_URL_TOKENS = (
     "github.com/knoel99/gpu",
     "knoel99.github.io/gpu",
 )
@@ -58,7 +57,7 @@ def _tokens_in(data):
     for token in TEXT_TOKENS:
         if token.encode("ascii") in data:
             found.append(token)
-    for token in GPU_URLS:
+    for token in BOUNDED_URL_TOKENS:
         if _has_bounded_url(data, token.encode("ascii")):
             found.append(token)
     return found
@@ -220,7 +219,7 @@ def _scanned_files(root):
 
 
 def _removed(root):
-    order = {token: index for index, token in enumerate(TEXT_TOKENS + GPU_URLS)}
+    order = {token: index for index, token in enumerate(TEXT_TOKENS + BOUNDED_URL_TOKENS)}
     hits = []
     seen = set()
     for path in _scanned_files(root):
