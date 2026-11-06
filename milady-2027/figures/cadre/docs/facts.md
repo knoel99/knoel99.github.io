@@ -21,3 +21,32 @@ Sources : [D] description technique de l'appelant ; [N] note théorique `specs/t
 - Usages : trois modes de Fourier ; ensemble de 7 trajectoires resserré à 3 observations ; densité de D = même mélange bimodal que le latent.
 
 ## Chaînes à l'écran (chaque chaîne est citée ici)
+
+| Chaîne (telle qu'affichée) | Source |
+|---|---|
+| « Flow matching latent » (titre a) | [D] « flow matching dans un espace latent » |
+| « λ », « Re », « Rm », « μr », « Paramètres de contrôle » | [D] λ = (Re, Rm, μ_r) ; [N] §0 |
+| « vθ(z, t, λ) » | [D], [N] §0, [Not] |
+| « z0 ~ N(0, I) », « z1 » | [D] ; [Not] (t = 1 : données) |
+| « 0 », « 1 », « t » (temps du flot) | [D] « t de 0 à 1 » |
+| « B », « −B », « S » | [D] « z → Sz ↔ B → −B » ; [N] C3, Prop. 4 |
+| « Décodeur à potentiels » (titre b) | [D] « décodeur … qui sort des potentiels » |
+| « Attention croisée », « x », « Ω » | [D] « attention croisée, interrogeable en tout point x » ; [Not] Ω domaine |
+| « Au », « AB » | [D] (A_u, A_B) |
+| « ψ », « a », « u », « B », « ∇× » | [D] « en 2D ψ et a … u = ∇×A_u, B = ∇×A_B » ; [Not] |
+| « Cible 3D : VKS » (titre c) | [D] « cylindre de type VKS » ; brief : ne pas suggérer un entraînement sur VKS |
+| « Turbines contrarotatives » | [W] deux turbines contrarotatives |
+| « Contrôle en loi » (titre d) | [D] « contrôle en loi » |
+| « E[ε] = E[P] », « E[P] », « ε » | [D] E[ε] = E[P] ; [N] C4 |
+| « inclinaison » | [D] « inclinaison exponentielle » ; [N] Prop. 7 |
+| « qθ » | [N] §0 q_θ(·∣λ) |
+| « en loi », « par échantillon », « dE/dt = P − ε » | [D] « et non en forçant ε = P sur chaque échantillon » ; [N] §1 remarque clé, Cor. 6 |
+| « perte de stationnarité » | [D] « perte de stationnarité à l'entraînement » ; [N] Prop. 7 |
+| « Usages » (titre e), « Modèles réduits », « Assimilation de données », « Renversements (Rice) », « D » | [D] (6) ; [N] Prop. 8 (D moment dipolaire) |
+| « C1 », « C3 », « C4 » | [N] §1 taxonomie |
+| « symétrie B ↦ −B : équivariance » | [N] C3 : mécanisme « équivariance du champ de vitesse » |
+| « ∇·u = ∇·B = 0 : par construction » | [N] C1, Prop. 1 |
+| « bilan d’énergie : en loi » | [N] C4 |
+| « stage : 3 modes, MHD 2D » | [D] « le stage valide sur des bancs d'essai simples : modèle à 3 modes et MHD 2D » ; [N] §3 |
+
+Panel letters « a »–« e » : convention de la figure.

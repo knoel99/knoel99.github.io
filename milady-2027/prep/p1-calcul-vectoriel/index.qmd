@@ -108,7 +108,7 @@ On note $\partial_i = \partial / \partial x_i$ avec $(x_1, x_2, x_3) = (x, y, z)
 Si $f$ est de classe $C^2$ sur un ouvert, ses dérivées croisées sont égales : $\partial_i \partial_j f = \partial_j \partial_i f$ pour tous $i, j$.
 
 ::: proof
-Résultat classique d'analyse de L2, admis ici ; une démonstration accessible se trouve dans les notes de cours de Tong (voir les Sources). Toutes les identités du chapitre 2 en découlent. [∎]{.qed}
+Résultat classique d'analyse de deuxième année, démontré dans tout cours de calcul différentiel ; nous l'admettons. L'idée est d'écrire de deux façons la « différence seconde » $f(x+h, y+k) - f(x+h, y) - f(x, y+k) + f(x, y)$, en appliquant deux fois le théorème des accroissements finis dans un ordre puis dans l'autre. Toutes les identités du chapitre 2 en découlent. [∎]{.qed}
 :::
 ::::
 
@@ -189,6 +189,8 @@ Un moyen mnémotechnique : le rotationnel est le « produit vectoriel » formel 
 [Exemple 1.9 — Trois champs plans élémentaires]{.tag}
 Le champ $\mathbf{u} = (x, y, 0)$ est une **source** : $\nabla\cdot\mathbf{u} = 2$ et $\nabla\times\mathbf{u} = \mathbf{0}$. Le champ $\mathbf{u} = (-y, x, 0)$ est une **rotation solide** de vitesse angulaire $1$ autour de $\mathbf{e}_z$ : $\nabla\cdot\mathbf{u} = 0$ et $\nabla\times\mathbf{u} = (0, 0, 2)$. Le champ de **cisaillement** $\mathbf{u} = (y, 0, 0)$ a des lignes de courant droites, et pourtant $\nabla\times\mathbf{u} = (0, 0, -1)$ : une petite roue à aubes placée dans cet écoulement tourne (exercice 2).
 :::
+
+![Quatre champs plans. De gauche à droite : la source $\mathbf{u} = (x, y)$, la rotation solide $\mathbf{u} = (-y, x)$, le cisaillement $\mathbf{u} = (y, 0)$ et l'écoulement cellulaire $\mathbf{u} = (\sin x\cos y, -\cos x\sin y)$ sur $[0, 2\pi]^2$, dont le fond colore la vorticité $\omega$ (rouge positif, bleu négatif). Le titre de chaque panneau donne la divergence et la vorticité $\omega = \partial_x u_y - \partial_y u_x$.](fig-champs.png){width="100%" fig-alt="Quatre panneaux de lignes de courant : rayons divergents pour la source, cercles concentriques pour la rotation solide, droites horizontales de sens opposés au-dessus et au-dessous de l'axe pour le cisaillement, et quatre cellules tourbillonnaires alternées pour l'écoulement cellulaire."}
 
 ::: ex
 [Exemple 1.10 — L'écoulement ABC]{.tag}
@@ -709,7 +711,128 @@ Si $S$ est un domaine plan du plan $z = 0$, on a $\mathbf{n} = \mathbf{e}_z$ et 
 :::
 ::::
 
-Les deux théorèmes ont la même structure : l'intégrale d'une dérivée sur un domaine égale l'intégrale de la fonction sur le bord du domaine. On en tire les formules d'intégration par parties en dimension quelconque.
+Les deux théorèmes ont la même structure : l'intégrale d'une dérivée sur un domaine égale l'intégrale de la fonction sur le bord du domaine.
+
+Appliquons (3.1) à une petite boule $B_\varepsilon$ centrée en $\mathbf{x}$, de volume $|B_\varepsilon|$. La moyenne de $\nabla\cdot\mathbf{u}$ sur cette boule tend vers $\nabla\cdot\mathbf{u}(\mathbf{x})$ quand $\varepsilon \to 0$, par continuité, d'où
+
+$$
+\nabla\cdot\mathbf{u}(\mathbf{x}) = \lim_{\varepsilon\to 0}\frac{1}{|B_\varepsilon|}\oint_{\partial B_\varepsilon}\mathbf{u}\cdot\mathbf{n}\,\mathrm{d}S.
+$$
+
+De même, (3.2) appliqué à un petit disque $D_\varepsilon$ de normale $\mathbf{n}$ centré en $\mathbf{x}$ donne
+
+$$
+(\nabla\times\mathbf{u})(\mathbf{x})\cdot\mathbf{n} = \lim_{\varepsilon\to 0}\frac{1}{\pi\varepsilon^2}\oint_{\partial D_\varepsilon}\mathbf{u}\cdot\mathrm{d}\boldsymbol\ell.
+$$
+
+Ces deux formules ne font intervenir aucun système de coordonnées : la divergence est un flux sortant par unité de volume, la composante normale du rotationnel une circulation par unité d'aire. Elles expliquent aussi les formules cylindriques du chapitre 1, qu'on retrouve en calculant flux et circulation sur un petit élément de volume $r\,\mathrm{d}r\,\mathrm{d}\theta\,\mathrm{d}z$. Le schéma interactif suivant le vérifie en 2D, où la boule devient un disque et le flux une intégrale sur un cercle.
+
+```{=html}
+<style>
+.mw-root { --mw-pos: #d6453d; --mw-neg: #2a78d6; --mw-c1: #2a78d6; --mw-c2: #c2410c; }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) .mw-root { --mw-pos: #e66767; --mw-neg: #3987e5; --mw-c1: #6ea8f0; --mw-c2: #fdba74; } }
+:root[data-theme="dark"] .mw-root { --mw-pos: #e66767; --mw-neg: #3987e5; --mw-c1: #6ea8f0; --mw-c2: #fdba74; }
+.mw-root canvas { touch-action: none; cursor: crosshair; border: 1px solid var(--hair); border-radius: .4rem; }
+.mw-root .widget-readout table { border-collapse: collapse; margin: .4rem 0 0; }
+.mw-root .widget-readout td, .mw-root .widget-readout th { padding: .15rem .7rem .15rem 0; text-align: left; border: 0; background: transparent; }
+</style>
+<div class="widget mw-root" id="w-flux">
+<p class="widget-title">Schéma interactif — flux et circulation à travers un petit cercle</p>
+<div class="widget-controls">
+<label>Champ
+<select id="wf-champ">
+<option value="source">source u = (x, y)</option>
+<option value="rotation">rotation solide u = (−y, x)</option>
+<option value="cisaillement">cisaillement u = (y, 0)</option>
+<option value="cellules" selected>cellules (sin x cos y, −cos x sin y)</option>
+<option value="tourbillon">tourbillon ponctuel (−y, x)/(x² + y²)</option>
+<option value="puits">source ponctuelle (x, y)/(x² + y²)</option>
+</select></label>
+<label>Rayon <input type="range" id="wf-r" min="0.03" max="1.6" step="0.01" value="0.8"> <span id="wf-rv">0.80</span></label>
+</div>
+<canvas id="wf-canvas" width="640" height="640" role="img" aria-label="Champ de vecteurs et cercle déplaçable ; les valeurs du flux et de la circulation sont données sous la figure."></canvas>
+<div class="widget-readout" id="wf-out" aria-live="polite"></div>
+<p class="widget-note">Cliquez ou faites glisser dans la figure pour déplacer le cercle. Quand le rayon diminue, le flux divisé par l'aire tend vers la divergence au centre (Green–Ostrogradski) et la circulation divisée par l'aire tend vers la vorticité au centre (Stokes), sauf si le cercle entoure une singularité.</p>
+</div>
+<script>
+(function () {
+  var root = document.getElementById("w-flux"); if (!root) return;
+  var cv = root.querySelector("#wf-canvas"), sel = root.querySelector("#wf-champ"),
+      rr = root.querySelector("#wf-r"), rv = root.querySelector("#wf-rv"), out = root.querySelector("#wf-out");
+  var D = 2.4, cx = 0.6, cy = 0.4;
+  var F = {
+    source: function (x, y) { return [x, y]; },
+    rotation: function (x, y) { return [-y, x]; },
+    cisaillement: function (x, y) { return [y, 0]; },
+    cellules: function (x, y) { var a = Math.PI / 2; return [Math.sin(a * x) * Math.cos(a * y), -Math.cos(a * x) * Math.sin(a * y)]; },
+    tourbillon: function (x, y) { var q = x * x + y * y + 1e-300; return [-y / q, x / q]; },
+    puits: function (x, y) { var q = x * x + y * y + 1e-300; return [x / q, y / q]; }
+  };
+  function css(n) { return getComputedStyle(root).getPropertyValue(n).trim() || "#888"; }
+  function fmt(v) { if (!isFinite(v)) return "—"; var a = Math.abs(v); if (a !== 0 && (a < 1e-3 || a >= 1e4)) return v.toExponential(2).replace("e", "·10^"); return v.toFixed(3).replace("-", "−"); }
+  function quad(f, x0, y0, r) {
+    var M = 1440, fl = 0, ci = 0;
+    for (var i = 0; i < M; i++) {
+      var t = 2 * Math.PI * (i + 0.5) / M, c = Math.cos(t), s = Math.sin(t), u = f(x0 + r * c, y0 + r * s);
+      fl += (u[0] * c + u[1] * s); ci += (-u[0] * s + u[1] * c);
+    }
+    var dl = 2 * Math.PI * r / M; return [fl * dl, ci * dl];
+  }
+  function local(f, x0, y0) {
+    var h = 1e-5, ax = f(x0 + h, y0), bx = f(x0 - h, y0), ay = f(x0, y0 + h), by = f(x0, y0 - h);
+    return [(ax[0] - bx[0]) / (2 * h) + (ay[1] - by[1]) / (2 * h), (ax[1] - bx[1]) / (2 * h) - (ay[0] - by[0]) / (2 * h)];
+  }
+  function draw() {
+    var dpr = window.devicePixelRatio || 1, W = cv.clientWidth || 640, H = W;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    var g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var bg = css("--bg"), ink = css("--ink"), mut = css("--hair"), c1 = css("--mw-c1"), c2 = css("--mw-c2");
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    var X = function (x) { return (x + D) / (2 * D) * W; }, Y = function (y) { return (D - y) / (2 * D) * H; };
+    g.strokeStyle = mut; g.lineWidth = 1; g.beginPath(); g.moveTo(X(-D), Y(0)); g.lineTo(X(D), Y(0)); g.moveTo(X(0), Y(-D)); g.lineTo(X(0), Y(D)); g.stroke();
+    var f = F[sel.value], n = 19, step = 2 * D / n, vmax = 0, pts = [];
+    for (var i = 0; i < n; i++) for (var j = 0; j < n; j++) {
+      var x = -D + (i + 0.5) * step, y = -D + (j + 0.5) * step, u = f(x, y), m = Math.hypot(u[0], u[1]);
+      pts.push([x, y, u, m]); if (isFinite(m)) vmax = Math.max(vmax, Math.min(m, 3));
+    }
+    g.strokeStyle = c1; g.fillStyle = c1; g.lineWidth = 1.6;
+    pts.forEach(function (p) {
+      var m = p[3]; if (!isFinite(m) || m === 0) return;
+      var len = 0.42 * step * Math.min(m, 3) / vmax, ux = p[2][0] / m, uy = p[2][1] / m;
+      var x0 = X(p[0] - 0.5 * len * ux), y0 = Y(p[1] - 0.5 * len * uy), x1 = X(p[0] + 0.5 * len * ux), y1 = Y(p[1] + 0.5 * len * uy);
+      g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke();
+      var a = Math.atan2(y1 - y0, x1 - x0), hl = Math.min(7, 0.45 * Math.hypot(x1 - x0, y1 - y0));
+      g.beginPath(); g.moveTo(x1, y1); g.lineTo(x1 - hl * Math.cos(a - 0.45), y1 - hl * Math.sin(a - 0.45)); g.lineTo(x1 - hl * Math.cos(a + 0.45), y1 - hl * Math.sin(a + 0.45)); g.closePath(); g.fill();
+    });
+    var r = parseFloat(rr.value); rv.textContent = r.toFixed(2);
+    g.strokeStyle = c2; g.lineWidth = 2.5; g.setLineDash([7, 5]);
+    g.beginPath(); g.arc(X(cx), Y(cy), r / (2 * D) * W, 0, 2 * Math.PI); g.stroke(); g.setLineDash([]);
+    g.fillStyle = ink; g.beginPath(); g.arc(X(cx), Y(cy), 3.5, 0, 2 * Math.PI); g.fill();
+    var q = quad(f, cx, cy, r), A = Math.PI * r * r, l = local(f, cx, cy);
+    out.innerHTML = "<table><tr><th></th><th>sur le cercle</th><th>÷ aire π r²</th><th>au centre</th></tr>" +
+      "<tr><td>flux sortant Φ</td><td>" + fmt(q[0]) + "</td><td>" + fmt(q[0] / A) + "</td><td>div u = " + fmt(l[0]) + "</td></tr>" +
+      "<tr><td>circulation Γ</td><td>" + fmt(q[1]) + "</td><td>" + fmt(q[1] / A) + "</td><td>ω = " + fmt(l[1]) + "</td></tr></table>" +
+      "<p style='margin:.3rem 0 0'>centre (" + fmt(cx) + ", " + fmt(cy) + "), rayon " + r.toFixed(2) + "</p>";
+  }
+  function move(e) {
+    var b = cv.getBoundingClientRect(); cx = ((e.clientX - b.left) / b.width) * 2 * D - D; cy = D - ((e.clientY - b.top) / b.height) * 2 * D; draw();
+  }
+  var down = false;
+  cv.addEventListener("pointerdown", function (e) { down = true; cv.setPointerCapture(e.pointerId); move(e); });
+  cv.addEventListener("pointermove", function (e) { if (down) move(e); });
+  cv.addEventListener("pointerup", function () { down = false; });
+  sel.addEventListener("change", draw); rr.addEventListener("input", draw);
+  window.addEventListener("resize", draw);
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (window.matchMedia) { var mq = window.matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", draw); }
+  draw();
+})();
+</script>
+```
+
+Avec les deux champs singuliers de la liste, la limite échoue dès que le cercle entoure l'origine : la circulation du tourbillon ponctuel reste égale à $2\pi$ et le flux de la source ponctuelle aussi, quel que soit le rayon, alors que la vorticité et la divergence sont nulles partout ailleurs. Toute la « source » est concentrée au point singulier ; nous retrouverons ce phénomène à l'exemple 3.9 et à la remarque 4.3.
+
+On tire aussi des deux théorèmes les formules d'intégration par parties en dimension quelconque.
 
 :::: prop
 [Corollaire 3.7 — Intégrations par parties]{.tag}
@@ -746,6 +869,8 @@ Pour un champ $\mathbf{B}$ de classe $C^1$ sur un ouvert $U$, les deux énoncés
 ::::
 
 Trois conséquences physiques en découlent. D'abord, le flux magnétique à travers une surface ne dépend que de la courbe qui la borde : deux surfaces de même bord forment ensemble une surface fermée, de flux total nul. Ensuite, dans un **tube de flux** (réunion de lignes de champ s'appuyant sur une petite courbe fermée), le flux est le même à travers toutes les sections. Enfin, une ligne de champ ne peut ni commencer ni finir en un point : il n'y a ni source ni puits de champ magnétique. Le champ électrique, lui, vérifie la loi de Gauss $\nabla\cdot\mathbf{E} = \rho/\varepsilon_0$ ; ses sources sont les charges. L'équation $\nabla\cdot\mathbf{B} = 0$ exprime qu'aucune « charge magnétique » n'a jamais été observée.
+
+![Lignes de champ d'une charge ponctuelle (à gauche, champ $\mathbf{x}/|\mathbf{x}|^3$) et d'un dipôle magnétique (à droite, coupe dans un plan contenant le moment, représenté par la flèche noire). Les cercles en tirets représentent des surfaces fermées. Pour la charge, toutes les lignes sortent de la surface qui l'entoure : le flux vaut $4\pi$. Pour le dipôle, chaque ligne qui sort de la surface y rentre : le flux est nul, comme pour toute surface fermée.](fig-monopole-dipole.png){width="100%" fig-alt="À gauche, des rayons partent d'un point central ; un cercle autour du point est traversé uniquement vers l'extérieur, un cercle éloigné est traversé une fois dans chaque sens. À droite, des boucles fermées partent du haut du dipôle et reviennent par le bas ; elles traversent le cercle central dans les deux sens."}
 
 ::: ex
 [Exemple 3.9 — Le fil rectiligne et le théorème d'Ampère]{.tag}
@@ -1186,6 +1311,70 @@ $e^{2i\pi(n+N)j/N} = e^{2i\pi nj/N}e^{2i\pi j} = e^{2i\pi nj/N}$. Pour (5.2), on
 
 Le plus grand nombre d'onde représentable est donc $|n| = N/2$, le **nombre d'onde de Nyquist** : il faut au moins deux points par longueur d'onde. Un mode plus fin n'est pas perdu, il est pris pour un mode plus grossier : $\cos(10x)$ échantillonné sur $N = 8$ points coïncide avec $\cos(2x)$.
 
+```{=html}
+<style>
+.mw-root { --mw-pos: #d6453d; --mw-neg: #2a78d6; --mw-c1: #2a78d6; --mw-c2: #c2410c; }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) .mw-root { --mw-pos: #e66767; --mw-neg: #3987e5; --mw-c1: #6ea8f0; --mw-c2: #fdba74; } }
+:root[data-theme="dark"] .mw-root { --mw-pos: #e66767; --mw-neg: #3987e5; --mw-c1: #6ea8f0; --mw-c2: #fdba74; }
+.mw-root canvas { touch-action: none; cursor: crosshair; border: 1px solid var(--hair); border-radius: .4rem; }
+.mw-root .widget-readout table { border-collapse: collapse; margin: .4rem 0 0; }
+.mw-root .widget-readout td, .mw-root .widget-readout th { padding: .15rem .7rem .15rem 0; text-align: left; border: 0; background: transparent; }
+</style>
+<div class="widget mw-root" id="w-alias">
+<p class="widget-title">Schéma interactif — repliement de spectre</p>
+<div class="widget-controls">
+<label>Mode n <input type="range" id="wa-n" min="0" max="40" step="1" value="10"> <span id="wa-nv">10</span></label>
+<label>Points N <input type="range" id="wa-N" min="3" max="40" step="1" value="8"> <span id="wa-Nv">8</span></label>
+<label>Fonction <select id="wa-f"><option value="cos">cos(n x)</option><option value="sin">sin(n x)</option></select></label>
+</div>
+<canvas id="wa-canvas" width="720" height="300" role="img" aria-label="Le mode n échantillonné sur N points et le mode replié qui passe par les mêmes points ; le résultat est écrit sous la figure."></canvas>
+<div class="widget-readout" id="wa-out" aria-live="polite"></div>
+<p class="widget-note">Trait fin : le mode n. Points : ses valeurs sur la grille de N points. Trait épais : le mode de plus petit nombre d'onde qui prend exactement les mêmes valeurs aux points de la grille (proposition 5.9).</p>
+</div>
+<script>
+(function () {
+  var root = document.getElementById("w-alias"); if (!root) return;
+  var cv = root.querySelector("#wa-canvas"), sn = root.querySelector("#wa-n"), sN = root.querySelector("#wa-N"),
+      sf = root.querySelector("#wa-f"), out = root.querySelector("#wa-out");
+  function css(n) { return getComputedStyle(root).getPropertyValue(n).trim() || "#888"; }
+  function draw() {
+    var n = parseInt(sn.value, 10), N = parseInt(sN.value, 10), f = sf.value;
+    root.querySelector("#wa-nv").textContent = n; root.querySelector("#wa-Nv").textContent = N;
+    var m = ((n % N) + N) % N; if (m > N / 2) m -= N;          // représentant dans ]-N/2, N/2]
+    var am = Math.abs(m), sgn = (f === "sin" && m < 0) ? -1 : 1;
+    var nyq = (N % 2 === 0 && am === N / 2);
+    var dpr = window.devicePixelRatio || 1, W = cv.clientWidth || 720, H = Math.round(W * 300 / 720);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    var g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var bg = css("--bg"), ink = css("--ink"), mut = css("--hair"), c1 = css("--mw-c1"), c2 = css("--mw-c2");
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    var pad = 14, X = function (x) { return pad + x / (2 * Math.PI) * (W - 2 * pad); }, Y = function (y) { return H / 2 - y * (H / 2 - pad - 4); };
+    g.strokeStyle = mut; g.lineWidth = 1; g.beginPath(); g.moveTo(X(0), Y(0)); g.lineTo(X(2 * Math.PI), Y(0)); g.stroke();
+    var fn = function (k, x) { return f === "cos" ? Math.cos(k * x) : Math.sin(k * x); };
+    g.strokeStyle = c1; g.lineWidth = 1.3; g.beginPath();
+    for (var i = 0; i <= 1400; i++) { var x = 2 * Math.PI * i / 1400, y = fn(n, x); if (i) g.lineTo(X(x), Y(y)); else g.moveTo(X(x), Y(y)); }
+    g.stroke();
+    g.strokeStyle = c2; g.lineWidth = 3; g.beginPath();
+    for (i = 0; i <= 700; i++) { x = 2 * Math.PI * i / 700; y = sgn * fn(am, x); if (nyq && f === "sin") y = 0; if (i) g.lineTo(X(x), Y(y)); else g.moveTo(X(x), Y(y)); }
+    g.stroke();
+    g.fillStyle = ink; g.strokeStyle = bg; g.lineWidth = 2;
+    for (var j = 0; j < N; j++) { x = 2 * Math.PI * j / N; y = fn(n, x); g.beginPath(); g.arc(X(x), Y(y), 5.5, 0, 2 * Math.PI); g.fill(); g.stroke(); }
+    var resolu = n < N / 2;
+    var txt = "Nombre d'onde de Nyquist : N/2 = " + (N / 2) + ". ";
+    if (resolu) txt += "Le mode n = " + n + " est résolu : il est son propre représentant.";
+    else txt += "Le mode n = " + n + " n'est pas résolu : sur la grille, " + f + "(" + n + " x) coïncide avec " +
+      (nyq && f === "sin" ? "0 (mode de Nyquist : sin s'annule en tous les points)" : (sgn < 0 ? "−" : "") + f + "(" + am + " x)") + ", car " + n + " ≡ " + m + " (mod " + N + ").";
+    out.textContent = txt;
+  }
+  [sn, sN].forEach(function (s) { s.addEventListener("input", draw); }); sf.addEventListener("change", draw);
+  window.addEventListener("resize", draw);
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (window.matchMedia) { var mq = window.matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", draw); }
+  draw();
+})();
+</script>
+```
+
 ### 5.3 La transformée de Fourier rapide (FFT)
 
 Calculer les $N$ coefficients par la définition coûte $N^2$ opérations. L'algorithme de Cooley et Tukey (1965) réduit ce coût à $O(N\log N)$.
@@ -1287,6 +1476,8 @@ for n_max in [11, 101, 1001]:
 ```
 
 Avec 32 points, la dérivée spectrale atteint la précision machine, alors que les différences finies d'ordre 2 font encore une erreur de quelques pourcents et ne gagnent qu'un facteur 4 chaque fois que $N$ double. La légère remontée de l'erreur spectrale au-delà de $N = 32$ est due à l'arrondi, qui croît comme $N\epsilon_{\text{machine}}$ parce que les nombres d'onde multiplient les erreurs. Le maximum des sommes partielles du créneau se stabilise à $1{,}1790$ : le dépassement de Gibbs ne disparaît pas quand on ajoute des modes, il se resserre seulement contre le saut.
+
+![Trois phénomènes de ce chapitre. À gauche, le repliement : sur la grille de $N = 8$ points, $\cos(10x)$ et $\cos(2x)$ prennent les mêmes valeurs. Au centre, le phénomène de Gibbs : les sommes partielles du créneau dépassent la valeur 1 d'environ $0{,}179$ près du saut, pour $n_{\max} = 11$ comme pour $n_{\max} = 101$. À droite, l'erreur maximale de la dérivée de $e^{\sin x}$ : décroissance exponentielle pour la méthode spectrale jusqu'à l'arrondi, en $N^{-2}$ pour les différences finies d'ordre 2.](fig-fourier.png){width="100%" fig-alt="Trois graphiques. Premier : une sinusoïde rapide et une lente passent par les mêmes huit points noirs. Deuxième : deux sommes partielles d'un créneau oscillent près du saut en x = 0 et dépassent la valeur 1 jusqu'à environ 1,18. Troisième : en échelle logarithmique, l'erreur spectrale chute de 1e-1 à 1e-15 entre N = 6 et N = 32 puis remonte légèrement, tandis que l'erreur des différences finies décroît selon une droite de pente -2." }
 
 ### 5.5 Fourier en plusieurs dimensions et spectre d'énergie
 
@@ -1567,9 +1758,11 @@ Pour $\mathbf{k}$ réel non nul, $P(\mathbf{k})$ est la matrice de la projection
 
 Pour un champ aléatoire isotrope (un bruit blanc, par exemple), chaque coefficient $\hat{\mathbf{u}}_{\mathbf{k}}$ a la même variance dans les $d$ directions et la projection en retire une : en moyenne, une fraction $(d-1)/d$ de l'énergie est conservée, soit $1/2$ en 2D et $2/3$ en 3D. En 2D, la projection s'écrit aussi avec la fonction de courant : $\mathbb{P}\mathbf{u} = \bar{\mathbf{u}} + \nabla^\perp\psi$ avec $-\Delta\psi = \omega$, où $\omega$ est la vorticité de $\mathbf{u}$ (exercice 14).
 
+![Décomposition de Helmholtz–Hodge d'un champ aléatoire lisse sur le tore $[0, 2\pi)^2$ (calculée par la formule (6.2)). À gauche, le champ $\mathbf{u}$ et, en fond, sa divergence. Au centre, la partie gradient $\nabla p$, sans vorticité, dont les lignes de courant partent des maxima de $p$ (en rouge) et convergent vers ses minima (en bleu). À droite, la partie solénoïdale $\mathbb{P}\mathbf{u}$, sans divergence, dont les lignes de courant s'enroulent autour des extrema de la vorticité. L'épaisseur des lignes est proportionnelle à la norme du champ.](fig-helmholtz.png){width="100%" fig-alt="Trois panneaux de lignes de courant sur fond coloré, reliés par les signes égal et plus. Le premier mélange sources, puits et tourbillons ; le deuxième ne montre que des sources et des puits ; le troisième ne montre que des tourbillons et des lignes fermées."}
+
 ::: note
 [Remarque 6.7 — « Divergence nulle » dépend de l'opérateur discret]{.tag}
-Sur une grille, $\mathbb{P}\mathbf{u}$ calculé par FFT a une divergence nulle à la précision machine **si la divergence est mesurée avec les mêmes nombres d'onde** (y compris la convention de Nyquist). Mesurée par différences finies, la divergence du même champ ne vaut que $O(h^2)$, où $h$ est le pas de grille. Une métrique de « contrôle de la divergence » n'a donc de sens que si l'on précise l'opérateur discret utilisé.
+Sur une grille, $\mathbb{P}\mathbf{u}$ calculé par FFT a une divergence nulle à la précision machine **si la divergence est mesurée avec les mêmes nombres d'onde** (y compris la convention de Nyquist). Mesurée par différences finies, la divergence du même champ ne vaut que $O(h^2)$, où $h$ est le pas de grille. Une métrique de « contrôle de la divergence » n'a donc de sens que si l'on précise l'opérateur discret utilisé. Avec la convention de Nyquist, les rares modes dont tous les nombres d'onde modifiés sont nuls (le mode moyen, mais aussi les modes de Nyquist « purs », comme $(N/2, 0)$ ou $(N/2, N/2)$ en 2D) sont laissés intacts par la formule de la définition 6.5 ; on peut préférer les annuler, comme dans l'exercice 14.
 :::
 
 Le code suivant projette des bruits blancs en 2D et en 3D et vérifie les propriétés de la proposition 6.6.
@@ -1616,24 +1809,149 @@ for d, N in [(2, 256), (3, 64)]:
 
 La divergence passe d'une valeur typique de 100 (le bruit blanc a beaucoup d'énergie aux petites échelles) à environ $10^{-15}$ fois cette valeur. La projection est idempotente, ses deux parties sont orthogonales, et elle conserve la moitié de l'énergie en 2D et les deux tiers en 3D, comme prévu.
 
+Le schéma interactif suivant refait ce calcul dans le navigateur, sur une grille $32\times 32$, pour un champ dont on règle l'échelle par un filtre gaussien de largeur $k_c$ en nombre d'onde. On y voit les deux parties de la décomposition et on y lit les trois propriétés : énergies qui s'additionnent, divergence de $\mathbb{P}\mathbf{u}$ au niveau de l'arrondi, vorticité de $\nabla p$ au même niveau.
+
+```{=html}
+<style>
+.mw-root { --mw-pos: #d6453d; --mw-neg: #2a78d6; --mw-c1: #2a78d6; --mw-c2: #c2410c; }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) .mw-root { --mw-pos: #e66767; --mw-neg: #3987e5; --mw-c1: #6ea8f0; --mw-c2: #fdba74; } }
+:root[data-theme="dark"] .mw-root { --mw-pos: #e66767; --mw-neg: #3987e5; --mw-c1: #6ea8f0; --mw-c2: #fdba74; }
+.mw-root canvas { touch-action: none; cursor: crosshair; border: 1px solid var(--hair); border-radius: .4rem; }
+.mw-root .widget-readout table { border-collapse: collapse; margin: .4rem 0 0; }
+.mw-root .widget-readout td, .mw-root .widget-readout th { padding: .15rem .7rem .15rem 0; text-align: left; border: 0; background: transparent; }
+</style>
+<div class="widget mw-root" id="w-leray">
+<p class="widget-title">Schéma interactif — décomposition de Helmholtz–Hodge d'un champ aléatoire</p>
+<div class="widget-controls">
+<span role="radiogroup" aria-label="Partie affichée">
+<label><input type="radio" name="wl-v" value="u" checked> champ u</label>
+<label><input type="radio" name="wl-v" value="g"> partie gradient ∇p</label>
+<label><input type="radio" name="wl-v" value="w"> partie solénoïdale ℙu</label>
+</span>
+<label>Échelle k<sub>c</sub> <input type="range" id="wl-kc" min="1" max="8" step="0.5" value="2.5"> <span id="wl-kcv">2.5</span></label>
+<button type="button" id="wl-new">Nouveau tirage</button>
+</div>
+<canvas id="wl-canvas" width="640" height="640" role="img" aria-label="Flèches du champ choisi sur une grille périodique 32 × 32 ; fond coloré par la divergence ou la vorticité ; valeurs numériques sous la figure."></canvas>
+<div class="widget-readout" id="wl-out" aria-live="polite"></div>
+<p class="widget-note">Grille périodique 32 × 32, transformée de Fourier discrète calculée dans le navigateur. Fond : divergence pour u et ∇p, vorticité pour ℙu (rouge positif, bleu négatif). La partie gradient n'a pas de vorticité, la partie solénoïdale n'a pas de divergence, et leurs énergies s'ajoutent (orthogonalité).</p>
+</div>
+<script>
+(function () {
+  var root = document.getElementById("w-leray"); if (!root) return;
+  var cv = root.querySelector("#wl-canvas"), out = root.querySelector("#wl-out"), skc = root.querySelector("#wl-kc");
+  var N = 32, seed = 7, state = null;
+  function css(n) { return getComputedStyle(root).getPropertyValue(n).trim() || "#888"; }
+  function rng(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  var CS = [], SN = [];
+  for (var t = 0; t < N; t++) { CS.push(Math.cos(2 * Math.PI * t / N)); SN.push(Math.sin(2 * Math.PI * t / N)); }
+  function dft1(re, im, inv) {                       // TFD naïve de longueur N (sens direct : e^{-2iπjn/N})
+    var R = new Float64Array(N), I = new Float64Array(N), s = inv ? 1 : -1;
+    for (var n = 0; n < N; n++) { var a = 0, b = 0;
+      for (var j = 0; j < N; j++) { var q = (j * n) % N, c = CS[q], d = s * SN[q]; a += re[j] * c - im[j] * d; b += re[j] * d + im[j] * c; }
+      R[n] = inv ? a / N : a; I[n] = inv ? b / N : b; }
+    return [R, I];
+  }
+  function dft2(re, im, inv) {                       // tableaux N*N, indice i*N + j (i : x, j : y)
+    var R = new Float64Array(N * N), I = new Float64Array(N * N), a = new Float64Array(N), b = new Float64Array(N), i, j, r;
+    for (i = 0; i < N; i++) { for (j = 0; j < N; j++) { a[j] = re[i * N + j]; b[j] = im[i * N + j]; } r = dft1(a, b, inv); for (j = 0; j < N; j++) { R[i * N + j] = r[0][j]; I[i * N + j] = r[1][j]; } }
+    for (j = 0; j < N; j++) { for (i = 0; i < N; i++) { a[i] = R[i * N + j]; b[i] = I[i * N + j]; } r = dft1(a, b, inv); for (i = 0; i < N; i++) { R[i * N + j] = r[0][i]; I[i * N + j] = r[1][i]; } }
+    return [R, I];
+  }
+  function kk(i) { return i < N / 2 ? i : (i === N / 2 ? 0 : i - N); }   // nombres d'onde, Nyquist annulé
+  function compute() {
+    var kc = parseFloat(skc.value), r = rng(seed), z = new Float64Array(N * N), U = [];
+    root.querySelector("#wl-kcv").textContent = kc.toFixed(1);
+    for (var c = 0; c < 2; c++) {
+      var a = new Float64Array(N * N);
+      for (var p = 0; p < N * N; p++) { var u1 = r() || 1e-12, u2 = r(); a[p] = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2); }
+      var h = dft2(a, z, false);
+      for (var i = 0; i < N; i++) for (var j = 0; j < N; j++) {
+        var kx = i < N / 2 ? i : i - N, ky = j < N / 2 ? j : j - N, k2 = kx * kx + ky * ky, ny = (i === N / 2 || j === N / 2);
+        var f = (k2 === 0 || ny) ? 0 : Math.exp(-k2 / (2 * kc * kc)); h[0][i * N + j] *= f; h[1][i * N + j] *= f;
+      }
+      U.push(h);
+    }
+    var G = [[new Float64Array(N * N), new Float64Array(N * N)], [new Float64Array(N * N), new Float64Array(N * N)]];
+    var Wh = [[new Float64Array(N * N), new Float64Array(N * N)], [new Float64Array(N * N), new Float64Array(N * N)]];
+    for (i = 0; i < N; i++) for (j = 0; j < N; j++) {
+      p = i * N + j; var KX = kk(i), KY = kk(j), K2 = KX * KX + KY * KY;
+      var dr = KX * U[0][0][p] + KY * U[1][0][p], di = KX * U[0][1][p] + KY * U[1][1][p];
+      var s = K2 ? 1 / K2 : 0;
+      G[0][0][p] = KX * dr * s; G[0][1][p] = KX * di * s; G[1][0][p] = KY * dr * s; G[1][1][p] = KY * di * s;
+      for (c = 0; c < 2; c++) { Wh[c][0][p] = U[c][0][p] - G[c][0][p]; Wh[c][1][p] = U[c][1][p] - G[c][1][p]; }
+    }
+    function back(H) { return [dft2(H[0][0], H[0][1], true)[0], dft2(H[1][0], H[1][1], true)[0]]; }
+    function deriv(H) {                                 // divergence et vorticité spectrales
+      var dR = new Float64Array(N * N), dI = new Float64Array(N * N), oR = new Float64Array(N * N), oI = new Float64Array(N * N);
+      for (var i = 0; i < N; i++) for (var j = 0; j < N; j++) { var p = i * N + j, KX = kk(i), KY = kk(j);
+        dR[p] = -(KX * H[0][1][p] + KY * H[1][1][p]); dI[p] = KX * H[0][0][p] + KY * H[1][0][p];
+        oR[p] = -(KX * H[1][1][p] - KY * H[0][1][p]); oI[p] = KX * H[1][0][p] - KY * H[0][0][p]; }
+      return [dft2(dR, dI, true)[0], dft2(oR, oI, true)[0]];
+    }
+    state = { u: back(U), g: back(G), w: back(Wh), du: deriv(U), dg: deriv(G), dw: deriv(Wh) };
+  }
+  function nrm2(v) { var s = 0; for (var p = 0; p < N * N; p++) s += v[0][p] * v[0][p] + v[1][p] * v[1][p]; return s / (N * N); }
+  function maxabs(a) { var m = 0; for (var p = 0; p < a.length; p++) m = Math.max(m, Math.abs(a[p])); return m; }
+  function rms(a) { var s = 0; for (var p = 0; p < a.length; p++) s += a[p] * a[p]; return Math.sqrt(s / a.length); }
+  function mix(c1, c2, t) { return "rgb(" + [0, 1, 2].map(function (k) { return Math.round(c1[k] + (c2[k] - c1[k]) * t); }).join(",") + ")"; }
+  function rgb(s) { var d = document.createElement("span"); d.style.color = s; document.body.appendChild(d); var c = getComputedStyle(d).color; d.remove(); return c.match(/\d+/g).slice(0, 3).map(Number); }
+  function draw() {
+    if (!state) return;
+    var v = root.querySelector("input[name=wl-v]:checked").value, F = state[v], D = state["d" + v], bgf = v === "w" ? D[1] : D[0];
+    var dpr = window.devicePixelRatio || 1, W = cv.clientWidth || 640, H = W;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    var g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var bg = rgb(css("--bg")), pos = rgb(css("--mw-pos")), neg = rgb(css("--mw-neg")), ink = css("--ink");
+    var cell = W / N, m = Math.max(maxabs(state.du[0]), maxabs(state.dw[1]), 1e-300), i, j, p;
+    for (i = 0; i < N; i++) for (j = 0; j < N; j++) { var t = bgf[i * N + j] / m; g.fillStyle = mix(bg, t > 0 ? pos : neg, Math.min(1, Math.abs(t)) * 0.8); g.fillRect(i * cell, H - (j + 1) * cell, cell + 0.5, cell + 0.5); }
+    var vm = 0; for (p = 0; p < N * N; p++) vm = Math.max(vm, Math.hypot(state.u[0][p], state.u[1][p]));
+    g.strokeStyle = ink; g.fillStyle = ink; g.lineWidth = 1.2;
+    for (i = 0; i < N; i++) for (j = 0; j < N; j++) {
+      p = i * N + j; var ux = F[0][p], uy = F[1][p], mg = Math.hypot(ux, uy); if (mg < 1e-12 * vm) continue;
+      var L = 1.25 * cell * mg / vm, x0 = (i + 0.5) * cell - 0.5 * L * ux / mg, y0 = H - (j + 0.5) * cell + 0.5 * L * uy / mg, x1 = x0 + L * ux / mg, y1 = y0 - L * uy / mg;
+      g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke();
+      var a = Math.atan2(y1 - y0, x1 - x0), hl = Math.min(5, 0.4 * L);
+      g.beginPath(); g.moveTo(x1, y1); g.lineTo(x1 - hl * Math.cos(a - 0.5), y1 - hl * Math.sin(a - 0.5)); g.lineTo(x1 - hl * Math.cos(a + 0.5), y1 - hl * Math.sin(a + 0.5)); g.closePath(); g.fill();
+    }
+    var Eu = nrm2(state.u), Eg = nrm2(state.g), Ew = nrm2(state.w), cr = 0;
+    for (p = 0; p < N * N; p++) cr += state.g[0][p] * state.w[0][p] + state.g[1][p] * state.w[1][p];
+    cr /= N * N;
+    var e = function (x) { return x.toExponential(1).replace("e", "·10^").replace("-", "−"); };
+    out.innerHTML = "énergie : ⟨|∇p|²⟩ / ⟨|u|²⟩ = " + (100 * Eg / Eu).toFixed(1) + " %, ⟨|ℙu|²⟩ / ⟨|u|²⟩ = " + (100 * Ew / Eu).toFixed(1) +
+      " %, somme = " + (100 * (Eg + Ew) / Eu).toFixed(4) + " %<br>orthogonalité : ⟨∇p · ℙu⟩ / ⟨|u|²⟩ = " + e(cr / Eu) +
+      "<br>divergence (rms) : u : " + e(rms(state.du[0])) + " ; ℙu : " + e(rms(state.dw[0])) +
+      " — vorticité (rms) de ∇p : " + e(rms(state.dg[1]));
+  }
+  function redo() { compute(); draw(); }
+  root.querySelectorAll("input[name=wl-v]").forEach(function (b) { b.addEventListener("change", draw); });
+  skc.addEventListener("input", redo);
+  root.querySelector("#wl-new").addEventListener("click", function () { seed = (seed * 48271 + 11) % 2147483647; redo(); });
+  window.addEventListener("resize", draw);
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (window.matchMedia) { var mq = window.matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", draw); }
+  redo();
+})();
+</script>
+```
+
 Deux voies mènent donc à un champ solénoïdal sur le tore : **construire** le champ à partir d'un potentiel (chapitre 4), ou **projeter** un champ quelconque. Le code suivant illustre la première voie sur une grille : il tire une fonction de courant aléatoire dont le spectre d'énergie suit une loi $E(k) \propto k^{-3}$ (la loi attendue dans la cascade d'enstrophie de la turbulence 2D), puis en déduit la vitesse par dérivation spectrale.
 
 ```python
 import numpy as np
 rng = np.random.default_rng(6)
 N, L = 256, 2 * np.pi
-k1 = 2 * np.pi * np.fft.fftfreq(N, d=L / N)
-k1[N // 2] = 0.0
+kv = 2 * np.pi * np.fft.fftfreq(N, d=L / N)          # vrais nombres d'onde
+k1 = kv.copy(); k1[N // 2] = 0.0                      # pour les dérivées : Nyquist annulé
 KX, KY = np.meshgrid(k1, k1, indexing="ij")
-kn = np.sqrt(KX**2 + KY**2)
+kn = np.sqrt(sum(k**2 for k in np.meshgrid(kv, kv, indexing="ij")))   # |k| vrai
 F, Fi = np.fft.fft2, lambda a: np.real(np.fft.ifft2(a))
 
 # 1) Fonction de courant aléatoire de spectre cible E(k) ~ k^-3 pour 4 <= |k| <= 64.
 #    Énergie d'un mode : |k|^2 |psi^_k|^2 / 2 ; il y a environ 2 pi k modes par couche.
 amp = np.zeros_like(kn)
-bande = (kn >= 4) & (kn <= 64)
+bande = (kn >= 4) & (kn <= 64)                        # exclut aussi les modes de Nyquist (|k| >= 128)
 amp[bande] = np.sqrt(kn[bande]**-3 / (np.pi * kn[bande]**3))
-psi = Fi(amp * F(rng.normal(size=(N, N))))     # filtrer un bruit blanc : psi réel
+psi = Fi(amp * F(rng.normal(size=(N, N))))            # filtrer un bruit blanc : psi réel
 psi_h = F(psi)
 
 # 2) u = (d_y psi, -d_x psi), normalisé à <|u|^2> = 1
@@ -1647,21 +1965,23 @@ div = dxux + Fi(1j * KY * F(uy))
 print("max|div u| =", f"{np.abs(div).max():.1e}", "; max|d_x u_x| =", f"{np.abs(dxux).max():.1f}",
       "; rapport =", f"{np.abs(div).max() / np.abs(dxux).max():.1e}")
 uh2 = (np.abs(F(ux))**2 + np.abs(F(uy))**2) / N**4
-E = np.array([0.5 * uh2[(kn >= s - 0.5) & (kn < s + 0.5)].sum() for s in range(N // 2)])
+E = np.array([0.5 * uh2[(kn >= s - 0.5) & (kn < s + 0.5)].sum() for s in range(N)])
 s = np.arange(8, 49)
 print("pente du spectre entre k = 8 et 48 :", f"{np.polyfit(np.log(s), np.log(E[s]), 1)[0]:.2f}", "(cible -3)")
 print("Parseval : sum E(k) =", f"{E.sum():.12f}", "; <|u|^2>/2 =", f"{0.5 * np.mean(ux**2 + uy**2):.12f}")
 # sortie :
-# max|div u| = 8.7e-14 ; max|d_x u_x| = 12.4 ; rapport = 7.0e-15
-# pente du spectre entre k = 8 et 48 : -2.95 (cible -3)
+# max|div u| = 8.2e-14 ; max|d_x u_x| = 12.9 ; rapport = 6.3e-15
+# pente du spectre entre k = 8 et 48 : -2.91 (cible -3)
 # Parseval : sum E(k) = 0.500000000000 ; <|u|^2>/2 = 0.500000000000
 ```
 
-Le champ obtenu est solénoïdal à la précision machine (le rapport de $7\times 10^{-15}$ reflète l'arrondi des FFT sur $256^2$ points) et son spectre a la pente voulue. Construire par potentiel permet donc de contrôler en même temps la contrainte et le spectre ; projeter permet de partir de n'importe quel champ, mais modifie son spectre.
+Le champ obtenu est solénoïdal à la précision machine (le rapport de $6\times 10^{-15}$ reflète l'arrondi des FFT sur $256^2$ points) et son spectre a la pente voulue, aux fluctuations statistiques près : chaque couche ne contient que quelques dizaines à quelques centaines de modes tirés au hasard. Notez que l'amplitude est calculée avec les **vrais** nombres d'onde, alors que les dérivées utilisent les nombres d'onde dont le mode de Nyquist est annulé : sinon, les modes de Nyquist, d'échelle égale à deux pas de grille, recevraient l'amplitude d'un mode de grande échelle et le champ serait couvert d'un damier parasite. Construire par potentiel permet donc de contrôler en même temps la contrainte et le spectre ; projeter permet de partir de n'importe quel champ, mais modifie son spectre.
+
+![Champ de vitesse construit par fonction de courant avec le code précédent. À gauche, les lignes de niveau de $\psi$, qui sont les lignes de courant (traits pleins pour $\psi > 0$, tirets pour $\psi < 0$), sur un fond coloré par la vorticité $\omega = -\Delta\psi$ ; la vorticité est dominée par les petites échelles, car le spectre d'enstrophie $k^2E(k) \propto k^{-1}$ décroît lentement. À droite, le spectre d'énergie mesuré par couches, comparé à la pente $k^{-3}$ visée.](fig-courant.png){width="100%" fig-alt="À gauche, des lignes de niveau tourbillonnaires sur un fond rouge et bleu finement granulé. À droite, un nuage de points en échelle log-log qui suit une droite de pente -3 entre k = 5 et k = 64."}
 
 ::: note
 [Remarque 6.8 — Pression, méthode de projection et modèles génératifs]{.tag}
-Pour l'équation de Navier–Stokes incompressible, appliquer $\mathbb{P}$ élimine la pression : $\partial_t\mathbf{u} = \mathbb{P}\big[-(\mathbf{u}\cdot\nabla)\mathbf{u} + \mathbf{f}\big] + \nu\Delta\mathbf{u}$. La pression est le multiplicateur de Lagrange de la contrainte $\nabla\cdot\mathbf{u} = 0$. La méthode de projection de Chorin (1968) avance d'abord la vitesse sans pression, puis projette. Les modèles génératifs récents reprennent cette idée : Genuist et al. (2026, préprint) comparent plusieurs façons d'insérer le projecteur de Leray dans un modèle de diffusion pour des écoulements 2D, et concluent qu'aucune stratégie ne domine dans tous les régimes ; Li et al. (2026, préprint) projettent l'estimation débruitée d'un modèle de diffusion de turbulence 3D en rotation et obtiennent une divergence nulle à la précision machine.
+Pour l'équation de Navier–Stokes incompressible, appliquer $\mathbb{P}$ élimine la pression : $\partial_t\mathbf{u} = \mathbb{P}\big[-(\mathbf{u}\cdot\nabla)\mathbf{u} + \mathbf{f}\big] + \nu\Delta\mathbf{u}$. La pression est le multiplicateur de Lagrange de la contrainte $\nabla\cdot\mathbf{u} = 0$. La méthode de projection de Chorin (1968) avance d'abord la vitesse sans pression, puis projette. Les modèles génératifs récents reprennent cette idée : Genuist et al. (2026, préprint) comparent, pour des écoulements 2D périodiques, six variantes d'un modèle de diffusion, dont plusieurs insertions du projecteur spectral de Leray et une simple pénalité de divergence ; ils concluent qu'aucune stratégie ne domine dans tous les régimes (les contraintes strictes l'emportent près de la distribution d'entraînement, la pénalité douce sur un cas de Taylor–Green hors distribution) ; Li et al. (2026, préprint) projettent l'estimation débruitée d'un modèle de diffusion de turbulence 3D en rotation et obtiennent une divergence nulle à la précision machine.
 :::
 
 ### 6.3 Avec des parois : pourquoi c'est plus difficile
@@ -1672,7 +1992,7 @@ Dans une boîte périodique, $\mathbb{P}$ est **diagonal** en Fourier : chaque v
 2. **Une seule condition au bord.** La projection impose $\mathbf{w}\cdot\mathbf{n} = 0$, mais pas la nullité de la vitesse tangentielle exigée par l'adhérence d'un fluide visqueux. Les méthodes de projection doivent donc gérer une couche limite numérique au voisinage des parois.
 3. **Plus de commutation.** Dans un domaine borné, $\mathbb{P}$ ne commute plus en général avec le laplacien ni avec les dérivées : l'argument (v) de la proposition 6.6, qui reposait sur des multiplicateurs de Fourier, tombe. Nous admettons ce point.
 4. **Des conditions magnétiques non locales.** Pour le champ magnétique, la bonne condition n'est pas $\mathbf{B}\cdot\mathbf{n} = 0$. Si le conducteur est entouré d'un isolant, le champ extérieur vérifie $\nabla\times\mathbf{B} = \mathbf{0}$ et $\nabla\cdot\mathbf{B} = 0$, donc $\mathbf{B} = \nabla\phi$ avec $\Delta\phi = 0$ hors du conducteur, et il doit se raccorder continûment au champ intérieur : la condition au bord dépend de la solution d'un problème extérieur. Si la perméabilité magnétique $\mu$ saute (turbines en fer doux de VKS), il faut en plus raccorder $\mathbf{B}\cdot\mathbf{n}$ et la composante tangentielle de $\mathbf{H} = \mathbf{B}/\mu$ à travers l'interface. Ces conditions de saut sont traitées explicitement par SFEMaNS.
-5. **Le contournement par pénalisation.** Les codes pseudo-spectraux plongent le cylindre et les turbines dans une boîte périodique et imposent les parois par un terme de pénalisation volumique (Kreuzahler et al., 2014, 2017 : boîte $(3\pi)^3$ et $384^3$ points pour VKS). La projection par FFT reste alors utilisable, au prix d'une représentation approchée des parois.
+5. **Le contournement par pénalisation.** Les codes pseudo-spectraux plongent le cylindre et les turbines dans une boîte périodique et imposent les parois par un terme de pénalisation volumique (Kreuzahler et al., 2014 ; dans Kreuzahler et al., 2017, la boîte périodique mesure $(3\pi)^3$ et compte $384^3$ points). La projection par FFT reste alors utilisable, au prix d'une représentation approchée des parois.
 
 Le relevé bibliographique du site (synthèse, voir la [page de la thèse](../../these/index.html#theorie)) n'a trouvé aucun modèle génératif imposant une contrainte de divergence dure avec les conditions aux limites d'un cylindre à parois ; c'est l'une des questions ouvertes du projet.
 

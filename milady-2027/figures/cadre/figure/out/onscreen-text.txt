@@ -1,0 +1,59 @@
+panel	8.0pt	a
+title	7.0pt	Flow matching latent
+label	8.0pt	λ
+label	5.6pt	Re
+label	5.6pt	Rm
+label	5.6pt	μr
+label	6.0pt	Paramètresde contrôle
+label	5.5pt	0
+label	5.5pt	1
+label	6.0pt	t
+label	6.0pt	z0 ~ N(0, I)
+label	6.0pt	z1
+label	6.0pt	B
+label	6.0pt	−B
+label	6.5pt	S
+label	6.0pt	vθ(z, t, λ)
+label	6.0pt	C3
+label	6.0pt	symétrie B ↦ −B : équivariance
+panel	8.0pt	b
+title	7.0pt	Décodeur à potentiels
+label	6.0pt	z1
+label	6.0pt	Attentioncroisée
+label	6.0pt	x
+label	5.6pt	Ω
+label	5.6pt	Au
+label	5.6pt	AB
+label	6.0pt	∇×
+label	6.0pt	∇×
+label	6.5pt	ψ
+label	6.5pt	a
+label	6.5pt	u
+label	6.5pt	B
+label	6.0pt	C1
+label	6.0pt	∇·u = ∇·B = 0 : par construction
+panel	8.0pt	c
+title	7.0pt	Cible 3D : VKS
+label	6.0pt	Turbinescontrarotatives
+label	6.5pt	u
+label	6.5pt	B
+label	6.0pt	stage : 3 modes, MHD 2D
+panel	8.0pt	d
+title	7.0pt	Contrôle en loi
+label	6.5pt	ε
+label	5.5pt	E[P]
+label	6.0pt	E[ε] = E[P]
+label	5.5pt	inclinaison
+label	5.8pt	qθ
+label	6.0pt	en loi
+label	6.0pt	par échantillon
+label	6.0pt	dE/dt = P − ε
+label	6.0pt	C4
+label	6.0pt	bilan d’énergie : en loi
+panel	8.0pt	e
+title	7.0pt	Usages
+label	6.0pt	Modèles réduits
+label	6.0pt	Assimilationde données
+label	5.6pt	D
+label	6.0pt	Renversements(Rice)
+label	5.6pt	perte de stationnarité

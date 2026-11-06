@@ -35,7 +35,7 @@ export function cross(L, g, x, y, s, color) {      // cross mark
 }
 
 export function heading(L, P, str, opts = {}) {
-  L.text(P, opts.dx ?? 12, opts.dy ?? 7.6, str, { size: 6.5, weight: 'bold', color: K.ink, role: 'title' });
+  L.text(P, opts.dx ?? 12, opts.dy ?? 7.6, str, { size: 7, weight: 'bold', color: K.ink, role: 'title' });
 }
 
 // constraint chip: class code in a dark tab, then the mechanism
@@ -47,7 +47,7 @@ export function chip(L, g, x, y, w, code, line, opts = {}) {
     L.rect(g, x + 8, y, 5, h, { fill: col, stroke: 'none' });
     L.text(g, x + 6.5, y + h / 2, code, { size: 6, weight: 'bold', color: '#ffffff', anchor: 'middle', valign: 'middle' });
   }
-  L.text(g, x + (code ? 16 : 4), y + h / 2, line, { size: 5.6, color: K.ink, valign: 'middle' });
+  L.text(g, x + (code ? 16 : 4), y + h / 2, line, { size: 6, color: K.ink, valign: 'middle' });
 }
 
 // ---------------------------------------------------------------- a. parameters
@@ -148,7 +148,7 @@ export function fieldLines(L, g, x, y, s, segs, kind, opts = {}) {
     const pts = sg.pts.map(([u, v]) => [x + u * s, y + (1 - v) * s]);
     L.polyline(cg.node, pts, { stroke: col, width: 0.55, fill: 'none' });
     let len = 0; for (let i = 1; i < pts.length; i++) len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
-    if (len > s * 0.35) chev(L, cg.node, pts, 0.5, col, { len: 1.5, width: 0.5 });
+    if (len > s * 0.5) chev(L, cg.node, pts, 0.5, col, { len: 1.5, width: 0.5 });
   }
   L.rect(g, x, y, s, s, { stroke: '#8a8a8a', width: 0.4, fill: 'none' });
 }
@@ -161,7 +161,7 @@ export function vks(F, L, g, cx, cy, R, D, opts = {}) {
   const ell = (z, r, a0, a1, n = 60) => Array.from({ length: n + 1 }, (_, i) => { const a = a0 + (a1 - a0) * i / n; return P(r * Math.cos(a), r * Math.sin(a), z); });
   const PI = Math.PI;
   // bottom shaft (behind everything)
-  L.cylinder3(g, P, [0, 0, -Hc - 0.32 * R], [0, 0, -Hc], 0.07 * R, 0.07 * R, { fill: '#9aa1a8', shading: true, stroke: '#5f656b', width: 0.35 });
+  L.cylinder3(g, P, [0, 0, -Hc - 0.38 * R], [0, 0, -Hc], 0.07 * R, 0.07 * R, { fill: '#9aa1a8', shading: true, stroke: '#5f656b', width: 0.35 });
   // glass body (back)
   const sil = [...ell(Hc, R, 0, -PI), ...ell(-Hc, R, -PI, 0)];
   L.polygon(g, sil, { fill: K.glass, opacity: 0.45, stroke: 'none' });
@@ -189,7 +189,7 @@ export function vks(F, L, g, cx, cy, R, D, opts = {}) {
   const mer = [P(-R, 0, -h + bh), P(R, 0, -h + bh), P(R, 0, h - bh), P(-R, 0, h - bh)];
   L.polygon(g, mer, { fill: '#ffffff', opacity: 0.55, stroke: 'none' });
   for (const sg of D.vks.u) {
-    if (Math.abs(sg.lev) < 0.06) continue;
+    if (Math.abs(sg.lev) < 0.04) continue;
     const pts = sg.pts.map(([r, z]) => P(-r * R, 0, z * R));
     L.polyline(g, pts, { stroke: K.u, width: 0.55, fill: 'none' });
     chev(L, g, pts, 0.25, K.u, { len: 1.6 }); chev(L, g, pts, 0.75, K.u, { len: 1.6 });
@@ -217,16 +217,18 @@ export function vks(F, L, g, cx, cy, R, D, opts = {}) {
   const hl = (a) => [P(R * Math.cos(a), R * Math.sin(a), -Hc + 0.15 * R), P(R * Math.cos(a), R * Math.sin(a), Hc - 0.15 * R)];
   L.line(g, ...hl(-2.35), { stroke: '#ffffff', width: 1.4, opacity: 0.8, cap: 'round' });
   // top shaft
-  L.cylinder3(g, P, [0, 0, Hc], [0, 0, Hc + 0.32 * R], 0.07 * R, 0.07 * R, { fill: '#9aa1a8', shading: true, stroke: '#5f656b', width: 0.35 });
+  L.cylinder3(g, P, [0, 0, Hc], [0, 0, Hc + 0.38 * R], 0.07 * R, 0.07 * R, { fill: '#9aa1a8', shading: true, stroke: '#5f656b', width: 0.35 });
   // counter-rotation: arcs on the near side at the two impeller levels, opposite senses
-  const rot = (z, sense) => {
-    const a0 = -PI * 0.86, a1 = -PI * 0.14, rr = 1.12 * R;
+  const rot = (z, sense) => {           // curved arrow around the shaft, just outside the end wall
+    const a0 = -PI * 0.92, a1 = -PI * 0.08, rr = 0.46 * R;
     const pts = ell(z, rr, sense > 0 ? a0 : a1, sense > 0 ? a1 : a0, 40);
-    L.polyline(g, pts.slice(0, -2), { stroke: K.u, width: 0.7, fill: 'none' });
+    L.polyline(g, pts.slice(0, -2), { stroke: K.ink, width: 0.65, fill: 'none' });
     const [p1, p2] = [pts[pts.length - 3], pts[pts.length - 1]], d = Math.hypot(p2[0] - p1[0], p2[1] - p1[1]);
-    L.chevron(g, p2, [(p2[0] - p1[0]) / d, (p2[1] - p1[1]) / d], { len: 2.2, spread: 0.7, stroke: K.u, width: 0.7 });
+    L.chevron(g, p2, [(p2[0] - p1[0]) / d, (p2[1] - p1[1]) / d], { len: 2.2, spread: 0.7, stroke: K.ink, width: 0.65 });
   };
-  rot(h - 0.05 * R, 1); rot(-h + 0.05 * R, -1);
+  rot(Hc + 0.2 * R, 1); rot(-Hc - 0.2 * R, -1);
+  F.anchor('vks.ucell', g, ...P(-0.88 * R, 0, 0.28 * R));
+  F.anchor('vks.Bloop', g, ...P(1.55 * R, 0, 0.52 * R));
   F.anchor('vks.left', g, ...P(-1.2 * R, 0, 0));
   F.anchor('vks.right', g, ...P(1.95 * R, 0, 0));
   F.anchor('vks.top', g, ...P(0, 0, Hc + 0.35 * R));
@@ -236,7 +238,7 @@ export function vks(F, L, g, cx, cy, R, D, opts = {}) {
 }
 
 // ---------------------------------------------------------------- d. law control
-export function lawHist(F, L, g, box, D) {
+export function lawHist(F, L, g, box, D, opts = {}) {
   const { x, y, w, h } = box, lw = D.law, e = lw.edges;
   const xr = [0.2, 2.4], X = (v) => x + (v - xr[0]) / (xr[1] - xr[0]) * w;
   const ymax = Math.max(...lw.tilt, ...lw.raw) * 1.05, Yv = (v) => y + h - v / ymax * h;
@@ -248,9 +250,9 @@ export function lawHist(F, L, g, box, D) {
   L.text(g, x + w + 5.5, y + h, '*ε*', { size: 6.5, valign: 'middle', color: K.ink });
   // means
   const xe = X(lw.EP), xr0 = X(lw.mean_raw);
-  L.line(g, [xe, y - 3], [xe, y + h + 1.5], { stroke: K.ink, width: 0.6 });
-  L.line(g, [xr0, y + 4], [xr0, y + h], { stroke: '#8a8a8a', width: 0.45, dash: '1.2 0.9' });
-  L.arrow(g, [xr0 - 0.4, y + 6.5], [xe + 0.6, y + 6.5], { stroke: K.E, width: 0.55, head: 2.0, headWidth: 1.3 });
+  L.line(g, [xe, (opts.arrowY ?? y) - 4], [xe, y + h + 1.5], { stroke: K.ink, width: 0.6 });
+  L.line(g, [xr0, (opts.arrowY ?? y + 4) - 1.5], [xr0, y + h], { stroke: '#8a8a8a', width: 0.45, dash: '1.2 0.9' });
+  L.arrow(g, [xr0 - 0.4, opts.arrowY ?? y + 6.5], [xe + 0.6, opts.arrowY ?? y + 6.5], { stroke: K.E, width: 0.55, head: 2.0, headWidth: 1.3 });
   L.text(g, xe, y + h + 3.2, '*E*[*P*]', { size: 5.5, anchor: 'middle', valign: 'top', color: K.ink });
   return { X, Yv, xe, xr0 };
 }
