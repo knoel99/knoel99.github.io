@@ -32,26 +32,30 @@ Sources : [M07] Monchaux et al., PRL 98, 044502 (2007) « Generation of a magnet
 | Durées | phases longues et irrégulières, basculements brefs (VKS : renversement de l'ordre de la seconde, phases de quelques secondes à quelques minutes) | [B07], mémoire ; non affiché |
 | Symétrie | (D, Q) → (−D, −Q) laisse le modèle invariant (**B** → −**B**) | [T] taxonomie C3, [PF09] |
 
-## Étiquettes affichées (registre)
+## Étiquettes affichées (registre ; chaînes telles que rendues, balisage entre parenthèses)
 
 | Chaîne à l'écran | Source |
 |---|---|
-| "écoulement moyen **u**" | description de l'appelant |
-| "champ moyen **B**" | description de l'appelant |
+| "écoulement moyen u" (u en gras bleu) | description de l'appelant |
+| "champ moyen B" (B en gras vermillon) | description de l'appelant |
 | "sodium liquide" | [M07] |
 | "turbine en fer doux" | [M07] |
 | "pales courbes" | description de l'appelant, [M07] |
-| "*F*_{1}" , "*F*_{2}" | [B07] (fréquences des turbines) |
+| "F1" , "F2" (F italique, indice 1, 2 : fréquences de rotation des turbines) | [B07] |
+| "B" (gras vermillon, bout de la ligne de champ axiale) | notation du projet (specs/notations.md) |
 | "cellules toroïdales" | description de l'appelant |
 | "recirculation poloïdale" | description de l'appelant |
 | "plan médian" | description de l'appelant |
 | "effet dynamo" | [M07] |
 | "dipôle axial" | description de l'appelant |
-| "dipôle *D*" | description de l'appelant |
-| "quadripôle *Q*" | description de l'appelant |
-| "temps *t*" | — |
-| "+*D*\*" , "−*D*\*" | modèle [PF09] |
-| "+(*D*\*, *Q*\*)" , "−(*D*\*, *Q*\*)" | description de l'appelant |
+| "dipôle D" (D italique) | description de l'appelant |
+| "D" (axe de c) | description de l'appelant |
+| "quadripôle Q" (Q italique) | description de l'appelant |
+| "temps t" (t italique) | — |
+| "+D∗" , "−D∗" (niveaux des points fixes) | modèle [PF09] |
+| "+(D∗, Q∗)" , "−(D∗, Q∗)" | description de l'appelant |
 | "renversement" | [B07] |
 | "excursion" | [B07] |
 | "point-col" | [PF09] |
+
+Glyphe sans texte : petit cylindre gris avec flèche vermillon → (D > 0), ← (D < 0), ← | → (quadripôle : champ axial opposé dans chaque moitié, [GDF10]). Expliqué en légende.

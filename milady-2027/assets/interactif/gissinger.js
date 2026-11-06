@@ -45,7 +45,13 @@
  *    l'estimation coïncide alors avec le comptage, aux excursions près qui entrent dans la bande
  *    sans la traverser. Son intérêt est de n'utiliser que la loi des états (échantillons sans ordre).
  *
- * 7. Seuil des renversements : sous Γ ≈ 0,865, D garde son signe (deux attracteurs symétriques
+ * 7. Condition initiale aléatoire (bouton « Réinitialiser ») : ±(Q*, D*, V*) + bruit gaussien
+ *    d'écart-type 0,5 sur chaque composante. On évite le voisinage du point fixe trivial (0, 0, Γ) :
+ *    sa jacobienne a pour valeurs propres −1 et (μ − ν)/2 ± i √(Γ² − ((μ + ν)/2)²), donc une spirale
+ *    instable de taux (μ − ν)/2 ≈ 0,0095 seulement, qui donnerait des transitoires (oscillations de D
+ *    autour de 0, période ≈ 2π/Γ) plus longs que les 200 u.t. ignorées.
+ *
+ * 8. Seuil des renversements : sous Γ ≈ 0,865, D garde son signe (deux attracteurs symétriques
  *    disjoints) ; ils fusionnent par une crise (Grebogi, Ott, Romeiras, Yorke 1987) entre
  *    Γ = 0,86 et 0,87 dans les simulations de l'expérience E1 du site (experiences/e1_gissinger.py).
  *
@@ -98,18 +104,16 @@
       canvas: "Panneau (a) : dipôle D en fonction du temps sur les 600 dernières unités de temps, " +
         "avec la ligne D = 0, en bleu quand D > 0 et en orange quand D < 0. Panneau (b) : portrait de " +
         "phase (Q, D) avec la traînée des 200 dernières unités de temps et les deux points fixes non triviaux.",
-      l1: function (g, t) { return "Γ = " + g + " · durée depuis le dernier changement : " + t + " u.t."; },
-      l2: function (n, np) { return "Passages de D par 0 : " + n + ", dont " + np + " après le transitoire (200 premières u.t. ignorées)"; },
-      l3: function (np, T, f, h, r) { return "Fréquence par u.t. : comptage " + np + " / " + T + " = " + f + " ; Rice (h = " + h + ") : " + r; },
-      l3wait: function (left) { return "Fréquence : transitoire en cours, encore " + left + " u.t. avant l'estimation"; },
+      l1: function (g, t) { return "Γ\u00a0=\u00a0" + g + " · durée depuis le dernier changement\u00a0: " + t + " u.t."; },
+      l2: function (n, np) { return "Passages de D par 0\u00a0: " + n + ", dont " + np + " après le transitoire (200 premières u.t. ignorées)"; },
+      l3: function (np, T, f, h, r) { return "Fréquence par u.t.\u00a0: comptage " + np + " / " + T + "\u00a0=\u00a0" + f + " ; Rice (h\u00a0=\u00a0" + h + ")\u00a0: " + r; },
+      l3wait: function (left) { return "Fréquence\u00a0: transitoire en cours, encore " + left + " u.t. avant l'estimation"; },
       note: "μ = 0,119, ν = 0,1 ; RK4, dt = 0,01 ; u.t. = unité de temps (×1 = 10 u.t./s). " +
         "Bleu : D > 0, orange : D < 0, bande verte : |D| < h, × : points fixes non triviaux. " +
-        "Sous Γ ≈ 0,865, aucun renversement : D garde son signe sur l'un des deux attracteurs symétriques, " +
-        "qui fusionnent (crise) entre Γ = 0,86 et 0,87 dans les expériences du site. " +
-        "Le long d'une trajectoire, chaque traversée de la bande apporte ∫|Ḋ| dt ≈ 2h, d'où l'accord avec le comptage " +
-        "(au biais près des excursions qui entrent dans la bande sans la traverser, plus fréquentes quand h grandit) ; " +
-        "mais Rice n'utilise que la loi des états, pas leur ordre : elle s'applique donc aussi aux échantillons d'un modèle génératif. " +
-        "En pause, changer Γ ou réinitialiser calcule d'un coup 800 u.t."
+        "Sous Γ ≈ 0,865, pas de renversement : les deux attracteurs symétriques (D > 0, D < 0) ne fusionnent (crise) " +
+        "qu'entre 0,86 et 0,87 dans les expériences du site. Le long d'une trajectoire, chaque traversée de la bande " +
+        "apporte ∫|Ḋ| dt ≈ 2h, d'où l'accord avec le comptage ; mais Rice n'utilise que la loi des états, pas leur ordre : " +
+        "elle vaut donc aussi pour les échantillons d'un modèle génératif. En pause, changer Γ ou réinitialiser calcule d'un coup 800 u.t."
     },
     en: {
       title: "Dipole reversals in Gissinger's three-mode model",
@@ -123,18 +127,16 @@
       canvas: "Panel (a): dipole D versus time over the last 600 time units, with the line D = 0, " +
         "blue where D > 0 and orange where D < 0. Panel (b): phase portrait (Q, D) with the trail of the " +
         "last 200 time units and the two non-trivial fixed points.",
-      l1: function (g, t) { return "Γ = " + g + " · time since last change: " + t + " t.u."; },
+      l1: function (g, t) { return "Γ\u00a0=\u00a0" + g + " · time since last change: " + t + " t.u."; },
       l2: function (n, np) { return "Zero crossings of D: " + n + ", of which " + np + " after the transient (first 200 t.u. ignored)"; },
-      l3: function (np, T, f, h, r) { return "Rate per t.u.: count " + np + " / " + T + " = " + f + "; Rice (h = " + h + "): " + r; },
+      l3: function (np, T, f, h, r) { return "Rate per t.u.: count " + np + " / " + T + "\u00a0=\u00a0" + f + "; Rice (h\u00a0=\u00a0" + h + "): " + r; },
       l3wait: function (left) { return "Rate: transient in progress, " + left + " t.u. left before estimating"; },
       note: "μ = 0.119, ν = 0.1; RK4, dt = 0.01; t.u. = time unit (×1 = 10 t.u./s). " +
         "Blue: D > 0, orange: D < 0, green band: |D| < h, ×: non-trivial fixed points. " +
-        "Below Γ ≈ 0.865 there is no reversal: D keeps its sign on one of two symmetric attractors, " +
-        "which merge (crisis) between Γ = 0.86 and 0.87 in the site's experiments. " +
-        "Along a trajectory, each traversal of the band contributes ∫|Ḋ| dt ≈ 2h, hence the agreement with the count " +
-        "(up to a bias from excursions that enter the band without crossing it, more frequent as h grows); " +
-        "but Rice uses only the distribution of states, not their order, so it also applies to samples from a generative model. " +
-        "While paused, changing Γ or resetting computes 800 t.u. at once."
+        "Below Γ ≈ 0.865 there is no reversal: the two symmetric attractors (D > 0, D < 0) only merge (crisis) " +
+        "between 0.86 and 0.87 in the site's experiments. Along a trajectory, each traversal of the band contributes " +
+        "∫|Ḋ| dt ≈ 2h, hence the agreement with the count; but Rice uses only the distribution of states, not their order, " +
+        "so it also holds for samples from a generative model. While paused, changing Γ or resetting computes 800 t.u. at once."
     }
   };
 
@@ -386,7 +388,9 @@
 
   /* ----- état et intégration ----- */
   Widget.prototype.newState = function () {
-    this.q = 0.8 * gauss(); this.d = 0.8 * gauss(); this.v = Math.abs(0.8 * gauss());
+    // condition initiale : un des deux points fixes non triviaux (signe au hasard) + bruit N(0, 0,5²)
+    var Ds = Math.sqrt(MU * (this.g + SQ_MN) / SQ_MN), Qs = -SQ_NM * Ds, sg = Math.random() < 0.5 ? -1 : 1;
+    this.q = sg * Qs + 0.5 * gauss(); this.d = sg * Ds + 0.5 * gauss(); this.v = -SQ_MN + 0.5 * gauss();
     this.k = 0; this.sub = 0;
     this.head = 0; this.count = 0;
     this.markers = [];
@@ -680,7 +684,7 @@
     c.strokeStyle = C.pal[1]; c.stroke(pn);
 
     // repères : changements de Γ et symétries
-    var lastLab = -1e9, self = this;
+    var lastLab = [-1e9, -1e9], self = this;
     this.markers = this.markers.filter(function (m) { return m.t >= t0 - 1; });
     this.markers.forEach(function (m) {
       var xm = Math.round(X(m.t)) + 0.5;
@@ -692,9 +696,12 @@
       var s = m.type === "g" ? "Γ = " + fmt(lg, m.g, 3) : T.symMark;
       var w = self.textWidth(s, 11, "600");
       var xl = Math.min(xm + 3, p.r - w - 2);
-      if (xl > lastLab + 4) {
-        self.text(s, xl, p.t + 12, "left", m.type === "g" ? C.soft : C.ink, 11, "600", true);
-        lastLab = xl + w;
+      for (var row = 0; row < 2; row++) {            // deux rangées d'étiquettes, sans chevauchement
+        if (xl > lastLab[row] + 4) {
+          self.text(s, xl, p.t + 12 + 13 * row, "left", m.type === "g" ? C.soft : C.ink, 11, "600", true);
+          lastLab[row] = xl + w;
+          break;
+        }
       }
     });
 

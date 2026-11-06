@@ -1,8 +1,8 @@
 """Data for the « vks » figure (qualitative curves, no value is printed on the figure).
 
-1. Field lines of the axial dipole (panel a, right view): contours of the flux function Psi = r A_phi of a
-   uniform sheet of azimuthal currents filling the sodium volume (r = 0.8 R, |x| <= 0.9 R), the textbook source of a
-   field that is nearly uniform and axial inside and dipolar outside.
+1. Field lines of the axial dipole (panel a, right view): contours of the flux function Psi = r A_phi of
+   azimuthal currents filling the sodium volume between the turbines (J_phi proportional to r, r <= 0.95 R,
+   |x| <= 0.9 R): a field that is axial inside and dipolar outside (qualitative source, not a VKS solution).
 2. D(t), Q(t) (panels b and c): Pétrélis–Fauve normal form dA/dt = mu A + nu conj(A) - |A|^2 A + sigma (xi1 + i xi2),
    A = D + iQ (Pétrélis & Fauve 2008; Pétrélis, Fauve, Dormy & Valet 2009). Parameters chosen by hand for a
    qualitative picture: rare reversals through the quadrupole-dominated saddles, one excursion.
@@ -13,6 +13,7 @@ import os
 
 import numpy as np
 from scipy.special import ellipe, ellipk
+from scipy.ndimage import gaussian_filter
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -21,7 +22,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 out = {}
 
 # ---------------------------------------------------------------- 1. dipole field lines (units of R)
-A_LOOP, XMAX, NLOOP = 0.80, 0.90, 41
+A_LOOPS, XMAX, NLOOP = np.linspace(0.08, 0.95, 12), 0.90, 37
 
 
 def psi_loop(r, x, a, x0):
@@ -37,15 +38,16 @@ def psi_loop(r, x, a, x0):
 xs = np.linspace(-4.0, 4.0, 801)
 rs = np.linspace(0.0, 3.4, 341)
 X, Rg = np.meshgrid(xs, rs)
-PSI = sum(psi_loop(Rg, X, A_LOOP, x0) for x0 in np.linspace(-XMAX, XMAX, NLOOP))
+PSI = sum(a * psi_loop(Rg, X, a, x0) for a in A_LOOPS for x0 in np.linspace(-XMAX, XMAX, NLOOP))
 norm = PSI.max()
 PSI /= norm
+PSI = gaussian_filter(PSI, 2.0)   # removes the ripple of the discrete loops (0.02 R)
 
 # levels fixed by where the line crosses the mid-plane inside the sodium (r_in, in units of R)
-psi_mid = sum(psi_loop(rs, 0.0, A_LOOP, x0) for x0 in np.linspace(-XMAX, XMAX, NLOOP)) / norm
+psi_mid = sum(a * psi_loop(rs, 0.0, a, x0) for a in A_LOOPS for x0 in np.linspace(-XMAX, XMAX, NLOOP)) / norm
 j = int(np.argmax(psi_mid))
 lines = []
-for r_in in (0.30, 0.52, 0.67):   # equal flux steps (Psi ~ r^2 inside)
+for r_in in (0.30, 0.50, 0.66):   # roughly equal flux steps
     lev = float(np.interp(r_in, rs[:j + 1], psi_mid[:j + 1]))
     r_out = round(float(np.interp(-lev, -psi_mid[j:], rs[j:])), 3)
     cs = plt.contour(X, Rg, PSI, levels=[lev])

@@ -138,7 +138,7 @@ Soit $f$ de classe $C^1$.
 
 (ii) Parmi toutes les directions unitaires $\mathbf{e}$, la dérivée directionnelle $\nabla f\cdot\mathbf{e}$ est maximale pour $\mathbf{e} = \nabla f / |\nabla f|$, et ce maximum vaut $|\nabla f|$.
 
-(iii) Le gradient est orthogonal aux surfaces de niveau $\{f = c\}$.
+(iii) Là où $\nabla f \neq \mathbf{0}$, le gradient est orthogonal aux surfaces de niveau $\{f = c\}$.
 
 ::: proof
 Le point (i) est la définition de la différentiabilité, que garantit la continuité des dérivées partielles (admis). Pour (ii), l'inégalité de Cauchy–Schwarz donne $\nabla f\cdot\mathbf{e} \le |\nabla f|\,|\mathbf{e}| = |\nabla f|$, avec égalité si et seulement si $\mathbf{e}$ est colinéaire à $\nabla f$ et de même sens. Pour (iii), soit $s \mapsto \mathbf{x}(s)$ une courbe tracée sur la surface $\{f = c\}$. Alors $f(\mathbf{x}(s)) = c$ pour tout $s$ ; en dérivant par la règle de dérivation des fonctions composées, $\nabla f\cdot\mathbf{x}'(s) = 0$. Le gradient est donc orthogonal à tout vecteur tangent à la surface. [∎]{.qed}
@@ -206,7 +206,7 @@ $$
 \nabla\times\mathbf{u} = \mathbf{u}.
 $$
 
-Un champ colinéaire à son rotationnel est appelé **champ de Beltrami**. Sa densité d'hélicité $\mathbf{u}\cdot\boldsymbol\omega = |\mathbf{u}|^2$ est partout positive, et sa moyenne vaut $\langle|\mathbf{u}|^2\rangle = A^2 + B^2 + C^2$ (la moyenne de $\sin^2$ et de $\cos^2$ sur une période vaut $1/2$, celle des produits croisés est nulle). C'est l'écoulement utilisé pour la dynamo cinématique de l'expérience E3 du dépôt (voir le [rapport](../../rapport/index.html#e3)).
+Un champ colinéaire à son rotationnel est appelé **champ de Beltrami**. Sa densité d'hélicité $\mathbf{u}\cdot\boldsymbol\omega = |\mathbf{u}|^2$ est partout positive ou nulle, et sa moyenne vaut $\langle|\mathbf{u}|^2\rangle = A^2 + B^2 + C^2$ (la moyenne de $\sin^2$ et de $\cos^2$ sur une période vaut $1/2$, celle des produits croisés est nulle). C'est l'écoulement utilisé pour la dynamo cinématique de l'expérience E3 du dépôt (voir le [rapport](../../rapport/index.html#e3)).
 :::
 
 ### 1.4 Notation indicielle
@@ -711,7 +711,7 @@ Si $S$ est un domaine plan du plan $z = 0$, on a $\mathbf{n} = \mathbf{e}_z$ et 
 :::
 ::::
 
-Les deux théorèmes ont la même structure : l'intégrale d'une dérivée sur un domaine égale l'intégrale de la fonction sur le bord du domaine.
+Ces trois théorèmes ont la même structure : l'intégrale d'une dérivée sur un domaine égale l'intégrale de la fonction sur le bord du domaine.
 
 Appliquons (3.1) à une petite boule $B_\varepsilon$ centrée en $\mathbf{x}$, de volume $|B_\varepsilon|$. La moyenne de $\nabla\cdot\mathbf{u}$ sur cette boule tend vers $\nabla\cdot\mathbf{u}(\mathbf{x})$ quand $\varepsilon \to 0$, par continuité, d'où
 
@@ -744,11 +744,11 @@ Ces deux formules ne font intervenir aucun système de coordonnées : la diverge
 <option value="source">source u = (x, y)</option>
 <option value="rotation">rotation solide u = (−y, x)</option>
 <option value="cisaillement">cisaillement u = (y, 0)</option>
-<option value="cellules" selected>cellules (sin x cos y, −cos x sin y)</option>
+<option value="cellules" selected>cellules (sin ax cos ay, −cos ax sin ay), a = π/2</option>
 <option value="tourbillon">tourbillon ponctuel (−y, x)/(x² + y²)</option>
 <option value="puits">source ponctuelle (x, y)/(x² + y²)</option>
 </select></label>
-<label>Rayon <input type="range" id="wf-r" min="0.03" max="1.6" step="0.01" value="0.8"> <span id="wf-rv">0.80</span></label>
+<label>Rayon <input type="range" id="wf-r" min="0.03" max="1.6" step="0.01" value="0.8"> <span id="wf-rv">0,80</span></label>
 </div>
 <canvas id="wf-canvas" width="640" height="640" role="img" aria-label="Champ de vecteurs et cercle déplaçable ; les valeurs du flux et de la circulation sont données sous la figure."></canvas>
 <div class="widget-readout" id="wf-out" aria-live="polite"></div>
@@ -769,7 +769,9 @@ Ces deux formules ne font intervenir aucun système de coordonnées : la diverge
     puits: function (x, y) { var q = x * x + y * y + 1e-300; return [x / q, y / q]; }
   };
   function css(n) { return getComputedStyle(root).getPropertyValue(n).trim() || "#888"; }
-  function fmt(v) { if (!isFinite(v)) return "—"; var a = Math.abs(v); if (a !== 0 && (a < 1e-3 || a >= 1e4)) return v.toExponential(2).replace("e", "·10^"); return v.toFixed(3).replace("-", "−"); }
+  function fmt(v) { if (!isFinite(v)) return "—"; var a = Math.abs(v);
+    if (a !== 0 && (a < 1e-3 || a >= 1e4)) { var t = v.toExponential(2).split("e"); return t[0].replace(".", ",").replace("-", "−") + "·10<sup>" + String(parseInt(t[1], 10)).replace("-", "−") + "</sup>"; }
+    return v.toFixed(3).replace(".", ",").replace("-", "−"); }
   function quad(f, x0, y0, r) {
     var M = 1440, fl = 0, ci = 0;
     for (var i = 0; i < M; i++) {
@@ -804,7 +806,7 @@ Ces deux formules ne font intervenir aucun système de coordonnées : la diverge
       var a = Math.atan2(y1 - y0, x1 - x0), hl = Math.min(7, 0.45 * Math.hypot(x1 - x0, y1 - y0));
       g.beginPath(); g.moveTo(x1, y1); g.lineTo(x1 - hl * Math.cos(a - 0.45), y1 - hl * Math.sin(a - 0.45)); g.lineTo(x1 - hl * Math.cos(a + 0.45), y1 - hl * Math.sin(a + 0.45)); g.closePath(); g.fill();
     });
-    var r = parseFloat(rr.value); rv.textContent = r.toFixed(2);
+    var r = parseFloat(rr.value); rv.textContent = r.toFixed(2).replace(".", ",");
     g.strokeStyle = c2; g.lineWidth = 2.5; g.setLineDash([7, 5]);
     g.beginPath(); g.arc(X(cx), Y(cy), r / (2 * D) * W, 0, 2 * Math.PI); g.stroke(); g.setLineDash([]);
     g.fillStyle = ink; g.beginPath(); g.arc(X(cx), Y(cy), 3.5, 0, 2 * Math.PI); g.fill();
@@ -812,7 +814,7 @@ Ces deux formules ne font intervenir aucun système de coordonnées : la diverge
     out.innerHTML = "<table><tr><th></th><th>sur le cercle</th><th>÷ aire π r²</th><th>au centre</th></tr>" +
       "<tr><td>flux sortant Φ</td><td>" + fmt(q[0]) + "</td><td>" + fmt(q[0] / A) + "</td><td>div u = " + fmt(l[0]) + "</td></tr>" +
       "<tr><td>circulation Γ</td><td>" + fmt(q[1]) + "</td><td>" + fmt(q[1] / A) + "</td><td>ω = " + fmt(l[1]) + "</td></tr></table>" +
-      "<p style='margin:.3rem 0 0'>centre (" + fmt(cx) + ", " + fmt(cy) + "), rayon " + r.toFixed(2) + "</p>";
+      "<p style='margin:.3rem 0 0'>centre (" + fmt(cx) + " ; " + fmt(cy) + "), rayon " + r.toFixed(2).replace(".", ",") + "</p>";
   }
   function move(e) {
     var b = cv.getBoundingClientRect(); cx = ((e.clientX - b.left) / b.width) * 2 * D - D; cy = D - ((e.clientY - b.top) / b.height) * 2 * D; draw();
@@ -832,7 +834,7 @@ Ces deux formules ne font intervenir aucun système de coordonnées : la diverge
 
 Avec les deux champs singuliers de la liste, la limite échoue dès que le cercle entoure l'origine : la circulation du tourbillon ponctuel reste égale à $2\pi$ et le flux de la source ponctuelle aussi, quel que soit le rayon, alors que la vorticité et la divergence sont nulles partout ailleurs. Toute la « source » est concentrée au point singulier ; nous retrouverons ce phénomène à l'exemple 3.9 et à la remarque 4.3.
 
-On tire aussi des deux théorèmes les formules d'intégration par parties en dimension quelconque.
+Le théorème de la divergence fournit aussi les formules d'intégration par parties en dimension quelconque.
 
 :::: prop
 [Corollaire 3.7 — Intégrations par parties]{.tag}
@@ -900,7 +902,7 @@ On multiplie l'équation par $\mathbf{B}$ et on moyenne : $\frac{\mathrm{d}}{\ma
 :::
 ::::
 
-Le terme $-\eta\langle|\mathbf{j}|^2\rangle$ est la dissipation par effet Joule, toujours négative. Le terme $-\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle$ est l'opposé du travail de la force de Laplace sur le fluide : quand le fluide travaille **contre** cette force, il cède de l'énergie cinétique au champ magnétique. Une dynamo est un écoulement pour lequel ce transfert l'emporte durablement sur la dissipation.
+Le terme $-\eta\langle|\mathbf{j}|^2\rangle$, toujours négatif ou nul, représente la dissipation par effet Joule. Le terme $-\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle$ est l'opposé du travail de la force de Laplace sur le fluide : quand le fluide travaille **contre** cette force, il cède de l'énergie cinétique au champ magnétique. Une dynamo est un écoulement pour lequel ce transfert l'emporte durablement sur la dissipation.
 
 Le code suivant vérifie numériquement le théorème de la divergence et celui de Stokes par quadrature (Gauss–Legendre en $\cos\theta$, trapèzes en $\varphi$, une méthode très précise pour les fonctions régulières sur la sphère).
 
@@ -1025,7 +1027,7 @@ Pour $\psi$ de classe $C^2$ et $\mathbf{u} = \nabla^\perp\psi$ :
 
 (iv) le débit de $\mathbf{u}$ à travers une courbe allant de $\mathbf{a}$ à $\mathbf{b}$ (normale obtenue en tournant la tangente d'un quart de tour vers la droite) vaut $\psi(\mathbf{b}) - \psi(\mathbf{a})$ ;
 
-(v) réciproquement, sur un domaine simplement connexe, tout champ 2D à divergence nulle s'écrit $\nabla^\perp\psi$.
+(v) réciproquement, sur un domaine étoilé, tout champ 2D à divergence nulle s'écrit $\nabla^\perp\psi$. Le résultat reste vrai sur tout domaine simplement connexe, ce que nous admettons.
 
 ::: proof
 (i) $\partial_x\partial_y\psi - \partial_y\partial_x\psi = 0$ par Schwarz. (ii) $\omega = \partial_x(-\partial_x\psi) - \partial_y(\partial_y\psi) = -\Delta\psi$. (iii) $\partial_y\psi\,\partial_x\psi - \partial_x\psi\,\partial_y\psi = 0$. (iv) Pour une courbe $\boldsymbol\gamma(s)$, la normale non normalisée est $(\gamma_y', -\gamma_x')$ et $\mathbf{u}\cdot(\gamma_y', -\gamma_x') = \partial_y\psi\,\gamma_y' + \partial_x\psi\,\gamma_x' = \frac{\mathrm{d}}{\mathrm{d}s}\psi(\boldsymbol\gamma(s))$ ; on intègre. (v) Le champ tourné $\mathbf{v} = (-u_y, u_x)$ a une vorticité $\partial_x u_x + \partial_y u_y = \nabla\cdot\mathbf{u} = 0$ ; par le théorème 4.2 (i) en 2D, $\mathbf{v} = \nabla g$, d'où $u_x = \partial_y g$ et $u_y = -\partial_x g$ : on prend $\psi = g$. [∎]{.qed}
@@ -1068,7 +1070,7 @@ Pour $\mathbf{B} = B_0\mathbf{e}_z$, le potentiel symétrique $\mathbf{A} = \fra
 
 :::: prop
 [Proposition 4.10 — Invariance de jauge de l'hélicité magnétique]{.tag}
-Dans une boîte périodique, si $\nabla\cdot\mathbf{B} = 0$, l'hélicité magnétique $H_M = \langle\mathbf{A}\cdot\mathbf{B}\rangle$ ne dépend pas de la jauge.
+Dans une boîte périodique, si $\nabla\cdot\mathbf{B} = 0$, l'hélicité magnétique $H_M = \langle\mathbf{A}\cdot\mathbf{B}\rangle$ ne dépend pas de la jauge : elle ne change pas quand on remplace $\mathbf{A}$ par $\mathbf{A} + \nabla\chi$, pour toute fonction $\chi$ périodique.
 
 ::: proof
 Par (3.3) sans terme de bord, $\langle(\mathbf{A} + \nabla\chi)\cdot\mathbf{B}\rangle = \langle\mathbf{A}\cdot\mathbf{B}\rangle + \langle\nabla\chi\cdot\mathbf{B}\rangle = \langle\mathbf{A}\cdot\mathbf{B}\rangle - \langle\chi\,\nabla\cdot\mathbf{B}\rangle = \langle\mathbf{A}\cdot\mathbf{B}\rangle$. [∎]{.qed}
@@ -1089,7 +1091,7 @@ $$
 \mathbf{B} = \underbrace{\nabla\times\big(A_\theta\,\mathbf{e}_\theta\big)}_{\text{poloïdal}} + \underbrace{B_\theta\,\mathbf{e}_\theta}_{\text{toroïdal}}, \qquad \nabla\times\big(A_\theta\,\mathbf{e}_\theta\big) = -\partial_z A_\theta\,\mathbf{e}_r + \frac{1}{r}\partial_r(rA_\theta)\,\mathbf{e}_z,
 $$
 
-est à divergence nulle. Réciproquement, tout champ axisymétrique à divergence nulle s'écrit ainsi, et les lignes de champ poloïdales sont contenues dans les surfaces $rA_\theta = \text{cste}$.
+est à divergence nulle. Réciproquement, dans un domaine dont la section méridienne est étoilée (un cylindre plein ou creux, par exemple), tout champ axisymétrique régulier à divergence nulle s'écrit ainsi, et les lignes de champ poloïdales sont contenues dans les surfaces $rA_\theta = \text{cste}$.
 
 ::: proof
 Le calcul de $\nabla\times(A_\theta\mathbf{e}_\theta)$ découle de (1.3). Par (1.2), la partie toroïdale a une divergence $\frac1r\partial_\theta B_\theta = 0$ et la partie poloïdale
@@ -1098,7 +1100,7 @@ $$
 \frac{1}{r}\partial_r\big(-r\,\partial_z A_\theta\big) + \partial_z\Big(\frac{1}{r}\partial_r(rA_\theta)\Big) = \frac{1}{r}\Big[-\partial_r\partial_z(rA_\theta) + \partial_z\partial_r(rA_\theta)\Big] = 0.
 $$
 
-Pour la réciproque, $\nabla\cdot\mathbf{B} = 0$ s'écrit $\partial_r(rB_r) + \partial_z(rB_z) = 0$ : le champ plan $(rB_z, -rB_r)$ dans le demi-plan méridien $(r, z)$ est irrotationnel au sens 2D, donc (théorème 4.2) il existe $\Psi(r, z)$ avec $\partial_r\Psi = rB_z$ et $\partial_z\Psi = -rB_r$. On pose $A_\theta = \Psi/r$. Enfin $\mathbf{B}_{\text{pol}}\cdot\nabla\Psi = B_r\,rB_z + B_z(-rB_r) = 0$ : $\Psi = rA_\theta$ est constante le long des lignes poloïdales, exactement comme la fonction de courant en 2D. [∎]{.qed}
+Pour la réciproque, $\nabla\cdot\mathbf{B} = 0$ s'écrit $\partial_r(rB_r) + \partial_z(rB_z) = 0$ : le champ plan $(rB_z, -rB_r)$ dans le demi-plan méridien $(r, z)$ est irrotationnel au sens 2D, donc (théorème 4.2, appliqué dans la section méridienne étoilée) il existe $\Psi(r, z)$ avec $\partial_r\Psi = rB_z$ et $\partial_z\Psi = -rB_r$. On pose $A_\theta = \Psi/r$. Si le domaine contient l'axe, on a $\partial_z\Psi = 0$ sur l'axe ; on choisit alors la constante pour que $\Psi = 0$ sur l'axe, si bien que $\Psi \approx r^2 B_z/2$ près de l'axe et que $A_\theta$ reste régulier en $r = 0$. Enfin $\mathbf{B}_{\text{pol}}\cdot\nabla\Psi = B_r\,rB_z + B_z(-rB_r) = 0$ : $\Psi = rA_\theta$ est constante le long des lignes poloïdales, exactement comme la fonction de courant en 2D. [∎]{.qed}
 :::
 ::::
 
@@ -1110,14 +1112,14 @@ $$
 \mathbf{B} = \nabla\times(T\,\mathbf{x}) + \nabla\times\nabla\times(P\,\mathbf{x}),
 $$
 
-avec deux fonctions scalaires $T$ (toroïdale) et $P$ (poloïdale), uniques si l'on impose que leur moyenne sur chaque sphère centrée soit nulle. Dans une couche plane ou une boîte périodique, on remplace $\mathbf{x}$ par $\mathbf{e}_z$, à condition d'ajouter un champ moyen horizontal ne dépendant que de $z$.
+avec deux fonctions scalaires $T$ (toroïdale) et $P$ (poloïdale), uniques si l'on impose que leur moyenne sur chaque sphère centrée soit nulle. Dans une couche plane ou une boîte périodique, on remplace $\mathbf{x}$ par $\mathbf{e}_z$, à condition d'ajouter la moyenne de $\mathbf{B}$ sur les plans horizontaux : elle ne dépend que de $z$, et sa composante verticale est même constante (car $\nabla\cdot\mathbf{B} = 0$).
 
 ::: proof
 Admis ; voir Backus (1986) pour une démonstration complète et Moffatt et Dormy (2019) pour l'usage en théorie de la dynamo. Notons seulement que chaque terme est un rotationnel, donc à divergence nulle, et que $\nabla\times(T\mathbf{x}) = \nabla T\times\mathbf{x}$ est orthogonal à $\mathbf{x}$ : les lignes de champ toroïdales sont tangentes aux sphères centrées. [∎]{.qed}
 :::
 ::::
 
-Le dipôle magnétique terrestre est un champ poloïdal ; une rotation différentielle cisaille un champ poloïdal et crée un champ toroïdal (« effet oméga »). Dans les simulations de VKS, la dynamo obtenue avec des turbines en fer doux est un dipôle axial essentiellement axisymétrique (Nore et al., 2016), donc décrit par la proposition 4.11 avec $m = 0$.
+Le dipôle magnétique terrestre est un champ poloïdal ; une rotation différentielle cisaille un champ poloïdal et crée un champ toroïdal (« effet oméga »). Dans les simulations de VKS, la dynamo obtenue avec des turbines en fer doux est un dipôle axial essentiellement axisymétrique (Nore et al., 2016) : sa partie dominante, le mode $m = 0$, relève donc de la proposition 4.11.
 
 Le code suivant vérifie par différentiation automatique qu'un champ construit par fonction de courant (2D) ou par potentiel vecteur (3D) est solénoïdal, même quand le potentiel est un réseau de neurones aléatoire, et qu'un changement de jauge ne modifie pas $\mathbf{B}$.
 
@@ -1360,9 +1362,10 @@ Le plus grand nombre d'onde représentable est donc $|n| = N/2$, le **nombre d'o
     g.fillStyle = ink; g.strokeStyle = bg; g.lineWidth = 2;
     for (var j = 0; j < N; j++) { x = 2 * Math.PI * j / N; y = fn(n, x); g.beginPath(); g.arc(X(x), Y(y), 5.5, 0, 2 * Math.PI); g.fill(); g.stroke(); }
     var resolu = n < N / 2;
-    var txt = "Nombre d'onde de Nyquist : N/2 = " + (N / 2) + ". ";
+    var txt = "Nombre d'onde de Nyquist : N/2 = " + String(N / 2).replace(".", ",") + ". ";
     if (resolu) txt += "Le mode n = " + n + " est résolu : il est son propre représentant.";
-    else txt += "Le mode n = " + n + " n'est pas résolu : sur la grille, " + f + "(" + n + " x) coïncide avec " +
+    else if (n === N / 2) txt += "Le mode n = " + n + " est le mode de Nyquist : " + (f === "cos" ? "cos(" + n + " x) vaut ±1 aux points de la grille ; il est représenté, mais sa dérivée ne l'est pas (définition 5.11)." : "sin(" + n + " x) s'annule en tous les points de la grille : il est invisible.");
+    else txt +="Le mode n = " + n + " n'est pas résolu : sur la grille, " + f + "(" + n + " x) coïncide avec " +
       (nyq && f === "sin" ? "0 (mode de Nyquist : sin s'annule en tous les points)" : (sgn < 0 ? "−" : "") + f + "(" + am + " x)") + ", car " + n + " ≡ " + m + " (mod " + N + ").";
     out.textContent = txt;
   }
@@ -1584,7 +1587,7 @@ Par (5.2), le coefficient TFD du produit vaut $\sum_p\widehat{(uv)}_{n + pN}$. L
 :::
 ::::
 
-En pratique, on annule les modes $|n| > N/3$ avant (ou après) chaque produit : on ne garde que les deux tiers centraux du spectre, d'où le nom de la règle. Le code suivant montre le repliement puis son élimination.
+En pratique, on maintient les champs tronqués à $|n| \le N/3$ en annulant les modes $|n| > N/3$ après chaque produit, de sorte que les facteurs du produit suivant sont eux aussi tronqués : on ne garde que les deux tiers centraux du spectre, d'où le nom de la règle. Le code suivant montre le repliement puis son élimination.
 
 ```python
 import numpy as np
@@ -1656,7 +1659,7 @@ Ce qu'il faut retenir — chapitre 5
 
 ## 6. Décomposition de Helmholtz–Hodge et projection de Leray {#ch6}
 
-Un champ produit par un schéma numérique ou par un réseau génératif a en général une petite divergence non nulle. Le théorème de Helmholtz–Hodge affirme que tout champ se décompose de façon unique en une partie gradient et une partie solénoïdale ; ne garder que la seconde s'appelle **projeter**. Dans une boîte périodique, cette projection coûte une FFT et une petite multiplication matricielle par vecteur d'onde. Avec des parois, elle exige de résoudre un problème elliptique global. Ce contraste est au cœur des choix de modélisation du stage.
+Un champ produit par un schéma numérique ou par un réseau génératif a en général une petite divergence non nulle. Le théorème de Helmholtz–Hodge affirme que tout champ se décompose de façon unique en une partie gradient et une partie solénoïdale ; ne garder que la seconde s'appelle **projeter**. Dans une boîte périodique, cette projection coûte deux FFT (aller et retour) et une petite multiplication matricielle par vecteur d'onde. Avec des parois, elle exige de résoudre un problème elliptique global. Ce contraste est au cœur des choix de modélisation du stage.
 
 ### 6.1 Énoncé général
 
@@ -1722,7 +1725,7 @@ $$
 $$
 
 ::: proof
-*Existence.* On définit $\hat p_{\mathbf{k}}$ et $\hat{\mathbf{w}}_{\mathbf{k}}$ par (6.2) pour $\mathbf{k} \neq \mathbf{0}$, et $\hat p_{\mathbf{0}} = 0$, $\hat{\mathbf{w}}_{\mathbf{0}} = \mathbf{0}$. Alors $\widehat{\nabla p}_{\mathbf{k}} = i\mathbf{k}\hat p_{\mathbf{k}} = \mathbf{k}(\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}})/|\mathbf{k}|^2$, si bien que $\hat{\mathbf{u}}_{\mathbf{k}} = \widehat{\nabla p}_{\mathbf{k}} + \hat{\mathbf{w}}_{\mathbf{k}}$ pour $\mathbf{k}\neq\mathbf{0}$, et $\hat{\mathbf{u}}_{\mathbf{0}} = \bar{\mathbf{u}}$. On vérifie $i\mathbf{k}\cdot\hat{\mathbf{w}}_{\mathbf{k}} = i\big(\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}} - |\mathbf{k}|^2\,\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}}/|\mathbf{k}|^2\big) = 0$. Les formules (6.2) sont paires en $\mathbf{k}$ et commutent avec la conjugaison, donc $\hat{\mathbf{w}}_{-\mathbf{k}} = \overline{\hat{\mathbf{w}}_{\mathbf{k}}}$ : $\mathbf{w}$ est réel, et de même pour $p$. Enfin $|\hat{\mathbf{w}}_{\mathbf{k}}| \le |\hat{\mathbf{u}}_{\mathbf{k}}|$ et $|\mathbf{k}\hat p_{\mathbf{k}}| \le |\hat{\mathbf{u}}_{\mathbf{k}}|$, de sorte que les séries convergent dans $L^2$.
+*Existence.* On définit $\hat p_{\mathbf{k}}$ et $\hat{\mathbf{w}}_{\mathbf{k}}$ par (6.2) pour $\mathbf{k} \neq \mathbf{0}$, et $\hat p_{\mathbf{0}} = 0$, $\hat{\mathbf{w}}_{\mathbf{0}} = \mathbf{0}$. Alors $\widehat{\nabla p}_{\mathbf{k}} = i\mathbf{k}\hat p_{\mathbf{k}} = \mathbf{k}(\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}})/|\mathbf{k}|^2$, si bien que $\hat{\mathbf{u}}_{\mathbf{k}} = \widehat{\nabla p}_{\mathbf{k}} + \hat{\mathbf{w}}_{\mathbf{k}}$ pour $\mathbf{k}\neq\mathbf{0}$, et $\hat{\mathbf{u}}_{\mathbf{0}} = \bar{\mathbf{u}}$. On vérifie $i\mathbf{k}\cdot\hat{\mathbf{w}}_{\mathbf{k}} = i\big(\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}} - |\mathbf{k}|^2\,\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}}/|\mathbf{k}|^2\big) = 0$. Comme $\mathbf{u}$ est réel, $\hat{\mathbf{u}}_{-\mathbf{k}} = \overline{\hat{\mathbf{u}}_{\mathbf{k}}}$. La matrice $I - \mathbf{k}\mathbf{k}^{\mathsf{T}}/|\mathbf{k}|^2$ est réelle et paire en $\mathbf{k}$, donc $\hat{\mathbf{w}}_{-\mathbf{k}} = \overline{\hat{\mathbf{w}}_{\mathbf{k}}}$ et $\mathbf{w}$ est réel. Pour $p$, le facteur $\mathbf{k}$ change de signe avec $\mathbf{k}$ et le facteur $-i$ change de signe par conjugaison : $\hat p_{-\mathbf{k}} = \overline{\hat p_{\mathbf{k}}}$, et $p$ est réel lui aussi. Enfin $|\hat{\mathbf{w}}_{\mathbf{k}}| \le |\hat{\mathbf{u}}_{\mathbf{k}}|$ et $|\mathbf{k}\hat p_{\mathbf{k}}| \le |\hat{\mathbf{u}}_{\mathbf{k}}|$, de sorte que les séries convergent dans $L^2$.
 
 *Orthogonalité.* Par Parseval (sous sa forme polarisée $\langle\mathbf{a}\cdot\mathbf{b}\rangle = \sum_{\mathbf{k}}\overline{\hat{\mathbf{a}}_{\mathbf{k}}}\cdot\hat{\mathbf{b}}_{\mathbf{k}}$ pour des champs réels),
 
@@ -1738,7 +1741,7 @@ Le champ constant est orthogonal aux deux autres, qui sont de moyenne nulle.
 
 ::: def
 [Définition 6.5 — Projecteur de Leray]{.tag}
-Le projecteur de Leray $\mathbb{P}$ agit en Fourier par $\widehat{(\mathbb{P}\mathbf{u})}_{\mathbf{k}} = P(\mathbf{k})\,\hat{\mathbf{u}}_{\mathbf{k}}$, avec
+Le projecteur de Leray, du nom du mathématicien qui a introduit les solutions faibles des équations de Navier–Stokes (Leray, 1934), est l'opérateur $\mathbb{P}$ qui agit en Fourier par $\widehat{(\mathbb{P}\mathbf{u})}_{\mathbf{k}} = P(\mathbf{k})\,\hat{\mathbf{u}}_{\mathbf{k}}$, avec
 
 $$
 P_{ij}(\mathbf{k}) = \delta_{ij} - \frac{k_i k_j}{|\mathbf{k}|^2} \quad (\mathbf{k} \neq \mathbf{0}), \qquad P(\mathbf{0}) = I.
@@ -1758,7 +1761,7 @@ Pour $\mathbf{k}$ réel non nul, $P(\mathbf{k})$ est la matrice de la projection
 
 Pour un champ aléatoire isotrope (un bruit blanc, par exemple), chaque coefficient $\hat{\mathbf{u}}_{\mathbf{k}}$ a la même variance dans les $d$ directions et la projection en retire une : en moyenne, une fraction $(d-1)/d$ de l'énergie est conservée, soit $1/2$ en 2D et $2/3$ en 3D. En 2D, la projection s'écrit aussi avec la fonction de courant : $\mathbb{P}\mathbf{u} = \bar{\mathbf{u}} + \nabla^\perp\psi$ avec $-\Delta\psi = \omega$, où $\omega$ est la vorticité de $\mathbf{u}$ (exercice 14).
 
-![Décomposition de Helmholtz–Hodge d'un champ aléatoire lisse sur le tore $[0, 2\pi)^2$ (calculée par la formule (6.2)). À gauche, le champ $\mathbf{u}$ et, en fond, sa divergence. Au centre, la partie gradient $\nabla p$, sans vorticité, dont les lignes de courant partent des maxima de $p$ (en rouge) et convergent vers ses minima (en bleu). À droite, la partie solénoïdale $\mathbb{P}\mathbf{u}$, sans divergence, dont les lignes de courant s'enroulent autour des extrema de la vorticité. L'épaisseur des lignes est proportionnelle à la norme du champ.](fig-helmholtz.png){width="100%" fig-alt="Trois panneaux de lignes de courant sur fond coloré, reliés par les signes égal et plus. Le premier mélange sources, puits et tourbillons ; le deuxième ne montre que des sources et des puits ; le troisième ne montre que des tourbillons et des lignes fermées."}
+![Décomposition de Helmholtz–Hodge d'un champ aléatoire lisse sur le tore $[0, 2\pi)^2$ (calculée par la formule (6.2)). À gauche, le champ $\mathbf{u}$ et, en fond, sa divergence. Au centre, la partie gradient $\nabla p$, sans vorticité, dont les lignes de courant, qui montent le long de $p$, partent de ses minima (en bleu) et convergent vers ses maxima (en rouge). À droite, la partie solénoïdale $\mathbb{P}\mathbf{u}$, sans divergence, dont les lignes de courant s'enroulent autour des extrema de la vorticité. L'épaisseur des lignes est proportionnelle à la norme du champ.](fig-helmholtz.png){width="100%" fig-alt="Trois panneaux de lignes de courant sur fond coloré, reliés par les signes égal et plus. Le premier mélange sources, puits et tourbillons ; le deuxième ne montre que des sources et des puits ; le troisième ne montre que des tourbillons et des lignes fermées."}
 
 ::: note
 [Remarque 6.7 — « Divergence nulle » dépend de l'opérateur discret]{.tag}
@@ -1828,7 +1831,7 @@ Le schéma interactif suivant refait ce calcul dans le navigateur, sur une grill
 <label><input type="radio" name="wl-v" value="g"> partie gradient ∇p</label>
 <label><input type="radio" name="wl-v" value="w"> partie solénoïdale ℙu</label>
 </span>
-<label>Échelle k<sub>c</sub> <input type="range" id="wl-kc" min="1" max="8" step="0.5" value="2.5"> <span id="wl-kcv">2.5</span></label>
+<label>Échelle k<sub>c</sub> <input type="range" id="wl-kc" min="1" max="8" step="0.5" value="2.5"> <span id="wl-kcv">2,5</span></label>
 <button type="button" id="wl-new">Nouveau tirage</button>
 </div>
 <canvas id="wl-canvas" width="640" height="640" role="img" aria-label="Flèches du champ choisi sur une grille périodique 32 × 32 ; fond coloré par la divergence ou la vorticité ; valeurs numériques sous la figure."></canvas>
@@ -1860,7 +1863,7 @@ Le schéma interactif suivant refait ce calcul dans le navigateur, sur une grill
   function kk(i) { return i < N / 2 ? i : (i === N / 2 ? 0 : i - N); }   // nombres d'onde, Nyquist annulé
   function compute() {
     var kc = parseFloat(skc.value), r = rng(seed), z = new Float64Array(N * N), U = [];
-    root.querySelector("#wl-kcv").textContent = kc.toFixed(1);
+    root.querySelector("#wl-kcv").textContent = kc.toFixed(1).replace(".", ",");
     for (var c = 0; c < 2; c++) {
       var a = new Float64Array(N * N);
       for (var p = 0; p < N * N; p++) { var u1 = r() || 1e-12, u2 = r(); a[p] = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2); }
@@ -1916,9 +1919,10 @@ Le schéma interactif suivant refait ce calcul dans le navigateur, sur une grill
     var Eu = nrm2(state.u), Eg = nrm2(state.g), Ew = nrm2(state.w), cr = 0;
     for (p = 0; p < N * N; p++) cr += state.g[0][p] * state.w[0][p] + state.g[1][p] * state.w[1][p];
     cr /= N * N;
-    var e = function (x) { return x.toExponential(1).replace("e", "·10^").replace("-", "−"); };
-    out.innerHTML = "énergie : ⟨|∇p|²⟩ / ⟨|u|²⟩ = " + (100 * Eg / Eu).toFixed(1) + " %, ⟨|ℙu|²⟩ / ⟨|u|²⟩ = " + (100 * Ew / Eu).toFixed(1) +
-      " %, somme = " + (100 * (Eg + Ew) / Eu).toFixed(4) + " %<br>orthogonalité : ⟨∇p · ℙu⟩ / ⟨|u|²⟩ = " + e(cr / Eu) +
+    var e = function (x) { var t = x.toExponential(1).split("e"); return t[0].replace(".", ",").replace("-", "−") + "·10<sup>" + String(parseInt(t[1], 10)).replace("-", "−") + "</sup>"; };
+    var pc = function (x, d) { return x.toFixed(d).replace(".", ","); };
+    out.innerHTML = "énergie : ⟨|∇p|²⟩ / ⟨|u|²⟩ = " + pc(100 * Eg / Eu, 1) + " %, ⟨|ℙu|²⟩ / ⟨|u|²⟩ = " + pc(100 * Ew / Eu, 1) +
+      " %, somme = " + pc(100 * (Eg + Ew) / Eu, 4) + " %<br>orthogonalité : ⟨∇p · ℙu⟩ / ⟨|u|²⟩ = " + e(cr / Eu) +
       "<br>divergence (rms) : u : " + e(rms(state.du[0])) + " ; ℙu : " + e(rms(state.dw[0])) +
       " — vorticité (rms) de ∇p : " + e(rms(state.dg[1]));
   }
@@ -1934,7 +1938,7 @@ Le schéma interactif suivant refait ce calcul dans le navigateur, sur une grill
 </script>
 ```
 
-Deux voies mènent donc à un champ solénoïdal sur le tore : **construire** le champ à partir d'un potentiel (chapitre 4), ou **projeter** un champ quelconque. Le code suivant illustre la première voie sur une grille : il tire une fonction de courant aléatoire dont le spectre d'énergie suit une loi $E(k) \propto k^{-3}$ (la loi attendue dans la cascade d'enstrophie de la turbulence 2D), puis en déduit la vitesse par dérivation spectrale.
+Deux voies mènent donc à un champ solénoïdal sur le tore : **construire** le champ à partir d'un potentiel (chapitre 4), ou **projeter** un champ quelconque. Le code suivant illustre la première voie sur une grille : il tire une fonction de courant aléatoire dont le spectre d'énergie suit une loi $E(k) \propto k^{-3}$ (la loi prédite par Kraichnan (1967) dans la cascade d'enstrophie de la turbulence 2D), puis en déduit la vitesse par dérivation spectrale.
 
 ```python
 import numpy as np
@@ -2056,3 +2060,403 @@ Ce qu'il faut retenir — chapitre 6
 - Avec des parois, la projection est un problème de Poisson global, n'impose que la composante normale, ne commute plus avec le laplacien, et le champ magnétique demande des conditions de raccord non locales.
 ::::
 
+## Exercices {#exercices}
+
+Les exercices suivent l'ordre des séances du plan de travail. Une étoile (★) signale une application directe du cours, deux étoiles (★★) un exercice qui enchaîne plusieurs résultats, trois étoiles (★★★) une démonstration ou un programme plus long, proche des questions du stage. Cherchez chaque exercice au moins vingt minutes avant de lire sa solution ; les exercices 13 à 15 demandent d'écrire et d'exécuter du code.
+
+1. **★ Calculs directs (séance 1).** Soit $f(x, y, z) = x^2 y + y z^3$ et $\mathbf{u} = (xy, \; yz, \; zx)$. (a) Calculer $\nabla f$ et $\Delta f$, puis vérifier sur cet exemple que $\nabla\times(\nabla f) = \mathbf{0}$. (b) Calculer $\nabla\cdot\mathbf{u}$ et $\nabla\times\mathbf{u}$, puis vérifier que $\nabla\cdot(\nabla\times\mathbf{u}) = 0$. (c) Au point $(1, 1, 1)$, calculer la dérivée de $f$ dans la direction $\mathbf{e} = (1, 2, 2)/3$, puis le plus grand taux de variation possible de $f$ et la direction où il est atteint.
+
+   ::: sol
+   *Solution.* (a) On trouve $\nabla f = (2xy, \; x^2 + z^3, \; 3yz^2)$ et $\Delta f = 2y + 0 + 6yz$. Les composantes du rotationnel de $\nabla f$ sont $\partial_y(3yz^2) - \partial_z(x^2 + z^3) = 3z^2 - 3z^2$, puis $\partial_z(2xy) - \partial_x(3yz^2) = 0 - 0$, enfin $\partial_x(x^2 + z^3) - \partial_y(2xy) = 2x - 2x$ : toutes sont nulles.
+
+   *(b)* On trouve $\nabla\cdot\mathbf{u} = y + z + x$. Les composantes du rotationnel sont $\partial_y(zx) - \partial_z(yz) = -y$, puis $\partial_z(xy) - \partial_x(zx) = -z$, enfin $\partial_x(yz) - \partial_y(xy) = -x$, soit
+
+   $$
+   \nabla\times\mathbf{u} = (-y, \; -z, \; -x),
+   $$
+
+   dont la divergence vaut $\partial_x(-y) + \partial_y(-z) + \partial_z(-x) = 0$.
+
+   *(c)* Au point $(1, 1, 1)$, $\nabla f = (2, 2, 3)$, donc la dérivée directionnelle vaut $\nabla f\cdot\mathbf{e} = (2 + 4 + 6)/3 = 4$. D'après la proposition 1.6 (ii), le plus grand taux de variation vaut $|\nabla f| = \sqrt{17} \approx 4{,}12$ ; il est atteint dans la direction $(2, 2, 3)/\sqrt{17}$, qui est proche de $\mathbf{e}$, d'où une dérivée directionnelle de 4 déjà proche du maximum.
+   :::
+
+2. **★ La roue à aubes (séance 1).** (a) Pour un champ $\mathbf{u}$ de classe $C^1$, on note $J_{ij} = \partial_j u_i$ la matrice jacobienne, $S = (J + J^{\mathsf T})/2$ sa partie symétrique et $A = (J - J^{\mathsf T})/2$ sa partie antisymétrique. Montrer que $A\mathbf{h} = \frac12\boldsymbol\omega\times\mathbf{h}$ pour tout vecteur $\mathbf{h}$, où $\boldsymbol\omega = \nabla\times\mathbf{u}$, et en déduire que le mouvement au voisinage d'un point est la somme d'une translation, d'une déformation pure et d'une rotation solide de vitesse angulaire $\boldsymbol\omega/2$. (b) Appliquer ce résultat au cisaillement $\mathbf{u} = (y, 0, 0)$ : dans quel sens et à quelle vitesse tourne une petite roue à aubes d'axe $\mathbf{e}_z$ ? Donner une explication physique. (c) Que fait la même roue dans le tourbillon ponctuel $\mathbf{u} = \frac{\Gamma}{2\pi r}\mathbf{e}_\theta$ de l'exemple 1.16 ?
+
+   ::: sol
+   *Solution.* (a) Avec $\omega_j = \varepsilon_{jlm}\partial_l u_m$ et la permutation circulaire $\varepsilon_{ijk} = \varepsilon_{jki}$ :
+
+   $$
+   \tfrac12(\boldsymbol\omega\times\mathbf{h})_i = \tfrac12\varepsilon_{ijk}\,\omega_j\,h_k = \tfrac12\varepsilon_{jki}\varepsilon_{jlm}\,\partial_l u_m\,h_k.
+   $$
+
+   Le lemme 1.12 donne $\varepsilon_{jki}\varepsilon_{jlm} = \delta_{kl}\delta_{im} - \delta_{km}\delta_{il}$, d'où
+
+   $$
+   \tfrac12(\boldsymbol\omega\times\mathbf{h})_i = \tfrac12(\delta_{kl}\delta_{im} - \delta_{km}\delta_{il})\,\partial_l u_m\,h_k = \tfrac12(\partial_k u_i - \partial_i u_k)\,h_k,
+   $$
+
+   ce qui est exactement $(A\mathbf{h})_i$. Le développement de Taylor s'écrit donc $\mathbf{u}(\mathbf{x} + \mathbf{h}) = \mathbf{u}(\mathbf{x}) + S\mathbf{h} + \frac12\boldsymbol\omega\times\mathbf{h} + o(|\mathbf{h}|)$. Le premier terme est une translation. La matrice $S$ est symétrique réelle, donc diagonalisable dans une base orthonormée : $S\mathbf{h}$ étire ou comprime le voisinage le long de trois axes perpendiculaires, sans le faire tourner. Le dernier terme est le champ de vitesse d'une rotation solide de vecteur vitesse angulaire $\boldsymbol\omega/2$ (proposition 1.8 (ii)).
+
+   *(b)* Pour $\mathbf{u} = (y, 0, 0)$, seul $J_{12} = \partial_y u_x = 1$ est non nul, et $\boldsymbol\omega = (0, 0, -1)$. La roue tourne donc à la vitesse angulaire $1/2$ dans le sens des aiguilles d'une montre. Physiquement, les pales du haut sont entraînées vers la droite plus vite que celles du bas : le couple fait tourner la roue. La partie symétrique $S$, de valeurs propres $\pm 1/2$ et de directions propres $(1, 1)/\sqrt2$ et $(1, -1)/\sqrt2$, étire le voisinage le long de la première diagonale et le comprime le long de la seconde : le cisaillement est la somme d'une déformation pure et d'une rotation.
+
+   *(c)* Pour $r > 0$, la vorticité du tourbillon ponctuel est nulle : la roue parcourt un cercle autour de l'axe, mais garde une orientation fixe, comme une nacelle de grande roue. Les pales proches de l'axe sont plus rapides que les pales extérieures, ce qui tendrait à faire tourner la roue dans un sens, mais la courbure de la trajectoire compense exactement cet effet.
+   :::
+
+3. **★★ Coordonnées cylindriques (séance 2).** (a) Le tourbillon de Rankine est défini par $u_r = u_z = 0$ et $u_\theta = \Omega r$ pour $r \le a$, $u_\theta = \Omega a^2/r$ pour $r > a$. Calculer sa vorticité dans les deux régions et sa circulation sur un cercle de rayon $R > a$ centré sur l'axe, puis vérifier le théorème de Stokes. (b) Le champ uniforme $\mathbf{u} = \mathbf{e}_x$ s'écrit $u_r = \cos\theta$, $u_\theta = -\sin\theta$, $u_z = 0$. Vérifier avec (1.2) que sa divergence est nulle, puis avec (1.5) que son laplacien vectoriel est nul. Que donnerait le laplacien « composante par composante » $(\Delta u_r, \Delta u_\theta)$ ? Conclure.
+
+   ::: sol
+   *Solution.* (a) Par (1.3), $\omega_z = \frac1r\frac{\mathrm{d}}{\mathrm{d}r}(r u_\theta)$. À l'intérieur, $\omega_z = \frac1r\frac{\mathrm{d}}{\mathrm{d}r}(\Omega r^2) = 2\Omega$ : le cœur tourne en bloc. À l'extérieur, $r u_\theta = \Omega a^2$ est constant et $\omega_z = 0$. La circulation sur le cercle de rayon $R > a$ vaut $\int_0^{2\pi}\frac{\Omega a^2}{R}\,R\,\mathrm{d}\theta = 2\pi\Omega a^2$. Le flux de la vorticité à travers le disque correspondant vaut $2\Omega\times\pi a^2$, puisque la vorticité est concentrée dans le cœur : les deux membres de (3.2) coïncident. La circulation ne dépend pas de $R$ ; vu de loin, le tourbillon de Rankine est un tourbillon ponctuel de circulation $\Gamma = 2\pi\Omega a^2$.
+
+   *(b)* Par (1.2), $\nabla\cdot\mathbf{u} = \frac1r\partial_r(r\cos\theta) + \frac1r\partial_\theta(-\sin\theta) = \frac{\cos\theta}{r} - \frac{\cos\theta}{r} = 0$. Par (1.4), $\Delta u_r = \frac{1}{r^2}\partial_\theta^2\cos\theta = -\frac{\cos\theta}{r^2}$ et $\Delta u_\theta = \frac{\sin\theta}{r^2}$. La formule (1.5) donne alors
+
+   $$
+   (\Delta\mathbf{u})_r = -\frac{\cos\theta}{r^2} - \frac{\cos\theta}{r^2} - \frac{2}{r^2}\,\partial_\theta(-\sin\theta) = 0,
+   $$
+
+   et, de même,
+
+   $$
+   (\Delta\mathbf{u})_\theta = \frac{\sin\theta}{r^2} + \frac{\sin\theta}{r^2} + \frac{2}{r^2}\,\partial_\theta(\cos\theta) = 0.
+   $$
+
+   Le laplacien composante par composante donnerait $(-\cos\theta, \sin\theta)/r^2$, qui n'est pas nul : il attribuerait une « courbure » à un champ constant. Les termes supplémentaires de (1.5) corrigent l'effet de la rotation des vecteurs de base ; les oublier est une erreur fréquente dans les codes en coordonnées cylindriques.
+   :::
+
+4. **★★ Formules de produits (séance 3).** Démontrer les formules (a), (c) et (f) de la proposition 2.5. Pour (f), on pourra commencer par établir $[\mathbf{u}\times(\nabla\times\mathbf{v})]_i = u_j\,\partial_i v_j - u_j\,\partial_j v_i$.
+
+   ::: sol
+   *Solution.* (a) Par la règle de Leibniz, $\partial_i(fg) = f\,\partial_i g + g\,\partial_i f$.
+
+   *(c)* $[\nabla\times(f\mathbf{u})]_i = \varepsilon_{ijk}\partial_j(f u_k) = f\,\varepsilon_{ijk}\partial_j u_k + \varepsilon_{ijk}(\partial_j f)\,u_k = f\,(\nabla\times\mathbf{u})_i + (\nabla f\times\mathbf{u})_i$.
+
+   (f) Par le lemme 1.12, avec $\varepsilon_{ijk} = \varepsilon_{kij}$ :
+
+   $$
+   [\mathbf{u}\times(\nabla\times\mathbf{v})]_i = \varepsilon_{ijk}\,u_j\,\varepsilon_{klm}\partial_l v_m = (\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl})\,u_j\,\partial_l v_m = u_j\,\partial_i v_j - u_j\,\partial_j v_i.
+   $$
+
+   Donc $u_j\partial_i v_j = [\mathbf{u}\times(\nabla\times\mathbf{v})]_i + [(\mathbf{u}\cdot\nabla)\mathbf{v}]_i$ et, en échangeant les rôles, $v_j\partial_i u_j = [\mathbf{v}\times(\nabla\times\mathbf{u})]_i + [(\mathbf{v}\cdot\nabla)\mathbf{u}]_i$. La somme des deux est $\partial_i(u_j v_j) = [\nabla(\mathbf{u}\cdot\mathbf{v})]_i$, ce qui est (f).
+   :::
+
+5. **★★ L'écoulement ABC, solution exacte (séance 3).** Soit $\mathbf{u}$ l'écoulement ABC de l'exemple 1.10. (a) À l'aide de la forme de Lamb (2.2), montrer que $(\mathbf{u}\cdot\nabla)\mathbf{u} = \nabla(|\mathbf{u}|^2/2)$. (b) En déduire que $\mathbf{u}$ est une solution stationnaire des équations d'Euler incompressibles $\partial_t\mathbf{u} + (\mathbf{u}\cdot\nabla)\mathbf{u} = -\nabla p$, $\nabla\cdot\mathbf{u} = 0$, et donner la pression. (c) On prend maintenant ce champ comme champ magnétique $\mathbf{B}$. Montrer que la force de Laplace $\mathbf{j}\times\mathbf{B}$ est nulle et interpréter ce résultat avec (2.3). (d) Dans un conducteur immobile, que devient ce champ magnétique sous l'équation d'induction (2.4) ?
+
+   ::: sol
+   *Solution.* (a) Comme $\boldsymbol\omega = \mathbf{u}$, on a $\mathbf{u}\times\boldsymbol\omega = \mathbf{0}$ et (2.2) se réduit à $(\mathbf{u}\cdot\nabla)\mathbf{u} = \nabla(|\mathbf{u}|^2/2)$.
+
+   *(b)* Avec $p = -|\mathbf{u}|^2/2 + \text{cste}$, on a $(\mathbf{u}\cdot\nabla)\mathbf{u} = -\nabla p$ ; le champ indépendant du temps vérifie donc l'équation d'Euler, et il est à divergence nulle. C'est une solution stationnaire exacte, dont les lignes de courant peuvent être chaotiques (Dombre et al., 1986).
+
+   *(c)* On a $\mathbf{j} = \nabla\times\mathbf{B} = \mathbf{B}$, donc $\mathbf{j}\times\mathbf{B} = \mathbf{B}\times\mathbf{B} = \mathbf{0}$ : le champ est dit **sans force**. D'après (2.3), la tension magnétique $(\mathbf{B}\cdot\nabla)\mathbf{B}$ y équilibre exactement le gradient de pression magnétique $\nabla(|\mathbf{B}|^2/2)$.
+
+   *(d)* Avec $\mathbf{u} = \mathbf{0}$, (2.4) se réduit à $\partial_t\mathbf{B} = \eta\Delta\mathbf{B} = -\eta\mathbf{B}$ (exemple 2.8), d'où $\mathbf{B}(t) = e^{-\eta t}\mathbf{B}(0)$ : le champ décroît exponentiellement par effet Joule. Pour qu'il croisse, il faut un écoulement capable d'étirer les lignes de champ plus vite que la diffusion ne les dissipe ; l'expérience E3 du dépôt mesure le taux de croissance obtenu quand l'écoulement est lui-même l'écoulement ABC, en fonction de $Rm$ (voir le [rapport](../../rapport/index.html#e3)).
+   :::
+
+6. **★ Le champ coulombien (séance 4).** Soit $\mathbf{E}(\mathbf{x}) = \mathbf{x}/|\mathbf{x}|^3$ sur $\mathbb{R}^3\setminus\{\mathbf{0}\}$. (a) Montrer que $\nabla\cdot\mathbf{E} = 0$ hors de l'origine. (b) Calculer le flux sortant de $\mathbf{E}$ à travers la sphère de rayon $R$ centrée en $\mathbf{0}$. (c) Montrer que ce flux est nul à travers toute sphère qui n'entoure pas l'origine, et qu'il vaut $4\pi$ à travers toute surface fermée régulière qui l'entoure. (d) Pourquoi n'y a-t-il pas de contradiction avec la proposition 3.8 ? Que faudrait-il pour qu'un champ magnétique se comporte ainsi ?
+
+   ::: sol
+   *Solution.* (a) Avec $r = |\mathbf{x}|$ et $\partial_i r = x_i/r$ : $\partial_i(x_i r^{-3}) = 3r^{-3} + x_i\cdot(-3)r^{-4}\cdot\frac{x_i}{r} = 3r^{-3} - 3r^{-3} = 0$.
+
+   *(b)* Sur la sphère, $\mathbf{n} = \mathbf{x}/R$ et $\mathbf{E}\cdot\mathbf{n} = 1/R^2$ ; le flux vaut $\frac{1}{R^2}\times 4\pi R^2 = 4\pi$, quel que soit $R$.
+
+   *(c)* Si la sphère n'entoure pas l'origine, $\mathbf{E}$ est de classe $C^1$ sur la boule qu'elle borde et le théorème 3.5 donne un flux égal à $\int\nabla\cdot\mathbf{E} = 0$. Si une surface fermée $S$ entoure l'origine, on choisit une petite sphère $S_\varepsilon$ centrée en $\mathbf{0}$ et intérieure à $S$. Le domaine compris entre les deux ne contient pas l'origine ; son bord est formé de $S$ (normale sortante) et de $S_\varepsilon$ (normale dirigée vers l'origine). Le théorème 3.5 y donne $\Phi(S) - \Phi(S_\varepsilon) = 0$, donc $\Phi(S) = 4\pi$.
+
+   *(d)* La proposition 3.8 suppose le champ de classe $C^1$ sur tout l'ouvert ; ici $\mathbf{E}$ n'est pas défini en $\mathbf{0}$, et tout le flux provient de ce point singulier : c'est le champ d'une charge ponctuelle (au sens des distributions, $\nabla\cdot\mathbf{E} = 4\pi\delta_{\mathbf{0}}$). Pour un champ magnétique, il faudrait une « charge magnétique » ponctuelle, c'est-à-dire un monopôle, ce qui n'a jamais été observé. Le bloc de code du chapitre 3 et la figure de la section 3.3 illustrent ces deux cas.
+   :::
+
+7. **★★ Green et Ampère (séance 4).** (a) Avec $P = -y/2$ et $Q = x/2$ dans le théorème 3.4, montrer que l'aire d'un domaine plan $D$ vaut $\frac12\oint_{\partial D}(x\,\mathrm{d}y - y\,\mathrm{d}x)$, et en déduire l'aire de l'ellipse de demi-axes $a$ et $b$. (b) Un fil cylindrique infini de rayon $a$ et d'axe $\mathbf{e}_z$ est parcouru par un courant $I$ de densité uniforme $\mathbf{j} = \frac{I}{\pi a^2}\mathbf{e}_z$. En admettant que $\mathbf{B} = B_\theta(r)\,\mathbf{e}_\theta$, calculer $B_\theta$ à l'intérieur et à l'extérieur du fil à l'aide du théorème de Stokes appliqué à $\nabla\times\mathbf{B} = \mu_0\mathbf{j}$. Vérifier le résultat avec (1.2) et (1.3).
+
+   ::: sol
+   *Solution.* (a) On a $\partial_x Q - \partial_y P = \frac12 + \frac12 = 1$, donc le membre de droite du théorème 3.4 est l'aire de $D$. Pour l'ellipse $x = a\cos t$, $y = b\sin t$, on a $x\,\mathrm{d}y - y\,\mathrm{d}x = (ab\cos^2 t + ab\sin^2 t)\,\mathrm{d}t = ab\,\mathrm{d}t$, et l'aire vaut $\frac12\times 2\pi ab = \pi ab$.
+
+   *(b)* Sur un cercle de rayon $r$ centré sur l'axe, $\oint\mathbf{B}\cdot\mathrm{d}\boldsymbol\ell = 2\pi r\,B_\theta(r)$. Le flux de $\mu_0\mathbf{j}$ à travers le disque correspondant vaut $\mu_0 I r^2/a^2$ si $r \le a$ et $\mu_0 I$ si $r \ge a$. D'où
+
+   $$
+   B_\theta(r) = \frac{\mu_0 I\,r}{2\pi a^2} \quad (r \le a), \qquad B_\theta(r) = \frac{\mu_0 I}{2\pi r} \quad (r \ge a),
+   $$
+
+   deux expressions qui se raccordent en $r = a$. Vérification : $\nabla\cdot\mathbf{B} = \frac1r\partial_\theta B_\theta = 0$, et $(\nabla\times\mathbf{B})_z = \frac1r\frac{\mathrm{d}}{\mathrm{d}r}(rB_\theta)$ vaut $\frac1r\frac{\mathrm{d}}{\mathrm{d}r}\big(\frac{\mu_0 I r^2}{2\pi a^2}\big) = \frac{\mu_0 I}{\pi a^2} = \mu_0 j$ à l'intérieur et $0$ à l'extérieur. Le champ singulier de l'exemple 3.9 est la limite $a \to 0$, où toute la densité de courant se concentre sur l'axe.
+   :::
+
+8. **★★ Bilan d'énergie cinétique (séance 4).** Dans une boîte périodique, on considère une solution régulière des équations de Navier–Stokes $\partial_t\mathbf{u} + (\mathbf{u}\cdot\nabla)\mathbf{u} = -\nabla p + \nu\Delta\mathbf{u} + \mathbf{f}$, $\nabla\cdot\mathbf{u} = 0$. Montrer que (a) $\langle\mathbf{u}\cdot\nabla p\rangle = 0$ ; (b) $\langle\mathbf{u}\cdot(\mathbf{u}\cdot\nabla)\mathbf{u}\rangle = 0$ ; (c) $\langle\mathbf{u}\cdot\Delta\mathbf{u}\rangle = -\langle|\boldsymbol\omega|^2\rangle$. En déduire le bilan
+
+   $$
+   \frac{\mathrm{d}}{\mathrm{d}t}\Big\langle\frac{|\mathbf{u}|^2}{2}\Big\rangle = \langle\mathbf{u}\cdot\mathbf{f}\rangle - \nu\,\langle|\boldsymbol\omega|^2\rangle,
+   $$
+
+   interpréter chaque terme, et dire où sert l'hypothèse $\nabla\cdot\mathbf{u} = 0$.
+
+   ::: sol
+   *Solution.* (a) Par (3.3) sans terme de bord, $\langle\mathbf{u}\cdot\nabla p\rangle = -\langle p\,\nabla\cdot\mathbf{u}\rangle = 0$.
+
+   *(b)* On a $u_i u_j\partial_j u_i = u_j\,\partial_j(|\mathbf{u}|^2/2) = \nabla\cdot\big(\mathbf{u}\,|\mathbf{u}|^2/2\big) - \frac{|\mathbf{u}|^2}{2}\nabla\cdot\mathbf{u}$. La moyenne d'une divergence de champ périodique est nulle (théorème 3.5 sur la boîte, les flux des faces opposées se compensant), et le second terme est nul par incompressibilité.
+
+   *(c)* Le théorème 2.3 avec $\nabla\cdot\mathbf{u} = 0$ donne $\Delta\mathbf{u} = -\nabla\times\boldsymbol\omega$, puis (3.4) sans terme de bord donne $\langle\mathbf{u}\cdot\nabla\times\boldsymbol\omega\rangle = \langle\boldsymbol\omega\cdot\nabla\times\mathbf{u}\rangle = \langle|\boldsymbol\omega|^2\rangle$.
+
+   En multipliant l'équation par $\mathbf{u}$ et en moyennant, on obtient le bilan annoncé. Le terme $\langle\mathbf{u}\cdot\mathbf{f}\rangle$ est la puissance injectée par le forçage ; $\nu\langle|\boldsymbol\omega|^2\rangle \ge 0$ est la dissipation visqueuse. L'advection et la pression ne créent ni ne détruisent d'énergie : elles la redistribuent dans l'espace et entre les échelles (c'est la cascade du module [Mécanique des fluides et turbulence](../p2-mecanique-fluides/index.html)). L'incompressibilité sert dans les trois points. En MHD, on ajoute la force de Laplace $\mathbf{j}\times\mathbf{B}$ au second membre : le bilan cinétique gagne le terme $\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle$, qui est exactement l'opposé du terme d'échange de la proposition 3.10. L'énergie totale vérifie donc $\frac{\mathrm{d}}{\mathrm{d}t}E = \langle\mathbf{u}\cdot\mathbf{f}\rangle - \nu\langle|\boldsymbol\omega|^2\rangle - \eta\langle|\mathbf{j}|^2\rangle$.
+   :::
+
+9. **★★ Fonction de courant (séance 5).** Soit $\psi = \sin x\sin y$ sur le tore $[0, 2\pi)^2$ et $\mathbf{u} = \nabla^\perp\psi$ (exemple 4.6). (a) Calculer le débit de $\mathbf{u}$ à travers le segment allant de $(0, 0)$ à $(\pi/2, \pi/2)$ de deux façons : par la proposition 4.5 (iv), puis par un calcul direct. (b) Montrer plus généralement que, si la vorticité est une fonction de la fonction de courant, $\omega = F(\psi)$, l'écoulement est une solution stationnaire de l'équation d'Euler 2D écrite en vorticité, $\partial_t\omega + \mathbf{u}\cdot\nabla\omega = 0$. Appliquer à $\psi = \sin x\sin y$. (c) Un écoulement uniforme $\mathbf{u} = U\mathbf{e}_x$ s'écrit-il $\nabla^\perp\psi$ avec $\psi$ périodique ? Que faut-il ajouter à la représentation par fonction de courant sur le tore ?
+
+   ::: sol
+   *Solution.* (a) Par la proposition 4.5 (iv), le débit vaut $\psi(\pi/2, \pi/2) - \psi(0, 0) = 1$. Directement : le segment est paramétré par $\boldsymbol\gamma(s) = (s, s)$, $s \in [0, \pi/2]$, la normale non normalisée vaut $(\gamma_y', -\gamma_x') = (1, -1)$ et $\mathbf{u}(\boldsymbol\gamma(s)) = (\sin s\cos s, \; -\cos s\sin s)$. On a donc $\mathbf{u}\cdot(1, -1) = 2\sin s\cos s = \sin 2s$, dont l'intégrale sur $[0, \pi/2]$ vaut 1.
+
+   *(b)* Par la règle de dérivation des fonctions composées, $\mathbf{u}\cdot\nabla\omega = F'(\psi)\,\mathbf{u}\cdot\nabla\psi = 0$ d'après la proposition 4.5 (iii). Le champ $\omega$ indépendant du temps vérifie donc $\partial_t\omega + \mathbf{u}\cdot\nabla\omega = 0$. Pour $\psi = \sin x\sin y$, $\omega = 2\psi$ : la fonction $F$ est linéaire.
+
+   *(c)* La fonction $\psi = Uy$ donne bien $\mathbf{u} = (U, 0)$, mais elle n'est pas périodique en $y$. Plus généralement, pour $\psi$ périodique, $\langle\nabla^\perp\psi\rangle = \mathbf{0}$, car la moyenne d'une dérivée de fonction périodique est nulle. Sur le tore, un champ à divergence nulle s'écrit donc $\bar{\mathbf{u}} + \nabla^\perp\psi$ : deux constantes pour le champ moyen, plus une fonction de courant périodique (remarque 4.3 et théorème 6.4). Un modèle génératif qui ne produit que $\psi$ ne peut pas représenter un champ moyen non nul : il faut le générer à part, ou vérifier qu'il est nul dans les données.
+   :::
+
+10. **★★★ Lemme de Poincaré pour les champs solénoïdaux (séance 5).** Soit $\Omega$ un domaine étoilé par rapport à l'origine et $\mathbf{B}$ un champ de classe $C^1$ sur $\Omega$ tel que $\nabla\cdot\mathbf{B} = 0$. On pose $\mathbf{A}(\mathbf{x}) = \int_0^1 t\,\mathbf{B}(t\mathbf{x})\times\mathbf{x}\,\mathrm{d}t$. (a) Montrer que $\nabla\times\mathbf{A} = \mathbf{B}$ (théorème 4.2 (ii)). (b) Calculer $\mathbf{A}$ pour $\mathbf{B} = B_0\mathbf{e}_z$ et comparer à l'exemple 4.9. (c) Montrer que $\mathbf{x}\cdot\mathbf{A} = 0$ et que $\nabla\cdot\mathbf{A} = \int_0^1 t^2\,\mathbf{x}\cdot(\nabla\times\mathbf{B})(t\mathbf{x})\,\mathrm{d}t$. Ce potentiel est-il en jauge de Coulomb en général ?
+
+    ::: sol
+    *Solution.* (a) On écrit $A_m = \int_0^1 t\,\varepsilon_{mjk}B_j(t\mathbf{x})\,x_k\,\mathrm{d}t$ et on dérive sous l'intégrale, en notant que $\partial_l[B_j(t\mathbf{x})] = t\,(\partial_l B_j)(t\mathbf{x})$. Avec $\varepsilon_{ilm}\varepsilon_{mjk} = \varepsilon_{mil}\varepsilon_{mjk} = \delta_{ij}\delta_{lk} - \delta_{ik}\delta_{lj}$ (lemme 1.12) :
+
+    $$
+    (\nabla\times\mathbf{A})_i = \int_0^1 t\,\varepsilon_{ilm}\varepsilon_{mjk}\,\partial_l\big[B_j(t\mathbf{x})\,x_k\big]\,\mathrm{d}t,
+    $$
+
+    avec
+
+    $$
+    \partial_l\big[B_j(t\mathbf{x})\,x_k\big] = t\,x_k(\partial_l B_j)(t\mathbf{x}) + B_j(t\mathbf{x})\,\delta_{lk}.
+    $$
+
+    Le premier produit de symboles donne $t\,x_l(\partial_l B_i)(t\mathbf{x}) + 3B_i(t\mathbf{x})$, le second $-t\,x_i(\nabla\cdot\mathbf{B})(t\mathbf{x}) - B_i(t\mathbf{x})$, nul pour sa première partie puisque $\nabla\cdot\mathbf{B} = 0$. L'intégrande vaut donc
+
+    $$
+    t^2\,x_l(\partial_l B_i)(t\mathbf{x}) + 2t\,B_i(t\mathbf{x}) = \frac{\mathrm{d}}{\mathrm{d}t}\big[t^2 B_i(t\mathbf{x})\big],
+    $$
+
+    dont l'intégrale entre 0 et 1 vaut $B_i(\mathbf{x})$. Le caractère étoilé garantit que $t\mathbf{x} \in \Omega$ pour tout $t \in [0, 1]$.
+
+    *(b)* Pour $\mathbf{B} = B_0\mathbf{e}_z$, $\mathbf{A} = \big(\int_0^1 t\,\mathrm{d}t\big)B_0\,\mathbf{e}_z\times\mathbf{x} = \frac{B_0}{2}(-y, x, 0)$ : c'est le potentiel symétrique de l'exemple 4.9.
+
+    *(c)* $\mathbf{x}\cdot(\mathbf{B}\times\mathbf{x}) = 0$ pour tout $t$, d'où $\mathbf{x}\cdot\mathbf{A} = 0$. Pour la divergence, $\partial_i A_i = \int_0^1 t\,\varepsilon_{ijk}\big[t\,x_k(\partial_i B_j)(t\mathbf{x}) + B_j(t\mathbf{x})\,\delta_{ik}\big]\,\mathrm{d}t$ ; le second terme contient $\varepsilon_{iji} = 0$, et le premier vaut $t^2 x_k\varepsilon_{kij}\partial_i B_j = t^2\,\mathbf{x}\cdot(\nabla\times\mathbf{B})$. Ce n'est pas nul en général : pour $\mathbf{B} = (0, 0, x)$, à divergence nulle, $\nabla\times\mathbf{B} = (0, -1, 0)$ et $\nabla\cdot\mathbf{A} = -y/3$. Ce potentiel vérifie la condition $\mathbf{x}\cdot\mathbf{A} = 0$ (parfois appelée jauge de Poincaré) ; pour passer en jauge de Coulomb, on résout l'équation de Poisson de la proposition 4.8.
+    :::
+
+11. **★ Série de Fourier du signal triangulaire (séance 6).** Soit $f$ la fonction $2\pi$-périodique égale à $|x|$ sur $[-\pi, \pi]$. (a) Calculer ses coefficients de Fourier. Comment décroissent-ils, et pourquoi plus vite que ceux du créneau de l'exemple 5.6 ? (b) En évaluant la série en $x = 0$, montrer que $\sum_{n\ \text{impair}\ \ge 1}1/n^2 = \pi^2/8$. (c) À l'aide de l'égalité de Parseval, montrer que $\sum_{n\ \text{impair}\ \ge 1}1/n^4 = \pi^4/96$, puis que $\sum_{n \ge 1}1/n^4 = \pi^4/90$.
+
+    ::: sol
+    *Solution.* (a) On a $\hat f_0 = \frac{1}{2\pi}\int_{-\pi}^{\pi}|x|\,\mathrm{d}x = \frac{\pi}{2}$ et, par parité puis intégration par parties,
+
+    $$
+    \hat f_n = \frac{1}{\pi}\int_0^\pi x\cos(nx)\,\mathrm{d}x = \frac{1}{\pi}\Big[\frac{x\sin(nx)}{n} + \frac{\cos(nx)}{n^2}\Big]_0^\pi = \frac{(-1)^n - 1}{\pi n^2},
+    $$
+
+    soit $-\frac{2}{\pi n^2}$ pour $n$ impair et $0$ pour $n$ pair non nul. Les coefficients décroissent comme $1/n^2$ : $f$ est continue et sa dérivée est le créneau $\operatorname{signe}(\sin x)$ de l'exemple 5.6. La proposition 5.4 donne $\hat f_n = \widehat{(f')}_n/(in) = \frac{2}{i\pi n}\cdot\frac{1}{in} = -\frac{2}{\pi n^2}$, ce qui confirme le calcul : une intégration de plus, un facteur $1/n$ de plus.
+
+    *(b)* La fonction $f$ est continue et de classe $C^1$ par morceaux ; par le théorème 5.3 (ii), sa série converge uniformément : $f(x) = \frac{\pi}{2} - \frac{4}{\pi}\sum_{n\ \text{impair}\ \ge 1}\frac{\cos(nx)}{n^2}$. En $x = 0$, on obtient $0 = \frac{\pi}{2} - \frac{4}{\pi}\sum_{\text{impair}}\frac{1}{n^2}$, d'où le résultat.
+
+    *(c)* Le membre de gauche de (5.1) vaut $\frac{1}{2\pi}\int_{-\pi}^{\pi}x^2\,\mathrm{d}x = \frac{\pi^2}{3}$. Le membre de droite vaut $\frac{\pi^2}{4} + 2\sum_{\text{impair}}\frac{4}{\pi^2 n^4}$. On en tire $\sum_{\text{impair}}\frac{1}{n^4} = \frac{\pi^2}{8}\Big(\frac{\pi^2}{3} - \frac{\pi^2}{4}\Big) = \frac{\pi^4}{96}$. Enfin, en notant $S = \sum_{n\ge1}1/n^4$, la somme sur les entiers pairs vaut $S/16$, donc $S - S/16 = \pi^4/96$ et $S = \pi^4/90$.
+    :::
+
+12. **★★ Repliement et règle des 2/3 (séance 6).** (a) Sur une grille de $N = 16$ points de $[0, 2\pi)$, à quelles fonctions de nombre d'onde au plus 8 les fonctions $\sin(21x)$, $\cos(12x)$ et $\sin(8x)$ sont-elles indiscernables ? Vérifier avec le schéma interactif de la section 5.2. (b) Un code pseudo-spectral garde les modes $|n| \le K = 21$ et calcule des termes quadratiques. Quel est le plus petit $N$ qui élimine le repliement sur ces modes ? (c) Pour un terme cubique $u^3$, montrer qu'il faut $N \ge 4K + 1$, c'est-à-dire ne garder que la moitié du spectre.
+
+    ::: sol
+    *Solution.* (a) Comme $21 = 16 + 5$, $\sin(21x)$ coïncide sur la grille avec $\sin(5x)$. Comme $12 = 16 - 4$, $\cos(12x_j) = \cos(-4x_j) = \cos(4x_j)$. Enfin $\sin(8x_j) = \sin(\pi j) = 0$ : le mode de Nyquist en sinus est invisible sur la grille, ce qui justifie aussi la convention de la définition 5.11.
+
+    *(b)* Par le théorème 5.16, il faut $N \ge 3K + 1 = 64$. C'est le choix usuel : $64$ points pour garder les modes $|n| \le 21$, soit le tiers de $64$.
+
+    *(c)* Le produit $u^3$ a des modes jusqu'à $3K$. Par (5.2), le coefficient discret d'indice $n$, $|n| \le K$, reçoit les termes repliés $\widehat{(u^3)}_{n + pN}$, $p \neq 0$, avec $|n + pN| \ge N - K$. Ils sont tous nuls si $N - K > 3K$, c'est-à-dire $N \ge 4K + 1$. On ne garde alors que les modes $|n| \le N/4$, la moitié du spectre représentable.
+    :::
+
+13. **★★ Régularité et vitesse de convergence (code, séance 6).** À l'aide des propositions 5.4 et 5.12, prédire la vitesse de convergence de la dérivée spectrale de $f(x) = |\sin x|^3$. Vérifier numériquement en comparant à $e^{\sin x}$.
+
+    ::: sol
+    *Solution.* Près de $x = 0$, $f(x) \approx |x|^3$, dont les dérivées successives sont $3x|x|$, $6|x|$ et $6\operatorname{signe}(x)$ : $f$ est de classe $C^2$ et sa dérivée troisième est continue par morceaux avec des sauts en $0$ et en $\pi$. Trois intégrations par parties donnent $\hat f_n = \widehat{(f''')}_n/(in)^3$ et, comme pour le créneau, $\widehat{(f''')}_n = O(1/n)$ ; donc $|\hat f_n| = O(n^{-4})$. La proposition 5.12 avec $q = 4$ prédit une erreur en $O(N^{-2})$ : elle doit être divisée par 4 quand $N$ double. Pour $e^{\sin x}$, fonction analytique, la convergence est exponentielle.
+
+    ```python
+    import numpy as np
+
+    def derivee_spectrale(f):
+        N = f.size
+        k = np.fft.fftfreq(N, d=1 / N)            # nombres d'onde entiers (L = 2 pi)
+        if N % 2 == 0:
+            k[N // 2] = 0.0
+        return np.real(np.fft.ifft(1j * k * np.fft.fft(f)))
+
+    print("   N   erreur e^(sin x)   erreur |sin x|^3   rapport")
+    e_prec = None
+    for N in [16, 32, 64, 128, 256, 512]:
+        x = 2 * np.pi * np.arange(N) / N
+        e1 = np.abs(derivee_spectrale(np.exp(np.sin(x))) - np.cos(x) * np.exp(np.sin(x))).max()
+        e2 = np.abs(derivee_spectrale(np.abs(np.sin(x))**3)
+                    - 3 * np.abs(np.sin(x)) * np.sin(x) * np.cos(x)).max()
+        r = "  -" if e_prec is None else f"{e_prec / e2:.2f}"
+        print(f"{N:4d}   {e1:.1e}            {e2:.1e}            {r}")
+        e_prec = e2
+    # sortie :
+    #    N   erreur e^(sin x)   erreur |sin x|^3   rapport
+    #   16   1.8e-07            1.7e-02              -
+    #   32   2.9e-15            4.4e-03            3.93
+    #   64   1.1e-14            1.1e-03            3.98
+    #  128   2.4e-14            2.7e-04            4.00
+    #  256   5.5e-14            6.8e-05            4.00
+    #  512   1.2e-13            1.7e-05            4.00
+    ```
+
+    Le rapport des erreurs successives tend vers 4, comme prévu, alors que $e^{\sin x}$ atteint la précision machine dès $N = 32$. La méthode spectrale n'est donc pas « magique » : elle est aussi précise que la fonction est régulière. C'est pourquoi les codes pseudo-spectraux qui représentent des objets à bords francs, comme les turbines de VKS, doivent filtrer les discontinuités (remarque 5.17).
+    :::
+
+14. **★★★ Projection de Leray en 2D par la fonction de courant (code, séance 7).** (a) Sur le tore 2D, montrer en Fourier que $\mathbb{P}\mathbf{u} = \langle\mathbf{u}\rangle + \nabla^\perp\psi$, où $\psi$ est la solution de moyenne nulle de $-\Delta\psi = \omega$ et $\omega = \partial_x u_y - \partial_y u_x$. (b) En déduire que $\mathbf{u}$ et $\mathbb{P}\mathbf{u}$ ont la même vorticité, et interpréter. (c) Programmer les deux calculs sur un champ aléatoire et vérifier qu'ils coïncident à l'arrondi près.
+
+    ::: sol
+    *Solution.* (a) Pour $\mathbf{k} \neq \mathbf{0}$, $\hat\omega = i(k_x\hat u_y - k_y\hat u_x)$, $\hat\psi = \hat\omega/|\mathbf{k}|^2$ et $\widehat{\nabla^\perp\psi} = (ik_y\hat\psi, \; -ik_x\hat\psi)$. La première composante vaut
+
+    $$
+    \frac{ik_y\cdot i(k_x\hat u_y - k_y\hat u_x)}{|\mathbf{k}|^2} = \frac{k_y^2\hat u_x - k_x k_y\hat u_y}{|\mathbf{k}|^2} = \hat u_x - \frac{k_x(k_x\hat u_x + k_y\hat u_y)}{|\mathbf{k}|^2},
+    $$
+
+    en utilisant $k_y^2 = |\mathbf{k}|^2 - k_x^2$. C'est la première composante de (6.2) ; la seconde se traite de même. Le mode $\mathbf{k} = \mathbf{0}$ donne le champ moyen, conservé par $\mathbb{P}$.
+
+    *(b)* La vorticité de $\nabla^\perp\psi$ vaut $-\Delta\psi = \omega$ (proposition 4.5 (ii)) et le champ moyen n'en a pas. La projection retire la partie gradient, qui n'a pas de vorticité ($\nabla\times\nabla p = \mathbf{0}$) : elle modifie la divergence et laisse la vorticité intacte. En 2D, projeter revient donc à « reconstruire la vitesse à partir de sa vorticité ».
+
+    *(c)* On retire d'abord les modes de Nyquist, dont la dérivée n'est pas définie (remarque 6.7) ; sans cette précaution, les deux calculs diffèrent sur ces quelques modes.
+
+    ```python
+    import numpy as np
+    rng = np.random.default_rng(14)
+    N = 128
+    k1 = np.fft.fftfreq(N, d=1 / N); k1[N // 2] = 0.0      # nombres d'onde entiers, Nyquist annulé
+    KX, KY = np.meshgrid(k1, k1, indexing="ij")
+    K2 = KX**2 + KY**2
+    K2s = np.where(K2 == 0, 1.0, K2)
+    F, Fi = np.fft.fft2, lambda a: np.real(np.fft.ifft2(a))
+
+    u = rng.normal(size=(2, N, N)) + np.array([0.3, -0.2])[:, None, None]   # bruit + champ moyen
+    uh = np.stack([F(u[0]), F(u[1])])
+    nyq = np.zeros((N, N), bool); nyq[N // 2, :] = nyq[:, N // 2] = True
+    uh[:, nyq] = 0.0                                        # modes de Nyquist retirés (dérivée non définie)
+    u = np.stack([Fi(uh[0]), Fi(uh[1])])
+
+    # (a) Leray : u^ - k (k . u^)/|k|^2  (le mode k = 0 est conservé)
+    kd = KX * uh[0] + KY * uh[1]
+    P1 = np.stack([Fi(uh[0] - KX * kd / K2s), Fi(uh[1] - KY * kd / K2s)])
+
+    # (b) Fonction de courant : omega = d_x u_y - d_y u_x, -Lap psi = omega, Pu = <u> + (d_y psi, -d_x psi)
+    om_h = 1j * KX * uh[1] - 1j * KY * uh[0]
+    psi_h = om_h / K2s
+    psi_h[0, 0] = 0.0
+    P2 = np.stack([Fi(1j * KY * psi_h), Fi(-1j * KX * psi_h)]) + u.mean(axis=(1, 2))[:, None, None]
+
+    div = Fi(1j * KX * F(P2[0]) + 1j * KY * F(P2[1]))
+    print("max|P1 - P2| =", f"{np.abs(P1 - P2).max():.1e}", "; max|div P2| =", f"{np.abs(div).max():.1e}")
+    print("moyenne conservée :", np.round(P2.mean(axis=(1, 2)), 12), "; vorticité inchangée :",
+          f"{np.abs(Fi(1j * KX * F(P2[1]) - 1j * KY * F(P2[0])) - Fi(om_h)).max():.1e}")
+    # sortie :
+    # max|P1 - P2| = 8.9e-16 ; max|div P2| = 3.9e-14
+    # moyenne conservée : [ 0.31141623 -0.20974851] ; vorticité inchangée : 8.5e-14
+    ```
+
+    Les deux calculs coïncident à $10^{-15}$ près, la divergence du résultat est au niveau de l'arrondi des FFT, le champ moyen est conservé et la vorticité n'a pas changé.
+    :::
+
+15. **★★★ Potentiel vecteur et hélicité magnétique (code, séance 7).** (a) En Fourier, montrer que $H_M = \langle\mathbf{A}\cdot\mathbf{B}\rangle = \sum_{\mathbf{k}}\overline{\hat{\mathbf{A}}_{\mathbf{k}}}\cdot\hat{\mathbf{B}}_{\mathbf{k}}$ ne change pas quand on remplace $\hat{\mathbf{A}}_{\mathbf{k}}$ par $\hat{\mathbf{A}}_{\mathbf{k}} + i\mathbf{k}\hat\chi_{\mathbf{k}}$ : c'est une seconde démonstration de la proposition 4.10. (b) Programmer : tirer un champ $\mathbf{B}$ lisse, solénoïdal et de moyenne nulle sur le tore 3D ; calculer son potentiel en jauge de Coulomb par la proposition 4.8 ; vérifier $\nabla\times\mathbf{A} = \mathbf{B}$ et $\nabla\cdot\mathbf{A} = 0$ ; comparer $H_M$ dans deux jauges. (c) Contrôler le programme sur le champ ABC, pour lequel $\mathbf{A} = \mathbf{B}$ et $H_M = A^2 + B^2 + C^2$ (exemple 4.9). (d) Pourquoi a-t-on imposé que $\mathbf{B}$ soit de moyenne nulle ?
+
+    ::: sol
+    *Solution.* (a) La variation de $H_M$ vaut $\sum_{\mathbf{k}}\overline{i\mathbf{k}\hat\chi_{\mathbf{k}}}\cdot\hat{\mathbf{B}}_{\mathbf{k}} = \sum_{\mathbf{k}}(-i)\,\overline{\hat\chi_{\mathbf{k}}}\,(\mathbf{k}\cdot\hat{\mathbf{B}}_{\mathbf{k}}) = 0$, puisque $\mathbf{k}\cdot\hat{\mathbf{B}}_{\mathbf{k}} = 0$ pour un champ solénoïdal. Chaque mode de Fourier est invariant de jauge séparément.
+
+    *(b)* et (c) :
+
+    ```python
+    import numpy as np
+    rng = np.random.default_rng(8)
+    N, L = 32, 2 * np.pi
+    kv = 2 * np.pi * np.fft.fftfreq(N, d=L / N)            # vrais nombres d'onde
+    filtre = np.exp(-sum(k**2 for k in np.meshgrid(kv, kv, kv, indexing="ij")) / 8)
+    k1 = kv.copy(); k1[N // 2] = 0.0                       # Nyquist annulé pour les dérivées
+    K = np.stack(np.meshgrid(k1, k1, k1, indexing="ij"))
+    K2 = (K**2).sum(0)
+    K2s = np.where(K2 == 0, 1.0, K2)
+    F  = lambda a: np.fft.fftn(a, axes=(-3, -2, -1))
+    Fi = lambda a: np.real(np.fft.ifftn(a, axes=(-3, -2, -1)))
+    croix = lambda a, b: np.stack([a[1]*b[2] - a[2]*b[1], a[2]*b[0] - a[0]*b[2], a[0]*b[1] - a[1]*b[0]])
+
+    # B aléatoire lisse, à divergence nulle et de moyenne nulle (projection de Leray)
+    Bh = F(rng.normal(size=(3, N, N, N))) * filtre
+    Bh = Bh - K * (K * Bh).sum(0) / K2s
+    Bh[:, 0, 0, 0] = 0.0
+    Bh = Bh / np.sqrt(np.mean((Fi(Bh)**2).sum(0)))         # normalisation <|B|^2> = 1
+    B = Fi(Bh)
+
+    # Potentiel vecteur en jauge de Coulomb : -Lap A = rot B  =>  A^ = i k x B^ / |k|^2
+    Ah = 1j * croix(K, Bh) / K2s
+    A = Fi(Ah)
+    print("max|rot A - B| =", f"{np.abs(Fi(1j * croix(K, Ah)) - B).max():.1e}",
+          "; max|div A| =", f"{np.abs(Fi((1j * K * Ah).sum(0))).max():.1e}", "; max|B| =", f"{np.abs(B).max():.1f}")
+    HM = np.mean((A * B).sum(0))
+    chi = Fi(F(rng.normal(size=(N, N, N))) * filtre)
+    A2 = A + Fi(1j * K * F(chi))                           # autre jauge, même B
+    print("H_M (Coulomb) =", f"{HM:.12f}", "; H_M (A + grad chi) =", f"{np.mean((A2 * B).sum(0)):.12f}")
+
+    # Contrôle analytique : pour le champ ABC (champ de Beltrami k = 1), A = B en jauge de Coulomb, H_M = A^2 + B^2 + C^2
+    x = L * np.arange(N) / N
+    X, Y, Z = np.meshgrid(x, x, x, indexing="ij")
+    a, b, c = 1.0, 0.8, 0.6
+    Babc = np.stack([a*np.sin(Z) + c*np.cos(Y), b*np.sin(X) + a*np.cos(Z), c*np.sin(Y) + b*np.cos(X)])
+    Aabc = Fi(1j * croix(K, F(Babc)) / K2s)
+    print("ABC : max|A - B| =", f"{np.abs(Aabc - Babc).max():.1e}", "; H_M =", f"{np.mean((Aabc * Babc).sum(0)):.12f}")
+    # sortie :
+    # max|rot A - B| = 5.6e-15 ; max|div A| = 8.2e-17 ; max|B| = 2.2
+    # H_M (Coulomb) = -0.039622643548 ; H_M (A + grad chi) = -0.039622643548
+    # ABC : max|A - B| = 8.9e-16 ; H_M = 2.000000000000
+    ```
+
+    Le potentiel reproduit $\mathbf{B}$ à $10^{-15}$ près, il est bien en jauge de Coulomb, et l'hélicité est identique dans les deux jauges jusqu'à la douzième décimale. Sur le champ ABC, le programme retrouve $\mathbf{A} = \mathbf{B}$ et $H_M = 1 + 0{,}64 + 0{,}36 = 2$.
+
+    *(d)* Un champ moyen $\bar{\mathbf{B}} \neq \mathbf{0}$ n'a pas de potentiel périodique (remarque 4.3) : $\bar{\mathbf{B}} = \nabla\times\mathbf{A}$ exige un $\mathbf{A}$ qui croît linéairement, comme dans l'exemple 4.9, et $\langle\mathbf{A}\cdot\mathbf{B}\rangle$ n'est alors plus défini sur le tore. C'est pourquoi la formule de la proposition 4.8 exclut le mode $\mathbf{k} = \mathbf{0}$. Avec des parois, une difficulté analogue impose d'utiliser une hélicité « relative » lorsque $\mathbf{B}\cdot\mathbf{n} \neq 0$ au bord (Berger et Field, 1984).
+    :::
+
+## Lien avec le stage {#lien-stage}
+
+L'[offre de stage](https://scheng2024.github.io/stage_milady_2027.pdf) demande de construire des modèles génératifs conditionnels de champs physiques dépendant de paramètres, d'y imposer des contraintes issues des EDP et des conditions aux limites « through model design, training losses, or sampling procedures », et de les valider avec des métriques portant sur « energy spectra, helicity, divergence control, and topology preservation ». Chacun de ces termes renvoie à un chapitre de ce module.
+
+**Divergence nulle : construire ou projeter.** Les cinq mécanismes de contrainte comparés dans l'expérience E2 du dépôt, consacrée à la génération conditionnelle (par la diffusivité $\eta$) de champs MHD 2D forcés, relèvent tous de ce module (voir le [rapport](../../rapport/index.html#e2)). Le modèle libre et la pénalité de divergence mesurent ou pénalisent $\nabla\cdot\mathbf{u}$ et $\nabla\cdot\mathbf{B}$ calculées comme aux chapitres 1, 2 et 5. La projection finale et le flot projeté appliquent le projecteur de Leray du chapitre 6, une seule fois à la fin de la génération ou à chaque pas du flot. La paramétrisation par potentiels génère la fonction de courant $\psi$ et le potentiel magnétique $a$, puis dérive, comme au chapitre 4. Comme les champs de E2 sont représentés directement par leurs coefficients de Fourier sur une grille périodique, dérivation et projection y sont des opérations mode par mode, exactement comme aux chapitres 5 et 6. La [taxonomie des contraintes](../../rapport/index.html#taxonomie) du rapport range ces choix selon l'endroit où ils agissent : architecture, perte ou échantillonnage. En 3D, la généralisation directe de la fonction de courant est le potentiel vecteur, avec la question de la jauge (proposition 4.8 et exercice 15) ; les réseaux à divergence nulle par construction de Richter-Powell et al. (2022) en sont une autre réalisation.
+
+**Bilan d'énergie.** La proposition 3.10 et l'exercice 8 donnent les bilans magnétique et cinétique ; leur somme fait disparaître le terme d'échange $\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle$. En régime statistiquement stationnaire, la moyenne de la dérivée de l'énergie est nulle, si bien que la puissance injectée égale en moyenne la somme des dissipations visqueuse et ohmique. Cette égalité porte sur la **loi** des champs, et non sur chaque champ isolé : c'est le sens de la contrainte « en loi » du bilan d'énergie étudiée dans le second volet de l'expérience E2. Le cadre théorique est posé dans la section [formulation](../../rapport/index.html#formulation) du rapport.
+
+**Métriques.** Le spectre d'énergie par couches (définition 5.13) repose sur l'égalité de Parseval. L'hélicité cinétique $\langle\mathbf{u}\cdot\boldsymbol\omega\rangle$ se calcule directement ; l'hélicité magnétique demande un potentiel vecteur, et elle n'est invariante de jauge qu'en périodique ou si $\mathbf{B}\cdot\mathbf{n} = 0$ au bord (proposition 4.10). La divergence doit être mesurée avec l'opérateur discret qui a servi à l'imposer, et normalisée (remarque 6.7). La « topologie » renvoie aux lignes de champ, aux tubes de flux (section 3.3) et à leur enlacement, dont l'hélicité donne une mesure : pour deux tubes de flux fins, elle est proportionnelle à leur nombre d'enlacement (Moffatt, 1969). Une hélicité nulle n'implique toutefois pas l'absence d'enlacement.
+
+**Les trois expériences du dépôt.** L'expérience E3 calcule le taux de croissance de la dynamo cinématique portée par l'écoulement ABC (exemple 1.10, exercice 5) en fonction de $Rm$, avec un schéma pseudo-spectral 3D et la règle des 2/3 du chapitre 5 (voir le [rapport](../../rapport/index.html#e3)). L'équation d'induction y est écrite sous forme de rotationnel, $\partial_t\mathbf{B} = \nabla\times(\mathbf{u}\times\mathbf{B}) + \eta\Delta\mathbf{B}$ : la divergence de $\mathbf{B}$ reste nulle au niveau discret, grâce à l'identité $\mathbf{k}\cdot(\mathbf{k}\times\hat{\mathbf{v}}) = 0$ de la section 5.5, ce qui est la version discrète de la proposition 2.6. L'expérience E1 porte sur le modèle à trois modes de Gissinger (2012), qui n'a pas de structure spatiale ; ce module y intervient par une seule remarque : l'équation d'induction est linéaire en $\mathbf{B}$ et la force de Laplace est quadratique, de sorte que les équations de la MHD sont invariantes par $\mathbf{B} \to -\mathbf{B}$. C'est l'origine de la symétrie $(Q, D, V) \to (-Q, -D, V)$ du modèle, où $Q$ et $D$ sont des amplitudes de modes magnétiques et $V$ un mode de vitesse (voir le [rapport](../../rapport/index.html#e1)).
+
+**Vers la thèse.** Les trois expériences se déroulent en domaine périodique ou en petite dimension, alors que les dynamos expérimentales VKS et DRESDYN sont des cylindres à parois. La section 6.3 explique pourquoi la projection y devient un problème de Poisson global, avec des conditions magnétiques non locales ; c'est l'une des questions ouvertes du [sujet de thèse](../../these/index.html#theorie), dont le [plan expérimental](../../these/index.html#plan-experimental) prévoit le passage progressif du périodique aux géométries bornées.
+
+La suite naturelle du parcours est le module [Mécanique des fluides et turbulence](../p2-mecanique-fluides/index.html), qui utilise Parseval et les spectres pour la cascade d'énergie, puis le module [Électromagnétisme, MHD et effet dynamo](../p3-mhd-dynamo/index.html), qui part de l'équation d'induction de la section 2.3. Les modules [Modèles génératifs : diffusion et flow matching](../p7-modeles-generatifs/index.html) et [Modèles génératifs sous contraintes physiques](../p8-contraintes-physiques/index.html) réutilisent directement la projection de Leray et les potentiels.
+
+## Pour aller plus loin {#plus-loin}
+
+1. **D. Tong, *Vector Calculus*** (notes de cours de première année à Cambridge, en accès libre). Les chapitres 3 et 4 reprennent les opérateurs, les coordonnées curvilignes et les théorèmes intégraux avec de nombreux exemples tirés de la physique ; la section 4.4.1 démontre le théorème de Stokes pour une surface courbe, que nous avons admis.
+2. **L. N. Trefethen (2000), *Spectral Methods in MATLAB*.** Un livre court et très concret sur la dérivation spectrale, sa précision et le repliement, organisé autour de petits programmes faciles à traduire en NumPy. C'est la meilleure suite au chapitre 5.
+3. **C. Canuto, M. Y. Hussaini, A. Quarteroni et T. A. Zang (2006), *Spectral Methods: Fundamentals in Single Domains*.** L'ouvrage de référence sur les méthodes spectrales, à consulter pour l'élimination du repliement et pour les bases de Chebyshev qui remplacent Fourier quand le domaine a des parois.
+4. **A. J. Chorin et J. E. Marsden (1993), *A Mathematical Introduction to Fluid Mechanics*.** Une introduction rigoureuse et brève aux équations d'Euler et de Navier–Stokes, où la décomposition de Helmholtz–Hodge avec parois et la méthode de projection occupent une place centrale. Elle prolonge le chapitre 6.
+5. **H. K. Moffatt et E. Dormy (2019), *Self-Exciting Fluid Dynamos*.** Le traité moderne de la théorie de la dynamo : décomposition poloïdale–toroïdale, hélicité, dynamos cinématiques. C'est le pont entre ce module et le module [Électromagnétisme, MHD et effet dynamo](../p3-mhd-dynamo/index.html).
+
+## Sources {#sources}
+
+- Backus, G. (1986). Poloidal and toroidal fields in geomagnetic field modeling. *Reviews of Geophysics*, 24(1), 75–109. [doi:10.1029/RG024i001p00075](https://doi.org/10.1029/RG024i001p00075)
+- Berger, M. A., Field, G. B. (1984). The topological properties of magnetic helicity. *Journal of Fluid Mechanics*, 147, 133–148. [doi:10.1017/S0022112084002019](https://doi.org/10.1017/S0022112084002019)
+- Bousquet, R., Ponty, Y., Botez, V., Plihon, N., Nore, C. (2026). Magnetic field reversals in numerical simulations of the von Kármán sodium experiment. *Physical Review Fluids*, 11(6), 063703. [doi:10.1103/9tx2-1m13](https://doi.org/10.1103/9tx2-1m13)
+- Brackbill, J. U., Barnes, D. C. (1980). The effect of nonzero $\nabla\cdot\mathbf{B}$ on the numerical solution of the magnetohydrodynamic equations. *Journal of Computational Physics*, 35(3), 426–430. [doi:10.1016/0021-9991(80)90079-0](https://doi.org/10.1016/0021-9991(80)90079-0)
+- Canuto, C., Hussaini, M. Y., Quarteroni, A., Zang, T. A. (2006). *Spectral Methods: Fundamentals in Single Domains*. Springer, coll. Scientific Computation. [doi:10.1007/978-3-540-30726-6](https://doi.org/10.1007/978-3-540-30726-6)
+- Chorin, A. J. (1968). Numerical solution of the Navier-Stokes equations. *Mathematics of Computation*, 22(104), 745–762. [doi:10.1090/S0025-5718-1968-0242392-2](https://doi.org/10.1090/S0025-5718-1968-0242392-2)
+- Chorin, A. J., Marsden, J. E. (1993). *A Mathematical Introduction to Fluid Mechanics*. Springer, coll. Texts in Applied Mathematics. [doi:10.1007/978-1-4612-0883-9](https://doi.org/10.1007/978-1-4612-0883-9)
+- Cooley, J. W., Tukey, J. W. (1965). An algorithm for the machine calculation of complex Fourier series. *Mathematics of Computation*, 19(90), 297–301. [doi:10.1090/S0025-5718-1965-0178586-1](https://doi.org/10.1090/S0025-5718-1965-0178586-1)
+- Dombre, T., Frisch, U., Greene, J. M., Hénon, M., Mehr, A., Soward, A. M. (1986). Chaotic streamlines in the ABC flows. *Journal of Fluid Mechanics*, 167, 353–391. [doi:10.1017/S0022112086002859](https://doi.org/10.1017/S0022112086002859)
+- Genuist, W., Savin, É., Gatti, F., Clouteau, D. (2026). Divergence-free diffusion models for incompressible fluid flows. Préprint [arXiv:2601.19368](https://arxiv.org/abs/2601.19368).
+- Girault, V., Raviart, P.-A. (1986). *Finite Element Methods for Navier-Stokes Equations*. Springer, coll. Springer Series in Computational Mathematics. [doi:10.1007/978-3-642-61623-5](https://doi.org/10.1007/978-3-642-61623-5)
+- Gissinger, C. (2012). A new deterministic model for chaotic reversals. *The European Physical Journal B*, 85(4), 137. [doi:10.1140/epjb/e2012-20799-5](https://doi.org/10.1140/epjb/e2012-20799-5)
+- Kraichnan, R. H. (1967). Inertial ranges in two-dimensional turbulence. *The Physics of Fluids*, 10(7), 1417–1423. [doi:10.1063/1.1762301](https://doi.org/10.1063/1.1762301)
+- Kreuzahler, S., Schulz, D., Homann, H., Ponty, Y., Grauer, R. (2014). Numerical study of impeller-driven von Kármán flows via a volume penalization method. *New Journal of Physics*, 16(10), 103001. [doi:10.1088/1367-2630/16/10/103001](https://doi.org/10.1088/1367-2630/16/10/103001)
+- Kreuzahler, S., Ponty, Y., Plihon, N., Homann, H., Grauer, R. (2017). Dynamo enhancement and mode selection triggered by high magnetic permeability. *Physical Review Letters*, 119(23), 234501. [doi:10.1103/PhysRevLett.119.234501](https://doi.org/10.1103/PhysRevLett.119.234501)
+- Leray, J. (1934). Sur le mouvement d'un liquide visqueux emplissant l'espace. *Acta Mathematica*, 63, 193–248. [doi:10.1007/BF02547354](https://doi.org/10.1007/BF02547354)
+- Li, T., Buzzicotti, M., Bonaccorso, F., Biferale, L. (2026). Physics-constrained diffusion model for synthesis of 3D turbulent data. Préprint [arXiv:2603.12834](https://arxiv.org/abs/2603.12834).
+- Lucor, D., Agrawal, A., Sergent, A. (2022). Simple computational strategies for more effective physics-informed neural networks modeling of turbulent natural convection. *Journal of Computational Physics*, 456, 111022. [doi:10.1016/j.jcp.2022.111022](https://doi.org/10.1016/j.jcp.2022.111022)
+- Moffatt, H. K. (1969). The degree of knottedness of tangled vortex lines. *Journal of Fluid Mechanics*, 35(1), 117–129. [doi:10.1017/S0022112069000991](https://doi.org/10.1017/S0022112069000991)
+- Moffatt, H. K., Dormy, E. (2019). *Self-Exciting Fluid Dynamos*. Cambridge University Press. [doi:10.1017/9781107588691](https://doi.org/10.1017/9781107588691)
+- Nore, C., Castanon Quiroz, D., Cappanera, L., Guermond, J.-L. (2016). Direct numerical simulation of the axial dipolar dynamo in the Von Kármán Sodium experiment. *EPL*, 114(6), 65002. [doi:10.1209/0295-5075/114/65002](https://doi.org/10.1209/0295-5075/114/65002)
+- Orszag, S. A. (1971). On the elimination of aliasing in finite-difference schemes by filtering high-wavenumber components. *Journal of the Atmospheric Sciences*, 28(6), 1074. [DOI](https://doi.org/10.1175/1520-0469%281971%29028%3C1074%3AOTEOAI%3E2.0.CO%3B2)
+- Richter-Powell, J., Lipman, Y., Chen, R. T. Q. (2022). Neural conservation laws: a divergence-free perspective. *Advances in Neural Information Processing Systems 35* (NeurIPS 2022), 38075–38088. [doi:10.52202/068431-2759](https://doi.org/10.52202/068431-2759) ; préprint [arXiv:2210.01741](https://arxiv.org/abs/2210.01741).
+- SFEMaNS (Spectral/Finite Elements for Maxwell and Navier–Stokes), documentation de la version 5.3. [people.tamu.edu/~guermond/SFEMaNS](https://people.tamu.edu/~guermond/SFEMaNS/html/doc_intro.html)
+- Stage M2 « Physics-Constrained Generative AI Modelling of Parametric Dynamical Systems » (CEREA/ENPC et LISN, 2027), offre publiée par les encadrants. [PDF](https://scheng2024.github.io/stage_milady_2027.pdf)
+- Tong, D. *Vector Calculus*. Notes de cours, University of Cambridge, Part IA Mathematical Tripos. [davidtong.org/teaching/vector-calculus](https://davidtong.org/teaching/vector-calculus/)
+- Tóth, G. (2000). The $\nabla\cdot B = 0$ constraint in shock-capturing magnetohydrodynamics codes. *Journal of Computational Physics*, 161(2), 605–652. [doi:10.1006/jcph.2000.6519](https://doi.org/10.1006/jcph.2000.6519)
+- Trefethen, L. N. (2000). *Spectral Methods in MATLAB*. SIAM. [doi:10.1137/1.9780898719598](https://doi.org/10.1137/1.9780898719598)
+- Wang, S., Dou, Z., Shan, S., Liu, T.-R., Lu, L. (2026). FunDiff: diffusion models over function spaces for physics-informed generative modeling. *Nature Communications*, 17, 5749. [doi:10.1038/s41467-026-72292-0](https://doi.org/10.1038/s41467-026-72292-0)

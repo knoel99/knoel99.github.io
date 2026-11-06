@@ -242,7 +242,7 @@ window.Quarto = {
 <div class="thm">
 <p><span class="tag">Théorème 1.3 — Schwarz</span> Si <span class="math inline">f</span> est de classe <span class="math inline">C^2</span> sur un ouvert, ses dérivées croisées sont égales : <span class="math inline">\partial_i \partial_j f = \partial_j \partial_i f</span> pour tous <span class="math inline">i, j</span>.</p>
 <div class="proof">
-<p><span class="proof-title"><em>Preuve</em>. </span>Résultat classique d’analyse de L2, admis ici ; une démonstration accessible se trouve dans les notes de cours de Tong (voir les Sources). Toutes les identités du chapitre 2 en découlent. <span class="qed">∎</span></p>
+<p><span class="proof-title"><em>Preuve</em>. </span>Résultat classique d’analyse de deuxième année, démontré dans tout cours de calcul différentiel ; nous l’admettons. L’idée est d’écrire de deux façons la « différence seconde » <span class="math inline">f(x+h, y+k) - f(x+h, y) - f(x, y+k) + f(x, y)</span>, en appliquant deux fois le théorème des accroissements finis dans un ordre puis dans l’autre. Toutes les identités du chapitre 2 en découlent. <span class="qed">∎</span></p>
 </div>
 </div>
 <div class="ex">
@@ -298,6 +298,12 @@ window.Quarto = {
 </div>
 <div class="ex">
 <p><span class="tag">Exemple 1.9 — Trois champs plans élémentaires</span> Le champ <span class="math inline">\mathbf{u} = (x, y, 0)</span> est une <strong>source</strong> : <span class="math inline">\nabla\cdot\mathbf{u} = 2</span> et <span class="math inline">\nabla\times\mathbf{u} = \mathbf{0}</span>. Le champ <span class="math inline">\mathbf{u} = (-y, x, 0)</span> est une <strong>rotation solide</strong> de vitesse angulaire <span class="math inline">1</span> autour de <span class="math inline">\mathbf{e}_z</span> : <span class="math inline">\nabla\cdot\mathbf{u} = 0</span> et <span class="math inline">\nabla\times\mathbf{u} = (0, 0, 2)</span>. Le champ de <strong>cisaillement</strong> <span class="math inline">\mathbf{u} = (y, 0, 0)</span> a des lignes de courant droites, et pourtant <span class="math inline">\nabla\times\mathbf{u} = (0, 0, -1)</span> : une petite roue à aubes placée dans cet écoulement tourne (exercice 2).</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="fig-champs.png" style="width:100.0%" alt="Quatre panneaux de lignes de courant : rayons divergents pour la source, cercles concentriques pour la rotation solide, droites horizontales de sens opposés au-dessus et au-dessous de l'axe pour le cisaillement, et quatre cellules tourbillonnaires alternées pour l'écoulement cellulaire."></p>
+<figcaption>Quatre champs plans. De gauche à droite : la source <span class="math inline">\mathbf{u} = (x, y)</span>, la rotation solide <span class="math inline">\mathbf{u} = (-y, x)</span>, le cisaillement <span class="math inline">\mathbf{u} = (y, 0)</span> et l’écoulement cellulaire <span class="math inline">\mathbf{u} = (\sin x\cos y, -\cos x\sin y)</span> sur <span class="math inline">[0, 2\pi]^2</span>, dont le fond colore la vorticité <span class="math inline">\omega</span> (rouge positif, bleu négatif). Le titre de chaque panneau donne la divergence et la vorticité <span class="math inline">\omega = \partial_x u_y - \partial_y u_x</span>.</figcaption>
+</figure>
 </div>
 <div class="ex">
 <p><span class="tag">Exemple 1.10 — L’écoulement ABC</span> L’écoulement ABC (Arnold–Beltrami–Childress), étudié en détail par Dombre et al.&nbsp;(1986), est défini sur le cube périodique <span class="math inline">[0, 2\pi)^3</span> par</p>
@@ -688,7 +694,120 @@ window.Quarto = {
 <p><span class="proof-title"><em>Preuve</em>. </span>Si <span class="math inline">S</span> est un domaine plan du plan <span class="math inline">z = 0</span>, on a <span class="math inline">\mathbf{n} = \mathbf{e}_z</span> et <span class="math inline">(\nabla\times\mathbf{u})\cdot\mathbf{e}_z = \partial_x u_y - \partial_y u_x</span> : c’est le théorème 3.4 avec <span class="math inline">P = u_x</span> et <span class="math inline">Q = u_y</span>. Pour une surface courbe paramétrée par <span class="math inline">(s, t)</span>, on ramène les deux membres à des intégrales dans le plan <span class="math inline">(s, t)</span> et on applique de nouveau Green–Riemann ; ce calcul est admis ici (voir le chapitre 4 des notes de Tong). <span class="qed">∎</span></p>
 </div>
 </div>
-<p>Les deux théorèmes ont la même structure : l’intégrale d’une dérivée sur un domaine égale l’intégrale de la fonction sur le bord du domaine. On en tire les formules d’intégration par parties en dimension quelconque.</p>
+<p>Les deux théorèmes ont la même structure : l’intégrale d’une dérivée sur un domaine égale l’intégrale de la fonction sur le bord du domaine.</p>
+<p>Appliquons (3.1) à une petite boule <span class="math inline">B_\varepsilon</span> centrée en <span class="math inline">\mathbf{x}</span>, de volume <span class="math inline">|B_\varepsilon|</span>. La moyenne de <span class="math inline">\nabla\cdot\mathbf{u}</span> sur cette boule tend vers <span class="math inline">\nabla\cdot\mathbf{u}(\mathbf{x})</span> quand <span class="math inline">\varepsilon \to 0</span>, par continuité, d’où</p>
+<p><span class="math display">
+\nabla\cdot\mathbf{u}(\mathbf{x}) = \lim_{\varepsilon\to 0}\frac{1}{|B_\varepsilon|}\oint_{\partial B_\varepsilon}\mathbf{u}\cdot\mathbf{n}\,\mathrm{d}S.
+</span></p>
+<p>De même, (3.2) appliqué à un petit disque <span class="math inline">D_\varepsilon</span> de normale <span class="math inline">\mathbf{n}</span> centré en <span class="math inline">\mathbf{x}</span> donne</p>
+<p><span class="math display">
+(\nabla\times\mathbf{u})(\mathbf{x})\cdot\mathbf{n} = \lim_{\varepsilon\to 0}\frac{1}{\pi\varepsilon^2}\oint_{\partial D_\varepsilon}\mathbf{u}\cdot\mathrm{d}\boldsymbol\ell.
+</span></p>
+<p>Ces deux formules ne font intervenir aucun système de coordonnées : la divergence est un flux sortant par unité de volume, la composante normale du rotationnel une circulation par unité d’aire. Elles expliquent aussi les formules cylindriques du chapitre 1, qu’on retrouve en calculant flux et circulation sur un petit élément de volume <span class="math inline">r\,\mathrm{d}r\,\mathrm{d}\theta\,\mathrm{d}z</span>. Le schéma interactif suivant le vérifie en 2D, où la boule devient un disque et le flux une intégrale sur un cercle.</p>
+<style>
+.mw-root { --mw-pos: #d6453d; --mw-neg: #2a78d6; --mw-c1: #2a78d6; --mw-c2: #c2410c; }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) .mw-root { --mw-pos: #e66767; --mw-neg: #3987e5; --mw-c1: #6ea8f0; --mw-c2: #fdba74; } }
+:root[data-theme="dark"] .mw-root { --mw-pos: #e66767; --mw-neg: #3987e5; --mw-c1: #6ea8f0; --mw-c2: #fdba74; }
+.mw-root canvas { touch-action: none; cursor: crosshair; border: 1px solid var(--hair); border-radius: .4rem; }
+.mw-root .widget-readout table { border-collapse: collapse; margin: .4rem 0 0; }
+.mw-root .widget-readout td, .mw-root .widget-readout th { padding: .15rem .7rem .15rem 0; text-align: left; border: 0; background: transparent; }
+</style>
+<div class="widget mw-root" id="w-flux">
+<p class="widget-title">Schéma interactif — flux et circulation à travers un petit cercle</p>
+<div class="widget-controls">
+<label>Champ
+<select id="wf-champ">
+<option value="source">source u = (x, y)</option>
+<option value="rotation">rotation solide u = (−y, x)</option>
+<option value="cisaillement">cisaillement u = (y, 0)</option>
+<option value="cellules" selected="">cellules (sin x cos y, −cos x sin y)</option>
+<option value="tourbillon">tourbillon ponctuel (−y, x)/(x² + y²)</option>
+<option value="puits">source ponctuelle (x, y)/(x² + y²)</option>
+</select></label>
+<label>Rayon <input type="range" id="wf-r" min="0.03" max="1.6" step="0.01" value="0.8"> <span id="wf-rv">0,80</span></label>
+</div>
+<canvas id="wf-canvas" width="640" height="640" role="img" aria-label="Champ de vecteurs et cercle déplaçable ; les valeurs du flux et de la circulation sont données sous la figure."></canvas>
+<div class="widget-readout" id="wf-out" aria-live="polite"></div>
+<p class="widget-note">Cliquez ou faites glisser dans la figure pour déplacer le cercle. Quand le rayon diminue, le flux divisé par l'aire tend vers la divergence au centre (Green–Ostrogradski) et la circulation divisée par l'aire tend vers la vorticité au centre (Stokes), sauf si le cercle entoure une singularité.</p>
+</div>
+<script>
+(function () {
+  var root = document.getElementById("w-flux"); if (!root) return;
+  var cv = root.querySelector("#wf-canvas"), sel = root.querySelector("#wf-champ"),
+      rr = root.querySelector("#wf-r"), rv = root.querySelector("#wf-rv"), out = root.querySelector("#wf-out");
+  var D = 2.4, cx = 0.6, cy = 0.4;
+  var F = {
+    source: function (x, y) { return [x, y]; },
+    rotation: function (x, y) { return [-y, x]; },
+    cisaillement: function (x, y) { return [y, 0]; },
+    cellules: function (x, y) { var a = Math.PI / 2; return [Math.sin(a * x) * Math.cos(a * y), -Math.cos(a * x) * Math.sin(a * y)]; },
+    tourbillon: function (x, y) { var q = x * x + y * y + 1e-300; return [-y / q, x / q]; },
+    puits: function (x, y) { var q = x * x + y * y + 1e-300; return [x / q, y / q]; }
+  };
+  function css(n) { return getComputedStyle(root).getPropertyValue(n).trim() || "#888"; }
+  function fmt(v) { if (!isFinite(v)) return "—"; var a = Math.abs(v);
+    if (a !== 0 && (a < 1e-3 || a >= 1e4)) { var t = v.toExponential(2).split("e"); return t[0].replace(".", ",").replace("-", "−") + "·10<sup>" + String(parseInt(t[1], 10)).replace("-", "−") + "</sup>"; }
+    return v.toFixed(3).replace(".", ",").replace("-", "−"); }
+  function quad(f, x0, y0, r) {
+    var M = 1440, fl = 0, ci = 0;
+    for (var i = 0; i < M; i++) {
+      var t = 2 * Math.PI * (i + 0.5) / M, c = Math.cos(t), s = Math.sin(t), u = f(x0 + r * c, y0 + r * s);
+      fl += (u[0] * c + u[1] * s); ci += (-u[0] * s + u[1] * c);
+    }
+    var dl = 2 * Math.PI * r / M; return [fl * dl, ci * dl];
+  }
+  function local(f, x0, y0) {
+    var h = 1e-5, ax = f(x0 + h, y0), bx = f(x0 - h, y0), ay = f(x0, y0 + h), by = f(x0, y0 - h);
+    return [(ax[0] - bx[0]) / (2 * h) + (ay[1] - by[1]) / (2 * h), (ax[1] - bx[1]) / (2 * h) - (ay[0] - by[0]) / (2 * h)];
+  }
+  function draw() {
+    var dpr = window.devicePixelRatio || 1, W = cv.clientWidth || 640, H = W;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    var g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var bg = css("--bg"), ink = css("--ink"), mut = css("--hair"), c1 = css("--mw-c1"), c2 = css("--mw-c2");
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    var X = function (x) { return (x + D) / (2 * D) * W; }, Y = function (y) { return (D - y) / (2 * D) * H; };
+    g.strokeStyle = mut; g.lineWidth = 1; g.beginPath(); g.moveTo(X(-D), Y(0)); g.lineTo(X(D), Y(0)); g.moveTo(X(0), Y(-D)); g.lineTo(X(0), Y(D)); g.stroke();
+    var f = F[sel.value], n = 19, step = 2 * D / n, vmax = 0, pts = [];
+    for (var i = 0; i < n; i++) for (var j = 0; j < n; j++) {
+      var x = -D + (i + 0.5) * step, y = -D + (j + 0.5) * step, u = f(x, y), m = Math.hypot(u[0], u[1]);
+      pts.push([x, y, u, m]); if (isFinite(m)) vmax = Math.max(vmax, Math.min(m, 3));
+    }
+    g.strokeStyle = c1; g.fillStyle = c1; g.lineWidth = 1.6;
+    pts.forEach(function (p) {
+      var m = p[3]; if (!isFinite(m) || m === 0) return;
+      var len = 0.42 * step * Math.min(m, 3) / vmax, ux = p[2][0] / m, uy = p[2][1] / m;
+      var x0 = X(p[0] - 0.5 * len * ux), y0 = Y(p[1] - 0.5 * len * uy), x1 = X(p[0] + 0.5 * len * ux), y1 = Y(p[1] + 0.5 * len * uy);
+      g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke();
+      var a = Math.atan2(y1 - y0, x1 - x0), hl = Math.min(7, 0.45 * Math.hypot(x1 - x0, y1 - y0));
+      g.beginPath(); g.moveTo(x1, y1); g.lineTo(x1 - hl * Math.cos(a - 0.45), y1 - hl * Math.sin(a - 0.45)); g.lineTo(x1 - hl * Math.cos(a + 0.45), y1 - hl * Math.sin(a + 0.45)); g.closePath(); g.fill();
+    });
+    var r = parseFloat(rr.value); rv.textContent = r.toFixed(2).replace(".", ",");
+    g.strokeStyle = c2; g.lineWidth = 2.5; g.setLineDash([7, 5]);
+    g.beginPath(); g.arc(X(cx), Y(cy), r / (2 * D) * W, 0, 2 * Math.PI); g.stroke(); g.setLineDash([]);
+    g.fillStyle = ink; g.beginPath(); g.arc(X(cx), Y(cy), 3.5, 0, 2 * Math.PI); g.fill();
+    var q = quad(f, cx, cy, r), A = Math.PI * r * r, l = local(f, cx, cy);
+    out.innerHTML = "<table><tr><th></th><th>sur le cercle</th><th>÷ aire π r²</th><th>au centre</th></tr>" +
+      "<tr><td>flux sortant Φ</td><td>" + fmt(q[0]) + "</td><td>" + fmt(q[0] / A) + "</td><td>div u = " + fmt(l[0]) + "</td></tr>" +
+      "<tr><td>circulation Γ</td><td>" + fmt(q[1]) + "</td><td>" + fmt(q[1] / A) + "</td><td>ω = " + fmt(l[1]) + "</td></tr></table>" +
+      "<p style='margin:.3rem 0 0'>centre (" + fmt(cx) + " ; " + fmt(cy) + "), rayon " + r.toFixed(2).replace(".", ",") + "</p>";
+  }
+  function move(e) {
+    var b = cv.getBoundingClientRect(); cx = ((e.clientX - b.left) / b.width) * 2 * D - D; cy = D - ((e.clientY - b.top) / b.height) * 2 * D; draw();
+  }
+  var down = false;
+  cv.addEventListener("pointerdown", function (e) { down = true; cv.setPointerCapture(e.pointerId); move(e); });
+  cv.addEventListener("pointermove", function (e) { if (down) move(e); });
+  cv.addEventListener("pointerup", function () { down = false; });
+  sel.addEventListener("change", draw); rr.addEventListener("input", draw);
+  window.addEventListener("resize", draw);
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (window.matchMedia) { var mq = window.matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", draw); }
+  draw();
+})();
+</script>
+<p>Avec les deux champs singuliers de la liste, la limite échoue dès que le cercle entoure l’origine : la circulation du tourbillon ponctuel reste égale à <span class="math inline">2\pi</span> et le flux de la source ponctuelle aussi, quel que soit le rayon, alors que la vorticité et la divergence sont nulles partout ailleurs. Toute la « source » est concentrée au point singulier ; nous retrouverons ce phénomène à l’exemple 3.9 et à la remarque 4.3.</p>
+<p>On tire aussi des deux théorèmes les formules d’intégration par parties en dimension quelconque.</p>
 <div class="prop">
 <p><span class="tag">Corollaire 3.7 — Intégrations par parties</span> Pour des champs réguliers sur <span class="math inline">\Omega</span> :</p>
 <p><span class="math display">
@@ -717,6 +836,12 @@ window.Quarto = {
 </div>
 </div>
 <p>Trois conséquences physiques en découlent. D’abord, le flux magnétique à travers une surface ne dépend que de la courbe qui la borde : deux surfaces de même bord forment ensemble une surface fermée, de flux total nul. Ensuite, dans un <strong>tube de flux</strong> (réunion de lignes de champ s’appuyant sur une petite courbe fermée), le flux est le même à travers toutes les sections. Enfin, une ligne de champ ne peut ni commencer ni finir en un point : il n’y a ni source ni puits de champ magnétique. Le champ électrique, lui, vérifie la loi de Gauss <span class="math inline">\nabla\cdot\mathbf{E} = \rho/\varepsilon_0</span> ; ses sources sont les charges. L’équation <span class="math inline">\nabla\cdot\mathbf{B} = 0</span> exprime qu’aucune « charge magnétique » n’a jamais été observée.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="fig-monopole-dipole.png" style="width:100.0%" alt="À gauche, des rayons partent d'un point central ; un cercle autour du point est traversé uniquement vers l'extérieur, un cercle éloigné est traversé une fois dans chaque sens. À droite, des boucles fermées partent du haut du dipôle et reviennent par le bas ; elles traversent le cercle central dans les deux sens."></p>
+<figcaption>Lignes de champ d’une charge ponctuelle (à gauche, champ <span class="math inline">\mathbf{x}/|\mathbf{x}|^3</span>) et d’un dipôle magnétique (à droite, coupe dans un plan contenant le moment, représenté par la flèche noire). Les cercles en tirets représentent des surfaces fermées. Pour la charge, toutes les lignes sortent de la surface qui l’entoure : le flux vaut <span class="math inline">4\pi</span>. Pour le dipôle, chaque ligne qui sort de la surface y rentre : le flux est nul, comme pour toute surface fermée.</figcaption>
+</figure>
+</div>
 <div class="ex">
 <p><span class="tag">Exemple 3.9 — Le fil rectiligne et le théorème d’Ampère</span> Pour <span class="math inline">\mathbf{B} = \frac{\mu_0 I}{2\pi r}\mathbf{e}_\theta</span>, la formule (1.2) donne <span class="math inline">\nabla\cdot\mathbf{B} = 0</span> et la formule (1.3) donne <span class="math inline">\nabla\times\mathbf{B} = \frac{1}{r}\partial_r\big(\frac{\mu_0 I}{2\pi}\big)\mathbf{e}_z = \mathbf{0}</span> pour <span class="math inline">r &gt; 0</span>. Pourtant, la circulation sur un cercle de rayon <span class="math inline">R</span> centré sur le fil vaut</p>
 <p><span class="math display">
@@ -1041,6 +1166,67 @@ f(x) = \frac{4}{\pi}\sum_{n\ \text{impair}\ \ge 1}\frac{\sin(nx)}{n}.
 </div>
 </div>
 <p>Le plus grand nombre d’onde représentable est donc <span class="math inline">|n| = N/2</span>, le <strong>nombre d’onde de Nyquist</strong> : il faut au moins deux points par longueur d’onde. Un mode plus fin n’est pas perdu, il est pris pour un mode plus grossier : <span class="math inline">\cos(10x)</span> échantillonné sur <span class="math inline">N = 8</span> points coïncide avec <span class="math inline">\cos(2x)</span>.</p>
+<style>
+.mw-root { --mw-pos: #d6453d; --mw-neg: #2a78d6; --mw-c1: #2a78d6; --mw-c2: #c2410c; }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) .mw-root { --mw-pos: #e66767; --mw-neg: #3987e5; --mw-c1: #6ea8f0; --mw-c2: #fdba74; } }
+:root[data-theme="dark"] .mw-root { --mw-pos: #e66767; --mw-neg: #3987e5; --mw-c1: #6ea8f0; --mw-c2: #fdba74; }
+.mw-root canvas { touch-action: none; cursor: crosshair; border: 1px solid var(--hair); border-radius: .4rem; }
+.mw-root .widget-readout table { border-collapse: collapse; margin: .4rem 0 0; }
+.mw-root .widget-readout td, .mw-root .widget-readout th { padding: .15rem .7rem .15rem 0; text-align: left; border: 0; background: transparent; }
+</style>
+<div class="widget mw-root" id="w-alias">
+<p class="widget-title">Schéma interactif — repliement de spectre</p>
+<div class="widget-controls">
+<label>Mode n <input type="range" id="wa-n" min="0" max="40" step="1" value="10"> <span id="wa-nv">10</span></label>
+<label>Points N <input type="range" id="wa-N" min="3" max="40" step="1" value="8"> <span id="wa-Nv">8</span></label>
+<label>Fonction <select id="wa-f"><option value="cos">cos(n x)</option><option value="sin">sin(n x)</option></select></label>
+</div>
+<canvas id="wa-canvas" width="720" height="300" role="img" aria-label="Le mode n échantillonné sur N points et le mode replié qui passe par les mêmes points ; le résultat est écrit sous la figure."></canvas>
+<div class="widget-readout" id="wa-out" aria-live="polite"></div>
+<p class="widget-note">Trait fin : le mode n. Points : ses valeurs sur la grille de N points. Trait épais : le mode de plus petit nombre d'onde qui prend exactement les mêmes valeurs aux points de la grille (proposition 5.9).</p>
+</div>
+<script>
+(function () {
+  var root = document.getElementById("w-alias"); if (!root) return;
+  var cv = root.querySelector("#wa-canvas"), sn = root.querySelector("#wa-n"), sN = root.querySelector("#wa-N"),
+      sf = root.querySelector("#wa-f"), out = root.querySelector("#wa-out");
+  function css(n) { return getComputedStyle(root).getPropertyValue(n).trim() || "#888"; }
+  function draw() {
+    var n = parseInt(sn.value, 10), N = parseInt(sN.value, 10), f = sf.value;
+    root.querySelector("#wa-nv").textContent = n; root.querySelector("#wa-Nv").textContent = N;
+    var m = ((n % N) + N) % N; if (m > N / 2) m -= N;          // représentant dans ]-N/2, N/2]
+    var am = Math.abs(m), sgn = (f === "sin" && m < 0) ? -1 : 1;
+    var nyq = (N % 2 === 0 && am === N / 2);
+    var dpr = window.devicePixelRatio || 1, W = cv.clientWidth || 720, H = Math.round(W * 300 / 720);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    var g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var bg = css("--bg"), ink = css("--ink"), mut = css("--hair"), c1 = css("--mw-c1"), c2 = css("--mw-c2");
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    var pad = 14, X = function (x) { return pad + x / (2 * Math.PI) * (W - 2 * pad); }, Y = function (y) { return H / 2 - y * (H / 2 - pad - 4); };
+    g.strokeStyle = mut; g.lineWidth = 1; g.beginPath(); g.moveTo(X(0), Y(0)); g.lineTo(X(2 * Math.PI), Y(0)); g.stroke();
+    var fn = function (k, x) { return f === "cos" ? Math.cos(k * x) : Math.sin(k * x); };
+    g.strokeStyle = c1; g.lineWidth = 1.3; g.beginPath();
+    for (var i = 0; i <= 1400; i++) { var x = 2 * Math.PI * i / 1400, y = fn(n, x); if (i) g.lineTo(X(x), Y(y)); else g.moveTo(X(x), Y(y)); }
+    g.stroke();
+    g.strokeStyle = c2; g.lineWidth = 3; g.beginPath();
+    for (i = 0; i <= 700; i++) { x = 2 * Math.PI * i / 700; y = sgn * fn(am, x); if (nyq && f === "sin") y = 0; if (i) g.lineTo(X(x), Y(y)); else g.moveTo(X(x), Y(y)); }
+    g.stroke();
+    g.fillStyle = ink; g.strokeStyle = bg; g.lineWidth = 2;
+    for (var j = 0; j < N; j++) { x = 2 * Math.PI * j / N; y = fn(n, x); g.beginPath(); g.arc(X(x), Y(y), 5.5, 0, 2 * Math.PI); g.fill(); g.stroke(); }
+    var resolu = n < N / 2;
+    var txt = "Nombre d'onde de Nyquist : N/2 = " + (N / 2) + ". ";
+    if (resolu) txt += "Le mode n = " + n + " est résolu : il est son propre représentant.";
+    else txt += "Le mode n = " + n + " n'est pas résolu : sur la grille, " + f + "(" + n + " x) coïncide avec " +
+      (nyq && f === "sin" ? "0 (mode de Nyquist : sin s'annule en tous les points)" : (sgn < 0 ? "−" : "") + f + "(" + am + " x)") + ", car " + n + " ≡ " + m + " (mod " + N + ").";
+    out.textContent = txt;
+  }
+  [sn, sN].forEach(function (s) { s.addEventListener("input", draw); }); sf.addEventListener("change", draw);
+  window.addEventListener("resize", draw);
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (window.matchMedia) { var mq = window.matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", draw); }
+  draw();
+})();
+</script>
 <h3 id="la-transformée-de-fourier-rapide-fft">5.3 La transformée de Fourier rapide (FFT)</h3>
 <p>Calculer les <span class="math inline">N</span> coefficients par la définition coûte <span class="math inline">N^2</span> opérations. L’algorithme de Cooley et Tukey (1965) réduit ce coût à <span class="math inline">O(N\log N)</span>.</p>
 <div class="thm">
@@ -1121,6 +1307,12 @@ F_n = E_n + w^n O_n, \qquad F_{n + N/2} = E_n - w^n O_n.
 <span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="co"># n_max =  101 : max de la somme partielle = 1.1790</span></span>
 <span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="co"># n_max = 1001 : max de la somme partielle = 1.1790</span></span></code></pre></div>
 <p>Avec 32 points, la dérivée spectrale atteint la précision machine, alors que les différences finies d’ordre 2 font encore une erreur de quelques pourcents et ne gagnent qu’un facteur 4 chaque fois que <span class="math inline">N</span> double. La légère remontée de l’erreur spectrale au-delà de <span class="math inline">N = 32</span> est due à l’arrondi, qui croît comme <span class="math inline">N\epsilon_{\text{machine}}</span> parce que les nombres d’onde multiplient les erreurs. Le maximum des sommes partielles du créneau se stabilise à <span class="math inline">1{,}1790</span> : le dépassement de Gibbs ne disparaît pas quand on ajoute des modes, il se resserre seulement contre le saut.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="fig-fourier.png" style="width:100.0%" alt="Trois graphiques. Premier : une sinusoïde rapide et une lente passent par les mêmes huit points noirs. Deuxième : deux sommes partielles d'un créneau oscillent près du saut en x = 0 et dépassent la valeur 1 jusqu'à environ 1,18. Troisième : en échelle logarithmique, l'erreur spectrale chute de 1e-1 à 1e-15 entre N = 6 et N = 32 puis remonte légèrement, tandis que l'erreur des différences finies décroît selon une droite de pente -2."></p>
+<figcaption>Trois phénomènes de ce chapitre. À gauche, le repliement : sur la grille de <span class="math inline">N = 8</span> points, <span class="math inline">\cos(10x)</span> et <span class="math inline">\cos(2x)</span> prennent les mêmes valeurs. Au centre, le phénomène de Gibbs : les sommes partielles du créneau dépassent la valeur 1 d’environ <span class="math inline">0{,}179</span> près du saut, pour <span class="math inline">n_{\max} = 11</span> comme pour <span class="math inline">n_{\max} = 101</span>. À droite, l’erreur maximale de la dérivée de <span class="math inline">e^{\sin x}</span> : décroissance exponentielle pour la méthode spectrale jusqu’à l’arrondi, en <span class="math inline">N^{-2}</span> pour les différences finies d’ordre 2.</figcaption>
+</figure>
+</div>
 <h3 id="fourier-en-plusieurs-dimensions-et-spectre-dénergie">5.5 Fourier en plusieurs dimensions et spectre d’énergie</h3>
 <p>Dans une boîte <span class="math inline">[0, L)^3</span> périodique, les vecteurs d’onde sont <span class="math inline">\mathbf{k} \in \frac{2\pi}{L}\mathbb{Z}^3</span> et un champ s’écrit <span class="math inline">\mathbf{u}(\mathbf{x}) = \sum_{\mathbf{k}}\hat{\mathbf{u}}_{\mathbf{k}}e^{i\mathbf{k}\cdot\mathbf{x}}</span>. Les opérateurs deviennent algébriques :</p>
 <p><span class="math display">
@@ -1335,8 +1527,14 @@ P_{ij}(\mathbf{k}) = \delta_{ij} - \frac{k_i k_j}{|\mathbf{k}|^2} \quad (\mathbf
 </div>
 </div>
 <p>Pour un champ aléatoire isotrope (un bruit blanc, par exemple), chaque coefficient <span class="math inline">\hat{\mathbf{u}}_{\mathbf{k}}</span> a la même variance dans les <span class="math inline">d</span> directions et la projection en retire une : en moyenne, une fraction <span class="math inline">(d-1)/d</span> de l’énergie est conservée, soit <span class="math inline">1/2</span> en 2D et <span class="math inline">2/3</span> en 3D. En 2D, la projection s’écrit aussi avec la fonction de courant : <span class="math inline">\mathbb{P}\mathbf{u} = \bar{\mathbf{u}} + \nabla^\perp\psi</span> avec <span class="math inline">-\Delta\psi = \omega</span>, où <span class="math inline">\omega</span> est la vorticité de <span class="math inline">\mathbf{u}</span> (exercice 14).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="fig-helmholtz.png" style="width:100.0%" alt="Trois panneaux de lignes de courant sur fond coloré, reliés par les signes égal et plus. Le premier mélange sources, puits et tourbillons ; le deuxième ne montre que des sources et des puits ; le troisième ne montre que des tourbillons et des lignes fermées."></p>
+<figcaption>Décomposition de Helmholtz–Hodge d’un champ aléatoire lisse sur le tore <span class="math inline">[0, 2\pi)^2</span> (calculée par la formule (6.2)). À gauche, le champ <span class="math inline">\mathbf{u}</span> et, en fond, sa divergence. Au centre, la partie gradient <span class="math inline">\nabla p</span>, sans vorticité, dont les lignes de courant partent des maxima de <span class="math inline">p</span> (en rouge) et convergent vers ses minima (en bleu). À droite, la partie solénoïdale <span class="math inline">\mathbb{P}\mathbf{u}</span>, sans divergence, dont les lignes de courant s’enroulent autour des extrema de la vorticité. L’épaisseur des lignes est proportionnelle à la norme du champ.</figcaption>
+</figure>
+</div>
 <div class="note">
-<p><span class="tag">Remarque 6.7 — « Divergence nulle » dépend de l’opérateur discret</span> Sur une grille, <span class="math inline">\mathbb{P}\mathbf{u}</span> calculé par FFT a une divergence nulle à la précision machine <strong>si la divergence est mesurée avec les mêmes nombres d’onde</strong> (y compris la convention de Nyquist). Mesurée par différences finies, la divergence du même champ ne vaut que <span class="math inline">O(h^2)</span>, où <span class="math inline">h</span> est le pas de grille. Une métrique de « contrôle de la divergence » n’a donc de sens que si l’on précise l’opérateur discret utilisé.</p>
+<p><span class="tag">Remarque 6.7 — « Divergence nulle » dépend de l’opérateur discret</span> Sur une grille, <span class="math inline">\mathbb{P}\mathbf{u}</span> calculé par FFT a une divergence nulle à la précision machine <strong>si la divergence est mesurée avec les mêmes nombres d’onde</strong> (y compris la convention de Nyquist). Mesurée par différences finies, la divergence du même champ ne vaut que <span class="math inline">O(h^2)</span>, où <span class="math inline">h</span> est le pas de grille. Une métrique de « contrôle de la divergence » n’a donc de sens que si l’on précise l’opérateur discret utilisé. Avec la convention de Nyquist, les rares modes dont tous les nombres d’onde modifiés sont nuls (le mode moyen, mais aussi les modes de Nyquist « purs », comme <span class="math inline">(N/2, 0)</span> ou <span class="math inline">(N/2, N/2)</span> en 2D) sont laissés intacts par la formule de la définition 6.5 ; on peut préférer les annuler, comme dans l’exercice 14.</p>
 </div>
 <p>Le code suivant projette des bruits blancs en 2D et en 3D et vérifie les propriétés de la proposition 6.6.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1377,22 +1575,144 @@ P_{ij}(\mathbf{k}) = \delta_{ij} - \frac{k_i k_j}{|\mathbf{k}|^2} \quad (\mathbf
 <span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co"># d = 3, N = 64 : rms div u = 3.1e+01 -&gt; max|div Pu| = 3.6e-14 (rapport 1.2e-15)</span></span>
 <span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="co">#    ||P(Pu) - Pu||max = 1.8e-15 ; &lt;Pu . (u - Pu)&gt; = -2.5e-16 ; énergie gardée = 0.667</span></span></code></pre></div>
 <p>La divergence passe d’une valeur typique de 100 (le bruit blanc a beaucoup d’énergie aux petites échelles) à environ <span class="math inline">10^{-15}</span> fois cette valeur. La projection est idempotente, ses deux parties sont orthogonales, et elle conserve la moitié de l’énergie en 2D et les deux tiers en 3D, comme prévu.</p>
+<p>Le schéma interactif suivant refait ce calcul dans le navigateur, sur une grille <span class="math inline">32\times 32</span>, pour un champ dont on règle l’échelle par un filtre gaussien de largeur <span class="math inline">k_c</span> en nombre d’onde. On y voit les deux parties de la décomposition et on y lit les trois propriétés : énergies qui s’additionnent, divergence de <span class="math inline">\mathbb{P}\mathbf{u}</span> au niveau de l’arrondi, vorticité de <span class="math inline">\nabla p</span> au même niveau.</p>
+<style>
+.mw-root { --mw-pos: #d6453d; --mw-neg: #2a78d6; --mw-c1: #2a78d6; --mw-c2: #c2410c; }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) .mw-root { --mw-pos: #e66767; --mw-neg: #3987e5; --mw-c1: #6ea8f0; --mw-c2: #fdba74; } }
+:root[data-theme="dark"] .mw-root { --mw-pos: #e66767; --mw-neg: #3987e5; --mw-c1: #6ea8f0; --mw-c2: #fdba74; }
+.mw-root canvas { touch-action: none; cursor: crosshair; border: 1px solid var(--hair); border-radius: .4rem; }
+.mw-root .widget-readout table { border-collapse: collapse; margin: .4rem 0 0; }
+.mw-root .widget-readout td, .mw-root .widget-readout th { padding: .15rem .7rem .15rem 0; text-align: left; border: 0; background: transparent; }
+</style>
+<div class="widget mw-root" id="w-leray">
+<p class="widget-title">Schéma interactif — décomposition de Helmholtz–Hodge d'un champ aléatoire</p>
+<div class="widget-controls">
+<span role="radiogroup" aria-label="Partie affichée">
+<label><input type="radio" name="wl-v" value="u" checked=""> champ u</label>
+<label><input type="radio" name="wl-v" value="g"> partie gradient ∇p</label>
+<label><input type="radio" name="wl-v" value="w"> partie solénoïdale ℙu</label>
+</span>
+<label>Échelle k<sub>c</sub> <input type="range" id="wl-kc" min="1" max="8" step="0.5" value="2.5"> <span id="wl-kcv">2,5</span></label>
+<button type="button" id="wl-new">Nouveau tirage</button>
+</div>
+<canvas id="wl-canvas" width="640" height="640" role="img" aria-label="Flèches du champ choisi sur une grille périodique 32 × 32 ; fond coloré par la divergence ou la vorticité ; valeurs numériques sous la figure."></canvas>
+<div class="widget-readout" id="wl-out" aria-live="polite"></div>
+<p class="widget-note">Grille périodique 32 × 32, transformée de Fourier discrète calculée dans le navigateur. Fond : divergence pour u et ∇p, vorticité pour ℙu (rouge positif, bleu négatif). La partie gradient n'a pas de vorticité, la partie solénoïdale n'a pas de divergence, et leurs énergies s'ajoutent (orthogonalité).</p>
+</div>
+<script>
+(function () {
+  var root = document.getElementById("w-leray"); if (!root) return;
+  var cv = root.querySelector("#wl-canvas"), out = root.querySelector("#wl-out"), skc = root.querySelector("#wl-kc");
+  var N = 32, seed = 7, state = null;
+  function css(n) { return getComputedStyle(root).getPropertyValue(n).trim() || "#888"; }
+  function rng(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  var CS = [], SN = [];
+  for (var t = 0; t < N; t++) { CS.push(Math.cos(2 * Math.PI * t / N)); SN.push(Math.sin(2 * Math.PI * t / N)); }
+  function dft1(re, im, inv) {                       // TFD naïve de longueur N (sens direct : e^{-2iπjn/N})
+    var R = new Float64Array(N), I = new Float64Array(N), s = inv ? 1 : -1;
+    for (var n = 0; n < N; n++) { var a = 0, b = 0;
+      for (var j = 0; j < N; j++) { var q = (j * n) % N, c = CS[q], d = s * SN[q]; a += re[j] * c - im[j] * d; b += re[j] * d + im[j] * c; }
+      R[n] = inv ? a / N : a; I[n] = inv ? b / N : b; }
+    return [R, I];
+  }
+  function dft2(re, im, inv) {                       // tableaux N*N, indice i*N + j (i : x, j : y)
+    var R = new Float64Array(N * N), I = new Float64Array(N * N), a = new Float64Array(N), b = new Float64Array(N), i, j, r;
+    for (i = 0; i < N; i++) { for (j = 0; j < N; j++) { a[j] = re[i * N + j]; b[j] = im[i * N + j]; } r = dft1(a, b, inv); for (j = 0; j < N; j++) { R[i * N + j] = r[0][j]; I[i * N + j] = r[1][j]; } }
+    for (j = 0; j < N; j++) { for (i = 0; i < N; i++) { a[i] = R[i * N + j]; b[i] = I[i * N + j]; } r = dft1(a, b, inv); for (i = 0; i < N; i++) { R[i * N + j] = r[0][i]; I[i * N + j] = r[1][i]; } }
+    return [R, I];
+  }
+  function kk(i) { return i < N / 2 ? i : (i === N / 2 ? 0 : i - N); }   // nombres d'onde, Nyquist annulé
+  function compute() {
+    var kc = parseFloat(skc.value), r = rng(seed), z = new Float64Array(N * N), U = [];
+    root.querySelector("#wl-kcv").textContent = kc.toFixed(1).replace(".", ",");
+    for (var c = 0; c < 2; c++) {
+      var a = new Float64Array(N * N);
+      for (var p = 0; p < N * N; p++) { var u1 = r() || 1e-12, u2 = r(); a[p] = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2); }
+      var h = dft2(a, z, false);
+      for (var i = 0; i < N; i++) for (var j = 0; j < N; j++) {
+        var kx = i < N / 2 ? i : i - N, ky = j < N / 2 ? j : j - N, k2 = kx * kx + ky * ky, ny = (i === N / 2 || j === N / 2);
+        var f = (k2 === 0 || ny) ? 0 : Math.exp(-k2 / (2 * kc * kc)); h[0][i * N + j] *= f; h[1][i * N + j] *= f;
+      }
+      U.push(h);
+    }
+    var G = [[new Float64Array(N * N), new Float64Array(N * N)], [new Float64Array(N * N), new Float64Array(N * N)]];
+    var Wh = [[new Float64Array(N * N), new Float64Array(N * N)], [new Float64Array(N * N), new Float64Array(N * N)]];
+    for (i = 0; i < N; i++) for (j = 0; j < N; j++) {
+      p = i * N + j; var KX = kk(i), KY = kk(j), K2 = KX * KX + KY * KY;
+      var dr = KX * U[0][0][p] + KY * U[1][0][p], di = KX * U[0][1][p] + KY * U[1][1][p];
+      var s = K2 ? 1 / K2 : 0;
+      G[0][0][p] = KX * dr * s; G[0][1][p] = KX * di * s; G[1][0][p] = KY * dr * s; G[1][1][p] = KY * di * s;
+      for (c = 0; c < 2; c++) { Wh[c][0][p] = U[c][0][p] - G[c][0][p]; Wh[c][1][p] = U[c][1][p] - G[c][1][p]; }
+    }
+    function back(H) { return [dft2(H[0][0], H[0][1], true)[0], dft2(H[1][0], H[1][1], true)[0]]; }
+    function deriv(H) {                                 // divergence et vorticité spectrales
+      var dR = new Float64Array(N * N), dI = new Float64Array(N * N), oR = new Float64Array(N * N), oI = new Float64Array(N * N);
+      for (var i = 0; i < N; i++) for (var j = 0; j < N; j++) { var p = i * N + j, KX = kk(i), KY = kk(j);
+        dR[p] = -(KX * H[0][1][p] + KY * H[1][1][p]); dI[p] = KX * H[0][0][p] + KY * H[1][0][p];
+        oR[p] = -(KX * H[1][1][p] - KY * H[0][1][p]); oI[p] = KX * H[1][0][p] - KY * H[0][0][p]; }
+      return [dft2(dR, dI, true)[0], dft2(oR, oI, true)[0]];
+    }
+    state = { u: back(U), g: back(G), w: back(Wh), du: deriv(U), dg: deriv(G), dw: deriv(Wh) };
+  }
+  function nrm2(v) { var s = 0; for (var p = 0; p < N * N; p++) s += v[0][p] * v[0][p] + v[1][p] * v[1][p]; return s / (N * N); }
+  function maxabs(a) { var m = 0; for (var p = 0; p < a.length; p++) m = Math.max(m, Math.abs(a[p])); return m; }
+  function rms(a) { var s = 0; for (var p = 0; p < a.length; p++) s += a[p] * a[p]; return Math.sqrt(s / a.length); }
+  function mix(c1, c2, t) { return "rgb(" + [0, 1, 2].map(function (k) { return Math.round(c1[k] + (c2[k] - c1[k]) * t); }).join(",") + ")"; }
+  function rgb(s) { var d = document.createElement("span"); d.style.color = s; document.body.appendChild(d); var c = getComputedStyle(d).color; d.remove(); return c.match(/\d+/g).slice(0, 3).map(Number); }
+  function draw() {
+    if (!state) return;
+    var v = root.querySelector("input[name=wl-v]:checked").value, F = state[v], D = state["d" + v], bgf = v === "w" ? D[1] : D[0];
+    var dpr = window.devicePixelRatio || 1, W = cv.clientWidth || 640, H = W;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    var g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var bg = rgb(css("--bg")), pos = rgb(css("--mw-pos")), neg = rgb(css("--mw-neg")), ink = css("--ink");
+    var cell = W / N, m = Math.max(maxabs(state.du[0]), maxabs(state.dw[1]), 1e-300), i, j, p;
+    for (i = 0; i < N; i++) for (j = 0; j < N; j++) { var t = bgf[i * N + j] / m; g.fillStyle = mix(bg, t > 0 ? pos : neg, Math.min(1, Math.abs(t)) * 0.8); g.fillRect(i * cell, H - (j + 1) * cell, cell + 0.5, cell + 0.5); }
+    var vm = 0; for (p = 0; p < N * N; p++) vm = Math.max(vm, Math.hypot(state.u[0][p], state.u[1][p]));
+    g.strokeStyle = ink; g.fillStyle = ink; g.lineWidth = 1.2;
+    for (i = 0; i < N; i++) for (j = 0; j < N; j++) {
+      p = i * N + j; var ux = F[0][p], uy = F[1][p], mg = Math.hypot(ux, uy); if (mg < 1e-12 * vm) continue;
+      var L = 1.25 * cell * mg / vm, x0 = (i + 0.5) * cell - 0.5 * L * ux / mg, y0 = H - (j + 0.5) * cell + 0.5 * L * uy / mg, x1 = x0 + L * ux / mg, y1 = y0 - L * uy / mg;
+      g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke();
+      var a = Math.atan2(y1 - y0, x1 - x0), hl = Math.min(5, 0.4 * L);
+      g.beginPath(); g.moveTo(x1, y1); g.lineTo(x1 - hl * Math.cos(a - 0.5), y1 - hl * Math.sin(a - 0.5)); g.lineTo(x1 - hl * Math.cos(a + 0.5), y1 - hl * Math.sin(a + 0.5)); g.closePath(); g.fill();
+    }
+    var Eu = nrm2(state.u), Eg = nrm2(state.g), Ew = nrm2(state.w), cr = 0;
+    for (p = 0; p < N * N; p++) cr += state.g[0][p] * state.w[0][p] + state.g[1][p] * state.w[1][p];
+    cr /= N * N;
+    var e = function (x) { var t = x.toExponential(1).split("e"); return t[0].replace(".", ",").replace("-", "−") + "·10<sup>" + String(parseInt(t[1], 10)).replace("-", "−") + "</sup>"; };
+    var pc = function (x, d) { return x.toFixed(d).replace(".", ","); };
+    out.innerHTML = "énergie : ⟨|∇p|²⟩ / ⟨|u|²⟩ = " + pc(100 * Eg / Eu, 1) + " %, ⟨|ℙu|²⟩ / ⟨|u|²⟩ = " + pc(100 * Ew / Eu, 1) +
+      " %, somme = " + pc(100 * (Eg + Ew) / Eu, 4) + " %<br>orthogonalité : ⟨∇p · ℙu⟩ / ⟨|u|²⟩ = " + e(cr / Eu) +
+      "<br>divergence (rms) : u : " + e(rms(state.du[0])) + " ; ℙu : " + e(rms(state.dw[0])) +
+      " — vorticité (rms) de ∇p : " + e(rms(state.dg[1]));
+  }
+  function redo() { compute(); draw(); }
+  root.querySelectorAll("input[name=wl-v]").forEach(function (b) { b.addEventListener("change", draw); });
+  skc.addEventListener("input", redo);
+  root.querySelector("#wl-new").addEventListener("click", function () { seed = (seed * 48271 + 11) % 2147483647; redo(); });
+  window.addEventListener("resize", draw);
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (window.matchMedia) { var mq = window.matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", draw); }
+  redo();
+})();
+</script>
 <p>Deux voies mènent donc à un champ solénoïdal sur le tore : <strong>construire</strong> le champ à partir d’un potentiel (chapitre 4), ou <strong>projeter</strong> un champ quelconque. Le code suivant illustre la première voie sur une grille : il tire une fonction de courant aléatoire dont le spectre d’énergie suit une loi <span class="math inline">E(k) \propto k^{-3}</span> (la loi attendue dans la cascade d’enstrophie de la turbulence 2D), puis en déduit la vitesse par dérivation spectrale.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">6</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>N, L <span class="op">=</span> <span class="dv">256</span>, <span class="dv">2</span> <span class="op">*</span> np.pi</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>k1 <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> np.fft.fftfreq(N, d<span class="op">=</span>L <span class="op">/</span> N)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>k1[N <span class="op">//</span> <span class="dv">2</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>kv <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> np.fft.fftfreq(N, d<span class="op">=</span>L <span class="op">/</span> N)          <span class="co"># vrais nombres d'onde</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>k1 <span class="op">=</span> kv.copy()<span class="op">;</span> k1[N <span class="op">//</span> <span class="dv">2</span>] <span class="op">=</span> <span class="fl">0.0</span>                      <span class="co"># pour les dérivées : Nyquist annulé</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>KX, KY <span class="op">=</span> np.meshgrid(k1, k1, indexing<span class="op">=</span><span class="st">"ij"</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>kn <span class="op">=</span> np.sqrt(KX<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> KY<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>kn <span class="op">=</span> np.sqrt(<span class="bu">sum</span>(k<span class="op">**</span><span class="dv">2</span> <span class="cf">for</span> k <span class="kw">in</span> np.meshgrid(kv, kv, indexing<span class="op">=</span><span class="st">"ij"</span>)))   <span class="co"># |k| vrai</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>F, Fi <span class="op">=</span> np.fft.fft2, <span class="kw">lambda</span> a: np.real(np.fft.ifft2(a))</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) Fonction de courant aléatoire de spectre cible E(k) ~ k^-3 pour 4 &lt;= |k| &lt;= 64.</span></span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    Énergie d'un mode : |k|^2 |psi^_k|^2 / 2 ; il y a environ 2 pi k modes par couche.</span></span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>amp <span class="op">=</span> np.zeros_like(kn)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>bande <span class="op">=</span> (kn <span class="op">&gt;=</span> <span class="dv">4</span>) <span class="op">&amp;</span> (kn <span class="op">&lt;=</span> <span class="dv">64</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>bande <span class="op">=</span> (kn <span class="op">&gt;=</span> <span class="dv">4</span>) <span class="op">&amp;</span> (kn <span class="op">&lt;=</span> <span class="dv">64</span>)                        <span class="co"># exclut aussi les modes de Nyquist (|k| &gt;= 128)</span></span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>amp[bande] <span class="op">=</span> np.sqrt(kn[bande]<span class="op">**-</span><span class="dv">3</span> <span class="op">/</span> (np.pi <span class="op">*</span> kn[bande]<span class="op">**</span><span class="dv">3</span>))</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>psi <span class="op">=</span> Fi(amp <span class="op">*</span> F(rng.normal(size<span class="op">=</span>(N, N))))     <span class="co"># filtrer un bruit blanc : psi réel</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>psi <span class="op">=</span> Fi(amp <span class="op">*</span> F(rng.normal(size<span class="op">=</span>(N, N))))            <span class="co"># filtrer un bruit blanc : psi réel</span></span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>psi_h <span class="op">=</span> F(psi)</span>
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) u = (d_y psi, -d_x psi), normalisé à &lt;|u|^2&gt; = 1</span></span>
@@ -1406,17 +1726,23 @@ P_{ij}(\mathbf{k}) = \delta_{ij} - \frac{k_i k_j}{|\mathbf{k}|^2} \quad (\mathbf
 <span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"max|div u| ="</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(div)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1e}</span><span class="ss">"</span>, <span class="st">"; max|d_x u_x| ="</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(dxux)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1f}</span><span class="ss">"</span>,</span>
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>      <span class="st">"; rapport ="</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(div)<span class="sc">.</span><span class="bu">max</span>() <span class="op">/</span> np<span class="sc">.</span><span class="bu">abs</span>(dxux)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1e}</span><span class="ss">"</span>)</span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>uh2 <span class="op">=</span> (np.<span class="bu">abs</span>(F(ux))<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> np.<span class="bu">abs</span>(F(uy))<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> N<span class="op">**</span><span class="dv">4</span></span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> np.array([<span class="fl">0.5</span> <span class="op">*</span> uh2[(kn <span class="op">&gt;=</span> s <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">&amp;</span> (kn <span class="op">&lt;</span> s <span class="op">+</span> <span class="fl">0.5</span>)].<span class="bu">sum</span>() <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(N <span class="op">//</span> <span class="dv">2</span>)])</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> np.array([<span class="fl">0.5</span> <span class="op">*</span> uh2[(kn <span class="op">&gt;=</span> s <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">&amp;</span> (kn <span class="op">&lt;</span> s <span class="op">+</span> <span class="fl">0.5</span>)].<span class="bu">sum</span>() <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(N)])</span>
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> np.arange(<span class="dv">8</span>, <span class="dv">49</span>)</span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"pente du spectre entre k = 8 et 48 :"</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span>polyfit(np.log(s), np.log(E[s]), <span class="dv">1</span>)[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>, <span class="st">"(cible -3)"</span>)</span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Parseval : sum E(k) ="</span>, <span class="ss">f"</span><span class="sc">{</span>E<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:.12f}</span><span class="ss">"</span>, <span class="st">"; &lt;|u|^2&gt;/2 ="</span>, <span class="ss">f"</span><span class="sc">{</span><span class="fl">0.5</span> <span class="op">*</span> np<span class="sc">.</span>mean(ux<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> uy<span class="op">**</span><span class="dv">2</span>)<span class="sc">:.12f}</span><span class="ss">"</span>)</span>
 <span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co"># sortie :</span></span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="co"># max|div u| = 8.7e-14 ; max|d_x u_x| = 12.4 ; rapport = 7.0e-15</span></span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="co"># pente du spectre entre k = 8 et 48 : -2.95 (cible -3)</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="co"># max|div u| = 8.2e-14 ; max|d_x u_x| = 12.9 ; rapport = 6.3e-15</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="co"># pente du spectre entre k = 8 et 48 : -2.91 (cible -3)</span></span>
 <span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Parseval : sum E(k) = 0.500000000000 ; &lt;|u|^2&gt;/2 = 0.500000000000</span></span></code></pre></div>
-<p>Le champ obtenu est solénoïdal à la précision machine (le rapport de <span class="math inline">7\times 10^{-15}</span> reflète l’arrondi des FFT sur <span class="math inline">256^2</span> points) et son spectre a la pente voulue. Construire par potentiel permet donc de contrôler en même temps la contrainte et le spectre ; projeter permet de partir de n’importe quel champ, mais modifie son spectre.</p>
+<p>Le champ obtenu est solénoïdal à la précision machine (le rapport de <span class="math inline">6\times 10^{-15}</span> reflète l’arrondi des FFT sur <span class="math inline">256^2</span> points) et son spectre a la pente voulue, aux fluctuations statistiques près : chaque couche ne contient que quelques dizaines à quelques centaines de modes tirés au hasard. Notez que l’amplitude est calculée avec les <strong>vrais</strong> nombres d’onde, alors que les dérivées utilisent les nombres d’onde dont le mode de Nyquist est annulé : sinon, les modes de Nyquist, d’échelle égale à deux pas de grille, recevraient l’amplitude d’un mode de grande échelle et le champ serait couvert d’un damier parasite. Construire par potentiel permet donc de contrôler en même temps la contrainte et le spectre ; projeter permet de partir de n’importe quel champ, mais modifie son spectre.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="fig-courant.png" style="width:100.0%" alt="À gauche, des lignes de niveau tourbillonnaires sur un fond rouge et bleu finement granulé. À droite, un nuage de points en échelle log-log qui suit une droite de pente -3 entre k = 5 et k = 64."></p>
+<figcaption>Champ de vitesse construit par fonction de courant avec le code précédent. À gauche, les lignes de niveau de <span class="math inline">\psi</span>, qui sont les lignes de courant (traits pleins pour <span class="math inline">\psi &gt; 0</span>, tirets pour <span class="math inline">\psi &lt; 0</span>), sur un fond coloré par la vorticité <span class="math inline">\omega = -\Delta\psi</span> ; la vorticité est dominée par les petites échelles, car le spectre d’enstrophie <span class="math inline">k^2E(k) \propto k^{-1}</span> décroît lentement. À droite, le spectre d’énergie mesuré par couches, comparé à la pente <span class="math inline">k^{-3}</span> visée.</figcaption>
+</figure>
+</div>
 <div class="note">
-<p><span class="tag">Remarque 6.8 — Pression, méthode de projection et modèles génératifs</span> Pour l’équation de Navier–Stokes incompressible, appliquer <span class="math inline">\mathbb{P}</span> élimine la pression : <span class="math inline">\partial_t\mathbf{u} = \mathbb{P}\big[-(\mathbf{u}\cdot\nabla)\mathbf{u} + \mathbf{f}\big] + \nu\Delta\mathbf{u}</span>. La pression est le multiplicateur de Lagrange de la contrainte <span class="math inline">\nabla\cdot\mathbf{u} = 0</span>. La méthode de projection de Chorin (1968) avance d’abord la vitesse sans pression, puis projette. Les modèles génératifs récents reprennent cette idée : Genuist et al.&nbsp;(2026, préprint) comparent plusieurs façons d’insérer le projecteur de Leray dans un modèle de diffusion pour des écoulements 2D, et concluent qu’aucune stratégie ne domine dans tous les régimes ; Li et al.&nbsp;(2026, préprint) projettent l’estimation débruitée d’un modèle de diffusion de turbulence 3D en rotation et obtiennent une divergence nulle à la précision machine.</p>
+<p><span class="tag">Remarque 6.8 — Pression, méthode de projection et modèles génératifs</span> Pour l’équation de Navier–Stokes incompressible, appliquer <span class="math inline">\mathbb{P}</span> élimine la pression : <span class="math inline">\partial_t\mathbf{u} = \mathbb{P}\big[-(\mathbf{u}\cdot\nabla)\mathbf{u} + \mathbf{f}\big] + \nu\Delta\mathbf{u}</span>. La pression est le multiplicateur de Lagrange de la contrainte <span class="math inline">\nabla\cdot\mathbf{u} = 0</span>. La méthode de projection de Chorin (1968) avance d’abord la vitesse sans pression, puis projette. Les modèles génératifs récents reprennent cette idée : Genuist et al.&nbsp;(2026, préprint) comparent, pour des écoulements 2D périodiques, six variantes d’un modèle de diffusion, dont plusieurs insertions du projecteur spectral de Leray et une simple pénalité de divergence ; ils concluent qu’aucune stratégie ne domine dans tous les régimes (les contraintes strictes l’emportent près de la distribution d’entraînement, la pénalité douce sur un cas de Taylor–Green hors distribution) ; Li et al.&nbsp;(2026, préprint) projettent l’estimation débruitée d’un modèle de diffusion de turbulence 3D en rotation et obtiennent une divergence nulle à la précision machine.</p>
 </div>
 <h3 id="avec-des-parois-pourquoi-cest-plus-difficile">6.3 Avec des parois : pourquoi c’est plus difficile</h3>
 <p>Dans une boîte périodique, <span class="math inline">\mathbb{P}</span> est <strong>diagonal</strong> en Fourier : chaque vecteur d’onde est traité indépendamment des autres, en <span class="math inline">O(1)</span> opérations, et la FFT fait le reste. Dès que le domaine possède des parois, plusieurs difficultés apparaissent.</p>
@@ -1425,7 +1751,7 @@ P_{ij}(\mathbf{k}) = \delta_{ij} - \frac{k_i k_j}{|\mathbf{k}|^2} \quad (\mathbf
 <li><strong>Une seule condition au bord.</strong> La projection impose <span class="math inline">\mathbf{w}\cdot\mathbf{n} = 0</span>, mais pas la nullité de la vitesse tangentielle exigée par l’adhérence d’un fluide visqueux. Les méthodes de projection doivent donc gérer une couche limite numérique au voisinage des parois.</li>
 <li><strong>Plus de commutation.</strong> Dans un domaine borné, <span class="math inline">\mathbb{P}</span> ne commute plus en général avec le laplacien ni avec les dérivées : l’argument (v) de la proposition 6.6, qui reposait sur des multiplicateurs de Fourier, tombe. Nous admettons ce point.</li>
 <li><strong>Des conditions magnétiques non locales.</strong> Pour le champ magnétique, la bonne condition n’est pas <span class="math inline">\mathbf{B}\cdot\mathbf{n} = 0</span>. Si le conducteur est entouré d’un isolant, le champ extérieur vérifie <span class="math inline">\nabla\times\mathbf{B} = \mathbf{0}</span> et <span class="math inline">\nabla\cdot\mathbf{B} = 0</span>, donc <span class="math inline">\mathbf{B} = \nabla\phi</span> avec <span class="math inline">\Delta\phi = 0</span> hors du conducteur, et il doit se raccorder continûment au champ intérieur : la condition au bord dépend de la solution d’un problème extérieur. Si la perméabilité magnétique <span class="math inline">\mu</span> saute (turbines en fer doux de VKS), il faut en plus raccorder <span class="math inline">\mathbf{B}\cdot\mathbf{n}</span> et la composante tangentielle de <span class="math inline">\mathbf{H} = \mathbf{B}/\mu</span> à travers l’interface. Ces conditions de saut sont traitées explicitement par SFEMaNS.</li>
-<li><strong>Le contournement par pénalisation.</strong> Les codes pseudo-spectraux plongent le cylindre et les turbines dans une boîte périodique et imposent les parois par un terme de pénalisation volumique (Kreuzahler et al., 2014, 2017 : boîte <span class="math inline">(3\pi)^3</span> et <span class="math inline">384^3</span> points pour VKS). La projection par FFT reste alors utilisable, au prix d’une représentation approchée des parois.</li>
+<li><strong>Le contournement par pénalisation.</strong> Les codes pseudo-spectraux plongent le cylindre et les turbines dans une boîte périodique et imposent les parois par un terme de pénalisation volumique (Kreuzahler et al., 2014 ; dans Kreuzahler et al., 2017, la boîte périodique mesure <span class="math inline">(3\pi)^3</span> et compte <span class="math inline">384^3</span> points). La projection par FFT reste alors utilisable, au prix d’une représentation approchée des parois.</li>
 </ol>
 <p>Le relevé bibliographique du site (synthèse, voir la <a href="../../these/index.html#theorie">page de la thèse</a>) n’a trouvé aucun modèle génératif imposant une contrainte de divergence dure avec les conditions aux limites d’un cylindre à parois ; c’est l’une des questions ouvertes du projet.</p>
 <p>Le code suivant réalise une projection exacte (au sens discret) dans un carré fermé par des parois, avec une grille décalée de type MAC (<em>marker-and-cell</em>) : les composantes normales de la vitesse vivent sur les faces des cellules, la pression au centre. Le laplacien discret à cinq points avec condition de Neumann est diagonalisé par la transformée en cosinus de type II (<code>scipy.fft.dctn</code>).</p>
@@ -1484,6 +1810,303 @@ P_{ij}(\mathbf{k}) = \delta_{ij} - \frac{k_i k_j}{|\mathbf{k}|^2} \quad (\mathbf
 <li>Avec des parois, la projection est un problème de Poisson global, n’impose que la composante normale, ne commute plus avec le laplacien, et le champ magnétique demande des conditions de raccord non locales.</li>
 </ul>
 </div>
+<h2 id="exercices">Exercices</h2>
+<p>Les exercices suivent l’ordre des séances du plan de travail. Une étoile (★) signale une application directe du cours, deux étoiles (★★) un exercice qui enchaîne plusieurs résultats, trois étoiles (★★★) une démonstration ou un programme plus long, proche des questions du stage. Cherchez chaque exercice au moins vingt minutes avant de lire sa solution ; les exercices 13 à 15 demandent d’écrire et d’exécuter du code.</p>
+<ol type="1">
+<li><p><strong>★ Calculs directs (séance 1).</strong> Soit <span class="math inline">f(x, y, z) = x^2 y + y z^3</span> et <span class="math inline">\mathbf{u} = (xy, \; yz, \; zx)</span>. (a) Calculer <span class="math inline">\nabla f</span> et <span class="math inline">\Delta f</span>, puis vérifier sur cet exemple que <span class="math inline">\nabla\times(\nabla f) = \mathbf{0}</span>. (b) Calculer <span class="math inline">\nabla\cdot\mathbf{u}</span> et <span class="math inline">\nabla\times\mathbf{u}</span>, puis vérifier que <span class="math inline">\nabla\cdot(\nabla\times\mathbf{u}) = 0</span>. (c) Au point <span class="math inline">(1, 1, 1)</span>, calculer la dérivée de <span class="math inline">f</span> dans la direction <span class="math inline">\mathbf{e} = (1, 2, 2)/3</span>, puis le plus grand taux de variation possible de <span class="math inline">f</span> et la direction où il est atteint.</p>
+<div class="sol">
+<p><em>Solution.</em> (a) On trouve <span class="math inline">\nabla f = (2xy, \; x^2 + z^3, \; 3yz^2)</span> et <span class="math inline">\Delta f = 2y + 0 + 6yz</span>. Les composantes du rotationnel de <span class="math inline">\nabla f</span> sont <span class="math inline">\partial_y(3yz^2) - \partial_z(x^2 + z^3) = 3z^2 - 3z^2</span>, puis <span class="math inline">\partial_z(2xy) - \partial_x(3yz^2) = 0 - 0</span>, enfin <span class="math inline">\partial_x(x^2 + z^3) - \partial_y(2xy) = 2x - 2x</span> : toutes sont nulles.</p>
+<p><em>(b)</em> On trouve <span class="math inline">\nabla\cdot\mathbf{u} = y + z + x</span>. Les composantes du rotationnel sont <span class="math inline">\partial_y(zx) - \partial_z(yz) = -y</span>, puis <span class="math inline">\partial_z(xy) - \partial_x(zx) = -z</span>, enfin <span class="math inline">\partial_x(yz) - \partial_y(xy) = -x</span>, soit</p>
+<p><span class="math display">
+\nabla\times\mathbf{u} = (-y, \; -z, \; -x),
+</span></p>
+<p>dont la divergence vaut <span class="math inline">\partial_x(-y) + \partial_y(-z) + \partial_z(-x) = 0</span>.</p>
+<p><em>(c)</em> Au point <span class="math inline">(1, 1, 1)</span>, <span class="math inline">\nabla f = (2, 2, 3)</span>, donc la dérivée directionnelle vaut <span class="math inline">\nabla f\cdot\mathbf{e} = (2 + 4 + 6)/3 = 4</span>. D’après la proposition 1.6 (ii), le plus grand taux de variation vaut <span class="math inline">|\nabla f| = \sqrt{17} \approx 4{,}12</span> ; il est atteint dans la direction <span class="math inline">(2, 2, 3)/\sqrt{17}</span>, qui est proche de <span class="math inline">\mathbf{e}</span>, d’où une dérivée directionnelle de 4 déjà proche du maximum.</p>
+</div></li>
+<li><p><strong>★ La roue à aubes (séance 1).</strong> (a) Pour un champ <span class="math inline">\mathbf{u}</span> de classe <span class="math inline">C^1</span>, on note <span class="math inline">J_{ij} = \partial_j u_i</span> la matrice jacobienne, <span class="math inline">S = (J + J^{\mathsf T})/2</span> sa partie symétrique et <span class="math inline">A = (J - J^{\mathsf T})/2</span> sa partie antisymétrique. Montrer que <span class="math inline">A\mathbf{h} = \frac12\boldsymbol\omega\times\mathbf{h}</span> pour tout vecteur <span class="math inline">\mathbf{h}</span>, où <span class="math inline">\boldsymbol\omega = \nabla\times\mathbf{u}</span>, et en déduire que le mouvement au voisinage d’un point est la somme d’une translation, d’une déformation pure et d’une rotation solide de vitesse angulaire <span class="math inline">\boldsymbol\omega/2</span>. (b) Appliquer ce résultat au cisaillement <span class="math inline">\mathbf{u} = (y, 0, 0)</span> : dans quel sens et à quelle vitesse tourne une petite roue à aubes d’axe <span class="math inline">\mathbf{e}_z</span> ? Donner une explication physique. (c) Que fait la même roue dans le tourbillon ponctuel <span class="math inline">\mathbf{u} = \frac{\Gamma}{2\pi r}\mathbf{e}_\theta</span> de l’exemple 1.16 ?</p>
+<div class="sol">
+<p><em>Solution.</em> (a) Avec <span class="math inline">\omega_j = \varepsilon_{jlm}\partial_l u_m</span> et la permutation circulaire <span class="math inline">\varepsilon_{ijk} = \varepsilon_{jki}</span> :</p>
+<p><span class="math display">
+\tfrac12(\boldsymbol\omega\times\mathbf{h})_i = \tfrac12\varepsilon_{ijk}\,\omega_j\,h_k = \tfrac12\varepsilon_{jki}\varepsilon_{jlm}\,\partial_l u_m\,h_k.
+</span></p>
+<p>Le lemme 1.12 donne <span class="math inline">\varepsilon_{jki}\varepsilon_{jlm} = \delta_{kl}\delta_{im} - \delta_{km}\delta_{il}</span>, d’où</p>
+<p><span class="math display">
+\tfrac12(\boldsymbol\omega\times\mathbf{h})_i = \tfrac12(\delta_{kl}\delta_{im} - \delta_{km}\delta_{il})\,\partial_l u_m\,h_k = \tfrac12(\partial_k u_i - \partial_i u_k)\,h_k,
+</span></p>
+<p>ce qui est exactement <span class="math inline">(A\mathbf{h})_i</span>. Le développement de Taylor s’écrit donc <span class="math inline">\mathbf{u}(\mathbf{x} + \mathbf{h}) = \mathbf{u}(\mathbf{x}) + S\mathbf{h} + \frac12\boldsymbol\omega\times\mathbf{h} + o(|\mathbf{h}|)</span>. Le premier terme est une translation. La matrice <span class="math inline">S</span> est symétrique réelle, donc diagonalisable dans une base orthonormée : <span class="math inline">S\mathbf{h}</span> étire ou comprime le voisinage le long de trois axes perpendiculaires, sans le faire tourner. Le dernier terme est le champ de vitesse d’une rotation solide de vecteur vitesse angulaire <span class="math inline">\boldsymbol\omega/2</span> (proposition 1.8 (ii)).</p>
+<p><em>(b)</em> Pour <span class="math inline">\mathbf{u} = (y, 0, 0)</span>, seul <span class="math inline">J_{12} = \partial_y u_x = 1</span> est non nul, et <span class="math inline">\boldsymbol\omega = (0, 0, -1)</span>. La roue tourne donc à la vitesse angulaire <span class="math inline">1/2</span> dans le sens des aiguilles d’une montre. Physiquement, les pales du haut sont entraînées vers la droite plus vite que celles du bas : le couple fait tourner la roue. La partie symétrique <span class="math inline">S</span>, de valeurs propres <span class="math inline">\pm 1/2</span> et de directions propres <span class="math inline">(1, 1)/\sqrt2</span> et <span class="math inline">(1, -1)/\sqrt2</span>, étire le voisinage le long de la première diagonale et le comprime le long de la seconde : le cisaillement est la somme d’une déformation pure et d’une rotation.</p>
+<p><em>(c)</em> Pour <span class="math inline">r &gt; 0</span>, la vorticité du tourbillon ponctuel est nulle : la roue parcourt un cercle autour de l’axe, mais garde une orientation fixe, comme une nacelle de grande roue. Les pales proches de l’axe sont plus rapides que les pales extérieures, ce qui tendrait à faire tourner la roue dans un sens, mais la courbure de la trajectoire compense exactement cet effet.</p>
+</div></li>
+<li><p><strong>★★ Coordonnées cylindriques (séance 2).</strong> (a) Le tourbillon de Rankine est défini par <span class="math inline">u_r = u_z = 0</span> et <span class="math inline">u_\theta = \Omega r</span> pour <span class="math inline">r \le a</span>, <span class="math inline">u_\theta = \Omega a^2/r</span> pour <span class="math inline">r &gt; a</span>. Calculer sa vorticité dans les deux régions et sa circulation sur un cercle de rayon <span class="math inline">R &gt; a</span> centré sur l’axe, puis vérifier le théorème de Stokes. (b) Le champ uniforme <span class="math inline">\mathbf{u} = \mathbf{e}_x</span> s’écrit <span class="math inline">u_r = \cos\theta</span>, <span class="math inline">u_\theta = -\sin\theta</span>, <span class="math inline">u_z = 0</span>. Vérifier avec (1.2) que sa divergence est nulle, puis avec (1.5) que son laplacien vectoriel est nul. Que donnerait le laplacien « composante par composante » <span class="math inline">(\Delta u_r, \Delta u_\theta)</span> ? Conclure.</p>
+<div class="sol">
+<p><em>Solution.</em> (a) Par (1.3), <span class="math inline">\omega_z = \frac1r\frac{\mathrm{d}}{\mathrm{d}r}(r u_\theta)</span>. À l’intérieur, <span class="math inline">\omega_z = \frac1r\frac{\mathrm{d}}{\mathrm{d}r}(\Omega r^2) = 2\Omega</span> : le cœur tourne en bloc. À l’extérieur, <span class="math inline">r u_\theta = \Omega a^2</span> est constant et <span class="math inline">\omega_z = 0</span>. La circulation sur le cercle de rayon <span class="math inline">R &gt; a</span> vaut <span class="math inline">\int_0^{2\pi}\frac{\Omega a^2}{R}\,R\,\mathrm{d}\theta = 2\pi\Omega a^2</span>. Le flux de la vorticité à travers le disque correspondant vaut <span class="math inline">2\Omega\times\pi a^2</span>, puisque la vorticité est concentrée dans le cœur : les deux membres de (3.2) coïncident. La circulation ne dépend pas de <span class="math inline">R</span> ; vu de loin, le tourbillon de Rankine est un tourbillon ponctuel de circulation <span class="math inline">\Gamma = 2\pi\Omega a^2</span>.</p>
+<p><em>(b)</em> Par (1.2), <span class="math inline">\nabla\cdot\mathbf{u} = \frac1r\partial_r(r\cos\theta) + \frac1r\partial_\theta(-\sin\theta) = \frac{\cos\theta}{r} - \frac{\cos\theta}{r} = 0</span>. Par (1.4), <span class="math inline">\Delta u_r = \frac{1}{r^2}\partial_\theta^2\cos\theta = -\frac{\cos\theta}{r^2}</span> et <span class="math inline">\Delta u_\theta = \frac{\sin\theta}{r^2}</span>. La formule (1.5) donne alors</p>
+<p><span class="math display">
+(\Delta\mathbf{u})_r = -\frac{\cos\theta}{r^2} - \frac{\cos\theta}{r^2} - \frac{2}{r^2}\,\partial_\theta(-\sin\theta) = 0,
+</span></p>
+<p>et, de même,</p>
+<p><span class="math display">
+(\Delta\mathbf{u})_\theta = \frac{\sin\theta}{r^2} + \frac{\sin\theta}{r^2} + \frac{2}{r^2}\,\partial_\theta(\cos\theta) = 0.
+</span></p>
+<p>Le laplacien composante par composante donnerait <span class="math inline">(-\cos\theta, \sin\theta)/r^2</span>, qui n’est pas nul : il attribuerait une « courbure » à un champ constant. Les termes supplémentaires de (1.5) corrigent l’effet de la rotation des vecteurs de base ; les oublier est une erreur fréquente dans les codes en coordonnées cylindriques.</p>
+</div></li>
+<li><p><strong>★★ Formules de produits (séance 3).</strong> Démontrer les formules (a), (c) et (f) de la proposition 2.5. Pour (f), on pourra commencer par établir <span class="math inline">[\mathbf{u}\times(\nabla\times\mathbf{v})]_i = u_j\,\partial_i v_j - u_j\,\partial_j v_i</span>.</p>
+<div class="sol">
+<p><em>Solution.</em> (a) Par la règle de Leibniz, <span class="math inline">\partial_i(fg) = f\,\partial_i g + g\,\partial_i f</span>.</p>
+<p><em>(c)</em> <span class="math inline">[\nabla\times(f\mathbf{u})]_i = \varepsilon_{ijk}\partial_j(f u_k) = f\,\varepsilon_{ijk}\partial_j u_k + \varepsilon_{ijk}(\partial_j f)\,u_k = f\,(\nabla\times\mathbf{u})_i + (\nabla f\times\mathbf{u})_i</span>.</p>
+<ol start="6" type="a">
+<li>Par le lemme 1.12, avec <span class="math inline">\varepsilon_{ijk} = \varepsilon_{kij}</span> :</li>
+</ol>
+<p><span class="math display">
+[\mathbf{u}\times(\nabla\times\mathbf{v})]_i = \varepsilon_{ijk}\,u_j\,\varepsilon_{klm}\partial_l v_m = (\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl})\,u_j\,\partial_l v_m = u_j\,\partial_i v_j - u_j\,\partial_j v_i.
+</span></p>
+<p>Donc <span class="math inline">u_j\partial_i v_j = [\mathbf{u}\times(\nabla\times\mathbf{v})]_i + [(\mathbf{u}\cdot\nabla)\mathbf{v}]_i</span> et, en échangeant les rôles, <span class="math inline">v_j\partial_i u_j = [\mathbf{v}\times(\nabla\times\mathbf{u})]_i + [(\mathbf{v}\cdot\nabla)\mathbf{u}]_i</span>. La somme des deux est <span class="math inline">\partial_i(u_j v_j) = [\nabla(\mathbf{u}\cdot\mathbf{v})]_i</span>, ce qui est (f).</p>
+</div></li>
+<li><p><strong>★★ L’écoulement ABC, solution exacte (séance 3).</strong> Soit <span class="math inline">\mathbf{u}</span> l’écoulement ABC de l’exemple 1.10. (a) À l’aide de la forme de Lamb (2.2), montrer que <span class="math inline">(\mathbf{u}\cdot\nabla)\mathbf{u} = \nabla(|\mathbf{u}|^2/2)</span>. (b) En déduire que <span class="math inline">\mathbf{u}</span> est une solution stationnaire des équations d’Euler incompressibles <span class="math inline">\partial_t\mathbf{u} + (\mathbf{u}\cdot\nabla)\mathbf{u} = -\nabla p</span>, <span class="math inline">\nabla\cdot\mathbf{u} = 0</span>, et donner la pression. (c) On prend maintenant ce champ comme champ magnétique <span class="math inline">\mathbf{B}</span>. Montrer que la force de Laplace <span class="math inline">\mathbf{j}\times\mathbf{B}</span> est nulle et interpréter ce résultat avec (2.3). (d) Dans un conducteur immobile, que devient ce champ magnétique sous l’équation d’induction (2.4) ?</p>
+<div class="sol">
+<p><em>Solution.</em> (a) Comme <span class="math inline">\boldsymbol\omega = \mathbf{u}</span>, on a <span class="math inline">\mathbf{u}\times\boldsymbol\omega = \mathbf{0}</span> et (2.2) se réduit à <span class="math inline">(\mathbf{u}\cdot\nabla)\mathbf{u} = \nabla(|\mathbf{u}|^2/2)</span>.</p>
+<p><em>(b)</em> Avec <span class="math inline">p = -|\mathbf{u}|^2/2 + \text{cste}</span>, on a <span class="math inline">(\mathbf{u}\cdot\nabla)\mathbf{u} = -\nabla p</span> ; le champ indépendant du temps vérifie donc l’équation d’Euler, et il est à divergence nulle. C’est une solution stationnaire exacte, dont les lignes de courant peuvent être chaotiques (Dombre et al., 1986).</p>
+<p><em>(c)</em> On a <span class="math inline">\mathbf{j} = \nabla\times\mathbf{B} = \mathbf{B}</span>, donc <span class="math inline">\mathbf{j}\times\mathbf{B} = \mathbf{B}\times\mathbf{B} = \mathbf{0}</span> : le champ est dit <strong>sans force</strong>. D’après (2.3), la tension magnétique <span class="math inline">(\mathbf{B}\cdot\nabla)\mathbf{B}</span> y équilibre exactement le gradient de pression magnétique <span class="math inline">\nabla(|\mathbf{B}|^2/2)</span>.</p>
+<p><em>(d)</em> Avec <span class="math inline">\mathbf{u} = \mathbf{0}</span>, (2.4) se réduit à <span class="math inline">\partial_t\mathbf{B} = \eta\Delta\mathbf{B} = -\eta\mathbf{B}</span> (exemple 2.8), d’où <span class="math inline">\mathbf{B}(t) = e^{-\eta t}\mathbf{B}(0)</span> : le champ décroît exponentiellement par effet Joule. Pour qu’il croisse, il faut un écoulement capable d’étirer les lignes de champ plus vite que la diffusion ne les dissipe ; l’expérience E3 du dépôt mesure le taux de croissance obtenu quand l’écoulement est lui-même l’écoulement ABC, en fonction de <span class="math inline">Rm</span> (voir le <a href="../../rapport/index.html#e3">rapport</a>).</p>
+</div></li>
+<li><p><strong>★ Le champ coulombien (séance 4).</strong> Soit <span class="math inline">\mathbf{E}(\mathbf{x}) = \mathbf{x}/|\mathbf{x}|^3</span> sur <span class="math inline">\mathbb{R}^3\setminus\{\mathbf{0}\}</span>. (a) Montrer que <span class="math inline">\nabla\cdot\mathbf{E} = 0</span> hors de l’origine. (b) Calculer le flux sortant de <span class="math inline">\mathbf{E}</span> à travers la sphère de rayon <span class="math inline">R</span> centrée en <span class="math inline">\mathbf{0}</span>. (c) Montrer que ce flux est nul à travers toute sphère qui n’entoure pas l’origine, et qu’il vaut <span class="math inline">4\pi</span> à travers toute surface fermée régulière qui l’entoure. (d) Pourquoi n’y a-t-il pas de contradiction avec la proposition 3.8 ? Que faudrait-il pour qu’un champ magnétique se comporte ainsi ?</p>
+<div class="sol">
+<p><em>Solution.</em> (a) Avec <span class="math inline">r = |\mathbf{x}|</span> et <span class="math inline">\partial_i r = x_i/r</span> : <span class="math inline">\partial_i(x_i r^{-3}) = 3r^{-3} + x_i\cdot(-3)r^{-4}\cdot\frac{x_i}{r} = 3r^{-3} - 3r^{-3} = 0</span>.</p>
+<p><em>(b)</em> Sur la sphère, <span class="math inline">\mathbf{n} = \mathbf{x}/R</span> et <span class="math inline">\mathbf{E}\cdot\mathbf{n} = 1/R^2</span> ; le flux vaut <span class="math inline">\frac{1}{R^2}\times 4\pi R^2 = 4\pi</span>, quel que soit <span class="math inline">R</span>.</p>
+<p><em>(c)</em> Si la sphère n’entoure pas l’origine, <span class="math inline">\mathbf{E}</span> est de classe <span class="math inline">C^1</span> sur la boule qu’elle borde et le théorème 3.5 donne un flux égal à <span class="math inline">\int\nabla\cdot\mathbf{E} = 0</span>. Si une surface fermée <span class="math inline">S</span> entoure l’origine, on choisit une petite sphère <span class="math inline">S_\varepsilon</span> centrée en <span class="math inline">\mathbf{0}</span> et intérieure à <span class="math inline">S</span>. Le domaine compris entre les deux ne contient pas l’origine ; son bord est formé de <span class="math inline">S</span> (normale sortante) et de <span class="math inline">S_\varepsilon</span> (normale dirigée vers l’origine). Le théorème 3.5 y donne <span class="math inline">\Phi(S) - \Phi(S_\varepsilon) = 0</span>, donc <span class="math inline">\Phi(S) = 4\pi</span>.</p>
+<p><em>(d)</em> La proposition 3.8 suppose le champ de classe <span class="math inline">C^1</span> sur tout l’ouvert ; ici <span class="math inline">\mathbf{E}</span> n’est pas défini en <span class="math inline">\mathbf{0}</span>, et tout le flux provient de ce point singulier : c’est le champ d’une charge ponctuelle (au sens des distributions, <span class="math inline">\nabla\cdot\mathbf{E} = 4\pi\delta_{\mathbf{0}}</span>). Pour un champ magnétique, il faudrait une « charge magnétique » ponctuelle, c’est-à-dire un monopôle, ce qui n’a jamais été observé. Le premier bloc de code du chapitre 3 et la figure de la section 3.3 illustrent ces deux cas.</p>
+</div></li>
+<li><p><strong>★★ Green et Ampère (séance 4).</strong> (a) Avec <span class="math inline">P = -y/2</span> et <span class="math inline">Q = x/2</span> dans le théorème 3.4, montrer que l’aire d’un domaine plan <span class="math inline">D</span> vaut <span class="math inline">\frac12\oint_{\partial D}(x\,\mathrm{d}y - y\,\mathrm{d}x)</span>, et en déduire l’aire de l’ellipse de demi-axes <span class="math inline">a</span> et <span class="math inline">b</span>. (b) Un fil cylindrique infini de rayon <span class="math inline">a</span> et d’axe <span class="math inline">\mathbf{e}_z</span> est parcouru par un courant <span class="math inline">I</span> de densité uniforme <span class="math inline">\mathbf{j} = \frac{I}{\pi a^2}\mathbf{e}_z</span>. En admettant que <span class="math inline">\mathbf{B} = B_\theta(r)\,\mathbf{e}_\theta</span>, calculer <span class="math inline">B_\theta</span> à l’intérieur et à l’extérieur du fil à l’aide du théorème de Stokes appliqué à <span class="math inline">\nabla\times\mathbf{B} = \mu_0\mathbf{j}</span>. Vérifier le résultat avec (1.2) et (1.3).</p>
+<div class="sol">
+<p><em>Solution.</em> (a) On a <span class="math inline">\partial_x Q - \partial_y P = \frac12 + \frac12 = 1</span>, donc le membre de droite du théorème 3.4 est l’aire de <span class="math inline">D</span>. Pour l’ellipse <span class="math inline">x = a\cos t</span>, <span class="math inline">y = b\sin t</span>, on a <span class="math inline">x\,\mathrm{d}y - y\,\mathrm{d}x = (ab\cos^2 t + ab\sin^2 t)\,\mathrm{d}t = ab\,\mathrm{d}t</span>, et l’aire vaut <span class="math inline">\frac12\times 2\pi ab = \pi ab</span>.</p>
+<p><em>(b)</em> Sur un cercle de rayon <span class="math inline">r</span> centré sur l’axe, <span class="math inline">\oint\mathbf{B}\cdot\mathrm{d}\boldsymbol\ell = 2\pi r\,B_\theta(r)</span>. Le flux de <span class="math inline">\mu_0\mathbf{j}</span> à travers le disque correspondant vaut <span class="math inline">\mu_0 I r^2/a^2</span> si <span class="math inline">r \le a</span> et <span class="math inline">\mu_0 I</span> si <span class="math inline">r \ge a</span>. D’où</p>
+<p><span class="math display">
+B_\theta(r) = \frac{\mu_0 I\,r}{2\pi a^2} \quad (r \le a), \qquad B_\theta(r) = \frac{\mu_0 I}{2\pi r} \quad (r \ge a),
+</span></p>
+<p>deux expressions qui se raccordent en <span class="math inline">r = a</span>. Vérification : <span class="math inline">\nabla\cdot\mathbf{B} = \frac1r\partial_\theta B_\theta = 0</span>, et <span class="math inline">(\nabla\times\mathbf{B})_z = \frac1r\frac{\mathrm{d}}{\mathrm{d}r}(rB_\theta)</span> vaut <span class="math inline">\frac1r\frac{\mathrm{d}}{\mathrm{d}r}\big(\frac{\mu_0 I r^2}{2\pi a^2}\big) = \frac{\mu_0 I}{\pi a^2} = \mu_0 j</span> à l’intérieur et <span class="math inline">0</span> à l’extérieur. Le champ singulier de l’exemple 3.9 est la limite <span class="math inline">a \to 0</span>, où toute la vorticité magnétique se concentre sur l’axe.</p>
+</div></li>
+<li><p><strong>★★ Bilan d’énergie cinétique (séance 4).</strong> Dans une boîte périodique, on considère une solution régulière des équations de Navier–Stokes <span class="math inline">\partial_t\mathbf{u} + (\mathbf{u}\cdot\nabla)\mathbf{u} = -\nabla p + \nu\Delta\mathbf{u} + \mathbf{f}</span>, <span class="math inline">\nabla\cdot\mathbf{u} = 0</span>. Montrer que (a) <span class="math inline">\langle\mathbf{u}\cdot\nabla p\rangle = 0</span> ; (b) <span class="math inline">\langle\mathbf{u}\cdot(\mathbf{u}\cdot\nabla)\mathbf{u}\rangle = 0</span> ; (c) <span class="math inline">\langle\mathbf{u}\cdot\Delta\mathbf{u}\rangle = -\langle|\boldsymbol\omega|^2\rangle</span>. En déduire le bilan</p>
+<p><span class="math display">
+\frac{\mathrm{d}}{\mathrm{d}t}\Big\langle\frac{|\mathbf{u}|^2}{2}\Big\rangle = \langle\mathbf{u}\cdot\mathbf{f}\rangle - \nu\,\langle|\boldsymbol\omega|^2\rangle,
+</span></p>
+<p>interpréter chaque terme, et dire où sert l’hypothèse <span class="math inline">\nabla\cdot\mathbf{u} = 0</span>.</p>
+<div class="sol">
+<p><em>Solution.</em> (a) Par (3.3) sans terme de bord, <span class="math inline">\langle\mathbf{u}\cdot\nabla p\rangle = -\langle p\,\nabla\cdot\mathbf{u}\rangle = 0</span>.</p>
+<p><em>(b)</em> On a <span class="math inline">u_i u_j\partial_j u_i = u_j\,\partial_j(|\mathbf{u}|^2/2) = \nabla\cdot\big(\mathbf{u}\,|\mathbf{u}|^2/2\big) - \frac{|\mathbf{u}|^2}{2}\nabla\cdot\mathbf{u}</span>. La moyenne d’une divergence de champ périodique est nulle (théorème 3.5 sur la boîte, les flux des faces opposées se compensant), et le second terme est nul par incompressibilité.</p>
+<p><em>(c)</em> Le théorème 2.3 avec <span class="math inline">\nabla\cdot\mathbf{u} = 0</span> donne <span class="math inline">\Delta\mathbf{u} = -\nabla\times\boldsymbol\omega</span>, puis (3.4) sans terme de bord donne <span class="math inline">\langle\mathbf{u}\cdot\nabla\times\boldsymbol\omega\rangle = \langle\boldsymbol\omega\cdot\nabla\times\mathbf{u}\rangle = \langle|\boldsymbol\omega|^2\rangle</span>.</p>
+<p>En multipliant l’équation par <span class="math inline">\mathbf{u}</span> et en moyennant, on obtient le bilan annoncé. Le terme <span class="math inline">\langle\mathbf{u}\cdot\mathbf{f}\rangle</span> est la puissance injectée par le forçage ; <span class="math inline">\nu\langle|\boldsymbol\omega|^2\rangle \ge 0</span> est la dissipation visqueuse. L’advection et la pression ne créent ni ne détruisent d’énergie : elles la redistribuent dans l’espace et entre les échelles (c’est la cascade du module <a href="../p2-mecanique-fluides/index.html">Mécanique des fluides et turbulence</a>). L’incompressibilité sert dans les trois points. En MHD, on ajoute la force de Laplace <span class="math inline">\mathbf{j}\times\mathbf{B}</span> au second membre : le bilan cinétique gagne le terme <span class="math inline">\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle</span>, qui est exactement l’opposé du terme d’échange de la proposition 3.10. L’énergie totale vérifie donc <span class="math inline">\frac{\mathrm{d}}{\mathrm{d}t}E = \langle\mathbf{u}\cdot\mathbf{f}\rangle - \nu\langle|\boldsymbol\omega|^2\rangle - \eta\langle|\mathbf{j}|^2\rangle</span>.</p>
+</div></li>
+<li><p><strong>★★ Fonction de courant (séance 5).</strong> Soit <span class="math inline">\psi = \sin x\sin y</span> sur le tore <span class="math inline">[0, 2\pi)^2</span> et <span class="math inline">\mathbf{u} = \nabla^\perp\psi</span> (exemple 4.6). (a) Calculer le débit de <span class="math inline">\mathbf{u}</span> à travers le segment allant de <span class="math inline">(0, 0)</span> à <span class="math inline">(\pi/2, \pi/2)</span> de deux façons : par la proposition 4.5 (iv), puis par un calcul direct. (b) Montrer plus généralement que, si la vorticité est une fonction de la fonction de courant, <span class="math inline">\omega = F(\psi)</span>, l’écoulement est une solution stationnaire de l’équation d’Euler 2D écrite en vorticité, <span class="math inline">\partial_t\omega + \mathbf{u}\cdot\nabla\omega = 0</span>. Appliquer à <span class="math inline">\psi = \sin x\sin y</span>. (c) Un écoulement uniforme <span class="math inline">\mathbf{u} = U\mathbf{e}_x</span> s’écrit-il <span class="math inline">\nabla^\perp\psi</span> avec <span class="math inline">\psi</span> périodique ? Que faut-il ajouter à la représentation par fonction de courant sur le tore ?</p>
+<div class="sol">
+<p><em>Solution.</em> (a) Par la proposition 4.5 (iv), le débit vaut <span class="math inline">\psi(\pi/2, \pi/2) - \psi(0, 0) = 1</span>. Directement : le segment est paramétré par <span class="math inline">\boldsymbol\gamma(s) = (s, s)</span>, <span class="math inline">s \in [0, \pi/2]</span>, la normale non normalisée vaut <span class="math inline">(\gamma_y', -\gamma_x') = (1, -1)</span> et <span class="math inline">\mathbf{u}(\boldsymbol\gamma(s)) = (\sin s\cos s, \; -\cos s\sin s)</span>. On a donc <span class="math inline">\mathbf{u}\cdot(1, -1) = 2\sin s\cos s = \sin 2s</span>, dont l’intégrale sur <span class="math inline">[0, \pi/2]</span> vaut 1.</p>
+<p><em>(b)</em> Par la règle de dérivation des fonctions composées, <span class="math inline">\mathbf{u}\cdot\nabla\omega = F'(\psi)\,\mathbf{u}\cdot\nabla\psi = 0</span> d’après la proposition 4.5 (iii). Le champ <span class="math inline">\omega</span> indépendant du temps vérifie donc <span class="math inline">\partial_t\omega + \mathbf{u}\cdot\nabla\omega = 0</span>. Pour <span class="math inline">\psi = \sin x\sin y</span>, <span class="math inline">\omega = 2\psi</span> : la fonction <span class="math inline">F</span> est linéaire.</p>
+<p><em>(c)</em> La fonction <span class="math inline">\psi = Uy</span> donne bien <span class="math inline">\mathbf{u} = (U, 0)</span>, mais elle n’est pas périodique en <span class="math inline">y</span>. Plus généralement, pour <span class="math inline">\psi</span> périodique, <span class="math inline">\langle\nabla^\perp\psi\rangle = \mathbf{0}</span>, car la moyenne d’une dérivée de fonction périodique est nulle. Sur le tore, un champ à divergence nulle s’écrit donc <span class="math inline">\bar{\mathbf{u}} + \nabla^\perp\psi</span> : deux constantes pour le champ moyen, plus une fonction de courant périodique (remarque 4.3 et théorème 6.4). Un modèle génératif qui ne produit que <span class="math inline">\psi</span> ne peut pas représenter un champ moyen non nul : il faut le générer à part, ou vérifier qu’il est nul dans les données.</p>
+</div></li>
+<li><p><strong>★★★ Lemme de Poincaré pour les champs solénoïdaux (séance 5).</strong> Soit <span class="math inline">\Omega</span> un domaine étoilé par rapport à l’origine et <span class="math inline">\mathbf{B}</span> un champ de classe <span class="math inline">C^1</span> sur <span class="math inline">\Omega</span> tel que <span class="math inline">\nabla\cdot\mathbf{B} = 0</span>. On pose <span class="math inline">\mathbf{A}(\mathbf{x}) = \int_0^1 t\,\mathbf{B}(t\mathbf{x})\times\mathbf{x}\,\mathrm{d}t</span>. (a) Montrer que <span class="math inline">\nabla\times\mathbf{A} = \mathbf{B}</span> (théorème 4.2 (ii)). (b) Calculer <span class="math inline">\mathbf{A}</span> pour <span class="math inline">\mathbf{B} = B_0\mathbf{e}_z</span> et comparer à l’exemple 4.9. (c) Montrer que <span class="math inline">\mathbf{x}\cdot\mathbf{A} = 0</span> et que <span class="math inline">\nabla\cdot\mathbf{A} = \int_0^1 t^2\,\mathbf{x}\cdot(\nabla\times\mathbf{B})(t\mathbf{x})\,\mathrm{d}t</span>. Ce potentiel est-il en jauge de Coulomb en général ?</p>
+<div class="sol">
+<p><em>Solution.</em> (a) On écrit <span class="math inline">A_m = \int_0^1 t\,\varepsilon_{mjk}B_j(t\mathbf{x})\,x_k\,\mathrm{d}t</span> et on dérive sous l’intégrale, en notant que <span class="math inline">\partial_l[B_j(t\mathbf{x})] = t\,(\partial_l B_j)(t\mathbf{x})</span>. Avec <span class="math inline">\varepsilon_{ilm}\varepsilon_{mjk} = \varepsilon_{mil}\varepsilon_{mjk} = \delta_{ij}\delta_{lk} - \delta_{ik}\delta_{lj}</span> (lemme 1.12) :</p>
+<p><span class="math display">
+(\nabla\times\mathbf{A})_i = \int_0^1 t\,\varepsilon_{ilm}\varepsilon_{mjk}\,\partial_l\big[B_j(t\mathbf{x})\,x_k\big]\,\mathrm{d}t,
+</span></p>
+<p>avec</p>
+<p><span class="math display">
+\partial_l\big[B_j(t\mathbf{x})\,x_k\big] = t\,x_k(\partial_l B_j)(t\mathbf{x}) + B_j(t\mathbf{x})\,\delta_{lk}.
+</span></p>
+<p>Le premier produit de symboles donne <span class="math inline">t\,x_l(\partial_l B_i)(t\mathbf{x}) + 3B_i(t\mathbf{x})</span>, le second <span class="math inline">-t\,x_i(\nabla\cdot\mathbf{B})(t\mathbf{x}) - B_i(t\mathbf{x})</span>, nul pour sa première partie puisque <span class="math inline">\nabla\cdot\mathbf{B} = 0</span>. L’intégrande vaut donc</p>
+<p><span class="math display">
+t^2\,x_l(\partial_l B_i)(t\mathbf{x}) + 2t\,B_i(t\mathbf{x}) = \frac{\mathrm{d}}{\mathrm{d}t}\big[t^2 B_i(t\mathbf{x})\big],
+</span></p>
+<p>dont l’intégrale entre 0 et 1 vaut <span class="math inline">B_i(\mathbf{x})</span>. Le caractère étoilé garantit que <span class="math inline">t\mathbf{x} \in \Omega</span> pour tout <span class="math inline">t \in [0, 1]</span>.</p>
+<p><em>(b)</em> Pour <span class="math inline">\mathbf{B} = B_0\mathbf{e}_z</span>, <span class="math inline">\mathbf{A} = \big(\int_0^1 t\,\mathrm{d}t\big)B_0\,\mathbf{e}_z\times\mathbf{x} = \frac{B_0}{2}(-y, x, 0)</span> : c’est le potentiel symétrique de l’exemple 4.9.</p>
+<p><em>(c)</em> <span class="math inline">\mathbf{x}\cdot(\mathbf{B}\times\mathbf{x}) = 0</span> pour tout <span class="math inline">t</span>, d’où <span class="math inline">\mathbf{x}\cdot\mathbf{A} = 0</span>. Pour la divergence, <span class="math inline">\partial_i A_i = \int_0^1 t\,\varepsilon_{ijk}\big[t\,x_k(\partial_i B_j)(t\mathbf{x}) + B_j(t\mathbf{x})\,\delta_{ik}\big]\,\mathrm{d}t</span> ; le second terme contient <span class="math inline">\varepsilon_{iji} = 0</span>, et le premier vaut <span class="math inline">t^2 x_k\varepsilon_{kij}\partial_i B_j = t^2\,\mathbf{x}\cdot(\nabla\times\mathbf{B})</span>. Ce n’est pas nul en général : pour <span class="math inline">\mathbf{B} = (0, 0, x)</span>, à divergence nulle, <span class="math inline">\nabla\times\mathbf{B} = (0, -1, 0)</span> et <span class="math inline">\nabla\cdot\mathbf{A} = -y/3</span>. Ce potentiel vérifie la condition <span class="math inline">\mathbf{x}\cdot\mathbf{A} = 0</span> (parfois appelée jauge de Poincaré) ; pour passer en jauge de Coulomb, on résout l’équation de Poisson de la proposition 4.8.</p>
+</div></li>
+<li><p><strong>★ Série de Fourier du signal triangulaire (séance 6).</strong> Soit <span class="math inline">f</span> la fonction <span class="math inline">2\pi</span>-périodique égale à <span class="math inline">|x|</span> sur <span class="math inline">[-\pi, \pi]</span>. (a) Calculer ses coefficients de Fourier. Comment décroissent-ils, et pourquoi plus vite que ceux du créneau de l’exemple 5.6 ? (b) En évaluant la série en <span class="math inline">x = 0</span>, montrer que <span class="math inline">\sum_{n\ \text{impair}\ \ge 1}1/n^2 = \pi^2/8</span>. (c) À l’aide de l’égalité de Parseval, montrer que <span class="math inline">\sum_{n\ \text{impair}\ \ge 1}1/n^4 = \pi^4/96</span>, puis que <span class="math inline">\sum_{n \ge 1}1/n^4 = \pi^4/90</span>.</p>
+<div class="sol">
+<p><em>Solution.</em> (a) On a <span class="math inline">\hat f_0 = \frac{1}{2\pi}\int_{-\pi}^{\pi}|x|\,\mathrm{d}x = \frac{\pi}{2}</span> et, par parité puis intégration par parties,</p>
+<p><span class="math display">
+\hat f_n = \frac{1}{\pi}\int_0^\pi x\cos(nx)\,\mathrm{d}x = \frac{1}{\pi}\Big[\frac{x\sin(nx)}{n} + \frac{\cos(nx)}{n^2}\Big]_0^\pi = \frac{(-1)^n - 1}{\pi n^2},
+</span></p>
+<p>soit <span class="math inline">-\frac{2}{\pi n^2}</span> pour <span class="math inline">n</span> impair et <span class="math inline">0</span> pour <span class="math inline">n</span> pair non nul. Les coefficients décroissent comme <span class="math inline">1/n^2</span> : <span class="math inline">f</span> est continue et sa dérivée est le créneau <span class="math inline">\operatorname{signe}(\sin x)</span> de l’exemple 5.6. La proposition 5.4 donne <span class="math inline">\hat f_n = \widehat{(f')}_n/(in) = \frac{2}{i\pi n}\cdot\frac{1}{in} = -\frac{2}{\pi n^2}</span>, ce qui confirme le calcul : une intégration de plus, un facteur <span class="math inline">1/n</span> de plus.</p>
+<p><em>(b)</em> La fonction <span class="math inline">f</span> est continue et de classe <span class="math inline">C^1</span> par morceaux ; par le théorème 5.3 (ii), sa série converge uniformément : <span class="math inline">f(x) = \frac{\pi}{2} - \frac{4}{\pi}\sum_{n\ \text{impair}\ \ge 1}\frac{\cos(nx)}{n^2}</span>. En <span class="math inline">x = 0</span>, on obtient <span class="math inline">0 = \frac{\pi}{2} - \frac{4}{\pi}\sum_{\text{impair}}\frac{1}{n^2}</span>, d’où le résultat.</p>
+<p><em>(c)</em> Le membre de gauche de (5.1) vaut <span class="math inline">\frac{1}{2\pi}\int_{-\pi}^{\pi}x^2\,\mathrm{d}x = \frac{\pi^2}{3}</span>. Le membre de droite vaut <span class="math inline">\frac{\pi^2}{4} + 2\sum_{\text{impair}}\frac{4}{\pi^2 n^4}</span>. On en tire <span class="math inline">\sum_{\text{impair}}\frac{1}{n^4} = \frac{\pi^2}{8}\Big(\frac{\pi^2}{3} - \frac{\pi^2}{4}\Big) = \frac{\pi^4}{96}</span>. Enfin, en notant <span class="math inline">S = \sum_{n\ge1}1/n^4</span>, la somme sur les entiers pairs vaut <span class="math inline">S/16</span>, donc <span class="math inline">S - S/16 = \pi^4/96</span> et <span class="math inline">S = \pi^4/90</span>.</p>
+</div></li>
+<li><p><strong>★★ Repliement et règle des 2/3 (séance 6).</strong> (a) Sur une grille de <span class="math inline">N = 16</span> points de <span class="math inline">[0, 2\pi)</span>, à quelles fonctions de nombre d’onde au plus 8 les fonctions <span class="math inline">\sin(21x)</span>, <span class="math inline">\cos(12x)</span> et <span class="math inline">\sin(8x)</span> sont-elles indiscernables ? Vérifier avec le schéma interactif de la section 5.2. (b) Un code pseudo-spectral garde les modes <span class="math inline">|n| \le K = 21</span> et calcule des termes quadratiques. Quel est le plus petit <span class="math inline">N</span> qui élimine le repliement sur ces modes ? (c) Pour un terme cubique <span class="math inline">u^3</span>, montrer qu’il faut <span class="math inline">N \ge 4K + 1</span>, c’est-à-dire ne garder que la moitié du spectre.</p>
+<div class="sol">
+<p><em>Solution.</em> (a) Comme <span class="math inline">21 = 16 + 5</span>, <span class="math inline">\sin(21x)</span> coïncide sur la grille avec <span class="math inline">\sin(5x)</span>. Comme <span class="math inline">12 = 16 - 4</span>, <span class="math inline">\cos(12x_j) = \cos(-4x_j) = \cos(4x_j)</span>. Enfin <span class="math inline">\sin(8x_j) = \sin(\pi j) = 0</span> : le mode de Nyquist en sinus est invisible sur la grille, ce qui justifie aussi la convention de la définition 5.11.</p>
+<p><em>(b)</em> Par le théorème 5.16, il faut <span class="math inline">N \ge 3K + 1 = 64</span>. C’est le choix usuel : <span class="math inline">64</span> points pour garder les modes <span class="math inline">|n| \le 21</span>, soit le tiers de <span class="math inline">64</span>.</p>
+<p><em>(c)</em> Le produit <span class="math inline">u^3</span> a des modes jusqu’à <span class="math inline">3K</span>. Par (5.2), le coefficient discret d’indice <span class="math inline">n</span>, <span class="math inline">|n| \le K</span>, reçoit les termes repliés <span class="math inline">\widehat{(u^3)}_{n + pN}</span>, <span class="math inline">p \neq 0</span>, avec <span class="math inline">|n + pN| \ge N - K</span>. Ils sont tous nuls si <span class="math inline">N - K &gt; 3K</span>, c’est-à-dire <span class="math inline">N \ge 4K + 1</span>. On ne garde alors que les modes <span class="math inline">|n| \le N/4</span>, la moitié du spectre représentable.</p>
+</div></li>
+<li><p><strong>★★ Régularité et vitesse de convergence (code, séance 6).</strong> À l’aide des propositions 5.4 et 5.12, prédire la vitesse de convergence de la dérivée spectrale de <span class="math inline">f(x) = |\sin x|^3</span>. Vérifier numériquement en comparant à <span class="math inline">e^{\sin x}</span>.</p>
+<div class="sol">
+<p><em>Solution.</em> Près de <span class="math inline">x = 0</span>, <span class="math inline">f(x) \approx |x|^3</span>, dont les dérivées successives sont <span class="math inline">3x|x|</span>, <span class="math inline">6|x|</span> et <span class="math inline">6\operatorname{signe}(x)</span> : <span class="math inline">f</span> est de classe <span class="math inline">C^2</span> et sa dérivée troisième est continue par morceaux avec des sauts en <span class="math inline">0</span> et en <span class="math inline">\pi</span>. Trois intégrations par parties donnent <span class="math inline">\hat f_n = \widehat{(f''')}_n/(in)^3</span> et, comme pour le créneau, <span class="math inline">\widehat{(f''')}_n = O(1/n)</span> ; donc <span class="math inline">|\hat f_n| = O(n^{-4})</span>. La proposition 5.12 avec <span class="math inline">q = 4</span> prédit une erreur en <span class="math inline">O(N^{-2})</span> : elle doit être divisée par 4 quand <span class="math inline">N</span> double. Pour <span class="math inline">e^{\sin x}</span>, fonction analytique, la convergence est exponentielle.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> derivee_spectrale(f):</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> f.size</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> np.fft.fftfreq(N, d<span class="op">=</span><span class="dv">1</span> <span class="op">/</span> N)            <span class="co"># nombres d'onde entiers (L = 2 pi)</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> N <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        k[N <span class="op">//</span> <span class="dv">2</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.real(np.fft.ifft(<span class="ot">1j</span> <span class="op">*</span> k <span class="op">*</span> np.fft.fft(f)))</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"   N   erreur e^(sin x)   erreur |sin x|^3   rapport"</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>e_prec <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> N <span class="kw">in</span> [<span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>, <span class="dv">128</span>, <span class="dv">256</span>, <span class="dv">512</span>]:</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> np.arange(N) <span class="op">/</span> N</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    e1 <span class="op">=</span> np.<span class="bu">abs</span>(derivee_spectrale(np.exp(np.sin(x))) <span class="op">-</span> np.cos(x) <span class="op">*</span> np.exp(np.sin(x))).<span class="bu">max</span>()</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    e2 <span class="op">=</span> np.<span class="bu">abs</span>(derivee_spectrale(np.<span class="bu">abs</span>(np.sin(x))<span class="op">**</span><span class="dv">3</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                <span class="op">-</span> <span class="dv">3</span> <span class="op">*</span> np.<span class="bu">abs</span>(np.sin(x)) <span class="op">*</span> np.sin(x) <span class="op">*</span> np.cos(x)).<span class="bu">max</span>()</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> <span class="st">"  -"</span> <span class="cf">if</span> e_prec <span class="kw">is</span> <span class="va">None</span> <span class="cf">else</span> <span class="ss">f"</span><span class="sc">{</span>e_prec <span class="op">/</span> e2<span class="sc">:.2f}</span><span class="ss">"</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>N<span class="sc">:4d}</span><span class="ss">   </span><span class="sc">{</span>e1<span class="sc">:.1e}</span><span class="ss">            </span><span class="sc">{</span>e2<span class="sc">:.1e}</span><span class="ss">            </span><span class="sc">{</span>r<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    e_prec <span class="op">=</span> e2</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co"># sortie :</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co">#    N   erreur e^(sin x)   erreur |sin x|^3   rapport</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co">#   16   1.8e-07            1.7e-02              -</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co">#   32   2.9e-15            4.4e-03            3.93</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="co">#   64   1.1e-14            1.1e-03            3.98</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="co">#  128   2.4e-14            2.7e-04            4.00</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="co">#  256   5.5e-14            6.8e-05            4.00</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co">#  512   1.2e-13            1.7e-05            4.00</span></span></code></pre></div>
+<p>Le rapport des erreurs successives tend vers 4, comme prévu, alors que <span class="math inline">e^{\sin x}</span> atteint la précision machine dès <span class="math inline">N = 32</span>. La méthode spectrale n’est donc pas « magique » : elle est aussi précise que la fonction est régulière. C’est pourquoi les codes pseudo-spectraux qui représentent des objets à bords francs, comme les turbines de VKS, doivent filtrer les discontinuités (remarque 5.17).</p>
+</div></li>
+<li><p><strong>★★★ Projection de Leray en 2D par la fonction de courant (code, séance 7).</strong> (a) Sur le tore 2D, montrer en Fourier que <span class="math inline">\mathbb{P}\mathbf{u} = \langle\mathbf{u}\rangle + \nabla^\perp\psi</span>, où <span class="math inline">\psi</span> est la solution de moyenne nulle de <span class="math inline">-\Delta\psi = \omega</span> et <span class="math inline">\omega = \partial_x u_y - \partial_y u_x</span>. (b) En déduire que <span class="math inline">\mathbf{u}</span> et <span class="math inline">\mathbb{P}\mathbf{u}</span> ont la même vorticité, et interpréter. (c) Programmer les deux calculs sur un champ aléatoire et vérifier qu’ils coïncident à l’arrondi près.</p>
+<div class="sol">
+<p><em>Solution.</em> (a) Pour <span class="math inline">\mathbf{k} \neq \mathbf{0}</span>, <span class="math inline">\hat\omega = i(k_x\hat u_y - k_y\hat u_x)</span>, <span class="math inline">\hat\psi = \hat\omega/|\mathbf{k}|^2</span> et <span class="math inline">\widehat{\nabla^\perp\psi} = (ik_y\hat\psi, \; -ik_x\hat\psi)</span>. La première composante vaut</p>
+<p><span class="math display">
+\frac{ik_y\cdot i(k_x\hat u_y - k_y\hat u_x)}{|\mathbf{k}|^2} = \frac{k_y^2\hat u_x - k_x k_y\hat u_y}{|\mathbf{k}|^2} = \hat u_x - \frac{k_x(k_x\hat u_x + k_y\hat u_y)}{|\mathbf{k}|^2},
+</span></p>
+<p>en utilisant <span class="math inline">k_y^2 = |\mathbf{k}|^2 - k_x^2</span>. C’est la première composante de (6.2) ; la seconde se traite de même. Le mode <span class="math inline">\mathbf{k} = \mathbf{0}</span> donne le champ moyen, conservé par <span class="math inline">\mathbb{P}</span>.</p>
+<p><em>(b)</em> La vorticité de <span class="math inline">\nabla^\perp\psi</span> vaut <span class="math inline">-\Delta\psi = \omega</span> (proposition 4.5 (ii)) et le champ moyen n’en a pas. La projection retire la partie gradient, qui n’a pas de vorticité (<span class="math inline">\nabla\times\nabla p = \mathbf{0}</span>) : elle modifie la divergence et laisse la vorticité intacte. En 2D, projeter revient donc à « reconstruire la vitesse à partir de sa vorticité ».</p>
+<p><em>(c)</em> On retire d’abord les modes de Nyquist, dont la dérivée n’est pas définie (remarque 6.7) ; sans cette précaution, les deux calculs diffèrent sur ces quelques modes.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">14</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">128</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>k1 <span class="op">=</span> np.fft.fftfreq(N, d<span class="op">=</span><span class="dv">1</span> <span class="op">/</span> N)<span class="op">;</span> k1[N <span class="op">//</span> <span class="dv">2</span>] <span class="op">=</span> <span class="fl">0.0</span>      <span class="co"># nombres d'onde entiers, Nyquist annulé</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>KX, KY <span class="op">=</span> np.meshgrid(k1, k1, indexing<span class="op">=</span><span class="st">"ij"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>K2 <span class="op">=</span> KX<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> KY<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>K2s <span class="op">=</span> np.where(K2 <span class="op">==</span> <span class="dv">0</span>, <span class="fl">1.0</span>, K2)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>F, Fi <span class="op">=</span> np.fft.fft2, <span class="kw">lambda</span> a: np.real(np.fft.ifft2(a))</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> rng.normal(size<span class="op">=</span>(<span class="dv">2</span>, N, N)) <span class="op">+</span> np.array([<span class="fl">0.3</span>, <span class="op">-</span><span class="fl">0.2</span>])[:, <span class="va">None</span>, <span class="va">None</span>]   <span class="co"># bruit + champ moyen</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>uh <span class="op">=</span> np.stack([F(u[<span class="dv">0</span>]), F(u[<span class="dv">1</span>])])</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>nyq <span class="op">=</span> np.zeros((N, N), <span class="bu">bool</span>)<span class="op">;</span> nyq[N <span class="op">//</span> <span class="dv">2</span>, :] <span class="op">=</span> nyq[:, N <span class="op">//</span> <span class="dv">2</span>] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>uh[:, nyq] <span class="op">=</span> <span class="fl">0.0</span>                                        <span class="co"># modes de Nyquist retirés (dérivée non définie)</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> np.stack([Fi(uh[<span class="dv">0</span>]), Fi(uh[<span class="dv">1</span>])])</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># (a) Leray : u^ - k (k . u^)/|k|^2  (le mode k = 0 est conservé)</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>kd <span class="op">=</span> KX <span class="op">*</span> uh[<span class="dv">0</span>] <span class="op">+</span> KY <span class="op">*</span> uh[<span class="dv">1</span>]</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>P1 <span class="op">=</span> np.stack([Fi(uh[<span class="dv">0</span>] <span class="op">-</span> KX <span class="op">*</span> kd <span class="op">/</span> K2s), Fi(uh[<span class="dv">1</span>] <span class="op">-</span> KY <span class="op">*</span> kd <span class="op">/</span> K2s)])</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co"># (b) Fonction de courant : omega = d_x u_y - d_y u_x, -Lap psi = omega, Pu = &lt;u&gt; + (d_y psi, -d_x psi)</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>om_h <span class="op">=</span> <span class="ot">1j</span> <span class="op">*</span> KX <span class="op">*</span> uh[<span class="dv">1</span>] <span class="op">-</span> <span class="ot">1j</span> <span class="op">*</span> KY <span class="op">*</span> uh[<span class="dv">0</span>]</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>psi_h <span class="op">=</span> om_h <span class="op">/</span> K2s</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>psi_h[<span class="dv">0</span>, <span class="dv">0</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>P2 <span class="op">=</span> np.stack([Fi(<span class="ot">1j</span> <span class="op">*</span> KY <span class="op">*</span> psi_h), Fi(<span class="op">-</span><span class="ot">1j</span> <span class="op">*</span> KX <span class="op">*</span> psi_h)]) <span class="op">+</span> u.mean(axis<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">2</span>))[:, <span class="va">None</span>, <span class="va">None</span>]</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>div <span class="op">=</span> Fi(<span class="ot">1j</span> <span class="op">*</span> KX <span class="op">*</span> F(P2[<span class="dv">0</span>]) <span class="op">+</span> <span class="ot">1j</span> <span class="op">*</span> KY <span class="op">*</span> F(P2[<span class="dv">1</span>]))</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"max|P1 - P2| ="</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(P1 <span class="op">-</span> P2)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1e}</span><span class="ss">"</span>, <span class="st">"; max|div P2| ="</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(div)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1e}</span><span class="ss">"</span>)</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"moyenne conservée :"</span>, np.<span class="bu">round</span>(P2.mean(axis<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">2</span>)), <span class="dv">12</span>), <span class="st">"; vorticité inchangée :"</span>,</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(Fi(<span class="ot">1j</span> <span class="op">*</span> KX <span class="op">*</span> F(P2[<span class="dv">1</span>]) <span class="op">-</span> <span class="ot">1j</span> <span class="op">*</span> KY <span class="op">*</span> F(P2[<span class="dv">0</span>])) <span class="op">-</span> Fi(om_h))<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1e}</span><span class="ss">"</span>)</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="co"># sortie :</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="co"># max|P1 - P2| = 8.9e-16 ; max|div P2| = 3.9e-14</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="co"># moyenne conservée : [ 0.31141623 -0.20974851] ; vorticité inchangée : 8.5e-14</span></span></code></pre></div>
+<p>Les deux calculs coïncident à <span class="math inline">10^{-15}</span> près, la divergence du résultat est au niveau de l’arrondi des FFT, le champ moyen est conservé et la vorticité n’a pas changé.</p>
+</div></li>
+<li><p><strong>★★★ Potentiel vecteur et hélicité magnétique (code, séance 7).</strong> (a) En Fourier, montrer que <span class="math inline">H_M = \langle\mathbf{A}\cdot\mathbf{B}\rangle = \sum_{\mathbf{k}}\overline{\hat{\mathbf{A}}_{\mathbf{k}}}\cdot\hat{\mathbf{B}}_{\mathbf{k}}</span> ne change pas quand on remplace <span class="math inline">\hat{\mathbf{A}}_{\mathbf{k}}</span> par <span class="math inline">\hat{\mathbf{A}}_{\mathbf{k}} + i\mathbf{k}\hat\chi_{\mathbf{k}}</span> : c’est une seconde démonstration de la proposition 4.10. (b) Programmer : tirer un champ <span class="math inline">\mathbf{B}</span> lisse, solénoïdal et de moyenne nulle sur le tore 3D ; calculer son potentiel en jauge de Coulomb par la proposition 4.8 ; vérifier <span class="math inline">\nabla\times\mathbf{A} = \mathbf{B}</span> et <span class="math inline">\nabla\cdot\mathbf{A} = 0</span> ; comparer <span class="math inline">H_M</span> dans deux jauges. (c) Contrôler le programme sur le champ ABC, pour lequel <span class="math inline">\mathbf{A} = \mathbf{B}</span> et <span class="math inline">H_M = A^2 + B^2 + C^2</span> (exemple 4.9). (d) Pourquoi a-t-on imposé que <span class="math inline">\mathbf{B}</span> soit de moyenne nulle ?</p>
+<div class="sol">
+<p><em>Solution.</em> (a) La variation de <span class="math inline">H_M</span> vaut <span class="math inline">\sum_{\mathbf{k}}\overline{i\mathbf{k}\hat\chi_{\mathbf{k}}}\cdot\hat{\mathbf{B}}_{\mathbf{k}} = \sum_{\mathbf{k}}(-i)\,\overline{\hat\chi_{\mathbf{k}}}\,(\mathbf{k}\cdot\hat{\mathbf{B}}_{\mathbf{k}}) = 0</span>, puisque <span class="math inline">\mathbf{k}\cdot\hat{\mathbf{B}}_{\mathbf{k}} = 0</span> pour un champ solénoïdal. Chaque mode de Fourier est invariant de jauge séparément.</p>
+<p><em>(b)</em> et (c) :</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">8</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>N, L <span class="op">=</span> <span class="dv">32</span>, <span class="dv">2</span> <span class="op">*</span> np.pi</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>kv <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> np.fft.fftfreq(N, d<span class="op">=</span>L <span class="op">/</span> N)            <span class="co"># vrais nombres d'onde</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>filtre <span class="op">=</span> np.exp(<span class="op">-</span><span class="bu">sum</span>(k<span class="op">**</span><span class="dv">2</span> <span class="cf">for</span> k <span class="kw">in</span> np.meshgrid(kv, kv, kv, indexing<span class="op">=</span><span class="st">"ij"</span>)) <span class="op">/</span> <span class="dv">8</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>k1 <span class="op">=</span> kv.copy()<span class="op">;</span> k1[N <span class="op">//</span> <span class="dv">2</span>] <span class="op">=</span> <span class="fl">0.0</span>                       <span class="co"># Nyquist annulé pour les dérivées</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> np.stack(np.meshgrid(k1, k1, k1, indexing<span class="op">=</span><span class="st">"ij"</span>))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>K2 <span class="op">=</span> (K<span class="op">**</span><span class="dv">2</span>).<span class="bu">sum</span>(<span class="dv">0</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>K2s <span class="op">=</span> np.where(K2 <span class="op">==</span> <span class="dv">0</span>, <span class="fl">1.0</span>, K2)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>F  <span class="op">=</span> <span class="kw">lambda</span> a: np.fft.fftn(a, axes<span class="op">=</span>(<span class="op">-</span><span class="dv">3</span>, <span class="op">-</span><span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>Fi <span class="op">=</span> <span class="kw">lambda</span> a: np.real(np.fft.ifftn(a, axes<span class="op">=</span>(<span class="op">-</span><span class="dv">3</span>, <span class="op">-</span><span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>)))</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>croix <span class="op">=</span> <span class="kw">lambda</span> a, b: np.stack([a[<span class="dv">1</span>]<span class="op">*</span>b[<span class="dv">2</span>] <span class="op">-</span> a[<span class="dv">2</span>]<span class="op">*</span>b[<span class="dv">1</span>], a[<span class="dv">2</span>]<span class="op">*</span>b[<span class="dv">0</span>] <span class="op">-</span> a[<span class="dv">0</span>]<span class="op">*</span>b[<span class="dv">2</span>], a[<span class="dv">0</span>]<span class="op">*</span>b[<span class="dv">1</span>] <span class="op">-</span> a[<span class="dv">1</span>]<span class="op">*</span>b[<span class="dv">0</span>]])</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># B aléatoire lisse, à divergence nulle et de moyenne nulle (projection de Leray)</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>Bh <span class="op">=</span> F(rng.normal(size<span class="op">=</span>(<span class="dv">3</span>, N, N, N))) <span class="op">*</span> filtre</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>Bh <span class="op">=</span> Bh <span class="op">-</span> K <span class="op">*</span> (K <span class="op">*</span> Bh).<span class="bu">sum</span>(<span class="dv">0</span>) <span class="op">/</span> K2s</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>Bh[:, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>Bh <span class="op">=</span> Bh <span class="op">/</span> np.sqrt(np.mean((Fi(Bh)<span class="op">**</span><span class="dv">2</span>).<span class="bu">sum</span>(<span class="dv">0</span>)))         <span class="co"># normalisation &lt;|B|^2&gt; = 1</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> Fi(Bh)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Potentiel vecteur en jauge de Coulomb : -Lap A = rot B  =&gt;  A^ = i k x B^ / |k|^2</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>Ah <span class="op">=</span> <span class="ot">1j</span> <span class="op">*</span> croix(K, Bh) <span class="op">/</span> K2s</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> Fi(Ah)</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"max|rot A - B| ="</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(Fi(<span class="ot">1j</span> <span class="op">*</span> croix(K, Ah)) <span class="op">-</span> B)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1e}</span><span class="ss">"</span>,</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>      <span class="st">"; max|div A| ="</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(Fi((<span class="ot">1j</span> <span class="op">*</span> K <span class="op">*</span> Ah).<span class="bu">sum</span>(<span class="dv">0</span>)))<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1e}</span><span class="ss">"</span>, <span class="st">"; max|B| ="</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(B)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1f}</span><span class="ss">"</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>HM <span class="op">=</span> np.mean((A <span class="op">*</span> B).<span class="bu">sum</span>(<span class="dv">0</span>))</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>chi <span class="op">=</span> Fi(F(rng.normal(size<span class="op">=</span>(N, N, N))) <span class="op">*</span> filtre)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>A2 <span class="op">=</span> A <span class="op">+</span> Fi(<span class="ot">1j</span> <span class="op">*</span> K <span class="op">*</span> F(chi))                           <span class="co"># autre jauge, même B</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"H_M (Coulomb) ="</span>, <span class="ss">f"</span><span class="sc">{</span>HM<span class="sc">:.12f}</span><span class="ss">"</span>, <span class="st">"; H_M (A + grad chi) ="</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span>mean((A2 <span class="op">*</span> B).<span class="bu">sum</span>(<span class="dv">0</span>))<span class="sc">:.12f}</span><span class="ss">"</span>)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Contrôle analytique : pour le champ ABC (champ de Beltrami k = 1), A = B en jauge de Coulomb, H_M = A^2 + B^2 + C^2</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> L <span class="op">*</span> np.arange(N) <span class="op">/</span> N</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>X, Y, Z <span class="op">=</span> np.meshgrid(x, x, x, indexing<span class="op">=</span><span class="st">"ij"</span>)</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>a, b, c <span class="op">=</span> <span class="fl">1.0</span>, <span class="fl">0.8</span>, <span class="fl">0.6</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>Babc <span class="op">=</span> np.stack([a<span class="op">*</span>np.sin(Z) <span class="op">+</span> c<span class="op">*</span>np.cos(Y), b<span class="op">*</span>np.sin(X) <span class="op">+</span> a<span class="op">*</span>np.cos(Z), c<span class="op">*</span>np.sin(Y) <span class="op">+</span> b<span class="op">*</span>np.cos(X)])</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>Aabc <span class="op">=</span> Fi(<span class="ot">1j</span> <span class="op">*</span> croix(K, F(Babc)) <span class="op">/</span> K2s)</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ABC : max|A - B| ="</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">abs</span>(Aabc <span class="op">-</span> Babc)<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1e}</span><span class="ss">"</span>, <span class="st">"; H_M ="</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span>mean((Aabc <span class="op">*</span> Babc).<span class="bu">sum</span>(<span class="dv">0</span>))<span class="sc">:.12f}</span><span class="ss">"</span>)</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a><span class="co"># sortie :</span></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a><span class="co"># max|rot A - B| = 5.6e-15 ; max|div A| = 8.2e-17 ; max|B| = 2.2</span></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="co"># H_M (Coulomb) = -0.039622643548 ; H_M (A + grad chi) = -0.039622643548</span></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a><span class="co"># ABC : max|A - B| = 8.9e-16 ; H_M = 2.000000000000</span></span></code></pre></div>
+<p>Le potentiel reproduit <span class="math inline">\mathbf{B}</span> à <span class="math inline">10^{-15}</span> près, il est bien en jauge de Coulomb, et l’hélicité est identique dans les deux jauges jusqu’à la douzième décimale. Sur le champ ABC, le programme retrouve <span class="math inline">\mathbf{A} = \mathbf{B}</span> et <span class="math inline">H_M = 1 + 0{,}64 + 0{,}36 = 2</span>.</p>
+<p><em>(d)</em> Un champ moyen <span class="math inline">\bar{\mathbf{B}} \neq \mathbf{0}</span> n’a pas de potentiel périodique (remarque 4.3) : <span class="math inline">\bar{\mathbf{B}} = \nabla\times\mathbf{A}</span> exige un <span class="math inline">\mathbf{A}</span> qui croît linéairement, comme dans l’exemple 4.9, et <span class="math inline">\langle\mathbf{A}\cdot\mathbf{B}\rangle</span> n’est alors plus défini sur le tore. C’est pourquoi la formule de la proposition 4.8 exclut le mode <span class="math inline">\mathbf{k} = \mathbf{0}</span>. Avec des parois, une difficulté analogue impose d’utiliser une hélicité « relative » lorsque <span class="math inline">\mathbf{B}\cdot\mathbf{n} \neq 0</span> au bord (Berger et Field, 1984).</p>
+</div></li>
+</ol>
+<h2 id="lien-stage">Lien avec le stage</h2>
+<p>L’<a href="https://scheng2024.github.io/stage_milady_2027.pdf">offre de stage</a> demande de construire des modèles génératifs conditionnels de champs physiques dépendant de paramètres, d’y imposer des contraintes issues des EDP et des conditions aux limites « through model design, training losses, or sampling procedures », et de les valider avec des métriques portant sur « energy spectra, helicity, divergence control, and topology preservation ». Chacun de ces termes renvoie à un chapitre de ce module.</p>
+<p><strong>Divergence nulle : construire ou projeter.</strong> Les cinq mécanismes de contrainte comparés dans l’expérience E2 du dépôt, consacrée à la génération conditionnelle (par la diffusivité <span class="math inline">\eta</span>) de champs MHD 2D forcés, relèvent tous de ce module (voir le <a href="../../rapport/index.html#e2">rapport</a>). Le modèle libre et la pénalité de divergence mesurent ou pénalisent <span class="math inline">\nabla\cdot\mathbf{u}</span> et <span class="math inline">\nabla\cdot\mathbf{B}</span> calculées comme aux chapitres 1, 2 et 5. La projection finale et le flot projeté appliquent le projecteur de Leray du chapitre 6, une seule fois à la fin de la génération ou à chaque pas du flot. La paramétrisation par potentiels génère la fonction de courant <span class="math inline">\psi</span> et le potentiel magnétique <span class="math inline">a</span>, puis dérive, comme au chapitre 4. Comme les champs de E2 sont représentés directement par leurs coefficients de Fourier sur une grille périodique, dérivation et projection y sont des opérations mode par mode, exactement comme aux chapitres 5 et 6. La <a href="../../rapport/index.html#taxonomie">taxonomie des contraintes</a> du rapport range ces choix selon l’endroit où ils agissent : architecture, perte ou échantillonnage. En 3D, la généralisation directe de la fonction de courant est le potentiel vecteur, avec la question de la jauge (proposition 4.8 et exercice 15) ; les réseaux à divergence nulle par construction de Richter-Powell et al.&nbsp;(2022) en sont une autre réalisation.</p>
+<p><strong>Bilan d’énergie.</strong> La proposition 3.10 et l’exercice 8 donnent les bilans magnétique et cinétique ; leur somme fait disparaître le terme d’échange <span class="math inline">\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle</span>. En régime statistiquement stationnaire, la moyenne de la dérivée de l’énergie est nulle, si bien que la puissance injectée égale en moyenne la somme des dissipations visqueuse et ohmique. Cette égalité porte sur la <strong>loi</strong> des champs, et non sur chaque champ isolé : c’est le sens de la contrainte « en loi » du bilan d’énergie étudiée dans le second volet de l’expérience E2. Le cadre théorique est posé dans la section <a href="../../rapport/index.html#formulation">formulation</a> du rapport.</p>
+<p><strong>Métriques.</strong> Le spectre d’énergie par couches (définition 5.13) repose sur l’égalité de Parseval. L’hélicité cinétique <span class="math inline">\langle\mathbf{u}\cdot\boldsymbol\omega\rangle</span> se calcule directement ; l’hélicité magnétique demande un potentiel vecteur, et elle n’est invariante de jauge qu’en périodique ou si <span class="math inline">\mathbf{B}\cdot\mathbf{n} = 0</span> au bord (proposition 4.10). La divergence doit être mesurée avec l’opérateur discret qui a servi à l’imposer, et normalisée (remarque 6.7). La « topologie » renvoie aux lignes de champ, aux tubes de flux (section 3.3) et à leur enlacement, que mesure précisément l’hélicité (Moffatt, 1969).</p>
+<p><strong>Les trois expériences du dépôt.</strong> L’expérience E3 calcule le taux de croissance de la dynamo cinématique portée par l’écoulement ABC (exemple 1.10, exercice 5) en fonction de <span class="math inline">Rm</span>, avec un schéma pseudo-spectral 3D et la règle des 2/3 du chapitre 5 (voir le <a href="../../rapport/index.html#e3">rapport</a>). L’équation d’induction y est écrite sous forme de rotationnel, <span class="math inline">\partial_t\mathbf{B} = \nabla\times(\mathbf{u}\times\mathbf{B}) + \eta\Delta\mathbf{B}</span> : la divergence de <span class="math inline">\mathbf{B}</span> reste nulle au niveau discret, grâce à l’identité <span class="math inline">\mathbf{k}\cdot(\mathbf{k}\times\hat{\mathbf{v}}) = 0</span> de la section 5.5, ce qui est la version discrète de la proposition 2.6. L’expérience E1 porte sur le modèle à trois modes de Gissinger (2012), qui n’a pas de structure spatiale ; ce module y intervient par une seule remarque : l’équation d’induction est linéaire en <span class="math inline">\mathbf{B}</span> et la force de Laplace est quadratique, de sorte que les équations de la MHD sont invariantes par <span class="math inline">\mathbf{B} \to -\mathbf{B}</span>. C’est l’origine de la symétrie <span class="math inline">(Q, D, V) \to (-Q, -D, V)</span> du modèle, où <span class="math inline">Q</span> et <span class="math inline">D</span> sont des amplitudes de modes magnétiques et <span class="math inline">V</span> un mode de vitesse (voir le <a href="../../rapport/index.html#e1">rapport</a>).</p>
+<p><strong>Vers la thèse.</strong> Les trois expériences se déroulent en domaine périodique ou en petite dimension, alors que les dynamos expérimentales VKS et DRESDYN sont des cylindres à parois. La section 6.3 explique pourquoi la projection y devient un problème de Poisson global, avec des conditions magnétiques non locales ; c’est l’une des questions ouvertes du <a href="../../these/index.html#theorie">sujet de thèse</a>, dont le <a href="../../these/index.html#plan-experimental">plan expérimental</a> prévoit le passage progressif du périodique aux géométries bornées.</p>
+<p>La suite naturelle du parcours est le module <a href="../p2-mecanique-fluides/index.html">Mécanique des fluides et turbulence</a>, qui utilise Parseval et les spectres pour la cascade d’énergie, puis le module <a href="../p3-mhd-dynamo/index.html">Électromagnétisme, MHD et effet dynamo</a>, qui part de l’équation d’induction de la section 2.3. Les modules <a href="../p7-modeles-generatifs/index.html">Modèles génératifs : diffusion et flow matching</a> et <a href="../p8-contraintes-physiques/index.html">Modèles génératifs sous contraintes physiques</a> réutilisent directement la projection de Leray et les potentiels.</p>
+<h2 id="plus-loin">Pour aller plus loin</h2>
+<ol type="1">
+<li><strong>D. Tong, <em>Vector Calculus</em></strong> (notes de cours de première année à Cambridge, en accès libre). Les chapitres 3 et 4 reprennent les opérateurs, les coordonnées curvilignes et les théorèmes intégraux avec de nombreux exemples tirés de la physique ; la section 4.4.1 démontre le théorème de Stokes pour une surface courbe, que nous avons admis.</li>
+<li><strong>L. N. Trefethen (2000), <em>Spectral Methods in MATLAB</em>.</strong> Un livre court et très concret sur la dérivation spectrale, sa précision et le repliement, organisé autour de petits programmes faciles à traduire en NumPy. C’est la meilleure suite au chapitre 5.</li>
+<li><strong>C. Canuto, M. Y. Hussaini, A. Quarteroni et T. A. Zang (2006), <em>Spectral Methods: Fundamentals in Single Domains</em>.</strong> L’ouvrage de référence sur les méthodes spectrales, à consulter pour l’élimination du repliement et pour les bases de Chebyshev qui remplacent Fourier quand le domaine a des parois.</li>
+<li><strong>A. J. Chorin et J. E. Marsden (1993), <em>A Mathematical Introduction to Fluid Mechanics</em>.</strong> Une introduction rigoureuse et brève aux équations d’Euler et de Navier–Stokes, où la décomposition de Helmholtz–Hodge avec parois et la méthode de projection occupent une place centrale. Elle prolonge le chapitre 6.</li>
+<li><strong>K. Moffatt et E. Dormy (2019), <em>Self-Exciting Fluid Dynamos</em>.</strong> Le traité moderne de la théorie de la dynamo : décomposition poloïdale–toroïdale, hélicité, dynamos cinématiques. C’est le pont entre ce module et le module <a href="../p3-mhd-dynamo/index.html">Électromagnétisme, MHD et effet dynamo</a>.</li>
+</ol>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Backus, G. (1986). Poloidal and toroidal fields in geomagnetic field modeling. <em>Reviews of Geophysics</em>, 24(1), 75–109. <a href="https://doi.org/10.1029/RG024i001p00075">doi:10.1029/RG024i001p00075</a></li>
+<li>Berger, M. A., Field, G. B. (1984). The topological properties of magnetic helicity. <em>Journal of Fluid Mechanics</em>, 147, 133–148. <a href="https://doi.org/10.1017/S0022112084002019">doi:10.1017/S0022112084002019</a></li>
+<li>Bousquet, R., Ponty, Y., Botez, V., Plihon, N., Nore, C. (2026). Magnetic field reversals in numerical simulations of the von Kármán sodium experiment. <em>Physical Review Fluids</em>, 11(6), 063703. <a href="https://doi.org/10.1103/9tx2-1m13">doi:10.1103/9tx2-1m13</a></li>
+<li>Brackbill, J. U., Barnes, D. C. (1980). The effect of nonzero <span class="math inline">\nabla\cdot\mathbf{B}</span> on the numerical solution of the magnetohydrodynamic equations. <em>Journal of Computational Physics</em>, 35(3), 426–430. <a href="https://doi.org/10.1016/0021-9991(80)90079-0">doi:10.1016/0021-9991(80)90079-0</a></li>
+<li>Canuto, C., Hussaini, M. Y., Quarteroni, A., Zang, T. A. (2006). <em>Spectral Methods: Fundamentals in Single Domains</em>. Springer, coll. Scientific Computation. <a href="https://doi.org/10.1007/978-3-540-30726-6">doi:10.1007/978-3-540-30726-6</a></li>
+<li>Chorin, A. J. (1968). Numerical solution of the Navier-Stokes equations. <em>Mathematics of Computation</em>, 22(104), 745–762. <a href="https://doi.org/10.1090/S0025-5718-1968-0242392-2">doi:10.1090/S0025-5718-1968-0242392-2</a></li>
+<li>Chorin, A. J., Marsden, J. E. (1993). <em>A Mathematical Introduction to Fluid Mechanics</em>. Springer, coll. Texts in Applied Mathematics. <a href="https://doi.org/10.1007/978-1-4612-0883-9">doi:10.1007/978-1-4612-0883-9</a></li>
+<li>Cooley, J. W., Tukey, J. W. (1965). An algorithm for the machine calculation of complex Fourier series. <em>Mathematics of Computation</em>, 19(90), 297–301. <a href="https://doi.org/10.2307/2003354">doi:10.2307/2003354</a></li>
+<li>Dombre, T., Frisch, U., Greene, J. M., Hénon, M., Mehr, A., Soward, A. M. (1986). Chaotic streamlines in the ABC flows. <em>Journal of Fluid Mechanics</em>, 167, 353–391. <a href="https://doi.org/10.1017/S0022112086002859">doi:10.1017/S0022112086002859</a></li>
+<li>Genuist, W., Savin, É., Gatti, F., Clouteau, D. (2026). Divergence-free diffusion models for incompressible fluid flows. Préprint <a href="https://arxiv.org/abs/2601.19368">arXiv:2601.19368</a>.</li>
+<li>Girault, V., Raviart, P.-A. (1986). <em>Finite Element Methods for Navier-Stokes Equations</em>. Springer, coll. Springer Series in Computational Mathematics. <a href="https://doi.org/10.1007/978-3-642-61623-5">doi:10.1007/978-3-642-61623-5</a></li>
+<li>Gissinger, C. (2012). A new deterministic model for chaotic reversals. <em>The European Physical Journal B</em>, 85(4), 137. <a href="https://doi.org/10.1140/epjb/e2012-20799-5">doi:10.1140/epjb/e2012-20799-5</a></li>
+<li>Kreuzahler, S., Schulz, D., Homann, H., Ponty, Y., Grauer, R. (2014). Numerical study of impeller-driven von Kármán flows via a volume penalization method. <em>New Journal of Physics</em>, 16(10), 103001. <a href="https://doi.org/10.1088/1367-2630/16/10/103001">doi:10.1088/1367-2630/16/10/103001</a></li>
+<li>Kreuzahler, S., Ponty, Y., Plihon, N., Homann, H., Grauer, R. (2017). Dynamo enhancement and mode selection triggered by high magnetic permeability. <em>Physical Review Letters</em>, 119(23), 234501. <a href="https://doi.org/10.1103/PhysRevLett.119.234501">doi:10.1103/PhysRevLett.119.234501</a></li>
+<li>Leray, J. (1934). Sur le mouvement d’un liquide visqueux emplissant l’espace. <em>Acta Mathematica</em>, 63, 193–248. <a href="https://doi.org/10.1007/BF02547354">doi:10.1007/BF02547354</a></li>
+<li>Li, T., Buzzicotti, M., Bonaccorso, F., Biferale, L. (2026). Physics-constrained diffusion model for synthesis of 3D turbulent data. Préprint <a href="https://arxiv.org/abs/2603.12834">arXiv:2603.12834</a>.</li>
+<li>Lucor, D., Agrawal, A., Sergent, A. (2022). Simple computational strategies for more effective physics-informed neural networks modeling of turbulent natural convection. <em>Journal of Computational Physics</em>, 456, 111022. <a href="https://doi.org/10.1016/j.jcp.2022.111022">doi:10.1016/j.jcp.2022.111022</a></li>
+<li>Moffatt, H. K. (1969). The degree of knottedness of tangled vortex lines. <em>Journal of Fluid Mechanics</em>, 35(1), 117–129. <a href="https://doi.org/10.1017/S0022112069000991">doi:10.1017/S0022112069000991</a></li>
+<li>Moffatt, K., Dormy, E. (2019). <em>Self-Exciting Fluid Dynamos</em>. Cambridge University Press. <a href="https://doi.org/10.1017/9781107588691">doi:10.1017/9781107588691</a></li>
+<li>Nore, C., Castanon Quiroz, D., Cappanera, L., Guermond, J.-L. (2016). Direct numerical simulation of the axial dipolar dynamo in the Von Kármán Sodium experiment. <em>EPL</em>, 114(6), 65002. <a href="https://doi.org/10.1209/0295-5075/114/65002">doi:10.1209/0295-5075/114/65002</a></li>
+<li>Orszag, S. A. (1971). On the elimination of aliasing in finite-difference schemes by filtering high-wavenumber components. <em>Journal of the Atmospheric Sciences</em>, 28(6), 1074. <a href="https://doi.org/10.1175/1520-0469%281971%29028%3C1074%3AOTEOAI%3E2.0.CO%3B2">DOI</a></li>
+<li>Richter-Powell, J., Lipman, Y., Chen, R. T. Q. (2022). Neural conservation laws: a divergence-free perspective. <em>Advances in Neural Information Processing Systems 35</em> (NeurIPS 2022), 38075–38088. Préprint <a href="https://arxiv.org/abs/2210.01741">arXiv:2210.01741</a>.</li>
+<li>SFEMaNS (Spectral/Finite Elements for Maxwell and Navier–Stokes), documentation de la version 5.3. <a href="https://people.tamu.edu/~guermond/SFEMaNS/html/doc_intro.html">people.tamu.edu/~guermond/SFEMaNS</a></li>
+<li>Stage M2 « Physics-Constrained Generative AI Modelling of Parametric Dynamical Systems » (CEREA/ENPC et LISN, 2027), offre publiée par les encadrants. <a href="https://scheng2024.github.io/stage_milady_2027.pdf">PDF</a></li>
+<li>Tong, D. <em>Vector Calculus</em>. Notes de cours, University of Cambridge, Part IA Mathematical Tripos. <a href="https://davidtong.org/teaching/vector-calculus/">davidtong.org/teaching/vector-calculus</a></li>
+<li>Tóth, G. (2000). The <span class="math inline">\nabla\cdot B = 0</span> constraint in shock-capturing magnetohydrodynamics codes. <em>Journal of Computational Physics</em>, 161(2), 605–652. <a href="https://doi.org/10.1006/jcph.2000.6519">doi:10.1006/jcph.2000.6519</a></li>
+<li>Trefethen, L. N. (2000). <em>Spectral Methods in MATLAB</em>. SIAM. <a href="https://doi.org/10.1137/1.9780898719598">doi:10.1137/1.9780898719598</a></li>
+<li>Wang, S., Dou, Z., Shan, S., Liu, T.-R., Lu, L. (2026). FunDiff: diffusion models over function spaces for physics-informed generative modeling. <em>Nature Communications</em>, 17, 5749. <a href="https://doi.org/10.1038/s41467-026-72292-0">doi:10.1038/s41467-026-72292-0</a></li>
+</ul>
 
 </main>
 </div>

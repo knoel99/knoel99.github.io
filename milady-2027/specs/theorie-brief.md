@@ -55,3 +55,26 @@ $$ \nu_0 = \mathbb{E}_\mu\big[\,|\ell(F(\mathbf{x}))|\;\delta(\ell(\mathbf{x}))\
 - **E1** (Gissinger 2012, 3 modes) : Propositions 4, 5, 6, 7, 8 et 9 (seuil des renversements, crise de fusion d'attracteurs entre $\Gamma = 0{,}86$ et $0{,}87$).
 - **E2** (MHD 2D forcée, base de Fourier tronquée = POD) : Propositions 1, 2, 3 (cinq mécanismes de divergence), 5, 6, 7 (bilan d'énergie, hélicité croisée et $\langle a^2\rangle$ en loi).
 - **E3** (dynamo cinématique ABC) : validation du palier 3D (seuil $Rm_c$, divergence à la précision machine par la forme rotationnelle).
+
+## 4. Antériorité et positionnement (à respecter dans le rapport et la thèse)
+
+Base de faits vérifiée : `research/donnees-metriques.md` §3 et `research/litterature.md` (scratchpad de la session ; références reprises ci-dessous).
+
+**Déjà publié — à citer, ne pas revendiquer :**
+- Invariance ⟺ $\mathbb{E}_\mu[\mathcal{L}\varphi] = 0$ sur un cœur de fonctions test : Echeverría (1982), Ethier & Kurtz (1986), approche par le générateur de Barbour (1988, 1990), discrepances de Stein (Gorham & Mackey 2015 ; Gorham, Duncan, Vollmer, Mackey 2019 ; Liu, Lee, Jordan 2016).
+- Forme faible du Fokker–Planck stationnaire comme **perte d'un générateur d'échantillons** : Weak Generative Sampler, Cai, Cao, Huang, Zhou, *SIAM J. Sci. Comput.* 48(4):C708–C735 (2026), DOI 10.1137/24M1665271 (perte $\mathbb{E}_\varphi(\mathbb{E}_z[\mathcal{L}^*\varphi(G_\theta(z))])^2$, fonctions test gaussiennes aléatoires, dimension ≤ 100) ; antécédent min-max : WAN, Zang et al., *J. Comput. Phys.* 411:109409 (2020).
+- Apprendre via la mesure invariante : Yang et al. (SIADS 2023), Botvinick-Greenhouse, Martin, Yang (*Chaos* 2023), Jiang et al. (NeurIPS 2023), DySLIM (Schiff et al., ICML 2024), PINN-IMSM (*Physica D* 2026).
+- I-projection / maximum d'entropie sur un générateur pré-entraîné : Csiszár (1975), Jaynes (1957), Khalifa et al. (ICLR 2021), Pitera & Chodera (2012) ; inclinaison sous contraintes de moments à l'inférence dans un modèle de diffusion : Mun (arXiv:2608.30096, 2026) ; inclinaison d'un flow matching par un résidu d'EDP en forme faible (récompense par échantillon) : Tauberschmidt, Fellenz, Vollmer, Duncan (ICLR 2026, arXiv:2508.09156).
+- Divergence nulle dans les modèles génératifs : fonction de courant (FunDiff 2026), projection de Leray (Genuist et al., arXiv:2601.19368, 2026 ; PCDM, Li, Buzzicotti, Bonaccorso, Biferale, arXiv:2603.12834, 2026 ; « Project and Generate », arXiv:2603.24500, 2026), réseaux à divergence nulle (Richter-Powell et al. 2022).
+- Flots équivariants et lois invariantes (Proposition 4) : résultat classique des flots normalisants équivariants ; le présenter comme standard.
+- Propositions 2 et 3 : conséquences élémentaires des définitions ; les présenter comme « propositions élémentaires, sans doute connues sous d'autres formes ».
+
+**Ce que ce travail revendique (formulé prudemment : « à notre connaissance, après une recherche bibliographique au 6 novembre 2026 ») :**
+1. Utiliser les identités de stationnarité d'une **EDP de champs** (MHD : bilans d'énergie, d'hélicité croisée, de $\langle a^2\rangle$) comme contraintes **en loi** d'un modèle génératif **conditionnel paramétrique**, imposables à des paramètres **sans données** (réglage fin E1, perte en loi E2), et des **identités sans valeur cible** (contrairement aux moments externes de Khalifa ou Mun).
+2. Énoncer et **mesurer** l'incohérence de la contrainte par échantillon d'un bilan stationnaire (Corollaire 6) : E1 et E2.
+3. **Formule de Rice appliquée à un générateur d'instantanés** pour prédire la fréquence des renversements sans intégration temporelle (Proposition 8) : aucune antériorité trouvée.
+4. Complémentarité symétrie / stationnarité : les identités ne fixent pas les poids des composantes ergodiques ; l'équivariance est nécessaire (E1).
+5. Point technique : l'estimateur naïf (moyenne de mini-lot)² d'une perte de stationnarité vaut $(\mathbb{E}g)^2 + \mathrm{Var}(g)/n$ et pénalise la dispersion de la loi ; un estimateur sans biais (produit des moyennes de deux demi-lots) supprime ce biais (observé dans E1, version rapide).
+6. Proposition 9 (borne inférieure d'erreur près d'un saut de loi) appliquée au seuil dynamo.
+
+**Points de vigilance :** les identités sont nécessaires mais pas suffisantes (toute mesure invariante les vérifie, y compris celles portées par des orbites instables) : garder l'attache aux données ; la sélection de la mesure physique par la limite à bruit nul n'est garantie qu'en cadre Axiom A (Young 2002) ; la mesure SRB est en général singulière, d'où la forme faible.
