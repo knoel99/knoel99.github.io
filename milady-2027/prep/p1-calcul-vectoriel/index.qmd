@@ -383,3 +383,460 @@ Ce qu'il faut retenir — chapitre 1
 - L'écoulement ABC est un champ de Beltrami ($\nabla\times\mathbf{u} = \mathbf{u}$), à divergence nulle et d'hélicité moyenne $A^2 + B^2 + C^2$.
 ::::
 
+## 2. Identités vectorielles {#ch2}
+
+Trois identités et une poignée de formules de produits font toute l'algèbre de la MHD. Elles transforment les équations de Maxwell et la loi d'Ohm en équation d'induction, montrent qu'un rotationnel est automatiquement à divergence nulle (c'est le principe des contraintes « par potentiel » du stage) et réécrivent les termes non linéaires sous des formes interprétables.
+
+### 2.1 Les trois identités fondamentales
+
+:::: thm
+[Théorème 2.1 — Le rotationnel d'un gradient est nul]{.tag}
+Pour tout champ scalaire $f$ de classe $C^2$ :
+
+$$
+\nabla\times(\nabla f) = \mathbf{0}.
+$$
+
+::: proof
+En notation indicielle, $[\nabla\times(\nabla f)]_i = \varepsilon_{ijk}\,\partial_j\partial_k f$. D'après le théorème de Schwarz, $S_{jk} = \partial_j\partial_k f$ est symétrique en $(j, k)$ ; le lemme 1.13 conclut. [∎]{.qed}
+:::
+::::
+
+:::: thm
+[Théorème 2.2 — La divergence d'un rotationnel est nulle]{.tag}
+Pour tout champ vectoriel $\mathbf{u}$ de classe $C^2$ :
+
+$$
+\nabla\cdot(\nabla\times\mathbf{u}) = 0.
+$$
+
+::: proof
+On a $\nabla\cdot(\nabla\times\mathbf{u}) = \partial_i(\varepsilon_{ijk}\partial_j u_k) = \varepsilon_{ijk}\,\partial_i\partial_j u_k$. Pour chaque $k$ fixé, $\partial_i\partial_j u_k$ est symétrique en $(i, j)$, alors que $\varepsilon_{ijk}$ est antisymétrique en $(i, j)$ : la somme est nulle par le même argument que le lemme 1.13. [∎]{.qed}
+:::
+::::
+
+:::: thm
+[Théorème 2.3 — Rotationnel du rotationnel]{.tag}
+Pour tout champ vectoriel $\mathbf{u}$ de classe $C^2$ :
+
+$$
+\nabla\times(\nabla\times\mathbf{u}) = \nabla(\nabla\cdot\mathbf{u}) - \Delta\mathbf{u}. \tag{2.1}
+$$
+
+::: proof
+On utilise l'invariance de $\varepsilon$ par permutation circulaire, $\varepsilon_{ijk} = \varepsilon_{kij}$, puis le lemme 1.12 :
+
+$$
+[\nabla\times(\nabla\times\mathbf{u})]_i = \varepsilon_{ijk}\,\partial_j\big(\varepsilon_{klm}\partial_l u_m\big) = \varepsilon_{kij}\varepsilon_{klm}\,\partial_j\partial_l u_m = (\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl})\,\partial_j\partial_l u_m.
+$$
+
+Le premier terme donne $\partial_j\partial_i u_j = \partial_i(\partial_j u_j)$, la composante $i$ de $\nabla(\nabla\cdot\mathbf{u})$ ; le second donne $-\partial_j\partial_j u_i$, la composante $i$ de $-\Delta\mathbf{u}$. [∎]{.qed}
+:::
+::::
+
+::: note
+[Remarque 2.4 — Le laplacien vectoriel hors des coordonnées cartésiennes]{.tag}
+En coordonnées curvilignes, on **définit** le laplacien vectoriel par $\Delta\mathbf{u} = \nabla(\nabla\cdot\mathbf{u}) - \nabla\times(\nabla\times\mathbf{u})$. On peut vérifier que cette définition redonne la formule (1.5) en cylindrique, ce qui explique les termes supplémentaires de cette formule.
+:::
+
+### 2.2 Formules de produits
+
+On note $(\mathbf{u}\cdot\nabla)\mathbf{v}$ le vecteur de composantes $u_j\partial_j v_i$ : c'est la dérivée de $\mathbf{v}$ dans la direction de $\mathbf{u}$, multipliée par $|\mathbf{u}|$. Le terme d'advection de Navier–Stokes est $(\mathbf{u}\cdot\nabla)\mathbf{u}$.
+
+:::: prop
+[Proposition 2.5 — Formules de produits]{.tag}
+Pour des champs scalaires $f, g$ et vectoriels $\mathbf{u}, \mathbf{v}$ de classe $C^1$ :
+
+(a) $\nabla(fg) = f\,\nabla g + g\,\nabla f$ ;
+
+(b) $\nabla\cdot(f\mathbf{u}) = f\,\nabla\cdot\mathbf{u} + \mathbf{u}\cdot\nabla f$ ;
+
+(c) $\nabla\times(f\mathbf{u}) = f\,\nabla\times\mathbf{u} + \nabla f\times\mathbf{u}$ ;
+
+(d) $\nabla\cdot(\mathbf{u}\times\mathbf{v}) = \mathbf{v}\cdot(\nabla\times\mathbf{u}) - \mathbf{u}\cdot(\nabla\times\mathbf{v})$ ;
+
+(e) $\nabla\times(\mathbf{u}\times\mathbf{v}) = \mathbf{u}\,(\nabla\cdot\mathbf{v}) - \mathbf{v}\,(\nabla\cdot\mathbf{u}) + (\mathbf{v}\cdot\nabla)\mathbf{u} - (\mathbf{u}\cdot\nabla)\mathbf{v}$ ;
+
+(f) $\nabla(\mathbf{u}\cdot\mathbf{v}) = (\mathbf{u}\cdot\nabla)\mathbf{v} + (\mathbf{v}\cdot\nabla)\mathbf{u} + \mathbf{u}\times(\nabla\times\mathbf{v}) + \mathbf{v}\times(\nabla\times\mathbf{u})$.
+
+::: proof
+Toutes reposent sur la règle de Leibniz $\partial_i(ab) = a\,\partial_i b + b\,\partial_i a$. Nous démontrons (b), (d) et (e) ; (a), (c) et (f) font l'objet de l'exercice 4.
+
+(b) $\partial_i(f u_i) = f\,\partial_i u_i + u_i\,\partial_i f$.
+
+(d) Avec $\varepsilon_{ijk} = \varepsilon_{kij}$ et $\varepsilon_{ijk} = -\varepsilon_{jik}$ :
+
+$$
+\partial_i(\varepsilon_{ijk}u_j v_k) = v_k\,\varepsilon_{kij}\partial_i u_j - u_j\,\varepsilon_{jik}\partial_i v_k = \mathbf{v}\cdot(\nabla\times\mathbf{u}) - \mathbf{u}\cdot(\nabla\times\mathbf{v}).
+$$
+
+(e) Avec le lemme 1.12 :
+
+$$
+\varepsilon_{ijk}\partial_j(\varepsilon_{klm}u_l v_m) = (\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl})\,\partial_j(u_l v_m) = \partial_j(u_i v_j) - \partial_j(u_j v_i),
+$$
+
+et le développement $v_j\partial_j u_i + u_i\partial_j v_j - v_i\partial_j u_j - u_j\partial_j v_i$ est la formule annoncée. [∎]{.qed}
+:::
+::::
+
+::: key
+[À retenir — Forme de Lamb du terme d'advection]{.tag}
+En prenant $\mathbf{v} = \mathbf{u}$ dans (f), on obtient $\nabla(|\mathbf{u}|^2) = 2(\mathbf{u}\cdot\nabla)\mathbf{u} + 2\,\mathbf{u}\times\boldsymbol\omega$, soit
+
+$$
+(\mathbf{u}\cdot\nabla)\mathbf{u} = \nabla\Big(\frac{|\mathbf{u}|^2}{2}\Big) - \mathbf{u}\times\boldsymbol\omega. \tag{2.2}
+$$
+
+De même, avec $\mathbf{u} = \mathbf{v} = \mathbf{B}$ et $\mathbf{j} = \nabla\times\mathbf{B}$, la force de Laplace (en unités d'Alfvén) se décompose en tension magnétique et gradient de pression magnétique :
+
+$$
+\mathbf{j}\times\mathbf{B} = (\mathbf{B}\cdot\nabla)\mathbf{B} - \nabla\Big(\frac{|\mathbf{B}|^2}{2}\Big). \tag{2.3}
+$$
+:::
+
+### 2.3 Application : l'équation d'induction
+
+Dans un conducteur de conductivité $\sigma$ en mouvement à la vitesse $\mathbf{u}$, la loi d'Ohm s'écrit $\mathbf{j} = \sigma(\mathbf{E} + \mathbf{u}\times\mathbf{B})$. L'équation de Maxwell–Faraday s'écrit $\partial_t\mathbf{B} = -\nabla\times\mathbf{E}$ et, dans l'approximation de la MHD où l'on néglige le courant de déplacement, l'équation de Maxwell–Ampère se réduit à $\nabla\times\mathbf{B} = \mu_0\mathbf{j}$. On élimine $\mathbf{E} = \mathbf{j}/\sigma - \mathbf{u}\times\mathbf{B}$ et $\mathbf{j}$, avec $\eta = 1/(\mu_0\sigma)$ supposé constant :
+
+$$
+\partial_t\mathbf{B} = \nabla\times(\mathbf{u}\times\mathbf{B}) - \eta\,\nabla\times(\nabla\times\mathbf{B}).
+$$
+
+:::: prop
+[Proposition 2.6 — Équation d'induction et conservation de $\nabla\cdot\mathbf{B} = 0$]{.tag}
+Si $\nabla\cdot\mathbf{B} = 0$ et $\nabla\cdot\mathbf{u} = 0$, l'équation précédente s'écrit
+
+$$
+\partial_t\mathbf{B} = (\mathbf{B}\cdot\nabla)\mathbf{u} - (\mathbf{u}\cdot\nabla)\mathbf{B} + \eta\,\Delta\mathbf{B}. \tag{2.4}
+$$
+
+De plus, pour toute solution régulière, $\partial_t(\nabla\cdot\mathbf{B}) = 0$ : si le champ initial est à divergence nulle, il le reste.
+
+::: proof
+Le théorème 2.3 avec $\nabla\cdot\mathbf{B} = 0$ donne $\nabla\times(\nabla\times\mathbf{B}) = -\Delta\mathbf{B}$, et la formule de produit (e) avec $\nabla\cdot\mathbf{u} = \nabla\cdot\mathbf{B} = 0$ donne $\nabla\times(\mathbf{u}\times\mathbf{B}) = (\mathbf{B}\cdot\nabla)\mathbf{u} - (\mathbf{u}\cdot\nabla)\mathbf{B}$. Pour la seconde affirmation, on prend la divergence de l'équation non simplifiée : le second membre est un rotationnel, sa divergence est nulle par le théorème 2.2. [∎]{.qed}
+:::
+::::
+
+Les trois termes de (2.4) ont un sens physique clair : $(\mathbf{B}\cdot\nabla)\mathbf{u}$ **étire** les lignes de champ (c'est le moteur de l'effet dynamo), $-(\mathbf{u}\cdot\nabla)\mathbf{B}$ les **transporte**, et $\eta\Delta\mathbf{B}$ les **diffuse**. Le rapport des deux premiers au troisième est mesuré par le nombre de Reynolds magnétique $Rm = UL/\eta$.
+
+::: note
+[Remarque 2.7 — Ce que la conservation ne garantit pas]{.tag}
+La proposition 2.6 est une propriété de l'équation **continue**. Un schéma numérique, et a fortiori un modèle génératif qui produit $\mathbf{B}$ directement, ne la respecte pas automatiquement. Brackbill et Barnes (1980) ont montré qu'une divergence numérique non nulle introduit une force parasite parallèle à $\mathbf{B}$ qui fausse la dynamique ; Tóth (2000) compare plusieurs méthodes de contrôle de $\nabla\cdot\mathbf{B}$ dans les codes MHD. Les chapitres 4 et 6 présentent les deux grandes familles de remèdes : paramétrer par un potentiel, ou projeter.
+:::
+
+::: ex
+[Exemple 2.8 — Vérification sur l'écoulement ABC]{.tag}
+Pour l'écoulement ABC, $\nabla\times(\nabla\times\mathbf{u}) = \nabla\times\mathbf{u} = \mathbf{u}$. D'autre part $\nabla\cdot\mathbf{u} = 0$ et chaque composante est une combinaison de fonctions comme $\sin z$ ou $\cos y$ dont le laplacien vaut l'opposé : $\Delta\mathbf{u} = -\mathbf{u}$. Le membre de droite de (2.1) vaut donc $0 - (-\mathbf{u}) = \mathbf{u}$, en accord avec le membre de gauche.
+:::
+
+Le code suivant vérifie les identités et deux formules de produits sur des champs « quelconques » : de petits réseaux de neurones aléatoires $\mathbb{R}^3 \to \mathbb{R}^3$. Les opérateurs sont écrits comme des fonctions qui prennent un champ et renvoient un champ, ce qui permet de les composer comme en mathématiques.
+
+```python
+import torch
+torch.set_num_threads(1)
+torch.manual_seed(1)
+dt = torch.float64
+
+# Opérateurs par différentiation automatique : chacun prend un champ (fonction de x)
+# et renvoie un nouveau champ, ce qui permet de les composer.
+def jac(F, x):
+    u = F(x)
+    return torch.stack([torch.autograd.grad(u[:, i].sum(), x, create_graph=True)[0]
+                        for i in range(u.shape[1])], dim=1)
+
+def grad(f):
+    return lambda x: torch.autograd.grad(f(x).sum(), x, create_graph=True)[0]
+
+def div(F):
+    return lambda x: jac(F, x).diagonal(dim1=1, dim2=2).sum(-1)
+
+def rot(F):
+    def r(x):
+        J = jac(F, x)
+        return torch.stack([J[:, 2, 1] - J[:, 1, 2],
+                            J[:, 0, 2] - J[:, 2, 0],
+                            J[:, 1, 0] - J[:, 0, 1]], dim=1)
+    return r
+
+def lap_vec(F):  # laplacien composante par composante
+    return lambda x: torch.stack([div(grad(lambda y, i=i: F(y)[:, i]))(x)
+                                  for i in range(3)], dim=1)
+
+# Champs « quelconques » : petits réseaux de neurones aléatoires (lisses, tanh)
+def reseau(d_out):
+    W1, b1 = torch.randn(3, 32, dtype=dt), torch.randn(32, dtype=dt)
+    W2 = torch.randn(32, d_out, dtype=dt) / 4
+    return lambda x: torch.tanh(x @ W1 + b1) @ W2
+
+u, v, f = reseau(3), reseau(3), reseau(1)
+f_s = lambda x: f(x)[:, 0]
+x = torch.randn(500, 3, dtype=dt).requires_grad_(True)
+
+def ecart(a, b):  # écart max (et taille des termes si b est non nul)
+    e = f"{(a - b).abs().max().item():.1e}"
+    return e if b.abs().max() == 0 else e + f" (termes ~ {b.abs().max().item():.1e})"
+
+print("rot grad f                     :", ecart(rot(grad(f_s))(x), 0 * x),
+      "; max|grad f| =", f"{grad(f_s)(x).abs().max().item():.1e}")
+print("div rot u                      :", ecart(div(rot(u))(x), 0 * x[:, 0]),
+      "; max|rot u| =", f"{rot(u)(x).abs().max().item():.1e}")
+lhs = rot(rot(u))(x)
+rhs = grad(div(u))(x) - lap_vec(u)(x)
+print("rot rot u = grad div u - lap u :", ecart(lhs, rhs))
+# Formules de produits
+uv = lambda x: torch.linalg.cross(u(x), v(x), dim=1)
+lhs = div(uv)(x)
+rhs = (v(x) * rot(u)(x)).sum(1) - (u(x) * rot(v)(x)).sum(1)
+print("div(u x v) = v.rot u - u.rot v :", ecart(lhs, rhs))
+fu = lambda x: f(x) * u(x)
+lhs = rot(fu)(x)
+rhs = f(x) * rot(u)(x) + torch.linalg.cross(grad(f_s)(x), u(x), dim=1)
+print("rot(f u) = f rot u + grad f x u:", ecart(lhs, rhs))
+# sortie :
+# rot grad f                     : 4.4e-16 ; max|grad f| = 1.8e+00
+# div rot u                      : 2.4e-15 ; max|rot u| = 2.5e+00
+# rot rot u = grad div u - lap u : 2.7e-15 (termes ~ 7.2e+00)
+# div(u x v) = v.rot u - u.rot v : 3.6e-15 (termes ~ 6.6e+00)
+# rot(f u) = f rot u + grad f x u: 2.3e-15 (termes ~ 3.9e+00)
+```
+
+Tous les écarts sont au niveau de l'arrondi en double précision (environ $10^{-16}$ fois la taille des termes, multipliée par le nombre d'opérations). Ce type de vérification est celui qu'on utilise pour calculer une pénalité de divergence sur la sortie d'un réseau. Lucor, Agrawal et Sergent (2022) ont d'ailleurs observé, pour des réseaux informés par la physique appliqués à la convection turbulente, qu'il est utile de **relâcher** la contrainte d'incompressibilité pour faciliter l'optimisation : imposer exactement $\nabla\cdot\mathbf{u} = 0$ n'est pas toujours la meilleure stratégie d'apprentissage.
+
+:::: recap
+::: recap-title
+Ce qu'il faut retenir — chapitre 2
+:::
+- $\nabla\times\nabla f = \mathbf{0}$ et $\nabla\cdot(\nabla\times\mathbf{u}) = 0$ découlent du théorème de Schwarz et de l'antisymétrie de $\varepsilon_{ijk}$.
+- $\nabla\times(\nabla\times\mathbf{u}) = \nabla(\nabla\cdot\mathbf{u}) - \Delta\mathbf{u}$ découle de la contraction $\varepsilon_{kij}\varepsilon_{klm}$.
+- Les formules de produits se démontrent toutes par la règle de Leibniz en notation indicielle.
+- L'équation d'induction $\partial_t\mathbf{B} = \nabla\times(\mathbf{u}\times\mathbf{B}) + \eta\Delta\mathbf{B}$ conserve $\nabla\cdot\mathbf{B} = 0$ au niveau continu, mais pas forcément après discrétisation ou génération.
+::::
+
+## 3. Flux, circulation et théorèmes intégraux {#ch3}
+
+Les lois de conservation se lisent mieux sous forme intégrale : ce qui sort d'un volume par sa surface est ce qui disparaît à l'intérieur. La contrainte locale $\nabla\cdot\mathbf{B} = 0$ n'est autre que la version infinitésimale de l'énoncé « le flux magnétique à travers toute surface fermée est nul », et les bilans d'énergie du stage s'obtiennent par les mêmes théorèmes.
+
+### 3.1 Circulation et flux
+
+::: def
+[Définition 3.1 — Circulation]{.tag}
+Soit $\mathcal{C}$ une courbe orientée paramétrée par $\boldsymbol\gamma : [a, b] \to \mathbb{R}^3$. La circulation de $\mathbf{u}$ le long de $\mathcal{C}$ est
+
+$$
+\int_{\mathcal{C}}\mathbf{u}\cdot\mathrm{d}\boldsymbol\ell = \int_a^b \mathbf{u}(\boldsymbol\gamma(s))\cdot\boldsymbol\gamma'(s)\,\mathrm{d}s.
+$$
+
+Elle ne dépend pas du paramétrage, pourvu que celui-ci respecte l'orientation. On note $\oint$ la circulation le long d'une courbe fermée.
+:::
+
+::: def
+[Définition 3.2 — Flux]{.tag}
+Soit $S$ une surface orientée paramétrée par $(s, t) \mapsto \mathbf{X}(s, t)$. L'élément de surface orienté est $\mathbf{n}\,\mathrm{d}S = (\partial_s\mathbf{X}\times\partial_t\mathbf{X})\,\mathrm{d}s\,\mathrm{d}t$ et le flux de $\mathbf{u}$ à travers $S$ est
+
+$$
+\Phi = \iint_S \mathbf{u}\cdot\mathbf{n}\,\mathrm{d}S.
+$$
+
+Pour une surface fermée, on choisit la normale sortante.
+:::
+
+:::: prop
+[Proposition 3.3 — Circulation d'un gradient]{.tag}
+Pour $f$ de classe $C^1$ et une courbe allant de $\boldsymbol\gamma(a)$ à $\boldsymbol\gamma(b)$ :
+
+$$
+\int_{\mathcal{C}}\nabla f\cdot\mathrm{d}\boldsymbol\ell = f(\boldsymbol\gamma(b)) - f(\boldsymbol\gamma(a)).
+$$
+
+En particulier, la circulation d'un gradient le long de toute courbe fermée est nulle.
+
+::: proof
+Par dérivation des fonctions composées, $\frac{\mathrm{d}}{\mathrm{d}s}f(\boldsymbol\gamma(s)) = \nabla f(\boldsymbol\gamma(s))\cdot\boldsymbol\gamma'(s)$ ; on intègre de $a$ à $b$. [∎]{.qed}
+:::
+::::
+
+### 3.2 Les trois théorèmes intégraux
+
+:::: thm
+[Théorème 3.4 — Green–Riemann (dans le plan)]{.tag}
+Soit $D \subset \mathbb{R}^2$ un domaine borné dont le bord $\partial D$ est une courbe fermée régulière par morceaux, parcourue dans le sens trigonométrique. Pour $P, Q$ de classe $C^1$ :
+
+$$
+\oint_{\partial D}(P\,\mathrm{d}x + Q\,\mathrm{d}y) = \iint_D(\partial_x Q - \partial_y P)\,\mathrm{d}x\,\mathrm{d}y.
+$$
+
+::: proof
+Faisons la preuve pour un rectangle $D = [a, b]\times[c, d]$. Par le théorème fondamental de l'analyse,
+
+$$
+\iint_D\partial_x Q\,\mathrm{d}x\,\mathrm{d}y = \int_c^d\big[Q(b, y) - Q(a, y)\big]\,\mathrm{d}y,
+$$
+
+qui est exactement la contribution de $Q\,\mathrm{d}y$ sur le côté droit (parcouru vers le haut) et sur le côté gauche (parcouru vers le bas) ; les côtés horizontaux n'y contribuent pas car $\mathrm{d}y = 0$. De même, $-\iint_D\partial_y P = \int_a^b[P(x, c) - P(x, d)]\,\mathrm{d}x$ est la contribution de $P\,\mathrm{d}x$ sur le bas (vers la droite) et le haut (vers la gauche). Pour un domaine général, on l'approche par une réunion de petits rectangles : chaque arête intérieure est parcourue deux fois en sens opposés et sa contribution s'annule, il ne reste que le bord extérieur. Rendre ce passage à la limite rigoureux demande des hypothèses de régularité sur $\partial D$, que nous admettons. [∎]{.qed}
+:::
+::::
+
+:::: thm
+[Théorème 3.5 — Green–Ostrogradski (théorème de la divergence)]{.tag}
+Soit $\Omega \subset \mathbb{R}^3$ un domaine borné de bord $\partial\Omega$ régulier par morceaux, de normale sortante $\mathbf{n}$. Pour $\mathbf{u}$ de classe $C^1$ jusqu'au bord :
+
+$$
+\iiint_\Omega\nabla\cdot\mathbf{u}\,\mathrm{d}V = \oint_{\partial\Omega}\mathbf{u}\cdot\mathbf{n}\,\mathrm{d}S. \tag{3.1}
+$$
+
+::: proof
+Pour un pavé $[a_1, b_1]\times[a_2, b_2]\times[a_3, b_3]$, on traite chaque terme de la divergence séparément :
+
+$$
+\iiint\partial_x u_x\,\mathrm{d}V = \iint\big[u_x(b_1, y, z) - u_x(a_1, y, z)\big]\,\mathrm{d}y\,\mathrm{d}z,
+$$
+
+ce qui est le flux de $\mathbf{u}$ à travers les faces $x = b_1$ (normale $\mathbf{e}_x$) et $x = a_1$ (normale $-\mathbf{e}_x$). On procède de même en $y$ et en $z$ et on additionne. Pour un domaine général, on découpe en petits pavés : le flux à travers une face intérieure commune à deux pavés est compté deux fois avec des normales opposées et s'annule. Comme pour le théorème 3.4, la justification complète du passage à la limite est admise. [∎]{.qed}
+:::
+::::
+
+:::: thm
+[Théorème 3.6 — Stokes]{.tag}
+Soit $S$ une surface orientée dont le bord $\partial S$ est une courbe fermée, orientée selon la règle de la main droite par rapport à $\mathbf{n}$. Pour $\mathbf{u}$ de classe $C^1$ :
+
+$$
+\oint_{\partial S}\mathbf{u}\cdot\mathrm{d}\boldsymbol\ell = \iint_S(\nabla\times\mathbf{u})\cdot\mathbf{n}\,\mathrm{d}S. \tag{3.2}
+$$
+
+::: proof
+Si $S$ est un domaine plan du plan $z = 0$, on a $\mathbf{n} = \mathbf{e}_z$ et $(\nabla\times\mathbf{u})\cdot\mathbf{e}_z = \partial_x u_y - \partial_y u_x$ : c'est le théorème 3.4 avec $P = u_x$ et $Q = u_y$. Pour une surface courbe paramétrée par $(s, t)$, on ramène les deux membres à des intégrales dans le plan $(s, t)$ et on applique de nouveau Green–Riemann ; ce calcul est admis ici (voir le chapitre 4 des notes de Tong). [∎]{.qed}
+:::
+::::
+
+Les deux théorèmes ont la même structure : l'intégrale d'une dérivée sur un domaine égale l'intégrale de la fonction sur le bord du domaine. On en tire les formules d'intégration par parties en dimension quelconque.
+
+:::: prop
+[Corollaire 3.7 — Intégrations par parties]{.tag}
+Pour des champs réguliers sur $\Omega$ :
+
+$$
+\int_\Omega f\,\nabla\cdot\mathbf{u}\,\mathrm{d}V = \oint_{\partial\Omega}f\,\mathbf{u}\cdot\mathbf{n}\,\mathrm{d}S - \int_\Omega\mathbf{u}\cdot\nabla f\,\mathrm{d}V, \tag{3.3}
+$$
+
+$$
+\int_\Omega\mathbf{v}\cdot(\nabla\times\mathbf{u})\,\mathrm{d}V = \int_\Omega\mathbf{u}\cdot(\nabla\times\mathbf{v})\,\mathrm{d}V + \oint_{\partial\Omega}(\mathbf{u}\times\mathbf{v})\cdot\mathbf{n}\,\mathrm{d}S. \tag{3.4}
+$$
+
+Dans une **boîte périodique**, les termes de bord s'annulent, car les contributions de deux faces opposées se compensent (même valeur du champ, normales opposées).
+
+::: proof
+On applique (3.1) à $f\mathbf{u}$ avec la formule de produit (b), puis à $\mathbf{u}\times\mathbf{v}$ avec la formule (d). [∎]{.qed}
+:::
+::::
+
+### 3.3 Sens de $\nabla\cdot\mathbf{B} = 0$
+
+:::: prop
+[Proposition 3.8 — Pas de monopôle magnétique]{.tag}
+Pour un champ $\mathbf{B}$ de classe $C^1$ sur un ouvert $U$, les deux énoncés suivants sont équivalents :
+
+(i) $\nabla\cdot\mathbf{B} = 0$ en tout point de $U$ ;
+
+(ii) le flux de $\mathbf{B}$ à travers toute surface fermée bordant un domaine contenu dans $U$ est nul.
+
+::: proof
+(i) ⇒ (ii) est le théorème 3.5. Pour (ii) ⇒ (i), supposons $\nabla\cdot\mathbf{B}(\mathbf{x}_0) > 0$ en un point. Par continuité, la divergence reste strictement positive sur une petite boule centrée en $\mathbf{x}_0$, et le théorème 3.5 donne un flux strictement positif à travers la sphère qui la borde, ce qui contredit (ii). Le cas négatif est identique. [∎]{.qed}
+:::
+::::
+
+Trois conséquences physiques en découlent. D'abord, le flux magnétique à travers une surface ne dépend que de la courbe qui la borde : deux surfaces de même bord forment ensemble une surface fermée, de flux total nul. Ensuite, dans un **tube de flux** (réunion de lignes de champ s'appuyant sur une petite courbe fermée), le flux est le même à travers toutes les sections. Enfin, une ligne de champ ne peut ni commencer ni finir en un point : il n'y a ni source ni puits de champ magnétique. Le champ électrique, lui, vérifie la loi de Gauss $\nabla\cdot\mathbf{E} = \rho/\varepsilon_0$ ; ses sources sont les charges. L'équation $\nabla\cdot\mathbf{B} = 0$ exprime qu'aucune « charge magnétique » n'a jamais été observée.
+
+::: ex
+[Exemple 3.9 — Le fil rectiligne et le théorème d'Ampère]{.tag}
+Pour $\mathbf{B} = \frac{\mu_0 I}{2\pi r}\mathbf{e}_\theta$, la formule (1.2) donne $\nabla\cdot\mathbf{B} = 0$ et la formule (1.3) donne $\nabla\times\mathbf{B} = \frac{1}{r}\partial_r\big(\frac{\mu_0 I}{2\pi}\big)\mathbf{e}_z = \mathbf{0}$ pour $r > 0$. Pourtant, la circulation sur un cercle de rayon $R$ centré sur le fil vaut
+
+$$
+\oint\mathbf{B}\cdot\mathrm{d}\boldsymbol\ell = \int_0^{2\pi}\frac{\mu_0 I}{2\pi R}\,R\,\mathrm{d}\theta = \mu_0 I.
+$$
+
+Il n'y a pas de contradiction avec le théorème de Stokes : tout disque bordé par ce cercle est traversé par le fil, où $\nabla\times\mathbf{B} = \mu_0\mathbf{j}$ est concentré. Le théorème de Stokes appliqué à $\nabla\times\mathbf{B} = \mu_0\mathbf{j}$ est précisément le théorème d'Ampère : la circulation de $\mathbf{B}$ égale $\mu_0$ fois le courant enlacé.
+:::
+
+### 3.4 Bilan d'énergie magnétique
+
+Le bilan d'énergie est l'une des contraintes physiques visées par l'offre de stage. Voici comment il se déduit des outils de ce chapitre.
+
+:::: prop
+[Proposition 3.10 — Bilan d'énergie magnétique dans une boîte périodique]{.tag}
+Soit $\mathbf{B}$ une solution périodique et régulière de l'équation d'induction $\partial_t\mathbf{B} = \nabla\times(\mathbf{u}\times\mathbf{B}) + \eta\Delta\mathbf{B}$ avec $\nabla\cdot\mathbf{B} = 0$, et $\mathbf{j} = \nabla\times\mathbf{B}$. Alors
+
+$$
+\frac{\mathrm{d}}{\mathrm{d}t}\Big\langle\frac{|\mathbf{B}|^2}{2}\Big\rangle = -\big\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\big\rangle - \eta\,\big\langle|\mathbf{j}|^2\big\rangle. \tag{3.5}
+$$
+
+::: proof
+On multiplie l'équation par $\mathbf{B}$ et on moyenne : $\frac{\mathrm{d}}{\mathrm{d}t}\langle|\mathbf{B}|^2/2\rangle = \langle\mathbf{B}\cdot\nabla\times(\mathbf{u}\times\mathbf{B})\rangle + \eta\langle\mathbf{B}\cdot\Delta\mathbf{B}\rangle$. Pour le second terme, le théorème 2.3 avec $\nabla\cdot\mathbf{B} = 0$ donne $\Delta\mathbf{B} = -\nabla\times\mathbf{j}$, puis (3.4) sans terme de bord donne $\langle\mathbf{B}\cdot\nabla\times\mathbf{j}\rangle = \langle\mathbf{j}\cdot\nabla\times\mathbf{B}\rangle = \langle|\mathbf{j}|^2\rangle$. Pour le premier terme, (3.4) donne $\langle\mathbf{B}\cdot\nabla\times(\mathbf{u}\times\mathbf{B})\rangle = \langle(\mathbf{u}\times\mathbf{B})\cdot\mathbf{j}\rangle$, et le produit mixte vérifie $(\mathbf{u}\times\mathbf{B})\cdot\mathbf{j} = \mathbf{u}\cdot(\mathbf{B}\times\mathbf{j}) = -\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})$. [∎]{.qed}
+:::
+::::
+
+Le terme $-\eta\langle|\mathbf{j}|^2\rangle$ est la dissipation par effet Joule, toujours négative. Le terme $-\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle$ est l'opposé du travail de la force de Laplace sur le fluide : quand le fluide travaille **contre** cette force, il cède de l'énergie cinétique au champ magnétique. Une dynamo est un écoulement pour lequel ce transfert l'emporte durablement sur la dissipation.
+
+Le code suivant vérifie numériquement le théorème de la divergence et celui de Stokes par quadrature (Gauss–Legendre en $\cos\theta$, trapèzes en $\varphi$, une méthode très précise pour les fonctions régulières sur la sphère).
+
+```python
+import numpy as np
+
+# Quadrature sur une sphère : Gauss-Legendre en cos(theta), trapèzes en phi
+def flux_sphere(champ, centre, R, n=64):
+    mu, w_mu = np.polynomial.legendre.leggauss(n)          # mu = cos(theta)
+    phi = np.linspace(0, 2 * np.pi, 2 * n, endpoint=False)
+    MU, PHI = np.meshgrid(mu, phi, indexing="ij")
+    s = np.sqrt(1 - MU**2)
+    nrm = np.stack([s * np.cos(PHI), s * np.sin(PHI), MU])  # normale sortante
+    X = np.asarray(centre)[:, None, None] + R * nrm
+    F = champ(X)
+    dS = R**2 * w_mu[:, None] * (2 * np.pi / (2 * n))       # R^2 dmu dphi
+    return np.sum((F * nrm).sum(0) * dS)
+
+def coulomb(X):                     # E = x/|x|^3 : "monopôle" en 0
+    return X / np.linalg.norm(X, axis=0)**3
+
+def dipole(X, m=np.array([0.3, -0.2, 1.0])):
+    r = np.linalg.norm(X, axis=0)
+    n = X / r
+    return (3 * np.einsum("i,i...->...", m, n) * n - m[:, None, None]) / r**3
+
+for nom, ch in [("monopôle", coulomb), ("dipôle  ", dipole)]:
+    print(nom, ": flux(sphère autour de 0) =", f"{flux_sphere(ch, [0, 0, 0], 1.0):+.12g}",
+          "; flux(sphère loin de 0) =", f"{flux_sphere(ch, [3, 0, 0], 1.0):+.1e}")
+print("4 pi =", f"{4 * np.pi:.12g}")
+
+# Stokes : u = (-y^3, x^3, z), rot u = (0, 0, 3x^2 + 3y^2), bord = cercle unité
+t = np.linspace(0, 2 * np.pi, 2000, endpoint=False)
+x, y = np.cos(t), np.sin(t)
+circulation = np.sum(-y**3 * (-np.sin(t)) + x**3 * np.cos(t)) * (2 * np.pi / t.size)
+# flux de rot u à travers la demi-sphère supérieure (même bord)
+mu, w_mu = np.polynomial.legendre.leggauss(64)
+mu, w_mu = (mu + 1) / 2, w_mu / 2                          # mu dans [0, 1]
+phi = np.linspace(0, 2 * np.pi, 128, endpoint=False)
+MU, PHI = np.meshgrid(mu, phi, indexing="ij")
+s = np.sqrt(1 - MU**2)
+X, Y, Z = s * np.cos(PHI), s * np.sin(PHI), MU
+flux_rot = np.sum(3 * (X**2 + Y**2) * Z * w_mu[:, None]) * (2 * np.pi / 128)
+print("circulation =", f"{circulation:.12f}", "; flux de rot u =", f"{flux_rot:.12f}",
+      "; 3 pi/2 =", f"{1.5 * np.pi:.12f}")
+# sortie :
+# monopôle : flux(sphère autour de 0) = +12.5663706144 ; flux(sphère loin de 0) = -5.8e-16
+# dipôle   : flux(sphère autour de 0) = +0 ; flux(sphère loin de 0) = -1.4e-16
+# 4 pi = 12.5663706144
+# circulation = 4.712388980385 ; flux de rot u = 4.712388980385 ; 3 pi/2 = 4.712388980385
+```
+
+Le champ coulombien $\mathbf{x}/|\mathbf{x}|^3$ a une divergence nulle partout sauf en l'origine, où il n'est pas défini : son flux vaut $4\pi$ à travers toute sphère qui entoure l'origine et $0$ sinon (exercice 6). Le champ d'un dipôle, lui, a un flux nul dans les deux cas : c'est le comportement d'un champ magnétique. Pour le théorème de Stokes, la circulation sur le cercle unité et le flux du rotationnel à travers la demi-sphère qui s'appuie sur ce cercle coïncident à $10^{-12}$ près avec la valeur exacte $3\pi/2$.
+
+:::: recap
+::: recap-title
+Ce qu'il faut retenir — chapitre 3
+:::
+- Green–Ostrogradski : $\int_\Omega\nabla\cdot\mathbf{u} = \oint_{\partial\Omega}\mathbf{u}\cdot\mathbf{n}$ ; Stokes : $\oint_{\partial S}\mathbf{u}\cdot\mathrm{d}\boldsymbol\ell = \iint_S(\nabla\times\mathbf{u})\cdot\mathbf{n}$.
+- On en déduit les intégrations par parties ; dans une boîte périodique, les termes de bord disparaissent.
+- $\nabla\cdot\mathbf{B} = 0$ équivaut à un flux nul à travers toute surface fermée : pas de monopôle, des lignes de champ sans extrémités, un flux conservé le long des tubes de flux.
+- Bilan d'énergie magnétique : $\frac{\mathrm{d}}{\mathrm{d}t}\langle|\mathbf{B}|^2/2\rangle = -\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle - \eta\langle|\mathbf{j}|^2\rangle$.
+::::
+
