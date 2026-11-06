@@ -127,10 +127,10 @@ def orient(segs, f):
             sg['pts'] = p[::-1].tolist()
     return segs
 
-psi = field(11, kmax=3, slope=1.6)
-a = field(23, kmax=4, slope=1.3)
-lev_psi = np.linspace(-0.9, 0.9, 10)
-lev_a = np.linspace(-0.9, 0.9, 10)
+psi = field(11, kmax=3, slope=2.6)
+a = field(23, kmax=3, slope=2.1)
+lev_psi = np.array([-0.8, -0.5, -0.2, 0.2, 0.5, 0.8])
+lev_a = np.array([-0.8, -0.5, -0.2, 0.2, 0.5, 0.8])
 # check divergence of the discrete grad-perp (exactly zero for centred differences)
 ux, uy = grad_perp(psi)
 dx = 2 * np.pi / N
