@@ -189,6 +189,7 @@ export default async function draw(F, L) {
   }
   // direct labels
   L.text(b, Xs(0)(-1.55), base - 0.29 * ys, 'μ', { size: T.label, anchor: 'end', valign: 'middle', color: INK });
+  L.text(b, Xs(0)(0) + m(1.6), base + m(1.25), 'moyenne', { size: T.small, anchor: 'start', valign: 'middle', color: SUB });
   for (const k of [1, 2]) L.text(b, Xs(k)(-1.6), base - 0.2 * ys, 'μ', { size: T.label, anchor: 'end', valign: 'middle', color: INK });
   L.text(b, Xs(1)(1.95), base - 0.22 * ys, '*q*_θ', { size: T.label, anchor: 'start', valign: 'middle', color: '#7a7a7a' });
   L.text(b, Xs(2)(1.95), base - 0.22 * ys, '*q*_θ', { size: T.label, anchor: 'start', valign: 'middle', color: '#7a7a7a' });
