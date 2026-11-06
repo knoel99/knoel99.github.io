@@ -513,3 +513,19 @@ tr.nc td, .nc { color: var(--nc); }
   #contents, #contents + ul { display: block !important; }
   body { font-size: 11pt; }
 }
+
+/* ---------- MilaDy : bouton de langue, widgets interactifs, figures ---------- */
+.lang-btn { text-decoration: none; letter-spacing: .04em; }
+.tb-label-always { font-weight: 800; }
+figure.schema { margin: 1.6rem 0; }
+figure.schema img { width: 100%; height: auto; display: block; }
+figure.schema figcaption { font-size: .95rem; color: var(--soft); margin-top: .5rem; }
+.widget { margin: 1.6rem 0; padding: 1rem; border: 2px solid var(--rule); border-radius: .6rem; background: var(--bg); }
+.widget-title { font-weight: 800; margin: 0 0 .6rem; }
+.widget-controls { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; align-items: center; margin: .4rem 0 .8rem; font-size: .95rem; }
+.widget-controls label { display: inline-flex; align-items: center; gap: .45rem; }
+.widget-controls input[type=range] { width: 11rem; max-width: 100%; }
+.widget-controls button { font: inherit; font-weight: 700; padding: .3rem .8rem; border: 2px solid var(--ink); border-radius: .4rem; background: transparent; color: var(--ink); cursor: pointer; }
+.widget canvas, .widget svg { display: block; width: 100%; height: auto; max-width: 100%; }
+.widget-note { font-size: .9rem; color: var(--soft); margin: .5rem 0 0; }
+.widget-readout { font-variant-numeric: tabular-nums; font-size: .95rem; }

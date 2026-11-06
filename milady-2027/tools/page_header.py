@@ -1,18 +1,30 @@
 #!/usr/bin/env python3
-"""Front matter commun des pages (Quarto). Utilisé par tools/new_page.py.
+"""Front matter commun des pages (Quarto), en français ou en anglais.
 
-Le chemin relatif vers la racine dépend de la profondeur de la page :
-index.qmd (racine) → "", rapport/index.qmd → "../", prep/p1-x/index.qmd → "../../".
+`up` est le chemin relatif vers la racine du site (où vivent assets/) :
+index.qmd → "", rapport/index.qmd → "../", prep/p1-x/index.qmd → "../../",
+en/prep/p1-x/index.qmd → "../../../". Les pages anglaises vivent sous en/ avec les mêmes chemins.
 """
 
 KATEX = "https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js"
 
+UI = {
+    "fr": {"skip": "Aller au contenu", "contents": "Sommaire", "theme": "Thème", "home": "← Accueil",
+           "prep": "Préparation", "sup": "Encadrants", "report": "Rapport de stage", "thesis": "Sujet de thèse",
+           "exp": "Expériences", "interactive": "Schémas interactifs"},
+    "en": {"skip": "Skip to content", "contents": "Contents", "theme": "Theme", "home": "← Home",
+           "prep": "Preparation", "sup": "Supervisors", "report": "Internship report", "thesis": "PhD proposal",
+           "exp": "Experiments", "interactive": "Interactive diagrams"},
+}
 
-def header(title: str, subtitle: str, up: str) -> str:
+
+def header(title: str, subtitle: str, up: str, lang: str = "fr") -> str:
+    u = UI[lang]
+    home = up + ("en/" if lang == "en" else "")   # racine de la langue
     return f'''---
 title: "{title}"
 subtitle: "{subtitle}"
-lang: fr
+lang: {lang}
 format:
   html:
     theme: none
@@ -31,21 +43,21 @@ format:
           <script>(function(){{try{{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}}catch(e){{}}}})();</script>
     include-before-body:
       - text: |
-          <a class="skip" href="#main">Aller au contenu</a>
+          <a class="skip" href="#main">{u["skip"]}</a>
           <header class="topbar">
-            <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Sommaire</span></button>
-            <a class="brand" href="{up}index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+            <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">{u["contents"]}</span></button>
+            <a class="brand" href="{home}index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
             <span class="tb-title" id="tb-title"></span>
-            <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Thème</span></button>
+            <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">{u["theme"]}</span></button>
           </header>
           <div class="layout">
-          <nav class="sidetoc" id="sidetoc" aria-label="Sommaire"></nav>
+          <nav class="sidetoc" id="sidetoc" aria-label="{u["contents"]}"></nav>
           <main class="paper" id="main">
     include-after-body:
       - text: |
           </main>
           </div>
-          <footer class="foot"><p><a href="{up}index.html">← Accueil</a> · <a href="{up}prep/index.html">Préparation</a> · <a href="{up}encadrants/index.html">Encadrants</a> · <a href="{up}rapport/index.html">Rapport de stage</a> · <a href="{up}these/index.html">Sujet de thèse</a> · <a href="{up}experiences/index.html">Expériences</a></p></footer>
+          <footer class="foot"><p><a href="{home}index.html">{u["home"]}</a> · <a href="{home}prep/index.html">{u["prep"]}</a> · <a href="{home}encadrants/index.html">{u["sup"]}</a> · <a href="{home}rapport/index.html">{u["report"]}</a> · <a href="{home}these/index.html">{u["thesis"]}</a> · <a href="{home}interactifs/index.html">{u["interactive"]}</a> · <a href="{home}experiences/index.html">{u["exp"]}</a></p></footer>
           <script defer src="{up}assets/theme.js"></script>
 ---
 '''

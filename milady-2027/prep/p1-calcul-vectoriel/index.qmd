@@ -840,3 +840,899 @@ Ce qu'il faut retenir — chapitre 3
 - Bilan d'énergie magnétique : $\frac{\mathrm{d}}{\mathrm{d}t}\langle|\mathbf{B}|^2/2\rangle = -\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle - \eta\langle|\mathbf{j}|^2\rangle$.
 ::::
 
+## 4. Champs solénoïdaux et potentiels {#ch4}
+
+Pour qu'un modèle génératif produise des champs à divergence nulle « par construction », on peut lui faire générer non pas le champ lui-même, mais un potentiel dont le champ est le rotationnel : d'après le théorème 2.2, la contrainte est alors satisfaite exactement, quoi que produise le réseau. C'est ce que fait FunDiff en 2D : le décodeur produit une fonction de courant $\psi$ et la vitesse s'en déduit par dérivation (Wang et al., 2026). Ce chapitre étudie ces potentiels et leurs limites.
+
+::: def
+[Définition 4.1 — Champs solénoïdaux, irrotationnels, harmoniques]{.tag}
+Un champ $\mathbf{u}$ est **solénoïdal** si $\nabla\cdot\mathbf{u} = 0$, **irrotationnel** si $\nabla\times\mathbf{u} = \mathbf{0}$, et **harmonique** s'il est les deux à la fois.
+:::
+
+Les théorèmes 2.1 et 2.2 disent qu'un gradient est irrotationnel et qu'un rotationnel est solénoïdal. Les réciproques sont vraies sur des domaines sans « trou », mais fausses en général.
+
+:::: thm
+[Théorème 4.2 — Lemme de Poincaré]{.tag}
+Soit $\Omega$ un domaine étoilé par rapport à l'origine (par exemple $\mathbb{R}^3$, une boule ou un convexe contenant l'origine).
+
+(i) Si $\nabla\times\mathbf{u} = \mathbf{0}$ sur $\Omega$, alors $\mathbf{u} = \nabla f$ avec $f(\mathbf{x}) = \int_0^1\mathbf{u}(t\mathbf{x})\cdot\mathbf{x}\,\mathrm{d}t$.
+
+(ii) Si $\nabla\cdot\mathbf{B} = 0$ sur $\Omega$, alors $\mathbf{B} = \nabla\times\mathbf{A}$ avec $\mathbf{A}(\mathbf{x}) = \int_0^1 t\,\mathbf{B}(t\mathbf{x})\times\mathbf{x}\,\mathrm{d}t$.
+
+::: proof
+Démontrons (i) ; la preuve de (ii) suit le même schéma et fait l'objet de l'exercice 10. En dérivant sous l'intégrale :
+
+$$
+\partial_i f(\mathbf{x}) = \int_0^1\Big[t\,x_j\,(\partial_i u_j)(t\mathbf{x}) + u_i(t\mathbf{x})\Big]\,\mathrm{d}t.
+$$
+
+Comme le rotationnel est nul, $\partial_i u_j = \partial_j u_i$, et $x_j(\partial_j u_i)(t\mathbf{x}) = \frac{\mathrm{d}}{\mathrm{d}t}\big[u_i(t\mathbf{x})\big]$. L'intégrande vaut donc $t\frac{\mathrm{d}}{\mathrm{d}t}u_i(t\mathbf{x}) + u_i(t\mathbf{x}) = \frac{\mathrm{d}}{\mathrm{d}t}\big[t\,u_i(t\mathbf{x})\big]$, dont l'intégrale entre 0 et 1 vaut $u_i(\mathbf{x})$. Le caractère étoilé sert à garantir que le segment $[0, \mathbf{x}]$ reste dans $\Omega$. [∎]{.qed}
+:::
+::::
+
+::: note
+[Remarque 4.3 — La topologie compte]{.tag}
+Dans le plan privé de l'origine, qui n'est pas étoilé, le champ $\mathbf{u} = (-y, x)/(x^2 + y^2) = \mathbf{e}_\theta/r$ est irrotationnel, mais sa circulation sur le cercle unité vaut $2\pi$ : il n'est le gradient d'aucune fonction (proposition 3.3). Son « potentiel » serait l'angle $\theta$, qui n'est pas une fonction continue sur tout le domaine. Dans une **boîte périodique** (un tore), un champ constant $\mathbf{U} \neq \mathbf{0}$ est harmonique, mais ce n'est ni le gradient d'une fonction périodique, ni le rotationnel d'un potentiel périodique, car la moyenne d'une dérivée de fonction périodique est nulle. Les champs moyens doivent donc être traités à part ; nous retrouverons ce point au chapitre 6.
+:::
+
+### 4.1 Fonction de courant en 2D
+
+::: def
+[Définition 4.4 — Fonction de courant]{.tag}
+En 2D, on associe à une fonction $\psi(x, y)$ le champ (convention des notations du site)
+
+$$
+\mathbf{u} = \nabla^\perp\psi = (\partial_y\psi, \; -\partial_x\psi).
+$$
+
+La vorticité 2D est le scalaire $\omega = \partial_x u_y - \partial_y u_x$, composante selon $\mathbf{e}_z$ de $\nabla\times\mathbf{u}$.
+:::
+
+:::: prop
+[Proposition 4.5 — Propriétés de la fonction de courant]{.tag}
+Pour $\psi$ de classe $C^2$ et $\mathbf{u} = \nabla^\perp\psi$ :
+
+(i) $\nabla\cdot\mathbf{u} = 0$ ;
+
+(ii) $\omega = -\Delta\psi$ ;
+
+(iii) $\mathbf{u}\cdot\nabla\psi = 0$ : $\psi$ est constante le long des lignes de courant, qui sont donc ses lignes de niveau ;
+
+(iv) le débit de $\mathbf{u}$ à travers une courbe allant de $\mathbf{a}$ à $\mathbf{b}$ (normale obtenue en tournant la tangente d'un quart de tour vers la droite) vaut $\psi(\mathbf{b}) - \psi(\mathbf{a})$ ;
+
+(v) réciproquement, sur un domaine simplement connexe, tout champ 2D à divergence nulle s'écrit $\nabla^\perp\psi$.
+
+::: proof
+(i) $\partial_x\partial_y\psi - \partial_y\partial_x\psi = 0$ par Schwarz. (ii) $\omega = \partial_x(-\partial_x\psi) - \partial_y(\partial_y\psi) = -\Delta\psi$. (iii) $\partial_y\psi\,\partial_x\psi - \partial_x\psi\,\partial_y\psi = 0$. (iv) Pour une courbe $\boldsymbol\gamma(s)$, la normale non normalisée est $(\gamma_y', -\gamma_x')$ et $\mathbf{u}\cdot(\gamma_y', -\gamma_x') = \partial_y\psi\,\gamma_y' + \partial_x\psi\,\gamma_x' = \frac{\mathrm{d}}{\mathrm{d}s}\psi(\boldsymbol\gamma(s))$ ; on intègre. (v) Le champ tourné $\mathbf{v} = (-u_y, u_x)$ a une vorticité $\partial_x u_x + \partial_y u_y = \nabla\cdot\mathbf{u} = 0$ ; par le théorème 4.2 (i) en 2D, $\mathbf{v} = \nabla g$, d'où $u_x = \partial_y g$ et $u_y = -\partial_x g$ : on prend $\psi = g$. [∎]{.qed}
+:::
+::::
+
+::: ex
+[Exemple 4.6 — Écoulement cellulaire]{.tag}
+Pour $\psi = \sin x\sin y$ sur $[0, 2\pi)^2$, on obtient $\mathbf{u} = (\sin x\cos y, \; -\cos x\sin y)$ et $\omega = -\Delta\psi = 2\sin x\sin y = 2\psi$. Les lignes de courant sont les courbes $\sin x\sin y = \text{cste}$ : des cellules fermées de côté $\pi$, tournant alternativement dans un sens et dans l'autre. Cet écoulement est l'analogue 2D de l'écoulement de Taylor–Green.
+:::
+
+En MHD 2D, on écrit de même $\mathbf{B} = \nabla^\perp a$ avec un potentiel magnétique scalaire $a$, et la densité de courant vaut $j = -\Delta a$. Générer $\psi$ et $a$ au lieu de $\mathbf{u}$ et $\mathbf{B}$ est l'un des cinq mécanismes de contrainte comparés dans l'expérience E2 du dépôt (voir le [rapport](../../rapport/index.html#e2)).
+
+### 4.2 Potentiel vecteur en 3D et jauge
+
+::: def
+[Définition 4.7 — Potentiel vecteur, jauge]{.tag}
+Un potentiel vecteur de $\mathbf{B}$ est un champ $\mathbf{A}$ tel que $\mathbf{B} = \nabla\times\mathbf{A}$. Il n'est pas unique : pour toute fonction $\chi$, $\mathbf{A}' = \mathbf{A} + \nabla\chi$ donne le même $\mathbf{B}$ (théorème 2.1). Le choix d'un représentant s'appelle un **choix de jauge**. La **jauge de Coulomb** impose $\nabla\cdot\mathbf{A} = 0$.
+:::
+
+:::: prop
+[Proposition 4.8 — Jauge de Coulomb]{.tag}
+On peut toujours se ramener à la jauge de Coulomb en résolvant l'équation de Poisson $\Delta\chi = -\nabla\cdot\mathbf{A}$. En jauge de Coulomb, le potentiel vérifie
+
+$$
+-\Delta\mathbf{A} = \nabla\times\mathbf{B} = \mathbf{j}. \tag{4.1}
+$$
+
+Dans une boîte périodique, pour un champ $\mathbf{B}$ de moyenne nulle, la solution s'écrit en Fourier (chapitre 5) $\hat{\mathbf{A}}_{\mathbf{k}} = i\,\mathbf{k}\times\hat{\mathbf{B}}_{\mathbf{k}}/|\mathbf{k}|^2$ pour $\mathbf{k} \neq \mathbf{0}$.
+
+::: proof
+Si $\Delta\chi = -\nabla\cdot\mathbf{A}$, alors $\nabla\cdot(\mathbf{A} + \nabla\chi) = \nabla\cdot\mathbf{A} + \Delta\chi = 0$. En jauge de Coulomb, le théorème 2.3 donne $\nabla\times\mathbf{B} = \nabla\times(\nabla\times\mathbf{A}) = \nabla(\nabla\cdot\mathbf{A}) - \Delta\mathbf{A} = -\Delta\mathbf{A}$. En Fourier, $\nabla\times$ devient $i\mathbf{k}\times$ et $-\Delta$ devient $|\mathbf{k}|^2$ (chapitre 5), d'où $|\mathbf{k}|^2\hat{\mathbf{A}}_{\mathbf{k}} = i\mathbf{k}\times\hat{\mathbf{B}}_{\mathbf{k}}$. [∎]{.qed}
+:::
+::::
+
+::: ex
+[Exemple 4.9 — Champ uniforme et écoulement ABC]{.tag}
+Pour $\mathbf{B} = B_0\mathbf{e}_z$, le potentiel symétrique $\mathbf{A} = \frac{B_0}{2}(-y, x, 0)$ est en jauge de Coulomb, et le potentiel de Landau $\mathbf{A}' = (0, B_0 x, 0)$ convient aussi. Leur différence $\mathbf{A}' - \mathbf{A} = \frac{B_0}{2}(y, x, 0)$ est bien un gradient, celui de $\chi = B_0 xy/2$. Pour l'écoulement ABC, comme $\nabla\times\mathbf{u} = \mathbf{u}$ et $\nabla\cdot\mathbf{u} = 0$, le champ $\mathbf{u}$ est son propre potentiel vecteur en jauge de Coulomb.
+:::
+
+:::: prop
+[Proposition 4.10 — Invariance de jauge de l'hélicité magnétique]{.tag}
+Dans une boîte périodique, si $\nabla\cdot\mathbf{B} = 0$, l'hélicité magnétique $H_M = \langle\mathbf{A}\cdot\mathbf{B}\rangle$ ne dépend pas de la jauge.
+
+::: proof
+Par (3.3) sans terme de bord, $\langle(\mathbf{A} + \nabla\chi)\cdot\mathbf{B}\rangle = \langle\mathbf{A}\cdot\mathbf{B}\rangle + \langle\nabla\chi\cdot\mathbf{B}\rangle = \langle\mathbf{A}\cdot\mathbf{B}\rangle - \langle\chi\,\nabla\cdot\mathbf{B}\rangle = \langle\mathbf{A}\cdot\mathbf{B}\rangle$. [∎]{.qed}
+:::
+::::
+
+L'hélicité magnétique mesure l'enlacement des lignes de champ ; c'est une des métriques citées par l'offre de stage. Sans conditions de périodicité, l'argument fait apparaître un terme de bord $\oint\chi\,\mathbf{B}\cdot\mathbf{n}$, et l'invariance exige $\mathbf{B}\cdot\mathbf{n} = 0$ sur le bord. L'exercice 15 vérifie numériquement la proposition 4.10.
+
+### 4.3 Décomposition poloïdale–toroïdale
+
+En 3D, un champ solénoïdal a trois composantes liées par une équation : il ne porte que deux degrés de liberté scalaires. La décomposition poloïdale–toroïdale rend cette remarque explicite. Commençons par le cas axisymétrique, entièrement démontrable.
+
+:::: prop
+[Proposition 4.11 — Champs axisymétriques]{.tag}
+En coordonnées cylindriques, pour toutes fonctions régulières $A_\theta(r, z)$ et $B_\theta(r, z)$, le champ
+
+$$
+\mathbf{B} = \underbrace{\nabla\times\big(A_\theta\,\mathbf{e}_\theta\big)}_{\text{poloïdal}} + \underbrace{B_\theta\,\mathbf{e}_\theta}_{\text{toroïdal}}, \qquad \nabla\times\big(A_\theta\,\mathbf{e}_\theta\big) = -\partial_z A_\theta\,\mathbf{e}_r + \frac{1}{r}\partial_r(rA_\theta)\,\mathbf{e}_z,
+$$
+
+est à divergence nulle. Réciproquement, tout champ axisymétrique à divergence nulle s'écrit ainsi, et les lignes de champ poloïdales sont contenues dans les surfaces $rA_\theta = \text{cste}$.
+
+::: proof
+Le calcul de $\nabla\times(A_\theta\mathbf{e}_\theta)$ découle de (1.3). Par (1.2), la partie toroïdale a une divergence $\frac1r\partial_\theta B_\theta = 0$ et la partie poloïdale
+
+$$
+\frac{1}{r}\partial_r\big(-r\,\partial_z A_\theta\big) + \partial_z\Big(\frac{1}{r}\partial_r(rA_\theta)\Big) = \frac{1}{r}\Big[-\partial_r\partial_z(rA_\theta) + \partial_z\partial_r(rA_\theta)\Big] = 0.
+$$
+
+Pour la réciproque, $\nabla\cdot\mathbf{B} = 0$ s'écrit $\partial_r(rB_r) + \partial_z(rB_z) = 0$ : le champ plan $(rB_z, -rB_r)$ dans le demi-plan méridien $(r, z)$ est irrotationnel au sens 2D, donc (théorème 4.2) il existe $\Psi(r, z)$ avec $\partial_r\Psi = rB_z$ et $\partial_z\Psi = -rB_r$. On pose $A_\theta = \Psi/r$. Enfin $\mathbf{B}_{\text{pol}}\cdot\nabla\Psi = B_r\,rB_z + B_z(-rB_r) = 0$ : $\Psi = rA_\theta$ est constante le long des lignes poloïdales, exactement comme la fonction de courant en 2D. [∎]{.qed}
+:::
+::::
+
+:::: thm
+[Théorème 4.12 — Décomposition poloïdale–toroïdale (énoncé)]{.tag}
+Dans une boule ou une coquille sphérique, tout champ régulier à divergence nulle s'écrit
+
+$$
+\mathbf{B} = \nabla\times(T\,\mathbf{x}) + \nabla\times\nabla\times(P\,\mathbf{x}),
+$$
+
+avec deux fonctions scalaires $T$ (toroïdale) et $P$ (poloïdale), uniques si l'on impose que leur moyenne sur chaque sphère centrée soit nulle. Dans une couche plane ou une boîte périodique, on remplace $\mathbf{x}$ par $\mathbf{e}_z$, à condition d'ajouter un champ moyen horizontal ne dépendant que de $z$.
+
+::: proof
+Admis ; voir Backus (1986) pour une démonstration complète et Moffatt et Dormy (2019) pour l'usage en théorie de la dynamo. Notons seulement que chaque terme est un rotationnel, donc à divergence nulle, et que $\nabla\times(T\mathbf{x}) = \nabla T\times\mathbf{x}$ est orthogonal à $\mathbf{x}$ : les lignes de champ toroïdales sont tangentes aux sphères centrées. [∎]{.qed}
+:::
+::::
+
+Le dipôle magnétique terrestre est un champ poloïdal ; une rotation différentielle cisaille un champ poloïdal et crée un champ toroïdal (« effet oméga »). Dans les simulations de VKS, la dynamo obtenue avec des turbines en fer doux est un dipôle axial essentiellement axisymétrique (Nore et al., 2016), donc décrit par la proposition 4.11 avec $m = 0$.
+
+Le code suivant vérifie par différentiation automatique qu'un champ construit par fonction de courant (2D) ou par potentiel vecteur (3D) est solénoïdal, même quand le potentiel est un réseau de neurones aléatoire, et qu'un changement de jauge ne modifie pas $\mathbf{B}$.
+
+```python
+import torch
+torch.set_num_threads(1)
+torch.manual_seed(2)
+dt = torch.float64
+
+def d(f, x):  # gradient d'une fonction scalaire évaluée en x (n x d)
+    return torch.autograd.grad(f.sum(), x, create_graph=True)[0]
+
+def reseau(d_in, d_out):
+    W1, b1 = torch.randn(d_in, 64, dtype=dt), torch.randn(64, dtype=dt)
+    W2 = torch.randn(64, d_out, dtype=dt) / 8
+    return lambda x: torch.tanh(x @ W1 + b1) @ W2
+
+# --- 2D : fonction de courant psi, u = (d_y psi, -d_x psi)
+psi = reseau(2, 1)
+x = torch.randn(2000, 2, dtype=dt).requires_grad_(True)
+p = psi(x)[:, 0]
+gp = d(p, x)
+ux, uy = gp[:, 1], -gp[:, 0]
+div_u = d(ux, x)[:, 0] + d(uy, x)[:, 1]
+omega = d(uy, x)[:, 0] - d(ux, x)[:, 1]
+lap_psi = d(gp[:, 0], x)[:, 0] + d(gp[:, 1], x)[:, 1]
+print("2D : max|div u| =", f"{div_u.abs().max().item():.1e}",
+      "; max|u| =", f"{torch.hypot(ux, uy).max().item():.2f}",
+      "; max|omega + lap psi| =", f"{(omega + lap_psi).abs().max().item():.1e}")
+# psi est constante le long des lignes de courant : u . grad psi = 0
+print("2D : max|u . grad psi| =", f"{(ux * gp[:, 0] + uy * gp[:, 1]).abs().max().item():.1e}")
+
+# --- 3D : potentiel vecteur A, B = rot A ; changement de jauge A' = A + grad chi
+A, chi = reseau(3, 3), reseau(3, 1)
+y = torch.randn(2000, 3, dtype=dt).requires_grad_(True)
+def rot(F):
+    J = torch.stack([d(F[:, i], y) for i in range(3)], dim=1)   # J[n,i,j] = dF_i/dx_j
+    return torch.stack([J[:, 2, 1] - J[:, 1, 2], J[:, 0, 2] - J[:, 2, 0],
+                        J[:, 1, 0] - J[:, 0, 1]], dim=1)
+Av = A(y)
+Bv = rot(Av)
+div_B = sum(d(Bv[:, i], y)[:, i] for i in range(3))
+B2 = rot(Av + d(chi(y)[:, 0], y))
+print("3D : max|div B| =", f"{div_B.abs().max().item():.1e}",
+      "; max|B| =", f"{Bv.norm(dim=1).max().item():.2f}",
+      "; max|B(A + grad chi) - B(A)| =", f"{(B2 - Bv).abs().max().item():.1e}")
+# sortie :
+# 2D : max|div u| = 4.4e-16 ; max|u| = 1.47 ; max|omega + lap psi| = 0.0e+00
+# 2D : max|u . grad psi| = 0.0e+00
+# 3D : max|div B| = 1.3e-15 ; max|B| = 2.30 ; max|B(A + grad chi) - B(A)| = 5.6e-16
+```
+
+La contrainte est satisfaite à la précision machine, sans aucun apprentissage : c'est ce qu'on appelle une contrainte **dure par construction**. Le prix à payer est double. Il faut dériver la sortie du réseau, ce qui amplifie ses erreurs à petite échelle (une erreur de taille $\epsilon$ à l'échelle $\ell$ sur $\psi$ devient une erreur de taille $\epsilon/\ell$ sur $\mathbf{u}$). Et il faut traiter à part le champ moyen et, en 3D, la jauge.
+
+:::: recap
+::: recap-title
+Ce qu'il faut retenir — chapitre 4
+:::
+- Sur un domaine étoilé, irrotationnel équivaut à gradient et solénoïdal équivaut à rotationnel ; sur un domaine troué ou périodique, il faut tenir compte de la topologie et des champs moyens.
+- En 2D, $\mathbf{u} = \nabla^\perp\psi = (\partial_y\psi, -\partial_x\psi)$ est solénoïdal, $\omega = -\Delta\psi$, et $\psi$ est constante le long des lignes de courant.
+- En 3D, $\mathbf{B} = \nabla\times\mathbf{A}$ ; la jauge de Coulomb $\nabla\cdot\mathbf{A} = 0$ donne $-\Delta\mathbf{A} = \mathbf{j}$ ; l'hélicité $\langle\mathbf{A}\cdot\mathbf{B}\rangle$ est invariante de jauge en périodique.
+- Un champ solénoïdal 3D se décrit par deux scalaires (poloïdal et toroïdal) ; en axisymétrique, $\mathbf{B} = \nabla\times(A_\theta\mathbf{e}_\theta) + B_\theta\mathbf{e}_\theta$.
+::::
+
+## 5. Séries de Fourier, transformée de Fourier discrète et FFT {#ch5}
+
+Dans une boîte périodique, la base de Fourier transforme les dérivées en multiplications : $\partial_x$ devient $ik$. C'est le cadre des simulations pseudo-spectrales de dynamos, comme le code LATU, qui utilise une méthode de Fourier pseudo-spectrale sur une grille cartésienne régulière (Kreuzahler et al., 2017). C'est aussi en Fourier qu'on définit le spectre d'énergie, première des métriques citées par l'offre de stage.
+
+### 5.1 Séries de Fourier
+
+::: def
+[Définition 5.1 — Coefficients et série de Fourier]{.tag}
+Soit $f$ une fonction $L$-périodique, intégrable sur une période. On note $k_n = 2\pi n/L$ pour $n \in \mathbb{Z}$. Les coefficients de Fourier de $f$ sont
+
+$$
+\hat f_n = \frac{1}{L}\int_0^L f(x)\,e^{-ik_n x}\,\mathrm{d}x,
+$$
+
+et sa série de Fourier est $\sum_{n\in\mathbb{Z}}\hat f_n\,e^{ik_n x}$. Si $f$ est réelle, $\hat f_{-n} = \overline{\hat f_n}$.
+:::
+
+:::: prop
+[Proposition 5.2 — Orthonormalité]{.tag}
+Pour tous entiers $n, m$ :
+
+$$
+\frac{1}{L}\int_0^L e^{ik_n x}\,e^{-ik_m x}\,\mathrm{d}x = \delta_{nm}.
+$$
+
+::: proof
+Si $n = m$, l'intégrande vaut 1. Sinon, c'est $e^{2i\pi(n-m)x/L}$, dont une primitive $\frac{L}{2i\pi(n-m)}e^{2i\pi(n-m)x/L}$ prend la même valeur en $0$ et en $L$. [∎]{.qed}
+:::
+::::
+
+:::: thm
+[Théorème 5.3 — Convergence (énoncé)]{.tag}
+(i) Si $\int_0^L|f|^2 < \infty$, les sommes partielles $S_N f = \sum_{|n|\le N}\hat f_n e^{ik_n x}$ convergent vers $f$ en moyenne quadratique.
+
+(ii) Si $f$ est continue, périodique et de classe $C^1$ par morceaux, la convergence est uniforme.
+
+(iii) Si $f$ est de classe $C^1$ par morceaux avec des sauts, $S_N f(x)$ converge en chaque point vers $\frac12[f(x^+) + f(x^-)]$, mais près d'un saut les sommes partielles dépassent la valeur limite d'environ 9 % de la hauteur du saut, quel que soit $N$ : c'est le **phénomène de Gibbs**.
+
+::: proof
+Admis ; voir par exemple Canuto et al. (2006). Le dépassement de Gibbs est mesuré dans le code ci-dessous. [∎]{.qed}
+:::
+::::
+
+:::: prop
+[Proposition 5.4 — Dérivation et décroissance des coefficients]{.tag}
+Si $f$ est périodique de classe $C^1$, alors $\widehat{(f')}_n = ik_n\hat f_n$. Par récurrence, si $f$ est de classe $C^p$, alors
+
+$$
+|\hat f_n| \le \Big(\frac{L}{2\pi|n|}\Big)^p\max|f^{(p)}| \qquad (n \neq 0).
+$$
+
+Plus une fonction est régulière, plus ses coefficients de Fourier décroissent vite.
+
+::: proof
+Une intégration par parties donne $\frac1L\int_0^L f'e^{-ik_n x} = \frac1L\big[f e^{-ik_n x}\big]_0^L + ik_n\frac1L\int_0^L f e^{-ik_n x}$ ; le crochet est nul par périodicité. En itérant, $\hat f_n = \widehat{(f^{(p)})}_n/(ik_n)^p$, et $|\widehat{(f^{(p)})}_n| \le \max|f^{(p)}|$. [∎]{.qed}
+:::
+::::
+
+:::: thm
+[Théorème 5.5 — Parseval]{.tag}
+Pour $f$ de carré intégrable :
+
+$$
+\frac{1}{L}\int_0^L|f(x)|^2\,\mathrm{d}x = \sum_{n\in\mathbb{Z}}|\hat f_n|^2. \tag{5.1}
+$$
+
+::: proof
+Pour un polynôme trigonométrique $f = \sum_{|n|\le N}\hat f_n e^{ik_n x}$, on développe $|f|^2 = f\bar f = \sum_{n,m}\hat f_n\overline{\hat f_m}e^{i(k_n - k_m)x}$ et la proposition 5.2 ne laisse subsister que les termes $n = m$. Le cas général s'en déduit par densité des polynômes trigonométriques (admis). [∎]{.qed}
+:::
+::::
+
+Physiquement, (5.1) dit que l'énergie moyenne est la somme des énergies des modes : c'est ce qui permet de **répartir l'énergie par échelle**.
+
+::: ex
+[Exemple 5.6 — Le créneau]{.tag}
+Soit $f(x) = \operatorname{signe}(\sin x)$ sur $[0, 2\pi)$. Le calcul donne $\hat f_n = \frac{2}{i\pi n}$ pour $n$ impair et $0$ pour $n$ pair, soit
+
+$$
+f(x) = \frac{4}{\pi}\sum_{n\ \text{impair}\ \ge 1}\frac{\sin(nx)}{n}.
+$$
+
+Les coefficients décroissent seulement comme $1/n$, à cause des sauts. La limite du maximum des sommes partielles vaut $\frac{2}{\pi}\int_0^\pi\frac{\sin t}{t}\,\mathrm{d}t \approx 1{,}1790$ : le dépassement de $0{,}179$ représente environ 9 % du saut, qui vaut 2.
+:::
+
+### 5.2 Transformée de Fourier discrète
+
+Sur ordinateur, on ne connaît $f$ qu'en $N$ points régulièrement espacés $x_j = jL/N$, $j = 0, \dots, N-1$. On remplace l'intégrale par une somme.
+
+::: def
+[Définition 5.7 — Transformée de Fourier discrète (TFD)]{.tag}
+Les coefficients discrets et la formule d'inversion sont
+
+$$
+\hat f_n = \frac{1}{N}\sum_{j=0}^{N-1}f_j\,e^{-2i\pi jn/N}, \qquad f_j = \sum_{n}\hat f_n\,e^{2i\pi jn/N},
+$$
+
+où $n$ parcourt $N$ entiers consécutifs, par exemple $-N/2, \dots, N/2-1$ pour $N$ pair. Avec NumPy, `np.fft.fft(f)` renvoie $N\hat f_n$ (sans le facteur $1/N$), `np.fft.ifft` contient le facteur $1/N$, et les nombres d'onde $k_n$ s'obtiennent par `2*np.pi*np.fft.fftfreq(N, d=L/N)`, dans l'ordre $0, 1, \dots, N/2-1, -N/2, \dots, -1$.
+:::
+
+:::: prop
+[Proposition 5.8 — Orthogonalité discrète et Parseval discret]{.tag}
+Pour tous entiers $n, m$ :
+
+$$
+\sum_{j=0}^{N-1}e^{2i\pi j(n-m)/N} = \begin{cases} N & \text{si } n \equiv m \pmod N, \\ 0 & \text{sinon.}\end{cases}
+$$
+
+Par conséquent la formule d'inversion est exacte et $\frac{1}{N}\sum_j|f_j|^2 = \sum_n|\hat f_n|^2$, la somme portant sur $N$ entiers consécutifs.
+
+::: proof
+Si $n \not\equiv m$, la somme est géométrique de raison $q = e^{2i\pi(n-m)/N} \neq 1$ et vaut $(1 - q^N)/(1 - q) = 0$ puisque $q^N = 1$. Sinon chaque terme vaut 1. L'inversion et Parseval s'en déduisent comme dans le cas continu. [∎]{.qed}
+:::
+::::
+
+:::: prop
+[Proposition 5.9 — Repliement de spectre (aliasing)]{.tag}
+Sur la grille, les modes $n$ et $n + N$ sont indiscernables : $e^{ik_{n+N}x_j} = e^{ik_n x_j}$. Si la série de Fourier de $f$ converge absolument, le coefficient discret est la somme des coefficients continus « repliés » :
+
+$$
+\hat f_n^{\,\text{TFD}} = \sum_{p\in\mathbb{Z}}\hat f_{n + pN}. \tag{5.2}
+$$
+
+::: proof
+$e^{2i\pi(n+N)j/N} = e^{2i\pi nj/N}e^{2i\pi j} = e^{2i\pi nj/N}$. Pour (5.2), on remplace $f_j$ par sa série de Fourier dans la définition de la TFD et on applique la proposition 5.8 : seuls survivent les modes congrus à $n$ modulo $N$. [∎]{.qed}
+:::
+::::
+
+Le plus grand nombre d'onde représentable est donc $|n| = N/2$, le **nombre d'onde de Nyquist** : il faut au moins deux points par longueur d'onde. Un mode plus fin n'est pas perdu, il est pris pour un mode plus grossier : $\cos(10x)$ échantillonné sur $N = 8$ points coïncide avec $\cos(2x)$.
+
+### 5.3 La transformée de Fourier rapide (FFT)
+
+Calculer les $N$ coefficients par la définition coûte $N^2$ opérations. L'algorithme de Cooley et Tukey (1965) réduit ce coût à $O(N\log N)$.
+
+:::: thm
+[Théorème 5.10 — Découpage pair–impair (Cooley–Tukey)]{.tag}
+Soit $N$ pair, $w = e^{-2i\pi/N}$ et $F_n = \sum_{j=0}^{N-1}f_j w^{jn}$. Notons $E_n$ et $O_n$ les TFD (non normalisées) de taille $N/2$ des échantillons d'indices pairs et impairs. Alors, pour $n = 0, \dots, N/2 - 1$ :
+
+$$
+F_n = E_n + w^n O_n, \qquad F_{n + N/2} = E_n - w^n O_n.
+$$
+
+::: proof
+On sépare $j = 2m$ et $j = 2m+1$ : $F_n = \sum_m f_{2m}(w^2)^{mn} + w^n\sum_m f_{2m+1}(w^2)^{mn}$. Or $w^2 = e^{-2i\pi/(N/2)}$ est la racine de l'unité d'ordre $N/2$ : les deux sommes sont $E_n$ et $O_n$. Ces dernières sont $N/2$-périodiques en $n$ et $w^{N/2} = -1$, ce qui donne la seconde formule. [∎]{.qed}
+:::
+::::
+
+Si $C(N)$ est le coût pour une taille $N = 2^q$, on a $C(N) = 2C(N/2) + O(N)$, donc $C(N) = O(N\log_2 N)$. Pour une grille 3D de $256^3 = 2^{24}$ points, le rapport entre $N^2 \approx 2{,}8\times 10^{14}$ et $N\log_2 N \approx 4{,}0\times 10^{8}$ vaut environ $7\times 10^5$ : sans FFT, les méthodes spectrales seraient inutilisables. Les dimensions multiples se traitent axe par axe (`np.fft.fftn`).
+
+### 5.4 Dérivation spectrale
+
+::: def
+[Définition 5.11 — Dérivée spectrale]{.tag}
+La dérivée spectrale de $(f_j)$ est le vecteur
+
+$$
+(D_N f)_j = \sum_{n}ik_n\,\hat f_n\,e^{ik_n x_j},
+$$
+
+c'est-à-dire la dérivée exacte du polynôme trigonométrique qui interpole $f$ aux points de la grille. Pour $N$ pair, on remplace $ik_{N/2}$ par $0$ : le mode de Nyquist $\cos(\frac{N}{2}x)$ a une dérivée $-\frac N2\sin(\frac N2 x)$ qui est nulle sur la grille, et le conserver donnerait une dérivée non réelle (Trefethen, 2000).
+:::
+
+:::: prop
+[Proposition 5.12 — Précision de la dérivée spectrale]{.tag}
+Si $\sum_n|k_n\hat f_n|$ converge, l'erreur aux points de la grille vérifie
+
+$$
+\max_j\big|(D_N f)_j - f'(x_j)\big| \le 2\sum_{|n|\ge N/2}|k_n|\,|\hat f_n|.
+$$
+
+Si $|\hat f_n| = O(|n|^{-q})$ avec $q > 2$, l'erreur est donc en $O(N^{2-q})$ ; si $f$ est analytique, les coefficients décroissent exponentiellement et l'erreur aussi (**convergence spectrale**).
+
+::: proof
+Esquisse. $f'(x_j) = \sum_m ik_m\hat f_m e^{ik_m x_j}$, tandis que $D_N f$ utilise les coefficients repliés (5.2) multipliés par $ik_n$ avec $|n| < N/2$. La différence comporte les modes $|m| \ge N/2$ de $f'$, de somme bornée par $\sum_{|m|\ge N/2}|k_m||\hat f_m|$, et les termes repliés $ik_n\hat f_{n+pN}$ avec $p \neq 0$, où $|k_n| < |k_{n+pN}|$ : leur somme est bornée par la même quantité. Le mode de Nyquist mis à zéro relève du même décompte. [∎]{.qed}
+:::
+::::
+
+Le code ci-dessous compare la dérivée spectrale à des différences finies centrées d'ordre 2 pour $f = e^{\sin x}$, fonction analytique, puis vérifie Parseval et mesure le phénomène de Gibbs.
+
+```python
+import numpy as np
+
+def nombres_onde(N, L=2 * np.pi):
+    """k_n = 2 pi n / L dans l'ordre de np.fft (0, 1, ..., N/2-1, -N/2, ..., -1)."""
+    return 2 * np.pi * np.fft.fftfreq(N, d=L / N)
+
+def derivee_spectrale(f, L=2 * np.pi):
+    N = f.size
+    k = nombres_onde(N, L)
+    if N % 2 == 0:
+        k[N // 2] = 0.0          # mode de Nyquist : dérivée impaire mise à zéro
+    return np.real(np.fft.ifft(1j * k * np.fft.fft(f)))
+
+def derivee_df2(f, L=2 * np.pi):  # différences finies centrées d'ordre 2
+    h = L / f.size
+    return (np.roll(f, -1) - np.roll(f, 1)) / (2 * h)
+
+print(" N   erreur spectrale   erreur DF ordre 2")
+for N in [8, 16, 32, 64, 128]:
+    x = 2 * np.pi * np.arange(N) / N
+    f, fp = np.exp(np.sin(x)), np.cos(x) * np.exp(np.sin(x))
+    e_s = np.abs(derivee_spectrale(f) - fp).max()
+    e_d = np.abs(derivee_df2(f) - fp).max()
+    print(f"{N:3d}   {e_s:.1e}            {e_d:.1e}")
+
+# Parseval discret : (1/N) sum |f_j|^2 = sum |f^_k|^2 avec f^_k = fft(f)/N
+N = 64
+x = 2 * np.pi * np.arange(N) / N
+f = np.exp(np.sin(x))
+fh = np.fft.fft(f) / N
+print("Parseval :", f"{np.mean(f**2):.15f}", f"{np.sum(np.abs(fh)**2):.15f}")
+
+# Gibbs : sommes partielles du créneau sign(sin x) = (4/pi) sum_{n impair} sin(n x)/n
+xx = np.linspace(1e-4, np.pi / 2, 200001)
+for n_max in [11, 101, 1001]:
+    S = sum(4 / np.pi * np.sin(n * xx) / n for n in range(1, n_max + 1, 2))
+    print(f"n_max = {n_max:4d} : max de la somme partielle = {S.max():.4f}")
+# sortie :
+#  N   erreur spectrale   erreur DF ordre 2
+#   8   4.3e-03            3.4e-01
+#  16   1.8e-07            9.4e-02
+#  32   2.9e-15            2.6e-02
+#  64   1.1e-14            6.5e-03
+# 128   2.4e-14            1.6e-03
+# Parseval : 2.279585302336067 2.279585302336067
+# n_max =   11 : max de la somme partielle = 1.1813
+# n_max =  101 : max de la somme partielle = 1.1790
+# n_max = 1001 : max de la somme partielle = 1.1790
+```
+
+Avec 32 points, la dérivée spectrale atteint la précision machine, alors que les différences finies d'ordre 2 font encore une erreur de quelques pourcents et ne gagnent qu'un facteur 4 chaque fois que $N$ double. La légère remontée de l'erreur spectrale au-delà de $N = 32$ est due à l'arrondi, qui croît comme $N\epsilon_{\text{machine}}$ parce que les nombres d'onde multiplient les erreurs. Le maximum des sommes partielles du créneau se stabilise à $1{,}1790$ : le dépassement de Gibbs ne disparaît pas quand on ajoute des modes, il se resserre seulement contre le saut.
+
+### 5.5 Fourier en plusieurs dimensions et spectre d'énergie
+
+Dans une boîte $[0, L)^3$ périodique, les vecteurs d'onde sont $\mathbf{k} \in \frac{2\pi}{L}\mathbb{Z}^3$ et un champ s'écrit $\mathbf{u}(\mathbf{x}) = \sum_{\mathbf{k}}\hat{\mathbf{u}}_{\mathbf{k}}e^{i\mathbf{k}\cdot\mathbf{x}}$. Les opérateurs deviennent algébriques :
+
+$$
+\widehat{\nabla f} = i\mathbf{k}\hat f, \qquad \widehat{\nabla\cdot\mathbf{u}} = i\mathbf{k}\cdot\hat{\mathbf{u}}, \qquad \widehat{\nabla\times\mathbf{u}} = i\mathbf{k}\times\hat{\mathbf{u}}, \qquad \widehat{\Delta f} = -|\mathbf{k}|^2\hat f.
+$$
+
+Les identités du chapitre 2 deviennent des identités entre vecteurs : $\mathbf{k}\times\mathbf{k} = \mathbf{0}$, $\mathbf{k}\cdot(\mathbf{k}\times\hat{\mathbf{u}}) = 0$, et $i\mathbf{k}\times(i\mathbf{k}\times\hat{\mathbf{u}}) = -\mathbf{k}(\mathbf{k}\cdot\hat{\mathbf{u}}) + |\mathbf{k}|^2\hat{\mathbf{u}}$, qui n'est autre que la formule du double produit vectoriel $\mathbf{a}\times(\mathbf{b}\times\mathbf{c}) = \mathbf{b}(\mathbf{a}\cdot\mathbf{c}) - \mathbf{c}(\mathbf{a}\cdot\mathbf{b})$.
+
+::: def
+[Définition 5.13 — Spectres d'énergie et d'hélicité]{.tag}
+Pour $L = 2\pi$, le spectre d'énergie par couches est
+
+$$
+E(K) = \frac{1}{2}\sum_{K - 1/2 \,\le\, |\mathbf{k}| \,<\, K + 1/2}|\hat{\mathbf{u}}_{\mathbf{k}}|^2, \qquad K = 0, 1, 2, \dots
+$$
+
+Par Parseval, $\sum_K E(K) = \frac12\langle|\mathbf{u}|^2\rangle$ (pour peu que toutes les couches soient comptées). Le spectre d'hélicité cinétique se définit de même avec $\operatorname{Re}\big(\overline{\hat{\mathbf{u}}_{\mathbf{k}}}\cdot\hat{\boldsymbol\omega}_{\mathbf{k}}\big)$ à la place de $\frac12|\hat{\mathbf{u}}_{\mathbf{k}}|^2$.
+:::
+
+::: note
+[Remarque 5.14 — Cohérence discrète]{.tag}
+Sur une grille, les identités $\nabla\cdot(\nabla\times\mathbf{u}) = 0$ ou $\nabla\times(\nabla\times\mathbf{u}) = \nabla(\nabla\cdot\mathbf{u}) - \Delta\mathbf{u}$ ne sont exactes (à l'arrondi près) que si **tous** les opérateurs utilisent les mêmes nombres d'onde. Avec la convention de Nyquist de la définition 5.11, il faut donc calculer le laplacien comme $-|\mathbf{k}|^2$ avec ces mêmes $\mathbf{k}$ modifiés, sinon l'identité est fausse sur les modes de Nyquist.
+:::
+
+```python
+import numpy as np
+rng = np.random.default_rng(4)
+N, L = 32, 2 * np.pi
+kv = 2 * np.pi * np.fft.fftfreq(N, d=L / N)       # vrais nombres d'onde
+filtre = np.exp(-sum(k**2 for k in np.meshgrid(kv, kv, kv, indexing="ij")) / 16)
+k1 = kv.copy(); k1[N // 2] = 0.0                   # Nyquist annulé (dérivées impaires)
+KX, KY, KZ = np.meshgrid(k1, k1, k1, indexing="ij")
+K = np.stack([KX, KY, KZ])                         # vecteur d'onde, forme (3, N, N, N)
+K2 = (K**2).sum(0)                                 # |k|^2 cohérent avec ce choix
+
+F  = lambda a: np.fft.fftn(a, axes=(-3, -2, -1))
+Fi = lambda a: np.real(np.fft.ifftn(a, axes=(-3, -2, -1)))
+grad = lambda f: Fi(1j * K * F(f))
+div  = lambda u: Fi((1j * K * F(u)).sum(0))
+def rot(u):
+    uh = F(u)
+    return Fi(1j * np.stack([K[1]*uh[2] - K[2]*uh[1],
+                             K[2]*uh[0] - K[0]*uh[2],
+                             K[0]*uh[1] - K[1]*uh[0]]))
+lap = lambda u: Fi(-K2 * F(u))
+
+def lisse(shape):                                   # bruit blanc filtré, puis normalisé
+    a = Fi(F(rng.normal(size=shape)) * filtre)
+    return a / a.std()
+
+u, f = lisse((3, N, N, N)), lisse((N, N, N))
+print("max|rot grad f|          =", f"{np.abs(rot(grad(f))).max():.1e}", " (max|grad f| =", f"{np.abs(grad(f)).max():.1e})")
+print("max|div rot u|           =", f"{np.abs(div(rot(u))).max():.1e}", " (max|rot u|  =", f"{np.abs(rot(u)).max():.1e})")
+e = rot(rot(u)) - (grad(div(u)) - lap(u))
+print("max|rot rot u - (grad div u - lap u)| =", f"{np.abs(e).max():.1e}")
+
+# Parseval en 3D : <|u|^2> = sum_k |u^_k|^2 avec u^_k = fft(u)/N^3
+uh = F(u) / N**3
+print("Parseval : <|u|^2> =", f"{np.mean((u**2).sum(0)):.12f}", "; sum|u^_k|^2 =", f"{np.sum(np.abs(uh)**2):.12f}")
+
+# Écoulement ABC : spectre d'énergie par couches et hélicité cinétique
+x = L * np.arange(N) / N
+X, Y, Z = np.meshgrid(x, x, x, indexing="ij")
+A, B, C = 1.0, 0.8, 0.6
+v = np.stack([A*np.sin(Z) + C*np.cos(Y), B*np.sin(X) + A*np.cos(Z), C*np.sin(Y) + B*np.cos(X)])
+vh = F(v) / N**3
+kn = np.sqrt(K2)
+E = [0.5 * np.sum(np.abs(vh)**2 * ((kn >= s - 0.5) & (kn < s + 0.5))) for s in range(4)]
+print("spectre E(k), k = 0..3 :", np.round(E, 12), "; (A^2+B^2+C^2)/2 =", (A*A + B*B + C*C) / 2)
+print("hélicité <u . rot u> =", f"{np.mean((v * rot(v)).sum(0)):.12f}", "; A^2+B^2+C^2 =", A*A + B*B + C*C)
+# sortie :
+# max|rot grad f|          = 2.8e-14  (max|grad f| = 1.0e+01)
+# max|div rot u|           = 4.5e-14  (max|rot u|  = 1.2e+01)
+# max|rot rot u - (grad div u - lap u)| = 5.6e-14
+# Parseval : <|u|^2> = 3.007055058030 ; sum|u^_k|^2 = 3.007055058030
+# spectre E(k), k = 0..3 : [0. 1. 0. 0.] ; (A^2+B^2+C^2)/2 = 1.0
+# hélicité <u . rot u> = 2.000000000000 ; A^2+B^2+C^2 = 2.0
+```
+
+Les identités sont vérifiées à environ $10^{-15}$ près relativement à la taille des termes. Toute l'énergie de l'écoulement ABC se trouve dans la couche $K = 1$, et son hélicité moyenne vaut bien $A^2 + B^2 + C^2 = 2$.
+
+### 5.6 Produits, repliement et règle des 2/3
+
+Les termes non linéaires, comme $(\mathbf{u}\cdot\nabla)\mathbf{u}$ ou $\nabla\times(\mathbf{u}\times\mathbf{B})$, sont calculés dans les codes pseudo-spectraux par multiplication point par point sur la grille, ce qui ne coûte que $O(N)$ opérations après les FFT. Mais un produit élargit le spectre.
+
+:::: prop
+[Proposition 5.15 — Spectre d'un produit]{.tag}
+Les coefficients de Fourier d'un produit sont la convolution des coefficients : $\widehat{(uv)}_n = \sum_{p + q = n}\hat u_p\hat v_q$. Si $u$ et $v$ n'ont que des modes $|n| \le K$, leur produit a des modes jusqu'à $|n| = 2K$.
+
+::: proof
+On développe $uv = \sum_{p,q}\hat u_p\hat v_q e^{i(k_p + k_q)x}$ et on regroupe selon $n = p + q$. [∎]{.qed}
+:::
+::::
+
+:::: thm
+[Théorème 5.16 — Règle des 2/3 (Orszag, 1971)]{.tag}
+Si $\hat u$ et $\hat v$ sont tronqués à $|n| \le K$ avec $N \ge 3K + 1$, alors les coefficients TFD du produit calculé sur la grille coïncident, pour $|n| \le K$, avec les coefficients exacts de $uv$.
+
+::: proof
+Par (5.2), le coefficient TFD du produit vaut $\sum_p\widehat{(uv)}_{n + pN}$. Le produit exact n'a que des modes $|m| \le 2K$. Pour $|n| \le K$ et $p \neq 0$, on a $|n + pN| \ge N - |n| \ge N - K \ge 2K + 1$ : tous les termes repliés sont nuls. [∎]{.qed}
+:::
+::::
+
+En pratique, on annule les modes $|n| > N/3$ avant (ou après) chaque produit : on ne garde que les deux tiers centraux du spectre, d'où le nom de la règle. Le code suivant montre le repliement puis son élimination.
+
+```python
+import numpy as np
+rng = np.random.default_rng(3)
+
+# 1) Repliement : cos(10 x) échantillonné sur N = 8 points coïncide avec cos(2 x)
+N = 8
+x = 2 * np.pi * np.arange(N) / N
+print("max|cos(10x) - cos(2x)| sur la grille N=8 :", f"{np.abs(np.cos(10*x) - np.cos(2*x)).max():.1e}")
+
+# 2) Produit u*u calculé « pseudo-spectralement » sur une grille de N points
+N = 32
+k = np.fft.fftfreq(N, d=1 / N)                     # entiers 0..15, -16..-1
+
+def champ_aleatoire(K):
+    """Champ réel dont les modes vérifient 1 <= |k| <= K."""
+    uh = np.zeros(N, complex)
+    for n in range(1, K + 1):
+        c = rng.normal() + 1j * rng.normal()
+        uh[n], uh[-n] = c, np.conj(c)
+    return uh                                       # coefficients (convention fft/N)
+
+def produit_exact(uh, vh):
+    """Coefficients exacts de u*v pour |k| < N/2 : convolution discrète directe."""
+    wh = np.zeros(N, complex)
+    for p in range(N):
+        for q in range(N):
+            s = k[p] + k[q]
+            if abs(s) < N / 2:
+                wh[int(s) % N] += uh[p] * vh[q]
+    return wh
+
+def produit_grille(uh, vh):                         # produit point par point
+    u, v = np.fft.ifft(uh * N), np.fft.ifft(vh * N)
+    return np.fft.fft(u * v) / N
+
+uh = champ_aleatoire(15)                            # tous les modes résolus
+err = np.abs(produit_grille(uh, uh) - produit_exact(uh, uh))
+print("sans précaution : erreur max sur les coefficients de u^2 =", f"{err.max():.2f}",
+      "(taille des coefficients ~", f"{np.abs(produit_exact(uh, uh)).max():.1f})")
+
+K = N // 3                                          # règle des 2/3 : |k| <= 10
+garde = np.abs(k) <= K
+uh2 = uh * garde                                    # on tronque u avant le produit
+err = np.abs((produit_grille(uh2, uh2) - produit_exact(uh2, uh2))[garde])
+print("règle des 2/3   : erreur max sur les modes |k| <= 10 =", f"{err.max():.1e}")
+# sortie :
+# max|cos(10x) - cos(2x)| sur la grille N=8 : 3.5e-15
+# sans précaution : erreur max sur les coefficients de u^2 = 12.50 (taille des coefficients ~ 77.5)
+# règle des 2/3   : erreur max sur les modes |k| <= 10 = 1.1e-14
+```
+
+Sans précaution, les modes repliés polluent les coefficients du produit d'une erreur qui atteint environ 16 % du plus grand coefficient ; avec la troncature aux deux tiers, l'erreur tombe à l'arrondi. Dans une simulation, ce repliement injecte de l'énergie parasite aux petites échelles et peut faire diverger le calcul.
+
+::: note
+[Remarque 5.17 — Discontinuités et filtrage]{.tag}
+Le phénomène de Gibbs pose problème dès que les coefficients du problème sont discontinus. Dans le code LATU, les turbines de VKS sont représentées par pénalisation dans une boîte périodique, avec une perméabilité magnétique qui saute à leur surface ; pour limiter les oscillations de Gibbs, Kreuzahler et al. (2017) filtrent ces sauts par un filtre en cosinus surélevé « affûté » (*sharpened raised cosine*).
+:::
+
+:::: recap
+::: recap-title
+Ce qu'il faut retenir — chapitre 5
+:::
+- En Fourier, $\partial_x \to ik$, $\nabla \to i\mathbf{k}$, $\Delta \to -|\mathbf{k}|^2$ ; Parseval identifie l'énergie moyenne à la somme des énergies modales, d'où le spectre $E(K)$.
+- La régularité d'une fonction se lit dans la décroissance de ses coefficients ; la dérivée spectrale converge exponentiellement pour une fonction analytique.
+- Sur $N$ points, les modes $n$ et $n + N$ se confondent (repliement) ; le mode de Nyquist demande une convention cohérente pour toutes les dérivées.
+- La FFT coûte $O(N\log N)$ ; les produits doublent la largeur du spectre, et la règle des 2/3 ($N \ge 3K + 1$) élimine le repliement des termes quadratiques.
+::::
+
+## 6. Décomposition de Helmholtz–Hodge et projection de Leray {#ch6}
+
+Un champ produit par un schéma numérique ou par un réseau génératif a en général une petite divergence non nulle. Le théorème de Helmholtz–Hodge affirme que tout champ se décompose de façon unique en une partie gradient et une partie solénoïdale ; ne garder que la seconde s'appelle **projeter**. Dans une boîte périodique, cette projection coûte une FFT et une petite multiplication matricielle par vecteur d'onde. Avec des parois, elle exige de résoudre un problème elliptique global. Ce contraste est au cœur des choix de modélisation du stage.
+
+### 6.1 Énoncé général
+
+:::: thm
+[Théorème 6.1 — Helmholtz–Hodge dans un domaine borné (énoncé)]{.tag}
+Soit $\Omega \subset \mathbb{R}^d$ un domaine borné, connexe, de bord régulier, de normale sortante $\mathbf{n}$. Tout champ $\mathbf{u}$ de carré intégrable sur $\Omega$ se décompose de façon unique en
+
+$$
+\mathbf{u} = \mathbf{w} + \nabla p, \qquad \nabla\cdot\mathbf{w} = 0 \text{ dans } \Omega, \qquad \mathbf{w}\cdot\mathbf{n} = 0 \text{ sur } \partial\Omega,
+$$
+
+où $p$ est défini à une constante près. Les deux parties sont orthogonales dans $L^2(\Omega)$ : $\int_\Omega\mathbf{w}\cdot\nabla p\,\mathrm{d}V = 0$. Le potentiel $p$ est solution du **problème de Neumann**
+
+$$
+\Delta p = \nabla\cdot\mathbf{u} \ \text{ dans } \Omega, \qquad \partial_n p = \mathbf{u}\cdot\mathbf{n} \ \text{ sur } \partial\Omega. \tag{6.1}
+$$
+
+::: proof
+Démontrons l'orthogonalité et l'unicité ; l'existence repose sur la résolution de (6.1), admise ici (voir Chorin et Marsden, 1993, ou Girault et Raviart, 1986). Par (3.3), $\int_\Omega\mathbf{w}\cdot\nabla p = \oint_{\partial\Omega}p\,\mathbf{w}\cdot\mathbf{n} - \int_\Omega p\,\nabla\cdot\mathbf{w} = 0$. Si $\mathbf{w}_1 + \nabla p_1 = \mathbf{w}_2 + \nabla p_2$, le champ $\mathbf{w}_1 - \mathbf{w}_2 = \nabla(p_2 - p_1)$ est à la fois solénoïdal à flux normal nul et gradient : il est orthogonal à lui-même, donc nul. Enfin, en prenant la divergence et la composante normale de $\mathbf{u} = \mathbf{w} + \nabla p$, on obtient (6.1). [∎]{.qed}
+:::
+::::
+
+:::: prop
+[Proposition 6.2 — Compatibilité du problème de Neumann]{.tag}
+Le problème $\Delta p = f$ dans $\Omega$, $\partial_n p = g$ sur $\partial\Omega$ ne peut avoir de solution que si $\int_\Omega f\,\mathrm{d}V = \oint_{\partial\Omega}g\,\mathrm{d}S$, et deux solutions diffèrent d'une constante. Pour (6.1), la condition est automatiquement satisfaite.
+
+::: proof
+La condition nécessaire est le théorème 3.5 appliqué à $\nabla p$. Pour (6.1), c'est encore le théorème 3.5 appliqué à $\mathbf{u}$. Si $q$ est la différence de deux solutions, $\Delta q = 0$ et $\partial_n q = 0$, et l'identité de Green donne $\int_\Omega|\nabla q|^2 = \oint_{\partial\Omega}q\,\partial_n q - \int_\Omega q\,\Delta q = 0$, donc $q$ est constante sur le domaine connexe. [∎]{.qed}
+:::
+::::
+
+:::: prop
+[Proposition 6.3 — La projection est la correction minimale]{.tag}
+Notons $\mathbf{w} = \mathbb{P}\mathbf{u}$ la partie solénoïdale. Pour tout champ $\mathbf{v}$ solénoïdal vérifiant $\mathbf{v}\cdot\mathbf{n} = 0$ au bord :
+
+$$
+\|\mathbf{u} - \mathbb{P}\mathbf{u}\|_{L^2} \le \|\mathbf{u} - \mathbf{v}\|_{L^2}.
+$$
+
+::: proof
+$\mathbf{u} - \mathbf{v} = \nabla p + (\mathbf{w} - \mathbf{v})$, et $\mathbf{w} - \mathbf{v}$ est solénoïdal à flux normal nul, donc orthogonal à $\nabla p$. Par Pythagore, $\|\mathbf{u} - \mathbf{v}\|^2 = \|\nabla p\|^2 + \|\mathbf{w} - \mathbf{v}\|^2 \ge \|\nabla p\|^2 = \|\mathbf{u} - \mathbf{w}\|^2$. [∎]{.qed}
+:::
+::::
+
+Projeter un champ généré revient donc à le modifier le moins possible, au sens de l'énergie, pour satisfaire la contrainte. Cela ne garantit pas que le champ projeté soit physiquement plausible : la partie gradient retirée peut contenir de l'information utile, et la projection peut modifier les statistiques (spectre, hélicité) du champ généré.
+
+### 6.2 Démonstration dans une boîte périodique
+
+Sur le tore $\mathbb{T}^d = [0, L)^d$ périodique, il n'y a pas de bord, et Fourier diagonalise tout.
+
+:::: thm
+[Théorème 6.4 — Helmholtz–Hodge sur le tore]{.tag}
+Tout champ réel $\mathbf{u}$ de carré intégrable sur $\mathbb{T}^d$ se décompose de façon unique en
+
+$$
+\mathbf{u} = \bar{\mathbf{u}} + \nabla p + \mathbf{w},
+$$
+
+où $\bar{\mathbf{u}} = \langle\mathbf{u}\rangle$ est constant, $p$ est périodique de moyenne nulle, et $\mathbf{w}$ est périodique, solénoïdal et de moyenne nulle. Les trois parties sont deux à deux orthogonales. En Fourier, pour $\mathbf{k} \neq \mathbf{0}$ :
+
+$$
+\hat p_{\mathbf{k}} = -i\,\frac{\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}}}{|\mathbf{k}|^2}, \qquad \hat{\mathbf{w}}_{\mathbf{k}} = \hat{\mathbf{u}}_{\mathbf{k}} - \mathbf{k}\,\frac{\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}}}{|\mathbf{k}|^2} = \Big(I - \frac{\mathbf{k}\mathbf{k}^{\mathsf{T}}}{|\mathbf{k}|^2}\Big)\hat{\mathbf{u}}_{\mathbf{k}}. \tag{6.2}
+$$
+
+::: proof
+*Existence.* On définit $\hat p_{\mathbf{k}}$ et $\hat{\mathbf{w}}_{\mathbf{k}}$ par (6.2) pour $\mathbf{k} \neq \mathbf{0}$, et $\hat p_{\mathbf{0}} = 0$, $\hat{\mathbf{w}}_{\mathbf{0}} = \mathbf{0}$. Alors $\widehat{\nabla p}_{\mathbf{k}} = i\mathbf{k}\hat p_{\mathbf{k}} = \mathbf{k}(\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}})/|\mathbf{k}|^2$, si bien que $\hat{\mathbf{u}}_{\mathbf{k}} = \widehat{\nabla p}_{\mathbf{k}} + \hat{\mathbf{w}}_{\mathbf{k}}$ pour $\mathbf{k}\neq\mathbf{0}$, et $\hat{\mathbf{u}}_{\mathbf{0}} = \bar{\mathbf{u}}$. On vérifie $i\mathbf{k}\cdot\hat{\mathbf{w}}_{\mathbf{k}} = i\big(\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}} - |\mathbf{k}|^2\,\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}}/|\mathbf{k}|^2\big) = 0$. Les formules (6.2) sont paires en $\mathbf{k}$ et commutent avec la conjugaison, donc $\hat{\mathbf{w}}_{-\mathbf{k}} = \overline{\hat{\mathbf{w}}_{\mathbf{k}}}$ : $\mathbf{w}$ est réel, et de même pour $p$. Enfin $|\hat{\mathbf{w}}_{\mathbf{k}}| \le |\hat{\mathbf{u}}_{\mathbf{k}}|$ et $|\mathbf{k}\hat p_{\mathbf{k}}| \le |\hat{\mathbf{u}}_{\mathbf{k}}|$, de sorte que les séries convergent dans $L^2$.
+
+*Orthogonalité.* Par Parseval (sous sa forme polarisée $\langle\mathbf{a}\cdot\mathbf{b}\rangle = \sum_{\mathbf{k}}\overline{\hat{\mathbf{a}}_{\mathbf{k}}}\cdot\hat{\mathbf{b}}_{\mathbf{k}}$ pour des champs réels),
+
+$$
+\langle\nabla p\cdot\mathbf{w}\rangle = \sum_{\mathbf{k}}\overline{i\mathbf{k}\hat p_{\mathbf{k}}}\cdot\hat{\mathbf{w}}_{\mathbf{k}} = \sum_{\mathbf{k}}(-i)\,\overline{\hat p_{\mathbf{k}}}\,(\mathbf{k}\cdot\hat{\mathbf{w}}_{\mathbf{k}}) = 0.
+$$
+
+Le champ constant est orthogonal aux deux autres, qui sont de moyenne nulle.
+
+*Unicité.* Soit une décomposition de zéro, $\bar{\mathbf{v}} + \nabla q + \mathbf{z} = \mathbf{0}$. Le mode $\mathbf{k} = \mathbf{0}$ donne $\bar{\mathbf{v}} = \mathbf{0}$. Pour $\mathbf{k} \neq \mathbf{0}$, le produit scalaire avec $\mathbf{k}$ donne $i|\mathbf{k}|^2\hat q_{\mathbf{k}} + \mathbf{k}\cdot\hat{\mathbf{z}}_{\mathbf{k}} = i|\mathbf{k}|^2\hat q_{\mathbf{k}} = 0$, donc $\hat q_{\mathbf{k}} = 0$, puis $\hat{\mathbf{z}}_{\mathbf{k}} = \mathbf{0}$. [∎]{.qed}
+:::
+::::
+
+::: def
+[Définition 6.5 — Projecteur de Leray]{.tag}
+Le projecteur de Leray $\mathbb{P}$ agit en Fourier par $\widehat{(\mathbb{P}\mathbf{u})}_{\mathbf{k}} = P(\mathbf{k})\,\hat{\mathbf{u}}_{\mathbf{k}}$, avec
+
+$$
+P_{ij}(\mathbf{k}) = \delta_{ij} - \frac{k_i k_j}{|\mathbf{k}|^2} \quad (\mathbf{k} \neq \mathbf{0}), \qquad P(\mathbf{0}) = I.
+$$
+
+Avec cette convention, $\mathbb{P}$ conserve le champ moyen et retire la partie gradient.
+:::
+
+:::: prop
+[Proposition 6.6 — Propriétés du projecteur de Leray sur le tore]{.tag}
+(i) $\mathbb{P}^2 = \mathbb{P}$ ; (ii) $\mathbb{P}$ est symétrique : $\langle\mathbb{P}\mathbf{u}\cdot\mathbf{v}\rangle = \langle\mathbf{u}\cdot\mathbb{P}\mathbf{v}\rangle$ ; (iii) $\langle|\mathbb{P}\mathbf{u}|^2\rangle \le \langle|\mathbf{u}|^2\rangle$ ; (iv) $\nabla\cdot\mathbb{P}\mathbf{u} = 0$ ; (v) $\mathbb{P}$ commute avec les dérivées et avec le laplacien ; (vi) $\mathbb{P}(\nabla f) = \mathbf{0}$ et $\mathbb{P}(\nabla\times\mathbf{A}) = \nabla\times\mathbf{A}$.
+
+::: proof
+Pour $\mathbf{k}$ réel non nul, $P(\mathbf{k})$ est la matrice de la projection orthogonale sur le plan orthogonal à $\mathbf{k}$ : $P(\mathbf{k})^2 = P(\mathbf{k})$ et $P(\mathbf{k})^{\mathsf{T}} = P(\mathbf{k})$. Avec Parseval, on obtient (i), (ii) et (iii). (iv) : $\mathbf{k}\cdot P(\mathbf{k})\hat{\mathbf{u}} = 0$. (v) : les dérivées agissent en Fourier par multiplication par des scalaires ou des vecteurs ; pour la divergence et le rotationnel, on vérifie directement que $\mathbf{k}\cdot P(\mathbf{k}) = \mathbf{0}$ et que $\mathbf{k}\times P(\mathbf{k})\hat{\mathbf{u}} = \mathbf{k}\times\hat{\mathbf{u}}$ ; le laplacien est un multiplicateur scalaire. (vi) : $P(\mathbf{k})\mathbf{k} = \mathbf{0}$, et $\mathbf{k}\times\hat{\mathbf{A}}$ est déjà orthogonal à $\mathbf{k}$. [∎]{.qed}
+:::
+::::
+
+Pour un champ aléatoire isotrope (un bruit blanc, par exemple), chaque coefficient $\hat{\mathbf{u}}_{\mathbf{k}}$ a la même variance dans les $d$ directions et la projection en retire une : en moyenne, une fraction $(d-1)/d$ de l'énergie est conservée, soit $1/2$ en 2D et $2/3$ en 3D. En 2D, la projection s'écrit aussi avec la fonction de courant : $\mathbb{P}\mathbf{u} = \bar{\mathbf{u}} + \nabla^\perp\psi$ avec $-\Delta\psi = \omega$, où $\omega$ est la vorticité de $\mathbf{u}$ (exercice 14).
+
+::: note
+[Remarque 6.7 — « Divergence nulle » dépend de l'opérateur discret]{.tag}
+Sur une grille, $\mathbb{P}\mathbf{u}$ calculé par FFT a une divergence nulle à la précision machine **si la divergence est mesurée avec les mêmes nombres d'onde** (y compris la convention de Nyquist). Mesurée par différences finies, la divergence du même champ ne vaut que $O(h^2)$, où $h$ est le pas de grille. Une métrique de « contrôle de la divergence » n'a donc de sens que si l'on précise l'opérateur discret utilisé.
+:::
+
+Le code suivant projette des bruits blancs en 2D et en 3D et vérifie les propriétés de la proposition 6.6.
+
+```python
+import numpy as np
+rng = np.random.default_rng(5)
+
+def vecteurs_onde(N, d, L=2 * np.pi):
+    k1 = 2 * np.pi * np.fft.fftfreq(N, d=L / N)
+    k1[N // 2] = 0.0                       # même convention que pour les dérivées
+    return np.stack(np.meshgrid(*([k1] * d), indexing="ij"))
+
+def leray(u, K):
+    """Projection de Leray : u^_k <- u^_k - k (k . u^_k)/|k|^2 (mode k = 0 conservé)."""
+    ax = tuple(range(1, u.ndim))
+    uh = np.fft.fftn(u, axes=ax)
+    K2 = (K**2).sum(0)
+    K2[K2 == 0] = 1.0                      # évite 0/0 ; k.u^ = 0 en ces points de toute façon
+    uh = uh - K * (K * uh).sum(0) / K2
+    return np.real(np.fft.ifftn(uh, axes=ax))
+
+def divergence(u, K):
+    ax = tuple(range(1, u.ndim))
+    return np.real(np.fft.ifftn((1j * K * np.fft.fftn(u, axes=ax)).sum(0)))
+
+for d, N in [(2, 256), (3, 64)]:
+    K = vecteurs_onde(N, d)
+    u = rng.normal(size=(d,) + (N,) * d)   # bruit blanc : très loin d'être solénoïdal
+    w = leray(u, K)
+    g = u - w                              # partie gradient
+    a, b = divergence(u, K).std(), np.abs(divergence(w, K)).max()
+    print(f"d = {d}, N = {N} : rms div u = {a:.1e} -> max|div Pu| = {b:.1e} "
+          f"(rapport {b / a:.1e})")
+    print(f"   ||P(Pu) - Pu||max = {np.abs(leray(w, K) - w).max():.1e} ; "
+          f"<Pu . (u - Pu)> = {np.mean((w * g).sum(0)):.1e} ; "
+          f"énergie gardée = {np.mean((w**2).sum(0)) / np.mean((u**2).sum(0)):.3f}")
+# sortie :
+# d = 2, N = 256 : rms div u = 1.0e+02 -> max|div Pu| = 9.5e-14 (rapport 9.1e-16)
+#    ||P(Pu) - Pu||max = 8.9e-16 ; <Pu . (u - Pu)> = -3.7e-17 ; énergie gardée = 0.499
+# d = 3, N = 64 : rms div u = 3.1e+01 -> max|div Pu| = 3.6e-14 (rapport 1.2e-15)
+#    ||P(Pu) - Pu||max = 1.8e-15 ; <Pu . (u - Pu)> = -2.5e-16 ; énergie gardée = 0.667
+```
+
+La divergence passe d'une valeur typique de 100 (le bruit blanc a beaucoup d'énergie aux petites échelles) à environ $10^{-15}$ fois cette valeur. La projection est idempotente, ses deux parties sont orthogonales, et elle conserve la moitié de l'énergie en 2D et les deux tiers en 3D, comme prévu.
+
+Deux voies mènent donc à un champ solénoïdal sur le tore : **construire** le champ à partir d'un potentiel (chapitre 4), ou **projeter** un champ quelconque. Le code suivant illustre la première voie sur une grille : il tire une fonction de courant aléatoire dont le spectre d'énergie suit une loi $E(k) \propto k^{-3}$ (la loi attendue dans la cascade d'enstrophie de la turbulence 2D), puis en déduit la vitesse par dérivation spectrale.
+
+```python
+import numpy as np
+rng = np.random.default_rng(6)
+N, L = 256, 2 * np.pi
+k1 = 2 * np.pi * np.fft.fftfreq(N, d=L / N)
+k1[N // 2] = 0.0
+KX, KY = np.meshgrid(k1, k1, indexing="ij")
+kn = np.sqrt(KX**2 + KY**2)
+F, Fi = np.fft.fft2, lambda a: np.real(np.fft.ifft2(a))
+
+# 1) Fonction de courant aléatoire de spectre cible E(k) ~ k^-3 pour 4 <= |k| <= 64.
+#    Énergie d'un mode : |k|^2 |psi^_k|^2 / 2 ; il y a environ 2 pi k modes par couche.
+amp = np.zeros_like(kn)
+bande = (kn >= 4) & (kn <= 64)
+amp[bande] = np.sqrt(kn[bande]**-3 / (np.pi * kn[bande]**3))
+psi = Fi(amp * F(rng.normal(size=(N, N))))     # filtrer un bruit blanc : psi réel
+psi_h = F(psi)
+
+# 2) u = (d_y psi, -d_x psi), normalisé à <|u|^2> = 1
+ux, uy = Fi(1j * KY * psi_h), Fi(-1j * KX * psi_h)
+c = np.sqrt(np.mean(ux**2 + uy**2))
+ux, uy = ux / c, uy / c
+
+# 3) Diagnostics : divergence (recalculée depuis la grille), spectre, Parseval
+dxux = Fi(1j * KX * F(ux))
+div = dxux + Fi(1j * KY * F(uy))
+print("max|div u| =", f"{np.abs(div).max():.1e}", "; max|d_x u_x| =", f"{np.abs(dxux).max():.1f}",
+      "; rapport =", f"{np.abs(div).max() / np.abs(dxux).max():.1e}")
+uh2 = (np.abs(F(ux))**2 + np.abs(F(uy))**2) / N**4
+E = np.array([0.5 * uh2[(kn >= s - 0.5) & (kn < s + 0.5)].sum() for s in range(N // 2)])
+s = np.arange(8, 49)
+print("pente du spectre entre k = 8 et 48 :", f"{np.polyfit(np.log(s), np.log(E[s]), 1)[0]:.2f}", "(cible -3)")
+print("Parseval : sum E(k) =", f"{E.sum():.12f}", "; <|u|^2>/2 =", f"{0.5 * np.mean(ux**2 + uy**2):.12f}")
+# sortie :
+# max|div u| = 8.7e-14 ; max|d_x u_x| = 12.4 ; rapport = 7.0e-15
+# pente du spectre entre k = 8 et 48 : -2.95 (cible -3)
+# Parseval : sum E(k) = 0.500000000000 ; <|u|^2>/2 = 0.500000000000
+```
+
+Le champ obtenu est solénoïdal à la précision machine (le rapport de $7\times 10^{-15}$ reflète l'arrondi des FFT sur $256^2$ points) et son spectre a la pente voulue. Construire par potentiel permet donc de contrôler en même temps la contrainte et le spectre ; projeter permet de partir de n'importe quel champ, mais modifie son spectre.
+
+::: note
+[Remarque 6.8 — Pression, méthode de projection et modèles génératifs]{.tag}
+Pour l'équation de Navier–Stokes incompressible, appliquer $\mathbb{P}$ élimine la pression : $\partial_t\mathbf{u} = \mathbb{P}\big[-(\mathbf{u}\cdot\nabla)\mathbf{u} + \mathbf{f}\big] + \nu\Delta\mathbf{u}$. La pression est le multiplicateur de Lagrange de la contrainte $\nabla\cdot\mathbf{u} = 0$. La méthode de projection de Chorin (1968) avance d'abord la vitesse sans pression, puis projette. Les modèles génératifs récents reprennent cette idée : Genuist et al. (2026, préprint) comparent plusieurs façons d'insérer le projecteur de Leray dans un modèle de diffusion pour des écoulements 2D, et concluent qu'aucune stratégie ne domine dans tous les régimes ; Li et al. (2026, préprint) projettent l'estimation débruitée d'un modèle de diffusion de turbulence 3D en rotation et obtiennent une divergence nulle à la précision machine.
+:::
+
+### 6.3 Avec des parois : pourquoi c'est plus difficile
+
+Dans une boîte périodique, $\mathbb{P}$ est **diagonal** en Fourier : chaque vecteur d'onde est traité indépendamment des autres, en $O(1)$ opérations, et la FFT fait le reste. Dès que le domaine possède des parois, plusieurs difficultés apparaissent.
+
+1. **Un problème global.** Il faut résoudre le problème de Neumann (6.1) à chaque projection. Sur un domaine quelconque, les exponentielles $e^{i\mathbf{k}\cdot\mathbf{x}}$ ne sont plus des fonctions propres du laplacien avec condition de Neumann : la valeur de $p$ en un point dépend de $\mathbf{u}$ dans tout le domaine, et il faut un solveur de Poisson (multigrille, éléments finis, méthodes spectrales adaptées). Pour un rectangle, la transformée en cosinus diagonalise encore le problème (code ci-dessous) ; pour un cylindre, on combine Fourier en $\theta$ et un problème 2D en $(r, z)$ pour chaque mode $m$, comme dans SFEMaNS.
+2. **Une seule condition au bord.** La projection impose $\mathbf{w}\cdot\mathbf{n} = 0$, mais pas la nullité de la vitesse tangentielle exigée par l'adhérence d'un fluide visqueux. Les méthodes de projection doivent donc gérer une couche limite numérique au voisinage des parois.
+3. **Plus de commutation.** Dans un domaine borné, $\mathbb{P}$ ne commute plus en général avec le laplacien ni avec les dérivées : l'argument (v) de la proposition 6.6, qui reposait sur des multiplicateurs de Fourier, tombe. Nous admettons ce point.
+4. **Des conditions magnétiques non locales.** Pour le champ magnétique, la bonne condition n'est pas $\mathbf{B}\cdot\mathbf{n} = 0$. Si le conducteur est entouré d'un isolant, le champ extérieur vérifie $\nabla\times\mathbf{B} = \mathbf{0}$ et $\nabla\cdot\mathbf{B} = 0$, donc $\mathbf{B} = \nabla\phi$ avec $\Delta\phi = 0$ hors du conducteur, et il doit se raccorder continûment au champ intérieur : la condition au bord dépend de la solution d'un problème extérieur. Si la perméabilité magnétique $\mu$ saute (turbines en fer doux de VKS), il faut en plus raccorder $\mathbf{B}\cdot\mathbf{n}$ et la composante tangentielle de $\mathbf{H} = \mathbf{B}/\mu$ à travers l'interface. Ces conditions de saut sont traitées explicitement par SFEMaNS.
+5. **Le contournement par pénalisation.** Les codes pseudo-spectraux plongent le cylindre et les turbines dans une boîte périodique et imposent les parois par un terme de pénalisation volumique (Kreuzahler et al., 2014, 2017 : boîte $(3\pi)^3$ et $384^3$ points pour VKS). La projection par FFT reste alors utilisable, au prix d'une représentation approchée des parois.
+
+Le relevé bibliographique du site (synthèse, voir la [page de la thèse](../../these/index.html#theorie)) n'a trouvé aucun modèle génératif imposant une contrainte de divergence dure avec les conditions aux limites d'un cylindre à parois ; c'est l'une des questions ouvertes du projet.
+
+Le code suivant réalise une projection exacte (au sens discret) dans un carré fermé par des parois, avec une grille décalée de type MAC (*marker-and-cell*) : les composantes normales de la vitesse vivent sur les faces des cellules, la pression au centre. Le laplacien discret à cinq points avec condition de Neumann est diagonalisé par la transformée en cosinus de type II (`scipy.fft.dctn`).
+
+```python
+import numpy as np
+from scipy.fft import dctn, idctn
+rng = np.random.default_rng(7)
+
+# Boîte [0,1]^2 fermée par des parois, n x n cellules de côté h (grille décalée « MAC ») :
+#   u (composante x) aux faces verticales : tableau (n+1, n) ; v aux faces horizontales : (n, n+1)
+#   p et div aux centres des cellules : (n, n)
+n = 128
+h = 1.0 / n
+u = rng.normal(size=(n + 1, n))
+v = rng.normal(size=(n, n + 1))
+u[0, :] = u[-1, :] = 0.0                # imperméabilité : u.n = 0 sur les parois
+v[:, 0] = v[:, -1] = 0.0
+
+def divergence(u, v):
+    return (u[1:, :] - u[:-1, :]) / h + (v[:, 1:] - v[:, :-1]) / h
+
+# Problème de Poisson-Neumann discret  Lap_h p = div(u)  avec  dp/dn = 0.
+# Le laplacien à 5 points avec Neumann aux centres est diagonalisé par la DCT de type II.
+lam1 = (2 * np.cos(np.pi * np.arange(n) / n) - 2) / h**2
+lam = lam1[:, None] + lam1[None, :]
+lam[0, 0] = 1.0                          # mode constant : p défini à une constante près
+
+d = divergence(u, v)
+print("compatibilité : somme des divergences * h^2 =", f"{d.sum() * h * h:.1e}")
+ph = dctn(d, type=2, norm="ortho") / lam
+ph[0, 0] = 0.0
+p = idctn(ph, type=2, norm="ortho")
+
+# Correction u <- u - grad_h p sur les faces intérieures (les faces de paroi ne bougent pas)
+u2, v2 = u.copy(), v.copy()
+u2[1:-1, :] -= (p[1:, :] - p[:-1, :]) / h
+v2[:, 1:-1] -= (p[:, 1:] - p[:, :-1]) / h
+a, b = np.abs(d).max(), np.abs(divergence(u2, v2)).max()
+print("max|div| avant =", f"{a:.1e}", "; après =", f"{b:.1e}", "; rapport =", f"{b / a:.1e}")
+print("u.n sur les parois après projection :", np.abs(u2[[0, -1], :]).max(), np.abs(v2[:, [0, -1]]).max())
+# Vitesse tangentielle à la paroi (première rangée de faces u près de y = 0) : non nulle
+print("rms de la vitesse tangentielle près de la paroi y = 0 :", f"{np.sqrt(np.mean(u2[:, 0]**2)):.2f}")
+# sortie :
+# compatibilité : somme des divergences * h^2 = -3.6e-16
+# max|div| avant = 1.1e+03 ; après = 7.0e-13 ; rapport = 6.2e-16
+# u.n sur les parois après projection : 0.0 0.0
+# rms de la vitesse tangentielle près de la paroi y = 0 : 0.59
+```
+
+Trois observations résument la section. La condition de compatibilité de la proposition 6.2 est satisfaite automatiquement (somme nulle à l'arrondi près) parce que la vitesse normale est nulle sur les parois. La divergence discrète est annulée à la précision machine, mais seulement parce que gradient, divergence et laplacien discrets ont été choisis **compatibles** sur la grille décalée. Enfin, la vitesse tangentielle près de la paroi reste d'ordre 1 : la projection n'impose pas l'adhérence. Sur un domaine non rectangulaire, la transformée en cosinus ne s'applique plus et il faudrait un vrai solveur de Poisson.
+
+:::: recap
+::: recap-title
+Ce qu'il faut retenir — chapitre 6
+:::
+- Helmholtz–Hodge : $\mathbf{u} = \mathbf{w} + \nabla p$ avec $\mathbf{w}$ solénoïdal, décomposition unique et orthogonale ; $p$ résout un problème de Neumann.
+- La partie solénoïdale $\mathbb{P}\mathbf{u}$ est le champ solénoïdal le plus proche de $\mathbf{u}$ en norme $L^2$.
+- Sur le tore, $P(\mathbf{k}) = I - \mathbf{k}\mathbf{k}^{\mathsf{T}}/|\mathbf{k}|^2$ : projecteur orthogonal, diagonal en Fourier, qui commute avec les dérivées ; le mode moyen se traite à part.
+- Avec des parois, la projection est un problème de Poisson global, n'impose que la composante normale, ne commute plus avec le laplacien, et le champ magnétique demande des conditions de raccord non locales.
+::::
+

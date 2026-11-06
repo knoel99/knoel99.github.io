@@ -1,0 +1,2232 @@
+{
+ "name": "cadre_b",
+ "mode": "design",
+ "format": "journal",
+ "widthMM": 183,
+ "heightMM": 104,
+ "W": 518.740157480315,
+ "H": 294.80314960629926,
+ "texts": [
+  {
+   "s": "a",
+   "role": "panel",
+   "box": {
+    "x": 1.0842021724855044e-19,
+    "y": 3.68450528383255,
+    "w": 4.500093460083008,
+    "h": 9.000186920166016
+   },
+   "size": 8,
+   "minSize": 8,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "Flow matching latent",
+   "role": "title",
+   "box": {
+    "x": 12,
+    "y": 4.434520840644836,
+    "w": 64.65306091308594,
+    "h": 7.500156402587891
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "λ",
+   "role": "label",
+   "box": {
+    "x": 15.632762908935547,
+    "y": 24.834505558013916,
+    "w": 5.2501091957092285,
+    "h": 9.000188827514648
+   },
+   "size": 8.5,
+   "minSize": 8.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#009E73",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Re",
+   "role": "label",
+   "box": {
+    "x": 4.42570686340332,
+    "y": 113.83453893661499,
+    "w": 7.148586273193359,
+    "h": 6.75014066696167
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "Rm",
+   "role": "label",
+   "box": {
+    "x": 13.652253150939941,
+    "y": 113.83453893661499,
+    "w": 8.695493698120117,
+    "h": 6.75014066696167
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "μr",
+   "role": "label",
+   "box": {
+    "x": 25.04095458984375,
+    "y": 113.83453893661499,
+    "w": 5.320423126220703,
+    "h": 8.318138122558594
+   },
+   "size": 5.6,
+   "minSize": 4.032,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "0",
+   "role": "label",
+   "box": {
+    "x": 68.47067260742188,
+    "y": 134.53453588485718,
+    "w": 3.05865740776062,
+    "h": 6.75014066696167
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "1",
+   "role": "label",
+   "box": {
+    "x": 160.47067260742188,
+    "y": 134.53453588485718,
+    "w": 3.05865740776062,
+    "h": 6.75014066696167
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "t",
+   "role": "label",
+   "box": {
+    "x": 169.5,
+    "y": 127.95953893661499,
+    "w": 2.250046730041504,
+    "h": 6.75014066696167
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "z0 ~ N(0, I)",
+   "role": "label",
+   "box": {
+    "x": 48.95048522949219,
+    "y": 22.58453893661499,
+    "w": 29.14513397216797,
+    "h": 8.430137634277344
+   },
+   "size": 6,
+   "minSize": 4.32,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#5d5370",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "z1",
+   "role": "label",
+   "box": {
+    "x": 165.2987823486328,
+    "y": 22.58453893661499,
+    "w": 5.4024505615234375,
+    "h": 8.430139541625977
+   },
+   "size": 6,
+   "minSize": 4.32,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#6C4BA0",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "B",
+   "role": "label",
+   "box": {
+    "x": 181.3000030517578,
+    "y": 45.09218740463257,
+    "w": 4.500093460083008,
+    "h": 6.75014066696167
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#D55E00",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "−B",
+   "role": "label",
+   "box": {
+    "x": 181.3000030517578,
+    "y": 105.82687902450562,
+    "w": 8.004074096679688,
+    "h": 6.7501373291015625
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#D55E00",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "S",
+   "role": "label",
+   "box": {
+    "x": 191.1999969482422,
+    "y": 75.08452367782593,
+    "w": 4.500105381011963,
+    "h": 7.500156402587891
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "vθ(z, t, λ)",
+   "role": "label",
+   "box": {
+    "x": 103.964599609375,
+    "y": 17.61953604221344,
+    "w": 24.316909790039062,
+    "h": 8.430140495300293
+   },
+   "size": 6,
+   "minSize": 4.32,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#6C4BA0",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "C3",
+   "role": "label",
+   "box": {
+    "x": 72.66789245605469,
+    "y": 133.459538936615,
+    "w": 8.074718475341797,
+    "h": 6.75014066696167
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "symétrie : équivariance",
+   "role": "label",
+   "box": {
+    "x": 86,
+    "y": 133.459538936615,
+    "w": 57.481658935546875,
+    "h": 6.75014066696167
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "b",
+   "role": "panel",
+   "box": {
+    "x": 209.76377868652344,
+    "y": 3.68450528383255,
+    "w": 5.2501091957092285,
+    "h": 9.000186920166016
+   },
+   "size": 8,
+   "minSize": 8,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "Décodeur à potentiels (banc d’essai MHD 2D)",
+   "role": "title",
+   "box": {
+    "x": 221.76377868652344,
+    "y": 4.434520840644836,
+    "w": 139.70469665527344,
+    "h": 7.500156402587891
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "z1",
+   "role": "label",
+   "box": {
+    "x": 216.1625509262085,
+    "y": 47.58453893661499,
+    "w": 5.402457237243652,
+    "h": 8.430137634277344
+   },
+   "size": 6,
+   "minSize": 4.32,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#6C4BA0",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Attentioncroisée",
+   "role": "label",
+   "box": {
+    "x": 236.73034477233887,
+    "y": 72.23953890800476,
+    "w": 22.066865921020508,
+    "h": 13.190132141113281
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "x",
+   "role": "label",
+   "box": {
+    "x": 250.91376495361328,
+    "y": 110.05953741073608,
+    "w": 4.500093460083008,
+    "h": 6.75014066696167
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "Au",
+   "role": "label",
+   "box": {
+    "x": 273.6230888366699,
+    "y": 69.58453893661499,
+    "w": 6.293102264404297,
+    "h": 8.318138122558594
+   },
+   "size": 5.6,
+   "minSize": 4.032,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#0072B2",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "∇×",
+   "role": "label",
+   "box": {
+    "x": 338.25782775878906,
+    "y": 70.08453893661499,
+    "w": 8.506010055541992,
+    "h": 6.75014066696167
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "∇×",
+   "role": "label",
+   "box": {
+    "x": 474.25782775878906,
+    "y": 70.08453893661499,
+    "w": 8.505998611450195,
+    "h": 6.75014066696167
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "ψ",
+   "role": "label",
+   "box": {
+    "x": 307.39654541015625,
+    "y": 46.83452367782593,
+    "w": 5.2501091957092285,
+    "h": 7.500156402587891
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#0072B2",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "u",
+   "role": "label",
+   "box": {
+    "x": 373.7774200439453,
+    "y": 46.83452367782593,
+    "w": 3.9727389812469482,
+    "h": 7.500156402587891
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#0072B2",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "a",
+   "role": "label",
+   "box": {
+    "x": 443.9532012939453,
+    "y": 46.83452367782593,
+    "w": 3.7500782012939453,
+    "h": 7.500156402587891
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#D55E00",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "B",
+   "role": "label",
+   "box": {
+    "x": 509.4141387939453,
+    "y": 46.83452367782593,
+    "w": 4.699316501617432,
+    "h": 7.500156402587891
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#D55E00",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "∇·u = ∇·B = 0",
+   "role": "label",
+   "box": {
+    "x": 424.5153350830078,
+    "y": 105.58453893661499,
+    "w": 38.16127014160156,
+    "h": 6.7501373291015625
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "C1",
+   "role": "label",
+   "box": {
+    "x": 356.4316711425781,
+    "y": 133.459538936615,
+    "w": 8.074718475341797,
+    "h": 6.75014066696167
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "divergence nulle : exacte",
+   "role": "label",
+   "box": {
+    "x": 369.76377868652344,
+    "y": 133.459538936615,
+    "w": 61.84113311767578,
+    "h": 6.75014066696167
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "c",
+   "role": "panel",
+   "box": {
+    "x": 1.0842021724855044e-19,
+    "y": 151.08608084917068,
+    "w": 4.500093460083008,
+    "h": 9.000186920166016
+   },
+   "size": 8,
+   "minSize": 8,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "Cible 3D : dynamo VKS",
+   "role": "title",
+   "box": {
+    "x": 12,
+    "y": 151.83609640598297,
+    "w": 71.95938110351562,
+    "h": 7.500156402587891
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "Turbinescontrarotatives",
+   "role": "label",
+   "box": {
+    "x": 130,
+    "y": 169.557114481926,
+    "w": 36.86741638183594,
+    "h": 13.358139038085938
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "stage : 3 modes, MHD 2D",
+   "role": "label",
+   "box": {
+    "x": 10,
+    "y": 274.8611145019531,
+    "w": 64.77241516113281,
+    "h": 6.75014066696167
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "d",
+   "role": "panel",
+   "box": {
+    "x": 175.74803161621097,
+    "y": 151.08608084917068,
+    "w": 4.886820316314697,
+    "h": 9.000186920166016
+   },
+   "size": 8,
+   "minSize": 8,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "Contrôle en loi",
+   "role": "title",
+   "box": {
+    "x": 187.74803161621097,
+    "y": 151.83609640598297,
+    "w": 45.44625473022461,
+    "h": 7.500156402587891
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "ε",
+   "role": "label",
+   "box": {
+    "x": 273.24803924560547,
+    "y": 238.4860992431641,
+    "w": 3.0000624656677246,
+    "h": 7.500156402587891
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "E[P]",
+   "role": "label",
+   "box": {
+    "x": 209.09025573730472,
+    "y": 245.4361114501953,
+    "w": 10.40646743774414,
+    "h": 6.750144958496094
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "E[ε] = E[P]",
+   "role": "label",
+   "box": {
+    "x": 200.23655700683597,
+    "y": 166.9861125946045,
+    "w": 28.113861083984375,
+    "h": 6.750141143798828
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "qθ",
+   "role": "label",
+   "box": {
+    "x": 245.74803161621097,
+    "y": 208.98611450195312,
+    "w": 5.543083190917969,
+    "h": 8.374137878417969
+   },
+   "size": 5.8,
+   "minSize": 4.176,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#7a7a7a",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "en loi",
+   "role": "label",
+   "box": {
+    "x": 302.0623550415039,
+    "y": 207.98611450195312,
+    "w": 13.621647834777832,
+    "h": 6.75014066696167
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "par échantillon",
+   "role": "label",
+   "box": {
+    "x": 290.5660171508789,
+    "y": 257.9861145019531,
+    "w": 36.364036560058594,
+    "h": 6.75014066696167
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "P − ε",
+   "role": "label",
+   "box": {
+    "x": 302.46080017089844,
+    "y": 268.9861145019531,
+    "w": 13.113555908203125,
+    "h": 6.7501373291015625
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "C4",
+   "role": "label",
+   "box": {
+    "x": 186.4159212112427,
+    "y": 270.8611145019531,
+    "w": 8.074718475341797,
+    "h": 6.75014066696167
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "énergie : en loi",
+   "role": "label",
+   "box": {
+    "x": 199.74803161621097,
+    "y": 270.8611145019531,
+    "w": 36.92866897583008,
+    "h": 6.75014066696167
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "e",
+   "role": "panel",
+   "box": {
+    "x": 340.15747070312506,
+    "y": 151.08608084917068,
+    "w": 4.500093460083008,
+    "h": 9.000186920166016
+   },
+   "size": 8,
+   "minSize": 8,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "Usages en aval",
+   "role": "title",
+   "box": {
+    "x": 352.15747070312506,
+    "y": 151.83609640598297,
+    "w": 46.922847747802734,
+    "h": 7.500156402587891
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#2b2b2b",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "Modèlesréduits",
+   "role": "label",
+   "box": {
+    "x": 346.15747070312506,
+    "y": 216.98611450195312,
+    "w": 21.33395767211914,
+    "h": 13.190132141113281
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Assimilationde données",
+   "role": "label",
+   "box": {
+    "x": 402.15747070312506,
+    "y": 216.98611450195312,
+    "w": 29.824844360351562,
+    "h": 13.190132141113281
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Renversements(Rice)",
+   "role": "label",
+   "box": {
+    "x": 464.15747070312506,
+    "y": 216.98611450195312,
+    "w": 39.351226806640625,
+    "h": 13.190132141113281
+   },
+   "size": 5.6,
+   "minSize": 5.6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  }
+ ],
+ "strokes": [
+  {
+   "w": 1.8,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 1.8,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.7,
+   "tag": "circle",
+   "part": ""
+  },
+  {
+   "w": 1.8,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 1.8,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.7,
+   "tag": "circle",
+   "part": ""
+  },
+  {
+   "w": 1.8,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 1.8,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.7,
+   "tag": "circle",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.7,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.42,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.8,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.8,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.45,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.7,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.4375,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.7,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 1,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.5875,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.3625,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.35,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.35,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.35,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.5,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 1.4,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.35,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.7,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.7,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.7,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.7,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "polyline",
+   "part": "callout"
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.6,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.4,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.9,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.9,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.9,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 1.6,
+   "tag": "path",
+   "part": ""
+  },
+  {
+   "w": 1.6,
+   "tag": "path",
+   "part": ""
+  }
+ ],
+ "images": [],
+ "anchors": {
+  "flow.in": {
+   "x": 74,
+   "y": 29.834645748138435
+  },
+  "flow.vtheta": {
+   "x": 116,
+   "y": 28.834645748138435
+  },
+  "flow.out": {
+   "x": 195.9,
+   "y": 78.83464574813843
+  },
+  "flow.top": {
+   "x": 116,
+   "y": 22.834645748138435
+  },
+  "vks.left": {
+   "x": 11.200000000000003,
+   "y": 224.23622131347656
+  },
+  "vks.right": {
+   "x": 118.3,
+   "y": 224.23622131347656
+  },
+  "vks.top": {
+   "x": 52,
+   "y": 176.95088863552965
+  },
+  "vks.imp": {
+   "x": 70.7,
+   "y": 201.87740379761777
+  },
+  "vks.impB": {
+   "x": 70.7,
+   "y": 259.3865921897154
+  }
+ },
+ "relations": [],
+ "drawn": [],
+ "panels": [
+  {
+   "label": "a",
+   "x": 0,
+   "y": 2.834645669291339,
+   "w": 209.76377952755908,
+   "h": 141.73228346456693
+  },
+  {
+   "label": "b",
+   "x": 209.76377952755908,
+   "y": 2.834645669291339,
+   "w": 308.9763779527559,
+   "h": 141.73228346456693
+  },
+  {
+   "label": "c",
+   "x": 0,
+   "y": 150.23622047244095,
+   "w": 175.74803149606302,
+   "h": 141.73228346456693
+  },
+  {
+   "label": "d",
+   "x": 175.74803149606302,
+   "y": 150.23622047244095,
+   "w": 164.40944881889766,
+   "h": 141.73228346456693
+  },
+  {
+   "label": "e",
+   "x": 340.15748031496065,
+   "y": 150.23622047244095,
+   "w": 178.58267716535434,
+   "h": 141.73228346456693
+  }
+ ]
+}

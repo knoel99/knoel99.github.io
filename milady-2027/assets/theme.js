@@ -6,11 +6,22 @@
       the section being read is highlighted and named in the top bar.
    3. Tables: wrapped so they scroll sideways on phones; two-column
       key / value tables (course fiches) stack on narrow screens.
-   Textes d'interface en français. */
+   4. Langue : textes d'interface en français ou en anglais selon <html lang>,
+      bouton FR / EN vers la page homologue (même chemin sous en/).
+   Interface strings follow <html lang> (fr or en). */
 (function () {
   var KEY = "milady-theme";
   var TOC_KEY = "milady-toc-hidden";
   var root = document.documentElement;
+  var LANG = /^en/i.test(root.getAttribute("lang") || "") ? "en" : "fr";
+  var T = {
+    fr: { toLight: "Passer en mode clair", toDark: "Passer en mode sombre", light: "Clair", dark: "Sombre",
+          contents: "Sommaire", skip: "Aller au contenu", close: "✕ Fermer", closeLabel: "Fermer le sommaire",
+          top: "↑ Haut de page", other: "EN", otherLabel: "English version" },
+    en: { toLight: "Switch to light mode", toDark: "Switch to dark mode", light: "Light", dark: "Dark",
+          contents: "Contents", skip: "Skip to content", close: "✕ Close", closeLabel: "Close the contents",
+          top: "↑ Top of page", other: "FR", otherLabel: "Version française" }
+  }[LANG];
 
   function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
   function read(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -30,11 +41,11 @@
     var btn = document.getElementById("theme-toggle");
     if (!btn) return;
     var dark = theme === "dark";
-    btn.setAttribute("aria-label", dark ? "Passer en mode clair" : "Passer en mode sombre");
-    btn.setAttribute("title", dark ? "Passer en mode clair" : "Passer en mode sombre");
+    btn.setAttribute("aria-label", dark ? T.toLight : T.toDark);
+    btn.setAttribute("title", dark ? T.toLight : T.toDark);
     btn.setAttribute("aria-pressed", dark ? "true" : "false");
     btn.innerHTML = '<span aria-hidden="true">' + (dark ? "☀" : "☾") + '</span><span class="tb-label">' +
-      (dark ? "Clair" : "Sombre") + "</span>";
+      (dark ? T.light : T.dark) + "</span>";
   }
   applyTheme(currentTheme(), false);
 
@@ -57,16 +68,16 @@
     var bar = el("header", "topbar");
     bar.innerHTML =
       '<button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false">' +
-      '<span aria-hidden="true">☰</span><span class="tb-label">Sommaire</span></button>' +
+      '<span aria-hidden="true">☰</span><span class="tb-label">' + T.contents + '</span></button>' +
       '<a class="brand" href="#top">MilaDy<span class="brand-sub"> · 2027</span></a>' +
       '<span class="tb-title" id="tb-title"></span>' +
       '<button type="button" class="tb-btn" id="theme-toggle"></button>';
-    var skip = el("a", "skip", "Aller au contenu");
+    var skip = el("a", "skip", T.skip);
     skip.href = "#main";
     var layout = el("div", "layout");
     var nav = el("nav", "sidetoc");
     nav.id = "sidetoc";
-    nav.setAttribute("aria-label", "Sommaire");
+    nav.setAttribute("aria-label", T.contents);
     main.parentNode.insertBefore(layout, main);
     layout.appendChild(nav);
     layout.appendChild(main);
@@ -85,13 +96,13 @@
     if (!heads.length) return [];
     nav.innerHTML = "";
     var head = el("div", "sidetoc-head");
-    var title = el("p", "sidetoc-title", "Sommaire");
-    var x = el("button", "sidetoc-close", "✕ Fermer");
+    var title = el("p", "sidetoc-title", T.contents);
+    var x = el("button", "sidetoc-close", T.close);
     x.type = "button";
-    x.setAttribute("aria-label", "Fermer le sommaire");
+    x.setAttribute("aria-label", T.closeLabel);
     head.appendChild(title);
     head.appendChild(x);
-    var top = el("a", "sidetoc-top", "↑ Haut de page");
+    var top = el("a", "sidetoc-top", T.top);
     top.href = "#top";
     nav.appendChild(head);
     var list = el("ol", "sidetoc-list");
@@ -249,7 +260,33 @@
   window.addEventListener("load", fitFormulas);
   window.addEventListener("resize", scheduleFit);
 
+  /* ---------- 5. Language toggle: same path under en/ ---------- */
+  function siteRoot() {
+    var s = document.querySelector('script[src$="assets/theme.js"]');
+    if (!s) return null;
+    return s.src.replace(/assets\/theme\.js(\?.*)?$/, "");
+  }
+  function addLangToggle() {
+    var bar = document.querySelector(".topbar");
+    var rootUrl = siteRoot();
+    if (!bar || !rootUrl || document.getElementById("lang-toggle")) return;
+    var here = window.location.href.split("#")[0].split("?")[0];
+    if (here.indexOf(rootUrl) !== 0) return;
+    var rel = here.slice(rootUrl.length);
+    var other = /^en\//.test(rel) ? rel.slice(3) : "en/" + rel;
+    var a = el("a", "tb-btn lang-btn", null);
+    a.id = "lang-toggle";
+    a.href = rootUrl + other + window.location.hash;
+    a.setAttribute("hreflang", LANG === "fr" ? "en" : "fr");
+    a.setAttribute("title", T.otherLabel);
+    a.setAttribute("aria-label", T.otherLabel);
+    a.innerHTML = '<span class="tb-label-always">' + T.other + "</span>";
+    var theme = document.getElementById("theme-toggle");
+    if (theme) bar.insertBefore(a, theme); else bar.appendChild(a);
+  }
+
   function mount() {
+    addLangToggle();
     setupTables();
     setupToc();
     var btn = document.getElementById("theme-toggle");
