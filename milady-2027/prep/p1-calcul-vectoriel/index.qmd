@@ -1,0 +1,385 @@
+---
+title: "Calcul vectoriel et analyse de Fourier"
+subtitle: "Préparation · niveau L1 → L2 · ≈ 20 h"
+lang: fr
+format:
+  html:
+    theme: none
+    minimal: true
+    toc: false
+    anchor-sections: false
+    html-math-method:
+      method: katex
+      url: "https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js"
+    highlight-style: github
+    embed-resources: false
+    css: ../../assets/paper.css
+    include-in-header:
+      - text: |
+          <meta name="color-scheme" content="light dark">
+          <script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    include-before-body:
+      - text: |
+          <a class="skip" href="#main">Aller au contenu</a>
+          <header class="topbar">
+            <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Sommaire</span></button>
+            <a class="brand" href="../../index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+            <span class="tb-title" id="tb-title"></span>
+            <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Thème</span></button>
+          </header>
+          <div class="layout">
+          <nav class="sidetoc" id="sidetoc" aria-label="Sommaire"></nav>
+          <main class="paper" id="main">
+    include-after-body:
+      - text: |
+          </main>
+          </div>
+          <footer class="foot"><p><a href="../../index.html">← Accueil</a> · <a href="../../prep/index.html">Préparation</a> · <a href="../../encadrants/index.html">Encadrants</a> · <a href="../../rapport/index.html">Rapport de stage</a> · <a href="../../these/index.html">Sujet de thèse</a> · <a href="../../experiences/index.html">Expériences</a></p></footer>
+          <script defer src="../../assets/theme.js"></script>
+---
+
+## Objectifs {#objectifs}
+
+Ce module pose les outils mathématiques sur lesquels repose tout le reste du parcours. À la fin des vingt heures de travail prévues, vous saurez :
+
+1. calculer le gradient, la divergence, le rotationnel et le laplacien d'un champ donné, en coordonnées cartésiennes puis cylindriques, et interpréter physiquement chacun de ces opérateurs ;
+2. démontrer les identités $\nabla\times(\nabla f) = \mathbf{0}$, $\nabla\cdot(\nabla\times\mathbf{u}) = 0$ et $\nabla\times(\nabla\times\mathbf{u}) = \nabla(\nabla\cdot\mathbf{u}) - \Delta\mathbf{u}$, ainsi que les formules de produits, à l'aide du symbole de Levi-Civita ;
+3. appliquer les théorèmes de Green–Ostrogradski et de Stokes pour calculer un flux ou une circulation, et expliquer pourquoi $\nabla\cdot\mathbf{B} = 0$ signifie qu'il n'existe pas de monopôle magnétique ;
+4. construire un champ à divergence nulle à partir d'une fonction de courant (en 2D) ou d'un potentiel vecteur (en 3D), et choisir la jauge de Coulomb ;
+5. calculer une série de Fourier et une transformée de Fourier discrète avec NumPy, dériver un champ périodique par méthode spectrale, vérifier l'égalité de Parseval, et expliquer le repliement de spectre et la règle des 2/3 ;
+6. énoncer la décomposition de Helmholtz–Hodge, la démontrer dans une boîte périodique par Fourier, et programmer la projection de Leray en 2D et en 3D ;
+7. expliquer pourquoi la projection sur les champs à divergence nulle devient un problème de Poisson global dès que le domaine possède des parois.
+
+## Prérequis {#prerequis}
+
+Le point de départ est le niveau de fin de première année de licence scientifique (L1). Il faut être à l'aise avec les dérivées et les primitives des fonctions d'une variable, les développements limités, les intégrales simples et doubles sur un rectangle, les nombres complexes et l'exponentielle $e^{i\theta}$, le produit scalaire et le produit vectoriel dans $\mathbb{R}^3$.
+
+Côté programmation, il suffit de savoir manipuler des tableaux NumPy, écrire une boucle et une fonction en Python. PyTorch n'est utilisé que pour sa différentiation automatique (`torch.autograd.grad`), présentée au chapitre 1.
+
+Aucun autre module du site n'est requis : celui-ci est le premier du parcours. Il sert ensuite directement aux modules [Mécanique des fluides et turbulence](../p2-mecanique-fluides/index.html), [Électromagnétisme, MHD et effet dynamo](../p3-mhd-dynamo/index.html), [Apprentissage profond pour la physique](../p6-apprentissage-profond/index.html) et [Modèles génératifs sous contraintes physiques](../p8-contraintes-physiques/index.html).
+
+## Plan de travail {#plan}
+
+Le niveau indique la difficulté : 1 pour les fondations, 2 pour le cœur du module, 3 pour ce qui touche déjà aux questions de recherche du stage. Il ne redescend jamais d'une séance à la suivante.
+
+| Séance | Durée | Niveau | Contenu | Exercices |
+|:---:|:---:|:---:|---|:---:|
+| 1 | 3 h | 1 | Chapitre 1, sections 1.1 à 1.4 : champs, dérivées partielles, gradient, divergence, rotationnel, laplacien, notation indicielle | 1, 2 |
+| 2 | 2 h | 1 | Chapitre 1, section 1.5 : coordonnées cylindriques, décomposition azimutale de Fourier | 3 |
+| 3 | 3 h | 2 | Chapitre 2 : identités vectorielles, formules de produits, équation d'induction | 4, 5 |
+| 4 | 3 h | 2 | Chapitre 3 : flux, circulation, théorèmes de Green–Ostrogradski et de Stokes, sens de $\nabla\cdot\mathbf{B} = 0$, bilan d'énergie | 6, 7, 8 |
+| 5 | 2,5 h | 2 | Chapitre 4 : fonction de courant, potentiel vecteur, jauge de Coulomb, décomposition poloïdale–toroïdale | 9, 10 |
+| 6 | 3,5 h | 2 | Chapitre 5 : séries de Fourier, TFD, FFT, dérivation spectrale, Parseval, repliement, règle des 2/3 | 11, 12, 13 |
+| 7 | 3 h | 3 | Chapitre 6 : Helmholtz–Hodge, projection de Leray, parois et problème de Poisson–Neumann | 14, 15 |
+| **Total** | **20 h** | | 6 chapitres | 15 exercices |
+
+Chaque séance se termine par les exercices indiqués, à faire avant de lire leur solution. Les blocs de code sont courts (moins de 30 secondes chacun sur un ordinateur portable) : recopiez-les, exécutez-les, puis modifiez-les.
+
+## 1. Champs scalaires et vectoriels, opérateurs différentiels {#ch1}
+
+En magnétohydrodynamique (MHD), l'état d'un fluide conducteur est décrit par deux champs vectoriels, la vitesse $\mathbf{u}(\mathbf{x}, t)$ et le champ magnétique $\mathbf{B}(\mathbf{x}, t)$. Les lois physiques comme les contraintes visées par le stage (« divergence nulle ») s'écrivent avec quatre opérateurs : gradient, divergence, rotationnel et laplacien. Ce chapitre les définit, les interprète, puis les exprime dans les deux systèmes de coordonnées utiles au stage : cartésien, pour les boîtes périodiques, et cylindrique, pour la géométrie des expériences de dynamo comme VKS (von Kármán Sodium).
+
+### 1.1 Champs et dérivées partielles
+
+::: def
+[Définition 1.1 — Champ scalaire, champ vectoriel, ligne de champ]{.tag}
+Soit $\Omega \subset \mathbb{R}^d$ un domaine ($d = 2$ ou $3$). Un **champ scalaire** est une fonction $f : \Omega \to \mathbb{R}$ (température, pression, fonction de courant). Un **champ vectoriel** est une fonction $\mathbf{u} : \Omega \to \mathbb{R}^d$ qui associe un vecteur à chaque point (vitesse, champ magnétique). Une **ligne de champ** de $\mathbf{u}$ est une courbe $s \mapsto \mathbf{x}(s)$ tangente au champ en chacun de ses points :
+
+$$
+\frac{\mathrm{d}\mathbf{x}}{\mathrm{d}s} = \mathbf{u}(\mathbf{x}(s)).
+$$
+
+Pour un champ de vitesse stationnaire, les lignes de champ sont les trajectoires des particules fluides ; on les appelle alors lignes de courant.
+:::
+
+::: def
+[Définition 1.2 — Dérivée partielle]{.tag}
+La dérivée partielle de $f$ par rapport à $x$ au point $(x, y, z)$ est la dérivée de la fonction d'une variable obtenue en gelant $y$ et $z$ :
+
+$$
+\partial_x f(x, y, z) = \lim_{h \to 0} \frac{f(x + h, y, z) - f(x, y, z)}{h}.
+$$
+
+On note $\partial_i = \partial / \partial x_i$ avec $(x_1, x_2, x_3) = (x, y, z)$. Une fonction est de classe $C^k$ si toutes ses dérivées partielles jusqu'à l'ordre $k$ existent et sont continues.
+:::
+
+:::: thm
+[Théorème 1.3 — Schwarz]{.tag}
+Si $f$ est de classe $C^2$ sur un ouvert, ses dérivées croisées sont égales : $\partial_i \partial_j f = \partial_j \partial_i f$ pour tous $i, j$.
+
+::: proof
+Résultat classique d'analyse de L2, admis ici ; une démonstration accessible se trouve dans les notes de cours de Tong (voir les Sources). Toutes les identités du chapitre 2 en découlent. [∎]{.qed}
+:::
+::::
+
+::: ex
+[Exemple 1.4 — Dérivées croisées]{.tag}
+Pour $f(x, y) = x^2 y + \sin(xy)$, on trouve $\partial_x f = 2xy + y\cos(xy)$ et $\partial_y f = x^2 + x\cos(xy)$. En dérivant la première par rapport à $y$ et la seconde par rapport à $x$, on obtient dans les deux cas $2x + \cos(xy) - xy\sin(xy)$, comme l'annonce le théorème de Schwarz.
+:::
+
+### 1.2 Le gradient
+
+::: def
+[Définition 1.5 — Gradient]{.tag}
+Le gradient d'un champ scalaire $f$ de classe $C^1$ est le champ vectoriel
+
+$$
+\nabla f = (\partial_x f, \; \partial_y f, \; \partial_z f).
+$$
+
+Le symbole $\nabla$ (« nabla ») désigne le vecteur d'opérateurs $(\partial_x, \partial_y, \partial_z)$.
+:::
+
+:::: prop
+[Proposition 1.6 — Trois lectures du gradient]{.tag}
+Soit $f$ de classe $C^1$.
+
+(i) Pour un petit déplacement $\mathbf{h}$, on a $f(\mathbf{x} + \mathbf{h}) = f(\mathbf{x}) + \nabla f(\mathbf{x})\cdot\mathbf{h} + o(|\mathbf{h}|)$.
+
+(ii) Parmi toutes les directions unitaires $\mathbf{e}$, la dérivée directionnelle $\nabla f\cdot\mathbf{e}$ est maximale pour $\mathbf{e} = \nabla f / |\nabla f|$, et ce maximum vaut $|\nabla f|$.
+
+(iii) Le gradient est orthogonal aux surfaces de niveau $\{f = c\}$.
+
+::: proof
+Le point (i) est la définition de la différentiabilité, que garantit la continuité des dérivées partielles (admis). Pour (ii), l'inégalité de Cauchy–Schwarz donne $\nabla f\cdot\mathbf{e} \le |\nabla f|\,|\mathbf{e}| = |\nabla f|$, avec égalité si et seulement si $\mathbf{e}$ est colinéaire à $\nabla f$ et de même sens. Pour (iii), soit $s \mapsto \mathbf{x}(s)$ une courbe tracée sur la surface $\{f = c\}$. Alors $f(\mathbf{x}(s)) = c$ pour tout $s$ ; en dérivant par la règle de dérivation des fonctions composées, $\nabla f\cdot\mathbf{x}'(s) = 0$. Le gradient est donc orthogonal à tout vecteur tangent à la surface. [∎]{.qed}
+:::
+::::
+
+Par exemple, pour $f = x^2 + y^2 + z^2$, on trouve $\nabla f = 2\mathbf{x}$ : les surfaces de niveau sont des sphères centrées en l'origine et le gradient est radial, donc orthogonal à ces sphères.
+
+### 1.3 Divergence, rotationnel et laplacien
+
+::: def
+[Définition 1.7 — Divergence, rotationnel, laplacien]{.tag}
+Pour un champ vectoriel $\mathbf{u} = (u_x, u_y, u_z)$ de classe $C^1$, la **divergence** est le champ scalaire
+
+$$
+\nabla\cdot\mathbf{u} = \partial_x u_x + \partial_y u_y + \partial_z u_z,
+$$
+
+et le **rotationnel** est le champ vectoriel
+
+$$
+\nabla\times\mathbf{u} = \left(\partial_y u_z - \partial_z u_y, \;\; \partial_z u_x - \partial_x u_z, \;\; \partial_x u_y - \partial_y u_x\right).
+$$
+
+Le **laplacien** d'un champ scalaire $f$ de classe $C^2$ est $\Delta f = \nabla\cdot(\nabla f) = \partial_x^2 f + \partial_y^2 f + \partial_z^2 f$. En coordonnées **cartésiennes** seulement, le laplacien d'un champ vectoriel s'obtient composante par composante : $\Delta\mathbf{u} = (\Delta u_x, \Delta u_y, \Delta u_z)$.
+:::
+
+Un moyen mnémotechnique : le rotationnel est le « produit vectoriel » formel $\nabla\times\mathbf{u}$, que l'on peut calculer comme un déterminant $3\times 3$ dont la première ligne contient les vecteurs de base, la deuxième les opérateurs $\partial_x, \partial_y, \partial_z$ et la troisième les composantes de $\mathbf{u}$. On appelle **vorticité** le rotationnel de la vitesse, $\boldsymbol\omega = \nabla\times\mathbf{u}$, et **densité de courant** celui du champ magnétique, $\mathbf{j} = \nabla\times\mathbf{B}$ (en unités où $\mu_0 = 1$).
+
+:::: prop
+[Proposition 1.8 — Sens physique des trois opérateurs]{.tag}
+(i) **Divergence.** Un petit volume $\delta V$ transporté par l'écoulement $\mathbf{u}$ évolue selon $\frac{\mathrm{d}}{\mathrm{d}t}\delta V = (\nabla\cdot\mathbf{u})\,\delta V$ au premier ordre. Un champ de vitesse à divergence nulle conserve donc les volumes : c'est un écoulement **incompressible**.
+
+(ii) **Rotationnel.** Pour une rotation solide de vecteur vitesse angulaire $\boldsymbol\Omega$, c'est-à-dire $\mathbf{u} = \boldsymbol\Omega\times\mathbf{x}$, on a $\nabla\times\mathbf{u} = 2\boldsymbol\Omega$. La vorticité mesure donc le double de la vitesse angulaire locale du fluide.
+
+(iii) **Laplacien.** La moyenne de $f$ sur une petite sphère de rayon $\varepsilon$ centrée en $\mathbf{x}$ vaut $f(\mathbf{x}) + \frac{\varepsilon^2}{2d}\Delta f(\mathbf{x}) + O(\varepsilon^4)$ en dimension $d$. Le laplacien mesure l'écart entre la valeur moyenne au voisinage et la valeur au point ; c'est pourquoi il décrit la diffusion, qui lisse les champs.
+
+::: proof
+(i) Esquisse. Prenons un petit pavé d'arêtes $\delta x, \delta y, \delta z$ parallèles aux axes. L'arête $\delta x$ s'allonge à la vitesse $u_x(x + \delta x) - u_x(x) \approx \partial_x u_x\,\delta x$, et de même pour les deux autres. Les cisaillements déforment le pavé mais ne changent pas son volume au premier ordre. Donc $\frac{\mathrm{d}}{\mathrm{d}t}(\delta x\,\delta y\,\delta z) \approx (\partial_x u_x + \partial_y u_y + \partial_z u_z)\,\delta x\,\delta y\,\delta z$.
+
+(ii) Calcul direct : $\boldsymbol\Omega\times\mathbf{x} = (\Omega_y z - \Omega_z y, \;\Omega_z x - \Omega_x z, \;\Omega_x y - \Omega_y x)$, d'où $(\nabla\times\mathbf{u})_x = \partial_y(\Omega_x y - \Omega_y x) - \partial_z(\Omega_z x - \Omega_x z) = \Omega_x + \Omega_x = 2\Omega_x$, et de même pour les deux autres composantes.
+
+(iii) On écrit le développement de Taylor $f(\mathbf{x} + \mathbf{h}) = f + \nabla f\cdot\mathbf{h} + \frac12 \sum_{i,j} h_i h_j \partial_i\partial_j f + O(|\mathbf{h}|^3)$ et on moyenne sur la sphère $|\mathbf{h}| = \varepsilon$. Par symétrie, la moyenne de $h_i$ est nulle et celle de $h_i h_j$ vaut $\varepsilon^2\delta_{ij}/d$ (les $d$ directions jouent le même rôle et $\sum_i h_i^2 = \varepsilon^2$). Le terme cubique a une moyenne nulle par imparité. Il reste $f + \frac{\varepsilon^2}{2d}\sum_i \partial_i^2 f + O(\varepsilon^4)$. [∎]{.qed}
+:::
+::::
+
+::: ex
+[Exemple 1.9 — Trois champs plans élémentaires]{.tag}
+Le champ $\mathbf{u} = (x, y, 0)$ est une **source** : $\nabla\cdot\mathbf{u} = 2$ et $\nabla\times\mathbf{u} = \mathbf{0}$. Le champ $\mathbf{u} = (-y, x, 0)$ est une **rotation solide** de vitesse angulaire $1$ autour de $\mathbf{e}_z$ : $\nabla\cdot\mathbf{u} = 0$ et $\nabla\times\mathbf{u} = (0, 0, 2)$. Le champ de **cisaillement** $\mathbf{u} = (y, 0, 0)$ a des lignes de courant droites, et pourtant $\nabla\times\mathbf{u} = (0, 0, -1)$ : une petite roue à aubes placée dans cet écoulement tourne (exercice 2).
+:::
+
+::: ex
+[Exemple 1.10 — L'écoulement ABC]{.tag}
+L'écoulement ABC (Arnold–Beltrami–Childress), étudié en détail par Dombre et al. (1986), est défini sur le cube périodique $[0, 2\pi)^3$ par
+
+$$
+\mathbf{u} = \big(A\sin z + C\cos y, \;\; B\sin x + A\cos z, \;\; C\sin y + B\cos x\big).
+$$
+
+Chaque composante ne dépend pas de la coordonnée de même nom, donc $\nabla\cdot\mathbf{u} = 0$. La première composante du rotationnel vaut $\partial_y u_z - \partial_z u_y = C\cos y + A\sin z = u_x$, et un calcul identique pour les deux autres donne
+
+$$
+\nabla\times\mathbf{u} = \mathbf{u}.
+$$
+
+Un champ colinéaire à son rotationnel est appelé **champ de Beltrami**. Sa densité d'hélicité $\mathbf{u}\cdot\boldsymbol\omega = |\mathbf{u}|^2$ est partout positive, et sa moyenne vaut $\langle|\mathbf{u}|^2\rangle = A^2 + B^2 + C^2$ (la moyenne de $\sin^2$ et de $\cos^2$ sur une période vaut $1/2$, celle des produits croisés est nulle). C'est l'écoulement utilisé pour la dynamo cinématique de l'expérience E3 du dépôt (voir le [rapport](../../rapport/index.html#e3)).
+:::
+
+### 1.4 Notation indicielle
+
+Les calculs en composantes deviennent vite illisibles. La notation indicielle les rend mécaniques ; elle sera l'outil principal du chapitre 2.
+
+::: def
+[Définition 1.11 — Convention d'Einstein, symboles de Kronecker et de Levi-Civita]{.tag}
+Dans un produit, un indice répété deux fois est sommé de 1 à 3 : $a_i b_i = \sum_{i=1}^3 a_i b_i$. Le symbole de Kronecker $\delta_{ij}$ vaut 1 si $i = j$ et 0 sinon. Le symbole de Levi-Civita $\varepsilon_{ijk}$ vaut $+1$ si $(i, j, k)$ est une permutation paire de $(1, 2, 3)$, $-1$ si elle est impaire, et $0$ si deux indices sont égaux. Avec ces notations :
+
+$$
+(\nabla f)_i = \partial_i f, \qquad \nabla\cdot\mathbf{u} = \partial_i u_i, \qquad (\mathbf{a}\times\mathbf{b})_i = \varepsilon_{ijk} a_j b_k, \qquad (\nabla\times\mathbf{u})_i = \varepsilon_{ijk}\partial_j u_k.
+$$
+:::
+
+:::: prop
+[Lemme 1.12 — Contraction de deux symboles de Levi-Civita]{.tag}
+Pour tous indices $j, k, l, m$ :
+
+$$
+\varepsilon_{ijk}\,\varepsilon_{ilm} = \delta_{jl}\,\delta_{km} - \delta_{jm}\,\delta_{kl}.
+$$
+
+::: proof
+Les deux membres sont nuls si $j = k$ ou si $l = m$. Supposons $j \neq k$. Dans la somme sur $i$, seul l'indice $i$ différent de $j$ et de $k$ contribue ; pour que $\varepsilon_{ilm}$ soit non nul, il faut alors $\{l, m\} = \{j, k\}$. Si $(l, m) = (j, k)$, le membre de gauche vaut $\varepsilon_{ijk}^2 = 1$ et celui de droite $1 - 0 = 1$. Si $(l, m) = (k, j)$, le membre de gauche vaut $\varepsilon_{ijk}\varepsilon_{ikj} = -1$ et celui de droite $0 - 1 = -1$. Dans tous les autres cas, les deux membres sont nuls. [∎]{.qed}
+:::
+::::
+
+:::: prop
+[Lemme 1.13 — Antisymétrique contre symétrique]{.tag}
+Si $S_{jk} = S_{kj}$ pour tous $j, k$, alors $\varepsilon_{ijk} S_{jk} = 0$ pour tout $i$.
+
+::: proof
+Les indices $j$ et $k$ sont muets ; on peut les renommer : $\varepsilon_{ijk}S_{jk} = \varepsilon_{ikj}S_{kj} = -\varepsilon_{ijk}S_{jk}$, en utilisant l'antisymétrie de $\varepsilon$ puis la symétrie de $S$. Un nombre égal à son opposé est nul. [∎]{.qed}
+:::
+::::
+
+### 1.5 Coordonnées cylindriques
+
+Les expériences de dynamo en métal liquide se déroulent dans des cylindres : l'expérience VKS est un cylindre où deux turbines contrarotatives brassent du sodium, et DRESDYN un cylindre en précession. Le code SFEMaNS, utilisé par C. Nore et ses collaborateurs pour simuler ces écoulements, travaille en coordonnées cylindriques $(r, \theta, z)$, avec une décomposition de Fourier en $\theta$ et des éléments finis dans le plan méridien $(r, z)$ (documentation de SFEMaNS, voir les Sources).
+
+::: def
+[Définition 1.14 — Coordonnées et base cylindriques]{.tag}
+On pose $x = r\cos\theta$, $y = r\sin\theta$, $z = z$ avec $r \ge 0$ et $\theta \in [0, 2\pi)$. La base locale orthonormée est
+
+$$
+\mathbf{e}_r = (\cos\theta, \sin\theta, 0), \qquad \mathbf{e}_\theta = (-\sin\theta, \cos\theta, 0), \qquad \mathbf{e}_z = (0, 0, 1).
+$$
+
+Elle dépend du point : $\partial_\theta\mathbf{e}_r = \mathbf{e}_\theta$ et $\partial_\theta\mathbf{e}_\theta = -\mathbf{e}_r$, tandis que les dérivées par rapport à $r$ et $z$ des vecteurs de base sont nulles. Un champ s'écrit $\mathbf{u} = u_r\mathbf{e}_r + u_\theta\mathbf{e}_\theta + u_z\mathbf{e}_z$. Un déplacement élémentaire vaut $\mathrm{d}\mathbf{x} = \mathrm{d}r\,\mathbf{e}_r + r\,\mathrm{d}\theta\,\mathbf{e}_\theta + \mathrm{d}z\,\mathbf{e}_z$ et l'élément de volume $\mathrm{d}V = r\,\mathrm{d}r\,\mathrm{d}\theta\,\mathrm{d}z$.
+:::
+
+:::: prop
+[Proposition 1.15 — Opérateurs en coordonnées cylindriques]{.tag}
+Pour des champs réguliers et $r > 0$ :
+
+$$
+\nabla f = \partial_r f\,\mathbf{e}_r + \frac{1}{r}\partial_\theta f\,\mathbf{e}_\theta + \partial_z f\,\mathbf{e}_z, \tag{1.1}
+$$
+
+$$
+\nabla\cdot\mathbf{u} = \frac{1}{r}\partial_r(r u_r) + \frac{1}{r}\partial_\theta u_\theta + \partial_z u_z, \tag{1.2}
+$$
+
+$$
+\nabla\times\mathbf{u} = \Big(\frac{1}{r}\partial_\theta u_z - \partial_z u_\theta\Big)\mathbf{e}_r + \big(\partial_z u_r - \partial_r u_z\big)\mathbf{e}_\theta + \frac{1}{r}\Big(\partial_r(r u_\theta) - \partial_\theta u_r\Big)\mathbf{e}_z, \tag{1.3}
+$$
+
+$$
+\Delta f = \frac{1}{r}\partial_r\big(r\,\partial_r f\big) + \frac{1}{r^2}\partial_\theta^2 f + \partial_z^2 f. \tag{1.4}
+$$
+
+Le laplacien vectoriel n'est **pas** le laplacien des composantes :
+
+$$
+\Delta\mathbf{u} = \Big(\Delta u_r - \frac{u_r}{r^2} - \frac{2}{r^2}\partial_\theta u_\theta\Big)\mathbf{e}_r + \Big(\Delta u_\theta - \frac{u_\theta}{r^2} + \frac{2}{r^2}\partial_\theta u_r\Big)\mathbf{e}_\theta + \Delta u_z\,\mathbf{e}_z. \tag{1.5}
+$$
+
+::: proof
+Pour (1.1), on écrit la différentielle de deux façons : $\mathrm{d}f = \partial_r f\,\mathrm{d}r + \partial_\theta f\,\mathrm{d}\theta + \partial_z f\,\mathrm{d}z$ et $\mathrm{d}f = \nabla f\cdot\mathrm{d}\mathbf{x} = (\nabla f)_r\,\mathrm{d}r + (\nabla f)_\theta\,r\,\mathrm{d}\theta + (\nabla f)_z\,\mathrm{d}z$. L'identification donne (1.1), qu'on lit aussi comme l'opérateur $\nabla = \mathbf{e}_r\partial_r + \mathbf{e}_\theta\frac{1}{r}\partial_\theta + \mathbf{e}_z\partial_z$.
+
+Pour (1.2), on applique cet opérateur à $\mathbf{u}$ en n'oubliant pas que $\partial_\theta$ agit aussi sur les vecteurs de base. Le seul terme nouveau vient de $\mathbf{e}_\theta\cdot\frac{1}{r}\partial_\theta(u_r\mathbf{e}_r) = \frac{1}{r}u_r\,\mathbf{e}_\theta\cdot\mathbf{e}_\theta + \frac1r\partial_\theta u_r\,\mathbf{e}_\theta\cdot\mathbf{e}_r = \frac{u_r}{r}$ ; le terme en $u_\theta$ donne $\frac{1}{r}\partial_\theta u_\theta$, car $\partial_\theta \mathbf{e}_\theta = -\mathbf{e}_r$ est orthogonal à $\mathbf{e}_\theta$. Au total, $\partial_r u_r + \frac{u_r}{r} + \frac{1}{r}\partial_\theta u_\theta + \partial_z u_z$, ce qui est (1.2). La formule (1.3) s'obtient de la même manière avec le produit vectoriel, et (1.4) en composant (1.2) et (1.1).
+
+Pour (1.5), on remarque que le laplacien cartésien d'un champ vectoriel est l'opérateur scalaire (1.4) appliqué à la fonction vectorielle $\mathbf{x} \mapsto \mathbf{u}(\mathbf{x})$. Les vecteurs de base ne dépendent que de $\theta$, donc seul le terme $\frac{1}{r^2}\partial_\theta^2$ agit sur eux :
+
+$$
+\partial_\theta^2(u_r\mathbf{e}_r) = (\partial_\theta^2 u_r - u_r)\,\mathbf{e}_r + 2\,\partial_\theta u_r\,\mathbf{e}_\theta, \qquad \partial_\theta^2(u_\theta\mathbf{e}_\theta) = (\partial_\theta^2 u_\theta - u_\theta)\,\mathbf{e}_\theta - 2\,\partial_\theta u_\theta\,\mathbf{e}_r.
+$$
+
+En regroupant les termes selon $\mathbf{e}_r$ et $\mathbf{e}_\theta$, on obtient (1.5). [∎]{.qed}
+:::
+::::
+
+::: ex
+[Exemple 1.16 — Rotation solide, tourbillon ponctuel, fil électrique]{.tag}
+La rotation solide $\mathbf{u} = \Omega r\,\mathbf{e}_\theta$ vérifie $\nabla\cdot\mathbf{u} = \frac1r\partial_\theta(\Omega r) = 0$ et, par (1.3), $\nabla\times\mathbf{u} = \frac{1}{r}\partial_r(\Omega r^2)\,\mathbf{e}_z = 2\Omega\,\mathbf{e}_z$, ce qui retrouve la proposition 1.8. Le tourbillon ponctuel $\mathbf{u} = \frac{\Gamma}{2\pi r}\mathbf{e}_\theta$ a au contraire un rotationnel nul pour $r > 0$, puisque $r u_\theta = \Gamma/(2\pi)$ est constant, bien que ses lignes de courant soient des cercles. Le champ magnétique créé par un fil rectiligne infini parcouru par un courant $I$, $\mathbf{B} = \frac{\mu_0 I}{2\pi r}\mathbf{e}_\theta$, a exactement la même structure ; nous le retrouverons au chapitre 3.
+:::
+
+::: note
+[Remarque 1.17 — Décomposition azimutale de Fourier]{.tag}
+Une fonction est $2\pi$-périodique en $\theta$ ; on peut donc la développer en série de Fourier (chapitre 5) : $f(r, \theta, z) = \sum_{m\in\mathbb{Z}} f_m(r, z)\,e^{im\theta}$, avec $f_{-m} = \overline{f_m}$ pour un champ réel. Dans les formules (1.1) à (1.5), $\partial_\theta$ devient la multiplication par $im$. Pour un opérateur linéaire dont les coefficients ne dépendent pas de $\theta$, chaque mode $m$ évolue indépendamment des autres et ne demande qu'un calcul dans le plan méridien $(r, z)$. C'est le principe de SFEMaNS. Le mode $m = 0$ décrit la partie axisymétrique du champ ; dans les simulations de VKS de Bousquet et al. (2026), les quatre modes POD dominants sont axisymétriques et une signature $m = 8$ provient des huit pales des turbines.
+:::
+
+Le code ci-dessous vérifie les formules de ce chapitre par **différentiation automatique** : PyTorch calcule les dérivées exactes (à l'arrondi près) d'une fonction programmée, sans différences finies. C'est le même mécanisme qui permet, dans les réseaux de neurones « informés par la physique », d'évaluer $\nabla\cdot\mathbf{u}$ en sortie d'un réseau.
+
+```python
+import torch
+torch.set_num_threads(1)
+torch.manual_seed(0)
+dt = torch.float64
+
+def jacobienne(champ, x):
+    """u(x) et J[n, i, j] = du_i/dx_j aux points x (tableau n x 3)."""
+    u = champ(x)
+    J = torch.stack([torch.autograd.grad(u[:, i].sum(), x, create_graph=True)[0]
+                     for i in range(3)], dim=1)
+    return u, J
+
+def div_de(J):
+    return J.diagonal(dim1=1, dim2=2).sum(-1)
+
+def rot_de(J):
+    return torch.stack([J[:, 2, 1] - J[:, 1, 2],
+                        J[:, 0, 2] - J[:, 2, 0],
+                        J[:, 1, 0] - J[:, 0, 1]], dim=1)
+
+# 1) Écoulement ABC (A, B, C) = (1, 0.8, 0.6)
+A, B, C = 1.0, 0.8, 0.6
+def abc(x):
+    X, Y, Z = x[:, 0], x[:, 1], x[:, 2]
+    return torch.stack([A * torch.sin(Z) + C * torch.cos(Y),
+                        B * torch.sin(X) + A * torch.cos(Z),
+                        C * torch.sin(Y) + B * torch.cos(X)], dim=1)
+
+x = (2 * torch.pi * torch.rand(1000, 3, dtype=dt)).requires_grad_(True)
+u, J = jacobienne(abc, x)
+print("ABC : max|div u| =", f"{div_de(J).abs().max().item():.1e}",
+      "; max|rot u - u| =", f"{(rot_de(J) - u).abs().max().item():.1e}")
+
+# 2) Formules cylindriques contre calcul cartésien
+#    u = (r z) e_r + (r^2 sin t) e_t + (z cos t) e_z
+def champ_cyl(x):
+    X, Y, Z = x[:, 0], x[:, 1], x[:, 2]
+    r, t = torch.sqrt(X**2 + Y**2), torch.atan2(Y, X)
+    ur, ut, uz = r * Z, r**2 * torch.sin(t), Z * torch.cos(t)
+    return torch.stack([ur * torch.cos(t) - ut * torch.sin(t),
+                        ur * torch.sin(t) + ut * torch.cos(t), uz], dim=1)
+
+y = (torch.rand(1000, 3, dtype=dt) * 2 - 1 + 0.0).requires_grad_(True)
+u, J = jacobienne(champ_cyl, y)
+X, Y, Z = y[:, 0], y[:, 1], y[:, 2]
+r, t = torch.sqrt(X**2 + Y**2), torch.atan2(Y, X)
+div_cyl = 2 * Z + r * torch.cos(t) + torch.cos(t)                 # formule (1.2)
+rot_cyl_r = -Z * torch.sin(t) / r                                 # (1/r) d_t u_z - d_z u_t
+rot_cyl_t = r                                                     # d_z u_r - d_r u_z
+rot_cyl_z = 3 * r * torch.sin(t)                                  # (1/r)[d_r(r u_t) - d_t u_r]
+w = rot_de(J)
+w_r = w[:, 0] * torch.cos(t) + w[:, 1] * torch.sin(t)
+w_t = -w[:, 0] * torch.sin(t) + w[:, 1] * torch.cos(t)
+print("cylindrique : écart div =", f"{(div_de(J) - div_cyl).abs().max().item():.1e}",
+      "; écart rot =", f"{max((w_r - rot_cyl_r).abs().max().item(), (w_t - rot_cyl_t).abs().max().item(), (w[:, 2] - rot_cyl_z).abs().max().item()):.1e}")
+# sortie :
+# ABC : max|div u| = 0.0e+00 ; max|rot u - u| = 0.0e+00
+# cylindrique : écart div = 8.9e-16 ; écart rot = 1.8e-15
+```
+
+Pour l'écoulement ABC, les dérivées des sinus et cosinus sont calculées exactement, d'où des écarts strictement nuls. Pour le champ cylindrique, les écarts de l'ordre de $10^{-15}$ sont des erreurs d'arrondi : les formules (1.2) et (1.3) sont confirmées.
+
+:::: recap
+::: recap-title
+Ce qu'il faut retenir — chapitre 1
+:::
+- Le gradient est orthogonal aux surfaces de niveau et pointe vers la plus forte croissance ; la divergence mesure le taux de variation des volumes ; la vorticité vaut le double de la vitesse angulaire locale ; le laplacien mesure l'écart à la moyenne locale.
+- En notation indicielle : $(\nabla\times\mathbf{u})_i = \varepsilon_{ijk}\partial_j u_k$, et $\varepsilon_{ijk}\varepsilon_{ilm} = \delta_{jl}\delta_{km} - \delta_{jm}\delta_{kl}$.
+- En cylindrique, les vecteurs de base tournent avec $\theta$ : d'où les termes en $u_r/r$ dans la divergence et en $u_r/r^2$, $\partial_\theta u_\theta/r^2$ dans le laplacien vectoriel.
+- L'écoulement ABC est un champ de Beltrami ($\nabla\times\mathbf{u} = \mathbf{u}$), à divergence nulle et d'hélicité moyenne $A^2 + B^2 + C^2$.
+::::
+

@@ -40,7 +40,7 @@ G_TRAIN = np.round(np.arange(0.80, 1.0001, 0.02), 3)
 G_TEST = np.round(np.arange(0.81, 0.9901, 0.02), 3)
 G_FINE = np.round(np.arange(0.80, 1.0001, 0.005), 3)
 G_LO, G_HI = 0.78, 1.02
-H_RICE = 0.1  # demi-largeur de la fenêtre |D| < h de l'estimateur de Rice
+H_RICE = 0.2  # demi-largeur de la fenêtre |D| < h de l'estimateur de Rice
 
 
 def rhs(x, g):
@@ -148,7 +148,8 @@ def finetune(model, batcher, iters, beta, sd, mean, std, cnorm, n_gamma=8, n_per
 
     Perte de stationnarité : pour n_gamma valeurs de Gamma tirées uniformément dans [0.80, 1.00]
     (donc aussi entre les valeurs d'entraînement), on génère n_per échantillons par un schéma de Heun
-    différentiable à `steps` pas, puis on pénalise Σ_k (E[F·∇phi_k] / sd_k)² sur les monômes de degré ≤ 2.
+    différentiable à `steps` pas, puis on pénalise Σ_k (E[F·∇phi_k] / sd_k)² sur les monômes de degré ≤ 2,
+    estimé sans biais par le produit des moyennes de deux demi-lots.
     """
     from common import fm_loss
     opt = torch.optim.Adam(model.parameters(), lr=lr)
@@ -171,8 +172,10 @@ def finetune(model, batcher, iters, beta, sd, mean, std, cnorm, n_gamma=8, n_per
                 v1 = model(z + h * v0, t1v, cc)
                 z = z + 0.5 * h * (v0 + v1)
             x = z * std_t + mean_t
-            gt = generator_terms_torch(x, gg, MONO_TRAIN).view(n_gamma, n_per, -1).mean(1) / sd_t
-            loss = loss + beta * (gt ** 2).mean()
+            gt = generator_terms_torch(x, gg, MONO_TRAIN).view(n_gamma, 2, n_per // 2, -1).mean(2) / sd_t
+            # Estimateur sans biais de (E[F·∇phi])² : produit des moyennes de deux demi-lots indépendants.
+            # (Le carré d'une seule moyenne vaut (E g)² + Var(g)/n : il pénaliserait la dispersion de la loi.)
+            loss = loss + beta * (gt[:, 0] * gt[:, 1]).mean()
         opt.zero_grad(set_to_none=True)
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -228,7 +231,7 @@ def main(quick=False):
             return x, c
         return fn
 
-    iters = 3000 if quick else 20000
+    iters = 3000 if quick else 12000
     variants = {"A_reference": ("plain", False, iters), "B_augmentation": ("plain", True, iters),
                 "C_equivariant": ("sym", False, iters), "C_court": ("sym", False, max(iters // 10, 300))}
     seeds = [0] if quick else [0, 1, 2]
@@ -263,7 +266,7 @@ def main(quick=False):
     import copy
     sd = generator_terms(np.concatenate([train_data[g]["x"] for g in G_TRAIN]),
                          np.concatenate([np.full(len(train_data[g]["x"]), g) for g in G_TRAIN]), MONO_TRAIN).std(0)
-    ft_iters = 200 if quick else 1500
+    ft_iters = 200 if quick else 800
     for base_name, tag in (("C_equivariant", "C"), ("C_court", "Ccourt")):
         for beta, prefix in ((20.0, "F_stationnarite_"), (0.0, "F0_temoin_")):
             vname = prefix + tag
@@ -369,7 +372,7 @@ def main(quick=False):
 
     # Grille fine autour du seuil : modèle C (graine 0), grand échantillon pour Rice
     model = models[("C_equivariant", seeds[0])]
-    n_big = 8000 if quick else 40000
+    n_big = 8000 if quick else 20000
     fine = []
     for gam in G_FINE:
         torch.manual_seed(5000)

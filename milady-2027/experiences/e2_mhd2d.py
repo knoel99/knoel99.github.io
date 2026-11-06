@@ -258,8 +258,10 @@ def main(quick=False):
                     v0 = model(z, torch.full((len(z),), k * h), cc)
                     v1 = model(z + h * v0, torch.full((len(z),), (k + 1) * h), cc)
                     z = z + 0.5 * h * (v0 + v1)
-                d = diss_t(z, torch.tensor(etas, dtype=torch.float32)).view(4, 64).mean(1)
-                loss = loss + beta * ((d - inj) / inj).pow(2).mean()
+                d = diss_t(z, torch.tensor(etas, dtype=torch.float32)).view(4, 2, 32).mean(2)
+                r = (d - inj) / inj
+                # estimateur sans biais de (E[D] - ε)² : produit des résidus de deux demi-lots
+                loss = loss + beta * (r[:, 0] * r[:, 1]).mean()
             opt.zero_grad(set_to_none=True)
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)

@@ -34,6 +34,7 @@ class Induction3D:
         rng = np.random.default_rng(seed)
         b = rng.normal(size=(3, n, n, n))
         bh = np.stack([np.fft.rfftn(c) for c in b]) * self.dealias * np.exp(-self.k2 / 8)
+        bh[:, 0, 0, 0] = 0  # pas de champ moyen : en périodique, il est conservé exactement (mode neutre)
         self.bh = self.solenoidal(bh)
         self.bh /= self.norm(self.bh)
 
