@@ -677,7 +677,7 @@ $$
 :::
 ::::
 
-Trois limites encadrent l'usage. Il faut connaître $F$, donc le modèle physique : la formule ne s'applique pas à des données expérimentales seules. Les hypothèses ne sont pas gratuites : pour une dynamique déterministe chaotique, la mesure physique peut être singulière (Young 2002) et l'existence d'une densité continue pour la loi de $(D, \dot D)$ doit être vérifiée numériquement (régularité des histogrammes près de $D = 0$). Enfin, $\nu_0$ compte **tous** les passages, renversements, excursions et « bavardage » rapide autour de zéro ; c'est ce qu'E1 compare au comptage des changements de signe dans les simulations. Pour isoler les renversements, on compte des passages de seuils.
+Trois limites encadrent l'usage. Il faut connaître $F$, donc le modèle physique : la formule ne s'applique pas à des données expérimentales seules. Il faut aussi des trajectoires dérivables : avec un forçage blanc, le bruit ne doit pas agir directement sur $\mathbf{B}$, ce qui est le cas d'une dynamo forcée mécaniquement (bruit sur $\mathbf{u}$ seulement, $\mathbf{B}$ obéissant alors à une équation sans terme aléatoire). Les hypothèses ne sont pas gratuites : pour une dynamique déterministe chaotique, la mesure physique peut être singulière (Young 2002) et l'existence d'une densité continue pour la loi de $(D, \dot D)$ doit être vérifiée numériquement (régularité des histogrammes près de $D = 0$). Enfin, $\nu_0$ compte **tous** les passages, renversements, excursions et « bavardage » rapide autour de zéro ; c'est ce qu'E1 compare au comptage des changements de signe dans les simulations. Pour isoler les renversements, on compte des passages de seuils.
 
 :::: prop
 [Proposition 2.30 — Les seuils bornent la fréquence des renversements]{.tag}

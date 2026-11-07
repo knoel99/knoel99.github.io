@@ -7,3 +7,10 @@ index_files/
 .quarto/
 figures/**/node_modules/
 experiences/resultats/cache_e1/
+data/
+.env
+infra/docker/.env
+*.sif
+.pytest_cache/
+*.egg-info/
+mlruns/

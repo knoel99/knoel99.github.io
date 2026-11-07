@@ -240,7 +240,7 @@ Both sides vanish if $j = k$ or if $l = m$. Assume $j \neq k$. In the sum over $
 If $S_{jk} = S_{kj}$ for all $j, k$, then $\varepsilon_{ijk} S_{jk} = 0$ for all $i$.
 
 ::: proof
-The indices $j$ and $k$ are dummy indices; we can rename them: $\varepsilon_{ijk}S_{jk} = \varepsilon_{ikj}S_{kj} = -\varepsilon_{ijk}S_{jk}$, using the antisymmetry of $\varepsilon$ and then the symmetry of $S$. A number equal to its opposite is zero. [∎]{.qed}
+The indices $j$ and $k$ are dummy indices; we can rename them: $\varepsilon_{ijk}S_{jk} = \varepsilon_{ikj}S_{kj} = -\varepsilon_{ijk}S_{jk}$, using the antisymmetry of $\varepsilon$ and then the symmetry of $S$. A number equal to its negative is zero. [∎]{.qed}
 :::
 ::::
 
@@ -529,7 +529,7 @@ Proposition 2.6 is a property of the **continuous** equation. A numerical scheme
 
 ::: ex
 [Example 2.8 — Check on the ABC flow]{.tag}
-For the ABC flow, $\nabla\times(\nabla\times\mathbf{u}) = \nabla\times\mathbf{u} = \mathbf{u}$. On the other hand, $\nabla\cdot\mathbf{u} = 0$ and each component is a combination of functions such as $\sin z$ or $\cos y$ whose Laplacian is their opposite: $\Delta\mathbf{u} = -\mathbf{u}$. The right-hand side of (2.1) is therefore $0 - (-\mathbf{u}) = \mathbf{u}$, in agreement with the left-hand side.
+For the ABC flow, $\nabla\times(\nabla\times\mathbf{u}) = \nabla\times\mathbf{u} = \mathbf{u}$. On the other hand, $\nabla\cdot\mathbf{u} = 0$ and each component is a combination of functions such as $\sin z$ or $\cos y$ whose Laplacian is their negative: $\Delta\mathbf{u} = -\mathbf{u}$. The right-hand side of (2.1) is therefore $0 - (-\mathbf{u}) = \mathbf{u}$, in agreement with the left-hand side.
 :::
 
 The following code checks the identities and two product rules on “arbitrary” fields: small random neural networks $\mathbb{R}^3 \to \mathbb{R}^3$. The operators are written as functions that take a field and return a field, which makes it possible to compose them as in mathematics.
@@ -661,7 +661,7 @@ By the chain rule, $\frac{\mathrm{d}}{\mathrm{d}s}f(\boldsymbol\gamma(s)) = \nab
 ### 3.2 The three integral theorems
 
 :::: thm
-[Theorem 3.4 — Green–Riemann (in the plane)]{.tag}
+[Theorem 3.4 — Green (in the plane)]{.tag}
 Let $D \subset \mathbb{R}^2$ be a bounded domain whose boundary $\partial D$ is a piecewise smooth closed curve, traversed counterclockwise. For $P, Q$ of class $C^1$:
 
 $$
@@ -707,7 +707,7 @@ $$
 $$
 
 ::: proof
-If $S$ is a planar domain in the plane $z = 0$, then $\mathbf{n} = \mathbf{e}_z$ and $(\nabla\times\mathbf{u})\cdot\mathbf{e}_z = \partial_x u_y - \partial_y u_x$: this is Theorem 3.4 with $P = u_x$ and $Q = u_y$. For a curved surface parametrized by $(s, t)$, both sides are reduced to integrals in the $(s, t)$ plane and Green–Riemann is applied again; this computation is taken for granted here (see Chapter 4 of Tong's notes). [∎]{.qed}
+If $S$ is a planar domain in the plane $z = 0$, then $\mathbf{n} = \mathbf{e}_z$ and $(\nabla\times\mathbf{u})\cdot\mathbf{e}_z = \partial_x u_y - \partial_y u_x$: this is Theorem 3.4 with $P = u_x$ and $Q = u_y$. For a curved surface parametrized by $(s, t)$, both sides are reduced to integrals in the $(s, t)$ plane and Green's theorem in the plane is applied again; this computation is taken for granted here (see Chapter 4 of Tong's notes). [∎]{.qed}
 :::
 ::::
 
@@ -837,7 +837,7 @@ With the two singular fields of the list, the limit fails as soon as the circle 
 The divergence theorem also provides the integration by parts formulas in any dimension.
 
 :::: prop
-[Corollary 3.7 — Integrations by parts]{.tag}
+[Corollary 3.7 — Integration by parts]{.tag}
 For smooth fields on $\Omega$:
 
 $$
@@ -875,14 +875,14 @@ Three physical consequences follow. First, the magnetic flux through a surface d
 ![Field lines of a point charge (left, field $\mathbf{x}/|\mathbf{x}|^3$) and of a magnetic dipole (right, cross-section in a plane containing the moment, shown by the black arrow). The dashed circles represent closed surfaces. For the charge, all the lines leave the surface that surrounds it: the flux equals $4\pi$. For the dipole, every line that leaves the surface comes back into it: the flux is zero, as for every closed surface.](../../../prep/p1-calcul-vectoriel/fig-monopole-dipole-en.png){width="100%" fig-alt="On the left, rays leave a central point; a circle around the point is crossed only outward, a distant circle is crossed once in each direction. On the right, closed loops leave the top of the dipole and return through the bottom; they cross the central circle in both directions."}
 
 ::: ex
-[Example 3.9 — The straight wire and Ampère's theorem]{.tag}
+[Example 3.9 — The straight wire and Ampère's circuital law]{.tag}
 For $\mathbf{B} = \frac{\mu_0 I}{2\pi r}\mathbf{e}_\theta$, formula (1.2) gives $\nabla\cdot\mathbf{B} = 0$ and formula (1.3) gives $\nabla\times\mathbf{B} = \frac{1}{r}\partial_r\big(\frac{\mu_0 I}{2\pi}\big)\mathbf{e}_z = \mathbf{0}$ for $r > 0$. Yet the circulation on a circle of radius $R$ centered on the wire equals
 
 $$
 \oint\mathbf{B}\cdot\mathrm{d}\boldsymbol\ell = \int_0^{2\pi}\frac{\mu_0 I}{2\pi R}\,R\,\mathrm{d}\theta = \mu_0 I.
 $$
 
-There is no contradiction with Stokes' theorem: every disk bounded by this circle is crossed by the wire, where $\nabla\times\mathbf{B} = \mu_0\mathbf{j}$ is concentrated. Stokes' theorem applied to $\nabla\times\mathbf{B} = \mu_0\mathbf{j}$ is precisely Ampère's theorem: the circulation of $\mathbf{B}$ equals $\mu_0$ times the enclosed current.
+There is no contradiction with Stokes' theorem: every disk bounded by this circle is crossed by the wire, where $\nabla\times\mathbf{B} = \mu_0\mathbf{j}$ is concentrated. Stokes' theorem applied to $\nabla\times\mathbf{B} = \mu_0\mathbf{j}$ is precisely Ampère's circuital law: the circulation of $\mathbf{B}$ equals $\mu_0$ times the enclosed current.
 :::
 
 ### 3.4 Magnetic energy budget
@@ -902,7 +902,7 @@ We multiply the equation by $\mathbf{B}$ and average: $\frac{\mathrm{d}}{\mathrm
 :::
 ::::
 
-The term $-\eta\langle|\mathbf{j}|^2\rangle$, always nonpositive, represents Ohmic (Joule) dissipation. The term $-\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle$ is the opposite of the work of the Lorentz force on the fluid: when the fluid works **against** this force, it gives kinetic energy to the magnetic field. A dynamo is a flow for which this transfer lastingly outweighs the dissipation.
+The term $-\eta\langle|\mathbf{j}|^2\rangle$, always nonpositive, represents Ohmic (Joule) dissipation. The term $-\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle$ is minus the work done by the Lorentz force on the fluid: when the fluid works **against** this force, it gives kinetic energy to the magnetic field. A dynamo is a flow for which this transfer lastingly outweighs the dissipation.
 
 The following code numerically checks the divergence theorem and Stokes' theorem by quadrature (Gauss–Legendre in $\cos\theta$, trapezoidal rule in $\varphi$, a very accurate method for smooth functions on the sphere).
 
@@ -962,7 +962,7 @@ The Coulomb field $\mathbf{x}/|\mathbf{x}|^3$ has zero divergence everywhere exc
 Key takeaways — chapter 3
 :::
 - Green–Ostrogradski: $\int_\Omega\nabla\cdot\mathbf{u} = \oint_{\partial\Omega}\mathbf{u}\cdot\mathbf{n}$; Stokes: $\oint_{\partial S}\mathbf{u}\cdot\mathrm{d}\boldsymbol\ell = \iint_S(\nabla\times\mathbf{u})\cdot\mathbf{n}$.
-- Integrations by parts follow; in a periodic box, the boundary terms disappear.
+- The integration by parts formulas follow; in a periodic box, the boundary terms disappear.
 - $\nabla\cdot\mathbf{B} = 0$ is equivalent to zero flux through every closed surface: no monopole, field lines without endpoints, flux conserved along flux tubes.
 - Magnetic energy budget: $\frac{\mathrm{d}}{\mathrm{d}t}\langle|\mathbf{B}|^2/2\rangle = -\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle - \eta\langle|\mathbf{j}|^2\rangle$.
 ::::
@@ -2191,7 +2191,7 @@ The exercises follow the order of the sessions in the work plan. One star (★) 
 
    *(c)* Theorem 2.3 with $\nabla\cdot\mathbf{u} = 0$ gives $\Delta\mathbf{u} = -\nabla\times\boldsymbol\omega$, then (3.4) without boundary term gives $\langle\mathbf{u}\cdot\nabla\times\boldsymbol\omega\rangle = \langle\boldsymbol\omega\cdot\nabla\times\mathbf{u}\rangle = \langle|\boldsymbol\omega|^2\rangle$.
 
-   Multiplying the equation by $\mathbf{u}$ and averaging gives the stated budget. The term $\langle\mathbf{u}\cdot\mathbf{f}\rangle$ is the power injected by the forcing; $\nu\langle|\boldsymbol\omega|^2\rangle \ge 0$ is the viscous dissipation. Advection and pressure neither create nor destroy energy: they redistribute it in space and among scales (this is the cascade of the module [Fluid mechanics and turbulence](../p2-mecanique-fluides/index.html)). Incompressibility is used in all three points. In MHD, the Lorentz force $\mathbf{j}\times\mathbf{B}$ is added to the right-hand side: the kinetic budget gains the term $\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle$, which is exactly the opposite of the exchange term of Proposition 3.10. The total energy therefore satisfies $\frac{\mathrm{d}}{\mathrm{d}t}E = \langle\mathbf{u}\cdot\mathbf{f}\rangle - \nu\langle|\boldsymbol\omega|^2\rangle - \eta\langle|\mathbf{j}|^2\rangle$.
+   Multiplying the equation by $\mathbf{u}$ and averaging gives the stated budget. The term $\langle\mathbf{u}\cdot\mathbf{f}\rangle$ is the power injected by the forcing; $\nu\langle|\boldsymbol\omega|^2\rangle \ge 0$ is the viscous dissipation. Advection and pressure neither create nor destroy energy: they redistribute it in space and among scales (this is the cascade of the module [Fluid mechanics and turbulence](../p2-mecanique-fluides/index.html)). Incompressibility is used in all three points. In MHD, the Lorentz force $\mathbf{j}\times\mathbf{B}$ is added to the right-hand side: the kinetic budget gains the term $\langle\mathbf{u}\cdot(\mathbf{j}\times\mathbf{B})\rangle$, which is exactly the negative of the exchange term of Proposition 3.10. The total energy therefore satisfies $\frac{\mathrm{d}}{\mathrm{d}t}E = \langle\mathbf{u}\cdot\mathbf{f}\rangle - \nu\langle|\boldsymbol\omega|^2\rangle - \eta\langle|\mathbf{j}|^2\rangle$.
    :::
 
 9. **★★ Stream function (session 5).** Let $\psi = \sin x\sin y$ on the torus $[0, 2\pi)^2$ and $\mathbf{u} = \nabla^\perp\psi$ (Example 4.6). (a) Compute the flow rate of $\mathbf{u}$ through the segment going from $(0, 0)$ to $(\pi/2, \pi/2)$ in two ways: with Proposition 4.5 (iv), then by a direct computation. (b) Show more generally that, if the vorticity is a function of the stream function, $\omega = F(\psi)$, the flow is a steady solution of the 2D Euler equation written in vorticity form, $\partial_t\omega + \mathbf{u}\cdot\nabla\omega = 0$. Apply this to $\psi = \sin x\sin y$. (c) Can a uniform flow $\mathbf{u} = U\mathbf{e}_x$ be written $\nabla^\perp\psi$ with a periodic $\psi$? What must be added to the stream-function representation on the torus?
@@ -2235,7 +2235,7 @@ The exercises follow the order of the sessions in the work plan. One star (★) 
 11. **★ Fourier series of the triangle wave (session 6).** Let $f$ be the $2\pi$-periodic function equal to $|x|$ on $[-\pi, \pi]$. (a) Compute its Fourier coefficients. How do they decay, and why faster than those of the square wave of Example 5.6? (b) By evaluating the series at $x = 0$, show that $\sum_{n\ \text{odd}\ \ge 1}1/n^2 = \pi^2/8$. (c) Using Parseval's identity, show that $\sum_{n\ \text{odd}\ \ge 1}1/n^4 = \pi^4/96$, and then that $\sum_{n \ge 1}1/n^4 = \pi^4/90$.
 
     ::: sol
-    *Solution.* (a) We have $\hat f_0 = \frac{1}{2\pi}\int_{-\pi}^{\pi}|x|\,\mathrm{d}x = \frac{\pi}{2}$ and, by parity and then integration by parts,
+    *Solution.* (a) We have $\hat f_0 = \frac{1}{2\pi}\int_{-\pi}^{\pi}|x|\,\mathrm{d}x = \frac{\pi}{2}$ and, by evenness and then integration by parts,
 
     $$
     \hat f_n = \frac{1}{\pi}\int_0^\pi x\cos(nx)\,\mathrm{d}x = \frac{1}{\pi}\Big[\frac{x\sin(nx)}{n} + \frac{\cos(nx)}{n^2}\Big]_0^\pi = \frac{(-1)^n - 1}{\pi n^2},

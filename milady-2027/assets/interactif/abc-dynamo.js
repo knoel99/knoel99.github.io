@@ -20,6 +20,8 @@
  *    Taux de croissance : ‖B‖ = moyenne quadratique de |B| sur le volume, renormalisée tous les
  *    20 pas ; λ = pente (moindres carrés) de ln‖B‖(t) sur la seconde moitié de la simulation,
  *    λ_q = même pente sur le dernier quart (l'écart |λ − λ_q| indique la précision).
+ *    Verdict affiché : « dynamo » si λ > 0, « pas de dynamo » si λ < 0, « cas limite » si λ, λ_q
+ *    (et λ en 48³ quand il existe) ne sont pas tous du même signe (ici seulement Rm = 17,5).
  *
  * 3. Seuils (bords des fenêtres de dynamo) : interpolation linéaire entre deux points successifs
  *    (Rm_a, λ_a), (Rm_b, λ_b) de signes opposés :
@@ -90,9 +92,10 @@
       canvas: "Panneau (a) : taux de croissance λ du champ magnétique en fonction de Rm pour l'écoulement ABC, " +
         "avec la ligne λ = 0 et les fenêtres de dynamo (λ > 0) ombrées. Flèches gauche et droite : parcourir les points ; " +
         "Entrée : afficher la carte du mode si elle existe. Panneau (b) : carte de |B| dans le plan z = 0 pour le Rm choisi.",
-      l1: function (rm, lam, q, n48, dyn) {
+      l1: function (rm, lam, q, n48, st) {
         return "Rm = " + rm + " : λ = " + lam + " (dernier quart : " + q +
-          (n48 ? " ; 48³ : " + n48 : "") + ") → " + (dyn ? "dynamo (λ > 0)" : "pas de dynamo (λ < 0, champ amorti)");
+          (n48 ? " ; 48³ : " + n48 : "") + ") → " + (st > 0 ? "dynamo (λ > 0)" : st < 0 ?
+          "pas de dynamo (λ < 0, champ amorti)" : "cas limite : λ ≈ 0, signe incertain (estimations de signes opposés)");
       },
       l2: function (rm, grow, mx, mean, hov) {
         return "Carte : Rm = " + rm + ", " + (grow ? "mode croissant (λ > 0)" : "mode le moins amorti (λ < 0)") +
@@ -106,14 +109,14 @@
       loading: "Chargement des données…",
       noSrc: "Données absentes : ajoutez l'attribut data-src (chemin du fichier abc-dynamo.json).",
       error: function (src) { return "Données introuvables (" + src + "). La page doit être servie en http(s), pas ouverte en file://."; },
-      note: "u = (A sin z + C cos y, B sin x + A cos z, C sin y + B cos x), [0, 2π)³ périodique, Rm = 1/η ; λ = pente de ln‖B‖ " +
-        "sur t ∈ [75 ; 150] (pseudo-spectral 32³ ; carrés : contrôle en 48³). Fenêtres attendues ≈ 8,9 < Rm < 17,5 puis Rm > ≈ 27 " +
+      note: "u = (A sin z + C cos y, B sin x + A cos z, C sin y + B cos x), [0, 2π)³ périodique, Rm = 1/⁠η ; λ = pente de ln‖B‖ " +
+        "sur t ∈ [75 ; 150] (pseudo-spectral 32³ ; carrés : contrôle en 48³). Fenêtres publiées : 8,9 < Rm < 17,5, puis Rm > 27 environ " +
         "(Galloway & Frisch 1986). Comme ∇×u = u, B = u est un mode exact de taux −1/Rm (tirets, vue « complet »). " +
         "Carte : champ final normalisé (B_rms = 1), proche du mode dominant (le moins amorti si λ < 0)."
     },
     en: {
       title: "Kinematic ABC dynamo (A = B = C = 1): growth rate λ(Rm) and map of |B|",
-      cursor: "Point read", cursorAria: "Point of the λ(Rm) curve read by the cursor",
+      cursor: "Selected point", cursorAria: "Point of the λ(Rm) curve selected with the slider",
       modes: "Map of the mode at", modesAria: "Rm of the mode shown in the map (slice z = 0)",
       view: "λ axis", zoom: "zoom near 0", full: "full", viewAria: "Scale of the λ axis",
       arrows: "arrows (Bx, By)", common: "common colour scale",
@@ -126,9 +129,10 @@
       canvas: "Panel (a): growth rate λ of the magnetic field versus Rm for the ABC flow, with the line λ = 0 and the " +
         "dynamo windows (λ > 0) shaded. Left and right arrows: step through the points; Enter: show the map of the mode " +
         "when available. Panel (b): map of |B| in the plane z = 0 for the chosen Rm.",
-      l1: function (rm, lam, q, n48, dyn) {
+      l1: function (rm, lam, q, n48, st) {
         return "Rm = " + rm + ": λ = " + lam + " (last quarter: " + q +
-          (n48 ? "; 48³: " + n48 : "") + ") → " + (dyn ? "dynamo (λ > 0)" : "no dynamo (λ < 0, decaying field)");
+          (n48 ? "; 48³: " + n48 : "") + ") → " + (st > 0 ? "dynamo (λ > 0)" : st < 0 ?
+          "no dynamo (λ < 0, decaying field)" : "borderline: λ ≈ 0, sign uncertain (estimates of opposite signs)");
       },
       l2: function (rm, grow, mx, mean, hov) {
         return "Map: Rm = " + rm + ", " + (grow ? "growing mode (λ > 0)" : "least damped mode (λ < 0)") +
@@ -142,8 +146,8 @@
       loading: "Loading data…",
       noSrc: "No data: add the data-src attribute (path of the abc-dynamo.json file).",
       error: function (src) { return "Data not found (" + src + "). The page must be served over http(s), not opened as file://."; },
-      note: "u = (A sin z + C cos y, B sin x + A cos z, C sin y + B cos x), periodic [0, 2π)³, Rm = 1/η; λ = slope of ln‖B‖ " +
-        "over t ∈ [75, 150] (pseudo-spectral 32³; squares: 48³ check). Expected windows ≈ 8.9 < Rm < 17.5, then Rm > ≈ 27 " +
+      note: "u = (A sin z + C cos y, B sin x + A cos z, C sin y + B cos x), periodic [0, 2π)³, Rm = 1/⁠η; λ = slope of ln‖B‖ " +
+        "over t ∈ [75, 150] (pseudo-spectral 32³; squares: 48³ check). Published windows: 8.9 < Rm < 17.5, then Rm > 27 approximately " +
         "(Galloway & Frisch 1986). Since ∇×u = u, B = u is an exact mode with rate −1/Rm (dashes, “full” view). " +
         "Map: final field normalised (B_rms = 1), close to the dominant mode (the least damped one if λ < 0)."
     }
@@ -594,12 +598,19 @@
   };
 
   /* ----- lecture ----- */
+  // verdict : +1 dynamo, −1 pas de dynamo, 0 cas limite (λ, λ_q et λ_48 ne sont pas tous du même signe)
+  Widget.prototype.status = function (p) {
+    var pos = p.lam > 0;
+    if ((p.lamq > 0) !== pos || (p.n48 != null && (p.n48 > 0) !== pos)) return 0;
+    return pos ? 1 : -1;
+  };
+
   Widget.prototype.updateReadout = function () {
     if (!this.data) return;
     var T = this.T, lg = this.lang, d = this.data;
     var p = d.pts[this.cursor];
     var lines = [T.l1(fmtRm(lg, p.rm), fmt(lg, p.lam, 5, true), fmt(lg, p.lamq, 5, true),
-      p.n48 != null ? fmt(lg, p.n48, 5, true) : null, p.lam > 0)];
+      p.n48 != null ? fmt(lg, p.n48, 5, true) : null, this.status(p))];
     var m = d.modes[this.mode];
     if (m) {
       var hov = null;
@@ -788,17 +799,19 @@
 
     // étiquettes des zones et des seuils (en haut du cadre)
     // étiquettes des seuils : première ligne, sinon seconde ligne si elles se chevauchent (écrans étroits)
+    var full = this.view === "full";
+    var thrY = function (row) { return full ? p.b - 18 - 13 * row : p.t + 13 + 13 * row; };
     var lastR = [-1e9, -1e9];
     d.thr.forEach(function (r) {
       var s = fmt(lg, r, 2), w = self.textWidth(s, 11, "600"), x = X(r) + 4;
       if (x + w > p.r - 2) x = X(r) - 4 - w;
       for (var row = 0; row < 2; row++) {
-        if (x > lastR[row] + 4) { self.text(s, x, p.t + 13 + 13 * row, "left", C.soft, 11, "600", true); lastR[row] = x + w; break; }
+        if (x > lastR[row] + 4) { self.text(s, x, thrY(row), "left", C.soft, 11, "600", true); lastR[row] = x + w; break; }
       }
     });
     d.zones.forEach(function (z) {
       var xa = X(z[0]), xb = X(z[1]), s = T.dyn + (z[2] ? " →" : ""), w = self.textWidth(s, 11, "700");
-      if (xb - xa > w + 6) self.text(s, (xa + xb) / 2, p.t + 28, "center", C.ink, 11, "700", true);
+      if (xb - xa > w + 6) self.text(s, (xa + xb) / 2, full ? (p.t + p.b) / 2 + 4 : p.t + 28, "center", C.ink, 11, "700", true);
     });
 
     // cadre
@@ -831,6 +844,10 @@
     c.beginPath(); c.arc(cx, cyc, 6, 0, TWO_PI);
     c.fillStyle = cy === cyc ? C.pal[0] : C.bg; c.fill();
     c.lineWidth = 2.5; c.strokeStyle = C.ink; c.stroke();
+    if (cp.n48 != null) {
+      var y48 = Y(cp.n48);
+      if (y48 >= p.t - 1 && y48 <= p.b + 1) this.marker("sq", cx, y48, C.pal[1]);
+    }
     if (this.tipOn) this.tooltip(p, cx, cyc, [
       "Rm = " + fmtRm(lg, cp.rm),
       T.tipLam + " = " + fmt(lg, cp.lam, 5, true),
