@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Supervisors and the MilaDy project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js" integrity="sha384-QFFtAGzvvj+bfgCGxXJlNZZR1nXEZgvG8tDLCCY1F19xl20WlfTYgguB4VcNdxYk" crossorigin="anonymous"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.css" integrity="sha384-3rdsX6e5mueWyoweR9NIVmtEsUkokpBT/0ALqKKIBMr9j4qhHkaIkAcGgsE6uVlp" crossorigin="anonymous">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../assets/paper.css">
+</head>
+
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Contents</span></button>
+  <a class="brand" href="../../en/index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+  <span class="tb-title" id="tb-title"></span>
+  <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Theme</span></button>
+</header>
+<div class="layout">
+<nav class="sidetoc" id="sidetoc" aria-label="Contents"></nav>
+<main class="paper" id="main">
+
+<header id="title-block-header">
+<h1 class="title">Supervisors and the MilaDy project</h1>
+<p class="subtitle">Work of S. Cheng, D. Lucor, C. Nore and Y. Ponty · candidate PhD directions</p>
+
+</header>
+
+
+<div class="note">
+<p><span class="tag">Disclaimer</span> This page is independent work, written to prepare for the MilaDy 2027 internship. It has been neither reviewed nor endorsed by the people cited, by their laboratories or by the ANR. The facts about the people and about the project come solely from public sources (the project page on the ANR website, published offers, personal pages, HAL, Crossref, arXiv), checked on November 6, 2026. The candidate PhD directions, the scores in the evaluation and the final choice are proposals by the site’s author, not positions of the supervisors.</p>
+</div>
+<p>This page gathers what an applicant to the internship needs to know about the project that funds it and about the people who supervise it. It reads in three stages. We first present the ANR MilaDy project and the place the internship occupies in it. We then describe the work of the four supervisors, with an annotated selection of publications for each. Finally, we propose six PhD directions, assess them on an explicit grid, and justify the selected direction, which is developed in the <a href="../these/index.html#piste">PhD proposal</a>.</p>
+<h2 id="milady">The ANR MilaDy project</h2>
+<h3 id="project-fact-sheet">Project fact sheet</h3>
+<p>The information below is taken from the project page on the ANR website. Other public pages (CVs, personal pages) sometimes give slightly different dates or a slightly different amount; we use the ANR values here.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 78%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Title</td>
+<td><em>Machine learning modelling for turbulent Dynamos</em> (MilaDy); in French, <em>Modélisation par apprentissage automatique des dynamos turbulentes</em></td>
+</tr>
+<tr class="even">
+<td>Reference</td>
+<td>ANR-25-CE51-0077</td>
+</tr>
+<tr class="odd">
+<td>Committee</td>
+<td>CE51 “Engineering and process sciences”, 2025 call</td>
+</tr>
+<tr class="even">
+<td>Coordination</td>
+<td>Caroline Nore (LISN)</td>
+</tr>
+<tr class="odd">
+<td>Partners</td>
+<td>LISN (Laboratoire Interdisciplinaire des Sciences du Numérique); Lagrange laboratory, Observatoire de la Côte d’Azur (Nice); CEREA, École nationale des ponts et chaussées</td>
+</tr>
+<tr class="even">
+<td>ANR funding</td>
+<td>€560,612</td>
+</tr>
+<tr class="odd">
+<td>Start and duration</td>
+<td>January 2026, 48 months</td>
+</tr>
+</tbody>
+</table>
+<p>Sibo Cheng’s personal page specifies two points that the ANR page does not give: the funding instrument is a collaborative research project (PRC), and S. Cheng is a co-investigator in it for CEREA.</p>
+<h3 id="official-abstract-and-objectives">Official abstract and objectives</h3>
+<p>The abstract published by the ANR starts from a physical observation. The dynamo effect, that is, the amplification of a magnetic field by the flow of a conducting fluid, is hard to reproduce: only three experiments, including the one at Cadarache, have achieved it with liquid sodium, and the DRESDYN experiment, in Germany, seeks to achieve it with a precessing cylinder. Direct simulations are very costly, which motivates reduced models and machine learning, with an announced difficulty: capturing rare events. The abstract adds that “data assimilation (DA) with ML is becoming more accessible, notably thanks to the TorchDA platform” (our translation), S. Cheng’s software.</p>
+<p>The two objectives are stated as follows (excerpt from the French abstract on the ANR page, in our translation):</p>
+<blockquote>
+<p>“MilaDy aims to advance MHD research with two main objectives: (i) Study magnetic field reversals and ‘explosive’ dynamo phenomena using data-driven methods to identify key features and develop ROMs that reproduce the observed dynamics. The project investigates whether ML can improve the understanding of magnetic reversals and create faster models that identify phases such as the precursor, the reversal and the recovery. (ii) Optimize the DRESDYN device with parametric ROMs to explore the conditions of DyE, such as precession/rotation frequency ratios. ROMs allow efficient parameter exploration, helping experimentalists manage these complex systems.”</p>
+</blockquote>
+<p>In this excerpt, “DyE” denotes the dynamo effect and “ROM” a <em>reduced-order model</em>.</p>
+<p><strong>Objective (i): reversals and explosive dynamos.</strong> A reversal is the sign change of the magnetic dipole, as in the reversals of the Earth’s field; the VKS experiment at Cadarache produced some in the laboratory (Berhanu et al.&nbsp;2007). The English version of the abstract speaks of “burst dynamo phenomena” and of models able to distinguish the “precursor, reversal, and recovery” phases. The aim is thus to build, from the simulations, reduced models that reproduce this dynamics and recognize its stages.</p>
+<p><strong>Objective (ii): DRESDYN.</strong> DRESDYN is a precession-driven dynamo experiment conducted at the HZDR research center in Dresden. The project intends to contribute to it with parametric reduced models, which make it possible to explore at low cost the conditions for dynamo onset as a function of the ratio between the precession frequency and the rotation frequency.</p>
+<h3 id="offers-related-to-the-project">Offers related to the project</h3>
+<p>Three public offers precede or accompany the 2027 internship. They outline a progression: representing the data, building reduced models, then generating fields.</p>
+<table class="caption-top">
+<caption>Public offers related to the MilaDy project (offer PDFs, accessed November 6, 2026).</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 12%">
+<col style="width: 30%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Offer</th>
+<th>Period</th>
+<th>Central question</th>
+<th>Announced methods</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>M2 internship “Physics-aware Representation Learning for Turbulent Dynamo Data”</td>
+<td>spring 2026</td>
+<td>Compress 3D dynamo simulation outputs (Cadarache and Dresden configurations) into a latent representation tied to the physical parameters.</td>
+<td>Convolutional or attention-based encoder–decoder, latent regression on the parameters, contrastive learning.</td>
+</tr>
+<tr class="even">
+<td>24-month LISN postdoc, “Turbulent Dynamos Reduced-Order Modeling via Machine learning”</td>
+<td>announced in January 2026</td>
+<td>Build parametric and interpretable reduced models for reversals, bursts and the optimization of DRESDYN.</td>
+<td>Linear spectral approaches and physics-informed (v)AEs, constrained reduced dynamics in the latent space (LSTM, transformers).</td>
+</tr>
+<tr class="odd">
+<td>M2 internship “Physics-Constrained Generative AI Modelling of Parametric Dynamical Systems”</td>
+<td>spring 2027</td>
+<td>Generate 3D fields conditioned on the control parameters, while respecting the physical constraints.</td>
+<td>Conditional diffusion or flow matching; constraints imposed through the architecture, the losses or the sampling.</td>
+</tr>
+</tbody>
+</table>
+<p>The 2026 internship offer gave the four supervisors of the 2027 internship as contacts and already listed the same physical metrics (spectra, helicity, divergence, topology). The postdoc, whose contacts are C. Nore and D. Lucor, was publicly announced by S. Cheng on January 24, 2026. Its announcement is no longer displayed on D. Lucor’s page, which suggests that the position is closed; we could not find out who was recruited. Y. Ponty’s 2026 CV also mentions that he has supervised a postdoc of the project at the Observatoire de la Côte d’Azur since February 2026.</p>
+<h3 id="first-affiliated-publications">First affiliated publications</h3>
+<p>On November 6, 2026, a HAL search for the reference ANR-25-CE51-0077 returns three records. The first two are at the heart of the project.</p>
+<p><strong>Bousquet, Ponty, Botez, Plihon and Nore (2026), <em>Physical Review Fluids</em> 11, 063703.</strong> The paper studies field reversals in simulations of the VKS experiment, with two solvers: LATU, a pseudo-spectral code with penalization (Kreuzahler et al.&nbsp;2017), and SFEMaNS (Nore et al.&nbsp;2018). The reference simulation is at <span class="math inline">Re = 1594</span> and <span class="math inline">Rm = 531</span>, with a forcing asymmetry of <span class="math inline">0.058</span> and a relative permeability <span class="math inline">\mu_r = 16</span> in the impellers; a conducting outer medium proved necessary for reversals in the explored range. A proper orthogonal decomposition (POD) on 2000 snapshots reveals four dominant axisymmetric modes, and a reduced Galerkin model, called DQVU, is identified by constrained regression with PySINDy; it reproduces the asymmetric bimodal distribution of the amplitude <span class="math inline">V</span> of the zonal mode, which the earlier DQV model did not. The data are not public: they are available from the authors upon reasonable request.</p>
+<p><strong>Botez, Giesecke, Nore, Cappanera and Stefani (2026), <em>Physical Review Fluids</em> 11, 083701</strong> (published August 14, 2026). The paper computes the kinematic dynamo generated by averaged velocity fields in a precessing cylinder, within the narrow window of Poincaré numbers where the dynamo is most likely. It shows that the simplified boundary conditions with vanishing tangential field systematically underestimate the threshold <span class="math inline">Rm_c</span>, and that conducting or permeable walls can favor or suppress the dynamo. This is a direct application to DRESDYN.</p>
+<p>The third record (Barré and Horii 2026) is a mathematical work on large deviations, which also acknowledges the project; its link with the internship is weak. As of the same date, no publication by S. Cheng or D. Lucor on dynamos was found on arXiv or HAL.</p>
+<h3 id="how-the-2027-internship-fits-in">How the 2027 internship fits in</h3>
+<p>The 2026 internship learned to <strong>represent</strong> dynamo fields. The 2027 internship moves on to <strong>generation</strong>. Its offer states the objective in one sentence: “design and evaluate physics-constrained generative models for parameter-dependent physical fields in dynamo systems”. The generator must respect “energy balance and divergence-free conditions”, encode variations with respect to the control parameters (“Reynolds number, magnetic Reynolds number, material properties…”) and produce “3D fields that can serve as input for reduced-order models or data assimilation frameworks developed elsewhere in the project”.</p>
+<p>The requested work follows a precise order: conditional models by diffusion or flow matching, constraints derived from the equations and the boundary conditions, validation on simple PDEs, then evaluation of MHD fields with physical metrics (“energy spectra, helicity, divergence control, and topology preservation”). The deliverables are a comparative study of constraint strategies, a technical report and code integrated into the “MilaDy project toolbox”. The offer recommends two readings, FunDiff (Wang et al.&nbsp;2026) and Fukami and Taira (2023), and announces a possible funded PhD depending on the results of the internship.</p>
+<p>The internship takes place mainly at CEREA, under the supervision of S. Cheng (ENPC) and D. Lucor (LISN), in collaboration with C. Nore (LISN) and Y. Ponty (OCA). S. Cheng’s “Opportunities” page specifies that the PhD would be co-supervised by S. Cheng and D. Lucor.</p>
+<div class="key">
+<p><span class="tag">Key point</span> The 2026 internship learned to <strong>represent</strong> dynamo fields; the 2027 internship learns to <strong>generate</strong> them, conditioned on the parameters and under physical constraints, to feed the project’s reduced models and data assimilation.</p>
+</div>
+<h3 id="the-supervisory-team">The supervisory team</h3>
+<p>Several past collaborations link the supervisors. S. Cheng did his PhD under the supervision of D. Lucor (2017–2020, with EDF R&amp;D). D. Lucor and C. Nore co-supervise R. Bousquet, author of the work on autoencoders and POD. C. Nore and Y. Ponty publish together on the VKS reversals. S. Cheng and D. Lucor were guest editors of the same special issue of <em>Computer Physics Communications</em>, “Advances in Physics-Aware Machine Learning”. The four sections that follow describe their work from the internship’s point of view.</p>
+<h2 id="cheng">Sibo Cheng</h2>
+<p>Sibo Cheng has held a junior professor chair (a <em>tenure-track</em> position) at the École nationale des ponts et chaussées (Institut Polytechnique de Paris), at CEREA, since 2024; he remains an <em>Honorary Research Fellow</em> at Imperial College London. He was previously a researcher at the Data Science Institute of Imperial College (2020–2024), with Rossella Arcucci. He defended his PhD at Université Paris-Saclay in 2020, under the supervision of D. Lucor, on the specification of error covariances in data assimilation, in collaboration with EDF R&amp;D.</p>
+<p>His stated research themes are data assimilation and inverse problems, reduced-order and latent-space modeling, scientific machine learning (networks coupled with physical models, differentiable simulation, neural operators) and generative modeling, which he describes as probabilistic forecasting and field reconstruction with conditional generative models. His applications range from wildfires to air pollution and geophysical systems. He holds a Hi! PARIS grant (2026–2030) and leads the ANR JCJC project OFML (wildfires), and he is a co-investigator of MilaDy and of the QWERTY project (PEPR FORESTT).</p>
+<p>He has developed two software packages: TorchDA, a data assimilation library with deep networks, cited in the MilaDy abstract and directly useful to the internship, and PyTorchFire, a differentiable cellular automaton for wildfire spread. Several of his PhD students work on generative modeling or on representation for assimilation, including Lisa Achard (multimodal generative modeling and uncertainty quantification), supervised mainly by D. Lucor and Zeyu Fu. His research page summarizes the role of CEREA in MilaDy as follows: “physics-aware representation learning and reduced-order modelling of three-dimensional velocity and magnetic fields, connecting learned representations to data assimilation”.</p>
+<table class="caption-top">
+<caption>Selected publications of S. Cheng, in chronological order.</caption>
+<thead>
+<tr class="header">
+<th>Reference</th>
+<th>What it brings to the internship</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cheng S. <em>et al.</em> (17 authors, including D. Lucor) (2023). “Machine Learning With Data Assimilation and Uncertainty Quantification for Dynamical Systems: A Review”. <em>IEEE/CAA Journal of Automatica Sinica</em> 10(6), 1361–1387. <a href="https://doi.org/10.1109/JAS.2023.123537">doi:10.1109/JAS.2023.123537</a>; arXiv:2303.10462.</td>
+<td>The project’s shared vocabulary across learning, assimilation and uncertainty; the review, co-written with D. Lucor, presents itself as the first overview of this intersection.</td>
+</tr>
+<tr class="even">
+<td>Cheng S., Guo Y., Arcucci R. (2023). “A Generative Model for Surrogates of Spatial-Temporal Wildfire Nowcasting”. <em>IEEE Transactions on Emerging Topics in Computational Intelligence</em> 7(5), 1420–1430. <a href="https://doi.org/10.1109/TETCI.2023.3298535">doi:10.1109/TETCI.2023.3298535</a>; arXiv:2308.02810.</td>
+<td>A precedent for conditional field generation: a 3D VQ-VAE produces new wildfire sequences, conditioned on vegetation and slope, which are then used to train a surrogate model.</td>
+</tr>
+<tr class="odd">
+<td>Zhou H., Cheng S., Arcucci R. (2024). “Multi-fidelity physics constrained neural networks for dynamical systems”. <em>Computer Methods in Applied Mechanics and Engineering</em> 420, 116758. <a href="https://doi.org/10.1016/j.cma.2024.116758">doi:10.1016/j.cma.2024.116758</a>; arXiv:2402.02031.</td>
+<td>A way to reduce the cost of physical constraints: a latent space shared by several fidelities makes it possible to evaluate them at low fidelity.</td>
+</tr>
+<tr class="even">
+<td>Cheng S., Min J., Liu C., Arcucci R. (2025). “TorchDA: A Python package for performing data assimilation with deep learning forward and transformation functions”. <em>Computer Physics Communications</em> 306, 109359. <a href="https://doi.org/10.1016/j.cpc.2024.109359">doi:10.1016/j.cpc.2024.109359</a>; arXiv:2409.00244.</td>
+<td>The assimilation framework cited by the ANR (Kalman filters, 3D-Var and 4D-Var with deep networks): it is one of the intended users of the generated fields.</td>
+</tr>
+<tr class="odd">
+<td>Zhuang Y., Cheng S., Duraisamy K. (2025). “Spatially-aware diffusion models with cross-attention for global field reconstruction with sparse observations”. <em>Computer Methods in Applied Mechanics and Engineering</em> 435, 117623. <a href="https://doi.org/10.1016/j.cma.2024.117623">doi:10.1016/j.cma.2024.117623</a>; arXiv:2409.00230.</td>
+<td>The reference closest to the offer: a score-based diffusion conditioned on sparse observations. Diffusion wins under noisy conditions, the deterministic method in the noise-free case, and the ensembles are used for covariance-based corrections.</td>
+</tr>
+<tr class="even">
+<td>Cheng S., Bocquet M., Ding W., Finn T.S. <em>et al.</em> (23 authors, full list in the Sources) (2025). “Machine learning for modelling unstructured grid data in computational physics: A review”. <em>Information Fusion</em> 123, 103255. <a href="https://doi.org/10.1016/j.inffus.2025.103255">doi:10.1016/j.inffus.2025.103255</a>; arXiv:2502.09346.</td>
+<td>SFEMaNS outputs live on an unstructured finite element mesh; this review surveys the architectures suited to this type of data.</td>
+</tr>
+<tr class="odd">
+<td>Cheng X., He Y., Yang Y., Xue X., Cheng S., Giles D., Tang X., Hu Y. (2025). “Learning Chaos In A Linear Way”. <em>ICLR 2025</em>. arXiv:2503.14702.</td>
+<td>A model of chaotic dynamics trained to preserve the invariant measure: a precedent for learning that targets the stationary distribution, the central idea of the “distributional” constraints of the selected direction.</td>
+</tr>
+<tr class="even">
+<td>Yu W., Ghosh A., Finn T.S., Arcucci R., Bocquet M., Cheng S. (2026). “A probabilistic approach to wildfire spread prediction using a denoising diffusion surrogate model”. <em>Geoscientific Model Development</em> 19(2), 1027–1054. <a href="https://doi.org/10.5194/gmd-19-1027-2026">doi:10.5194/gmd-19-1027-2026</a>; arXiv:2507.00761.</td>
+<td>A reusable evaluation protocol: conditional diffusion is compared there with a regression model of the same architecture, using image scores and an uncertainty-aware score (“hit rate”).</td>
+</tr>
+<tr class="odd">
+<td>Xue X., ten Eikelder M.F.P., Gao M., Cheng X., Yang Y., He Y., Wang S., Cheng S., Hu Y., Coveney P.V. (2026). “Fast-forward prediction of lattice Boltzmann dynamics with physics-informed neural operators”. <em>Nature Communications</em> 17, 9243. <a href="https://doi.org/10.1038/s41467-026-75730-1">doi:10.1038/s41467-026-75730-1</a>.</td>
+<td>Moment constraints and an equivariance built into a discretization-invariant neural operator (coarse training, fine inference), two useful properties for costly 3D fields.</td>
+</tr>
+<tr class="even">
+<td>Bocquet M., Finn T.S., Cheng S. (2026). “Accounting for model error in ensemble variational data assimilation through learned generative dynamics”. Preprint arXiv:2610.17333.</td>
+<td>A generative forecast model replaces the Gaussian model error in a weak-constraint 4D-Var: the most direct bridge between generative modeling and assimilation.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Priority reading.</strong> The intern will start with Zhuang, Cheng and Duraisamy (2025), which poses the problem of conditional field generation with the very tools of the offer. They will then read Yu et al.&nbsp;(2026), whose protocol for comparing a generative model with a regression model can be reused almost as is for the requested comparative study. A quick look at TorchDA (Cheng et al.&nbsp;2025) is enough to understand where the generated fields will be used.</p>
+<h2 id="lucor">Didier Lucor</h2>
+<p>Didier Lucor is a CNRS research director (directeur de recherche) at LISN, where he belongs to the DATAFLOT group (data science, transition, instabilities, control and turbulence) of the mechanics department; he was deputy director of the laboratory from 2022 to 2025. He obtained his master’s degree and his PhD in applied mathematics at Brown University (2004), then spent two years as a postdoc in the Department of Ocean Engineering at MIT and ten years at the Institut d’Alembert (Sorbonne Université), before joining LIMSI, which merged in 2021 with LRI to form LISN.</p>
+<p>His stated research themes belong to stochastic modeling and computational mechanics: physics-informed statistical learning, model reduction, uncertainty quantification, data assimilation, sensitivity analysis and robust optimization. His applications cover turbulence, heat transfer, fluid–structure interaction, biomechanics, environmental flows and energy. His home page summarizes his position on physics-aware learning: the generalization errors of models are “considerably improved if some ‘physics information’ (in the form of invariant, first principles, symmetries, etc…) is included/enforced”.</p>
+<p>For the internship, his recent supervisions outline a continuity: S. Cheng (PhD, 2017–2020), R. Bousquet (M2 internship in 2022, then co-author with C. Nore of the work on autoencoders and POD) and L. Achard (PhD since 2025, under a joint-supervision agreement (cotutelle) with the University of Exeter and co-supervised by CEREA).</p>
+<table class="caption-top">
+<caption>Selected publications of D. Lucor, in chronological order.</caption>
+<thead>
+<tr class="header">
+<th>Reference</th>
+<th>What it brings to the internship</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lucor D., Meyers J., Sagaut P. (2007). “Sensitivity analysis of large-eddy simulations to subgrid-scale-model parametric uncertainty using polynomial chaos”. <em>Journal of Fluid Mechanics</em> 585, 255–279. <a href="https://doi.org/10.1017/S0022112007006751">doi:10.1017/S0022112007006751</a>.</td>
+<td>Polynomial chaos applied to large-eddy simulation: how the output of a turbulent simulation depends on its parameters, the very question of parametric conditioning.</td>
+</tr>
+<tr class="even">
+<td>Cheng S., Lucor D., Argaud J.-P. (2021). “Observation data compression for variational assimilation of dynamical systems”. <em>Journal of Computational Science</em> 53, 101405. <a href="https://doi.org/10.1016/j.jocs.2021.101405">doi:10.1016/j.jocs.2021.101405</a>; arXiv:2106.05427.</td>
+<td>From S. Cheng’s PhD: compressing observations without degrading assimilation, a problem close to that of the large 3D datasets mentioned in the offer.</td>
+</tr>
+<tr class="odd">
+<td>Lucor D., Agrawal A., Sergent A. (2022). “Simple computational strategies for more effective physics-informed neural networks modeling of turbulent natural convection”. <em>Journal of Computational Physics</em> 456, 111022. <a href="https://doi.org/10.1016/j.jcp.2022.111022">doi:10.1016/j.jcp.2022.111022</a>; preprint arXiv:2103.03565.</td>
+<td>PINNs for turbulent Rayleigh–Bénard convection from direct numerical simulation data. The paper relaxes the incompressibility constraint to ease optimization, which sheds light on the trade-off between hard and soft constraints at the heart of the internship.</td>
+</tr>
+<tr class="even">
+<td>Nony B.X., Rochoux M.C., Jaravel T., Lucor D. (2023). “Reduced-order modeling for parameterized large-eddy simulations of atmospheric pollutant dispersion”. <em>Stochastic Environmental Research and Risk Assessment</em> 37(6), 2117–2144. <a href="https://doi.org/10.1007/s00477-023-02383-7">doi:10.1007/s00477-023-02383-7</a>.</td>
+<td>A parametric reduced model built on costly simulations: the situation of the dynamo data, with few simulations for many parameters.</td>
+</tr>
+<tr class="odd">
+<td>Cai J., Angeli P.-E., Martinez J.-M., Damblin G., Lucor D. (2024). “Revisiting Tensor Basis Neural Network for Reynolds stress modeling: Application to plane channel and square duct flows”. <em>Computers &amp; Fluids</em> 275, 106246. <a href="https://doi.org/10.1016/j.compfluid.2024.106246">doi:10.1016/j.compfluid.2024.106246</a>; arXiv:2403.11746.</td>
+<td>Networks that respect Galilean and rotational invariance by construction: a concrete example of a symmetry imposed in the architecture.</td>
+</tr>
+<tr class="even">
+<td>Bousquet R., Chaffard O., Creff M., Lucor D., Nore C. (2024). “Large scale analysis of three-dimensional turbulent von Kármán swirling flows”. <em>Physics of Fluids</em> 36(10), 105133. <a href="https://doi.org/10.1063/5.0227495">doi:10.1063/5.0227495</a>.</td>
+<td>Simulations and POD of the von Kármán flow at several Reynolds numbers, with a metastable state that breaks the <span class="math inline">R_\pi</span> symmetry for <span class="math inline">Re &gt; 10^4</span>: the symmetries that the generated fields will have to respect, or break where appropriate.</td>
+</tr>
+<tr class="odd">
+<td>Bousquet R., Nore C., Lucor D. (2025). “AutoEncoders latent space interpretability in the light of proper orthogonal decomposition: Machine learning of periodically forced fluid flows”. <em>Computer Physics Communications</em> 315, 109728. <a href="https://doi.org/10.1016/j.cpc.2025.109728">doi:10.1016/j.cpc.2025.109728</a>.</td>
+<td>MilaDy’s baseline reference for representation: autoencoders compared with POD, equivariance relations between the latent and physical spaces, and the limitation of the Gaussian prior of VAEs, whose regularization degrades the reconstruction.</td>
+</tr>
+<tr class="even">
+<td>Jaber E., Blot V., Brunel N., Chabridon V., Remy E., Iooss B., Lucor D., Mougeot M., Leite A. (2025). “Conformal approach to Gaussian process surrogate evaluation with marginal coverage guarantees”. <em>Journal of Machine Learning for Modeling and Computing</em> 6(3), 37–68. <a href="https://doi.org/10.1615/JMachLearnModelComput.2025054687">doi:10.1615/JMachLearnModelComput.2025054687</a>.</td>
+<td>Conformal intervals with guaranteed coverage to evaluate a surrogate model: a tool to tell whether the uncertainty displayed by a generator is calibrated.</td>
+</tr>
+<tr class="odd">
+<td>Bousquet R., Faucheu A., Dumas L., Nore C., Lucor D. (2026). “Polynomial autoencoders with quantifiable errors for nonlinear fluid flow reconstruction”. Research Square preprint. <a href="https://doi.org/10.21203/rs.3.rs-10008570/v1">doi:10.21203/rs.3.rs-10008570/v1</a>.</td>
+<td>Polynomial autoencoders initialized to be exactly equivalent to POD, which speeds up training by an order of magnitude: an option for the latent space of a generator.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Priority reading.</strong> The essential reading is Bousquet, Nore and Lucor (2025): it is the latent representation on which a generator of the project will be built or against which it will be compared. Lucor, Agrawal and Sergent (2022) then show, on a concrete case, why a relaxed constraint can be easier to optimize than a strict one. Jaber et al.&nbsp;(2025) will be useful when the time comes to assess the uncertainty of the generated fields.</p>
+<h2 id="nore">Caroline Nore</h2>
+<p>Caroline Nore is referred to as a professor in the project’s offers (“Pr. Caroline Nore (LISN)” in the internship offer, “Pr. UPS” in the postdoctoral offer). She works at LISN, in the COMET team according to the HAL records of her recent papers, and she coordinates MilaDy. Her research concerns computational magnetohydrodynamics and the dynamo effect: simulation of the VKS experiment, precession dynamos, the Taylor–Couette dynamo. Her other topics, such as liquid metal batteries or ferrofluids, are further removed from the internship.</p>
+<p>Her main tool is SFEMaNS, which the M2 internship offer she proposed with D. Lucor calls “our massively parallel research code SFEMaNS”; she co-authored with J.-L. Guermond the method papers on which it is based (Guermond et al.&nbsp;2007, 2009, 2011). The code solves the Navier–Stokes equations, the induction equation and the full MHD coupling in cylindrical coordinates, with a Fourier decomposition in the azimuthal direction and Lagrange finite elements in the meridian plane. It handles jumps in magnetic permeability, the matching to a scalar potential in the vacuum and, for large Reynolds numbers, stabilization by entropy viscosity. For learning, the consequence is direct: the data are Fourier modes on an unstructured mesh, not arrays on a Cartesian grid.</p>
+<p>She has supervised PhDs on MHD and the dynamo (F. Luddens in 2012 with J.-L. Guermond, L. Cappanera in 2015, M. Creff in 2023 with B. Dubrulle) and co-supervised a PhD in machine learning, that of M. Quattromini (2024), on graph neural networks for data assimilation and optimization in fluid mechanics.</p>
+<table class="caption-top">
+<caption>Selected publications of C. Nore, in chronological order.</caption>
+<thead>
+<tr class="header">
+<th>Reference</th>
+<th>What it brings to the internship</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Laguerre R., Nore C., Ribeiro A., Léorat J., Guermond J.-L., Plunian F. (2008). “Impact of Impellers on the Axisymmetric Magnetic Mode in the VKS2 Dynamo Experiment”. <em>Physical Review Letters</em> 101(10), 104501. <a href="https://doi.org/10.1103/PhysRevLett.101.104501">doi:10.1103/PhysRevLett.101.104501</a>; arXiv:0805.2805.</td>
+<td>The role of the impellers and of ferromagnetic boundary conditions in the selection of the axisymmetric mode of VKS: why material properties are among the conditioning parameters.</td>
+</tr>
+<tr class="even">
+<td>Guermond J.-L., Laguerre R., Léorat J., Nore C. (2009). “Nonlinear magnetohydrodynamics in axisymmetric heterogeneous domains using a Fourier/finite element technique and an interior penalty method”. <em>Journal of Computational Physics</em> 228(8), 2739–2757. <a href="https://doi.org/10.1016/j.jcp.2008.12.026">doi:10.1016/j.jcp.2008.12.026</a>.</td>
+<td>The Fourier / finite element method of SFEMaNS, which sets the structure of the data that the generator will have to produce.</td>
+</tr>
+<tr class="odd">
+<td>Guermond J.-L., Léorat J., Luddens F., Nore C., Ribeiro A. (2011). “Effects of discontinuous magnetic permeability on magnetodynamic problems”. <em>Journal of Computational Physics</em> 230(16), 6299–6319. <a href="https://doi.org/10.1016/j.jcp.2011.04.026">doi:10.1016/j.jcp.2011.04.026</a>.</td>
+<td>The jump conditions at interfaces of discontinuous permeability: linear constraints that a generator of magnetic fields should respect.</td>
+</tr>
+<tr class="even">
+<td>Nore C., Léorat J., Guermond J.-L., Luddens F. (2011). “Nonlinear dynamo action in a precessing cylindrical container”. <em>Physical Review E</em> 84(1), 016317. <a href="https://doi.org/10.1103/PhysRevE.84.016317">doi:10.1103/PhysRevE.84.016317</a>; arXiv:1102.1846.</td>
+<td>The numerical demonstration that precession can sustain a dynamo in a cylinder: the physics behind the DRESDYN objective.</td>
+</tr>
+<tr class="odd">
+<td>Nore C., Guermond J.-L., Laguerre R., Léorat J., Luddens F. (2012). “Nonlinear dynamo in a short Taylor–Couette setup”. <em>Physics of Fluids</em> 24(9), 094106. <a href="https://doi.org/10.1063/1.4752756">doi:10.1063/1.4752756</a>.</td>
+<td>A tilted dipole whose axial component exhibits aperiodic reversals: a second system with reversals, simpler than VKS.</td>
+</tr>
+<tr class="even">
+<td>Nore C., Castanon Quiroz D., Cappanera L., Guermond J.-L. (2018). “Numerical simulation of the von Kármán sodium dynamo experiment”. <em>Journal of Fluid Mechanics</em> 854, 164–195. <a href="https://doi.org/10.1017/jfm.2018.582">doi:10.1017/jfm.2018.582</a>.</td>
+<td>The simulation of VKS with soft-iron impellers. The threshold <span class="math inline">Rm_c</span> decreases when the permeability or the Reynolds number increases: exactly the type of parametric dependence to be learned.</td>
+</tr>
+<tr class="odd">
+<td>Creff M., Faller H., Dubrulle B., Guermond J.-L., Nore C. (2024). “Tracking dynamo mechanisms from local energy transfers: Application to the von Kármán sodium dynamo”. <em>Physics of Plasmas</em> 31(2), 022306. <a href="https://doi.org/10.1063/5.0174251">doi:10.1063/5.0174251</a>.</td>
+<td>Local energy budgets in space, scale and time, computable on an unstructured mesh: a fine-grained physical metric for judging generated fields.</td>
+</tr>
+<tr class="even">
+<td>Botez V., Bousquet R., Nore C. (2025). “Large scale analysis of the von Kármán sodium experiment using proper orthogonal decomposition”. <em>Magnetohydrodynamics</em> 61(1/2), 13–24. <a href="https://doi.org/10.22364/mhd.61.1-2.2">doi:10.22364/mhd.61.1-2.2</a>.</td>
+<td>The POD of VKS in the growth and saturation phases; at saturation, the magnetic feedback breaks the symmetry of the velocity field, which provides a symmetry test for generated fields.</td>
+</tr>
+<tr class="odd">
+<td>Bousquet R., Ponty Y., Botez V., Plihon N., Nore C. (2026). “Magnetic field reversals in numerical simulations of the von Kármán sodium experiment”. <em>Physical Review Fluids</em> 11(6), 063703. <a href="https://doi.org/10.1103/9tx2-1m13">doi:10.1103/9tx2-1m13</a>.</td>
+<td>The reference data and reduced model for reversals: POD on 2000 snapshots and the DQVU Galerkin model identified under constraints (see the section on the project).</td>
+</tr>
+<tr class="even">
+<td>Botez V., Giesecke A., Nore C., Cappanera L., Stefani F. (2026). “Impact of boundary conditions on onset and symmetry of precession-driven dynamos”. <em>Physical Review Fluids</em> 11(8), 083701. <a href="https://doi.org/10.1103/rx1h-5zxp">doi:10.1103/rx1h-5zxp</a>.</td>
+<td>The threshold and symmetry of precession dynamos as functions of the boundary conditions, for DRESDYN: the simplified conditions systematically underestimate <span class="math inline">Rm_c</span>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Priority reading.</strong> The intern will first read Bousquet et al.&nbsp;(2026), which describes the reversal data, the parameters of the reference simulation and the reduced model against which a generator will have to be measured. Nore et al.&nbsp;(2018) then gives the VKS geometry, the physical parameters and the SFEMaNS method. Creff et al.&nbsp;(2024) will come in when choosing physical metrics finer than spectra.</p>
+<h2 id="ponty">Yannick Ponty</h2>
+<p>Yannick Ponty has been a CNRS research director (directeur de recherche) since 2014, at the Lagrange laboratory (UMR 7293) of the Observatoire de la Côte d’Azur, in Nice. He has led the “Turbulence Fluide et Plasma” (fluid and plasma turbulence) team since October 2025, having already led it from 2011 to 2021, and he is an external member of the Inria CASTOR team. He was a CNRS research scientist (chargé de recherche) from 2000 to 2014 and a <em>research fellow</em> in the MHD group of the University of Exeter from 1997 to 2000. His PhD (1997) dealt with rotating convective patterns and the dynamo effect in a chaotic flow, and his habilitation (2012) with the role of turbulence in the dynamo effect and in magnetic induction.</p>
+<p>His stated keywords are magnetohydrodynamics, the dynamo effect, turbulence, high-performance computing and optimal control. In Bochum, he co-supervised with R. Grauer the PhD of S. Kreuzahler on the penalization of the VKS impellers in a pseudo-spectral code; Bousquet et al.&nbsp;(2026) use the name “LATU” for the solver of Kreuzahler et al.&nbsp;(2017) that came out of this work. He has supervised a MilaDy postdoc since February 2026 and supervised an M1 internship on high-performance computing with Kokkos in 2025.</p>
+<p>His contribution to the internship does not lie in machine learning, a field in which we found no publication of his. It lies in the physics of dynamos at low magnetic Prandtl number, intermittency and rare events, subcritical bifurcations, pseudo-spectral codes and the high-order statistics used to validate generated fields.</p>
+<table class="caption-top">
+<caption>Selected publications of Y. Ponty, in chronological order.</caption>
+<thead>
+<tr class="header">
+<th>Reference</th>
+<th>What it brings to the internship</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ponty Y., Mininni P.D., Montgomery D.C., Pinton J.-F., Politano H., Pouquet A. (2005). “Numerical study of dynamo action at low magnetic Prandtl numbers”. <em>Physical Review Letters</em> 94, 164502. <a href="https://doi.org/10.1103/PhysRevLett.94.164502">doi:10.1103/PhysRevLett.94.164502</a>; arXiv:physics/0410046.</td>
+<td>Taylor–Green dynamos from <span class="math inline">P_M = 1</span> down to <span class="math inline">P_M = 10^{-2}</span>, with a threshold <span class="math inline">Rm_c</span> that rises steeply with <span class="math inline">P_M^{-1}</span> and then saturates, and a Kazantsev spectrum in <span class="math inline">k^{3/2}</span> in the linear phase: a periodic test bed and a spectral signature to check.</td>
+</tr>
+<tr class="even">
+<td>Ponty Y., Laval J.-P., Dubrulle B., Daviaud F., Pinton J.-F. (2007). “Subcritical Dynamo Bifurcation in the Taylor-Green Flow”. <em>Physical Review Letters</em> 99(22), 224501. <a href="https://doi.org/10.1103/PhysRevLett.99.224501">doi:10.1103/PhysRevLett.99.224501</a>; arXiv:0707.2498.</td>
+<td>A subcritical dynamo bifurcation with hysteresis: the case where the distribution of states jumps at the threshold, difficult for a generator that varies smoothly with its parameters.</td>
+</tr>
+<tr class="odd">
+<td>Alexakis A., Ponty Y. (2008). “Effect of the Lorentz force on on-off dynamo intermittency”. <em>Physical Review E</em> 77, 056308. <a href="https://doi.org/10.1103/PhysRevE.77.056308">doi:10.1103/PhysRevE.77.056308</a>; arXiv:0710.0063.</td>
+<td>On-off intermittency near the threshold, with active phases whose duration follows a power law at large Reynolds number: the rare-event statistics that a generator must reproduce.</td>
+</tr>
+<tr class="even">
+<td>Ponty Y., Plunian F. (2011). “Transition from Large-Scale to Small-Scale Dynamo”. <em>Physical Review Letters</em> 106, 154502. <a href="https://doi.org/10.1103/PhysRevLett.106.154502">doi:10.1103/PhysRevLett.106.154502</a>; arXiv:2004.11028.</td>
+<td>The transition from a large-scale dynamo to a small-scale dynamo as <span class="math inline">Rm</span> increases: a parametric regime change to be captured.</td>
+</tr>
+<tr class="odd">
+<td>Kreuzahler S., Schulz D., Homann H., Ponty Y., Grauer R. (2014). “Numerical study of impeller-driven von Kármán flows via a volume penalization method”. <em>New Journal of Physics</em> 16(10), 103001. <a href="https://doi.org/10.1088/1367-2630/16/10/103001">doi:10.1088/1367-2630/16/10/103001</a>.</td>
+<td>Volume penalization of the impellers in a pseudo-spectral code: how the VKS geometry fits into a periodic box.</td>
+</tr>
+<tr class="even">
+<td>Kreuzahler S., Ponty Y., Plihon N., Homann H., Grauer R. (2017). “Dynamo Enhancement and Mode Selection Triggered by High Magnetic Permeability”. <em>Physical Review Letters</em> 119(23), 234501. <a href="https://doi.org/10.1103/PhysRevLett.119.234501">doi:10.1103/PhysRevLett.119.234501</a>; arXiv:1706.00260.</td>
+<td>The LATU solver of Bousquet et al.&nbsp;(2026), on a Cartesian grid of <span class="math inline">384^3</span> points with a relative permeability from 1 to 16: a data format simpler to learn than the hybrid mesh of SFEMaNS.</td>
+</tr>
+<tr class="odd">
+<td>Mannix P.M., Ponty Y., Marcotte F. (2022). “Systematic Route to Subcritical Dynamo Branches”. <em>Physical Review Letters</em> 129(2), 024502. <a href="https://doi.org/10.1103/PhysRevLett.129.024502">doi:10.1103/PhysRevLett.129.024502</a>; arXiv:2112.11376.</td>
+<td>A nonlinear optimization that finds subcritical dynamo branches and their critical perturbations: a tool for locating the threshold that the generator must cross.</td>
+</tr>
+<tr class="even">
+<td>Ponty Y., Politano H., Pouquet A. (2025). “Intermittency assessed through a model of kurtosis–skewness relation in MHD in fast dynamo regimes”. <em>Journal of Plasma Physics</em> 91(2), E69. <a href="https://doi.org/10.1017/S0022377825000169">doi:10.1017/S0022377825000169</a>.</td>
+<td>Relations between kurtosis and skewness measured on very long simulations (up to <span class="math inline">3.14\times10^{5}</span> turnover times): a high-order statistical metric for validating generated fields.</td>
+</tr>
+<tr class="odd">
+<td>Bousquet R., Ponty Y., Botez V., Plihon N., Nore C. (2026). “Magnetic field reversals in numerical simulations of the von Kármán sodium experiment”. <em>Physical Review Fluids</em> 11(6), 063703. <a href="https://doi.org/10.1103/9tx2-1m13">doi:10.1103/9tx2-1m13</a>.</td>
+<td>Listed by Y. Ponty among his five significant publications (2026 CV): the VKS reversals seen through the project’s two solvers, LATU and SFEMaNS.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Priority reading.</strong> Bousquet et al.&nbsp;(2026) is again the first reading, since Y. Ponty is a co-author and LATU is one of its two solvers. Alexakis and Ponty (2008) then gives an intuition of rare events near the threshold, and Ponty, Politano and Pouquet (2025) a statistical metric directly applicable to generated fields.</p>
+<h2 id="matrice">Skills matrix</h2>
+<p>The table crosses the skills required by the offer with the published work of the four supervisors. The symbol ● marks a central theme of a supervisor’s work, attested by several publications; ◐ marks an indirect or occasional contribution (co-authorship on a related topic, supervised PhD); a dash means that no publication was found in the checked sources. A dash is therefore not a judgment of competence: it only states what the publications show.</p>
+<table class="caption-top">
+<caption>Skills in the offer and published work of the supervisors (the years refer to the publications cited on this page and listed in the Sources).</caption>
+<colgroup>
+<col style="width: 29%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Skill required by the offer</th>
+<th>Cheng</th>
+<th>Lucor</th>
+<th>Nore</th>
+<th>Ponty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Conditional generative models (diffusion, flow matching)</td>
+<td>● conditional diffusion (2025, 2026); VQ-VAE (2023)</td>
+<td>◐ PhD of L. Achard (multimodal generative modeling, ongoing)</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr class="even">
+<td>Dependence on the control parameters (<span class="math inline">Re</span>, <span class="math inline">Rm</span>, materials)</td>
+<td>◐ generation conditioned on vegetation and slope (2023)</td>
+<td>● polynomial chaos (2007); parametric reduced model (2023)</td>
+<td>● thresholds as functions of <span class="math inline">Re</span> and <span class="math inline">\mu</span> in VKS (2018)</td>
+<td>● thresholds as a function of <span class="math inline">P_M</span> (2005); subcritical branches (2022)</td>
+</tr>
+<tr class="odd">
+<td>Physical constraints (architecture, losses, sampling)</td>
+<td>● multi-fidelity constraints (2024); operator with moment constraints (2026)</td>
+<td>● PINNs (2022); networks with invariances (2024)</td>
+<td>◐ jump conditions and interior penalty in SFEMaNS (2007–2011)</td>
+<td>◐ volume penalization (2014, 2017)</td>
+</tr>
+<tr class="even">
+<td>Latent space and model reduction</td>
+<td>● latent assimilation (2022); learned linear dynamics (2025)</td>
+<td>● autoencoders and POD (2025); polynomial autoencoders (2026)</td>
+<td>● POD of VKS (2024, 2025); DQVU model (2026)</td>
+<td>◐ co-author of the DQVU model (2026)</td>
+</tr>
+<tr class="odd">
+<td>Data assimilation (downstream use of the fields)</td>
+<td>● TorchDA (2025); review (2023)</td>
+<td>● review (2023); observation compression from S. Cheng’s PhD (2021)</td>
+<td>◐ co-supervision of M. Quattromini’s PhD (2024)</td>
+<td>–</td>
+</tr>
+<tr class="even">
+<td>Uncertainty quantification and probabilistic evaluation</td>
+<td>● diffusion ensembles and “hit rate” score (2026)</td>
+<td>● polynomial chaos (2007); conformal prediction (2025)</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr class="odd">
+<td>3D MHD and dynamo simulation data</td>
+<td>–</td>
+<td>◐ hydrodynamic von Kármán simulations (2024, 2025)</td>
+<td>● SFEMaNS: VKS, precession, Taylor–Couette</td>
+<td>● LATU; Taylor–Green and ABC dynamos</td>
+</tr>
+<tr class="even">
+<td>Physics of reversals and rare events</td>
+<td>–</td>
+<td>–</td>
+<td>● reversals in VKS (2026) and Taylor–Couette (2012)</td>
+<td>● on-off intermittency (2008); subcritical bifurcations (2007, 2022)</td>
+</tr>
+<tr class="odd">
+<td>Physical metrics (spectra, helicity, divergence, topology)</td>
+<td>◐ image scores and “hit rate” (2026)</td>
+<td>◐ conformal coverage (2025)</td>
+<td>● local energy transfers (2024)</td>
+<td>● kurtosis and skewness (2025); Kazantsev spectrum (2005)</td>
+</tr>
+</tbody>
+</table>
+<p>The matrix shows a clear complementarity. S. Cheng and D. Lucor cover the learning side (generative modeling, constraints, reduction, assimilation, uncertainty), C. Nore and Y. Ponty the physics side (dynamo simulations, reversals, metrics). The overlap lies in reduced models, which all four touch through POD, autoencoders or the DQVU model. The empty cells show where the intern will have to build the bridge: according to our searches, none of the four has yet published a generative model trained on dynamo data, and this is precisely the novelty expected from the internship.</p>
+<h2 id="pistes">Candidate PhD directions</h2>
+<p>The six directions below are proposals written for this site on the basis of the checked sources. Their key challenges and risks are inferred from these sources; they were not formulated as such by the supervisors. Each direction is described by its statement, the scientific challenge it tackles, the work it builds on, the data it depends on and its risks. In SFEMaNS and in Bousquet et al.&nbsp;(2026), the magnetic field is denoted <span class="math inline">\mathbf{H}</span>; in a domain with variable permeability, the divergence constraint then applies to <span class="math inline">\mu_r\mathbf{H}</span>.</p>
+<h3 id="piste-a">Direction A — Conditional generator of parametric 3D MHD fields</h3>
+<p><strong>Statement.</strong> Direction A learns the conditional distribution <span class="math inline">p(\mathbf{u}, \mathbf{H} \mid Re, Rm, \mu_r, \delta)</span> of the VKS velocity and magnetic fields, where <span class="math inline">\delta</span> denotes the forcing asymmetry between the two impellers. The generator is a diffusion or flow matching model in a latent space. The autoencoder that defines this space is constrained by the symmetries of the flow (rotation <span class="math inline">R_\pi</span>, equivariance between the latent and physical spaces), regressed on the parameters and possibly aligned with the POD modes.</p>
+<p><strong>Challenge.</strong> The model must generalize beyond the few points <span class="math inline">(Re, Rm, \mu_r)</span> actually simulated, preserve <span class="math inline">\nabla\cdot\mathbf{u} = 0</span> and <span class="math inline">\nabla\cdot(\mu_r\mathbf{H}) = 0</span> after decoding, preserve the symmetries, and handle a hybrid representation made of azimuthal Fourier modes and unstructured finite elements.</p>
+<p><strong>Builds on.</strong> The direction extends the interpretable autoencoders of Bousquet, Nore and Lucor (2025), the VKS analyses of Bousquet et al.&nbsp;(2024), the latent regression and contrastive learning of the 2026 internship, the conditional diffusion of Zhuang, Cheng and Duraisamy (2025), the multi-fidelity constraints of Zhou, Cheng and Arcucci (2024) and the latent surrogate models of Zhou et al.&nbsp;(2026, preprint).</p>
+<p><strong>Data.</strong> It relies on the SFEMaNS simulations of VKS (Nore et al.&nbsp;2016, 2018, with sweeps in permeability and in Reynolds number; Creff et al.&nbsp;2024, with steel or soft-iron impellers) and on those of LATU (Kreuzahler et al.&nbsp;2017, relative permeability from 1 to 16).</p>
+<p><strong>Risks.</strong> The parametric points are few, because each MHD simulation is costly, as the ANR abstract stresses. The volume of the 3D fields requires working in a latent space. The data are not public and must be obtained through the consortium. Finally, the tension between reconstruction and regularization already observed for VAEs (Bousquet et al.&nbsp;2025) may limit the quality of the latent space.</p>
+<h3 id="piste-b">Direction B — Magnetic reversals and rare events through probabilistic generation</h3>
+<p><strong>Statement.</strong> Direction B builds a temporal generative model, for example an autoregressive diffusion or a diffusion conditioned on the current state, which produces ensembles of field trajectories in the vicinity of reversals. Sampling is guided by the DQVU reduced model or by Galerkin constraints, in the manner of universal guidance (Bansal et al.&nbsp;2024). The goal is to estimate reversal probabilities, waiting times and the precursor, reversal and recovery phases targeted by objective (i).</p>
+<p><strong>Challenge.</strong> Reversals are rare (a simulation contains few of them), their statistics have heavy tails (power laws for the active phases), and the generated 3D field must remain consistent with the reduced dynamics while staying calibrated in the probabilistic sense.</p>
+<p><strong>Builds on.</strong> The direction extends the analysis of reversals and the DQVU model of Bousquet et al.&nbsp;(2026), the on-off intermittency of Alexakis and Ponty (2008), the subcritical bifurcations of Ponty et al.&nbsp;(2007) and of Mannix, Ponty and Marcotte (2022), the aperiodic Taylor–Couette reversals (Nore et al.&nbsp;2012), the diffusion ensembles of Yu et al.&nbsp;(2026) and the invariant-measure-preserving learning of Cheng X. et al.&nbsp;(2025).</p>
+<p><strong>Data.</strong> It uses the reversal simulations of Bousquet et al.&nbsp;(2026), at <span class="math inline">Re = 1594</span>, <span class="math inline">Rm = 531</span> and <span class="math inline">\mu_r = 16</span> with an outer conducting layer, and Y. Ponty’s simulations of ABC and Taylor–Green dynamos for intermittency.</p>
+<p><strong>Risks.</strong> Long time series are needed, hence substantial computation. The DQVU model reproduces only imperfectly the distribution of the amplitude <span class="math inline">Q</span> of the quadrupolar mode (Bousquet et al.&nbsp;2026). Finally, rare-event metrics are hard to validate statistically with few events.</p>
+<h3 id="piste-c">Direction C — Data assimilation with a generative prior</h3>
+<p><strong>Statement.</strong> Direction C reconstructs 3D states <span class="math inline">(\mathbf{u}, \mathbf{H})</span> from synthetic sparse observations, for example simulated magnetic probes, by combining a generative prior (conditional diffusion) with variational or ensemble assimilation in the latent space.</p>
+<p><strong>Challenge.</strong> The posterior distribution is multimodal, since the dipole can have either polarity, and therefore non-Gaussian. The observation operator is nonlinear, the dimension is large, and the analysis must remain physically consistent.</p>
+<p><strong>Builds on.</strong> The direction extends generalized latent assimilation (Cheng et al.&nbsp;2022), the learned inverse operator VIVID (Cheng et al.&nbsp;2024), TorchDA (Cheng et al.&nbsp;2025), the 4D-Var with generative dynamics of Bocquet, Finn and Cheng (2026, preprint), the review by Cheng et al.&nbsp;(2023) and the conformal coverage of Jaber et al.&nbsp;(2025).</p>
+<p><strong>Data.</strong> It uses subsampled SFEMaNS and LATU outputs, and intermediate test beds (Lorenz, shallow water) already available in TorchDA.</p>
+<p><strong>Risks.</strong> No experimental data from VKS or DRESDYN has been identified as accessible: one would probably have to work with synthetic observations. The cost of diffusion sampling at each assimilation cycle may also be prohibitive.</p>
+<h3 id="piste-d">Direction D — Parametric generative model to explore DRESDYN</h3>
+<p><strong>Statement.</strong> Direction D generates mean or fluctuating velocity fields conditioned on the Poincaré number, the Reynolds number and the wall properties, then estimates the threshold <span class="math inline">Rm_c</span> and the symmetry of the dominant mode. The estimate is obtained with a kinematic solver applied to the generated fields, or with a prediction head, within a robust Bayesian optimization framework.</p>
+<p><strong>Challenge.</strong> The window of Poincaré numbers where the dynamo is likely is narrow (Botez et al.&nbsp;2026), the transitions between hydrodynamic states are abrupt, and <span class="math inline">Rm_c</span> is very sensitive to the electromagnetic conditions (vacuum or pseudo-vacuum, conducting or permeable walls).</p>
+<p><strong>Builds on.</strong> The direction extends Botez et al.&nbsp;(2026), the precession dynamos of Nore et al.&nbsp;(2011) and Cappanera et al.&nbsp;(2016), the preparatory work for DRESDYN (Stefani et al.&nbsp;2015; Giesecke et al.&nbsp;2018), the robust Bayesian optimization of Zhou, Wang, Lucor and Sauret (2026) and the latent variational calibration of Zhou et al.&nbsp;(2026, preprint).</p>
+<p><strong>Data.</strong> It depends on the hydrodynamic precession simulations and the averaged fields of Botez et al., computed with SFEMaNS in collaboration with HZDR. Objective (ii) of the ANR explicitly calls for parametric reduced models for DRESDYN.</p>
+<p><strong>Risks.</strong> The simulated configurations are few. The generator’s error propagates into a sensitive eigenvalue problem. Finally, the direction depends on the DRESDYN schedule; the ANR abstract describes DRESDYN as an “ongoing” experiment, and the postdoc offer calls its success uncertain.</p>
+<h3 id="piste-e">Direction E — Hard constraints on hybrid Fourier–finite element meshes</h3>
+<p><strong>Statement.</strong> Direction E formulates diffusion or flow matching in a function space, in the manner of FunDiff (Wang et al.&nbsp;2026), or directly on the SFEMaNS representation (azimuthal modes on meridian finite elements). It imposes exactly <span class="math inline">\nabla\cdot\mathbf{B} = 0</span> (through a vector potential or a poloidal–toroidal decomposition), the interface conditions at permeability jumps and the matching to the vacuum, and it controls the energy budget by projection at sampling time or through a loss.</p>
+<p><strong>Challenge.</strong> The meshes are unstructured, the permeability is discontinuous (continuity of the tangential component of <span class="math inline">\mathbf{H}</span> and of the normal component of <span class="math inline">\mu\mathbf{H}</span>), the impellers are penalized zones, and a hard constraint can degrade the quality of the samples.</p>
+<p><strong>Builds on.</strong> The direction extends the numerical methods of SFEMaNS (Guermond et al.&nbsp;2007, 2009, 2011), the study of the role of boundary conditions by Giesecke et al.&nbsp;(2012), the review by Cheng et al.&nbsp;(2025) on unstructured meshes, the moment constraints of Xue et al.&nbsp;(2026) and the relaxation of incompressibility by Lucor, Agrawal and Sergent (2022).</p>
+<p><strong>Data.</strong> It works on native SFEMaNS outputs, after validation on simple PDEs, as the offer requires.</p>
+<p><strong>Risks.</strong> The implementation on an unstructured mesh is costly, hard constraints can reduce the diversity of the samples, and the integration of a generator written in PyTorch with a massively parallel simulation code is not a given.</p>
+<h3 id="piste-f">Direction F — Test beds and physical metrics for MHD generators</h3>
+<p><strong>Statement.</strong> Direction F builds a ladder of test beds, from simple PDEs to periodic dynamos (Taylor–Green, ABC, Roberts) computed with Y. Ponty’s codes, then to VKS and precession with SFEMaNS and LATU. It pairs this ladder with a battery of metrics: spectra (including the Kazantsev spectrum), helicity, divergence, topology, local energy transfers (Creff et al.&nbsp;2024), kurtosis–skewness relations (Ponty et al.&nbsp;2025), conformal coverage (Jaber et al.&nbsp;2025) and the “hit rate” score (Yu et al.&nbsp;2026).</p>
+<p><strong>Challenge.</strong> The metrics must truly discriminate between models and must not depend on the mesh, and 3D diagnostics are expensive.</p>
+<p><strong>Builds on.</strong> The direction extends the Taylor–Green dynamos of Ponty et al.&nbsp;(2005, 2007), the transition studied by Ponty and Plunian (2011), the statistics of Ponty, Politano and Pouquet (2025), the budgets of Creff et al.&nbsp;(2024) and the metrics of the 2026 internship.</p>
+<p><strong>Data.</strong> Periodic simulations in a Cartesian box are simpler to produce and to learn, and long series exist (up to <span class="math inline">3.14\times10^{5}</span> turnover times). The public dataset The Well (Ohana et al.&nbsp;2024) also contains 3D MHD turbulence, but compressible and without dynamo effect: it can serve as a test bed for learning, not as a substitute for dynamo data.</p>
+<p><strong>Risks.</strong> The topic is mostly methodological, and a test bed risks being judged incremental. It is better to attach it to direction A or direction B.</p>
+<h2 id="evaluation">Evaluation of the directions</h2>
+<h3 id="criteria-and-weights">Criteria and weights</h3>
+<p>For each of the seven criteria, each direction receives a score from 1 (very unfavorable) to 5 (very favorable). The total score is the weighted average</p>
+<p><span class="math display">
+S = \sum_{k=1}^{7} w_k\, n_k ,
+</span></p>
+<p>where <span class="math inline">n_k</span> is the score for criterion <span class="math inline">k</span> and <span class="math inline">w_k</span> its weight, with <span class="math inline">\sum_k w_k = 1</span>. The weights reflect a deliberate priority: the PhD must first extend the internship and serve the project that funds it.</p>
+<table class="caption-top">
+<caption>Evaluation criteria, weights and justification.</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 28%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterion</th>
+<th>Weight</th>
+<th>What a score of 5 rewards</th>
+<th>Justification of the weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fit with the internship offer</td>
+<td>20%</td>
+<td>The PhD directly extends the work required in the internship.</td>
+<td>The PhD is offered to the intern: a direction that extends the internship recovers six months of work and the code already written.</td>
+</tr>
+<tr class="even">
+<td>Fit with the two ANR objectives</td>
+<td>20%</td>
+<td>The direction directly serves objective (i) or objective (ii).</td>
+<td>The funding comes from MilaDy: the PhD must produce what the project announced.</td>
+</tr>
+<tr class="odd">
+<td>Data access</td>
+<td>15%</td>
+<td>The data exist and are accessible, within the consortium or openly.</td>
+<td>Without data, no direction can move forward; access can, however, be negotiated, hence a weight lower than those of the two fit criteria.</td>
+</tr>
+<tr class="even">
+<td>Scientific novelty</td>
+<td>15%</td>
+<td>No prior work has been found in the checked literature, neither for the application nor for the method.</td>
+<td>A PhD must produce publishable results; since no published generative model on dynamo simulations has been found, all the directions are new through their application, and the score mainly separates them by the novelty of their method.</td>
+</tr>
+<tr class="odd">
+<td>Feasibility in 36 months</td>
+<td>10%</td>
+<td>A PhD student can complete the direction with the project’s resources.</td>
+<td>This criterion is correlated with risk; together the two weigh 20%, so as not to count the same information twice.</td>
+</tr>
+<tr class="even">
+<td>Risk (5 = low risk)</td>
+<td>10%</td>
+<td>A partial failure still leaves publishable results.</td>
+<td>Same reason as for feasibility.</td>
+</tr>
+<tr class="odd">
+<td>Coverage of the four supervisors</td>
+<td>10%</td>
+<td>Each of the four brings a skill attested by their publications.</td>
+<td>A direction that draws on the whole consortium makes the best use of it, but this is not a condition for success.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="justified-scores-criterion-by-criterion">Justified scores, criterion by criterion</h3>
+<h4 id="fit-with-the-internship-offer-20">Fit with the internship offer (20%)</h4>
+<table class="caption-top">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Direction</th>
+<th style="text-align: center;">Score</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">5</td>
+<td>This is the very objective of the offer: generating 3D fields conditioned on <span class="math inline">Re</span>, <span class="math inline">Rm</span> and the material properties, under constraints, to feed reduced models and assimilation.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">3</td>
+<td>The offer mentions abrupt reversals in its context, but it asks for fields conditioned on the parameters, not for trajectories; temporal generation goes beyond the internship.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">3</td>
+<td>The offer intends the generated fields for assimilation frameworks “developed elsewhere in the project”: assimilation is not the core of the internship.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">3</td>
+<td>Precession is not among the parameters cited in the 2027 offer (it was in the 2026 offer), but the direction reuses the conditional generator of the internship.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">4</td>
+<td>The offer asks for constraints derived from the equations and the boundary conditions, imposed through the architecture, the losses or the sampling: this is the subject of E, pushed all the way to the geometry of the real data.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">4</td>
+<td>The offer asks for validation on simple PDEs and then for physical metrics: F makes this its object, but without the generative component.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="fit-with-the-two-anr-objectives-20">Fit with the two ANR objectives (20%)</h4>
+<table class="caption-top">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Direction</th>
+<th style="text-align: center;">Score</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">4</td>
+<td>A provides the parametric exploration method targeted by objective (ii), applied to VKS rather than to DRESDYN, and supplies states to the reduced models of objective (i), without addressing the dynamics of reversals.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">5</td>
+<td>B is objective (i): reversals, explosive dynamos and the precursor, reversal and recovery phases.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">3</td>
+<td>The abstract highlights assimilation (TorchDA), but neither of the two objectives is assimilation: C is cross-cutting.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">5</td>
+<td>D is objective (ii): parametric models to explore the conditions for the dynamo in DRESDYN.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">3</td>
+<td>E improves every generator of the project without directly addressing either of the two objectives.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">2</td>
+<td>F is useful to all, but neither of the two objectives concerns the evaluation of models.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="data-access-15">Data access (15%)</h4>
+<table class="caption-top">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Direction</th>
+<th style="text-align: center;">Score</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">4</td>
+<td>The SFEMaNS and LATU simulations of VKS exist in the consortium; they are not public and the parametric points are few.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">3</td>
+<td>The reversal simulations of Bousquet et al.&nbsp;(2026) exist, but each contains few reversals and long series are needed.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">3</td>
+<td>In the absence of experimental measurements identified as accessible, synthetic observations would have to be built from the simulations.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">2</td>
+<td>The precession simulations of Botez et al.&nbsp;(2026) cover few configurations, and the direction depends on the collaboration with HZDR.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">4</td>
+<td>The native SFEMaNS outputs suffice, and the simple validation PDEs can be computed at will.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">5</td>
+<td>Periodic simulations are cheap to produce, and a public 3D MHD dataset exists (The Well, compressible and without dynamo).</td>
+</tr>
+</tbody>
+</table>
+<h4 id="scientific-novelty-15">Scientific novelty (15%)</h4>
+<table class="caption-top">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Direction</th>
+<th style="text-align: center;">Score</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">4</td>
+<td>No published generative model on dynamo simulations, nor one jointly conditioned on <span class="math inline">Re</span> and <span class="math inline">Rm</span>, has been found; the building blocks (latent diffusion, Leray projection, stream function), on the other hand, exist.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">5</td>
+<td>No probabilistic generation of dynamo reversals has been found, and the statistics of reversals obtained with a generative model remain entirely to be built.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">3</td>
+<td>Diffusion-based assimilation already exists in other fields, notably in S. Cheng’s work; the novelty would mainly lie in the application to MHD.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">4</td>
+<td>No generator of precession fields has been found; robust Bayesian optimization and parametric models, on the other hand, are established.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">4</td>
+<td>No method found imposes a hard zero-divergence constraint with cylindrical walls, permeability jumps and matching to the vacuum; projections in periodic domains, on the other hand, are published.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">3</td>
+<td>The absence of MHD metrics in the evaluation of generators is a real gap, but a test bed risks being judged incremental.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="feasibility-in-36-months-10">Feasibility in 36 months (10%)</h4>
+<table class="caption-top">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Direction</th>
+<th style="text-align: center;">Score</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">4</td>
+<td>A directly extends the internship on existing data; the volume of the 3D fields only requires working in a latent space.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">3</td>
+<td>B first requires a reliable generator, then long series to validate the reversal statistics.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">3</td>
+<td>C assumes a mature generator, then an assimilation loop in which each cycle samples a diffusion.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">2</td>
+<td>D combines few configurations, a sensitive downstream eigenvalue problem and a schedule tied to DRESDYN.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">2</td>
+<td>Development on an unstructured mesh with permeability jumps is long, and the integration with the simulation code is not guaranteed.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">4</td>
+<td>Periodic test beds can be set up quickly.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="risk-10-5-low-risk">Risk (10%, 5 = low risk)</h4>
+<table class="caption-top">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Direction</th>
+<th style="text-align: center;">Score</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">3</td>
+<td>The main risk is poor generalization from few parametric points; in case of failure on VKS, the results on simple PDEs remain publishable.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">3</td>
+<td>Rare events are hard to validate statistically, and the reference reduced model is itself imperfect.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">3</td>
+<td>Without experimental data, the contribution can only be demonstrated on synthetic data, and the cost of sampling may be prohibitive.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">2</td>
+<td>The generator’s error can propagate into the computation of <span class="math inline">Rm_c</span>, which is very sensitive to the boundary conditions, to the point of cancelling the benefit of the method.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">2</td>
+<td>Hard constraints can degrade the diversity of the samples, and the implementation may absorb most of the PhD.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">3</td>
+<td>The technical risk is low, but the risk of a contribution judged incremental is real.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="coverage-of-the-four-supervisors-10">Coverage of the four supervisors (10%)</h4>
+<table class="caption-top">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Direction</th>
+<th style="text-align: center;">Score</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">4</td>
+<td>S. Cheng brings conditional diffusion, D. Lucor the latent space and POD, C. Nore the SFEMaNS data and the symmetries; Y. Ponty contributes mainly through the LATU data.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">5</td>
+<td>All four are at the core: diffusion ensembles (Cheng), reduced models and uncertainty (Lucor), VKS reversals (Nore), intermittency and subcriticality (Ponty).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">3</td>
+<td>C falls within the core expertise of S. Cheng and D. Lucor, with support from C. Nore; no contribution from Y. Ponty has been identified.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">3</td>
+<td>C. Nore (precession) and D. Lucor (robust optimization) are on the front line, with S. Cheng for the generative part; Y. Ponty is little involved.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">4</td>
+<td>C. Nore (SFEMaNS methods), S. Cheng (unstructured data), D. Lucor (constraint relaxation) and Y. Ponty (penalization) each contribute.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">4</td>
+<td>Y. Ponty (periodic dynamos, intermittency), C. Nore (energy transfers), D. Lucor (conformal coverage) and S. Cheng (probabilistic scores) each contribute.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="summary-and-robustness">Summary and robustness</h3>
+<table class="caption-top" style="width:100%;">
+<caption>Scores and weighted score of the six directions.</caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Direction</th>
+<th style="text-align: center;">Offer (20%)</th>
+<th style="text-align: center;">ANR (20%)</th>
+<th style="text-align: center;">Data (15%)</th>
+<th style="text-align: center;">Novelty (15%)</th>
+<th style="text-align: center;">Feasibility (10%)</th>
+<th style="text-align: center;">Risk (10%)</th>
+<th style="text-align: center;">Supervisors (10%)</th>
+<th style="text-align: center;">Weighted score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><strong>4.10</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;"><strong>3.90</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3.20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3.40</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3.50</td>
+</tr>
+</tbody>
+</table>
+<p>Directions A and B come out on top, with 4.10 and 3.90. Their profiles are complementary: A wins on fit with the offer, data access and feasibility; B wins on objective (i) of the ANR, novelty and coverage of the supervisors. Direction F comes third (3.50), but its own justifications recommend attaching it to A or B.</p>
+<p>This ranking depends on the weights, which are a choice. To measure its robustness, we recomputed the scores with two other sets of weights. With equal weights (1/7 each), we obtain A 4.00, B 3.86, F 3.57, E 3.29, C 3.00 and D 3.00. When the project is given priority (offer 10%, ANR 30%, other weights unchanged), we obtain B 4.10, A 4.00, D 3.40, E 3.30, F 3.30 and C 3.00. In all three cases, A and B take the first two places; only their order changes.</p>
+<div class="note">
+<p><span class="tag">Limitations of the grid</span> The scores are judgments by the site’s author, argued from the sources but not validated by the supervisors. They do not measure the intrinsic scientific value of the directions: a direction ranked low here, such as C or D, may become a priority if experimental data become accessible or if the DRESDYN schedule speeds up.</p>
+</div>
+<h2 id="retenue">Selected direction</h2>
+<div class="key">
+<p><span class="tag">Proposed topic</span> <strong>Conditional generative models with hard and distributional physical constraints for turbulent dynamos: parametric exploration, dynamo threshold and reversal statistics.</strong></p>
+</div>
+<p>The French title of the topic uses the word <em>renversements</em>, the usual term in the dynamo literature, whereas the ANR abstract uses <em>inversions</em>; both are rendered here as “reversals” and denote the sign change of the magnetic dipole. The detailed topic, with its theoretical part, its experimental plan and its timeline, is presented in the <a href="../these/index.html#piste">PhD proposal</a>; the preliminary results of this site’s toy experiments are presented in the <a href="../rapport/index.html">internship report</a>, written in advance since the internship has not yet taken place.</p>
+<h3 id="why-merge-a-and-b">Why merge A and B</h3>
+<p>The first reason is the ranking: A and B are the two best directions under all three sets of weights tried. The second is their complementarity. A answers the offer and provides the parametric exploration method targeted by objective (ii); B answers objective (i), centered on reversals. A PhD that combines them therefore covers both what the internship asks for and what the project promised. If the merged direction is scored with the same grid, it inherits the best scores of each for the offer, the ANR, novelty and coverage of the supervisors (5 everywhere), keeps the scores of A for data access and risk (4 and 3), since a snapshot generator is sufficient (see below), and loses one point of feasibility compared with A (3), because its scope is broader; its weighted score would then be 4.45. This figure is favorable by construction and should not be over-interpreted.</p>
+<p>The third reason is the most important: a single theoretical thread links the two directions and removes the main risk of B. That risk was the need for long time series to learn the dynamics of reversals. Yet, as we shall see, a generator of <strong>snapshots</strong>, that is, the object of direction A, is enough to predict the mean frequency of the dipole’s zero crossings, hence of reversals up to excursions, without a temporal model. Validation still requires reference series, and the training snapshots must cover the rare region where the dipole is close to zero; but training no longer requires time-resolved trajectories.</p>
+<h3 id="the-theoretical-thread-hard-constraints-distributional-constraints-and-rices-formula">The theoretical thread: hard constraints, distributional constraints and Rice’s formula</h3>
+<p>The theoretical framework prepared for the internship distinguishes two families of constraints. <strong>Hard constraints</strong> apply to each sample: zero divergence, linear boundary conditions. They are imposed by construction, for example by generating a vector potential <span class="math inline">\mathbf{A}</span> and setting <span class="math inline">\mathbf{B} = \nabla\times\mathbf{A}</span>, or by projection. Symmetries occupy an intermediate position: they concern the distribution (a field and its image under the symmetry, for example <span class="math inline">\mathbf{B}</span> and <span class="math inline">-\mathbf{B}</span>, must be equally probable), but an equivariant network imposes them exactly.</p>
+<p><strong>Distributional constraints</strong> apply to the distribution of the samples, not to each of them. Let <span class="math inline">\dot{\mathbf{x}} = F_{\boldsymbol\lambda}(\mathbf{x})</span> be the discretized dynamics at fixed parameters <span class="math inline">\boldsymbol\lambda</span>, and <span class="math inline">\mu_{\boldsymbol\lambda}</span> the distribution of its states in the statistically stationary regime. For every smooth test function <span class="math inline">\varphi</span> with controlled growth, stationarity imposes</p>
+<p><span class="math display">
+\mathbb{E}_{\mathbf{x}\sim\mu_{\boldsymbol\lambda}}\big[F_{\boldsymbol\lambda}(\mathbf{x})\cdot\nabla\varphi(\mathbf{x})\big] = 0 .
+</span></p>
+<p>With <span class="math inline">\varphi = E</span>, the energy, we recover the mean budget: on average, the injected power equals the dissipated power. An isolated snapshot does not satisfy this budget in general, since the time derivative of the energy is not zero at every instant; it is a constraint on the distribution, which can be imposed through a loss during training, including at parameters for which no data are available, or through exponential tilting at sampling time. The offer asks for the energy balance to be respected: this formulation states in what precise sense this can be done.</p>
+<p><strong>Rice’s formula</strong> (Rice 1944) makes the link with reversals. Let <span class="math inline">D = \ell(\mathbf{x})</span> be the dipole moment, a linear observable of the state. For a stationary process with smooth trajectories, whose pair <span class="math inline">(D, \dot D)</span> has a continuous joint density, the mean number of zero crossings of <span class="math inline">D</span> per unit time is</p>
+<p><span class="math display">
+\nu_0 = \mathbb{E}_{\mathbf{x}\sim\mu_{\boldsymbol\lambda}}\Big[\,\big|\ell\big(F_{\boldsymbol\lambda}(\mathbf{x})\big)\big|\;\delta\big(\ell(\mathbf{x})\big)\Big] .
+</span></p>
+<p>This quantity depends only on the stationary distribution and on <span class="math inline">F_{\boldsymbol\lambda}</span>. In MHD, the time derivative of the dipole can be computed on a snapshot <span class="math inline">(\mathbf{u}, \mathbf{B})</span> thanks to the induction equation. A snapshot generator conditioned on <span class="math inline">\boldsymbol\lambda</span> therefore predicts the reversal frequency as a function of the parameters, without time integration. The formula has limitations that must be stated: it requires knowing <span class="math inline">F_{\boldsymbol\lambda}</span>, it also counts quick crossings back and forth around zero (excursions), and it does not give the distribution of waiting times between reversals.</p>
+<p>Finally, the <strong>dynamo threshold</strong> raises a difficulty of its own. Suppose that the distribution of states jumps at <span class="math inline">\lambda_c</span>: on either side of the threshold, the distributions <span class="math inline">\mu_\lambda</span> remain at a Wasserstein distance <span class="math inline">W_1</span> of at least <span class="math inline">J &gt; 0</span> from each other, as in a subcritical bifurcation with hysteresis (Ponty et al.&nbsp;2007). A generator whose dependence on <span class="math inline">\lambda</span> is <span class="math inline">K</span>-Lipschitz in the <span class="math inline">W_1</span> sense, that is, <span class="math inline">W_1(q_\lambda, q_{\lambda'}) \le K|\lambda - \lambda'|</span>, then satisfies, for every half-width <span class="math inline">r &gt; 0</span>,</p>
+<p><span class="math display">
+\max_{|\lambda-\lambda_c|\le r} W_1\big(q_\lambda, \mu_\lambda\big) \;\ge\; \frac{J - 2Kr}{2} .
+</span></p>
+<p>The proof is a single triangle inequality between <span class="math inline">\mu_{\lambda_c - r}</span>, <span class="math inline">q_{\lambda_c - r}</span>, <span class="math inline">q_{\lambda_c + r}</span> and <span class="math inline">\mu_{\lambda_c + r}</span>. A smooth generator therefore makes an error of at least <span class="math inline">J/2</span> near the jump, unless one accepts a large constant <span class="math inline">K</span> or also conditions on the state. For a supercritical bifurcation, the distribution varies continuously but with an infinite slope at the threshold, and the difficulty persists in a milder form. These statements and their proofs are developed in the <a href="../rapport/index.html#formulation">internship report</a> and in the <a href="../these/index.html#piste">PhD proposal</a>.</p>
+<h3 id="continuity-with-the-internship-and-reuse-of-the-toolbox">Continuity with the internship and reuse of the toolbox</h3>
+<p>The internship must produce a comparative study of constraint strategies (hard, soft, distributional). The preparatory experiments in this repository (<code>experiences/</code> folder, small models run on CPU) already lay the groundwork on three test beds: a three-mode reversal model (Gissinger 2012), a forced 2D MHD system, and a 3D kinematic ABC dynamo. The PhD would reuse the same code, integrated into the project’s toolbox as the offer requires, and would transfer it to the consortium’s 3D data: first LATU, whose Cartesian grid is the simplest, then SFEMaNS and its hybrid mesh.</p>
+<p>The generated fields directly feed the project’s existing tools. They can serve as input to the reduced models (POD and the DQVU model of Bousquet et al.&nbsp;2026, autoencoders of Bousquet, Nore and Lucor 2025) and to the assimilation frameworks (TorchDA), which matches the sentence of the offer about “input for reduced-order models or data assimilation frameworks”. Finally, let us note a connection, which reflects our own reading and not that of the authors: the regression that identifies DQVU already imposes a statistical constraint, the conservation of a third-order moment (Bousquet et al.&nbsp;2026). A constraint on averages, rather than on each instant, is therefore already used in the consortium, in another setting.</p>
+<h3 id="third-year-extensions-directions-c-and-d">Third-year extensions: directions C and D</h3>
+<p>Once the conditional generator is established, two extensions become natural. Toward <strong>direction C</strong>, the generator serves as a prior in latent assimilation (generalized latent assimilation, TorchDA, 4D-Var with generative dynamics) to reconstruct <span class="math inline">(\mathbf{u}, \mathbf{B})</span> from synthetic magnetic probes; the posterior distribution is then bimodal, because of the two polarities of the dipole, and a prior that respects the symmetry <span class="math inline">\mathbf{B} \to -\mathbf{B}</span>, and hence gives the same weight to both polarities, avoids biasing the analysis toward one of them. Toward <strong>direction D</strong>, the generator is conditioned on the Poincaré number to estimate <span class="math inline">Rm_c</span> and the symmetry of the dominant mode in the DRESDYN geometry, relying on the simulations of Botez et al.&nbsp;(2026) if they are accessible. The choice between the two will depend on the available data and on the progress made in the first two years.</p>
+<table class="caption-top" style="width:100%;">
+<caption>Indicative timeline, proposed as a basis for discussion.</caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 51%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Year</th>
+<th>Proposed work</th>
+<th>Target result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td>Latent conditional generator on LATU then SFEMaNS; hard constraints (divergence, symmetries); physical metrics from direction F.</td>
+<td>A comparative study of constraint strategies on 3D MHD dynamo fields.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td>Distributional constraints (stationary budgets), Rice’s formula, behavior near the dynamo threshold.</td>
+<td>The reversal frequency predicted without time integration, as a function of the parameters.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td>Extension toward C (assimilation) or D (DRESDYN), depending on the data; writing.</td>
+<td>An application to the project, and the dissertation.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-is-already-published-and-what-remains-to-be-done">What is already published and what remains to be done</h3>
+<p>Several building blocks of the selected direction are already published; they must be cited, not claimed.</p>
+<ul>
+<li>The characterization of an invariant distribution by the identities <span class="math inline">\mathbb{E}_\mu[\mathcal{L}\varphi] = 0</span>, where <span class="math inline">\mathcal{L}</span> is the generator of the dynamics, is classical (Echeverría 1982; Ethier and Kurtz 1986), and several works learn a dynamics through its invariant measure, for example DySLIM (Schiff et al.&nbsp;2024).</li>
+<li>The weak form of the stationary Fokker–Planck equation has already been used as a loss to train a sample generator: this is the <em>Weak Generative Sampler</em> (Cai, Cao, Huang and Zhou 2026), tested up to dimension 100 with random Gaussian test functions.</li>
+<li>Fine-tuning a flow matching model toward a distribution tilted by a weak-form PDE residual has been published (Tauberschmidt, Fellenz, Vollmer and Duncan, ICLR 2026); the residual there is, however, evaluated on each sample.</li>
+<li>Zero divergence is imposed exactly through a stream function in 2D in FunDiff (Wang et al.&nbsp;2026). Divergence-free diffusion models based on Leray projection have been published in periodic 2D (Genuist, Savin, Gatti and Clouteau 2026, preprint), with a comparison of six variants concluding that no strategy dominates everywhere.</li>
+<li>The same idea exists in 3D, in a periodic domain, for rotating turbulence (PCDM, Li, Buzzicotti, Bonaccorso and Biferale 2026, preprint), with zero divergence to machine precision.</li>
+<li>Exponential tilting of a generator under moment constraints is also known (Khalifa et al.&nbsp;2021; Mun 2026, preprint), but with external target values.</li>
+</ul>
+<p>What remains to be done, to our knowledge after a literature search as of November 6, 2026, comes down to five points.</p>
+<ol type="1">
+<li>No published generative model (diffusion or flow matching) has been found on dynamo simulations, whether geodynamo, VKS, DRESDYN or 3D turbulent dynamo.</li>
+<li>The stationarity identities of a field PDE (energy and cross-helicity budgets in MHD) have not been found used as distributional constraints of a <strong>parametric conditional</strong> generator, enforceable at parameters without data and without target values.</li>
+<li>The inconsistency of a per-sample constraint for a stationary budget has not been found in the literature. The internship report, which is prospective, states it and measures it on toy models; it remains to be measured on 3D dynamos.</li>
+<li>No prior work has been found for Rice’s formula applied to a snapshot generator.</li>
+<li>No generative model found jointly imposes <span class="math inline">\nabla\cdot\mathbf{u} = 0</span> and <span class="math inline">\nabla\cdot\mathbf{B} = 0</span> in 3D, let alone in a bounded cylindrical domain with permeability jumps; none is conditioned jointly on <span class="math inline">Re</span> and <span class="math inline">Rm</span>, and none studies the crossing of the dynamo threshold.</li>
+</ol>
+<p>These negative claims cannot be proven: they will have to be rechecked through literature monitoring throughout the PhD. Two points of caution also accompany the topic. The stationarity identities are necessary but not sufficient, because every invariant measure satisfies them, including those supported by unstable orbits: fitting to the data remains indispensable. And they do not fix the relative weights of two symmetric states, for example the two polarities of the dipole: the symmetry must be imposed separately, through the architecture.</p>
+<h2 id="sources">Sources</h2>
+<p>All the references below were checked on November 6, 2026 in Crossref, arXiv or HAL (on November 7 for Rice 1944 and for the full author list of the <em>Information Fusion</em> review), and the web pages were opened on November 6, 2026. The complete fact bases, with the details of each check and the list of unconfirmed points, are published in the repository: <a href="https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027/specs/sources">specs/sources/ on GitHub</a> (files <code>encadrants.md</code>, <code>litterature.md</code>, <code>dynamo.md</code> and <code>donnees-metriques.md</code>).</p>
+<h3 id="project-offers-and-public-pages">Project, offers and public pages</h3>
+<ul>
+<li>ANR, MilaDy project page (ANR-25-CE51-0077), French version: <a href="https://anr.fr/Projet-ANR-25-CE51-0077" class="uri">https://anr.fr/Projet-ANR-25-CE51-0077</a>; <a href="https://anr.fr/en/funded-projects-and-impact/funded-projects/project/funded/project/b2d9d3668f92a3b9fbbf7866072501ef-8f0bea4141/?tx_anrprojects_funded%5Bcontroller%5D=Funded&amp;cHash=f7b87490b7ffc2a2a9c7dc94387c163f">English version</a>.</li>
+<li>2027 M2 internship offer, “Physics-Constrained Generative AI Modelling of Parametric Dynamical Systems (with potential PhD position)”: <a href="https://scheng2024.github.io/stage_milady_2027.pdf" class="uri">https://scheng2024.github.io/stage_milady_2027.pdf</a>; also listed on <a href="https://perso.lisn.upsaclay.fr/lucor/opportunities.html" class="uri">https://perso.lisn.upsaclay.fr/lucor/opportunities.html</a>.</li>
+<li>2026 M2 internship offer, “Physics-aware Representation Learning for Turbulent Dynamo Data”: <a href="https://stages.phys.ens.psl.eu/OffresPDF/Offre-30818.pdf" class="uri">https://stages.phys.ens.psl.eu/OffresPDF/Offre-30818.pdf</a>.</li>
+<li>Postdoctoral offer, “Turbulent Dynamos Reduced-Order Modeling via Machine learning”: <a href="https://perso.lisn.upsaclay.fr/lucor/pdf/postdoc_milady_LISN.pdf" class="uri">https://perso.lisn.upsaclay.fr/lucor/pdf/postdoc_milady_LISN.pdf</a>; announcement on the ml-news mailing list (January 24, 2026): <a href="https://groups.google.com/g/ml-news/c/lr8uwyCAl_M" class="uri">https://groups.google.com/g/ml-news/c/lr8uwyCAl_M</a>.</li>
+<li>Nore–Lucor M2 internship offer, “Machine learning analysis of local energy transfers in turbulence”: <a href="https://perso.lisn.upsaclay.fr/lucor/pdf/M2Stage_Nore_Lucor.pdf" class="uri">https://perso.lisn.upsaclay.fr/lucor/pdf/M2Stage_Nore_Lucor.pdf</a>.</li>
+<li>S. Cheng’s pages: <a href="https://scheng2024.github.io/" class="uri">https://scheng2024.github.io/</a> (<em>research</em>, <em>publications</em>, <em>cv</em>, <em>people</em> and <em>opportunities</em> pages).</li>
+<li>D. Lucor’s pages: <a href="https://perso.lisn.upsaclay.fr/lucor/" class="uri">https://perso.lisn.upsaclay.fr/lucor/</a> (<em>publications</em> and <em>people</em> pages).</li>
+<li>Y. Ponty’s CVs: <a href="https://c2pu.oca.eu/images/LAGRANGE/pages_perso/ponty/pdf/cv-2pages-2026.pdf" class="uri">https://c2pu.oca.eu/images/LAGRANGE/pages_perso/ponty/pdf/cv-2pages-2026.pdf</a> and <a href="https://c2pu.oca.eu/images/LAGRANGE/pages_perso/ponty/pdf/cv-Yannick-Ponty.pdf" class="uri">https://c2pu.oca.eu/images/LAGRANGE/pages_perso/ponty/pdf/cv-Yannick-Ponty.pdf</a>.</li>
+<li>SFEMaNS documentation (version 5.3): <a href="https://people.tamu.edu/~guermond/SFEMaNS/html/doc_intro.html" class="uri">https://people.tamu.edu/~guermond/SFEMaNS/html/doc_intro.html</a>.</li>
+<li>HAL query on the project reference: <a href="https://api.archives-ouvertes.fr/search/?q=anrProjectReference_s:%22ANR-25-CE51-0077%22" class="uri">https://api.archives-ouvertes.fr/search/?q=anrProjectReference_s:%22ANR-25-CE51-0077%22</a>.</li>
+</ul>
+<h3 id="publications">Publications</h3>
+<ul>
+<li>Alexakis A., Ponty Y. (2008). “Effect of the Lorentz force on on-off dynamo intermittency”. <em>Physical Review E</em> 77, 056308. DOI 10.1103/PhysRevE.77.056308; arXiv:0710.0063. <a href="https://doi.org/10.1103/PhysRevE.77.056308" class="uri">https://doi.org/10.1103/PhysRevE.77.056308</a></li>
+<li>Bansal A., Chu H.-M., Schwarzschild A., Sengupta S., Goldblum M., Geiping J., Goldstein T. (2024). “Universal Guidance for Diffusion Models”. <em>International Conference on Learning Representations (ICLR 2024)</em>. arXiv:2302.07121. <a href="https://arxiv.org/abs/2302.07121" class="uri">https://arxiv.org/abs/2302.07121</a></li>
+<li>Barré J., Horii H. (2026). “Large deviations, gradient flows and fluctuating hydrodynamics for fractional diffusion”. HAL record hal-05796131. <a href="https://hal.science/hal-05796131" class="uri">https://hal.science/hal-05796131</a></li>
+<li>Berhanu M., Monchaux R., Fauve S., Mordant N., Pétrélis F., Chiffaudel A., Daviaud F., Dubrulle B., Marié L., Ravelet F., Bourgoin M., Odier P., Pinton J.-F., Volk R. (2007). “Magnetic field reversals in an experimental turbulent dynamo”. <em>EPL</em> 77, 59001. DOI 10.1209/0295-5075/77/59001; arXiv:physics/0701076. <a href="https://doi.org/10.1209/0295-5075/77/59001" class="uri">https://doi.org/10.1209/0295-5075/77/59001</a></li>
+<li>Bocquet M., Finn T.S., Cheng S. (2026). “Accounting for model error in ensemble variational data assimilation through learned generative dynamics”. Preprint arXiv:2610.17333. <a href="https://arxiv.org/abs/2610.17333" class="uri">https://arxiv.org/abs/2610.17333</a></li>
+<li>Botez V., Bousquet R., Nore C. (2025). “Large scale analysis of the von Kármán sodium experiment using proper orthogonal decomposition”. <em>Magnetohydrodynamics</em> 61(1/2), 13–24. DOI 10.22364/mhd.61.1-2.2. <a href="https://doi.org/10.22364/mhd.61.1-2.2" class="uri">https://doi.org/10.22364/mhd.61.1-2.2</a></li>
+<li>Botez V., Giesecke A., Nore C., Cappanera L., Stefani F. (2026). “Impact of boundary conditions on onset and symmetry of precession-driven dynamos”. <em>Physical Review Fluids</em> 11(8), 083701. DOI 10.1103/rx1h-5zxp. <a href="https://doi.org/10.1103/rx1h-5zxp" class="uri">https://doi.org/10.1103/rx1h-5zxp</a></li>
+<li>Bousquet R., Chaffard O., Creff M., Lucor D., Nore C. (2024). “Large scale analysis of three-dimensional turbulent von Kármán swirling flows”. <em>Physics of Fluids</em> 36(10), 105133. DOI 10.1063/5.0227495. <a href="https://doi.org/10.1063/5.0227495" class="uri">https://doi.org/10.1063/5.0227495</a></li>
+<li>Bousquet R., Faucheu A., Dumas L., Nore C., Lucor D. (2026). “Polynomial autoencoders with quantifiable errors for nonlinear fluid flow reconstruction”. Research Square preprint. DOI 10.21203/rs.3.rs-10008570/v1. <a href="https://doi.org/10.21203/rs.3.rs-10008570/v1" class="uri">https://doi.org/10.21203/rs.3.rs-10008570/v1</a></li>
+<li>Bousquet R., Nore C., Lucor D. (2025). “AutoEncoders latent space interpretability in the light of proper orthogonal decomposition: Machine learning of periodically forced fluid flows”. <em>Computer Physics Communications</em> 315, 109728. DOI 10.1016/j.cpc.2025.109728. <a href="https://doi.org/10.1016/j.cpc.2025.109728" class="uri">https://doi.org/10.1016/j.cpc.2025.109728</a></li>
+<li>Bousquet R., Ponty Y., Botez V., Plihon N., Nore C. (2026). “Magnetic field reversals in numerical simulations of the von Kármán sodium experiment”. <em>Physical Review Fluids</em> 11(6), 063703. DOI 10.1103/9tx2-1m13. <a href="https://doi.org/10.1103/9tx2-1m13" class="uri">https://doi.org/10.1103/9tx2-1m13</a>; full text: <a href="https://perso.ens-lyon.fr/nicolas.plihon/Publis/Bousquet_PRF_11.pdf" class="uri">https://perso.ens-lyon.fr/nicolas.plihon/Publis/Bousquet_PRF_11.pdf</a></li>
+<li>Cai J., Angeli P.-E., Martinez J.-M., Damblin G., Lucor D. (2024). “Revisiting Tensor Basis Neural Network for Reynolds stress modeling: Application to plane channel and square duct flows”. <em>Computers &amp; Fluids</em> 275, 106246. DOI 10.1016/j.compfluid.2024.106246; arXiv:2403.11746. <a href="https://doi.org/10.1016/j.compfluid.2024.106246" class="uri">https://doi.org/10.1016/j.compfluid.2024.106246</a></li>
+<li>Cai Z., Cao Y., Huang Y., Zhou X. (2026). “Weak Generative Sampler to Efficiently Sample Invariant Distribution of Stochastic Differential Equation”. <em>SIAM Journal on Scientific Computing</em> 48(4), C708–C735. DOI 10.1137/24M1665271; arXiv:2405.19256. <a href="https://doi.org/10.1137/24M1665271" class="uri">https://doi.org/10.1137/24M1665271</a></li>
+<li>Cappanera L., Guermond J.-L., Léorat J., Nore C. (2016). “Two spinning ways for precession dynamo”. <em>Physical Review E</em> 93(4), 043113. DOI 10.1103/PhysRevE.93.043113. <a href="https://doi.org/10.1103/PhysRevE.93.043113" class="uri">https://doi.org/10.1103/PhysRevE.93.043113</a></li>
+<li>Cheng S., Lucor D., Argaud J.-P. (2021). “Observation data compression for variational assimilation of dynamical systems”. <em>Journal of Computational Science</em> 53, 101405. DOI 10.1016/j.jocs.2021.101405; arXiv:2106.05427. <a href="https://doi.org/10.1016/j.jocs.2021.101405" class="uri">https://doi.org/10.1016/j.jocs.2021.101405</a></li>
+<li>Cheng S., Chen J., Anastasiou C., Angeli P., Matar O.K., Guo Y.-K., Pain C.C., Arcucci R. (2022). “Generalised Latent Assimilation in Heterogeneous Reduced Spaces with Machine Learning Surrogate Models”. <em>Journal of Scientific Computing</em> 94(1), 11. DOI 10.1007/s10915-022-02059-4; arXiv:2204.03497. <a href="https://doi.org/10.1007/s10915-022-02059-4" class="uri">https://doi.org/10.1007/s10915-022-02059-4</a></li>
+<li>Cheng S., Guo Y., Arcucci R. (2023). “A Generative Model for Surrogates of Spatial-Temporal Wildfire Nowcasting”. <em>IEEE Transactions on Emerging Topics in Computational Intelligence</em> 7(5), 1420–1430. DOI 10.1109/TETCI.2023.3298535; arXiv:2308.02810. <a href="https://doi.org/10.1109/TETCI.2023.3298535" class="uri">https://doi.org/10.1109/TETCI.2023.3298535</a></li>
+<li>Cheng S., Quilodrán-Casas C., Ouala S., Farchi A., Liu C., Tandeo P., Fablet R., Lucor D., Iooss B., Brajard J., Xiao D., Janjic T., Ding W., Guo Y., Carrassi A., Bocquet M., Arcucci R. (2023). “Machine Learning With Data Assimilation and Uncertainty Quantification for Dynamical Systems: A Review”. <em>IEEE/CAA Journal of Automatica Sinica</em> 10(6), 1361–1387. DOI 10.1109/JAS.2023.123537; arXiv:2303.10462. <a href="https://doi.org/10.1109/JAS.2023.123537" class="uri">https://doi.org/10.1109/JAS.2023.123537</a></li>
+<li>Cheng S., Liu C., Guo Y., Arcucci R. (2024). “Efficient deep data assimilation with sparse observations and time-varying sensors”. <em>Journal of Computational Physics</em> 496, 112581. DOI 10.1016/j.jcp.2023.112581; arXiv:2310.16187. <a href="https://doi.org/10.1016/j.jcp.2023.112581" class="uri">https://doi.org/10.1016/j.jcp.2023.112581</a></li>
+<li>Cheng S., Min J., Liu C., Arcucci R. (2025). “TorchDA: A Python package for performing data assimilation with deep learning forward and transformation functions”. <em>Computer Physics Communications</em> 306, 109359. DOI 10.1016/j.cpc.2024.109359; arXiv:2409.00244. <a href="https://doi.org/10.1016/j.cpc.2024.109359" class="uri">https://doi.org/10.1016/j.cpc.2024.109359</a></li>
+<li>Cheng S., Bocquet M., Ding W., Finn T.S., Fu R., Fu J., Guo Y., Johnson E., Li S., Liu C., Moro E.N., Pan J., Piggott M., Quilodran C., Sharma P., Wang K., Xiao D., Xue X., Zeng Y., Zhang M., Zhou H., Zhu K., Arcucci R. (2025). “Machine learning for modelling unstructured grid data in computational physics: A review”. <em>Information Fusion</em> 123, 103255. DOI 10.1016/j.inffus.2025.103255; arXiv:2502.09346. <a href="https://doi.org/10.1016/j.inffus.2025.103255" class="uri">https://doi.org/10.1016/j.inffus.2025.103255</a></li>
+<li>Cheng X., He Y., Yang Y., Xue X., Cheng S., Giles D., Tang X., Hu Y. (2025). “Learning Chaos In A Linear Way”. <em>International Conference on Learning Representations (ICLR 2025)</em>. arXiv:2503.14702. <a href="https://openreview.net/forum?id=Llh6CinTiy" class="uri">https://openreview.net/forum?id=Llh6CinTiy</a></li>
+<li>Creff M., Faller H., Dubrulle B., Guermond J.-L., Nore C. (2024). “Tracking dynamo mechanisms from local energy transfers: Application to the von Kármán sodium dynamo”. <em>Physics of Plasmas</em> 31(2), 022306. DOI 10.1063/5.0174251. <a href="https://doi.org/10.1063/5.0174251" class="uri">https://doi.org/10.1063/5.0174251</a></li>
+<li>Echeverría P. (1982). “A criterion for invariant measures of Markov processes”. <em>Zeitschrift für Wahrscheinlichkeitstheorie und verwandte Gebiete</em> 61(1), 1–16. DOI 10.1007/BF00537221. <a href="https://doi.org/10.1007/BF00537221" class="uri">https://doi.org/10.1007/BF00537221</a></li>
+<li>Ethier S.N., Kurtz T.G. (1986). <em>Markov Processes: Characterization and Convergence</em>. Wiley. DOI 10.1002/9780470316658. <a href="https://doi.org/10.1002/9780470316658" class="uri">https://doi.org/10.1002/9780470316658</a></li>
+<li>Fukami K., Taira K. (2023). “Grasping extreme aerodynamics on a low-dimensional manifold”. <em>Nature Communications</em> 14, 6480. DOI 10.1038/s41467-023-42213-6; arXiv:2305.08024. <a href="https://doi.org/10.1038/s41467-023-42213-6" class="uri">https://doi.org/10.1038/s41467-023-42213-6</a></li>
+<li>Genuist W., Savin É., Gatti F., Clouteau D. (2026). “Divergence-Free Diffusion Models for Incompressible Fluid Flows”. Preprint arXiv:2601.19368. <a href="https://arxiv.org/abs/2601.19368" class="uri">https://arxiv.org/abs/2601.19368</a></li>
+<li>Giesecke A., Nore C., Stefani F., Gerbeth G., Léorat J., Herreman W., Luddens F., Guermond J.-L. (2012). “Influence of high-permeability discs in an axisymmetric model of the Cadarache dynamo experiment”. <em>New Journal of Physics</em> 14, 053005. DOI 10.1088/1367-2630/14/5/053005; arXiv:1112.1780. <a href="https://doi.org/10.1088/1367-2630/14/5/053005" class="uri">https://doi.org/10.1088/1367-2630/14/5/053005</a></li>
+<li>Giesecke A., Vogt T., Gundrum T., Stefani F. (2018). “Nonlinear Large Scale Flow in a Precessing Cylinder and Its Ability To Drive Dynamo Action”. <em>Physical Review Letters</em> 120(2), 024502. DOI 10.1103/PhysRevLett.120.024502. <a href="https://doi.org/10.1103/PhysRevLett.120.024502" class="uri">https://doi.org/10.1103/PhysRevLett.120.024502</a></li>
+<li>Gissinger C. (2012). “A new deterministic model for chaotic reversals”. <em>European Physical Journal B</em> 85(4), 137. DOI 10.1140/epjb/e2012-20799-5; arXiv:1109.6569. <a href="https://doi.org/10.1140/epjb/e2012-20799-5" class="uri">https://doi.org/10.1140/epjb/e2012-20799-5</a></li>
+<li>Guermond J.-L., Laguerre R., Léorat J., Nore C. (2007). “An interior penalty Galerkin method for the MHD equations in heterogeneous domains”. <em>Journal of Computational Physics</em> 221, 349–369. DOI 10.1016/j.jcp.2006.06.045. <a href="https://doi.org/10.1016/j.jcp.2006.06.045" class="uri">https://doi.org/10.1016/j.jcp.2006.06.045</a></li>
+<li>Guermond J.-L., Laguerre R., Léorat J., Nore C. (2009). “Nonlinear magnetohydrodynamics in axisymmetric heterogeneous domains using a Fourier/finite element technique and an interior penalty method”. <em>Journal of Computational Physics</em> 228(8), 2739–2757. DOI 10.1016/j.jcp.2008.12.026. <a href="https://doi.org/10.1016/j.jcp.2008.12.026" class="uri">https://doi.org/10.1016/j.jcp.2008.12.026</a></li>
+<li>Guermond J.-L., Léorat J., Luddens F., Nore C., Ribeiro A. (2011). “Effects of discontinuous magnetic permeability on magnetodynamic problems”. <em>Journal of Computational Physics</em> 230(16), 6299–6319. DOI 10.1016/j.jcp.2011.04.026. <a href="https://doi.org/10.1016/j.jcp.2011.04.026" class="uri">https://doi.org/10.1016/j.jcp.2011.04.026</a></li>
+<li>Jaber E., Blot V., Brunel N., Chabridon V., Remy E., Iooss B., Lucor D., Mougeot M., Leite A. (2025). “Conformal approach to Gaussian process surrogate evaluation with marginal coverage guarantees”. <em>Journal of Machine Learning for Modeling and Computing</em> 6(3), 37–68. DOI 10.1615/JMachLearnModelComput.2025054687. <a href="https://doi.org/10.1615/JMachLearnModelComput.2025054687" class="uri">https://doi.org/10.1615/JMachLearnModelComput.2025054687</a></li>
+<li>Khalifa M., Elsahar H., Dymetman M. (2021). “A Distributional Approach to Controlled Text Generation”. <em>International Conference on Learning Representations (ICLR 2021)</em>. arXiv:2012.11635. <a href="https://arxiv.org/abs/2012.11635" class="uri">https://arxiv.org/abs/2012.11635</a></li>
+<li>Kreuzahler S., Schulz D., Homann H., Ponty Y., Grauer R. (2014). “Numerical study of impeller-driven von Kármán flows via a volume penalization method”. <em>New Journal of Physics</em> 16(10), 103001. DOI 10.1088/1367-2630/16/10/103001. <a href="https://doi.org/10.1088/1367-2630/16/10/103001" class="uri">https://doi.org/10.1088/1367-2630/16/10/103001</a></li>
+<li>Kreuzahler S., Ponty Y., Plihon N., Homann H., Grauer R. (2017). “Dynamo Enhancement and Mode Selection Triggered by High Magnetic Permeability”. <em>Physical Review Letters</em> 119(23), 234501. DOI 10.1103/PhysRevLett.119.234501; arXiv:1706.00260. <a href="https://doi.org/10.1103/PhysRevLett.119.234501" class="uri">https://doi.org/10.1103/PhysRevLett.119.234501</a></li>
+<li>Laguerre R., Nore C., Ribeiro A., Léorat J., Guermond J.-L., Plunian F. (2008). “Impact of Impellers on the Axisymmetric Magnetic Mode in the VKS2 Dynamo Experiment”. <em>Physical Review Letters</em> 101(10), 104501. DOI 10.1103/PhysRevLett.101.104501; arXiv:0805.2805. <a href="https://doi.org/10.1103/PhysRevLett.101.104501" class="uri">https://doi.org/10.1103/PhysRevLett.101.104501</a></li>
+<li>Li T., Buzzicotti M., Bonaccorso F., Biferale L. (2026). “Physics-Constrained Diffusion Model for Synthesis of 3D Turbulent Data”. Preprint arXiv:2603.12834. <a href="https://arxiv.org/abs/2603.12834" class="uri">https://arxiv.org/abs/2603.12834</a></li>
+<li>Lucor D., Meyers J., Sagaut P. (2007). “Sensitivity analysis of large-eddy simulations to subgrid-scale-model parametric uncertainty using polynomial chaos”. <em>Journal of Fluid Mechanics</em> 585, 255–279. DOI 10.1017/S0022112007006751. <a href="https://doi.org/10.1017/S0022112007006751" class="uri">https://doi.org/10.1017/S0022112007006751</a></li>
+<li>Lucor D., Agrawal A., Sergent A. (2022). “Simple computational strategies for more effective physics-informed neural networks modeling of turbulent natural convection”. <em>Journal of Computational Physics</em> 456, 111022. DOI 10.1016/j.jcp.2022.111022; preprint arXiv:2103.03565. <a href="https://doi.org/10.1016/j.jcp.2022.111022" class="uri">https://doi.org/10.1016/j.jcp.2022.111022</a></li>
+<li>Mannix P.M., Ponty Y., Marcotte F. (2022). “Systematic Route to Subcritical Dynamo Branches”. <em>Physical Review Letters</em> 129(2), 024502. DOI 10.1103/PhysRevLett.129.024502; arXiv:2112.11376. <a href="https://doi.org/10.1103/PhysRevLett.129.024502" class="uri">https://doi.org/10.1103/PhysRevLett.129.024502</a></li>
+<li>Mun J. (2026). “Multifidelity Computer Model Emulation Via Diffusion Model Steering and Targeted Maximum Likelihood”. Preprint arXiv:2608.30096. <a href="https://arxiv.org/abs/2608.30096" class="uri">https://arxiv.org/abs/2608.30096</a></li>
+<li>Nony B.X., Rochoux M.C., Jaravel T., Lucor D. (2023). “Reduced-order modeling for parameterized large-eddy simulations of atmospheric pollutant dispersion”. <em>Stochastic Environmental Research and Risk Assessment</em> 37(6), 2117–2144. DOI 10.1007/s00477-023-02383-7. <a href="https://doi.org/10.1007/s00477-023-02383-7" class="uri">https://doi.org/10.1007/s00477-023-02383-7</a></li>
+<li>Nore C., Léorat J., Guermond J.-L., Luddens F. (2011). “Nonlinear dynamo action in a precessing cylindrical container”. <em>Physical Review E</em> 84(1), 016317. DOI 10.1103/PhysRevE.84.016317; arXiv:1102.1846. <a href="https://doi.org/10.1103/PhysRevE.84.016317" class="uri">https://doi.org/10.1103/PhysRevE.84.016317</a></li>
+<li>Nore C., Guermond J.-L., Laguerre R., Léorat J., Luddens F. (2012). “Nonlinear dynamo in a short Taylor–Couette setup”. <em>Physics of Fluids</em> 24(9), 094106. DOI 10.1063/1.4752756. <a href="https://doi.org/10.1063/1.4752756" class="uri">https://doi.org/10.1063/1.4752756</a></li>
+<li>Nore C., Castanon Quiroz D., Cappanera L., Guermond J.-L. (2016). “Direct numerical simulation of the axial dipolar dynamo in the Von Karman Sodium experiment”. <em>EPL</em> 114, 65002. DOI 10.1209/0295-5075/114/65002. <a href="https://doi.org/10.1209/0295-5075/114/65002" class="uri">https://doi.org/10.1209/0295-5075/114/65002</a></li>
+<li>Nore C., Castanon Quiroz D., Cappanera L., Guermond J.-L. (2018). “Numerical simulation of the von Kármán sodium dynamo experiment”. <em>Journal of Fluid Mechanics</em> 854, 164–195. DOI 10.1017/jfm.2018.582. <a href="https://doi.org/10.1017/jfm.2018.582" class="uri">https://doi.org/10.1017/jfm.2018.582</a></li>
+<li>Ohana R., McCabe M., Meyer L., Morel R., Agocs F.J., Beneitez M., Berger M., Burkhart B., Burns K., Dalziel S.B., Fielding D.B., Fortunato D., Goldberg J.A., Hirashima K., Jiang Y.-F., Kerswell R.R., Maddu S., Miller J., Mukhopadhyay P., Nixon S.S., Shen J., Watteaux R., Régaldo-Saint Blancard B., Rozet F., Parker L.H., Cranmer M., Ho S. (2024). “The Well: a Large-Scale Collection of Diverse Physics Simulations for Machine Learning”. <em>NeurIPS 2024, Datasets and Benchmarks Track</em>. DOI 10.52202/079017-1430; arXiv:2412.00568. <a href="https://arxiv.org/abs/2412.00568" class="uri">https://arxiv.org/abs/2412.00568</a></li>
+<li>Ponty Y., Mininni P.D., Montgomery D.C., Pinton J.-F., Politano H., Pouquet A. (2005). “Numerical study of dynamo action at low magnetic Prandtl numbers”. <em>Physical Review Letters</em> 94, 164502. DOI 10.1103/PhysRevLett.94.164502; arXiv:physics/0410046. <a href="https://doi.org/10.1103/PhysRevLett.94.164502" class="uri">https://doi.org/10.1103/PhysRevLett.94.164502</a></li>
+<li>Ponty Y., Laval J.-P., Dubrulle B., Daviaud F., Pinton J.-F. (2007). “Subcritical Dynamo Bifurcation in the Taylor-Green Flow”. <em>Physical Review Letters</em> 99(22), 224501. DOI 10.1103/PhysRevLett.99.224501; arXiv:0707.2498. <a href="https://doi.org/10.1103/PhysRevLett.99.224501" class="uri">https://doi.org/10.1103/PhysRevLett.99.224501</a></li>
+<li>Ponty Y., Plunian F. (2011). “Transition from Large-Scale to Small-Scale Dynamo”. <em>Physical Review Letters</em> 106, 154502. DOI 10.1103/PhysRevLett.106.154502; arXiv:2004.11028. <a href="https://doi.org/10.1103/PhysRevLett.106.154502" class="uri">https://doi.org/10.1103/PhysRevLett.106.154502</a></li>
+<li>Ponty Y., Politano H., Pouquet A. (2025). “Intermittency assessed through a model of kurtosis–skewness relation in MHD in fast dynamo regimes”. <em>Journal of Plasma Physics</em> 91(2), E69. DOI 10.1017/S0022377825000169. <a href="https://doi.org/10.1017/S0022377825000169" class="uri">https://doi.org/10.1017/S0022377825000169</a></li>
+<li>Quattromini M. (2024). <em>Graph Neural Networks pour la mécanique des fluides : assimilation de données et optimisation</em>. PhD thesis, defended on December 13, 2024 (co-supervised by C. Nore, S. Cherubini, O. Semeraro, M. A. Bucci). HAL tel-04964013. <a href="https://theses.hal.science/tel-04964013" class="uri">https://theses.hal.science/tel-04964013</a></li>
+<li>Rice S.O. (1944). “Mathematical Analysis of Random Noise”. <em>Bell System Technical Journal</em> 23(3), 282–332. DOI 10.1002/j.1538-7305.1944.tb00874.x. <a href="https://doi.org/10.1002/j.1538-7305.1944.tb00874.x" class="uri">https://doi.org/10.1002/j.1538-7305.1944.tb00874.x</a></li>
+<li>Schiff Y., Wan Z.Y., Parker J.B., Hoyer S., Kuleshov V., Sha F., Zepeda-Núñez L. (2024). “DySLIM: Dynamics Stable Learning by Invariant Measure for Chaotic Systems”. <em>International Conference on Machine Learning (ICML 2024)</em>, PMLR 235, 43649–43684. arXiv:2402.04467. <a href="https://proceedings.mlr.press/v235/schiff24b.html" class="uri">https://proceedings.mlr.press/v235/schiff24b.html</a></li>
+<li>Stefani F., Albrecht T., Gerbeth G., Giesecke A., Gundrum T., Herault J., Nore C., Steglich C. (2015). “Towards a precession driven dynamo experiment”. <em>Magnetohydrodynamics</em> 51, 275–284. DOI 10.22364/mhd.51.2.11. <a href="https://doi.org/10.22364/mhd.51.2.11" class="uri">https://doi.org/10.22364/mhd.51.2.11</a></li>
+<li>Tauberschmidt J., Fellenz S., Vollmer S.J., Duncan A.B. (2026). “Physics-Constrained Fine-Tuning of Flow-Matching Models for Generation and Inverse Problems”. <em>International Conference on Learning Representations (ICLR 2026)</em>. arXiv:2508.09156. <a href="https://arxiv.org/abs/2508.09156" class="uri">https://arxiv.org/abs/2508.09156</a></li>
+<li>Wang S., Dou Z., Shan S., Liu T.-R., Lu L. (2026). “FunDiff: diffusion models over function spaces for physics-informed generative modeling”. <em>Nature Communications</em> 17, 5749. DOI 10.1038/s41467-026-72292-0; arXiv:2506.07902. <a href="https://doi.org/10.1038/s41467-026-72292-0" class="uri">https://doi.org/10.1038/s41467-026-72292-0</a></li>
+<li>Xue X., ten Eikelder M.F.P., Gao M., Cheng X., Yang Y., He Y., Wang S., Cheng S., Hu Y., Coveney P.V. (2026). “Fast-forward prediction of lattice Boltzmann dynamics with physics-informed neural operators”. <em>Nature Communications</em> 17, 9243. DOI 10.1038/s41467-026-75730-1. <a href="https://doi.org/10.1038/s41467-026-75730-1" class="uri">https://doi.org/10.1038/s41467-026-75730-1</a></li>
+<li>Yu W., Ghosh A., Finn T.S., Arcucci R., Bocquet M., Cheng S. (2026). “A probabilistic approach to wildfire spread prediction using a denoising diffusion surrogate model”. <em>Geoscientific Model Development</em> 19(2), 1027–1054. DOI 10.5194/gmd-19-1027-2026; arXiv:2507.00761. <a href="https://doi.org/10.5194/gmd-19-1027-2026" class="uri">https://doi.org/10.5194/gmd-19-1027-2026</a></li>
+<li>Zhou H., Cheng S., Arcucci R. (2024). “Multi-fidelity physics constrained neural networks for dynamical systems”. <em>Computer Methods in Applied Mechanics and Engineering</em> 420, 116758. DOI 10.1016/j.cma.2024.116758; arXiv:2402.02031. <a href="https://doi.org/10.1016/j.cma.2024.116758" class="uri">https://doi.org/10.1016/j.cma.2024.116758</a></li>
+<li>Zhou H., Wang Z., Lucor D., Sauret E. (2026). “New Bayesian optimisation framework for robust multi-objective design: decoupling performance and uncertainty”. <em>Reliability Engineering &amp; System Safety</em> 274, 112359. DOI 10.1016/j.ress.2026.112359. <a href="https://doi.org/10.1016/j.ress.2026.112359" class="uri">https://doi.org/10.1016/j.ress.2026.112359</a></li>
+<li>Zhou Q., Zhu X., Joli P., Cong Y., Cheng S. (2026). “Variational Parameter Calibration with Physics-Aware Latent-Space Surrogates”. Preprint arXiv:2608.11435. <a href="https://arxiv.org/abs/2608.11435" class="uri">https://arxiv.org/abs/2608.11435</a></li>
+<li>Zhuang Y., Cheng S., Duraisamy K. (2025). “Spatially-aware diffusion models with cross-attention for global field reconstruction with sparse observations”. <em>Computer Methods in Applied Mechanics and Engineering</em> 435, 117623. DOI 10.1016/j.cma.2024.117623; arXiv:2409.00230. <a href="https://doi.org/10.1016/j.cma.2024.117623" class="uri">https://doi.org/10.1016/j.cma.2024.117623</a></li>
+</ul>
+<h3 id="fact-bases-in-the-repository">Fact bases in the repository</h3>
+<ul>
+<li>Checked fact bases (supervisors and project, generative-model literature, dynamo physics, data and metrics): <a href="https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027/specs/sources" class="uri">https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027/specs/sources</a>.</li>
+<li>Theoretical note shared by the report and the PhD proposal: <a href="https://github.com/knoel99/knoel99.github.io/blob/main/milady-2027/specs/theorie-brief.md" class="uri">https://github.com/knoel99/knoel99.github.io/blob/main/milady-2027/specs/theorie-brief.md</a>.</li>
+</ul>
+
+</main>
+</div>
+<footer class="foot"><p><a href="../../en/index.html">← Home</a> · <a href="../../en/prep/index.html">Preparation</a> · <a href="../../en/encadrants/index.html">Supervisors</a> · <a href="../../en/rapport/index.html">Internship report</a> · <a href="../../en/these/index.html">PhD proposal</a> · <a href="../../en/interactifs/index.html">Interactive diagrams</a> · <a href="../../en/experiences/index.html">Experiments</a></p></footer>
+<script defer="" src="../../assets/theme.js"></script>
+
+
+
+
+</body></html>

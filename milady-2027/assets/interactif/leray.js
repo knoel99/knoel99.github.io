@@ -205,9 +205,9 @@
 
   function pct(lang, f) { return fmt(lang, 100 * f, 1) + (lang === "fr" ? " %" : "%"); }
 
-  // Texte du DOM : pas de coupure de ligne autour de =, ≤, ×, +, − entourés d'espaces, ni juste
-  // après « | » ou « / » collés à la suite (U+2060, gluon : « |∇·u| », « ∂φ/∂n ») ; en français, espace insécable avant « : »
-  // et fine insécable avant « ; » et « % ».
+  // Texte du DOM : pas de coupure de ligne autour de =, ≤, ×, +, − entourés d'espaces, ni après
+  // un « | » ou un « / » collé au signe suivant (U+2060, gluon : « |∇·u| », « ∂φ/∂n ») ;
+  // en français, espace insécable avant « : », fine insécable avant « ; » et « % ».
   function glue(lang, s) {
     s = s.replace(/ ([=≤×+−]) /g, "\u00a0$1\u00a0").replace(/([|/])(?=[^\s|])/g, "$1\u2060");
     if (lang === "fr") s = s.replace(/ :/g, "\u00a0:").replace(/ ([;%])/g, "\u202f$1");

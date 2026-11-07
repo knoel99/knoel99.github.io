@@ -380,7 +380,6 @@ Ce qu'il faut retenir — §2.1
 - Le raccord au vide est une contrainte linéaire non locale : exacte par projection, mais au prix d'un problème extérieur par échantillon.
 - Un potentiel continu garantit $[\mathbf{B}\cdot\mathbf{n}] = 0$ à un saut de perméabilité, pas $[\mathbf{n}\times\mathbf{H}] = 0$ ; un pli en $\lvert d\rvert$ bien choisi rend les deux exactes.
 - L'hélicité magnétique d'un champ qui traverse la paroi dépend de la jauge ; la décomposition poloïdale–toroïdale évite la jauge en périodique.
-:::
 ::::
 
 ### 2.2 Identités de stationnarité pour la MHD incompressible forcée
@@ -578,7 +577,6 @@ Ce qu'il faut retenir — §2.2 et §2.3
 - Imposer une identité échantillon par échantillon rend la loi étrangère à la vraie, même pour un générateur parfait.
 - La perte de stationnarité s'estime sans biais par le produit des moyennes de deux demi-lots ; elle ne déplace pas l'optimum d'un modèle bien spécifié et s'applique aux paramètres sans données.
 - L'inclinaison exponentielle est la correction minimale au sens de Kullback–Leibler, mais elle ne crée pas de masse.
-:::
 ::::
 
 ### 2.4 Symétries de VKS et équivariance
@@ -852,7 +850,6 @@ Ce qu'il faut retenir — §2.4 à §2.7
 - La formule de Rice donne la fréquence des passages du dipôle par zéro à partir de la loi et de $F$, calculable sur un instantané $(\mathbf{u}, \mathbf{B})$ ; des seuils $\pm a$ bornent la fréquence des renversements ; la loi des temps d'attente demande de la dynamique.
 - Un générateur lipschitzien en $\boldsymbol\lambda$ commet au moins la moitié du saut de loi près d'une bifurcation sous-critique, et une erreur en $1/K$ près d'un seuil supercritique.
 - Une dérive réduite obtenue par espérance conditionnelle sur des instantanés générés hérite des identités de stationnarité ; un a priori équivariant traite exactement la bimodalité $\pm\mathbf{B}$ de l'assimilation.
-:::
 ::::
 
 ## 3. Plan expérimental {#plan-experimental}
