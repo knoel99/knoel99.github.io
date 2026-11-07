@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Preparation pathway</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js" integrity="sha384-QFFtAGzvvj+bfgCGxXJlNZZR1nXEZgvG8tDLCCY1F19xl20WlfTYgguB4VcNdxYk" crossorigin="anonymous"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.css" integrity="sha384-3rdsX6e5mueWyoweR9NIVmtEsUkokpBT/0ALqKKIBMr9j4qhHkaIkAcGgsE6uVlp" crossorigin="anonymous">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../assets/paper.css">
+</head>
+
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Contents</span></button>
+  <a class="brand" href="../../en/index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+  <span class="tb-title" id="tb-title"></span>
+  <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Theme</span></button>
+</header>
+<div class="layout">
+<nav class="sidetoc" id="sidetoc" aria-label="Contents"></nav>
+<main class="paper" id="main">
+
+<header id="title-block-header">
+<h1 class="title">Preparation pathway</h1>
+<p class="subtitle">Eight modules, from first-year undergraduate (L1) level to M2 research level</p>
+
+</header>
+
+
+<p>This pathway leads from a first-year undergraduate (L1) level (calculus, linear algebra, some programming) to the level required to start the MilaDy internship: reading a paper on generative models under physical constraints, writing and training a conditional flow matching model, and assessing a generated MHD field against physical criteria. It comprises <strong>eight modules</strong>, about <strong>215 hours</strong> of work and <strong>121 exercises with solutions</strong>.</p>
+<div class="note">
+<p><span class="tag">About</span> These modules are independent notes. They are not an official course of ENPC, LISN or Université Paris-Saclay. Each module lists its sources; facts about recent research come from verified fact bases (the <code>specs/sources/</code> folder of the repository).</p>
+</div>
+<h2 id="modules">The eight modules</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Module</th>
+<th>Level</th>
+<th>Duration</th>
+<th>Exercises</th>
+<th>What it brings to the internship</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="p1-calcul-vectoriel/index.html">1. Vector calculus and Fourier analysis</a></td>
+<td>L1 → L2</td>
+<td>20 h</td>
+<td>15</td>
+<td>divergence, curl, potentials, FFT, Leray projection</td>
+</tr>
+<tr class="even">
+<td><a href="p2-mecanique-fluides/index.html">2. Fluid mechanics and turbulence</a></td>
+<td>L2 → M1</td>
+<td>25 h</td>
+<td>15</td>
+<td>Navier–Stokes, energy budgets, spectra, pseudo-spectral methods</td>
+</tr>
+<tr class="odd">
+<td><a href="p3-mhd-dynamo/index.html">3. Electromagnetism, MHD and the dynamo effect</a></td>
+<td>L2 → M2</td>
+<td>30 h</td>
+<td>14</td>
+<td>induction equation, <span class="math inline">Rm</span>, laboratory dynamos, reversals</td>
+</tr>
+<tr class="even">
+<td><a href="p4-systemes-dynamiques/index.html">4. Dynamical systems and invariant measures</a></td>
+<td>L2 → M2</td>
+<td>25 h</td>
+<td>15</td>
+<td>bifurcations, chaos, stationarity identities, Rice formula</td>
+</tr>
+<tr class="odd">
+<td><a href="p5-probabilites-transport/index.html">5. Probability, statistics and optimal transport</a></td>
+<td>L2 → M1</td>
+<td>25 h</td>
+<td>15</td>
+<td>pushforward measure, KL and I-projection, distances between distributions, SDEs</td>
+</tr>
+<tr class="even">
+<td><a href="p6-apprentissage-profond/index.html">6. Deep learning for physics</a></td>
+<td>L3 → M2</td>
+<td>30 h</td>
+<td>16</td>
+<td>neural networks, POD and autoencoders, equivariance, PINNs and operators</td>
+</tr>
+<tr class="odd">
+<td><a href="p7-modeles-generatifs/index.html">7. Generative models: diffusion and flow matching</a></td>
+<td>M1 → M2</td>
+<td>30 h</td>
+<td>16</td>
+<td>diffusion, score, flow matching, conditioning, FunDiff</td>
+</tr>
+<tr class="even">
+<td><a href="p8-contraintes-physiques/index.html">8. Generative models under physical constraints</a></td>
+<td>M2 → research</td>
+<td>30 h</td>
+<td>15</td>
+<td>taxonomy of constraints, projections, penalties, distributional constraints</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ordre">In what order</h2>
+<p>Modules 1 to 3 form the <strong>physics</strong> branch, modules 5 to 8 the <strong>learning</strong> branch; module 4 links the two, because it explains why a stationary turbulent state is described by an invariant probability distribution.</p>
+<ul>
+<li><strong>Physics</strong>: 1 → 2 → 3. Module 3 uses the potentials and the projection from module 1, and the energy budgets from module 2.</li>
+<li><strong>Bridge</strong>: 4, after 2 and 5. It is used for reversals (module 3) and for distributional constraints (module 8).</li>
+<li><strong>Learning</strong>: 5 → 6 → 7 → 8. Module 7 requires the pushforward measure and the continuity equation from module 5; module 8 requires all the others.</li>
+</ul>
+<p>A linear reading order that respects these dependencies is 1, 2, 5, 3, 4, 6, 7, 8.</p>
+<h2 id="calendrier">A possible schedule</h2>
+<p>To start the internship in spring 2027, at a pace of about 15 hours per week:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Weeks</th>
+<th>Modules</th>
+<th>Milestone</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1–2</td>
+<td>1</td>
+<td>be able to project a periodic field onto divergence-free fields</td>
+</tr>
+<tr class="even">
+<td>3–4</td>
+<td>2</td>
+<td>have run a 2D pseudo-spectral solver and checked its energy budget</td>
+</tr>
+<tr class="odd">
+<td>5–6</td>
+<td>5</td>
+<td>be able to compute an I-projection and an energy distance</td>
+</tr>
+<tr class="even">
+<td>7–8</td>
+<td>3</td>
+<td>be able to explain the threshold of a kinematic dynamo and the VKS reversals</td>
+</tr>
+<tr class="odd">
+<td>9–10</td>
+<td>4</td>
+<td>be able to check a stationarity identity and the Rice formula on a simple model</td>
+</tr>
+<tr class="even">
+<td>11–12</td>
+<td>6</td>
+<td>have compared POD and an autoencoder on fields</td>
+</tr>
+<tr class="odd">
+<td>13–14</td>
+<td>7</td>
+<td>have trained a conditional flow matching model</td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td>8</td>
+<td>have read the five references of the internship offer and reproduced an experiment from the <a href="../rapport/index.html">report</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="methode">How to work through a module</h2>
+<p>Each module follows the same structure: objectives, prerequisites, work plan (sessions, durations, levels from 1 to 3 that never go back down), chapters with definitions, theorems and proofs, executed Python code, graded exercises ★ / ★★ / ★★★ with solutions, connection to the internship, further reading and sources.</p>
+<ul>
+<li>Read a chapter, then do the exercises listed in its work plan before reading the solution.</li>
+<li>Run each code block and change a parameter: every block runs in under 30 seconds on a laptop.</li>
+<li>Keep one page of formulas per module; module 8 assumes you can retrieve them quickly.</li>
+<li>The <a href="../interactifs/index.html">interactive diagrams</a> illustrate five key notions: flow matching, Leray projection, distributional constraint, reversals and the ABC dynamo.</li>
+</ul>
+
+</main>
+</div>
+<footer class="foot"><p><a href="../../en/index.html">← Home</a> · <a href="../../en/prep/index.html">Preparation</a> · <a href="../../en/encadrants/index.html">Supervisors</a> · <a href="../../en/rapport/index.html">Internship report</a> · <a href="../../en/these/index.html">PhD proposal</a> · <a href="../../en/interactifs/index.html">Interactive diagrams</a> · <a href="../../en/experiences/index.html">Experiments</a></p></footer>
+<script defer="" src="../../assets/theme.js"></script>
+
+
+
+
+</body></html>

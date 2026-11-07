@@ -56,8 +56,10 @@ export function turbine(p, L, P, side, o = {}) {
   const iron = o.iron ?? K.iron, dark = L.shade(iron, -0.35), lite = L.shade(iron, 0.3);
   const xf = side * Xi, xb = side * (Xi + td), xt = side * (Xi - hb);   // fluid face, back face, blade tips
   const nb = 8, blade = (j) => {
-    // curved blade: from r = 0.2 to r = Ri, the angle advancing with r (same curvature on both turbines)
-    const n = 14, pts = Array.from({ length: n + 1 }, (_, i) => { const r = 0.2 + (Ri - 0.2) * i / n; return [r, 2 * Math.PI * j / nb + 0.15 + 0.95 * (r - 0.2)]; });
+    // curved blade: from r = 0.2 to r = Ri, the angle advancing with r. Identical impellers facing each other: the
+    // left one is the image of the right one by the rotation R_pi about a diameter ((x, y, z) -> (-x, y, -z), so the
+    // angle about +x changes sign). Both then turn the same way relative to their blades, as in VKS.
+    const n = 14, pts = Array.from({ length: n + 1 }, (_, i) => { const r = 0.2 + (Ri - 0.2) * i / n; return [r, side * (2 * Math.PI * j / nb + 0.15 + 0.95 * (r - 0.2))]; });
     return pts;
   };
   const disc = () => L.cylinder3(g, P, [Math.min(xf, xb), 0, 0], [Math.max(xf, xb), 0, 0], Ri, Ri, { fill: iron, shading: true, capFill: side > 0 ? L.shade(iron, 0.12) : L.shade(iron, 0.05), stroke: dark, width: 0.4, part: 'turbine-disc' });
@@ -76,7 +78,12 @@ export function turbine(p, L, P, side, o = {}) {
     }
   };
   if (side > 0) { disc(); drawBlades(); L.cylinder3(g, P, [xt, 0, 0], [xf, 0, 0], hub, hub, { fill: lite, shading: true, stroke: dark, width: 0.35, part: 'hub' }); }
-  else { drawBlades(); L.cylinder3(g, P, [xt, 0, 0], [xf, 0, 0], hub, hub, { fill: lite, shading: true, stroke: dark, width: 0.35, part: 'hub' }); disc(); }
+  else {
+    // left turbine, seen from behind: o.only = 'blades' (blades + hub, behind the flow glyphs) or 'disc' (drawn after them,
+    // so that the opaque iron disc hides what lies behind it); default: both
+    if (o.only !== 'disc') { drawBlades(); L.cylinder3(g, P, [xt, 0, 0], [xf, 0, 0], hub, hub, { fill: lite, shading: true, stroke: dark, width: 0.35, part: 'hub' }); }
+    if (o.only !== 'blades') disc();
+  }
   return g;
 }
 export function shaft(p, L, P, x0, x1, o = {}) {

@@ -606,7 +606,7 @@
    "role": "label",
    "box": {
     "x": 328.28502655029297,
-    "y": 337.5967712402344,
+    "y": 316.39361572265625,
     "w": 3.9023971557617188,
     "h": 7.500102519989014
    },
@@ -614,7 +614,7 @@
    "minSize": 7,
    "family": "Arial, Helvetica, sans-serif",
    "color": "#2b2b2b",
-   "halo": false,
+   "halo": true,
    "rotate": 0,
    "italic": true,
    "weight": "normal"
@@ -1894,6 +1894,11 @@
    "w": 0.4,
    "tag": "line",
    "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "path",
+   "part": "arrow-shaft"
   },
   {
    "w": 1.6,

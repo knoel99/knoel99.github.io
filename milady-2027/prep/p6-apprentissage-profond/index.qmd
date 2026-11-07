@@ -55,7 +55,7 @@ Ce module donne les outils d'apprentissage profond dont se servent les modèles 
 
 Le module part du niveau de troisième année de licence (L3). Il faut savoir dériver une fonction de plusieurs variables, manipuler des matrices (produit, transposée, valeurs propres d'une matrice symétrique), et connaître les bases des probabilités : espérance, variance, loi gaussienne, indépendance. La décomposition en valeurs singulières est rappelée au chapitre 5.
 
-Deux modules du site sont à lire avant : [Calcul vectoriel et analyse de Fourier](../p1-calcul-vectoriel/index.html), pour la transformée de Fourier discrète, la fonction de courant et le potentiel vecteur, et [Probabilités, statistiques et transport optimal](../p5-probabilites-transport/index.html), pour l'espérance conditionnelle et la divergence de Kullback–Leibler. Le module [Mécanique des fluides et turbulence](../p2-mecanique-fluides/index.html) éclaire le chapitre 5 (spectre d'énergie, turbulence homogène) et le module [Systèmes dynamiques, bifurcations et mesures invariantes](../p4-systemes-dynamiques/index.html) présente le modèle de Gissinger utilisé au chapitre 6.
+Deux modules du site sont à lire avant : [Calcul vectoriel et analyse de Fourier](../p1-calcul-vectoriel/index.html), pour la transformée de Fourier discrète, la fonction de courant et le potentiel vecteur, et [Probabilités, statistiques et transport optimal](../p5-probabilites-transport/index.html), pour l'espérance conditionnelle et la divergence de Kullback–Leibler. Le module [Mécanique des fluides et turbulence](../p2-mecanique-fluides/index.html) éclaire le chapitre 5 (spectre d'énergie, turbulence homogène) et le module [Systèmes dynamiques, bifurcations et mesures invariantes](../p4-systemes-dynamiques/index.html) présente le modèle de Gissinger utilisé au chapitre 6. Enfin, le module [Électromagnétisme, MHD et effet dynamo](../p3-mhd-dynamo/index.html) explique d'où vient la contrainte $\nabla\cdot\mathbf{B} = 0$ que le chapitre 6 impose par construction.
 
 Côté programmation, il faut connaître Python et NumPy. PyTorch est introduit progressivement : chaque bloc de code de la page tourne en moins de 30 secondes sur un seul cœur de processeur, sans carte graphique.
 
@@ -69,8 +69,8 @@ Le niveau indique la difficulté : 1 pour les fondations, 2 pour le cœur du mod
 |:---:|:---:|:---:|---|:---:|
 | 1 | 3 h | 1 | Chapitre 1, sections 1.1 et 1.2 : apprentissage supervisé, risque empirique, descente de gradient | 1 |
 | 2 | 3 h | 1 | Chapitre 1, sections 1.3 et 1.4 : gradient stochastique, momentum, Adam, rétropropagation | 2, 6, 7 |
-| 3 | 4 h | 1 | Chapitre 2 : perceptrons multicouches, approximation universelle, initialisation, normalisation | 3, 8 |
-| 4 | 4 h | 2 | Chapitre 3 : convolution, équivariance par translation, *padding* circulaire, U-Net | 9 |
+| 3 | 4 h | 1 | Chapitre 2 : perceptrons multicouches, approximation universelle, initialisation, normalisation | 8 |
+| 4 | 4 h | 2 | Chapitre 3 : convolution, équivariance par translation, *padding* circulaire, U-Net | 3, 9 |
 | 5 | 3 h | 2 | Chapitre 4 : attention, transformeurs, attention croisée, ViT, Perceiver | 5, 10 |
 | 6 | 4 h | 2 | Chapitre 5, sections 5.1 à 5.4 : POD, Eckart–Young, POD et Fourier, autoencodeurs | 11, 13, 14 |
 | 7 | 3 h | 3 | Chapitre 5, sections 5.5 à 5.7 : VAE, β-VAE, autoencodeurs augmentés, β-VAE + transformeur | 4 |
@@ -141,6 +141,8 @@ $$
 Une fonction $F$ différentiable est **$L$-régulière** si son gradient est $L$-lipschitzien : $|\nabla F(\theta) - \nabla F(\theta')| \leq L|\theta - \theta'|$. Elle est **$\mu$-fortement convexe** ($\mu > 0$) si $F(\theta') \geq F(\theta) + \nabla F(\theta)^\top(\theta' - \theta) + \frac{\mu}{2}|\theta' - \theta|^2$ pour tous $\theta, \theta'$. Le rapport $\kappa = L/\mu \geq 1$ est le **conditionnement**. Pour une forme quadratique de hessienne $H$, $L$ et $\mu$ sont la plus grande et la plus petite valeur propre de $H$.
 :::
 
+Une remarque de notation s'impose ici. En apprentissage, la lettre $\eta$ désigne traditionnellement le pas, et c'est le sens qu'elle a dans tout ce module. Dans le reste du site (voir les notations communes), $\eta$ est la diffusivité magnétique ; elle n'apparaît ici qu'à propos de l'expérience E2, où nous écrivons toujours « diffusivité magnétique $\eta$ » en toutes lettres.
+
 :::: thm
 [Théorème 1.6 — Convergence linéaire de la descente de gradient]{.tag}
 Soit $F$ une fonction $L$-régulière et $\mu$-fortement convexe, de minimum $F^\star$. Avec le pas $\eta = 1/L$, pour tout $k \geq 0$ :
@@ -164,7 +166,7 @@ $$
 
 ::: ex
 [Exemple 1.7 — Ce que coûte un mauvais conditionnement]{.tag}
-Pour diviser l'excès de risque par $10^6$, il faut $(1 - 1/\kappa)^k \leq 10^{-6}$, soit environ $k \geq \kappa \ln(10^6) \approx 13{,}8\,\kappa$ itérations. Avec $\kappa = 100$, cela fait environ 1 400 itérations ; avec $\kappa = 10^4$, environ 140 000. En pratique, les pertes des réseaux profonds sont mal conditionnées, ce qui motive le momentum et Adam. Le bloc de code de la section 1.3 reprend une régression linéaire de conditionnement $\kappa \approx 100$. Après 300 pas de taille $1/L$, le théorème ne garantit qu'une division de l'excès de risque par $(1 - 1/\kappa)^{-300} \approx e^{3} \approx 20$. On observe beaucoup mieux (l'excès passe de 1,9 à $3{,}3\times 10^{-6}$), car l'essentiel de l'excès initial est porté par les directions raides, qui convergent vite. La borne décrit le pire cas, où tout l'excès serait porté par la direction la plus plate ; c'est la composante restante sur cette direction qui limite la précision finale.
+Pour diviser l'excès de risque par $10^6$, il faut $(1 - 1/\kappa)^k \leq 10^{-6}$, soit environ $k \geq \kappa \ln(10^6) \approx 13{,}8\,\kappa$ itérations. Avec $\kappa = 100$, cela fait environ 1 400 itérations ; avec $\kappa = 10^4$, environ 140 000. En pratique, les pertes des réseaux profonds sont mal conditionnées, ce qui motive le momentum et Adam. Le bloc de code de la section 1.3 reprend une régression linéaire de conditionnement $\kappa \approx 100$. Après 300 pas de taille $1/L$, le théorème ne garantit qu'une division de l'excès de risque par $(1 - 1/\kappa)^{-300} \approx e^{300/\kappa} \approx 18$ (avec la valeur mesurée $\kappa = 104$). On observe beaucoup mieux (l'excès passe de 1,9 à $3{,}3\times 10^{-6}$), car l'essentiel de l'excès initial est porté par les directions raides, qui convergent vite. La borne décrit le pire cas, où tout l'excès serait porté par la direction la plus plate ; c'est la composante restante sur cette direction qui limite la précision finale.
 :::
 
 ### 1.3 Gradient stochastique, momentum et Adam
@@ -218,7 +220,7 @@ avec $\mathbf{m}_0 = \mathbf{v}_0 = 0$, $\odot$ le produit composante par compos
 :::
 ::::
 
-Kingma et Ba (2015, section 2.1) précisent la taille du pas effectif $\Delta_k = \eta\,\hat m_k/\sqrt{\hat v_k}$ : elle est bornée par $\eta$ lorsque $1 - \beta_1 \leq \sqrt{1 - \beta_2}$, et par $\eta(1 - \beta_1)/\sqrt{1 - \beta_2}$ sinon, ce second cas ne se produisant que pour des gradients très creux. La propriété (ii) explique en partie la robustesse d'Adam sur des pertes mal conditionnées dont les directions propres sont alignées avec les axes des paramètres : il égalise les échelles composante par composante. Elle n'aide pas quand la vallée est oblique, ce que montre le schéma interactif ci-dessous (case « vallée tournée »).
+Kingma et Ba (2015, section 2.1) majorent la taille du pas effectif $\Delta_k = \eta\,\hat m_k/\sqrt{\hat v_k}$ (pour $\varepsilon = 0$) : $|\Delta_k| \leq \eta$ lorsque $1 - \beta_1 \leq \sqrt{1 - \beta_2}$, et $|\Delta_k| \leq \eta(1 - \beta_1)/\sqrt{1 - \beta_2}$ sinon. Avec les valeurs par défaut, on est dans le second cas ($0{,}1 > \sqrt{0{,}001} \approx 0{,}032$, borne $\approx 3{,}2\,\eta$), mais les auteurs précisent que cette borne n'est approchée que pour des gradients extrêmement creux, nuls à tous les pas sauf au dernier ; dans les cas usuels, $|\hat m_k/\sqrt{\hat v_k}|$ reste de l'ordre de 1 au plus, et le pas de l'ordre de $\eta$. La propriété (ii) explique en partie la robustesse d'Adam sur des pertes mal conditionnées dont les directions propres sont alignées avec les axes des paramètres : il égalise les échelles composante par composante. Elle n'aide pas quand la vallée est oblique, ce que montre le schéma interactif ci-dessous (case « vallée tournée »).
 
 ```{=html}
 <div class="widget" id="p6w-opt">
@@ -348,7 +350,7 @@ Un réseau de neurones est une composition de fonctions simples. Son gradient pa
 
 ::: def
 [Définition 1.11 — Réseau en couches et adjoints]{.tag}
-On considère une composition $\mathbf{h}_0 = \mathbf{x}$, $\mathbf{h}_\ell = f_\ell(\mathbf{h}_{\ell-1}; \theta_\ell)$ pour $\ell = 1, \dots, L$, suivie d'une perte scalaire $J = \ell(\mathbf{h}_L)$. On note $A_\ell = \partial f_\ell/\partial\mathbf{h}_{\ell-1}$ et $B_\ell = \partial f_\ell/\partial\theta_\ell$ les matrices jacobiennes de la couche $\ell$, évaluées au point courant. L'**adjoint** de la couche $\ell$ est le vecteur $\boldsymbol\delta_\ell = \partial J/\partial\mathbf{h}_\ell$, de même taille que $\mathbf{h}_\ell$.
+On considère une composition $\mathbf{h}_0 = \mathbf{x}$, $\mathbf{h}_\ell = f_\ell(\mathbf{h}_{\ell-1}; \theta_\ell)$ pour $\ell = 1, \dots, L$, suivie d'une perte scalaire $J = \varphi(\mathbf{h}_L)$ (on note $\varphi$ la perte, pour ne pas la confondre avec l'indice de couche $\ell$). On note $A_\ell = \partial f_\ell/\partial\mathbf{h}_{\ell-1}$ et $B_\ell = \partial f_\ell/\partial\theta_\ell$ les matrices jacobiennes de la couche $\ell$, évaluées au point courant. L'**adjoint** de la couche $\ell$ est le vecteur $\boldsymbol\delta_\ell = \partial J/\partial\mathbf{h}_\ell$, de même taille que $\mathbf{h}_\ell$.
 :::
 
 :::: thm
@@ -356,21 +358,21 @@ On considère une composition $\mathbf{h}_0 = \mathbf{x}$, $\mathbf{h}_\ell = f_
 Les adjoints vérifient la récurrence descendante
 
 $$
-\boldsymbol\delta_L = \nabla\ell(\mathbf{h}_L), \qquad \boldsymbol\delta_{\ell-1} = A_\ell^\top\,\boldsymbol\delta_\ell \quad (\ell = L, \dots, 1),
+\boldsymbol\delta_L = \nabla\varphi(\mathbf{h}_L), \qquad \boldsymbol\delta_{\ell-1} = A_\ell^\top\,\boldsymbol\delta_\ell \quad (\ell = L, \dots, 1),
 $$
 
 et le gradient par rapport aux paramètres de la couche $\ell$ vaut $\nabla_{\theta_\ell} J = B_\ell^\top\,\boldsymbol\delta_\ell$. Calculer tous les gradients coûte une passe avant (qui stocke les $\mathbf{h}_\ell$) et une passe arrière, soit un petit multiple du coût d'une évaluation.
 
 ::: proof
-Différentions la composition. La règle de la chaîne donne $\mathrm{d}J = \nabla\ell(\mathbf{h}_L)^\top\mathrm{d}\mathbf{h}_L$ et, pour chaque couche, $\mathrm{d}\mathbf{h}_\ell = A_\ell\,\mathrm{d}\mathbf{h}_{\ell-1} + B_\ell\,\mathrm{d}\theta_\ell$, avec $\mathrm{d}\mathbf{h}_0 = 0$ puisque l'entrée est fixée. En déroulant cette récurrence,
+Différentions la composition. La règle de la chaîne donne $\mathrm{d}J = \nabla\varphi(\mathbf{h}_L)^\top\mathrm{d}\mathbf{h}_L$ et, pour chaque couche, $\mathrm{d}\mathbf{h}_\ell = A_\ell\,\mathrm{d}\mathbf{h}_{\ell-1} + B_\ell\,\mathrm{d}\theta_\ell$, avec $\mathrm{d}\mathbf{h}_0 = 0$ puisque l'entrée est fixée. En déroulant cette récurrence,
 
 $$
 \mathrm{d}\mathbf{h}_L = \sum_{\ell=1}^{L} A_L A_{L-1}\cdots A_{\ell+1}\,B_\ell\,\mathrm{d}\theta_\ell,
 $$
 
-donc $\mathrm{d}J = \sum_\ell \boldsymbol\delta_\ell^\top B_\ell\,\mathrm{d}\theta_\ell$ avec $\boldsymbol\delta_\ell^\top = \nabla\ell(\mathbf{h}_L)^\top A_L\cdots A_{\ell+1}$. Cette expression montre que $\boldsymbol\delta_\ell$ est bien $\partial J/\partial\mathbf{h}_\ell$, que $\boldsymbol\delta_{\ell-1}^\top = \boldsymbol\delta_\ell^\top A_\ell$, et que $\partial J/\partial\theta_\ell = B_\ell^\top\boldsymbol\delta_\ell$.
+donc $\mathrm{d}J = \sum_\ell \mathbf{g}_\ell^\top B_\ell\,\mathrm{d}\theta_\ell$ avec $\mathbf{g}_\ell^\top = \nabla\varphi(\mathbf{h}_L)^\top A_L\cdots A_{\ell+1}$, ce qui donne $\partial J/\partial\theta_\ell = B_\ell^\top\mathbf{g}_\ell$. Le même déroulement, commencé à la couche $\ell$, montre qu'une variation de $\mathbf{h}_\ell$ seule produit $\mathrm{d}\mathbf{h}_L = A_L\cdots A_{\ell+1}\,\mathrm{d}\mathbf{h}_\ell$, donc $\mathrm{d}J = \mathbf{g}_\ell^\top\mathrm{d}\mathbf{h}_\ell$ : le vecteur $\mathbf{g}_\ell$ est exactement l'adjoint $\boldsymbol\delta_\ell = \partial J/\partial\mathbf{h}_\ell$. Enfin, $\mathbf{g}_L = \nabla\varphi(\mathbf{h}_L)$ et $\mathbf{g}_{\ell-1}^\top = \mathbf{g}_\ell^\top A_\ell$, ce qui est la récurrence annoncée.
 
-Pour le coût, on évalue le produit $\nabla\ell^\top A_L\cdots A_{\ell+1}$ de la gauche vers la droite : chaque étape est un produit vecteur–matrice, aussi cher que l'application de la couche. Le mode direct, qui propagerait $\partial\mathbf{h}_\ell/\partial\theta$ de la droite vers la gauche, demanderait une passe par paramètre. [∎]{.qed}
+Pour le coût, on évalue le produit $\nabla\varphi^\top A_L\cdots A_{\ell+1}$ de la gauche vers la droite : chaque étape est un produit vecteur–matrice, aussi cher que l'application de la couche. Le mode direct, qui propagerait $\partial\mathbf{h}_\ell/\partial\theta$ de la droite vers la gauche, demanderait une passe par paramètre. [∎]{.qed}
 :::
 ::::
 
@@ -477,7 +479,7 @@ où $W_\ell \in \mathbb{R}^{n_\ell\times n_{\ell-1}}$, $\mathbf{b}_\ell \in \mat
 
 ::: ex
 [Exemple 2.2 — Taille d'un MLP]{.tag}
-Le MLP des expériences du dépôt (`MLPField` dans `experiences/common.py`) prend l'état, un plongement sinusoïdal du temps et du paramètre, et comporte quatre couches cachées de largeur 256. Pour un état de dimension 3 (modèle de Gissinger) et des plongements de taille $2 \times 33 = 66$, l'entrée a 69 composantes ; le nombre de paramètres vaut $(69 + 1)\times 256 + 3\times(256 + 1)\times 256 + (256 + 1)\times 3 = 17\,920 + 197\,376 + 771 = 216\,067$.
+Le MLP des expériences du dépôt (`MLPField` dans `experiences/common.py`) prend l'état, un plongement sinusoïdal du temps et du paramètre, et comporte quatre couches cachées, de largeur 256 dans l'expérience E1 (1 024 dans E2). Pour un état de dimension 3 (modèle de Gissinger) et des plongements de taille $2 \times 33 = 66$, l'entrée a 69 composantes ; le nombre de paramètres vaut $(69 + 1)\times 256 + 3\times(256 + 1)\times 256 + (256 + 1)\times 3 = 17\,920 + 197\,376 + 771 = 216\,067$.
 :::
 
 ### 2.2 Approximation universelle
@@ -572,7 +574,7 @@ Si les poids initiaux sont trop petits, le signal s'éteint de couche en couche 
 
 :::: prop
 [Proposition 2.7 — Propagation de la variance et règle de He]{.tag}
-Considérons la couche $\mathbf{a}^{(\ell)} = W^{(\ell)}\mathbf{h}^{(\ell-1)}$ avec $\mathbf{h}^{(\ell-1)} = \mathrm{ReLU}(\mathbf{a}^{(\ell-1)})$, des poids $W^{(\ell)}_{ij}$ indépendants, centrés, de variance $s^2$, indépendants de $\mathbf{h}^{(\ell-1)}$, et des pré-activations $a^{(\ell-1)}_j$ de loi symétrique. Alors
+Considérons la couche $\mathbf{a}^{(\ell)} = W^{(\ell)}\mathbf{h}^{(\ell-1)}$ avec $\mathbf{h}^{(\ell-1)} = \mathrm{ReLU}(\mathbf{a}^{(\ell-1)})$, des poids $W^{(\ell)}_{ij}$ indépendants, centrés, de variance $s^2$, indépendants de $\mathbf{h}^{(\ell-1)}$, et des pré-activations $a^{(\ell-1)}_j$ de loi symétrique (donc centrées) et de même variance pour tout $j$. Alors
 
 $$
 \mathrm{Var}\big(a^{(\ell)}_i\big) = \frac{n_{\ell-1}\,s^2}{2}\,\mathrm{Var}\big(a^{(\ell-1)}_j\big).
@@ -693,7 +695,7 @@ les indices étant pris modulo $N$ (**padding circulaire**). En apprentissage pr
 
 ::: ex
 [Exemple 3.2 — Le laplacien discret est une convolution]{.tag}
-Avec un canal, $r = 1$ et le noyau $K = (1, -2, 1)/h^2$, la couche calcule $(x[i-1] - 2x[i] + x[i+1])/h^2$ : c'est le laplacien par différences finies centrées sur une grille périodique de pas $h$. Pour un champ $64\times 64$ à 2 composantes, une couche dense vers 2 composantes compte $8\,192^2 + 8\,192 \approx 6{,}7\times 10^7$ paramètres ; une convolution $3\times 3$ de 2 vers 2 canaux en compte $2\times 2\times 9 + 2 = 38$.
+Avec un canal, $r = 1$ et le noyau $K = (1, -2, 1)/h^2$, la couche calcule $(x[i-1] - 2x[i] + x[i+1])/h^2$ : c'est le laplacien par différences finies centrées sur une grille périodique de pas $h$. Pour un champ $64\times 64$ à 2 composantes, une couche dense qui renvoie un champ de même taille compte $8\,192^2 + 8\,192 \approx 6{,}7\times 10^7$ paramètres ; une convolution $3\times 3$ de 2 vers 2 canaux en compte $2\times 2\times 9 + 2 = 38$.
 :::
 
 ### 3.2 Équivariance par translation
@@ -959,7 +961,7 @@ où le softmax agit sur chaque ligne : $\mathrm{softmax}(\mathbf{s})_j = e^{s_j}
 [Proposition 4.2 — Moyenne pondérée et facteur $1/\sqrt{d_k}$]{.tag}
 (i) Chaque ligne de $A$ est une loi de probabilité sur les $n$ clés : la sortie associée à la requête $\mathbf{q}_i$ est une combinaison convexe des valeurs, $\sum_j A_{ij}\mathbf{v}_j$.
 
-(ii) Si $\mathbf{q}$ et $\mathbf{k}$ ont des composantes indépendantes, centrées et de variance 1, alors $\mathrm{Var}(\mathbf{q}^\top\mathbf{k}) = d_k$. La division par $\sqrt{d_k}$ ramène donc les scores à une variance 1, quelle que soit la dimension.
+(ii) Si les $2d_k$ composantes de $\mathbf{q}$ et de $\mathbf{k}$ sont indépendantes, centrées et de variance 1, alors $\mathrm{Var}(\mathbf{q}^\top\mathbf{k}) = d_k$. La division par $\sqrt{d_k}$ ramène donc les scores à une variance 1, quelle que soit la dimension.
 
 ::: proof
 (i) Les coefficients $A_{ij} = e^{s_{ij}}/\sum_l e^{s_{il}}$ sont positifs et de somme 1 sur $j$.
@@ -985,7 +987,7 @@ où le MLP agit sur chaque jeton séparément. Le coût de l'auto-attention est 
 Pour toute matrice de permutation $P \in \mathbb{R}^{n\times n}$, $\mathrm{SA}(PX) = P\,\mathrm{SA}(X)$. Il en est de même d'un bloc transformeur.
 
 ::: proof
-$\mathrm{SA}(PX) = \mathrm{softmax}(PXW_QW_K^\top X^\top P^\top/\sqrt{d})\,PXW_V$. Permuter les lignes et les colonnes d'une matrice de scores permute de la même façon les lignes et les colonnes du softmax ligne à ligne : $\mathrm{softmax}(PSP^\top) = P\,\mathrm{softmax}(S)\,P^\top$. Comme $P^\top P = I$, il reste $P\,\mathrm{softmax}(S)\,XW_V = P\,\mathrm{SA}(X)$. La LayerNorm et le MLP agissent jeton par jeton et commutent avec $P$, de même que les connexions résiduelles. [∎]{.qed}
+$\mathrm{SA}(PX) = \mathrm{softmax}(PXW_QW_K^\top X^\top P^\top/\sqrt{d_k})\,PXW_V$. Permuter les lignes et les colonnes d'une matrice de scores permute de la même façon les lignes et les colonnes du softmax ligne à ligne : $\mathrm{softmax}(PSP^\top) = P\,\mathrm{softmax}(S)\,P^\top$. Comme $P^\top P = I$, il reste $P\,\mathrm{softmax}(S)\,XW_V = P\,\mathrm{SA}(X)$. La LayerNorm et le MLP agissent jeton par jeton et commutent avec $P$, de même que les connexions résiduelles. [∎]{.qed}
 :::
 ::::
 
@@ -1206,7 +1208,7 @@ Ce qu'il faut retenir — chapitre 4
 
 ## 5. Réduction de dimension {#ch5}
 
-Un champ MHD 3D sur une grille $128^3$ compte environ $6\times 10^6$ composantes, mais les états effectivement visités par une dynamo occupent une région de bien plus petite dimension. Générer dans une représentation réduite coûte moins cher et peut rendre le modèle plus interprétable ; c'est aussi l'objet des travaux de l'équipe MilaDy sur la POD et les autoencodeurs. Ce chapitre va de la réduction linéaire optimale (POD) aux autoencodeurs non linéaires et variationnels.
+Un champ MHD 3D $(\mathbf{u}, \mathbf{B})$ sur une grille $128^3$ compte $6\times 128^3 \approx 1{,}3\times 10^7$ composantes, mais les états effectivement visités par une dynamo occupent une région de bien plus petite dimension. Générer dans une représentation réduite coûte moins cher et peut rendre le modèle plus interprétable ; c'est aussi l'objet des travaux de l'équipe MilaDy sur la POD et les autoencodeurs. Ce chapitre va de la réduction linéaire optimale (POD) aux autoencodeurs non linéaires et variationnels.
 
 ### 5.1 ACP et POD
 
@@ -1315,7 +1317,7 @@ Les modes de Fourier forment une base orthogonale complète de fonctions propres
 [Remarque 5.7 — Trois précisions]{.tag}
 (i) Les valeurs propres sont **dégénérées** : $\mathbf{k}$ et $-\mathbf{k}$ ont la même valeur propre (modes réels $\cos$ et $\sin$), et pour un champ isotrope tous les $\mathbf{k}$ d'une même coquille $|\mathbf{k}|$ aussi. Dans un espace propre, toute base orthonormée convient : une SVD numérique renvoie une combinaison arbitraire, par exemple $\cos(x + \phi)$ et $\sin(x + \phi)$ avec une phase $\phi$ quelconque.
 (ii) Avec un nombre fini d'instantanés, la covariance empirique n'est qu'approximativement circulante, et les modes POD empiriques ne sont qu'approximativement des sinusoïdes ; ajouter aux instantanés toutes leurs translations rend la covariance exactement circulante.
-(iii) Pour un champ homogène, la POD n'apporte donc rien de plus que Fourier, et la décroissance de ses valeurs propres est celle du spectre, lente en turbulence. C'est pourquoi l'expérience E2 du dépôt (voir le [rapport](../../rapport/index.html#e2)) prend directement les coefficients de Fourier de bas nombre d'onde comme espace latent linéaire. La POD devient informative dans les directions inhomogènes : près des parois, ou dans la géométrie cylindrique de VKS (Holmes et al., 2012).
+(iii) Pour un champ homogène, la POD n'apporte donc rien de plus que Fourier, et la décroissance de ses valeurs propres est celle du spectre, lente en turbulence. C'est pourquoi l'expérience E2 du dépôt (voir le [rapport](../../rapport/index.html#e2)) prend directement les coefficients de Fourier de bas nombre d'onde comme espace latent linéaire. La POD devient informative dans les directions inhomogènes (Holmes et al., 2012), par exemple près des parois ou dans la géométrie cylindrique de VKS.
 :::
 
 ```python
@@ -1350,7 +1352,7 @@ print("prédiction homogène N a_k^2 / 4 (double : cos et sin) pour k = 1, 2, 3 
 # prédiction homogène N a_k^2 / 4 (double : cos et sin) pour k = 1, 2, 3 : [16.     4.     1.778]
 ```
 
-La prédiction $N a_k^2/4$ vient du calcul suivant : $\mathbb{E}[u(x)u(x')] = \sum_k \frac{a_k^2}{2}\cos(k(x - x'))$, et le vecteur discret $(\cos kx_j)_j$ a pour norme au carré $N/2$ ; la valeur propre de la matrice de covariance est donc $\frac{a_k^2}{2}\cdot\frac{N}{2}$. Les valeurs mesurées s'en écartent de 2 à 4 % à cause du nombre fini d'instantanés.
+La prédiction $N a_k^2/4$ vient du calcul suivant : $\mathbb{E}[u(x)u(x')] = \sum_k \frac{a_k^2}{2}\cos(k(x - x'))$, et le vecteur discret $(\cos kx_j)_j$ a pour norme au carré $N/2$ ; la valeur propre de la matrice de covariance est donc $\frac{a_k^2}{2}\cdot\frac{N}{2}$. Les valeurs mesurées s'en écartent d'environ 2 à 2,5 %, à cause du nombre fini d'instantanés.
 
 ![POD d'un champ aléatoire homogène sur 64 points (4 000 instantanés). (a) Les valeurs propres POD (points) suivent la prédiction $N a_k^2/4$ tirée du spectre (ligne), chaque valeur apparaissant deux fois (cosinus et sinus). (b) Les quatre premiers modes POD sont des sinusoïdes de nombre d'onde 1 et 2, avec une phase arbitraire. Script : [`figures_p6.py`](figures_p6.py).](fig-pod-fourier.png){width="100%" fig-alt="Panneau gauche : valeurs propres POD en échelle logarithmique en fonction de l'indice, décroissant par paires de 16 à 0,04, superposées à la prédiction spectrale. Panneau droit : quatre premiers modes POD tracés sur [0, 2π], deux sinusoïdes de période 2π et deux de période π, déphasées."}
 
@@ -1364,7 +1366,7 @@ Soit des données centrées dont la covariance $C$ a des valeurs propres $\lambd
 
 (i) le minimum de $\mathcal{L}$ vaut $\sum_{i>r}\lambda_i$ et il est atteint exactement quand $GE = U_rU_r^\top$, c'est-à-dire $G = U_rA$ et $E = A^{-1}U_r^\top$ pour une matrice inversible $A \in \mathbb{R}^{r\times r}$ ;
 
-(ii) tous les autres points critiques de $\mathcal{L}$ sont des points selles : la perte n'a pas de minimum local parasite.
+(ii) si de plus les valeurs propres de $C$ sont toutes distinctes (hypothèse de Baldi et Hornik), tous les autres points critiques de $\mathcal{L}$ sont des points selles : la perte n'a pas de minimum local parasite.
 
 ::: proof
 *Esquisse.* (i) La matrice $GEX$ est de rang au plus $r$, donc, par le théorème 5.3, $M\mathcal{L} = \|X - GEX\|_F^2 \geq \sum_{i>r}\sigma_i^2$, et $\sum_{i>r}\sigma_i^2/M = \sum_{i>r}\lambda_i$. L'égalité impose $GEX = X_r = U_rU_r^\top X$, unique car $\sigma_r > \sigma_{r+1}$ ; comme $\lambda_D > 0$, $X$ est de rang $D$ et l'on peut simplifier : $GE = U_rU_r^\top$. L'image de $G$ est alors l'espace engendré par $U_r$, donc $G = U_rA$ avec $A$ inversible (rang $r$), et $U_rAE = U_rU_r^\top$ donne $E = A^{-1}U_r^\top$. (ii) L'analyse des points critiques, plus longue, est faite par Baldi et Hornik (1989) ; nous l'admettons. [∎]{.qed}
@@ -1566,7 +1568,7 @@ $$
 Le second terme oblige le latent à s'organiser de sorte que l'observable en soit une fonction régulière.
 :::
 
-Fukami et Taira (2023) appliquent cette idée à des interactions extrêmes entre une rafale tourbillonnaire et un profil NACA 0012 à $Re = 100$. Un encodeur convolutif compresse le champ de l'écoulement en **trois** variables latentes, un décodeur symétrique le reconstruit, et un MLP prédit le coefficient de portance à partir du latent ; le poids $\beta = 0{,}05$ est choisi par une courbe en L. Les auteurs rapportent que l'ACP ne parvient pas à capter la signature du tourbillon, que l'autoencodeur sans augmentation reconstruit bien mais organise moins bien son latent, et qu'avec l'augmentation l'une des variables latentes s'interprète comme un angle d'attaque effectif. Aucune équation aux dérivées partielles n'est imposée : la physique entre par l'observable.
+Fukami et Taira (2023) appliquent cette idée à des interactions extrêmes entre une rafale tourbillonnaire et un profil NACA 0012 à $Re = 100$. Un encodeur convolutif compresse le champ de l'écoulement en **trois** variables latentes, un décodeur symétrique le reconstruit, et un MLP prédit le coefficient de portance à partir du latent. Leur perte additionne les normes des deux erreurs, $\|\mathbf{q} - \hat{\mathbf{q}}\|_2 + \beta\,\|C_L - \hat C_L\|_2$, sans les élever au carré comme dans la définition 5.16, et le poids $\beta = 0{,}05$ est choisi par une courbe en L. Les auteurs rapportent que l'ACP ne parvient pas à capter la signature du tourbillon, que l'autoencodeur sans augmentation reconstruit bien mais organise moins bien son latent, et qu'avec l'augmentation l'une des variables latentes s'interprète comme un angle d'attaque effectif. Aucune équation aux dérivées partielles n'est imposée : la physique entre par l'observable.
 
 ```{=html}
 <figure class="schema">
@@ -1594,7 +1596,7 @@ Fukami et Taira (2023) appliquent cette idée à des interactions extrêmes entr
     <path class="arr" d="M329,92 L329,138"/>
     <rect class="obs" x="279" y="140" width="100" height="40" rx="6"/><text x="292" y="165">MLP h(z)</text>
     <path class="arr" d="M381,160 L411,160"/><text x="416" y="165">ĉ (portance prédite)</text>
-    <rect class="loss" x="12" y="196" width="696" height="28" rx="6"/><text x="24" y="215">perte = |x − x̂|² + β |c − ĉ|²   (β = 0,05 chez Fukami et Taira, 2023)</text>
+    <rect class="loss" x="12" y="196" width="696" height="28" rx="6"/><text x="24" y="215">perte = |x − x̂|² + β |c − ĉ|²   (déf. 5.16 ; Fukami et Taira : normes non carrées, β = 0,05)</text>
   </g>
 </svg>
 <figcaption>Schéma 5.1 — Autoencodeur augmenté par une observable. Le prédicteur $h$, branché sur le latent, force celui-ci à porter l'information sur l'observable $c$ (ici la portance). Pour le stage, $c$ peut être un paramètre de contrôle ($Re$, $Rm$) ou une grandeur physique (énergie, hélicité).</figcaption>
@@ -1607,7 +1609,7 @@ Solera-Rico et al. (2024) construisent un modèle d'ordre réduit en deux étage
 
 ::: ex
 [Exemple 5.17 — Lire ces chiffres]{.tag}
-L'énergie reconstruite $E$ joue le rôle de $E_r$ pour la POD : $1 - E$ est l'erreur quadratique relative moyenne. Avec 20 latents, le β-VAE laisse $1 - 0{,}898 = 10{,}2$ % d'erreur en entraînement, la POD $1 - 0{,}644 = 35{,}6$ %, soit trois fois et demie plus. L'écart entre entraînement (89,8 %) et test (80,1 %) mesure le surapprentissage, que la POD (linéaire, peu de paramètres) subit beaucoup moins. C'est le même phénomène que l'impulsion advectée de l'exemple 5.10, sur un écoulement réel.
+L'énergie reconstruite $E$ joue le rôle de $E_r$ pour la POD : $1 - E$ est l'erreur quadratique relative moyenne. Avec 20 latents, le β-VAE laisse $1 - 0{,}898 = 10{,}2$ % d'erreur en entraînement, la POD $1 - 0{,}644 = 35{,}6$ %, soit trois fois et demie plus. C'est, sur un écoulement réel, le même phénomène que pour l'impulsion advectée de l'exemple 5.10 : à dimension latente égale, une représentation non linéaire capte bien plus d'énergie qu'un sous-espace. L'écart entre entraînement (89,8 %) et test (80,1 %) rappelle en revanche le prix de cette souplesse : un réseau de nombreux paramètres peut surapprendre, et c'est sur les données de test qu'il faut le comparer à la POD.
 :::
 
 ::: note
@@ -1915,7 +1917,7 @@ Un réseau qui produit $\mathbf{A}$ (et un vecteur constant $\bar{\mathbf{B}}$ a
 
 ::: note
 [Remarque 6.13 — Le prix de la construction]{.tag}
-(i) Le potentiel n'est pas unique : $\mathbf{A}$ et $\mathbf{A} + \nabla\chi$ donnent le même $\mathbf{B}$ (liberté de jauge). Ce n'est pas gênant pour produire $\mathbf{B}$, mais un modèle génératif qui travaille sur $\mathbf{A}$ doit soit fixer la jauge, soit en tolérer l'ambiguïté. (ii) Les conditions aux limites portent sur $\mathbf{B}$ ; les traduire en conditions sur $\mathbf{A}$ est simple dans une boîte périodique, plus délicat avec des parois isolantes ou des sauts de perméabilité. (iii) La dérivation amplifie les petites échelles : une erreur sur $\mathbf{A}$ au nombre d'onde $k$ devient une erreur d'amplitude $k$ fois plus grande sur $\mathbf{B}$. (iv) La divergence « mesurée » dépend de l'opérateur discret employé : la proposition 6.11 (ii) n'annule la divergence que si on la calcule avec les mêmes opérateurs que le rotationnel, ce que montre la dernière ligne du bloc de code ci-dessous. Dans l'expérience E2 du dépôt, la variante « potentiels » génère $(\hat\psi, \hat a)$ puis $\mathbf{u} = \nabla^\perp\psi$, $\mathbf{B} = \nabla^\perp a$ en Fourier, ce qui garantit une divergence nulle par construction ; la comparaison avec la pénalité et la projection est dans le [rapport](../../rapport/index.html#e2).
+(i) Le potentiel n'est pas unique : $\mathbf{A}$ et $\mathbf{A} + \nabla\chi$ donnent le même $\mathbf{B}$ (liberté de jauge). Ce n'est pas gênant pour produire $\mathbf{B}$, mais un modèle génératif qui travaille sur $\mathbf{A}$ doit soit fixer la jauge, soit en tolérer l'ambiguïté. (ii) Les conditions aux limites portent sur $\mathbf{B}$ ; les traduire en conditions sur $\mathbf{A}$ est simple dans une boîte périodique, plus délicat avec des parois isolantes ou des sauts de perméabilité. (iii) La dérivation amplifie les petites échelles : une erreur sur $\mathbf{A}$ au nombre d'onde $k$ devient une erreur d'amplitude $k$ fois plus grande sur $\mathbf{B}$. (iv) La divergence « mesurée » dépend de l'opérateur discret employé : la proposition 6.11 (ii) n'annule la divergence que si on la calcule avec les mêmes opérateurs que le rotationnel, ce que montrent les deux dernières lignes de sortie du bloc de code ci-dessous. Dans l'expérience E2 du dépôt, la variante « potentiels » génère $(\hat\psi, \hat a)$ puis $\mathbf{u} = \nabla^\perp\psi$, $\mathbf{B} = \nabla^\perp a$ en Fourier, ce qui garantit une divergence nulle par construction ; la comparaison avec la pénalité et la projection est dans le [rapport](../../rapport/index.html#e2).
 :::
 
 Le bloc suivant construit trois réseaux à divergence nulle : un réseau de coordonnées 2D qui produit une fonction de courant périodique (comme le décodeur de FunDiff), un réseau 3D qui produit un potentiel vecteur, et un CNN qui produit un potentiel sur une grille périodique, dérivé spectralement. La divergence est calculée par différentiation automatique dans les deux premiers cas et par des opérateurs discrets dans le troisième.
@@ -2066,7 +2068,7 @@ print("gradcheck :", torch.autograd.gradcheck(f, (torch.randn(3, 4, dtype=torch.
 # gradcheck : True
 ```
 
-Le réseau interpole très bien (1 % d'erreur pour des paramètres non vus dans l'intervalle) mais extrapole très mal (74 %) : rien ne lui apprend la forme de la famille hors de l'intervalle d'entraînement. C'est un point central pour un générateur paramétrique : la qualité aux paramètres non vus doit être mesurée séparément en interpolation et en extrapolation, et une contrainte physique imposée à tout $\boldsymbol\lambda$, y compris sans données, est l'un des rares leviers pour l'extrapolation. C'est l'idée de la contrainte « en loi » du bilan d'énergie dans l'expérience E2 : la perte de stationnarité y est imposée à toutes les valeurs de $\eta$, y compris celles sans données (voir le [rapport](../../rapport/index.html#e2) pour les résultats).
+Le réseau interpole très bien (1 % d'erreur pour des paramètres non vus dans l'intervalle) mais extrapole très mal (74 %) : rien ne lui apprend la forme de la famille hors de l'intervalle d'entraînement. C'est un point central pour un générateur paramétrique : la qualité aux paramètres non vus doit être mesurée séparément en interpolation et en extrapolation, et une contrainte physique imposée à tout $\boldsymbol\lambda$, y compris sans données, est l'un des rares leviers pour l'extrapolation. C'est l'idée de la contrainte « en loi » du bilan d'énergie dans l'expérience E2 : la perte de stationnarité y est imposée à toutes les valeurs de la diffusivité magnétique $\eta$, y compris celles sans données (voir le [rapport](../../rapport/index.html#e2) pour les résultats).
 
 ### 7.3 Spécificités du calcul sur CPU
 
@@ -2292,7 +2294,7 @@ Les exercices sont rangés par difficulté : ★ pour une application directe du
     k_xs_y - k_ys_x = \frac{h^2}{6}\,k_xk_y\,(k_x^2 - k_y^2) + O(h^4).
     $$
 
-    L'erreur est d'ordre $h^2|\mathbf{k}|^4$ : négligeable pour les grandes échelles bien résolues, elle devient d'ordre $|\mathbf{k}|$ près de la coupure $|k_x| \approx N/2$, où le CNN aléatoire du bloc de code met beaucoup d'énergie. Elle s'annule sur les axes ($k_xk_y = 0$) et les diagonales ($|k_x| = |k_y|$). (c) Une « divergence nulle » n'a de sens qu'avec un opérateur discret donné : il faut mesurer la divergence des champs générés avec le même opérateur que celui du solveur qui a produit les données (spectral pour un code pseudo-spectral, éléments finis pour SFEMaNS), et le préciser dans les résultats.
+    L'erreur est d'ordre $h^2|\mathbf{k}|^4$ : négligeable pour les grandes échelles bien résolues, elle devient, quand $|\mathbf{k}|h$ est d'ordre 1 (près de la coupure $|k_x| \approx N/2$), du même ordre que chacun des deux termes $k_xs_y$ et $k_ys_x$ qui devraient se compenser, c'est-à-dire d'ordre $|\mathbf{k}|\,|\hat{\mathbf{B}}_{\mathbf{k}}|$ : il n'y a plus de compensation du tout. C'est là que le CNN aléatoire du bloc de code met beaucoup d'énergie. Elle s'annule sur les axes ($k_xk_y = 0$) et les diagonales ($|k_x| = |k_y|$). (c) Une « divergence nulle » n'a de sens qu'avec un opérateur discret donné : il faut mesurer la divergence des champs générés avec le même opérateur que celui du solveur qui a produit les données (spectral pour un code pseudo-spectral, discrétisation mixte Fourier en azimut et éléments finis dans le plan méridien pour SFEMaNS), et le préciser dans les résultats.
 
 16. **★★★ Le champ de flow matching optimal est équivariant.** On génère par flow matching une loi $\mu$ invariante par un groupe $G$ agissant par matrices orthogonales, avec le bruit $\mathbf{x}_0\sim\mathcal{N}(0, I)$ indépendant de $\mathbf{x}_1\sim\mu$, le chemin $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$ et le champ optimal $v^\star(\mathbf{x}, t) = \mathbb{E}[\mathbf{x}_1 - \mathbf{x}_0\mid\mathbf{x}_t = \mathbf{x}]$ (proposition 1.2). Montrez que $v^\star$ est $G$-équivariant. Avec l'exercice 12, que gagne-t-on à symétriser un champ appris ?
 

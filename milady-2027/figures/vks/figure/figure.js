@@ -31,7 +31,7 @@ export default async function draw(F, L) {
   vesselBack(g1, L, P1);
   shaft(g1, L, P1, Xi + G.td, H);
   turbine(g1, L, P1, +1);
-  turbine(g1, L, P1, -1);
+  turbine(g1, L, P1, -1, { only: 'blades' });
   // poloidal recirculation: two nested streamlines per quadrant of the meridional plane y = 0
   const pol = {};
   for (const sx of [-1, 1]) for (const sz of [-1, 1]) for (const c of [0.065, 0.16]) {
@@ -40,6 +40,8 @@ export default async function draw(F, L) {
     L.path(g1, L.smooth(lp.map((q) => P1(...q)), true), { stroke: K.u, width: c < 0.1 ? 0.75 : 0.5, fill: 'none', part: 'poloidal' });
     if (c < 0.1) { headOn(g1, P1, lp, 30, K.u, 3.0); headOn(g1, P1, lp, 90, K.u, 3.0); }
   }
+  // the left turbine is seen from behind: its iron disc lies between the viewer and the left cells
+  turbine(g1, L, P1, -1, { only: 'disc' });
   // toroidal cells: angular velocity +x in the left half, -x in the right half (as their turbines)
   const torL = ribbonArc(g1, L, P1, -0.5, 0.9, +1), torR = ribbonArc(g1, L, P1, +0.5, 0.9, -1);
   shaft(g1, L, P1, -H, -(Xi + G.td));
@@ -102,7 +104,8 @@ export default async function draw(F, L) {
   const b = F.panel('b', { x: 0, y: 68, w: 124, h: 50 });
   const c = F.panel('c', { x: 126, y: 68, w: 57, h: 50 });
   const bx0 = mm(13), bx1 = mm(121), T1 = S.t[S.t.length - 1], X = (t) => bx0 + mm(1.5) + t / T1 * (bx1 - bx0 - mm(1.5));
-  const cx0 = mm(4), cx1 = mm(55), cQ0 = mm(28.5), Qk = mm(19), QX = (q) => cQ0 + q * Qk;
+  // Q scale: the slow curve (max |Q| = 0.75) must end left of the axis label « quadripôle Q »
+  const cx0 = mm(4), cx1 = mm(55), cQ0 = mm(27.2), Qk = mm(17.6), QX = (q) => cQ0 + q * Qk;
   const evCol = { renversement: K.rev, excursion: K.exc }, evTint = { renversement: '#EEEAF5', excursion: '#E3F3EC' };
   // event bands
   for (const e of S.events) L.rect(b, X(S.t[e.span[0]]) - 1, yTop - mm(1), X(S.t[e.span[1]]) - X(S.t[e.span[0]]) + 2, yBot - yTop + mm(2), { fill: evTint[e.kind], part: 'event-band' });

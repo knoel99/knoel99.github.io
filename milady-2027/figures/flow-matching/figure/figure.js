@@ -132,7 +132,10 @@ export default async function draw(F, L) {
   for (let n = 0; n < S.length - 1; n++) dot(L, pc, fc.T(S[n + 1].t), fc.Y(S[n].xp), 1.1, '#ffffff', K.mid, 0.45);
   S.forEach((s, n) => dot(L, pc, fc.T(s.t), fc.Y(s.x), 1.3, n === 0 ? K.noise : n === S.length - 1 ? K.data : K.ink, n === 0 || n === S.length - 1 ? K.ink : 'none', 0.4));
   timeAxis(L, pc, fc, yBot + mm(2.0), { ticks: [0, 0.25, 0.5, 0.75, 1], over: 3 });
-  L.text(pc, (fc.T(0.5) + fc.T(0.75)) / 2, yBot + mm(2.0) + 2.4, '*h*', { size: 7, anchor: 'middle', valign: 'top', color: K.ink });
+  // step length h: a dimension arrow spanning one step between the grid lines t = 0.5 and 0.75 (empty strip under the curves)
+  const yh = fc.Y(-0.1);
+  L.arrow(pc, [fc.T(0.5) + 0.5, yh], [fc.T(0.75) - 0.5, yh], { both: true, stroke: K.ink, width: 0.4, head: 2.0, headWidth: 0.85 });
+  L.text(pc, (fc.T(0.5) + fc.T(0.75)) / 2, yh - mm(0.7), '*h*', { size: 7, anchor: 'middle', valign: 'bottom', halo: true, color: K.ink });
   // key in the empty upper-left corner of the plot: three line styles
   const kx = fc.T(0) + mm(1.6), ky = fc.Y(1.12), kd = mm(3.6), kw = mm(5);
   L.line(pc, [kx, ky], [kx + kw, ky], { stroke: K.dataPale, width: 1.6, cap: 'round' });

@@ -226,7 +226,7 @@ On note $\mathbb{E}[X \mid Y]$ la variable aléatoire $h(Y)$ où $h(y) = \mathbb
 
 :::: thm
 [Théorème 1.13 — L'espérance conditionnelle est la meilleure prédiction quadratique]{.tag}
-Soit $\mathbf{X}$ de carré intégrable. Parmi toutes les fonctions $h$ telles que $h(Y)$ soit de carré intégrable, la quantité $\mathbb{E}\big[|\mathbf{X} - h(Y)|^2\big]$ est minimale pour $h(y) = \mathbb{E}[\mathbf{X} \mid Y = y]$. De plus, l'erreur $\mathbf{X} - \mathbb{E}[\mathbf{X} \mid Y]$ est orthogonale à toute fonction de $Y$ : $\mathbb{E}\big[(\mathbf{X} - \mathbb{E}[\mathbf{X} \mid Y])\cdot g(Y)\big] = 0$.
+Soit $\mathbf{X}$ de carré intégrable. Parmi toutes les fonctions $h$ telles que $h(Y)$ soit de carré intégrable, la quantité $\mathbb{E}\big[|\mathbf{X} - h(Y)|^2\big]$ est minimale pour $h(y) = \mathbb{E}[\mathbf{X} \mid Y = y]$. De plus, l'erreur $\mathbf{X} - \mathbb{E}[\mathbf{X} \mid Y]$ est orthogonale à toute fonction $g$ de $Y$ telle que $g(Y)$ soit de carré intégrable : $\mathbb{E}\big[(\mathbf{X} - \mathbb{E}[\mathbf{X} \mid Y])\cdot g(Y)\big] = 0$.
 
 ::: proof
 Notons $h^\star(Y) = \mathbb{E}[\mathbf{X} \mid Y]$. Pour toute $g$, $\mathbb{E}[\mathbf{X}\cdot g(Y)] = \iint \mathbf{x}\cdot g(y)\,p(\mathbf{x}\mid y)\,p_Y(y)\,\mathrm{d}\mathbf{x}\,\mathrm{d}y = \int h^\star(y)\cdot g(y)\,p_Y(y)\,\mathrm{d}y = \mathbb{E}[h^\star(Y)\cdot g(Y)]$, ce qui donne l'orthogonalité. Ensuite, pour toute $h$, on écrit $\mathbf{X} - h(Y) = (\mathbf{X} - h^\star(Y)) + (h^\star(Y) - h(Y))$ ; le second terme est une fonction de $Y$, donc le produit croisé a une espérance nulle et
@@ -256,14 +256,14 @@ La loi $\mathcal{N}(0, I)$ est la loi normale standard : ses coordonnées sont d
 
 :::: prop
 [Proposition 1.15 — Construction par transformation affine]{.tag}
-Soit $L$ une matrice inversible telle que $LL^{\mathsf{T}} = \Sigma$ (par exemple le facteur de Cholesky, triangulaire inférieur). Si $\mathbf{Z} \sim \mathcal{N}(0, I)$, alors $\mathbf{X} = \mathbf{m} + L\mathbf{Z} \sim \mathcal{N}(\mathbf{m}, \Sigma)$. Plus généralement, toute transformation affine d'un vecteur gaussien est gaussienne, et toute marginale d'un vecteur gaussien est gaussienne.
+Soit $L$ une matrice inversible telle que $LL^{\mathsf{T}} = \Sigma$ (par exemple le facteur de Cholesky, triangulaire inférieur). Si $\mathbf{Z} \sim \mathcal{N}(0, I)$, alors $\mathbf{X} = \mathbf{m} + L\mathbf{Z} \sim \mathcal{N}(\mathbf{m}, \Sigma)$. Plus généralement, toute transformation affine $A\mathbf{X} + \mathbf{b}$ d'un vecteur gaussien est gaussienne, de covariance $A\Sigma A^{\mathsf{T}}$ (elle n'a une densité que si cette matrice est inversible), et toute marginale d'un vecteur gaussien est gaussienne.
 
 ::: proof
 C'est un cas particulier du théorème 2.5 (formule du jacobien), que l'on peut déjà vérifier avec le changement de variables dans les intégrales multiples vu en L2. L'application $\mathbf{z} \mapsto \mathbf{m} + L\mathbf{z}$ a pour inverse $\mathbf{x} \mapsto L^{-1}(\mathbf{x} - \mathbf{m})$ et pour jacobien constant $\det L$, avec $|\det L| = \sqrt{\det\Sigma}$. La densité de $\mathbf{X}$ vaut donc $p_{\mathbf{Z}}(L^{-1}(\mathbf{x} - \mathbf{m}))/|\det L|$, et $|L^{-1}(\mathbf{x} - \mathbf{m})|^2 = (\mathbf{x} - \mathbf{m})^{\mathsf{T}}(LL^{\mathsf{T}})^{-1}(\mathbf{x} - \mathbf{m})$ redonne la définition 1.14. Pour une transformation affine quelconque ou une marginale, on admet le résultat ; une preuve courte passe par la fonction caractéristique $\mathbb{E}[e^{i\mathbf{u}\cdot\mathbf{X}}] = e^{i\mathbf{u}\cdot\mathbf{m} - \frac12\mathbf{u}^{\mathsf{T}}\Sigma\mathbf{u}}$. [∎]{.qed}
 :::
 ::::
 
-Cette proposition est utilisée dans tous les modèles génératifs du parcours : on tire $\mathbf{Z}$ coordonnée par coordonnée, puis on transforme. Elle a une conséquence propre aux gaussiennes, qui contredit le point (iii) de la proposition 1.11 : **pour un vecteur gaussien, des coordonnées non corrélées sont indépendantes**, car une matrice $\Sigma$ diagonale rend la densité factorisable.
+Cette proposition est utilisée dans tous les modèles génératifs du parcours : on tire $\mathbf{Z}$ coordonnée par coordonnée, puis on transforme. La définition 1.14 a aussi une conséquence propre aux gaussiennes, qui fait exception à la mise en garde du point (iii) de la proposition 1.11 : **pour un vecteur gaussien, des coordonnées non corrélées sont indépendantes**, car une matrice $\Sigma$ diagonale rend la densité factorisable. L'hypothèse porte sur la loi jointe : deux variables qui sont chacune gaussiennes, sans former ensemble un vecteur gaussien, peuvent être non corrélées et dépendantes.
 
 :::: prop
 [Proposition 1.16 — Lois conditionnelles gaussiennes]{.tag}
@@ -366,7 +366,7 @@ Cette formule est la raison pour laquelle on peut évaluer un modèle générati
 
 ::: ex
 [Exemple 2.3 — Symétrie d'une loi invariante]{.tag}
-Le modèle à trois modes de Gissinger (2012) pour les renversements du champ magnétique est invariant par la symétrie $S(Q, D, V) = (-Q, -D, V)$ : si $(Q, D, V)$ est une solution, $(-Q, -D, V)$ en est une autre. Sa loi invariante $\mu$ vérifie alors $S_\#\mu = \mu$, et la proposition 2.2 appliquée à $g(Q, D, V) = D$ donne $\mathbb{E}_\mu[D] = \mathbb{E}_\mu[-D]$, donc $\mathbb{E}_\mu[D] = 0$ : en moyenne sur un temps long, le dipôle n'a pas de polarité préférée. Vérifier qu'une loi générée respecte $S_\#q = q$ est l'un des tests de l'expérience E1 (voir le [rapport](../../rapport/index.html#e1)).
+Le modèle à trois modes de Gissinger (2012) pour les renversements du champ magnétique est invariant par la symétrie $S(Q, D, V) = (-Q, -D, V)$ : si $(Q, D, V)$ est une solution, $(-Q, -D, V)$ en est une autre. Si $\mu$ est une loi invariante, $S_\#\mu$ en est donc une autre ; lorsque la loi invariante est unique, ce que l'on attend dans un régime de renversements où une trajectoire typique visite les deux polarités, on a $S_\#\mu = \mu$. La proposition 2.2 appliquée à $g(Q, D, V) = D$ donne alors $\mathbb{E}_\mu[D] = \mathbb{E}_\mu[-D]$, donc $\mathbb{E}_\mu[D] = 0$ : en moyenne sur un temps long, le dipôle n'a pas de polarité préférée. Dans un régime sans renversement, il peut au contraire exister deux lois invariantes, une par polarité, que $S$ échange. Vérifier qu'une loi générée respecte $S_\#q = q$ est l'un des tests de l'expérience E1 (voir le [rapport](../../rapport/index.html#e1)).
 :::
 
 :::: prop
@@ -378,7 +378,7 @@ Comme $F$ est croissante, $\{F^{-1}(U) \le x\} = \{U \le F(x)\}$, d'où $\mathbb
 :::
 ::::
 
-En dimension 1, on sait donc transporter n'importe quelle loi sur n'importe quelle autre par une application croissante : $G^{-1}\circ F$ envoie la loi de répartition $F$ sur celle de répartition $G$. Cette application « des quantiles » réapparaîtra au chapitre 5 comme le transport optimal en dimension 1.
+En dimension 1, on sait donc transporter n'importe quelle loi sans atome sur n'importe quelle autre par une application croissante : si $F$ est continue, $F(X)$ est uniforme et $G^{-1}\circ F$ envoie la loi de fonction de répartition $F$ sur celle de fonction de répartition $G$. Cette application « des quantiles » réapparaîtra au chapitre 5 comme le transport optimal en dimension 1.
 
 ### 2.2 La formule du jacobien
 
@@ -536,7 +536,7 @@ print("P(Y1 > 0.5, Y2 < 0) : formule =", f"{(pY * region).sum().item() * h * h:.
 # P(Y1 > 0.5, Y2 < 0) : formule = 0.2799 ; échantillons = 0.2794
 ```
 
-L'écart de $0{,}005$ entre histogramme et formule en dimension 1 est l'erreur statistique attendue pour des classes de largeur $0{,}1$ contenant environ $4\times10^4$ tirages chacune. En dimension 2, la densité image intègre à 1 et prédit la probabilité d'une région à $5\times10^{-4}$ près, ce qui est compatible avec l'erreur Monte-Carlo de $400\,000$ tirages (environ $7\times10^{-4}$, voir le chapitre 3).
+L'écart de $0{,}005$ entre histogramme et formule en dimension 1 est l'erreur statistique attendue : les classes centrales, de largeur $0{,}1$, contiennent environ $4\times10^4$ tirages chacune, si bien que la densité y est estimée à $0{,}002$ près (un écart-type), et le maximum sur 80 classes atteint deux à trois écarts-types. En dimension 2, la densité image intègre à 1 et prédit la probabilité d'une région à $5\times10^{-4}$ près, ce qui est compatible avec l'erreur Monte-Carlo de $400\,000$ tirages (environ $7\times10^{-4}$, voir le chapitre 3).
 
 :::: recap
 ::: recap-title
@@ -627,13 +627,13 @@ quelle que soit la dimension de $\mathbf{X}$. Diviser l'erreur par 10 coûte 100
 ```{=html}
 <figure class="schema">
 <img src="fig-monte-carlo.png" alt="À gauche, l'estimation courante de E[cos X] en fonction du nombre de tirages, sur une échelle logarithmique, avec la bande de confiance à 95 % qui se resserre autour de la valeur exacte 0,6065. À droite, l'erreur quadratique moyenne sur 200 répétitions en fonction de N, en échelle log-log : les points s'alignent sur une droite de pente −1/2." loading="lazy">
-<figcaption>Figure 2 — Monte-Carlo pour I = E[cos X] = e^(−1/2), X ~ N(0, 1). À gauche, une estimation et son intervalle de confiance à 95 % ; à droite, l'erreur quadratique moyenne sur 200 répétitions suit exactement σ/√N, avec σ² = Var(cos X) = (1 + e⁻²)/2 − e⁻¹.</figcaption>
+<figcaption>Figure 2 — Monte-Carlo pour I = E[cos X] = e^(−1/2), X ~ N(0, 1). À gauche, une estimation et son intervalle de confiance à 95 % ; à droite, l'erreur quadratique moyenne sur 200 répétitions suit de près σ/√N, avec σ² = Var(cos X) = (1 + e⁻²)/2 − e⁻¹.</figcaption>
 </figure>
 ```
 
 ::: note
 [Remarque 3.6 — Échantillons corrélés]{.tag}
-Le TCL ci-dessus suppose des tirages indépendants. Quand on estime une loi invariante à partir d'**une seule trajectoire** échantillonnée à pas régulier (c'est le cas de l'expérience E1 sur le modèle de Gissinger), les points successifs sont corrélés. La variance de la moyenne devient alors approximativement $\frac{\sigma^2}{N}\big(1 + 2\sum_{k \ge 1}\rho_k\big)$, où $\rho_k$ est l'autocorrélation au décalage $k$ : tout se passe comme si l'on disposait de $N/(1 + 2\sum_k\rho_k)$ tirages indépendants seulement (voir par exemple Robert et Casella, 2004). Une trajectoire longue de 100 temps de corrélation ne vaut qu'une cinquantaine de tirages indépendants.
+Le TCL ci-dessus suppose des tirages indépendants. Quand on estime une loi invariante à partir de **trajectoires** échantillonnées à pas régulier (c'est ainsi que sont produites les données de référence de l'expérience E1 sur le modèle de Gissinger), les points successifs d'une même trajectoire sont corrélés. La variance de la moyenne devient alors approximativement $\frac{\sigma^2}{N}\big(1 + 2\sum_{k \ge 1}\rho_k\big)$, où $\rho_k$ est l'autocorrélation au décalage $k$ : tout se passe comme si l'on disposait de $N/(1 + 2\sum_k\rho_k)$ tirages indépendants seulement (voir par exemple Robert et Casella, 2004). Si l'on définit le temps de corrélation intégré $\tau = \int_0^\infty\rho(s)\,\mathrm{d}s$ et que le pas d'échantillonnage $\Delta$ est petit devant $\tau$, alors $1 + 2\sum_k\rho_k \approx 2\tau/\Delta$ : une trajectoire de durée $100\,\tau$ ne vaut qu'une cinquantaine de tirages indépendants, quel que soit le nombre de points que l'on y prélève.
 :::
 
 ### 3.3 Échantillonnage d'importance
@@ -759,7 +759,7 @@ Ce qu'il faut retenir — chapitre 3
 - La moyenne empirique est sans biais, de variance $\sigma^2/N$ ; l'erreur est en $\sigma/\sqrt N$ en toute dimension.
 - Intervalle de confiance à 95 % : $\hat I_N \pm 1{,}96\,\hat\sigma_N/\sqrt N$ ; avec des échantillons corrélés, $N$ est remplacé par un nombre effectif plus petit.
 - Échantillonnage d'importance : $\mathbb{E}_p[f] = \mathbb{E}_q[f\,p/q]$ ; tirer là où $|f|p$ est grand.
-- Poids autonormalisés quand $p$ est connue à une constante près ; diagnostic par $\mathrm{ESS} = (\sum w)^2/\sum w^2$, qui tend vers $N/\mathbb{E}_q[\bar w^2]$ ; un ESS empirique peut être trompeusement grand.
+- Poids autonormalisés quand $p$ est connue à une constante près ; diagnostic par $\mathrm{ESS} = (\sum w)^2/\sum w^2$, avec $\mathrm{ESS}/N \to \mathbb{E}_q[w]^2/\mathbb{E}_q[w^2]$ ; un ESS empirique peut être trompeusement grand.
 ::::
 
 ## 4. Entropie, divergence de Kullback–Leibler et I-projection {#ch4}
@@ -879,7 +879,7 @@ Une famille exponentielle est une famille de densités de la forme $p_\lambda(\m
 
 :::: prop
 [Proposition 4.10 — Dérivées de la fonction de partition]{.tag}
-Là où $A$ est finie, $\nabla A(\lambda) = \mathbb{E}_{p_\lambda}[\mathbf{g}]$ et $\nabla^2 A(\lambda) = \mathrm{Cov}_{p_\lambda}[\mathbf{g}]$. En particulier, $A$ est convexe.
+À l'intérieur du domaine où $A$ est finie, $\nabla A(\lambda) = \mathbb{E}_{p_\lambda}[\mathbf{g}]$ et $\nabla^2 A(\lambda) = \mathrm{Cov}_{p_\lambda}[\mathbf{g}]$. En particulier, $A$ est convexe.
 
 ::: proof
 En dérivant sous l'intégrale, $\partial_j A = \frac{\int r\,g_j\,e^{\lambda\cdot\mathbf{g}}}{\int r\,e^{\lambda\cdot\mathbf{g}}} = \mathbb{E}_{p_\lambda}[g_j]$. En dérivant une seconde fois ce quotient, $\partial_k\partial_j A = \mathbb{E}_{p_\lambda}[g_jg_k] - \mathbb{E}_{p_\lambda}[g_j]\,\mathbb{E}_{p_\lambda}[g_k] = \mathrm{Cov}_{p_\lambda}(g_j, g_k)$. Une matrice de covariance est semi-définie positive (proposition 1.11), donc $A$ est convexe. [∎]{.qed}
@@ -930,7 +930,7 @@ p^\star(\mathbf{x}) = \frac{q(\mathbf{x})\,e^{\lambda^\star\cdot\mathbf{g}(\math
 $$
 :::
 
-La démonstration ci-dessus est complète, mais elle suppose que $\lambda^\star$ existe ; c'est la forme du résultat que l'on utilise en pratique, et la section 4.5 dit ce qui se passe quand cette hypothèse tombe. Csiszár (1975) a développé la géométrie générale de ces projections (existence et caractérisation de la loi la plus proche dans un ensemble convexe de lois, identité de Pythagore) ; pour le cas des contraintes de moments, Cover et Thomas (2006, chapitres 11 et 12) donnent un exposé élémentaire. Khalifa, Elsahar et Dymetman (2021) appliquent cette construction à un modèle génératif de texte pré-entraîné pour imposer des contraintes de moments sur les textes produits.
+La démonstration ci-dessus est complète, mais elle suppose que $\lambda^\star$ existe ; c'est la forme du résultat que l'on utilise en pratique, et la section 4.5 dit ce qui se passe quand cette hypothèse tombe. Csiszár (1975) a développé la géométrie générale de ces projections (existence et caractérisation de la loi la plus proche dans un ensemble convexe de lois, inégalité de type Pythagore, qui devient l'égalité (iii) pour des contraintes linéaires comme ici) ; pour le cas des contraintes de moments, Cover et Thomas (2006, chapitres 11 et 12) donnent un exposé élémentaire. Khalifa, Elsahar et Dymetman (2021) appliquent cette construction à un modèle génératif de texte pré-entraîné pour imposer des contraintes de moments sur les textes produits.
 
 :::: prop
 [Proposition 4.12 — Version empirique et méthode de Newton]{.tag}
@@ -1024,7 +1024,7 @@ print("\ndeux contraintes : lambda =", lam.round(4), "; moments obtenus =", (w @
 ```{=html}
 <figure class="schema">
 <img src="fig-inclinaison.png" alt="À gauche, la densité bimodale de base, avec deux bosses égales en −2 et 2, et trois lois inclinées pour des moyennes imposées 0,5, 1,5 et 2,5 : la bosse de gauche s'efface progressivement et, pour 2,5, la bosse de droite se décale vers la droite. À droite, l'ESS divisé par N en échelle logarithmique en fonction de la moyenne imposée : proche de 1 jusqu'à c = 1, puis chute rapide au-delà de 2 ; les points estimés restent au-dessus de la courbe limite pour c > 2,5." loading="lazy">
-<figcaption>Figure 3 — I-projection d'une loi bimodale q sous la contrainte E[X] = c. Tant que c reste dans l'intervalle [−2, 2] couvert par les deux modes, l'inclinaison se contente de rééquilibrer leurs poids et l'ESS reste élevé ; au-delà, elle doit déplacer le mode de droite vers une région peu peuplée et l'ESS s'effondre. Pour c > 2,5, l'ESS estimé sur 20 000 tirages surestime sa limite, comme au chapitre 3.</figcaption>
+<figcaption>Figure 3 — I-projection d'une loi bimodale q sous la contrainte E[X] = c. Tant que c reste dans l'intervalle [−2, 2] couvert par les deux modes, l'inclinaison rééquilibre surtout leurs poids (chaque mode n'est décalé que de λs²) et l'ESS reste élevé ; au-delà, elle doit déplacer le mode de droite vers une région peu peuplée et l'ESS s'effondre. Pour c > 2,5, l'ESS estimé sur 20 000 tirages surestime sa limite, comme au chapitre 3.</figcaption>
 </figure>
 ```
 
@@ -1041,10 +1041,10 @@ Le tableau se lit en deux régimes. Tant que $c \le 1{,}5$, l'inclinaison transf
 
 :::: prop
 [Proposition 4.14 — Condition d'existence]{.tag}
-Si $\mathbf{c}$ n'appartient pas à l'enveloppe convexe fermée de $\{\mathbf{g}(\mathbf{x}) : \mathbf{x} \in \mathrm{supp}\,q\}$, aucune loi $p$ absolument continue par rapport à $q$ (c'est-à-dire telle que $\mathrm{KL}(p\,\|\,q) < \infty$) ne vérifie $\mathbb{E}_p[\mathbf{g}] = \mathbf{c}$. Pour un échantillon, la condition est $\mathbf{c} \in \mathrm{conv}\{\mathbf{g}(\mathbf{x}_1), \dots, \mathbf{g}(\mathbf{x}_N)\}$, et quand $\mathbf{c}$ s'approche du bord de cette enveloppe, $|\lambda^\star| \to \infty$ et $\mathrm{ESS} \to 1$.
+Si $\mathbf{c}$ n'appartient pas à l'enveloppe convexe fermée de $\{\mathbf{g}(\mathbf{x}) : \mathbf{x} \in \mathrm{supp}\,q\}$, aucune loi $p$ absolument continue par rapport à $q$ (en particulier aucune loi telle que $\mathrm{KL}(p\,\|\,q) < \infty$) ne vérifie $\mathbb{E}_p[\mathbf{g}] = \mathbf{c}$. Pour un échantillon, la condition devient $\mathbf{c} \in \mathrm{conv}\{\mathbf{g}(\mathbf{x}_1), \dots, \mathbf{g}(\mathbf{x}_N)\}$, et un multiplicateur $\lambda^\star$ fini n'existe que si $\mathbf{c}$ est à l'intérieur de cette enveloppe. Pour une seule contrainte ($m = 1$), quand $c$ s'approche de $\max_i g(\mathbf{x}_i)$, on a $\lambda^\star \to +\infty$, et $\mathrm{ESS} \to 1$ si ce maximum n'est atteint que par un seul tirage.
 
 ::: proof
-Si $\mathrm{KL}(p\,\|\,q) < \infty$, $p$ ne charge que le support de $q$, et $\mathbb{E}_p[\mathbf{g}]$ est une moyenne de valeurs $\mathbf{g}(\mathbf{x})$ avec $\mathbf{x}$ dans ce support : elle appartient à leur enveloppe convexe fermée. Pour un échantillon en dimension 1, si $c$ tend vers $\max_i g(\mathbf{x}_i)$, la moyenne pondérée $\sum_i\bar w_i g(\mathbf{x}_i)$ ne peut approcher ce maximum que si les poids se concentrent sur les tirages qui l'atteignent, ce qui impose $\lambda \to +\infty$ ; à la limite, un seul poids reste non nul et l'ESS vaut 1 (proposition 3.11). [∎]{.qed}
+Si $p$ est absolument continue par rapport à $q$, elle ne charge que le support de $q$, et $\mathbb{E}_p[\mathbf{g}]$ est une moyenne de valeurs $\mathbf{g}(\mathbf{x})$ avec $\mathbf{x}$ dans ce support : elle appartient à leur enveloppe convexe fermée. Pour un échantillon et $m = 1$, les poids $\bar w_i \propto e^{\lambda g(\mathbf{x}_i)}$ sont tous strictement positifs pour $\lambda$ fini, donc la moyenne pondérée $\sum_i\bar w_i g(\mathbf{x}_i)$ est strictement inférieure à $\max_i g(\mathbf{x}_i)$ (si les $g(\mathbf{x}_i)$ ne sont pas tous égaux) ; elle ne peut approcher ce maximum que si les poids se concentrent sur les tirages qui l'atteignent, ce qui impose $\lambda \to +\infty$. Si un seul tirage atteint le maximum, un seul poids reste non nul à la limite et l'ESS tend vers 1 (proposition 3.11). En dimension $m \ge 2$, les poids se concentrent de même sur les tirages de la face de l'enveloppe dont $\mathbf{c}$ s'approche, et l'ESS tend vers 1 quand $\mathbf{c}$ s'approche d'un sommet de l'enveloppe ; nous ne détaillons pas ce cas. [∎]{.qed}
 :::
 ::::
 
@@ -1122,7 +1122,7 @@ On utilisera aussi la **formule duale de Kantorovich–Rubinstein**, admise : $W
 
 :::: thm
 [Théorème 5.6 — Transport optimal en dimension 1]{.tag}
-Soit $\mu$ et $\nu$ deux lois sur $\mathbb{R}$ de fonctions de répartition $F$ et $G$, et de fonctions quantiles $F^{-1}$ et $G^{-1}$. Pour tout $p \ge 1$,
+Soit $p \ge 1$, et $\mu$ et $\nu$ deux lois sur $\mathbb{R}$ ayant un moment d'ordre $p$ fini, de fonctions de répartition $F$ et $G$, et de fonctions quantiles $F^{-1}$ et $G^{-1}$. Alors
 
 $$
 W_p^p(\mu, \nu) = \int_0^1\big|F^{-1}(u) - G^{-1}(u)\big|^p\,\mathrm{d}u,
@@ -1217,7 +1217,7 @@ Elle est positive, nulle si et seulement si $\mu = \nu$ (admis), et s'estime san
 
 :::: prop
 [Proposition 5.12 — Distance d'énergie en dimension 1]{.tag}
-Sur $\mathbb{R}$, $\mathcal{E}(\mu, \nu) = 2\int_{\mathbb{R}}\big(F(x) - G(x)\big)^2\,\mathrm{d}x$.
+Pour deux lois sur $\mathbb{R}$ ayant un moment d'ordre 1 fini, de fonctions de répartition $F$ et $G$, $\mathcal{E}(\mu, \nu) = 2\int_{\mathbb{R}}\big(F(x) - G(x)\big)^2\,\mathrm{d}x$.
 
 ::: proof
 Pour $X$ et $Y$ indépendants, $|X - Y| = \int\big(\mathbf{1}_{X \le t < Y} + \mathbf{1}_{Y \le t < X}\big)\,\mathrm{d}t$ ; en prenant l'espérance, $\mathbb{E}|X - Y| = \int\big[F(1 - G) + G(1 - F)\big]$. De même $\mathbb{E}|X - X'| = \int 2F(1 - F)$ et $\mathbb{E}|Y - Y'| = \int 2G(1 - G)$. On assemble : $2(F + G - 2FG) - 2F + 2F^2 - 2G + 2G^2 = 2(F - G)^2$. [∎]{.qed}
@@ -1416,7 +1416,7 @@ Un mouvement brownien standard est un processus $(W_t)_{t \ge 0}$ à valeurs ré
 :::
 ::::
 
-Le point (ii) est le cœur du calcul stochastique : un accroissement brownien sur un pas $\mathrm{d}t$ est d'ordre $\sqrt{\mathrm{d}t}$, et son carré $(\mathrm{d}W)^2$ se comporte comme $\mathrm{d}t$, de façon déterministe. C'est aussi pourquoi les trajectoires browniennes ne sont nulle part dérivables : $\Delta W/\Delta t$ est d'ordre $1/\sqrt{\Delta t}$.
+Le point (ii) est le cœur du calcul stochastique : un accroissement brownien sur un pas $\mathrm{d}t$ est d'ordre $\sqrt{\mathrm{d}t}$, et son carré $(\mathrm{d}W)^2$ se comporte comme $\mathrm{d}t$, de façon déterministe. Il donne aussi l'intuition d'un résultat classique, admis ici : les trajectoires browniennes ne sont presque sûrement dérivables nulle part, puisque le taux d'accroissement $\Delta W/\Delta t$ est d'ordre $1/\sqrt{\Delta t}$.
 
 ### 6.2 Équations différentielles stochastiques et schéma d'Euler–Maruyama
 
@@ -1575,20 +1575,20 @@ for dt in [0.01, 0.1, 0.4]:
 ```{=html}
 <figure class="schema">
 <img src="fig-ornstein-uhlenbeck.png" alt="À gauche, huit trajectoires bruitées partant de 1,5 et relaxant vers 0, avec la moyenne exacte en trait épais et une bande bleue moyenne plus ou moins deux écarts-types qui s'élargit puis se stabilise entre −1 et 1. À droite, deux histogrammes : à t = 0,25, centré vers 0,9 et étroit, superposé à la gaussienne exacte en tirets ; à t = 4, centré en 0, superposé à la densité stationnaire en trait plein." loading="lazy">
-<figcaption>Figure 5 — Ornstein–Uhlenbeck (θ = 2, σ = 1, x₀ = 1,5) simulé par Euler–Maruyama (Δt = 0,002). À gauche, trajectoires et bande exacte moyenne ± 2 écarts-types ; à droite, les histogrammes de 10⁵ particules suivent la solution de Fokker–Planck à t = 0,25 puis la loi stationnaire N(0, σ²/2θ) à t = 4.</figcaption>
+<figcaption>Figure 5 — Ornstein–Uhlenbeck (θ = 2, σ = 1, x₀ = 1,5) simulé par Euler–Maruyama (Δt = 0,002). À gauche, trajectoires et bande exacte moyenne ± 2 écarts-types ; à droite, les histogrammes de 10⁵ particules suivent la solution de Fokker–Planck à t = 0,25 puis la loi stationnaire N(0, σ²/(2θ)) à t = 4.</figcaption>
 </figure>
 ```
 
 ```{=html}
 <div class="widget" data-widget="ou">
 <p class="widget-title">Schéma interactif 4 — Euler–Maruyama et équation de Fokker–Planck</p>
-<p class="widget-note">« Lancer » fait évoluer 3 000 particules d'Ornstein–Uhlenbeck parties de x₀. À gauche, 25 trajectoires et la bande exacte moyenne ± 2 écarts-types ; à droite, l'histogramme, la solution exacte p(·, t) (tirets) et la loi stationnaire p∞ (trait plein). Augmentez Δt jusqu'à 0,4 ou 0,5 avec θ = 2 : la variance stationnaire du schéma s'écarte nettement de σ²/2θ ; avec θ Δt ≥ 2, le schéma diverge.</p>
+<p class="widget-note">« Lancer » fait évoluer 3 000 particules d'Ornstein–Uhlenbeck parties de x₀. À gauche, 25 trajectoires et la bande exacte moyenne ± 2 écarts-types ; à droite, l'histogramme, la solution exacte p(·, t) (tirets) et la loi stationnaire p∞ (trait plein). Augmentez Δt jusqu'à 0,4 ou 0,5 avec θ = 2 : la variance stationnaire du schéma s'écarte nettement de σ²/(2θ) ; avec θ Δt ≥ 2, le schéma diverge.</p>
 </div>
 ```
 
 ::: note
 [Remarque 6.12 — Fréquence de franchissement et formule de Rice]{.tag}
-Une loi stationnaire ne contient pas seulement des moyennes : elle contient aussi des fréquences d'événements. Pour un processus stationnaire $X_t$ dérivable, de densité jointe $p(x, \dot x)$ pour la position et la vitesse au même instant, Rice (1944) montre que le nombre moyen de franchissements du niveau $u$ vers le haut par unité de temps vaut
+Une loi stationnaire ne contient pas seulement des moyennes : elle contient aussi des fréquences d'événements. Pour un processus stationnaire $X_t$ dérivable, de densité jointe $p(x, \dot x)$ pour la position et la vitesse au même instant, Rice (1944, 1945) montre que le nombre moyen de franchissements du niveau $u$ vers le haut par unité de temps vaut
 
 $$
 \nu_u^+ = \int_0^{\infty}\dot x\,p(u, \dot x)\,\mathrm{d}\dot x.
@@ -1637,7 +1637,7 @@ $$
 v(\mathbf{x}, t) = \mathbb{E}\big[\mathbf{x}_1 - \mathbf{x}_0 \,\big|\, \mathbf{x}_t = \mathbf{x}\big].
 $$
 
-Alors $(p_t, v)$ vérifie l'équation de continuité (6.1). Par conséquent, si le flot de $v$ est bien défini, l'équation $\dot{\mathbf{x}} = v(\mathbf{x}, t)$ issue de $\mathbf{x}(0) \sim p_0$ donne $\mathbf{x}(t) \sim p_t$ pour tout $t$, et en particulier $\mathbf{x}(1) \sim p_1$. De plus, $v$ est l'unique minimiseur de la perte de flow matching conditionnel
+Alors $(p_t, v)$ vérifie l'équation de continuité (6.1). Par conséquent, si le flot de $v$ est bien défini, l'équation $\dot{\mathbf{x}} = v(\mathbf{x}, t)$ issue de $\mathbf{x}(0) \sim p_0$ donne $\mathbf{x}(t) \sim p_t$ pour tout $t$, et en particulier $\mathbf{x}(1) \sim p_1$. De plus, $v$ est le minimiseur, unique à une modification près sur un ensemble de probabilité nulle sous $p_t$, de la perte de flow matching conditionnel
 
 $$
 \mathcal{J}(u) = \int_0^1\mathbb{E}\Big[\big|u(\mathbf{x}_t, t) - (\mathbf{x}_1 - \mathbf{x}_0)\big|^2\Big]\,\mathrm{d}t.
@@ -1659,7 +1659,7 @@ $$
 dont l'optimum est la vitesse marginale, qui transporte le bruit sur les données en vertu de l'équation de continuité.
 :::
 
-Ce principe est celui de Lipman et al. (2023), de Liu, Gong et Liu (2023, « rectified flow ») et d'Albergo et Vanden-Eijnden (2023, interpolants stochastiques). Les trajectoires individuelles $\mathbf{x}_t = (1 - t)\mathbf{x}_0 + t\,\mathbf{x}_1$ sont des droites qui se croisent ; les trajectoires du flot marginal ne se croisent pas (deux solutions d'une même EDO ne peuvent se rencontrer), mais elles ont **les mêmes lois à chaque instant**. Le code ci-dessous le vérifie pour un bruit $\mathcal{N}(0, 1)$ et une cible bimodale, pour laquelle $v$ se calcule exactement : sachant la composante $k$ du mélange, le couple $(\mathbf{x}_t, \mathbf{x}_1 - \mathbf{x}_0)$ est gaussien et la proposition 1.16 donne l'espérance conditionnelle.
+Ce principe est celui de Lipman et al. (2023), de Liu, Gong et Liu (2023, « rectified flow ») et d'Albergo et Vanden-Eijnden (2023, interpolants stochastiques). Les trajectoires individuelles $\mathbf{x}_t = (1 - t)\mathbf{x}_0 + t\,\mathbf{x}_1$ sont des droites qui se croisent ; les trajectoires du flot marginal ne se croisent pas (pour un champ lipschitzien, deux solutions distinctes d'une même EDO ne peuvent se rencontrer), mais elles ont **les mêmes lois à chaque instant**. Le code ci-dessous le vérifie pour un bruit $\mathcal{N}(0, 1)$ et une cible bimodale, pour laquelle $v$ se calcule exactement : sachant la composante $k$ du mélange, le couple $(\mathbf{x}_t, \mathbf{x}_1 - \mathbf{x}_0)$ est gaussien et la proposition 1.16 donne l'espérance conditionnelle.
 
 ```python
 import numpy as np
@@ -1732,7 +1732,7 @@ Le résidu de l'équation de continuité est de l'ordre de $10^{-5}$, soit l'err
 ```{=html}
 <div class="widget" data-widget="flow">
 <p class="widget-title">Schéma interactif 5 — Équation de continuité : chemins conditionnels et flot marginal</p>
-<p class="widget-note">Déplacez t ou cliquez sur « Animer », puis changez d'affichage. Les 3 000 particules suivent soit les droites x_t = (1 − t)x₀ + t x₁, soit l'EDO de vitesse marginale. L'histogramme à droite reste le même dans les deux cas et suit la densité exacte p_t : la distance W₁ entre les deux nuages reste de l'ordre de 0,02, alors que l'écart moyen entre les positions d'une même particule dépasse 1.</p>
+<p class="widget-note">Déplacez t ou cliquez sur « Animer », puis changez d'affichage. Les 3 000 particules suivent soit les droites x_t = (1 − t)x₀ + t x₁, soit l'EDO de vitesse marginale. L'histogramme à droite reste le même dans les deux cas, aux fluctuations d'échantillonnage près, et suit la densité exacte p_t : la distance W₁ entre les deux nuages reste de quelques centièmes, le niveau de bruit attendu pour 3 000 particules, alors que l'écart moyen entre les positions d'une même particule dépasse 1 dès t ≈ 0,5.</p>
 </div>
 ```
 
@@ -1807,7 +1807,7 @@ Par la formule de transfert, $\mathbb{E}[Y] = \mathbb{E}[e^X] = \int e^x\,\frac{
 8. **★★ Divergence de Kullback–Leibler entre gaussiennes.** Démontrer la formule $\mathrm{KL}(\mathcal{N}(m_1, s_1^2)\,\|\,\mathcal{N}(m_2, s_2^2)) = \log\frac{s_2}{s_1} + \frac{s_1^2 + (m_1 - m_2)^2}{2s_2^2} - \frac12$, puis calculer les deux divergences entre $\mathcal{N}(0, 1)$ et $\mathcal{N}(0, 4)$.
 
 ::: sol
-*Solution.* Pour $X \sim \mathcal{N}(m_1, s_1^2)$, $\log\frac{p_1(X)}{p_2(X)} = \log\frac{s_2}{s_1} - \frac{(X - m_1)^2}{2s_1^2} + \frac{(X - m_2)^2}{2s_2^2}$. On prend l'espérance : $\mathbb{E}[(X - m_1)^2] = s_1^2$ et $\mathbb{E}[(X - m_2)^2] = s_1^2 + (m_1 - m_2)^2$, ce qui donne la formule. Avec $m_1 = m_2 = 0$ : $\mathrm{KL}(\mathcal{N}(0, 1)\,\|\,\mathcal{N}(0, 4)) = \log 2 + \frac18 - \frac12 \approx 0{,}318$ et $\mathrm{KL}(\mathcal{N}(0, 4)\,\|\,\mathcal{N}(0, 1)) = -\log 2 + 2 - \frac12 \approx 0{,}807$. Un modèle trop étalé (deuxième cas comme modèle de la première loi) est moins pénalisé par la KL directe qu'un modèle trop concentré, conformément à la remarque 4.6.
+*Solution.* Pour $X \sim \mathcal{N}(m_1, s_1^2)$, $\log\frac{p_1(X)}{p_2(X)} = \log\frac{s_2}{s_1} - \frac{(X - m_1)^2}{2s_1^2} + \frac{(X - m_2)^2}{2s_2^2}$. On prend l'espérance : $\mathbb{E}[(X - m_1)^2] = s_1^2$ et $\mathbb{E}[(X - m_2)^2] = s_1^2 + (m_1 - m_2)^2$, ce qui donne la formule. Avec $m_1 = m_2 = 0$ : $\mathrm{KL}(\mathcal{N}(0, 1)\,\|\,\mathcal{N}(0, 4)) = \log 2 + \frac18 - \frac12 \approx 0{,}318$ et $\mathrm{KL}(\mathcal{N}(0, 4)\,\|\,\mathcal{N}(0, 1)) = -\log 2 + 2 - \frac12 \approx 0{,}807$. Lisons ces valeurs comme des KL directes $\mathrm{KL}(\text{données}\,\|\,\text{modèle})$ : modéliser $\mathcal{N}(0, 1)$ par la loi trop étalée $\mathcal{N}(0, 4)$ coûte $0{,}318$, alors que modéliser $\mathcal{N}(0, 4)$ par la loi trop concentrée $\mathcal{N}(0, 1)$ coûte $0{,}807$. À rapport d'échelle égal, la KL directe pénalise davantage un modèle trop concentré, conformément à la remarque 4.6.
 :::
 
 9. **★★ Maximum d'entropie.** (a) Sur $[0, \infty)$, trouver la densité d'entropie maximale de moyenne $m$. (b) Sur $\mathbb{R}$, trouver la densité d'entropie maximale de moyenne $\mu$ et de variance $v$. (c) Sur un ensemble fini d'états $\{1, \dots, K\}$ d'énergies $E_k$, trouver la loi d'entropie maximale d'énergie moyenne fixée.
@@ -1816,10 +1816,10 @@ Par la formule de transfert, $\mathbb{E}[Y] = \mathbb{E}[e^X] = \int e^x\,\frac{
 *Solution.* On applique le théorème 4.7 ; il suffit de trouver, dans la famille exponentielle correspondante, la loi qui satisfait les contraintes. (a) $g(x) = x$ : $p_\lambda \propto e^{\lambda x}$ sur $[0, \infty)$, intégrable si $\lambda < 0$ ; c'est une loi exponentielle de paramètre $-\lambda$, de moyenne $-1/\lambda$, d'où $\lambda = -1/m$ et $p(x) = \frac1m e^{-x/m}$. (b) $\mathbf{g}(x) = (x, x^2)$ : $p \propto e^{\lambda_1x + \lambda_2x^2}$ avec $\lambda_2 < 0$, une gaussienne ; la contrainte impose $\mathcal{N}(\mu, v)$, d'entropie $\frac12\log(2\pi e v)$. Toute autre loi de même variance a une entropie plus petite. (c) La version discrète du théorème (sommes au lieu d'intégrales, même preuve) donne $p_k = e^{-\beta E_k}/Z(\beta)$ avec $Z(\beta) = \sum_k e^{-\beta E_k}$, où $\beta = -\lambda$ est choisi pour que $\sum_k p_kE_k$ vaille l'énergie imposée : c'est la loi de Gibbs, et $\beta$ est l'inverse de la température (Jaynes, 1957).
 :::
 
-10. **★★★ I-projections explicites.** (a) Soit $q = \mathcal{N}(0, 1)$. Calculer l'I-projection sous la contrainte $\mathbb{E}[X^2] = s$ ($s > 0$), le multiplicateur $\lambda^\star$ et la divergence minimale. (b) Montrer que $\mathcal{N}(m, s^2)$ inclinée par $e^{\lambda x}$ est proportionnelle à $\mathcal{N}(m + \lambda s^2, s^2)$, avec la constante $e^{\lambda m + \lambda^2s^2/2}$. En déduire l'inclinaison d'un mélange de gaussiennes, et la moyenne inclinée de $q = \frac12\mathcal{N}(-2, s^2) + \frac12\mathcal{N}(2, s^2)$. (c) Avec $s = 0{,}5$, montrer que $\mathrm{ESS}/N \to \frac12e^{-\lambda^2/4}$ quand $\lambda$ est grand, et expliquer l'écart entre multiplicateur estimé et exact pour $c = 3{,}5$ dans le code du chapitre 4.
+10. **★★★ I-projections explicites.** (a) Soit $q = \mathcal{N}(0, 1)$. Calculer l'I-projection sous la contrainte $\mathbb{E}[X^2] = v$ ($v > 0$), le multiplicateur $\lambda^\star$ et la divergence minimale. (b) Montrer que $\mathcal{N}(m, s^2)$ inclinée par $e^{\lambda x}$ est proportionnelle à $\mathcal{N}(m + \lambda s^2, s^2)$, avec la constante $e^{\lambda m + \lambda^2s^2/2}$. En déduire l'inclinaison d'un mélange de gaussiennes, et la moyenne inclinée de $q = \frac12\mathcal{N}(-2, s^2) + \frac12\mathcal{N}(2, s^2)$. (c) Avec $s = 0{,}5$, montrer que $\mathrm{ESS}/N \to \frac12e^{-\lambda^2/4}$ quand $\lambda$ est grand, et expliquer l'écart entre multiplicateur estimé et exact pour $c = 3{,}5$ dans le code du chapitre 4.
 
 ::: sol
-*Solution.* (a) $q\,e^{\lambda x^2} \propto e^{-(1 - 2\lambda)x^2/2}$, intégrable si $\lambda < 1/2$ : c'est $\mathcal{N}(0, 1/(1 - 2\lambda))$. La contrainte donne $1/(1 - 2\lambda^\star) = s$, soit $\lambda^\star = \frac12(1 - \frac1s)$. La divergence minimale est $\mathrm{KL}(\mathcal{N}(0, s)\,\|\,\mathcal{N}(0, 1)) = \frac12(s - 1 - \log s)$ par l'exercice 8 ; on la retrouve aussi comme $-\psi(\lambda^\star) = \lambda^\star s - \log Z(\lambda^\star)$ avec $\log Z(\lambda) = -\frac12\log(1 - 2\lambda) = \frac12\log s$. (b) En complétant le carré, $-\frac{(x - m)^2}{2s^2} + \lambda x = -\frac{(x - m - \lambda s^2)^2}{2s^2} + \lambda m + \frac{\lambda^2s^2}{2}$. Pour un mélange $\sum_k\pi_k\mathcal{N}(m_k, s_k^2)$, la loi inclinée est le mélange $\sum_k\pi_k'\mathcal{N}(m_k + \lambda s_k^2, s_k^2)$ avec $\pi_k' \propto \pi_k\,e^{\lambda m_k + \lambda^2s_k^2/2}$. Pour les deux modes symétriques, $\pi_\pm' = e^{\pm2\lambda}/(e^{2\lambda} + e^{-2\lambda})$ et la moyenne inclinée vaut $2\tanh(2\lambda) + \lambda s^2$. Avec $s^2 = 0{,}25$ : $c = 3$ donne $\lambda^\star = 4$ et $c = 3{,}5$ donne $\lambda^\star = 6$ (à $10^{-10}$ près, $\tanh(8) \approx \tanh(12) \approx 1$), les valeurs « exactes » du tableau. (c) Par la proposition 3.11, $\mathrm{ESS}/N \to \mathbb{E}_q[e^{\lambda X}]^2/\mathbb{E}_q[e^{2\lambda X}]$. Avec (b), $\mathbb{E}_q[e^{\lambda X}] = \cosh(2\lambda)\,e^{\lambda^2s^2/2} \approx \frac12e^{2\lambda + \lambda^2/8}$ et $\mathbb{E}_q[e^{2\lambda X}] \approx \frac12e^{4\lambda + \lambda^2/2}$, d'où $\mathrm{ESS}/N \to \frac12e^{-\lambda^2/4}$. Pour $\lambda = 6$, cela fait $\frac12e^{-9} \approx 6{,}2\times10^{-5}$, soit environ **un** tirage effectif sur $N = 20\,000$ : l'échantillon ne contient pas la région où la loi inclinée met sa masse (autour de $3{,}5$, au-delà de presque tous les tirages), et le multiplicateur estimé n'a plus de sens.
+*Solution.* (a) $q\,e^{\lambda x^2} \propto e^{-(1 - 2\lambda)x^2/2}$, intégrable si $\lambda < 1/2$ : c'est $\mathcal{N}(0, 1/(1 - 2\lambda))$. La contrainte donne $1/(1 - 2\lambda^\star) = v$, soit $\lambda^\star = \frac12(1 - \frac1v)$. La divergence minimale est $\mathrm{KL}(\mathcal{N}(0, v)\,\|\,\mathcal{N}(0, 1)) = \frac12(v - 1 - \log v)$ par l'exercice 8 ; on la retrouve aussi comme $-\psi(\lambda^\star) = \lambda^\star v - \log Z(\lambda^\star)$ avec $\log Z(\lambda^\star) = -\frac12\log(1 - 2\lambda^\star) = \frac12\log v$. (b) En complétant le carré, $-\frac{(x - m)^2}{2s^2} + \lambda x = -\frac{(x - m - \lambda s^2)^2}{2s^2} + \lambda m + \frac{\lambda^2s^2}{2}$. Pour un mélange $\sum_k\pi_k\mathcal{N}(m_k, s_k^2)$, la loi inclinée est le mélange $\sum_k\pi_k'\mathcal{N}(m_k + \lambda s_k^2, s_k^2)$ avec $\pi_k' \propto \pi_k\,e^{\lambda m_k + \lambda^2s_k^2/2}$. Pour les deux modes symétriques, $\pi_\pm' = e^{\pm2\lambda}/(e^{2\lambda} + e^{-2\lambda})$ et la moyenne inclinée vaut $2\tanh(2\lambda) + \lambda s^2$. Avec $s^2 = 0{,}25$ : $c = 3$ donne $\lambda^\star \approx 4$ et $c = 3{,}5$ donne $\lambda^\star \approx 6$, car $\tanh(8)$ et $\tanh(12)$ valent 1 à $3\times10^{-7}$ près ; la résolution exacte donne $\lambda^\star = 4 + 1{,}8\times10^{-6}$ et $6 + 6\times10^{-10}$, les valeurs « exactes » du tableau. (c) Par la proposition 3.11, $\mathrm{ESS}/N \to \mathbb{E}_q[e^{\lambda X}]^2/\mathbb{E}_q[e^{2\lambda X}]$. Avec (b), $\mathbb{E}_q[e^{\lambda X}] = \cosh(2\lambda)\,e^{\lambda^2s^2/2} \approx \frac12e^{2\lambda + \lambda^2/8}$ et $\mathbb{E}_q[e^{2\lambda X}] \approx \frac12e^{4\lambda + \lambda^2/2}$, d'où $\mathrm{ESS}/N \to \frac12e^{-\lambda^2/4}$. Pour $\lambda = 6$, cela fait $\frac12e^{-9} \approx 6{,}2\times10^{-5}$, soit environ **un** tirage effectif sur $N = 20\,000$ : l'échantillon ne contient pas la région où la loi inclinée met sa masse (autour de $3{,}5$, au-delà de presque tous les tirages), et le multiplicateur estimé n'a plus de sens.
 :::
 
 11. **★★ Calculs de distances de Wasserstein.** (a) Calculer $W_1$ et $W_2$ entre $\mu = \frac12\delta_0 + \frac12\delta_1$ et $\nu = \frac12\delta_0 + \frac12\delta_3$, et comparer au coût du couplage indépendant. (b) Calculer $W_1$ et $W_2$ entre $\delta_0$ et $\frac12\delta_{-1} + \frac12\delta_1$. (c) Pour une translation $\nu = \mu(\cdot - a)$ en dimension 1, montrer que $W_p(\mu, \nu) = |a|$ pour tout $p$.
@@ -1870,7 +1870,7 @@ print(f"p_inf(1) / p_inf(0) = {np.exp(-2 * (V(1) - V(0)) / sigma ** 2):.4f} = ex
 # p_inf(1) / p_inf(0) = 2.1842 = exp(1/(2 sigma^2))
 ```
 
-L'identité est vérifiée par la loi exacte comme par la simulation. Elle est **nécessaire** mais pas suffisante : beaucoup de lois vérifient $\mathbb{E}[X^4] - \mathbb{E}[X^2] = 0{,}32$ (par exemple une loi concentrée en $\pm x^\star$ avec $x^{\star 4} - x^{\star 2} = 0{,}32$). C'est pourquoi une contrainte de stationnarité doit accompagner l'apprentissage sur données, et non le remplacer.
+L'identité est vérifiée par la loi exacte comme par la simulation. L'accord de la simulation à $10^{-4}$ près est en partie fortuit : l'écart-type de $X^4 - X^2$ sous $p_\infty$ vaut environ $0{,}97$, si bien que l'erreur statistique sur $10^4$ particules est d'environ $10^{-2}$. L'identité est **nécessaire** mais pas suffisante : beaucoup de lois vérifient $\mathbb{E}[X^4] - \mathbb{E}[X^2] = 0{,}32$ (par exemple une loi concentrée en $\pm x^\star$ avec $x^{\star 4} - x^{\star 2} = 0{,}32$). C'est pourquoi une contrainte de stationnarité doit accompagner l'apprentissage sur données, et non le remplacer.
 :::
 
 15. **★★★ Flow matching entre deux gaussiennes.** Soit $x_0 \sim \mathcal{N}(0, 1)$ et $x_1 \sim \mathcal{N}(m, s^2)$ indépendants, $x_t = (1 - t)x_0 + t\,x_1$ et $\sigma_t^2 = (1 - t)^2 + t^2s^2$. (a) Donner la loi $p_t$. (b) Calculer la vitesse marginale $v(x, t) = \mathbb{E}[x_1 - x_0 \mid x_t = x]$. (c) Vérifier que $x(t) = tm + \sigma_tx_0$ résout $\dot x = v(x, t)$, et identifier l'application $x_0 \mapsto x(1)$. (d) Montrer que la valeur minimale de la perte de flow matching au temps $t$ vaut $s^2/\sigma_t^2$ ; que faut-il en conclure sur la courbe d'apprentissage ?
@@ -1890,11 +1890,11 @@ $$
 Le stage MilaDy demande des modèles génératifs conditionnels (diffusion, flow matching) de champs MHD paramétriques, qui respectent la divergence nulle, le bilan d'énergie et les conditions aux limites, et qui soient évalués par des spectres, des hélicités, la divergence et des indicateurs topologiques. Chaque chapitre de ce module intervient à un endroit précis.
 
 - **Ce qu'est un modèle génératif (chapitres 2 et 6).** La loi générée est une mesure image $(T_\theta)_\#\mathcal{N}(0, I)$ ; en flow matching, $T_\theta$ est le flot d'une vitesse $v_\theta$ entraînée par la régression de la proposition 6.15. Le module [Modèles génératifs : diffusion et flow matching](../p7-modeles-generatifs/index.html) part de là.
-- **Expérience E1 (chapitres 2, 3 et 6).** Le flow matching conditionnel y apprend la loi invariante du modèle à trois modes de Gissinger (2012). Trois tests de ce module y sont employés : la symétrie $S_\#q = q$ avec $S(Q, D, V) = (-Q, -D, V)$ (exemple 2.3), les identités de stationnarité $\mathbb{E}_q[\mathcal{L}\varphi] = 0$ (proposition 6.11) et la fréquence des renversements par la formule de Rice (remarque 6.12) ; les barres d'erreur tiennent compte de la corrélation temporelle des échantillons (remarque 3.6). Les résultats sont dans le [rapport, section E1](../../rapport/index.html#e1).
+- **Expérience E1 (chapitres 2, 3 et 6).** Le flow matching conditionnel y apprend la loi invariante du modèle à trois modes de Gissinger (2012). Trois tests de ce module y sont employés : la symétrie $S_\#q = q$ avec $S(Q, D, V) = (-Q, -D, V)$ (exemple 2.3), les identités de stationnarité $\mathbb{E}_q[\mathcal{L}\varphi] = 0$ (proposition 6.11) et la fréquence des renversements par la formule de Rice (remarque 6.12). Les données de référence sont prélevées le long de trajectoires, donc corrélées dans le temps : la remarque 3.6 rappelle qu'elles valent moins de tirages indépendants que leur nombre ne le laisse croire, ce qu'il faut garder en tête en lisant les écarts entre loi générée et référence. Les résultats sont dans le [rapport, section E1](../../rapport/index.html#e1).
 - **Expérience E2 (chapitres 4 et 5).** Des champs MHD 2D forcés sont générés conditionnellement à la diffusivité $\eta$, et cinq mécanismes de contrainte de divergence sont comparés (libre, pénalité, projection finale, flot projeté, potentiels). Le volet « contrainte en loi du bilan d'énergie » est une I-projection (théorème 4.11) réalisée par repondération, dont l'ESS mesure le coût (propositions 3.11 et 4.14). Les métriques suivent la section 5.6. Voir le [rapport, section E2](../../rapport/index.html#e2).
-- **Expérience E3.** Le taux de croissance de la dynamo cinématique ABC en fonction de $Rm$ est un problème aux valeurs propres déterministe ; ce module n'y intervient que par la comparaison de lois de quantités globales si l'on génère des champs de vitesse aléatoires autour de l'écoulement ABC. Voir le [rapport, section E3](../../rapport/index.html#e3).
+- **Expérience E3.** Le taux de croissance de la dynamo cinématique ABC en fonction de $Rm$ est un problème aux valeurs propres déterministe, et ce module n'y sert pas directement. Il servirait dans un prolongement que E3 ne réalise pas : générer des champs de vitesse aléatoires autour de l'écoulement ABC et comparer les lois des taux de croissance obtenus. Voir le [rapport, section E3](../../rapport/index.html#e3).
 - **Formulation et taxonomie des contraintes.** La distinction entre contraintes par échantillon (divergence nulle de chaque champ) et contraintes linéaires en la loi (bilan d'énergie moyen, identités de stationnarité, remarque 4.15) structure la [formulation du rapport](../../rapport/index.html#formulation) et sa [taxonomie des contraintes](../../rapport/index.html#taxonomie).
-- **Sujet de thèse.** La [partie théorique du sujet de thèse](../../these/index.html#theorie) repose sur l'I-projection et la forme faible de Fokker–Planck ; son [plan expérimental](../../these/index.html#plan-experimental) utilise les métriques en loi du chapitre 5.
+- **Sujet de thèse.** Le sujet de thèse prolonge le stage. Sa [partie théorique](../../these/index.html#theorie) peut s'appuyer sur l'I-projection (chapitre 4) et sur la forme faible de l'équation de Fokker–Planck (chapitre 6), et son [plan expérimental](../../these/index.html#plan-experimental) sur les métriques en loi du chapitre 5.
 
 Les modules suivants du parcours reprennent ces outils : [Apprentissage profond pour la physique](../p6-apprentissage-profond/index.html) pour l'entraînement des réseaux, et [Modèles génératifs sous contraintes physiques](../p8-contraintes-physiques/index.html) pour la combinaison des contraintes par échantillon et en loi.
 
@@ -1932,8 +1932,8 @@ Références vérifiées (DOI, arXiv ou page de l'éditeur consultés).
 - Lienen, M., Lüdke, D., Hansen-Palmus, J. et Günnemann, S. (2024). From Zero to Turbulence: Generative Modeling for 3D Flow Simulation. *ICLR 2024*. arXiv:2306.01776. <https://arxiv.org/abs/2306.01776>
 - Lipman, Y., Chen, R. T. Q., Ben-Hamu, H., Nickel, M. et Le, M. (2023). Flow Matching for Generative Modeling. *ICLR 2023*. arXiv:2210.02747. <https://arxiv.org/abs/2210.02747>
 - Liu, X., Gong, C. et Liu, Q. (2023). Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow. *ICLR 2023*. arXiv:2209.03003. <https://arxiv.org/abs/2209.03003>
-- Øksendal, B. (2003). *Stochastic Differential Equations: An Introduction with Applications*, 6e éd. Springer (Universitext). <https://doi.org/10.1007/978-3-642-14394-6>
 - Mun, J. (2026). Multifidelity Computer Model Emulation Via Diffusion Model Steering and Targeted Maximum Likelihood. Préprint arXiv:2608.30096. <https://arxiv.org/abs/2608.30096>
+- Øksendal, B. (2003). *Stochastic Differential Equations: An Introduction with Applications*, 6e éd. Springer (Universitext). <https://doi.org/10.1007/978-3-642-14394-6>
 - Owen, A. B. (2013). *Monte Carlo theory, methods and examples*. Livre en ligne. <https://artowen.su.domains/mc/>
 - Papamakarios, G., Nalisnick, E., Rezende, D. J., Mohamed, S. et Lakshminarayanan, B. (2021). Normalizing Flows for Probabilistic Modeling and Inference. *Journal of Machine Learning Research* 22(57), 1–64. arXiv:1912.02762. <https://arxiv.org/abs/1912.02762>
 - Pavliotis, G. A. (2014). *Stochastic Processes and Applications*. Springer (Texts in Applied Mathematics). <https://doi.org/10.1007/978-1-4939-1323-7>
@@ -1941,6 +1941,7 @@ Références vérifiées (DOI, arXiv ou page de l'éditeur consultés).
 - Rabin, J., Peyré, G., Delon, J. et Bernot, M. (2012). Wasserstein Barycenter and Its Application to Texture Mixing. *Scale Space and Variational Methods in Computer Vision (SSVM 2011)*, Lecture Notes in Computer Science, 435–446. <https://doi.org/10.1007/978-3-642-24785-9_37>
 - Rezende, D. J. et Mohamed, S. (2015). Variational Inference with Normalizing Flows. *ICML 2015*. arXiv:1505.05770. <https://arxiv.org/abs/1505.05770>
 - Rice, S. O. (1944). Mathematical Analysis of Random Noise. *Bell System Technical Journal* 23(3), 282–332. <https://doi.org/10.1002/j.1538-7305.1944.tb00874.x>
+- Rice, S. O. (1945). Mathematical Analysis of Random Noise (suite, parties III et IV). *Bell System Technical Journal* 24(1), 46–156. <https://doi.org/10.1002/j.1538-7305.1945.tb00453.x>
 - Robert, C. P. et Casella, G. (2004). *Monte Carlo Statistical Methods*, 2e éd. Springer. <https://doi.org/10.1007/978-1-4757-4145-2>
 - Santambrogio, F. (2015). *Optimal Transport for Applied Mathematicians*. Birkhäuser. <https://doi.org/10.1007/978-3-319-20828-2>
 - Sejdinovic, D., Sriperumbudur, B., Gretton, A. et Fukumizu, K. (2013). Equivalence of distance-based and RKHS-based statistics in hypothesis testing. *The Annals of Statistics* 41(5), 2263–2291. <https://doi.org/10.1214/13-AOS1140>

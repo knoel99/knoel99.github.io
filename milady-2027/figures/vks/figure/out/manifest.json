@@ -425,7 +425,7 @@
    "s": "D",
    "role": "label",
    "box": {
-    "x": 441.9212493896485,
+    "x": 438.2362213134766,
     "y": 201.76160526275635,
     "w": 5.250179767608643,
     "h": 7.5002570152282715
@@ -461,7 +461,7 @@
    "s": "+(D∗, Q∗)",
    "role": "label",
    "box": {
-    "x": 456.3419494628907,
+    "x": 451.6778717041016,
     "y": 215.73380851745608,
     "w": 31.594833374023438,
     "h": 7.910181045532227
@@ -479,7 +479,7 @@
    "s": "−(D∗, Q∗)",
    "role": "label",
    "box": {
-    "x": 387.96872138977056,
+    "x": 385.2627086639405,
     "y": 309.26933097839355,
     "w": 31.594831466674805,
     "h": 7.910179138183594
@@ -739,6 +739,46 @@
    "part": "cylinder-cap"
   },
   {
+   "w": 0.75,
+   "tag": "path",
+   "part": "poloidal"
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "poloidal"
+  },
+  {
+   "w": 0.75,
+   "tag": "path",
+   "part": "poloidal"
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "poloidal"
+  },
+  {
+   "w": 0.75,
+   "tag": "path",
+   "part": "poloidal"
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "poloidal"
+  },
+  {
+   "w": 0.75,
+   "tag": "path",
+   "part": "poloidal"
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "poloidal"
+  },
+  {
    "w": 0.4,
    "tag": "path",
    "part": "cylinder-body"
@@ -747,46 +787,6 @@
    "w": 0.4,
    "tag": "path",
    "part": "cylinder-cap"
-  },
-  {
-   "w": 0.75,
-   "tag": "path",
-   "part": "poloidal"
-  },
-  {
-   "w": 0.5,
-   "tag": "path",
-   "part": "poloidal"
-  },
-  {
-   "w": 0.75,
-   "tag": "path",
-   "part": "poloidal"
-  },
-  {
-   "w": 0.5,
-   "tag": "path",
-   "part": "poloidal"
-  },
-  {
-   "w": 0.75,
-   "tag": "path",
-   "part": "poloidal"
-  },
-  {
-   "w": 0.5,
-   "tag": "path",
-   "part": "poloidal"
-  },
-  {
-   "w": 0.75,
-   "tag": "path",
-   "part": "poloidal"
-  },
-  {
-   "w": 0.5,
-   "tag": "path",
-   "part": "poloidal"
   },
   {
    "w": 0.35,

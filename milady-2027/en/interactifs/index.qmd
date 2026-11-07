@@ -37,3 +37,83 @@ format:
           <footer class="foot"><p><a href="../../en/index.html">← Home</a> · <a href="../../en/prep/index.html">Preparation</a> · <a href="../../en/encadrants/index.html">Supervisors</a> · <a href="../../en/rapport/index.html">Internship report</a> · <a href="../../en/these/index.html">PhD proposal</a> · <a href="../../en/interactifs/index.html">Interactive diagrams</a> · <a href="../../en/experiences/index.html">Experiments</a></p></footer>
           <script defer src="../../assets/theme.js"></script>
 ---
+
+::: note
+[About]{.tag}
+Each diagram is a small, self-contained JavaScript program that runs in your browser, with no server. The formulas it uses are written at the top of each file (`assets/interactif/<nom>.js`), together with their references. These diagrams complement the static figures of the [report](../rapport/index.html) and of the [preparation modules](../prep/index.html); they do not replace the proofs.
+:::
+
+The five diagrams follow the order of the curriculum: the transport of probability distributions that underlies flow matching, the projection that makes a field divergence-free, the difference between a per-sample constraint and a constraint in distribution, then two dynamical systems from the internship, the reversal model and the ABC kinematic dynamo.
+
+## 1. Flow matching: transporting a distribution {#flow-matching}
+
+A flow matching model transports a simple distribution, here a Gaussian, to the data distribution through a velocity field $v(\mathbf{x}, t)$. This diagram uses the **exact** marginal field for a target distribution made of two symmetric Gaussians $\pm\mathbf{m}(\lambda)$: it is the field that a network would try to learn. The slider $\lambda$ plays the role of a physical conditioning parameter, like $Rm$ in the internship.
+
+Notice two things. The conditional paths $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$ are straight but cross each other; the trajectories of the marginal flow never cross. The final distribution is symmetric because the field is: this is Proposition 4 of the report at work.
+
+```{=html}
+<div class="widget" data-widget="flow-matching"></div>
+<script defer src="../../assets/interactif/flow-matching.js"></script>
+```
+
+To go further: module [p7 — generative models](../prep/p7-modeles-generatifs/index.html), chapter on flow matching.
+
+## 2. Leray projection {#leray}
+
+Every periodic vector field decomposes into a divergence-free part and a gradient part (Helmholtz–Hodge decomposition). The Leray projection $\mathbb{P}$ removes exactly the gradient part: in Fourier space, $\hat{\mathbf{u}}_{\mathbf{k}} \mapsto \hat{\mathbf{u}}_{\mathbf{k}} - \mathbf{k}(\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}})/|\mathbf{k}|^2$. The slider $\alpha$ sets the compressible share of the field; the color map shows $\nabla\cdot\mathbf{u}$.
+
+The projection can only remove energy ($\|\mathbb{P}\mathbf{u}\|^2 \le \|\mathbf{u}\|^2$). On a bounded domain, it would require solving a Poisson problem with boundary conditions: this is one of the reasons why the report prefers to generate potentials.
+
+```{=html}
+<div class="widget" data-widget="leray"></div>
+<script defer src="../../assets/interactif/leray.js"></script>
+```
+
+To go further: module [p1 — vector calculus and Fourier](../prep/p1-calcul-vectoriel/index.html) and experiment [E2](../rapport/index.html#e2).
+
+## 3. Constraint in distribution or per-sample constraint {#contrainte-loi}
+
+In a statistically stationary state, the energy variation $r = \mathrm{d}E/\mathrm{d}t = P - \varepsilon$ fluctuates: it is zero only **on average**. This diagram compares three distributions of $r$: the true distribution, the distribution of a biased model in which each sample is projected onto $r = 0$, and the same distribution corrected by exponential tilting $w_i \propto e^{\beta r_i}$. The per-sample projection satisfies the constraint by destroying the variance; the tilting corrects the mean while distorting the distribution as little as possible in the Kullback–Leibler sense.
+
+Check "missing support": if the model has never produced the right tail of the true distribution, no reweighting can create it. The effective sample size collapses. This is what experiments [E1](../rapport/index.html#e1) and [E2](../rapport/index.html#e2) observe, and it is why the report instead imposes the constraint during training.
+
+```{=html}
+<div class="widget" data-widget="contrainte-loi"></div>
+<script defer src="../../assets/interactif/contrainte-loi.js"></script>
+```
+
+To go further: module [p5 — probability and optimal transport](../prep/p5-probabilites-transport/index.html) (I-projection) and module [p8 — physical constraints](../prep/p8-contraintes-physiques/index.html).
+
+## 4. Dipole reversals: the Gissinger model {#gissinger}
+
+Gissinger's three-mode model (2012) couples a dipolar mode $D$, a quadrupolar mode $Q$ and a velocity mode $V$. It reproduces chaotic reversals of the dipole, analogous to those of the VKS experiment. Vary $\Gamma$: below about $0.865$, the trajectory stays on one side (no reversal); above it, the two symmetric attractors have merged and $D$ changes sign irregularly.
+
+The diagram counts the zero crossings of $D$ and compares them with the estimate given by **Rice's formula**, computed from the visited states alone: $\nu_0 \approx \mathbb{E}\big[|\dot D|\,\mathbf{1}_{|D|<h}\big]/(2h)$. This is the idea behind Proposition 8 of the report: a generative model of the stationary distribution is enough to predict the reversal frequency, without integrating in time.
+
+```{=html}
+<div class="widget" data-widget="gissinger"></div>
+<script defer src="../../assets/interactif/gissinger.js"></script>
+```
+
+To go further: module [p4 — dynamical systems](../prep/p4-systemes-dynamiques/index.html) and experiment [E1](../rapport/index.html#e1).
+
+## 5. ABC kinematic dynamo {#abc-dynamo}
+
+The ABC flow ($A = B = C = 1$) is a kinematic dynamo: for some values of the magnetic Reynolds number $Rm = 1/\eta$, an initially weak magnetic field grows exponentially. The curve shows the growth rate $\lambda(Rm)$ computed in this repository on a $32^3$ grid; the shaded areas are the dynamo windows. The map shows a slice of $|\mathbf{B}|$ for the most unstable mode.
+
+The measured thresholds ($Rm \approx 8.87$, $17.60$ and $26.80$) recover the known windows ($8.9 < Rm < 17.5$, then $Rm \gtrsim 27$). This computation serves as a 3D test bed for the PhD: generating eigenmodes conditioned on $Rm$ from a vector potential.
+
+```{=html}
+<div class="widget" data-widget="abc-dynamo" data-src="../../assets/interactif/data/abc-dynamo.json"></div>
+<script defer src="../../assets/interactif/abc-dynamo.js"></script>
+```
+
+To go further: module [p3 — MHD and the dynamo effect](../prep/p3-mhd-dynamo/index.html) and experiment [E3](../rapport/index.html#e3).
+
+## Sources {#sources}
+
+- C. Gissinger, "A new deterministic model for chaotic reversals", *Eur. Phys. J. B* 85, 137 (2012), arXiv:1109.6569.
+- S. O. Rice, "Mathematical analysis of random noise", *Bell System Technical Journal* 23(3), 282–332 (1944), DOI 10.1002/j.1538-7305.1944.tb00874.x.
+- Y. Lipman, R. T. Q. Chen, H. Ben-Hamu, M. Nickel, M. Le, "Flow Matching for Generative Modeling", ICLR 2023, arXiv:2210.02747.
+- V. Archontis, S. B. F. Dorch, Å. Nordlund, "Numerical simulations of kinematic dynamo action", *Astron. Astrophys.* 397, 393–399 (2003), DOI 10.1051/0004-6361:20021568.
+- I. Csiszár, "I-divergence geometry of probability distributions and minimization problems", *Ann. Probab.* 3(1), 146–158 (1975), DOI 10.1214/aop/1176996454.

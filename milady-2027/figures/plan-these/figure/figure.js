@@ -296,9 +296,13 @@ export default async function draw(F, L) {
   // trous signifiants
   L.text(P, m(colC(0)), m(BAND_Y[0] + BAND_H / 2), 'sans objet', { size: 6.5, italic: true, color: C.grey, anchor: 'middle', valign: 'middle' });
   {
-    const ym = BAND_Y[2] + BAND_H / 2;
-    L.line(P, [m(colX(1) - 0.5), m(ym)], [m(colX(2) + 0.5), m(ym)], { stroke: C.a3, width: 0.5, dash: '1.2 1.1' });
-    L.text(P, m(colC(1)), m(ym - 0.2), 'pas de dynamo 2D', { size: 6.5, italic: true, color: C.grey, anchor: 'middle', valign: 'middle', halo: true });
+    // tirets coupés autour de l'étiquette (le halo ne masque pas les espaces entre les mots)
+    const ym = BAND_Y[2] + BAND_H / 2, cx = m(colC(1));
+    const t = L.text(P, cx, m(ym - 0.2), 'pas de dynamo 2D', { size: 6.5, italic: true, color: C.grey, anchor: 'middle', valign: 'middle' });
+    let w; try { w = t.getBBox().width; } catch (e) { w = m(18.5); }
+    const gap = m(0.9), dl = { stroke: C.a3, width: 0.5, dash: '1.2 1.1' };
+    L.line(P, [m(colX(1) - 0.5), m(ym)], [cx - w / 2 - gap, m(ym)], dl);
+    L.line(P, [cx + w / 2 + gap, m(ym)], [m(colX(2) + 0.5), m(ym)], dl);
   }
 
   // =================================================================================================

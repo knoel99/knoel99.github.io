@@ -726,7 +726,7 @@ On a $\mathrm{Var}(y_i) = \sigma_{\mathrm{d}}^2 + \sigma^2$, d'où la première 
 
 ::: ex
 [Exemple 3.10 — Échantillonner avec le débruiteur exact]{.tag}
-Pour séparer les erreurs d'apprentissage des erreurs d'intégration, on utilise un débruiteur **exact** : pour un mélange de gaussiennes unidimensionnel, $D(y; \sigma) = \mathbb{E}[x \mid y]$ se calcule en forme close. On compare l'ODE de flot intégrée par Heun sur la grille d'EDM et l'EDS inverse intégrée par Euler–Maruyama, à l'aide de la distance d'énergie $D_{\mathcal{E}}$ définie au chapitre 7 (nulle si et seulement si les deux lois coïncident ; son estimateur sans biais fluctue autour de $0$ quand elles coïncident).
+Pour séparer les erreurs d'apprentissage des erreurs d'intégration, on utilise un débruiteur **exact** : pour un mélange de gaussiennes unidimensionnel, $D(y; \sigma) = \mathbb{E}[x \mid y]$ se calcule en forme close. On compare l'ODE de flot intégrée par Heun sur la grille d'EDM et l'EDS inverse intégrée par Euler–Maruyama, à l'aide de la distance d'énergie $\mathcal{E}$ définie au chapitre 7 (nulle si et seulement si les deux lois coïncident ; son estimateur sans biais fluctue autour de $0$ quand elles coïncident).
 :::
 
 ```python
@@ -1567,26 +1567,26 @@ La remarque 1.7 a donné les raisons générales. Pour les modèles de ce module
 Pour deux lois $P$ et $Q$ sur $\mathbb{R}^D$ à premier moment fini, avec $X, X' \sim P$ et $Y, Y' \sim Q$ indépendants,
 
 $$
-D_{\mathcal{E}}(P, Q) = 2\,\mathbb{E}\|X - Y\| - \mathbb{E}\|X - X'\| - \mathbb{E}\|Y - Y'\|.
+\mathcal{E}(P, Q) = 2\,\mathbb{E}\|X - Y\| - \mathbb{E}\|X - X'\| - \mathbb{E}\|Y - Y'\|.
 $$
 :::
 
 :::: thm
 [Théorème 7.2 — La distance d'énergie caractérise l'égalité des lois]{.tag}
-On a $D_{\mathcal{E}}(P, Q) \ge 0$, avec égalité si et seulement si $P = Q$, et $\sqrt{D_{\mathcal{E}}}$ est une distance. De plus, $D_{\mathcal{E}}$ vaut deux fois le carré de la *maximum mean discrepancy* (MMD) associée au noyau induit par la distance, $k(\mathbf{x}, \mathbf{y}) = \tfrac12\big(\|\mathbf{x}\| + \|\mathbf{y}\| - \|\mathbf{x} - \mathbf{y}\|\big)$ (Sejdinovic et al., 2013).
+On a $\mathcal{E}(P, Q) \ge 0$, avec égalité si et seulement si $P = Q$, et $\sqrt{\mathcal{E}}$ est une distance. De plus, $\mathcal{E}$ vaut deux fois le carré de la *maximum mean discrepancy* (MMD) associée au noyau induit par la distance, $k(\mathbf{x}, \mathbf{y}) = \tfrac12\big(\|\mathbf{x}\| + \|\mathbf{y}\| - \|\mathbf{x} - \mathbf{y}\|\big)$ (Sejdinovic et al., 2013).
 
 ::: proof
-Résultat admis. L'idée (Székely & Rizzo, 2013) est l'identité $D_{\mathcal{E}}(P, Q) = c_D\int_{\mathbb{R}^D}|\varphi_P(\boldsymbol\omega) - \varphi_Q(\boldsymbol\omega)|^2\,\|\boldsymbol\omega\|^{-(D+1)}\,\mathrm{d}\boldsymbol\omega$, où $\varphi_P$ et $\varphi_Q$ sont les fonctions caractéristiques et $c_D > 0$ : l'intégrale est positive, et nulle si et seulement si les fonctions caractéristiques coïncident, c'est-à-dire si $P = Q$. En dimension 1, une démonstration élémentaire passe par la formule $D_{\mathcal{E}} = 2\int(F - G)^2$ (exercice 16). [∎]{.qed}
+Résultat admis. L'idée (Székely & Rizzo, 2013) est l'identité $\mathcal{E}(P, Q) = c_D\int_{\mathbb{R}^D}|\varphi_P(\boldsymbol\omega) - \varphi_Q(\boldsymbol\omega)|^2\,\|\boldsymbol\omega\|^{-(D+1)}\,\mathrm{d}\boldsymbol\omega$, où $\varphi_P$ et $\varphi_Q$ sont les fonctions caractéristiques et $c_D > 0$ : l'intégrale est positive, et nulle si et seulement si les fonctions caractéristiques coïncident, c'est-à-dire si $P = Q$. En dimension 1, une démonstration élémentaire passe par la formule $\mathcal{E} = 2\int(F - G)^2$ (exercice 16). [∎]{.qed}
 :::
 ::::
 
 Avec des échantillons $X_1, \dots, X_n$ de $P$ et $Y_1, \dots, Y_m$ de $Q$, l'estimateur sans biais (U-statistique) est
 
 $$
-\hat D_{\mathcal{E}} = \frac{2}{nm}\sum_{i, j}\|X_i - Y_j\| - \frac{1}{n(n-1)}\sum_{i \ne i'}\|X_i - X_{i'}\| - \frac{1}{m(m-1)}\sum_{j \ne j'}\|Y_j - Y_{j'}\|.
+\hat{\mathcal{E}} = \frac{2}{nm}\sum_{i, j}\|X_i - Y_j\| - \frac{1}{n(n-1)}\sum_{i \ne i'}\|X_i - X_{i'}\| - \frac{1}{m(m-1)}\sum_{j \ne j'}\|Y_j - Y_{j'}\|.
 $$
 
-Son espérance est exactement $D_{\mathcal{E}}$ ; il peut donc être négatif quand les lois coïncident, ce qui est normal et rappelle qu'on doit toujours le comparer à son niveau de fluctuation. Son coût est en $O((n + m)^2 D)$.
+Son espérance est exactement $\mathcal{E}$ ; il peut donc être négatif quand les lois coïncident, ce qui est normal et rappelle qu'on doit toujours le comparer à son niveau de fluctuation. Son coût est en $O((n + m)^2 D)$.
 
 ::: def
 [Définition 7.3 — Distance de Wasserstein tranchée]{.tag}
@@ -1751,7 +1751,7 @@ for lam in [0.25, 0.5, 0.375, 0.625]:
 
 En rapprochant ces chiffres de ceux de la section 5.6 (même réseau, même budget d'entraînement, même graine), on obtient le tableau suivant.
 
-| Méthode | Évaluations du réseau | $D_{\mathcal{E}}$ aux quatre valeurs de $\lambda$ |
+| Méthode | Évaluations du réseau | $\hat{\mathcal{E}}$ aux quatre valeurs de $\lambda$ |
 |---|:---:|---|
 | Flow matching, Heun 50 pas | 99 | $-0{,}0002$ à $0{,}0010$ (plancher) |
 | DDPM, ancestral | 100 | $-0{,}0011$ à $0{,}0033$ (proche du plancher) |
@@ -1959,7 +1959,7 @@ Les exercices sont gradués : ★ application directe du cours, ★★ calcul ou
 
     *Solution* : (a) Par la proposition 6.3, $\mathbb{E}\|x_0\|^2 = \sum_{k \ne 0}|k|^{-\alpha} = 2\sum_{k \ge 1}k^{-\alpha}$, finie si et seulement si $\alpha > 1$ (série de Riemann). (b) Sur $N$ points, seuls les modes $1 \le |k| < N/2$ sont représentés, soit environ $N$ modes de variance $1$ : $\mathbb{E}\|x_0\|^2 \approx N$ et la norme croît comme $\sqrt N$. Le bloc donne $5{,}4$ ; $10{,}7$ ; $23{,}0$ ; $44{,}4$ pour $N = 32, 128, 512, 2048$, à comparer à $\sqrt N = 5{,}7$ ; $11{,}3$ ; $22{,}6$ ; $45{,}3$. (c) $\mathbb{E}\|x_0\|^2 = 2\zeta(2) = \pi^2/3 \approx 3{,}29$, soit une norme typique de l'ordre de $1{,}8$ ; la réalisation du bloc ($2{,}19$) est compatible, les premiers modes, peu nombreux, dominant la fluctuation. Plus généralement, comme la norme de Sobolev $H^r$ pondère le mode $k$ par un facteur de l'ordre de $(2\pi k)^{2r}$, $\mathbb{E}\|x_0\|_{H^r}^2$ est fini si et seulement si $\sum_{k \ge 1} k^{2r - \alpha}$ l'est, c'est-à-dire si $\alpha > 2r + 1$ : la décroissance du spectre fixe la régularité des échantillons.
 
-16. **★★★ Distance d'énergie en dimension 1.** Soient $P$ et $Q$ deux lois sur $\mathbb{R}$ à premier moment fini, de fonctions de répartition $F$ et $G$. (a) Montrer que $D_{\mathcal{E}}(P, Q) = 2\int_{\mathbb{R}}(F(u) - G(u))^2\,\mathrm{d}u$. (b) En déduire que $D_{\mathcal{E}} \ge 0$ avec égalité si et seulement si $P = Q$. (c) Calculer $D_{\mathcal{E}}\big(\mathcal{N}(0, 1), \mathcal{N}(\delta, 1)\big)$ pour $\delta$ petit.
+16. **★★★ Distance d'énergie en dimension 1.** Soient $P$ et $Q$ deux lois sur $\mathbb{R}$ à premier moment fini, de fonctions de répartition $F$ et $G$. (a) Montrer que $\mathcal{E}(P, Q) = 2\int_{\mathbb{R}}(F(u) - G(u))^2\,\mathrm{d}u$. (b) En déduire que $\mathcal{E} \ge 0$ avec égalité si et seulement si $P = Q$. (c) Calculer $\mathcal{E}\big(\mathcal{N}(0, 1), \mathcal{N}(\delta, 1)\big)$ pour $\delta$ petit.
 
     *Solution* : (a) Pour deux réels, $|x - y| = \int_{\mathbb{R}}\big(\mathbf{1}_{x \le u < y} + \mathbf{1}_{y \le u < x}\big)\,\mathrm{d}u$. Pour $X \sim P$ et $Y \sim Q$ indépendants, le théorème de Fubini donne $\mathbb{E}|X - Y| = \int\big[F(u)(1 - G(u)) + G(u)(1 - F(u))\big]\mathrm{d}u$, et de même $\mathbb{E}|X - X'| = \int 2F(1 - F)$, $\mathbb{E}|Y - Y'| = \int 2G(1 - G)$. On combine :
 
@@ -1967,7 +1967,7 @@ Les exercices sont gradués : ★ application directe du cours, ★★ calcul ou
     2\big[F(1 - G) + G(1 - F)\big] - 2F(1 - F) - 2G(1 - G) = 2F^2 - 4FG + 2G^2 = 2(F - G)^2.
     $$
 
-    (b) L'intégrale d'un carré est positive ; elle est nulle si et seulement si $F = G$ presque partout, donc partout par continuité à droite, c'est-à-dire $P = Q$. (c) Ici $F(u) - G(u) = \Phi(u) - \Phi(u - \delta) \approx \delta\,\varphi(u)$, et $\int\varphi^2 = 1/(2\sqrt\pi)$, d'où $D_{\mathcal{E}} \approx \delta^2/\sqrt\pi$. Pour $\delta = 0{,}1$, l'intégrale exacte vaut $0{,}005640$ et l'approximation $0{,}005642$. La distance d'énergie est **quadratique** en un petit décalage : c'est pourquoi les valeurs mesurées au chapitre 7 sont si petites, et pourquoi il faut les comparer au plancher statistique plutôt qu'à zéro.
+    (b) L'intégrale d'un carré est positive ; elle est nulle si et seulement si $F = G$ presque partout, donc partout par continuité à droite, c'est-à-dire $P = Q$. (c) Ici $F(u) - G(u) = \Phi(u) - \Phi(u - \delta) \approx \delta\,\varphi(u)$, et $\int\varphi^2 = 1/(2\sqrt\pi)$, d'où $\mathcal{E} \approx \delta^2/\sqrt\pi$. Pour $\delta = 0{,}1$, l'intégrale exacte vaut $0{,}005640$ et l'approximation $0{,}005642$. La distance d'énergie est **quadratique** en un petit décalage : c'est pourquoi les valeurs mesurées au chapitre 7 sont si petites, et pourquoi il faut les comparer au plancher statistique plutôt qu'à zéro.
 
 ## Lien avec le stage {#lien-stage}
 

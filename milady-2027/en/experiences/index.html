@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Experiments</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js" integrity="sha384-QFFtAGzvvj+bfgCGxXJlNZZR1nXEZgvG8tDLCCY1F19xl20WlfTYgguB4VcNdxYk" crossorigin="anonymous"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.css" integrity="sha384-3rdsX6e5mueWyoweR9NIVmtEsUkokpBT/0ALqKKIBMr9j4qhHkaIkAcGgsE6uVlp" crossorigin="anonymous">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../assets/paper.css">
+</head>
+
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Contents</span></button>
+  <a class="brand" href="../../en/index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+  <span class="tb-title" id="tb-title"></span>
+  <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Theme</span></button>
+</header>
+<div class="layout">
+<nav class="sidetoc" id="sidetoc" aria-label="Contents"></nav>
+<main class="paper" id="main">
+
+<header id="title-block-header">
+<h1 class="title">Experiments</h1>
+<p class="subtitle">Code, results, and reproducibility of experiments E1–E3</p>
+
+</header>
+
+
+<div class="note">
+<p><span class="tag">About</span> All the experiments on this site run on an ordinary processor (Intel Xeon, 4 cores, 2.30 GHz, no GPU), in Python 3.13 with NumPy 2.5, SciPy 1.18, Matplotlib 3.11 and PyTorch 2.15 (CPU build). They are <strong>small-scale testbeds</strong>: they test ideas and mechanisms, not performance on real dynamo data. All the figures quoted in the <a href="../rapport/index.html">report</a> come from the result files described here.</p>
+</div>
+<h2 id="code">Code organization</h2>
+<p>The <code>experiences/</code> folder of the repository contains everything needed to reproduce the results.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>common.py</code></td>
+<td>Conditional flow matching (linear path, Heun scheme), networks (MLP, equivariant symmetrization), metrics (energy distance, sliced Wasserstein), exponential tilting (regularized I-projection).</td>
+</tr>
+<tr class="even">
+<td><code>e1_gissinger.py</code></td>
+<td>E1: invariant distribution of the Gissinger (2012) reversal model, conditioned on <span class="math inline">\Gamma</span>; symmetry, stationarity identities, Rice formula. Costly steps are cached in <code>resultats/cache_e1/</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>mhd2d.py</code></td>
+<td>Pseudo-spectral solver for forced incompressible 2D MHD, in potentials <span class="math inline">(\omega, a)</span>.</td>
+</tr>
+<tr class="even">
+<td><code>e2_donnees.py</code></td>
+<td>E2: 2D MHD snapshots for eleven values of <span class="math inline">\eta</span> (six for training, five for testing).</td>
+</tr>
+<tr class="odd">
+<td><code>e2_mhd2d.py</code></td>
+<td>E2: five divergence-constraint mechanisms, distributional stationarity loss, tilting versus per-sample correction.</td>
+</tr>
+<tr class="even">
+<td><code>e3_abc.py</code></td>
+<td>E3: kinematic dynamo of the ABC flow, growth rate as a function of <span class="math inline">Rm</span>.</td>
+</tr>
+<tr class="odd">
+<td><code>unet.py</code></td>
+<td>Small periodic U-Net (not used in the final results: too slow on CPU, see below).</td>
+</tr>
+<tr class="even">
+<td><code>figures.py</code></td>
+<td>Plots in French and English (<code>figures/&lt;nom&gt;.png</code> and <code>figures/&lt;nom&gt;-en.png</code>).</td>
+</tr>
+<tr class="odd">
+<td><code>digest.py</code></td>
+<td>Numerical digest <code>resultats/digest.md</code>, the single source of the report’s tables.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reproduire">Reproducing the results</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> experiences</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e3_abc.py                 <span class="co"># E3, about 25 min</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e2_donnees.py             <span class="co"># E2, data: about 30 min</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e2_mhd2d.py               <span class="co"># E2, models: about 70 min</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e1_gissinger.py           <span class="co"># E1, about 1 h 30 (resumable)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> figures.py <span class="kw">&amp;&amp;</span> <span class="ex">python3</span> digest.py <span class="op">&gt;</span> resultats/digest.md</span></code></pre></div>
+<p>Each script accepts <code>--quick</code> for a reduced version that takes a few minutes, useful for checking the installation. The seeds are fixed in the code (0, 1 and 2 for the three repetitions of E1). The durations given were measured on the machine described above, partly while other computations were running.</p>
+<h2 id="e1">E1 — dipole reversals</h2>
+<p>Gissinger’s three-mode model serves as a “pocket dynamo”: it has the symmetry <span class="math inline">\mathbf{B}\to-\mathbf{B}</span>, an onset threshold for reversals (between <span class="math inline">\Gamma = 0.86</span> and <span class="math inline">0.87</span>) and exactly known dynamics. We learn the stationary distribution <span class="math inline">p(Q, D, V \mid \Gamma)</span> by conditional flow matching, then measure what changes when the symmetry is imposed by construction, when the stationarity loss is added, and when a per-sample projection is applied. The reversal frequency is estimated from the generated distribution alone, through the Rice formula.</p>
+<p>Results and discussion: <a href="../rapport/index.html#e1">report, section E1</a>. Interactive diagram: <a href="../interactifs/index.html#gissinger">Gissinger model</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="../../experiences/figures/e1_seuil.png" style="width:100.0%" alt="Two plots as a function of Gamma from 0.80 to 1.00: on the left, the frequency of zero crossings of D, zero below 0.865 and then increasing; on the right, the probability that |D| is less than 0.25."></p>
+<figcaption>Frequency of zero crossings of <span class="math inline">D</span> and mass of the “bridge” <span class="math inline">|D| &lt; 0.25</span> as a function of <span class="math inline">\Gamma</span>: simulation, Rice formula on the reference distribution and on the generated distributions.</figcaption>
+</figure>
+</div>
+<h2 id="e2">E2 — 2D MHD and divergence constraints</h2>
+<p>Forced 2D MHD produces fields <span class="math inline">(\mathbf{u}, \mathbf{B})</span> that are divergence-free by construction. We generate these fields conditionally on the parameter <span class="math inline">\eta</span> in the truncated Fourier basis (220 independent modes per scalar field), which is the POD basis of homogeneous turbulence on a periodic domain. We compare five ways of handling the divergence, then the effect of a distributional constraint on the energy budget.</p>
+<p>Results and discussion: <a href="../rapport/index.html#e2">report, section E2</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="../../experiences/figures/e2_mecanismes-en.png" style="width:100.0%" alt="Three horizontal bar charts, logarithmic scale, for eight variants."></p>
+<figcaption>Relative divergence, spectrum error and residual of the mean energy budget for variants V0 to V5 on the test values of <span class="math inline">\eta</span>, compared with a subsample of the data.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="../../experiences/figures/e2_en_loi-en.png" style="width:100.0%" alt="Three horizontal bar charts for four variants."></p>
+<figcaption>Distributional constraint versus per-sample constraint (test values of <span class="math inline">\eta</span>): residual of the energy budget, spread of the dissipation and energy distance, for the V4 model, its exponential tilting, its sample-by-sample correction, and the V5 model trained with the stationarity loss.</figcaption>
+</figure>
+</div>
+<p>A first attempt with a periodic U-Net on the <span class="math inline">32\times32</span> grid (file <code>unet.py</code>) cost about 0.3 s per training step on this processor: five variants would have required several hours each. Switching to the truncated Fourier basis keeps the comparison clean (same network, same budget for all variants) at a cost compatible with a CPU. The internship itself would run on GPU, with field architectures (U-Nets, transformers, functional decoders).</p>
+<h2 id="e3">E3 — ABC kinematic dynamo</h2>
+<p>The induction equation with the imposed ABC flow is solved by a <span class="math inline">32^3</span> pseudo-spectral method. The growth rate <span class="math inline">\lambda(Rm)</span> changes sign at <span class="math inline">Rm \approx 8.87</span>, <span class="math inline">17.60</span> and <span class="math inline">26.80</span>, in agreement with the known windows. The curl form of the equation keeps <span class="math inline">\nabla\cdot\mathbf{B}</span> at machine precision (<span class="math inline">\sim 10^{-16}</span>).</p>
+<p>Results: <a href="../rapport/index.html#e3">report, section E3</a>. Interactive diagram: <a href="../interactifs/index.html#abc-dynamo">ABC dynamo</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="../../experiences/figures/e3_abc-en.png" style="width:100.0%" alt="Curve of the growth rate as a function of Rm, positive between 8.9 and 17.6 and then beyond 26.8."></p>
+<figcaption>Growth rate <span class="math inline">\lambda</span> of the ABC kinematic dynamo as a function of <span class="math inline">Rm = 1/\eta</span> (<span class="math inline">32^3</span> grid, checks at <span class="math inline">48^3</span>); the shaded areas are the dynamo windows.</figcaption>
+</figure>
+</div>
+<h2 id="resultats">Result files</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>resultats/digest.md</code></td>
+<td>Numerical tables of all the experiments (generated).</td>
+</tr>
+<tr class="even">
+<td><code>resultats/e1_gissinger.json</code></td>
+<td>E1: configuration, data statistics, evaluation per variant, per <span class="math inline">\Gamma</span> and per seed, fine grid.</td>
+</tr>
+<tr class="odd">
+<td><code>resultats/e2_mhd2d.json</code></td>
+<td>E2: configuration, evaluation per variant and per <span class="math inline">\eta</span>, “distributional” part.</td>
+</tr>
+<tr class="even">
+<td><code>resultats/e3_abc.json</code></td>
+<td>E3: growth rates, resolution convergence, interpolated thresholds.</td>
+</tr>
+<tr class="odd">
+<td><code>resultats/*.npz</code></td>
+<td>Generated samples and eigenmodes, for the figures and the widgets.</td>
+</tr>
+</tbody>
+</table>
+<p>The files are in the repository: <a href="https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027/experiences" class="uri">https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027/experiences</a>.</p>
+
+</main>
+</div>
+<footer class="foot"><p><a href="../../en/index.html">← Home</a> · <a href="../../en/prep/index.html">Preparation</a> · <a href="../../en/encadrants/index.html">Supervisors</a> · <a href="../../en/rapport/index.html">Internship report</a> · <a href="../../en/these/index.html">PhD proposal</a> · <a href="../../en/interactifs/index.html">Interactive diagrams</a> · <a href="../../en/experiences/index.html">Experiments</a></p></footer>
+<script defer="" src="../../assets/theme.js"></script>
+
+
+
+
+</body></html>

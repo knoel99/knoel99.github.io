@@ -42,3 +42,8 @@
 | Facture | 4 | triangle blanc au-dessus de l'escalier, à gauche (inhérent à la forme en escalier) |
 
 WARN du gate gardés : texte « petit » (format revue 5–7 pt respecté), densité (voir Économie), chiffres blancs sur leurs pastilles foncées signalés « sur art chargé » (c'est leur propre fond, contraste élevé).
+
+## Contrôle indépendant (passe finale)
+- « pas de dynamo 2D » (axe 3, palier 1) : les tirets verts passaient sous l'étiquette et réapparaissaient dans les espaces entre les mots (« dynamo·2D ») ; le halo ne couvre que les glyphes. Les tirets sont maintenant coupés de part et d'autre de l'étiquette, à la largeur mesurée du texte.
+- Légende, palier 4 : « un cylindre en rotation sur un plateau en précession » et « l'angle […] n'a pas de valeur » reformulés (le plateau tourne et impose la précession autour de l'axe vertical en tirets ; l'angle dessiné est arbitraire).
+- Vérifié sans changement : contrarotation des turbines VKS (arcs de sens opposés autour du même axe), pales côté fluide, rapport L/D ≈ 1,27, turbines à ± 0,9 R ; symétrie (Q, D, V) → (−Q, −D, V) du modèle de Gissinger ; **B** = ∇×**A** ⇒ ∇·**B** = 0 ; **B** = ∇^⊥a tangent aux isolignes de a ; R_π ; jalons et barres de la frise conformes à facts.md (mois *n* = intervalle [n−1, n]).

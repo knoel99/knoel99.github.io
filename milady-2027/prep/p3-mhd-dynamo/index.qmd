@@ -55,7 +55,7 @@ Un fluide conducteur en mouvement dans un champ magnétique est parcouru par des
 
 Le point de départ est le niveau de deuxième année de licence (L2) en physique : les équations de Maxwell sous forme intégrale et locale dans le vide, la notion de force de Lorentz sur une charge, et les bases de la mécanique des fluides (dérivée particulaire, équation de continuité). Côté mathématiques, il faut savoir résoudre une équation différentielle linéaire à coefficients constants, diagonaliser une petite matrice et calculer une série de Fourier.
 
-Le module [Calcul vectoriel et analyse de Fourier](../p1-calcul-vectoriel/index.html) est indispensable : on y utilise sans les redémontrer les identités vectorielles (section 2.2), les théorèmes de Stokes et de Green–Ostrogradski (chapitre 3), la fonction de courant, le potentiel vecteur et la décomposition poloïdale–toroïdale (chapitre 4), ainsi que la dérivation spectrale (chapitre 5). Le module [Mécanique des fluides et turbulence](../p2-mecanique-fluides/index.html) est recommandé pour l'équation de Navier–Stokes, le nombre de Reynolds et le bilan d'énergie cinétique, que l'on étend ici à la MHD. Pour les chapitres 5 et 7, il est utile de lire en parallèle le module [Systèmes dynamiques, bifurcations et mesures invariantes](../p4-systemes-dynamiques/index.html), qui traite les bifurcations fourche et de Hopf et les attracteurs chaotiques.
+Le module [Calcul vectoriel et analyse de Fourier](../p1-calcul-vectoriel/index.html) est indispensable : on y utilise sans les redémontrer les identités vectorielles et les formules de produits (chapitre 2), les théorèmes de Stokes et de Green–Ostrogradski (chapitre 3), la fonction de courant, le potentiel vecteur et la décomposition poloïdale–toroïdale (chapitre 4), ainsi que la dérivation spectrale (chapitre 5). Le module [Mécanique des fluides et turbulence](../p2-mecanique-fluides/index.html) est recommandé pour l'équation de Navier–Stokes, le nombre de Reynolds et le bilan d'énergie cinétique, que l'on étend ici à la MHD. Pour les chapitres 5 et 7, il est utile de lire en parallèle le module [Systèmes dynamiques, bifurcations et mesures invariantes](../p4-systemes-dynamiques/index.html), qui traite les bifurcations fourche et de Hopf et les attracteurs chaotiques.
 
 Côté programmation, il suffit de savoir utiliser NumPy et SciPy (tableaux, transformée de Fourier rapide, valeurs propres, intégration d'équations différentielles). Tous les blocs de code tournent en moins de 30 secondes sur un seul cœur.
 
@@ -71,7 +71,7 @@ Le niveau indique la difficulté : 1 pour les fondations, 2 pour le cœur du mod
 | 4 | 3 h | 2 | Chapitre 4 : conditions aux limites magnétiques, modes libres d'une sphère, turbines en fer doux | 8, 9 |
 | 5 | 4 h | 2 | Chapitre 5, sections 5.1 à 5.3 : dynamo cinématique, borne énergétique, théorèmes anti-dynamo, exemples de dynamos | 10, 11 |
 | 6 | 4 h | 3 | Chapitre 5, sections 5.4 et 5.5 : effet $\alpha$, dynamo $\alpha^2$, saturation, écoulement de Roberts (codes et widget) | 12 |
-| 7 | 3 h | 3 | Chapitre 6 : dynamos de Riga, Karlsruhe, VKS et projet DRESDYN | 3 (b), 9 (c) |
+| 7 | 3 h | 3 | Chapitre 6 : dynamos de Riga, Karlsruhe, VKS et projet DRESDYN (code de conversion des définitions de $Rm$) | 3 (b), 9 (c) |
 | 8 | 4 h | 3 | Chapitre 7 : renversements, modèles de Pétrélis–Fauve, de Gissinger et DQVU, géodynamo, codes de simulation (code et widget) | 13, 14 |
 | **Total** | **30 h** | | 7 chapitres | 14 exercices |
 
@@ -278,7 +278,7 @@ Le tableau suivant situe les systèmes rencontrés dans ce module. Les valeurs s
 | Simulations numériques usuelles | $0{,}1$ à $10$ | — | Rincon (2019) |
 | Simulation de VKS de référence (code LATU) | $\approx 0{,}33$ | 531 ($Re = 1594$) | Bousquet et al. (2026) |
 
-Un $Pm$ petit a deux conséquences. D'abord, pour atteindre $Rm \sim 50$ dans le sodium, il faut $Re = Rm/Pm \sim 10^6$ à $10^7$ : l'écoulement d'une dynamo de laboratoire est toujours turbulent, et sa mise en mouvement demande des centaines de kilowatts. Ensuite, l'échelle de dissipation magnétique $\ell_\eta$ tombe dans la zone inertielle de la turbulence ; Rincon (2019, éq. 2.25) estime $\ell_\eta \sim Pm^{-3/4}\ell_\nu$, où $\ell_\nu$ est l'échelle de Kolmogorov. Le champ « voit » donc toute la turbulence aux échelles plus grandes que $\ell_\eta$, ce qui rend la dynamo plus difficile à obtenir qu'à $Pm \sim 1$ (voir le chapitre 6 et Ponty et al., 2005).
+Un $Pm$ petit a deux conséquences. D'abord, pour atteindre $Rm \sim 50$ dans le sodium, il faut $Re = Rm/Pm \sim 10^6$ à $10^7$ : l'écoulement d'une dynamo de laboratoire est toujours turbulent, et sa mise en mouvement demande une puissance de l'ordre de la centaine de kilowatts (chapitre 6). Ensuite, l'échelle de dissipation magnétique $\ell_\eta$ tombe dans la zone inertielle de la turbulence ; Rincon (2019, éq. 2.25) estime $\ell_\eta \sim Pm^{-3/4}\ell_\nu$, où $\ell_\nu$ est l'échelle de Kolmogorov. Le champ « voit » donc toute la turbulence aux échelles plus grandes que $\ell_\eta$, ce qui rend la dynamo plus difficile à obtenir qu'à $Pm \sim 1$ (voir le chapitre 6 et Ponty et al., 2005).
 
 ### 2.3 Le gel du flux magnétique
 
@@ -293,13 +293,13 @@ $$
 $$
 :::
 
-*Esquisse de démonstration.* Entre $t$ et $t + \delta t$, la surface passe de $S$ à $S'$ ; son bord $C$ balaie une bande latérale d'aire élémentaire $(\mathbf{u}\,\delta t)\times\mathrm{d}\boldsymbol\ell$. Le théorème de Green–Ostrogradski appliqué au volume compris entre $S$, $S'$ et la bande donne
+*Esquisse de démonstration.* Entre $t$ et $t + \delta t$, la surface passe de $S$ à $S'$, et le volume balayé a pour élément $\delta t\,\mathbf{u}\cdot\mathrm{d}\mathbf{S}$. Son bord $C$, orienté par la normale de $S$ (règle de la main droite), balaie une bande latérale dont l'élément de surface, orienté vers l'extérieur du volume balayé, vaut $\mathrm{d}\boldsymbol\ell\times(\mathbf{u}\,\delta t)$. Le théorème de Green–Ostrogradski appliqué au volume compris entre $S$, $S'$ et la bande, avec le champ pris à l'instant $t$, s'écrit $\delta t\int_S(\nabla\cdot\mathbf{F})\,\mathbf{u}\cdot\mathrm{d}\mathbf{S} = \int_{S'}\mathbf{F}\cdot\mathrm{d}\mathbf{S} - \int_{S}\mathbf{F}\cdot\mathrm{d}\mathbf{S} + \delta t\oint_C\mathbf{F}\cdot(\mathrm{d}\boldsymbol\ell\times\mathbf{u}) + o(\delta t)$. Comme $\mathrm{d}\boldsymbol\ell\times\mathbf{u} = -\,\mathbf{u}\times\mathrm{d}\boldsymbol\ell$, on obtient
 
 $$
-\int_{S'}\mathbf{F}\cdot\mathrm{d}\mathbf{S} - \int_{S}\mathbf{F}\cdot\mathrm{d}\mathbf{S} = \delta t\int_S(\nabla\cdot\mathbf{F})\,\mathbf{u}\cdot\mathrm{d}\mathbf{S} - \delta t\oint_C\mathbf{F}\cdot(\mathbf{u}\times\mathrm{d}\boldsymbol\ell) + o(\delta t),
+\int_{S'}\mathbf{F}\cdot\mathrm{d}\mathbf{S} - \int_{S}\mathbf{F}\cdot\mathrm{d}\mathbf{S} = \delta t\int_S(\nabla\cdot\mathbf{F})\,\mathbf{u}\cdot\mathrm{d}\mathbf{S} + \delta t\oint_C\mathbf{F}\cdot(\mathbf{u}\times\mathrm{d}\boldsymbol\ell) + o(\delta t).
 $$
 
-le champ étant pris à l'instant $t$. Le produit mixte s'écrit $\mathbf{F}\cdot(\mathbf{u}\times\mathrm{d}\boldsymbol\ell) = (\mathbf{F}\times\mathbf{u})\cdot\mathrm{d}\boldsymbol\ell$, et le théorème de Stokes transforme la circulation en $\int_S\nabla\times(\mathbf{F}\times\mathbf{u})\cdot\mathrm{d}\mathbf{S} = -\int_S\nabla\times(\mathbf{u}\times\mathbf{F})\cdot\mathrm{d}\mathbf{S}$. Il reste à ajouter la variation de $\mathbf{F}$ entre $t$ et $t + \delta t$ à surface fixée, $\delta t\int_S\partial_t\mathbf{F}\cdot\mathrm{d}\mathbf{S}$, puis à diviser par $\delta t$. ∎
+On peut contrôler le signe sur un exemple : pour $\mathbf{F} = \mathbf{e}_z$ et un disque horizontal qui s'agrandit, le premier terme est nul et le second vaut $+\delta t\oint u_r\,\mathrm{d}\ell$, l'aire gagnée. Le produit mixte s'écrit $\mathbf{F}\cdot(\mathbf{u}\times\mathrm{d}\boldsymbol\ell) = (\mathbf{F}\times\mathbf{u})\cdot\mathrm{d}\boldsymbol\ell$, et le théorème de Stokes transforme la circulation en $\int_S\nabla\times(\mathbf{F}\times\mathbf{u})\cdot\mathrm{d}\mathbf{S} = -\int_S\nabla\times(\mathbf{u}\times\mathbf{F})\cdot\mathrm{d}\mathbf{S}$. Il reste à ajouter la variation de $\mathbf{F}$ entre $t$ et $t + \delta t$ à surface fixée, $\delta t\int_S\partial_t\mathbf{F}\cdot\mathrm{d}\mathbf{S}$, puis à diviser par $\delta t$. ∎
 
 :::: thm
 [Théorème 2.5 — Gel du flux (Alfvén, 1942)]{.tag}
@@ -530,7 +530,7 @@ car $\langle\mathbf{A}\cdot\nabla\times\mathbf{G}\rangle = \langle\mathbf{G}\cdo
 :::
 ::::
 
-Les invariants quadratiques organisent la turbulence MHD. Comme l'énergie se dissipe plus vite que l'hélicité magnétique, l'énergie cascade vers les petites échelles tandis que $H_M$ subit une **cascade inverse** vers les grandes échelles, qui peut favoriser l'apparition de champs à grande échelle (Tobias, 2021 ; Pouquet et al., 2019). En deux dimensions, $\mathbf{A} = a\,\mathbf{e}_z$ est perpendiculaire au champ plan et $H_M = 0$ ; les invariants quadratiques idéaux sont alors l'énergie, l'hélicité croisée et le **potentiel quadratique** $\langle a^2\rangle$ (Krstulovic et al., 2011). L'exercice 7 montre qu'un champ hélicitaire ne peut pas se dissiper sans perdre son hélicité.
+Les invariants quadratiques organisent la turbulence MHD. À hélicité donnée, l'énergie magnétique est d'autant plus faible que le champ occupe de grandes échelles (c'est l'inégalité de l'exercice 7) ; un argument classique en déduit que l'énergie cascade vers les petites échelles tandis que $H_M$ subit une **cascade inverse** vers les grandes échelles, qui peut favoriser l'apparition de champs à grande échelle (Tobias, 2021 ; Pouquet et al., 2019). En deux dimensions, $\mathbf{A} = a\,\mathbf{e}_z$ est perpendiculaire au champ plan et $H_M = 0$ ; les invariants quadratiques idéaux sont alors l'énergie, l'hélicité croisée et le **potentiel quadratique** $\langle a^2\rangle$ (Krstulovic et al., 2011). L'exercice 7 montre qu'un champ hélicitaire ne peut pas se dissiper sans perdre son hélicité.
 
 ### 3.5 Les ondes d'Alfvén
 
@@ -547,7 +547,7 @@ $$
 Les **variables d'Elsässer** $\mathbf{z}^\pm = \mathbf{u} \pm \mathbf{b}$ découplent le système : $\partial_t\mathbf{z}^\pm = \pm(\mathbf{B}_0\cdot\nabla)\mathbf{z}^\pm$.
 
 ::: proof
-Au premier ordre, $\mathbf{j}\times\mathbf{B} \approx (\nabla\times\mathbf{b})\times\mathbf{B}_0 = (\mathbf{B}_0\cdot\nabla)\mathbf{b} - \nabla(\mathbf{B}_0\cdot\mathbf{b})$ d'après (3.1), et $\nabla\times(\mathbf{u}\times\mathbf{B}_0) = (\mathbf{B}_0\cdot\nabla)\mathbf{u}$ d'après la formule de produit, $\mathbf{B}_0$ étant uniforme et $\mathbf{u}$ à divergence nulle. Le gradient se regroupe avec la pression totale perturbée $P' + \mathbf{B}_0\cdot\mathbf{b}$ ; en prenant la divergence de l'équation de la vitesse, cette pression totale est harmonique, donc nulle dans une boîte périodique. On obtient les deux équations annoncées ; en ajoutant et en retranchant, $\partial_t\mathbf{z}^\pm = \pm(\mathbf{B}_0\cdot\nabla)\mathbf{z}^\pm$, et chaque mode de Fourier donne $\omega = \mp\,\mathbf{k}\cdot\mathbf{B}_0$. [∎]{.qed}
+Au premier ordre, $\mathbf{j}\times\mathbf{B} \approx (\nabla\times\mathbf{b})\times\mathbf{B}_0 = (\mathbf{B}_0\cdot\nabla)\mathbf{b} - \nabla(\mathbf{B}_0\cdot\mathbf{b})$ d'après (3.1), et $\nabla\times(\mathbf{u}\times\mathbf{B}_0) = (\mathbf{B}_0\cdot\nabla)\mathbf{u}$ d'après la formule de produit, $\mathbf{B}_0$ étant uniforme et $\mathbf{u}$ à divergence nulle. Le gradient se regroupe avec la pression totale perturbée $P' + \mathbf{B}_0\cdot\mathbf{b}$ ; en prenant la divergence de l'équation de la vitesse, cette pression totale est harmonique ; périodique, elle est donc constante, et son gradient est nul. On obtient les deux équations annoncées ; en ajoutant et en retranchant, $\partial_t\mathbf{z}^\pm = \pm(\mathbf{B}_0\cdot\nabla)\mathbf{z}^\pm$, et chaque mode de Fourier donne $\omega = \mp\,\mathbf{k}\cdot\mathbf{B}_0$. [∎]{.qed}
 :::
 ::::
 
@@ -836,7 +836,7 @@ $$
 \mathcal{L}_\eta\hat{\mathbf{B}} = \lambda\,\hat{\mathbf{B}}. \tag{5.1}
 $$
 
-Le **taux de croissance** est $\sigma(Rm) = \max\operatorname{Re}\lambda$. L'écoulement est une **dynamo cinématique** si $\sigma > 0$ : un champ germe arbitrairement faible croît alors exponentiellement. Le **seuil** $Rm_c$ est la plus petite valeur de $Rm$ où $\sigma$ s'annule ; si la valeur propre critique est complexe, le champ qui naît oscille (bifurcation de Hopf). On parle de **dynamo rapide** si $\sigma$ reste minoré par une constante positive quand $Rm \to \infty$, et de **dynamo lente** sinon.
+Le **taux de croissance** est $\sigma(Rm) = \max\operatorname{Re}\lambda$ (dans ce chapitre, $\sigma$ désigne un taux de croissance et non plus la conductivité du chapitre 1). L'écoulement est une **dynamo cinématique** si $\sigma > 0$ : un champ germe arbitrairement faible croît alors exponentiellement. Le **seuil** $Rm_c$ est la plus petite valeur de $Rm$ où $\sigma$ s'annule ; si la valeur propre critique est complexe, le champ qui naît oscille (bifurcation de Hopf). On parle de **dynamo rapide** si $\sigma$ reste minoré par une constante positive quand $Rm \to \infty$, et de **dynamo lente** sinon.
 :::
 
 L'opérateur $\mathcal{L}_\eta$ n'est pas autoadjoint ; ses vecteurs propres ne sont pas orthogonaux et des croissances transitoires sont possibles même quand $\sigma < 0$. Pour un écoulement dépendant du temps, périodique ou turbulent, on remplace la valeur propre par un exposant de Floquet ou de Lyapunov. Une première condition nécessaire découle d'un simple bilan d'énergie.
@@ -849,7 +849,7 @@ $$
 \frac{\mathrm{d}E_M}{\mathrm{d}t} \le 2\Big(s_{\max} - \eta\,\frac{4\pi^2}{L^2}\Big)E_M. \tag{5.2}
 $$
 
-Une dynamo exige donc $s_{\max}L^2/\eta \ge 4\pi^2$.
+Si $s_{\max}L^2/\eta \le 4\pi^2$, l'énergie magnétique ne peut pas croître : une dynamo exige donc $s_{\max}L^2/\eta > 4\pi^2$.
 
 ::: proof
 D'après (2.2), $\mathrm{d}E_M/\mathrm{d}t = \langle\mathbf{B}\cdot(\mathbf{B}\cdot\nabla)\mathbf{u}\rangle - \langle\mathbf{B}\cdot(\mathbf{u}\cdot\nabla)\mathbf{B}\rangle + \eta\langle\mathbf{B}\cdot\Delta\mathbf{B}\rangle$. Le deuxième terme vaut $\langle\mathbf{u}\cdot\nabla(|\mathbf{B}|^2/2)\rangle = 0$. Le premier s'écrit $\langle B_i B_j\,\partial_j u_i\rangle = \langle\mathbf{B}\cdot S\mathbf{B}\rangle$, car seule la partie symétrique du gradient contribue à une forme quadratique ; il est majoré par $s_{\max}\langle|\mathbf{B}|^2\rangle = 2s_{\max}E_M$. Enfin $\eta\langle\mathbf{B}\cdot\Delta\mathbf{B}\rangle = -\eta\sum_{\mathbf{k}}|\mathbf{k}|^2|\hat{\mathbf{B}}_{\mathbf{k}}|^2 \le -\eta\,(2\pi/L)^2\langle|\mathbf{B}|^2\rangle$, puisque le mode $\mathbf{k} = 0$ est absent et que les autres vérifient $|\mathbf{k}| \ge 2\pi/L$. [∎]{.qed}
@@ -1113,14 +1113,14 @@ Une dynamo cinématique croît exponentiellement, sans limite. En réalité, qua
 
 ::: prop
 [Proposition 5.8 — Saturation de la dynamo $\alpha^2$ périodique]{.tag}
-Dans une boîte périodique, avec l'effet $\alpha$ étouffé et $2\pi < C < 4\pi$ (un seul mode instable), le champ sature sur le mode hélicoïdal $n = 1$, de norme uniforme, avec
+Dans une boîte périodique, avec l'effet $\alpha$ étouffé et $2\pi < C < 4\pi$ (un seul mode instable), le système possède un état saturé stationnaire porté par le mode hélicoïdal $n = 1$, de norme uniforme, avec
 
 $$
 \frac{|\bar{\mathbf{B}}|^2}{B_{\mathrm{eq}}^2} = \frac{C}{2\pi} - 1. \tag{5.7}
 $$
 :::
 
-*Démonstration.* Le mode hélicoïdal $\bar{\mathbf{B}} = B(\cos kz, \sin kz, 0)$ a une norme uniforme, donc un $\alpha$ uniforme, et reste une solution exacte de (5.4) avec ce $\alpha$. Il est stationnaire si son taux (5.5) est nul : $\alpha(B)k = \eta_T k^2$ avec $k = 2\pi/L$, soit $\alpha_0/(1 + B^2/B_{\mathrm{eq}}^2) = 2\pi\eta_T/L$, d'où (5.7). ∎
+*Démonstration de l'existence.* Le mode hélicoïdal $\bar{\mathbf{B}} = B(\cos kz, \sin kz, 0)$, de polarisation choisie pour que son taux (5.5) vaille $|\alpha|k - \eta_T k^2$, a une norme uniforme, donc un $\alpha$ uniforme, et reste une solution exacte de (5.4) avec ce $\alpha$. Il est stationnaire si ce taux est nul : $|\alpha(B)|k = \eta_T k^2$ avec $k = 2\pi/L$, soit $|\alpha_0|/(1 + B^2/B_{\mathrm{eq}}^2) = 2\pi\eta_T/L$, d'où (5.7). ∎ Nous ne démontrons pas que cet état attire les autres solutions ; le code ci-dessous le vérifie numériquement à partir d'un bruit faible.
 
 La seconde partie du code ci-dessus intègre (5.4) avec $\alpha$ étouffé à partir d'un bruit faible : l'énergie saturée coïncide avec (5.7) à quatre chiffres. La loi $|\bar{\mathbf{B}}|^2 \propto C - C_c$ est la signature d'une **bifurcation fourche supercritique** (module 4). Les expériences la retrouvent : dans VKS, $\langle B^2\rangle$ croît linéairement avec $(Rm - Rm_c)/Rm_c$ et regroupe les données prises à différentes températures, sans hystérésis (Monchaux et al., 2007). Ce n'est pas universel : Ponty et al. (2007) ont trouvé une bifurcation **sous-critique**, avec hystérésis, dans l'écoulement de Taylor–Green ; l'hystérésis y est liée aux modifications de l'écoulement induites par la force de Lorentz. La rétroaction peut aussi briser des symétries de l'écoulement : dans les simulations de VKS analysées par POD, la saturation brise la symétrie du champ de vitesse même en contra-rotation exacte (Botez et al., 2025).
 
@@ -1142,11 +1142,11 @@ Ce qu'il faut retenir — chapitre 5
 
 ## 6. Les dynamos de laboratoire {#ch6}
 
-Obtenir une dynamo en laboratoire est difficile pour une raison que le chapitre 2 a déjà donnée : avec $Pm \approx 10^{-5}$, atteindre $Rm \sim 10$ à $50$ exige $Re \sim 10^6$ à $10^7$, donc des mètres cubes de sodium liquide mis en mouvement par des moteurs de plusieurs centaines de kilowatts. Le résumé du projet ANR MilaDy rappelle que seules trois expériences, dont celle de Cadarache, ont obtenu un effet dynamo avec du sodium liquide. Ce chapitre les présente, avec les chiffres publiés, puis le projet DRESDYN qui intéresse directement MilaDy. Les valeurs de $Rm$ ne sont **pas comparables** d'une expérience à l'autre, ni même d'un article à l'autre pour VKS : chacune utilise sa propre vitesse et sa propre longueur de référence.
+Obtenir une dynamo en laboratoire est difficile pour une raison que le chapitre 2 a déjà donnée : avec $Pm \approx 10^{-5}$, atteindre $Rm \sim 10$ à $50$ exige $Re \sim 10^6$ à $10^7$, donc de 150 litres (VKS) à 2 m³ (Riga) de sodium liquide mis en mouvement par des moteurs ou des pompes d'une puissance de l'ordre de la centaine de kilowatts (jusqu'à 300 kW pour VKS). Le résumé du projet ANR MilaDy rappelle que seules trois expériences, dont celle de Cadarache, ont obtenu un effet dynamo avec du sodium liquide. Ce chapitre les présente, avec les chiffres publiés, puis le projet DRESDYN qui intéresse directement MilaDy. Les valeurs de $Rm$ ne sont **pas comparables** d'une expérience à l'autre, ni même d'un article à l'autre pour VKS : chacune utilise sa propre vitesse et sa propre longueur de référence.
 
 ### 6.1 Riga : une dynamo de Ponomarenko
 
-L'installation de Riga (Lettonie) réalise l'écoulement de Ponomarenko (exemple 5.5) : le sodium circule en hélice dans un tube central de 0,25 m de diamètre et de 2,91 m de long, revient par un tube coaxial de 0,43 m, et le tout est entouré d'une couche de sodium au repos (Gailitis et al., 2000). Une hélice mue par deux moteurs met en mouvement environ 2 m³ de sodium à des vitesses de l'ordre de 15 m/s dans le tube central. La première auto-excitation d'un mode magnétique a été observée en novembre 1999, à 2150 tours par minute et 205 °C : le mode croissait avec un taux de $0{,}0315 \pm 0{,}0009\ \mathrm{s^{-1}}$ et une fréquence de $1{,}326$ Hz, en accord avec les prédictions numériques (Gailitis et al., 2000). Comme le prévoit la théorie, seul le mode azimutal $m = 1$ intervient : le champ est alternatif, de basse fréquence, et tourne lentement autour de l'axe. La campagne de juillet 2000 a atteint le régime saturé, avec un champ radial de 7 mT au capteur (Gailitis et al., 2001).
+L'installation de Riga (Lettonie) réalise l'écoulement de Ponomarenko (exemple 5.5) : le sodium circule en hélice dans un tube central de 0,25 m de diamètre et de 2,91 m de long, revient par un tube coaxial de 0,43 m, et le tout est entouré d'une couche de sodium au repos (Gailitis et al., 2000). L'installation contient environ 2 m³ de sodium ; une hélice mue par deux moteurs le fait circuler à des vitesses de l'ordre de 15 m/s dans le tube central. La première auto-excitation d'un mode magnétique a été observée en novembre 1999, à 2150 tours par minute et 205 °C : le mode croissait avec un taux de $0{,}0315 \pm 0{,}0009\ \mathrm{s^{-1}}$ et une fréquence de $1{,}326$ Hz, en accord avec les prédictions numériques (Gailitis et al., 2000). Comme le prévoit la théorie, seul le mode azimutal $m = 1$ intervient : le champ est alternatif, de basse fréquence, et tourne lentement autour de l'axe. La campagne de juillet 2000 a atteint le régime saturé, avec un champ radial de 7 mT au capteur (Gailitis et al., 2001).
 
 ### 6.2 Karlsruhe : une dynamo à deux échelles
 
@@ -1166,11 +1166,46 @@ Les résultats principaux sont les suivants.
 - **Renversements.** Quand les deux turbines tournent à des fréquences différentes, le champ peut se renverser de façon irrégulière. Berhanu et al. (2007) ont observé, à $F_1 = 16$ Hz et $F_2 = 22$ Hz, des polarités de durées moyennes 120 s et 50 s, séparées par des renversements d'environ 5 s, à comparer à un temps de diffusion ohmique d'environ 0,4 s. Pendant les renversements, la puissance consommée chute de plus de 20 %. Monchaux et al. (2009) décrivent toute une famille de régimes dynamiques (renversements, oscillations), de faible dimension malgré la turbulence.
 - **Définitions du seuil.** Selon la vitesse et la longueur de référence, le même seuil s'écrit $Rm_c \approx 31$ (Monchaux et al., 2007), $Rm_c \simeq 44$ avec une autre définition (Miralles et al., 2013), ou $52 \le Rm_c \le 71$ avec la définition $\mu_0\sigma\,2\pi f R^2$ sans facteur $K$ (Nore et al., 2018). Ce n'est pas une contradiction, mais un rappel : un modèle conditionné par $Rm$ doit préciser sa définition.
 
+::: ex
+[Exemple 6.1 — Une même rotation, trois nombres de Reynolds magnétiques]{.tag}
+Les trois définitions diffèrent par la vitesse et par la longueur de référence. Monchaux et al. (2007) utilisent $Rm = K\mu_0\sigma R_{\mathrm{cyl}}^2\Omega$ avec $K = 0{,}6$, Miralles et al. (2013) $Rm = \mu_0\sigma\Omega R_{\mathrm{imp}}R_o$ (rayon des turbines $R_{\mathrm{imp}} = 154{,}5$ mm, rayon intérieur de l'enveloppe de cuivre $R_o = 289$ mm), et Nore et al. (2018) $Rm = \mu_0\sigma\Omega R_{\mathrm{cyl}}^2$, avec $\Omega = 2\pi F$ et $R_{\mathrm{cyl}} = 206$ mm. Le code suivant les évalue aux deux fréquences extrêmes, 16 et 22 Hz, entre lesquelles Nore et al. (2018) situent les dynamos observées.
+:::
+
+```python
+import numpy as np
+
+# Trois définitions publiées de Rm pour VKS, appliquées à la même fréquence de rotation F des turbines
+mu0, sigma, nu = 4e-7 * np.pi, 9.6e6, 6.78e-7      # sodium vers 120 °C (Nore et al. 2018, §2.1)
+R_cyl, R_imp, R_o, K = 0.206, 0.1545, 0.289, 0.6    # rayons (m) et facteur K de Monchaux et al. (2007)
+
+def nombres(F):
+    Om = 2 * np.pi * F
+    return {"Monchaux 2007 : K mu0 sigma R_cyl² Omega": K * mu0 * sigma * R_cyl**2 * Om,
+            "Miralles 2013 : mu0 sigma Omega R_imp R_o": mu0 * sigma * Om * R_imp * R_o,
+            "Nore 2018     : mu0 sigma Omega R_cyl²": mu0 * sigma * Om * R_cyl**2}
+
+for F in [16.0, 22.0]:
+    print(f"F = {F:.0f} Hz :  Re (Nore) = {2 * np.pi * F * R_cyl**2 / nu:.1e}")
+    for nom, Rm in nombres(F).items():
+        print(f"    {nom:42s} Rm = {Rm:5.1f}")
+# sortie :
+# F = 16 Hz :  Re (Nore) = 6.3e+06
+#     Monchaux 2007 : K mu0 sigma R_cyl² Omega   Rm =  30.9
+#     Miralles 2013 : mu0 sigma Omega R_imp R_o  Rm =  54.2
+#     Nore 2018     : mu0 sigma Omega R_cyl²     Rm =  51.5
+# F = 22 Hz :  Re (Nore) = 8.7e+06
+#     Monchaux 2007 : K mu0 sigma R_cyl² Omega   Rm =  42.5
+#     Miralles 2013 : mu0 sigma Omega R_imp R_o  Rm =  74.5
+#     Nore 2018     : mu0 sigma Omega R_cyl²     Rm =  70.8
+```
+
+On retrouve les valeurs publiées : $6{,}3\times10^6 \le Re \le 8{,}7\times10^6$ et $52 \le Rm \le 71$ dans la définition de Nore et al. (2018), $Rm \approx 31$ à 16 Hz dans celle de Monchaux et al. (2007), qui correspond à leur seuil (situé vers 16 à 17 Hz selon les campagnes : Monchaux et al., 2009 ; Berhanu et al., 2007), et la valeur $42{,}5$ que Berhanu et al. (2007) associent à 22 Hz. Pour une même rotation, le rapport entre définitions est fixe : $1/K \approx 1{,}67$ entre Nore et Monchaux, $R_{\mathrm{imp}}R_o/R_{\mathrm{cyl}}^2 \approx 1{,}05$ entre Miralles et Nore. Il faut ajouter à cela la dépendance de $\sigma$ envers la température du sodium, qui varie d'une campagne à l'autre.
+
 Les simulations de VKS par SFEMaNS reproduisent le dipôle axial observé avec des turbines de perméabilité finie, et donnent un seuil asymptotique $Rm_c \approx 70$ dans la définition de Nore et al. (2018), compatible avec l'intervalle expérimental $[52, 71]$.
 
 ### 6.4 DRESDYN : une dynamo de précession
 
-Le projet DRESDYN (Helmholtz-Zentrum Dresden-Rossendorf) vise une dynamo sans hélice ni turbine : un cylindre de sodium tourne autour de son axe, lui-même entraîné en rotation lente autour d'un second axe (précession). Stefani et al. (2015) en décrivent la conception. Nore et al. (2011) avaient montré numériquement qu'une précession peut engendrer une dynamo dans un cylindre, et Giesecke et al. (2018) ont étudié l'écoulement de grande échelle non linéaire qui pourrait l'entretenir. Botez et al. (2026), dans le cadre de MilaDy, calculent la dynamo cinématique portée par des écoulements de précession moyennés et trouvent qu'elle n'existe que dans une plage étroite du nombre de Poincaré (le rapport des fréquences de précession et de rotation) ; ils montrent aussi que les conditions aux limites (parois conductrices ou perméables) peuvent favoriser ou supprimer la dynamo. L'expérience est **en cours** selon le résumé du projet ANR, dont le second objectif est d'optimiser DRESDYN par des modèles réduits paramétriques.
+Le projet DRESDYN (Helmholtz-Zentrum Dresden-Rossendorf) vise une dynamo sans hélice ni turbine : un cylindre de sodium tourne autour de son axe, lui-même entraîné en rotation lente autour d'un second axe (précession). Stefani et al. (2015) en décrivent la conception. Nore et al. (2011) avaient montré numériquement qu'une précession peut engendrer une dynamo dans un cylindre, et Giesecke et al. (2018) ont étudié l'écoulement de grande échelle non linéaire qui pourrait l'entretenir. Botez et al. (2026), dans le cadre de MilaDy, calculent la dynamo cinématique portée par des écoulements de précession moyennés en temps et identifient une plage étroite du nombre de Poincaré (le rapport des fréquences de précession et de rotation) où la dynamo est la plus probable ; ils montrent aussi que les conditions aux limites (parois conductrices ou perméables) peuvent favoriser ou supprimer la dynamo. L'expérience est **en cours** selon le résumé du projet ANR, dont le second objectif est d'optimiser DRESDYN par des modèles réduits paramétriques.
 
 | Expérience | Écoulement | Première dynamo | Chiffres clés | Sources |
 |---|---|---|---|---|
@@ -1212,7 +1247,7 @@ $$
 \dot Q = \mu Q - VD, \qquad \dot D = -\nu D + VQ, \qquad \dot V = \Gamma - V + QD. \tag{7.2}
 $$
 
-Le paramètre $\mu$ mesure la croissance du quadrupôle, $\nu$ l'amortissement du dipôle, et $\Gamma$ le forçage qui brise la symétrie ; le terme $QD$ représente la force de Lorentz. Le système est invariant par $(Q, D, V) \to (-Q, -D, V)$, image de $\mathbf{B} \to -\mathbf{B}$ : $V$ ne change pas de signe lors d'un renversement. La divergence du champ de vecteurs vaut $\mu - \nu - 1$, négative pour les paramètres étudiés : le système est dissipatif et ses trajectoires convergent vers un attracteur de volume nul.
+Le paramètre $\mu$ mesure la croissance du quadrupôle, $\nu$ l'amortissement du dipôle (ce sont des coefficients sans dimension du modèle, sans rapport avec la perméabilité ou la viscosité), et $\Gamma$ le forçage qui brise la symétrie ; le terme $QD$ représente la force de Lorentz. Le système est invariant par $(Q, D, V) \to (-Q, -D, V)$, image de $\mathbf{B} \to -\mathbf{B}$ : $V$ ne change pas de signe lors d'un renversement. La divergence du champ de vecteurs vaut $\mu - \nu - 1$, négative pour les paramètres étudiés : le système est dissipatif et ses trajectoires convergent vers un attracteur de volume nul.
 
 :::: prop
 [Proposition 7.1 — Points fixes du modèle de Gissinger]{.tag}
@@ -1466,7 +1501,7 @@ Les exercices suivent l'ordre des séances du plan de travail. Une étoile (★)
     # s_max = 1.4142  ->  dynamo impossible si Rm = 1/eta < 1/s_max = 0.707
     ```
 
-    Avec $k_{\min} = 1$, la proposition 5.2 exige $s_{\max} \ge \eta$, soit $Rm \ge 1/s_{\max} \approx 0{,}71$ (la valeur numérique $1{,}4142$ suggère $s_{\max} = \sqrt2$).
+    Avec $k_{\min} = 1$, la proposition 5.2 exige $s_{\max} > \eta$, soit $Rm > 1/s_{\max} \approx 0{,}71$ (la valeur numérique $1{,}4142$ suggère $s_{\max} = \sqrt2$).
 
     *(c)* La première fenêtre dynamo commence à $Rm \approx 8{,}9$ (Galloway et Frisch, 1984, cités par Archontis et al., 2003) : la borne énergétique est correcte mais plus de dix fois trop faible. Elle ignore que l'étirement maximal n'est atteint qu'en quelques points et que le champ doit être réorienté pour être étiré de façon cohérente.
     :::
@@ -1476,7 +1511,7 @@ Les exercices suivent l'ordre des séances du plan de travail. Une étoile (★)
     ::: sol
     *Solution.* (a) La composante $z$ de $\nabla\times(\mathbf{u}\times\mathbf{B}) = (\mathbf{B}\cdot\nabla)\mathbf{u} - (\mathbf{u}\cdot\nabla)\mathbf{B}$ (écoulement et champ à divergence nulle) vaut $(\mathbf{B}\cdot\nabla)u_z - (\mathbf{u}\cdot\nabla)B_z = -(\mathbf{u}\cdot\nabla)B_z$ puisque $u_z = 0$. Donc $\partial_t B_z + \mathbf{u}\cdot\nabla B_z = \eta\Delta B_z$. En multipliant par $B_z$ et en moyennant, l'advection disparaît et $\frac{\mathrm{d}}{\mathrm{d}t}\langle B_z^2\rangle = -2\eta\langle|\nabla B_z|^2\rangle \le -2\eta k_{\min}^2\langle B_z^2\rangle$ ; la moyenne de $B_z$ est conservée, et nulle par hypothèse.
 
-    *(b)* Si $B_z \equiv 0$, alors $\partial_x B_x + \partial_y B_y = 0$ dans chaque plan $z = z_0$ (constante), donc $(B_x, B_y) = (\partial_y a, -\partial_x a)$ pour une fonction $a(x, y, z, t)$. Le champ électromoteur $\mathbf{u}\times\mathbf{B}$ n'a alors qu'une composante $z$, égale à $-\mathbf{u}\cdot\nabla a$, et $a$ obéit à $\partial_t a + \mathbf{u}\cdot\nabla a = \eta\Delta a$ (à une fonction de jauge près) : les étapes 1 et 2 de la démonstration du théorème 5.4 s'appliquent mot pour mot. La démonstration complète doit traiter le couplage pendant que $B_z$ décroît, ce que fait l'article de Zeldovich (1957).
+    *(b)* Si $B_z \equiv 0$, alors $\partial_x B_x + \partial_y B_y = 0$ dans chaque plan $z = z_0$ (constante), donc $(B_x, B_y) = (\partial_y a, -\partial_x a)$ pour une fonction $a(x, y, z, t)$. Le champ électromoteur $\mathbf{u}\times\mathbf{B}$ n'a alors qu'une composante $z$, égale à $-\mathbf{u}\cdot\nabla a$, et $a$ obéit à $\partial_t a + \mathbf{u}\cdot\nabla a = \eta\Delta a$ (à une fonction de jauge près, que l'on peut choisir nulle). Les étapes 1 et 2 de la démonstration du théorème 5.4 s'appliquent alors, à condition de prendre pour $X$ la moyenne du carré du gradient **tridimensionnel** de $a$, qui majore l'énergie du champ plan. Dans le cas général, $B_z$ n'est pas nul mais décroît exponentiellement d'après (a), et il agit comme un terme source $B_z\,\partial_z\mathbf{u}$ dans l'équation de $(B_x, B_y)$ ; une démonstration complète doit contrôler ce couplage, ce que nous ne faisons pas ici.
     :::
 
 12. **★★★ La dynamo $\alpha\Omega$ et les ondes de dynamo (séance 6).** Dans le Soleil, la rotation différentielle (cisaillement $S$) produit beaucoup plus de champ azimutal que l'effet $\alpha$. On remplace (5.4) par $\partial_t B_x = -\alpha\,\partial_z B_y + \eta_T\partial_z^2 B_x$ et $\partial_t B_y = S B_x + \eta_T\partial_z^2 B_y$. (a) Pour des modes en $e^{ikz + \sigma t}$, établir que $(\sigma + \eta_T k^2)^2 = -i\alpha kS$. (b) En déduire $\operatorname{Re}\sigma$ et $\operatorname{Im}\sigma$, et la condition de dynamo en fonction du nombre dynamo $D = \alpha S/(\eta_T^2k^3)$. (c) Interpréter la partie imaginaire.
@@ -1500,7 +1535,7 @@ Les exercices suivent l'ordre des séances du plan de travail. Une étoile (★)
     ::: sol
     *Solution.* (a) Les seconds membres de $\dot Q$ et $\dot D$ sont impairs en $(Q, D)$ à $V$ fixé ($\mu Q - VD$ et $-\nu D + VQ$ changent de signe), et celui de $\dot V$ contient $QD$, invariant. Les équations sont donc inchangées.
 
-    *(b)* $Q\dot Q + D\dot D = \mu Q^2 - VQD - \nu D^2 + VQD = \mu Q^2 - \nu D^2$. Le terme en $V$ ne change pas la norme du vecteur $(Q, D)$ : il le **fait tourner** à la vitesse angulaire $V$ (le système $\dot Q = -VD$, $\dot D = VQ$ est une rotation). Un renversement est une rotation d'un demi-tour dans le plan $(Q, D)$, qui fait passer de $(Q, D)$ à $(-Q, -D)$ en traversant un état quadrupolaire ($D = 0$) : c'est le transfert dipôle → quadrupôle → dipôle inversé observé dans VKS par Bousquet et al. (2026).
+    *(b)* $Q\dot Q + D\dot D = \mu Q^2 - VQD - \nu D^2 + VQD = \mu Q^2 - \nu D^2$. Le terme en $V$ ne change pas la norme du vecteur $(Q, D)$ : il le **fait tourner** à la vitesse angulaire $V$ (le système $\dot Q = -VD$, $\dot D = VQ$ est une rotation). Un renversement est une rotation d'un demi-tour dans le plan $(Q, D)$, qui fait passer de $(Q, D)$ à $(-Q, -D)$ en traversant un état quadrupolaire ($D = 0$) : c'est le transfert dipôle → quadrupôle → dipôle inversé que Gissinger (2012) prédit et que Bousquet et al. (2026) décrivent dans leurs simulations de VKS.
 
     *(c)* Ici $\sqrt{\mu\nu} = 0{,}35 > \Gamma$, donc $M_\pm$ existent. D'après la proposition 7.1, $M_\pm = (\pm\sqrt{0{,}35 - 0{,}1}, \; \pm\sqrt{0{,}35 - 0{,}1}, \; 0{,}35) = (\pm0{,}5, \pm0{,}5, 0{,}35)$ et $N_\pm = (\pm\sqrt{0{,}45}, \mp\sqrt{0{,}45}, -0{,}35) \approx (\pm0{,}671, \mp0{,}671, -0{,}35)$.
     :::

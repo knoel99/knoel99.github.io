@@ -128,4 +128,559 @@ Ce que ce travail revendique est formulé avec prudence : **à notre connaissanc
 
 La [section 2](#etat-art) fait l'état de l'art : dynamos, réduction de modèle, modèles génératifs, contraintes dures et contraintes en loi. La [section 3](#formulation) pose le cadre, la taxonomie des contraintes et neuf énoncés démontrés. La [section 4](#methodes) décrit exactement les méthodes et le protocole des expériences, la [section 5](#experiences) leurs résultats, et la [section 6](#discussion) répond aux problématiques P1 à P5 et discute la validité des conclusions. La [section 7](#conclusion) conclut et ouvre vers la thèse. Les [annexes](#annexes) donnent les commandes de reproduction, les hyperparamètres et un glossaire.
 
+## 2. État de l'art {#etat-art}
+
+Cette section rassemble ce qui est publié et utile au stage. Tous les chiffres cités viennent des articles référencés, relus sur leur source primaire ; aucun ne vient de nos expériences.
+
+### Dynamos de laboratoire et dynamos numériques {#ea-dynamos}
+
+Le nombre de Reynolds magnétique $Rm = UL/\eta$ compare l'induction à la diffusion du champ ; une dynamo n'apparaît qu'au-dessus d'un seuil $Rm_c$. Les métaux liquides ont un très petit nombre de Prandtl magnétique, $Pm = \nu/\eta = 0{,}82\cdot10^{-5}$ pour le sodium à 120 °C (Nore et al. 2018), si bien que le nombre de Reynolds cinétique $Re = Rm/Pm$ atteint plusieurs millions au seuil : l'écoulement est pleinement turbulent quand le champ magnétique apparaît.
+
+Trois expériences en sodium liquide ont obtenu une dynamo auto-entretenue. À **Riga**, un écoulement hélicoïdal de type Ponomarenko a permis la première détection d'un mode propre magnétique auto-excité, en novembre 1999 : à 2150 tr/min et 205 °C, le mode croît au taux $p_2 = 0{,}0315 \pm 0{,}0009$ s⁻¹ et oscille à $f_2 = 1{,}326$ Hz (Gailitis et al. 2000 ; historique dans Gailitis et al. 2008). À **Karlsruhe**, un module de 52 générateurs de tourbillons réalise la dynamo à deux échelles de Roberts et Busse ; le premier fonctionnement réussi date de décembre 1999 (Rädler & Brandenburg 2003), et le champ saturé est un dipôle stationnaire qui présente deux états quasi équivalents (Stieglitz & Müller 2001 ; Müller et al. 2008). À **Cadarache**, l'expérience von Kármán Sodium (VKS) a obtenu une dynamo dans un écoulement fortement turbulent, entre deux turbines contrarotatives, avec des turbines en fer doux, alors qu'aucune dynamo n'apparaissait avec des turbines en acier inoxydable (Monchaux et al. 2007).
+
+Les seuils publiés pour VKS dépendent de la définition de $Rm$, et ne se comparent pas directement. Avec un facteur d'efficacité des turbines $K \approx 0{,}6$, Monchaux et al. (2007) trouvent $Rm_c \approx 31$ ; avec une définition sans ce facteur, Nore et al. (2018) rapportent un intervalle expérimental $52 \le Rm_c \le 71$ ; Miralles et al. (2013) utilisent encore une autre définition. Un modèle génératif conditionné par « $Rm$ » devra donc fixer sa convention.
+
+La simulation numérique directe de VKS avec les turbines représentées a été réalisée avec le code SFEMaNS, qui combine une décomposition de Fourier en azimut et des éléments finis de Lagrange dans le plan méridien (Guermond et al. 2007, 2009) : le seuil diminue quand la perméabilité magnétique des turbines augmente, et le champ est un dipôle axial essentiellement axisymétrique, comme dans l'expérience (Nore et al. 2016). Nore et al. (2018) quantifient la sensibilité aux conditions aux limites : à $Re = 1{,}5\cdot10^3$ et $\mu_r = 50$, $Rm_c = 90 \pm 5$ avec la condition $\mathbf{H}\times\mathbf{n} = 0$ (« pseudo-vide »), contre $130 \pm 10$ avec la condition de vide, soit environ 40 % de plus ; leur extrapolation $Rm_c \approx 70$ aux grands $Re$ tombe dans l'intervalle expérimental. Le second solveur du consortium, LATU, est un code pseudo-spectral de Fourier où les turbines et les parois sont représentées par pénalisation, dans une boîte périodique $(3\pi)^3$ à $384^3$ points (Kreuzahler et al. 2017).
+
+Pour la modélisation, ces travaux disent deux choses. Les paramètres de contrôle pertinents ne se réduisent pas à $Re$ et $Rm$ : la perméabilité $\mu_r$ et les conditions électromagnétiques déplacent le seuil autant qu'eux. Et les données de simulation ne vivent pas sur une grille cartésienne régulière : chez SFEMaNS, elles sont des modes de Fourier azimutaux portés par un maillage d'éléments finis non structuré.
+
+### Renversements et modèles de basse dimension {#ea-renversements}
+
+Berhanu et al. (2007) ont observé les premiers renversements $\mathbf{B} \to -\mathbf{B}$ en laboratoire, dans VKS, quand les deux turbines tournent à des fréquences différentes. À $F_1 = 16$ Hz et $F_2 = 22$ Hz, les durées moyennes des deux polarités sont $\langle T_+\rangle = 120$ s et $\langle T_-\rangle = 50$ s, et un renversement dure $\tau \approx 5$ s, à comparer à un temps de diffusion ohmique d'environ 0,4 s ; des excursions, où le champ chute puis revient à la même polarité, sont aussi observées.
+
+Pétrélis & Fauve (2008) expliquent ces dynamiques par le couplage d'un mode dipolaire $D$ et d'un mode quadripolaire $Q$. L'invariance des équations par $\mathbf{B} \to -\mathbf{B}$ impose une forme normale pour l'amplitude complexe $A = D + iQ$, qui se réduit à une équation de phase $\dot\theta = \mu_i - \rho\sin 2\theta$. Une bifurcation nœud-col en $\mu_i = \rho$ sépare les états stationnaires des renversements périodiques ; juste sous ce seuil, le bruit turbulent déclenche des renversements aléatoires. Pétrélis et al. (2009) appliquent ce mécanisme aux renversements du champ terrestre.
+
+Gissinger (2012) propose un modèle **déterministe** à trois modes, qui sert de banc d'essai E1 :
+
+$$
+\dot Q = \mu Q - VD, \qquad \dot D = -\nu D + VQ, \qquad \dot V = \Gamma - V + QD .
+$$
+
+Ici $V$ est un mode de vitesse qui brise la symétrie équatoriale, forcé par $\Gamma$, et le terme $QD$ représente la force de Lorentz. Le système est invariant par $(Q, D, V) \to (-Q, -D, V)$, image de $\mathbf{B} \to -\mathbf{B}$. Pour $\nu = 0{,}1$ et $\Gamma = 0{,}9$, les deux attracteurs symétriques fusionnent par une crise en $\mu_c \approx 0{,}11928$ ; à $\mu = 0{,}119$, les renversements sont chaotiques, avec un exposant de Lyapunov $\lambda \simeq 0{,}1$, et à $\mu = 0{,}12$ le chaos reste confiné autour d'un seul point fixe. La loi des temps d'attente entre renversements est poissonnienne aux temps longs, et la densité de $D$ est bimodale, avec une probabilité très faible en 0 (Gissinger 2012). Le même modèle, avec les rôles de $D$ et $Q$ échangés, figure dans Gissinger, Dormy & Fauve (2010), à partir de simulations en sphère. Une crise de fusion d'attracteurs (Grebogi, Ott & Yorke 1983) s'accompagne d'une intermittence dont le temps de séjour moyen diverge à l'approche du seuil (Grebogi et al. 1987) ; Gissinger (2012) observe un temps d'attente moyen $\tau \sim (\mu - \mu_c)^{-\gamma}$ avec $\gamma \simeq 1/2$, en précisant qu'il est « difficile de conclure » tant le résultat est sensible à $\mu_c$.
+
+Bousquet et al. (2026) ont obtenu des renversements dans des simulations de VKS, avec les deux solveurs du consortium. Pour leur simulation de référence ($Re = 1594$, $Rm = 531$, asymétrie de forçage $(F_1 - F_2)/(F_1 + F_2) = 0{,}058$, $\mu_r = 16$ dans les turbines), le renversement suit un mécanisme en cinq étapes : dipôle, affaiblissement près de la turbine rapide, état quadripolaire, affaiblissement près de la turbine lente, dipôle inversé. Une décomposition orthogonale aux valeurs propres (POD) sur 2000 instantanés fait ressortir quatre modes axisymétriques dominants, un dipôle, un quadripôle et deux modes de vitesse ; un modèle de Galerkin réduit, DQVU, identifié par régression parcimonieuse sous contraintes avec PySINDy, reproduit la loi bimodale asymétrique du mode de vitesse $V$, ce que le modèle à trois modes DQV ne fait pas. Les données ne sont pas publiques ; elles sont disponibles auprès des auteurs sur demande raisonnable.
+
+![**L'expérience von Kármán Sodium (VKS) : un écoulement turbulent de sodium liquide engendre un dipôle magnétique axial qui se renverse au hasard, en passant par un état quadripolaire.** **a**, Cuve cylindrique remplie de sodium liquide, brassé par deux turbines à pales courbes qui tournent en sens opposés aux fréquences $F_1$ et $F_2$. À gauche, l'écoulement moyen $\mathbf{u}$ (bleu) : rotation azimutale de chaque moitié dans le sens de sa turbine et recirculation poloïdale ; les boucles sont des lignes de niveau d'une fonction de courant choisie pour sa topologie, non calculée pour VKS. À droite, le champ moyen $\mathbf{B}$ (vermillon) de polarité positive, dipôle axial refermé à l'extérieur. **b**, Série temporelle qualitative du dipôle $D(t)$ : longues phases autour de $\pm D^\ast$, deux renversements rapides (violet) et une excursion (vert) qui revient à la polarité de départ ; dans VKS, les renversements apparaissent quand $F_1 \neq F_2$ (Berhanu et al. 2007). **c**, La même trajectoire dans le plan $(Q, D)$ : les états stables $\pm(D^\ast, Q^\ast)$ sont échangés par $\mathbf{B} \to -\mathbf{B}$, et les renversements traversent $D = 0$ avec $Q \neq 0$. Les courbes de **b** et **c** sont tirées de la forme normale de Pétrélis & Fauve (2008) avec un bruit blanc et des paramètres choisis à la main : elles sont qualitatives, ni les durées ni les amplitudes ne sont celles de VKS.](../figures/vks/figure/out/vks.png){width="100%" fig-alt="Trois panneaux. a : cylindre horizontal transparent avec deux turbines à pales aux extrémités, flèches bleues de l'écoulement à gauche et lignes de champ magnétique vermillon formant un dipôle axial à droite. b : courbe du dipôle D en fonction du temps, alternant entre un niveau positif et un niveau négatif, avec deux renversements en violet et une excursion en vert. c : plan Q-D avec deux taches symétriques autour des états stables et des trajectoires de renversement qui traversent D égal zéro."}
+
+Ces modèles fixent la cible. Un générateur de champs 3D de dynamo devrait reproduire la loi jointe des modes dominants (bimodalité, asymétrie, rareté du passage par $D = 0$) et, si possible, la statistique des renversements. Le modèle de Gissinger est assez simple pour que la vraie loi soit connue à la précision voulue, et assez riche pour avoir un seuil de renversements, une symétrie et un chaos déterministe.
+
+### Réduction de modèle par apprentissage {#ea-rom}
+
+Les modèles réduits appris cherchent une représentation de faible dimension où la dynamique devient simple. Fukami & Taira (2023), référence principale de l'offre, compressent l'écoulement autour d'un profil NACA 0012 à $Re = 100$, soumis à des rafales tourbillonnaires extrêmes, en **trois** variables latentes, avec un autoencodeur dont la perte contient aussi la prédiction de la portance ($\beta = 0{,}05$) ; l'analyse en composantes principales échoue à détecter le tourbillon dans ce cas. Solera-Rico et al. (2024) combinent un autoencodeur variationnel $\beta$-VAE et un transformer : à $Re = 100$, avec $\beta = 0{,}05$ et 20 variables latentes, le $\beta$-VAE capture 89,8 % de l'énergie sur les données d'entraînement, contre 64,4 % pour 20 modes POD, et il faut 69 modes POD pour l'égaler ; le modèle réduit complet garde 78,1 % de l'énergie à un temps convectif et 64,6 % à dix. Eivazi et al. (2022) rapportent 87,36 % de l'énergie avec 5 variables latentes, contre 32,41 % avec 5 modes POD, sur un écoulement urbain turbulent.
+
+Côté MilaDy, Bousquet, Nore & Lucor (2025) comparent autoencodeurs et autoencodeurs variationnels sur des champs de Navier–Stokes (cylindre oscillant, étude paramétrique, écoulement de von Kármán). Ils relient l'organisation de l'espace latent aux modes POD et analysent les relations d'équivariance entre symétries physiques et latentes, mieux préservées par les autoencodeurs variationnels ; augmenter la régularisation de ces derniers dégrade la reconstruction. Bousquet et al. (2024) ont analysé par POD des simulations des grandes échelles de l'écoulement de von Kármán à $Re > 10^4$ et y ont confirmé numériquement un état métastable qui brise la symétrie $R_\pi$.
+
+Une remarque relie ces travaux à E2. Pour un champ statistiquement homogène dans une direction périodique, les modes POD sont les modes de Fourier de cette direction (résultat classique, voir Holmes, Lumley & Berkooz 1996, et la [section 4](#m-fourier)). Une base de Fourier tronquée est donc l'espace latent linéaire optimal au sens de la POD pour la turbulence homogène de E2 ; les autoencodeurs non linéaires de Fukami, Solera-Rico ou Bousquet deviendront nécessaires dès que l'homogénéité est perdue, comme dans VKS.
+
+### Diffusion, flow matching et génération de champs physiques {#ea-generatif}
+
+Les modèles de diffusion apprennent à inverser un bruitage progressif des données : DDPM (Ho, Jain & Abbeel 2020), formulation par équations différentielles stochastiques et équation de flot de probabilité (Song et al. 2021), choix de conception d'EDM (Karras et al. 2022), guidage sans classifieur pour le conditionnement (Ho & Salimans 2022). Le **flow matching** (Lipman et al. 2023) entraîne directement le champ de vitesse d'une équation différentielle ordinaire qui transporte un bruit gaussien vers les données, par régression sur des chemins conditionnels ; le chemin linéaire correspond au *rectified flow* de Liu, Gong & Liu (2023), et les interpolants stochastiques unifient flots et diffusions (Albergo & Vanden-Eijnden 2023 ; Albergo, Boffi & Vanden-Eijnden 2025). Tong et al. (2024) généralisent la loi de base et le couplage. Ces idées ont été étendues aux espaces de fonctions (Kerrigan, Migliorini & Smyth 2024 ; Lim et al. 2025).
+
+**FunDiff** (Wang et al. 2026), référence principale de l'offre, combine un autoencodeur fonctionnel, dont le décodeur s'interroge en tout point, et un transformer de diffusion latente entraîné par *rectified flow*. Les contraintes y sont de trois natures. La divergence nulle est imposée par l'architecture : le décodeur produit une fonction de courant $\psi$, avec $u = \partial_y\psi$, $v = -\partial_x\psi$, et la divergence prédite est qualifiée de « négligeable », sans valeur numérique dans le texte. La périodicité et des symétries de réflexion sont imposées par construction. Le résidu d'EDP est ajouté comme perte douce. Sur l'élasticité linéaire, l'erreur $L^2$ relative est de 5,12 % à $256\times256$ à partir d'observations $32\times32$ bruitées à 10 %.
+
+**PIDM** (Bastek, Sun & Kochmann 2025), autre référence de l'offre, traite le résidu d'EDP comme une observation virtuelle nulle, évaluée sur l'estimée $\mathbf{x}_0^\ast$ du modèle de diffusion, et ajoute à la perte un terme $\|\mathcal{R}(\mathbf{x}_0^\ast)\|^2$. Les auteurs identifient l'**écart de Jensen** : $\mathcal{R}(\mathbb{E}[\mathbf{x}_0\mid\mathbf{x}_t]) \neq \mathbb{E}[\mathcal{R}(\mathbf{x}_0)\mid\mathbf{x}_t]$, si bien que la pénalité sur l'estimée moyenne entre en conflit avec la perte de données ; une estimée par échantillonnage en deux pas réduit ce conflit, au prix d'un surcoût d'entraînement de 69 % (23 % pour l'estimée moyenne). En optimisation topologique, l'erreur absolue moyenne du résidu passe de $1{,}86\cdot10^{-3}$ à $1{,}24\cdot10^{-3}$.
+
+D'autres travaux génèrent ou reconstruisent des écoulements. DiffusionPDE (Huang et al. 2024) guide l'échantillonnage par les observations et le résidu d'EDP, ce dernier seulement après 80 % des pas. Shu, Li & Barati Farimani (2023) et CoCoGen (Jacobsen, Zhuang & Duraisamy 2025) ajoutent des gradients du résidu pendant ou à la fin de l'échantillonnage. TurbDiff (Lienen et al. 2024) génère des états turbulents 3D sans état initial, en environ 20 s par échantillon sur GPU contre environ 602 s pour le solveur, sans contrainte d'incompressibilité explicite. Kohl, Chen & Thuerey (2026) conditionnent une diffusion autorégressive par le nombre de Reynolds et testent hors de la plage d'entraînement. CoNFiLD (Du et al. 2024) combine champs neuronaux et diffusion latente sur des géométries 3D. GenCast (Price et al. 2025) dépasse la prévision d'ensemble opérationnelle sur 97,2 % de 1320 cibles, sans contrainte physique explicite. Le plus proche de notre problème est le travail de Galletti et al. (2026), préprint, qui génère par flow matching latent des **états statistiquement stationnaires** de turbulence gyrocinétique conditionnés par des paramètres sans dimension, pour démarrer un solveur à chaud ; aucune contrainte physique n'y est mentionnée. Côté CEREA, Zhuang, Cheng & Duraisamy (2025) reconstruisent des champs globaux à partir d'observations éparses par une diffusion avec attention croisée. Enfin, la revue de Biferale & Buzzicotti (2026), préprint, plaide pour valider les modèles génératifs de turbulence sur les transferts d'énergie, les fonctions de structure et les lois de conservation, plutôt que sur des erreurs point à point.
+
+### Guidage à l'échantillonnage {#ea-guidage}
+
+Le guidage modifie l'échantillonnage d'un modèle déjà entraîné. DPS (Chung et al. 2023) ajoute le gradient d'une vraisemblance évaluée sur l'estimée de Tweedie, approximation dont l'erreur est encore un écart de Jensen. Le **guidage universel** (Bansal et al. 2024), cité par l'offre, étend cette idée à toute fonction différentiable : guidage « avant » par le gradient d'une perte évaluée sur l'estimée $\hat{\mathbf{z}}_0$, guidage « arrière » qui optimise une correction $\Delta\mathbf{z}_0$ par quelques pas de descente, et répétition de chaque pas avec re-bruitage. Les auteurs précisent que les hyperparamètres doivent être réglés pour chaque réseau de guidage. D-Flow (Ben-Hamu et al. 2024) optimise plutôt le bruit initial en dérivant à travers tout le flot, ce qui coûte cher. Ces méthodes imposent des contraintes **douces** et agissent **échantillon par échantillon** ; nous ne les utilisons pas dans les expériences, mais elles sont la référence à laquelle comparer les mécanismes en loi.
+
+### Contraintes dures {#ea-dures}
+
+Une contrainte est dite dure quand elle est satisfaite par construction ou à la précision machine. Richter-Powell, Lipman & Chen (2022) construisent des réseaux **à divergence nulle par construction** à partir de formes différentielles, universels sur le tore, pour un coût quadratique en la dimension. Pour des ensembles convexes, la projection après chaque pas de Langevin garantit la faisabilité (Christopher, Baek & Fioretto 2024), au prix d'un surcoût qui peut être très élevé quand la projection est un problème d'optimisation (682,40 s contre 13,79 s par échantillon dans l'une de leurs tâches). ECI (Cheng et al. 2025) impose des contraintes linéaires ou de valeur sans gradient, par extrapolation, correction et interpolation à chaque pas, en 0,065 s par échantillon contre 28,774 s pour D-Flow. PCFM (Utkarsh et al. 2025) traite des contraintes **non linéaires** par une projection de Gauss–Newton à chaque pas et une projection finale exacte, qui représente 1 à 3 % du temps total.
+
+Pour la divergence nulle des écoulements incompressibles, trois travaux de 2026 sont directement pertinents. **Genuist et al. (2026)**, préprint non évalué par les pairs, comparent six manières d'imposer l'incompressibilité dans une diffusion autorégressive (référence sans contrainte, projection sur la variété, projection de Leray en sortie du débruiteur, pénalité douce de type PINN, projection a posteriori, projection progressive) sur une turbulence 2D en déclin avec frottement d'Ekman. La pénalité douce « performs poorly across all metrics » en distribution et en déroulement ; mais sur le cas hors distribution de Taylor–Green, c'est elle qui obtient la meilleure erreur quadratique ($4{,}53\cdot10^{-4}$ contre $1{,}49\cdot10^{-3}$ pour la référence), avec une divergence non nulle ($1{,}84\cdot10^{-2}$). Les auteurs concluent qu'aucune stratégie ne domine : les contraintes strictes sont meilleures près de la distribution et à court horizon, les contraintes souples parfois préférables en déroulement long et hors distribution. **PCDM** (Li, Buzzicotti, Bonaccorso & Biferale 2026, préprint) applique la projection de Fourier $I - \mathbf{k}\mathbf{k}^\top/|\mathbf{k}|^2$ à l'estimée propre du débruiteur, sur une turbulence 3D en rotation à $64^3$ : la divergence est nulle à la précision machine et l'entraînement est environ cinq fois plus court que celui de la référence (12 jours contre 56 sur 4 GPU A100). **Project and Generate** (Li, Zhang et al. 2026, préprint) construit une mesure gaussienne de référence à divergence nulle, pour que les chemins de flow matching restent dans l'espace contraint ; la divergence reste de l'ordre de $10^{-7}$, alors que le flow matching non contraint diverge numériquement en déroulement long.
+
+Pour le champ magnétique, da Silva et al. (2025, préprint) génèrent les coefficients d'harmoniques sphériques d'un champ potentiel coronal, ce qui impose $\nabla\cdot\mathbf{B} = 0$ par représentation ; leur évaluation est qualitative.
+
+### Contraintes en loi et mesures invariantes {#ea-loi}
+
+Une dynamique chaotique à l'état statistiquement stationnaire n'impose rien à un instantané isolé, mais elle impose des identités à la loi des instantanés. Le critère classique dit qu'une mesure $\mu$ est invariante pour un processus de Markov de générateur $\mathcal{L}$ si et seulement si $\int \mathcal{L}f\,\mathrm{d}\mu = 0$ pour toute $f$ d'un cœur du générateur ; la nécessité est générale, la suffisance demande des hypothèses (Echeverría 1982 ; Ethier & Kurtz 1986). L'approche par le générateur sous-tend les discrépances de Stein (Barbour 1988, 1990 ; Gorham & Mackey 2015 ; Gorham et al. 2019 ; Liu, Lee & Jordan 2016), qui testent un échantillon contre une cible connue par son score ; ici, au contraire, la cible est inconnue et c'est le générateur physique qui est connu.
+
+L'antériorité la plus proche de nos pertes de stationnarité est le **Weak Generative Sampler** (Cai, Cao, Huang & Zhou 2026) : un générateur $G_\theta$ est entraîné à minimiser $\mathbb{E}_\varphi\big(\mathbb{E}_z[\mathcal{L}^\ast\varphi(G_\theta(z))]\big)^2$, avec des fonctions test gaussiennes aléatoires, pour échantillonner la loi invariante d'équations différentielles stochastiques jusqu'en dimension 100 ; les réseaux adverses faibles (Zang et al. 2020) en sont l'antécédent en min-max. D'autres travaux apprennent une dynamique ou un émulateur à partir de la mesure invariante : transport optimal (Yang et al. 2023), optimisation sous contrainte de Fokker–Planck stationnaire (Botvinick-Greenhouse, Martin & Yang 2023), statistiques choisies ou apprentissage contrastif (Jiang et al. 2023), régularisation par la distance MMD à la mesure invariante dans DySLIM (Schiff et al. 2024), dont les auteurs notent que les mesures invariantes peuvent ne pas être uniques, et appariement de score de la mesure invariante (Chen et al. 2026). Wu et al. (2020) imposent la covariance des données à un générateur adverse de convection de Rayleigh–Bénard, et Guan et al. (2023) une conservation globale du transfert d'enstrophie dans des fermetures sous-maille.
+
+L'**I-projection** donne la loi la plus proche d'une loi donnée, au sens de Kullback–Leibler, sous des contraintes de moments ; c'est une inclinaison exponentielle (Csiszár 1975 ; principe de maximum d'entropie de Jaynes 1957). Elle a été appliquée à des ensembles moléculaires simulés (Pitera & Chodera 2012) et à des générateurs pré-entraînés de texte (Khalifa, Elsahar & Dymetman 2021). Mun (2026, préprint) cherche « the exponentially tilted high-resolution distribution that minimizes KL divergence from the biased baseline, subject to moment constraints derived from low-resolution simulations », exécutée à l'inférence dans un modèle de diffusion ; Khalafi, Ding & Ribeiro (2024) entraînent des diffusions sous contraintes de loi par dualité. Tauberschmidt et al. (2026) affinent un modèle de flow matching vers la loi inclinée $p_r \propto e^{\lambda r}p$ par une récompense construite sur un résidu d'EDP **en forme faible** ; ce résidu est calculé sur chaque échantillon, car l'EDP stationnaire doit être satisfaite champ par champ.
+
+Deux mises en garde viennent de la théorie ergodique. Pour un système dissipatif, la mesure physique (mesure SRB) est en général singulière par rapport à la mesure de Lebesgue, de sorte que l'équation de Liouville n'a pas de solution à densité et que seule sa **forme faible** a un sens ; et la sélection de cette mesure comme limite à bruit nul n'est établie que dans le cadre Axiome A, Young (2002) précisant qu'il n'existe « no general result » au-delà.
+
+### Modèles génératifs pour la MHD {#ea-mhd}
+
+Les travaux les plus proches de notre sujet restent éloignés des dynamos. Kacmaz, Huerta & Haas (2025) combinent un opérateur neuronal informé par la physique (PINO) et une diffusion conditionnelle pour la MHD 2D incompressible résistive, à $Pm = 1$ et $Re$ de 100 à 10 000 : à $Re = 1000$, l'erreur $L^2$ relative passe de 0,2548 à 0,1033 ; la divergence de $\mathbf{B}$ n'est garantie que par le solveur, qui utilise un potentiel vecteur, et non par le modèle génératif, et aucune hélicité n'est évaluée. Martin et al. (2025) génèrent des trajectoires de particules test dans une turbulence MHD 3D ; da Silva et al. (2025) des champs potentiels coronaux ; le jeu de données The Well contient de la MHD 3D compressible isotherme, sans dynamo d'expérience de laboratoire (Ohana et al. 2024).
+
+À notre connaissance, aucun modèle génératif par diffusion ou flow matching n'a été publié sur des simulations de dynamo (géodynamo, VKS, DRESDYN ou dynamo turbulente 3D) : des recherches dans l'API arXiv et sur le web, refaites le 6 novembre 2026, ne l'ont pas contredit, mais une absence ne se prouve pas.
+
+### Lacunes {#ea-lacunes}
+
+L'état de l'art laisse six lacunes qui structurent ce stage.
+
+1. **Pas de modèle génératif de dynamo.** Le travail MHD le plus proche est en 2D, configuration où une dynamo auto-entretenue est exclue par le théorème anti-dynamo de Zel'dovich (1957, rappelé par Tobias 2021), et son générateur n'impose pas $\nabla\cdot\mathbf{B} = 0$.
+2. **Pas de contrainte dure conjointe sur $\nabla\cdot\mathbf{u}$ et $\nabla\cdot\mathbf{B}$ en 3D.** Les briques existent séparément : projection de Leray 3D (PCDM), réseaux à divergence nulle, fonction de courant en 2D (FunDiff), champ potentiel. Le potentiel vecteur, généralisation 3D de la fonction de courant, impose un choix de jauge.
+3. **Pas de traitement des domaines bornés.** La projection de Leray en Fourier suppose la périodicité, alors que VKS et DRESDYN sont des cylindres à parois, avec des sauts de perméabilité et un raccord au champ extérieur.
+4. **Pas de métriques MHD.** Aucun travail trouvé n'évalue l'hélicité magnétique ou croisée, les bilans d'énergie magnétique ou la topologie des lignes de champ de champs générés.
+5. **Pas de conditionnement par $(Re, Rm)$ ni de franchissement de seuil.** Aucun travail ne conditionne sur les deux nombres de Reynolds à la fois, ni n'étudie la traversée du seuil dynamo ou du seuil des renversements par un modèle génératif.
+6. **Pas de comparaison systématique sur des EDP couplées, ni de contrainte en loi pour des champs.** La comparaison la plus directe (Genuist et al. 2026) porte sur la seule divergence en hydrodynamique 2D et conclut qu'aucune stratégie ne domine ; les contraintes de stationnarité en loi n'ont été utilisées que pour des systèmes de petite dimension (au plus 100 pour le Weak Generative Sampler).
+
+## 3. Formulation {#formulation}
+
+Cette section pose le cadre mathématique, classe les contraintes physiques et démontre neuf énoncés qui guident les expériences. Les propositions portent la numérotation de la note théorique commune au rapport et au sujet de thèse (Propositions 1 à 9, dont le Corollaire 6) ; les autres encadrés sont numérotés par chapitre. Les notations sont celles du site : $\mathbf{x} \in \mathbb{R}^D$ est un champ discrétisé, $t \in [0, 1]$ le temps du flot génératif (ce n'est **pas** un temps physique), et $v_\theta$ le champ de vitesse du flot, à ne pas confondre avec la vitesse physique $\mathbf{u}$.
+
+### Cadre {#cadre}
+
+::: def
+[Définition 3.1 — Famille paramétrique de lois stationnaires]{.tag}
+Soit $\Lambda \subset \mathbb{R}^p$ l'ensemble des paramètres de contrôle $\boldsymbol\lambda$ (par exemple $Re$, $Rm$, $\mu_r$, ou le forçage $\Gamma$ du modèle de Gissinger). Pour chaque $\boldsymbol\lambda$, l'état discrétisé évolue selon
+
+$$
+\mathrm{d}\mathbf{x} = F_{\boldsymbol\lambda}(\mathbf{x})\,\mathrm{d}t + \Sigma\,\mathrm{d}W_t ,
+$$
+
+avec $\Sigma = 0$ pour une dynamique déterministe. Le **générateur** de la dynamique agit sur les fonctions test $\varphi$ par
+
+$$
+\mathcal{L}_{\boldsymbol\lambda}\varphi = F_{\boldsymbol\lambda}\cdot\nabla\varphi + \tfrac12\,\Sigma\Sigma^\top : \nabla^2\varphi .
+$$
+
+Les données sont des instantanés d'un état statistiquement stationnaire. Leur loi $\mu_{\boldsymbol\lambda}$ est une mesure invariante de la dynamique, estimée par moyenne temporelle le long de trajectoires longues.
+:::
+
+::: def
+[Définition 3.2 — Modèle génératif conditionnel par flow matching]{.tag}
+Un réseau $v_\theta(\mathbf{z}, t, \boldsymbol\lambda)$ définit, pour chaque $\boldsymbol\lambda$, le flot $\Phi^{\boldsymbol\lambda}_t$ de l'équation $\dot{\mathbf{z}} = v_\theta(\mathbf{z}, t, \boldsymbol\lambda)$, et la loi générée $q_\theta(\cdot\mid\boldsymbol\lambda) = (\Phi^{\boldsymbol\lambda}_1)_\#\,\mathcal{N}(0, I)$. Il est entraîné par la perte de flow matching sur le chemin linéaire $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\,\mathbf{x}_1$ :
+
+$$
+\mathcal{J}(v) = \mathbb{E}\,\big\|\,v(\mathbf{x}_t, t, \boldsymbol\lambda) - (\mathbf{x}_1 - \mathbf{x}_0)\,\big\|^2 ,
+$$
+
+où $t \sim \mathcal{U}[0, 1]$, $\boldsymbol\lambda$ suit la loi des paramètres d'entraînement, $\mathbf{x}_1 \sim \mu_{\boldsymbol\lambda}$ et $\mathbf{x}_0 \sim \mathcal{N}(0, I)$ est indépendant de $\mathbf{x}_1$. Le minimiseur est
+
+$$
+v^\star(\mathbf{x}, t, \boldsymbol\lambda) = \mathbb{E}\big[\mathbf{x}_1 - \mathbf{x}_0 \,\big|\, \mathbf{x}_t = \mathbf{x}, \boldsymbol\lambda\big].
+$$
+:::
+
+Le minimiseur se justifie en une ligne : pour tout champ $v$, $\mathcal{J}(v) = \mathcal{J}(v^\star) + \mathbb{E}\|v(\mathbf{x}_t, t, \boldsymbol\lambda) - v^\star(\mathbf{x}_t, t, \boldsymbol\lambda)\|^2$, car le terme croisé $\mathbb{E}\big[(v - v^\star)\cdot(v^\star - (\mathbf{x}_1 - \mathbf{x}_0))\big]$ est nul en conditionnant par $(\mathbf{x}_t, t, \boldsymbol\lambda)$. Le réseau apprend donc une moyenne conditionnelle par simple régression, sans jamais la calculer ; Lipman et al. (2023) montrent que le flot de $v^\star$ transporte bien $\mathcal{N}(0, I)$ sur $\mu_{\boldsymbol\lambda}$.
+
+La figure 1 résume le cadre que ce rapport défend : chaque classe de contrainte est traitée à l'étage où elle est vraie.
+
+![**Figure 1 — Cadre génératif proposé.** Les paramètres physiques $\boldsymbol\lambda$ pilotent un flow matching latent ; un décodeur à potentiels rend $\nabla\cdot\mathbf{u} = 0$ et $\nabla\cdot\mathbf{B} = 0$ exactes ; la symétrie $\mathbf{B} \to -\mathbf{B}$ est imposée par équivariance ; le bilan d'énergie est imposé en loi, pas échantillon par échantillon. **a**, Le champ de vitesse $v_\theta(\mathbf{z}, t, \boldsymbol\lambda)$ transporte un bruit gaussien vers une loi latente bimodale symétrique, image des deux polarités ; si $v_\theta(S\mathbf{z}, t, \boldsymbol\lambda) = S\,v_\theta(\mathbf{z}, t, \boldsymbol\lambda)$, la loi générée est exactement invariante (Proposition 4). **b**, Un décodeur fonctionnel sort des potentiels, dont les rotationnels donnent $\mathbf{u}$ et $\mathbf{B}$ à divergence nulle quelle que soit la loi latente (Proposition 1) ; en 2D, ces potentiels sont la fonction de courant $\psi$ et le potentiel magnétique $a$. **c**, Géométrie visée, de type VKS ; le modèle n'a pas été entraîné sur VKS, et les expériences de ce rapport sont des bancs d'essai simples (E1, E2, E3). **d**, Contrôle en loi : une inclinaison exponentielle ramène la dissipation moyenne sur la puissance injectée moyenne sans modifier les échantillons (Proposition 7) ; imposer $\varepsilon = P$ à chaque échantillon réduirait la loi de $\mathrm{d}E/\mathrm{d}t$ à un pic en zéro (Corollaire 6). **e**, Usages en aval : bases de modèles réduits, ensembles pour l'assimilation de données, fréquence des renversements par la formule de Rice (Proposition 8). Tous les glyphes de données de la figure sont schématiques, sans valeurs mesurées.](../figures/cadre/figure/out/cadre.png){width="100%" fig-alt="Schéma en cinq panneaux. a : trajectoires d'un flot qui transporte une gaussienne vers une loi à deux bosses symétriques, avec un opérateur S qui échange les bosses. b : un décodeur reçoit des jetons latents et produit des cartes de potentiels dont les isolignes sont les lignes de champ. c : cylindre de type VKS avec deux turbines, lignes de courant d'un côté et lignes de champ dipolaire de l'autre. d : histogrammes de la dissipation, loi brute décalée et loi inclinée recentrée, avec un pic en zéro barré pour la projection par échantillon. e : trois usages en aval, modèles réduits, assimilation de données et formule de Rice."}
+
+### Taxonomie des contraintes {#taxonomie}
+
+Toutes les « contraintes physiques » n'ont pas le même statut. Certaines sont vraies pour chaque champ admissible ; d'autres ne sont vraies que pour la loi des champs. La taxonomie suivante, qui organise tout le rapport, sépare quatre classes et associe à chacune le mécanisme qui agit là où la contrainte est vraie.
+
+![**Figure 2 — Chaque classe de contrainte appelle un mécanisme qui agit là où la contrainte est vraie : sur chaque échantillon pour C1 et C2, sur la loi pour C3 et C4 ; projeter chaque échantillon sur une contrainte en loi détruit la loi.** Le bleu marque ce qui est vrai pour chaque échantillon et les mécanismes qui agissent sur chaque échantillon ; l'orange, ce qui n'est vrai que pour la loi et les mécanismes qui agissent sur la loi. **a**, Les quatre classes. C1 : $\mathbf{x}$ appartient à un sous-espace $S = \ker A$ (divergence nulle, conditions aux limites linéaires homogènes), imposé par des potentiels ou par la projection orthogonale sur $S$. C2 : $c(\mathbf{x}) = 0$, par exemple le résidu d'une EDP stationnaire, imposé par une projection non linéaire, ou par une pénalité ou un guidage sur la prédiction moyenne de fin de chemin, biaisés par l'écart de Jensen. C3 : la loi est invariante par une symétrie, mais un échantillon isolé ne l'est pas ; un champ de vitesse équivariant et une loi de base invariante suffisent. C4 : identités de stationnarité $\mathbb{E}_\mu[\mathcal{L}\varphi] = 0$, dont le bilan d'énergie moyen, imposées sur la loi par une perte d'entraînement ou par une inclinaison exponentielle. **b**, Pour C4, trois lois de $\mathrm{d}E/\mathrm{d}t$ : la vraie loi, étalée et de moyenne nulle ; la projection de chaque échantillon sur $\mathrm{d}E/\mathrm{d}t = 0$, qui donne un Dirac étranger à la vraie loi ; la correction en loi, qui garde les échantillons et change leurs poids. Courbes illustratives, pas des mesures.](../figures/taxonomie/figure/out/taxonomie.png){width="100%" fig-alt="Panneau a : quatre colonnes C1 à C4. C1 montre des points sur une droite et une projection orthogonale ; C2 un arc de courbe et l'écart de Jensen entre la moyenne de deux points et la courbe ; C3 deux nuages symétriques échangés par une réflexion ; C4 une densité centrée en zéro. En bas, le mécanisme adapté à chaque classe. Panneau b : trois densités de dE/dt, la loi vraie étalée, la projection par échantillon réduite à un Dirac en zéro, et la correction en loi recentrée et étalée."}
+
+::: def
+[Définition 3.3 — Quatre classes de contraintes]{.tag}
+
+| Classe | Forme | Exemples en MHD | Vraie pour | Mécanisme adapté |
+|---|---|---|---|---|
+| C1 — locale linéaire | $\mathbf{x} \in S$, avec $S = \ker A$ sous-espace fermé | $\nabla\cdot\mathbf{u} = 0$, $\nabla\cdot\mathbf{B} = 0$, conditions aux limites linéaires homogènes | chaque échantillon | architecture (potentiels) ou projection |
+| C2 — locale non linéaire | $c(\mathbf{x}) = 0$ | équation stationnaire (Darcy dans PIDM), relation algébrique | chaque échantillon, si aucune dérivée en temps n'intervient | projection non linéaire (PCFM, ECI), pénalité ou guidage |
+| C3 — symétrie | $g_\#\mu_{\boldsymbol\lambda} = \mu_{\boldsymbol\lambda}$ pour $g \in G$ | $\mathbf{B} \to -\mathbf{B}$ ; rotation $R_\pi$ de VKS ; $(Q, D, V) \to (-Q, -D, V)$ | la loi | équivariance du champ de vitesse |
+| C4 — statistique (stationnarité) | $\mathbb{E}_{\mu_{\boldsymbol\lambda}}[\mathcal{L}_{\boldsymbol\lambda}\varphi] = 0$ pour $\varphi \in \Phi$ | bilan d'énergie moyen $\langle\varepsilon\rangle = \langle P\rangle$ ; bilans d'hélicité croisée et de $\langle a^2\rangle$ | la loi seulement | perte en loi à l'entraînement ; inclinaison exponentielle à l'échantillonnage |
+:::
+
+::: note
+[Remarque 3.4 — Un instantané ne « vérifie » pas une équation d'évolution]{.tag}
+Pour un instantané d'une EDP instationnaire, le résidu $\partial_t\mathbf{x} - F(\mathbf{x})$ n'est pas calculable, puisque la dérivée en temps n'est pas dans l'instantané : tout état est l'état initial d'une solution. Les seules contraintes par échantillon que fournit le modèle physique sont celles qui ne font pas intervenir le temps, comme la divergence nulle, les conditions aux limites ou les équations elliptiques diagnostiques (la pression, par exemple). En particulier, le bilan d'énergie $\mathrm{d}E/\mathrm{d}t = P - \varepsilon$ est une **identité**, dont le membre de droite se calcule sur l'instantané ; ce n'est pas une contrainte. La contrainte est $\mathbb{E}[P - \varepsilon] = 0$, et elle porte sur la loi.
+:::
+
+### Contraintes par échantillon : Propositions 1 à 3 {#props-echantillon}
+
+:::: prop
+[Proposition 1 — Contrainte linéaire par construction]{.tag}
+Si le modèle génère $\mathbf{z}$ selon une loi quelconque puis renvoie $\mathbf{x} = \mathcal{C}(\mathbf{z})$, avec un décodeur $\mathcal{C}$ tel que $\mathrm{Im}\,\mathcal{C} \subset S$ (par exemple $\mathbf{u} = \nabla^\perp\psi$, $\mathbf{B} = \nabla\times\mathbf{A}$), alors la loi générée vérifie $q(S) = 1$, quelle que soit la loi de $\mathbf{z}$, donc quelle que soit la qualité de l'apprentissage.
+
+::: proof
+On a $q(S) = q_{\mathbf{z}}(\mathcal{C}^{-1}(S))$, et $\mathcal{C}^{-1}(S)$ est l'espace latent tout entier puisque l'image de $\mathcal{C}$ est contenue dans $S$ ; donc $q(S) = 1$. [∎]{.qed}
+:::
+::::
+
+La proposition est triviale ; tout l'intérêt est dans le choix de $\mathcal{C}$. En 2D, $\mathbf{u} = \nabla^\perp\psi = (\partial_y\psi, -\partial_x\psi)$ vérifie $\nabla\cdot\mathbf{u} = \partial_x\partial_y\psi - \partial_y\partial_x\psi = 0$ pour toute fonction $\psi$ deux fois dérivable ; c'est le choix de FunDiff et de notre variante V4. En 3D, $\mathbf{B} = \nabla\times\mathbf{A}$ convient pour tout $\mathbf{A}$, mais $\mathbf{A}$ n'est défini qu'à un gradient près, et un modèle génératif de potentiels doit fixer la jauge pour que la loi de $\mathbf{A}$ soit déterminée par la physique.
+
+::: note
+[Remarque 3.5 — Domaines bornés]{.tag}
+En domaine borné, le décodeur doit aussi respecter les conditions aux limites. Pour une paroi imperméable en 2D, $\psi$ doit être constante sur la paroi. Pour le potentiel vecteur en 3D, Amrouche & Seloula (2011) donnent les deux choix canoniques sur un domaine borné régulier : si $\mathbf{B}$ est à divergence nulle et de flux nul à travers chaque composante connexe du bord, il existe un unique $\boldsymbol\psi$ tel que $\mathbf{B} = \nabla\times\boldsymbol\psi$, $\nabla\cdot\boldsymbol\psi = 0$ et $\boldsymbol\psi\cdot\mathbf{n} = 0$ au bord (avec des conditions de flux à travers des coupures si le domaine n'est pas simplement connexe) ; si de plus $\mathbf{B}\cdot\mathbf{n} = 0$ au bord, on peut imposer $\boldsymbol\psi\times\mathbf{n} = 0$. Le raccord à un champ extérieur potentiel, comme dans SFEMaNS, demande en plus de générer ou de calculer ce champ extérieur.
+:::
+
+La proposition suivante explique pourquoi plusieurs mécanismes différents visent la même cible, et d'où vient la divergence résiduelle d'un modèle qui n'impose rien.
+
+:::: prop
+[Proposition 2 — Flot optimal quand les données vivent dans un sous-espace]{.tag}
+Soit $S \subset \mathbb{R}^D$ un sous-espace, $P$ le projecteur orthogonal sur $S$, et supposons $\mu(S) = 1$. Avec $\mathbf{x}_0 \sim \mathcal{N}(0, I)$ indépendant de $\mathbf{x}_1 \sim \mu$, le champ optimal s'écrit, pour $t \in [0, 1)$,
+
+$$
+v^\star(\mathbf{x}, t) = m(P\mathbf{x}, t) - \frac{(I-P)\,\mathbf{x}}{1-t}, \qquad m(\mathbf{y}, t) = \mathbb{E}\big[\mathbf{x}_1 - P\mathbf{x}_0 \,\big|\, P\mathbf{x}_t = \mathbf{y}\big] \in S .
+$$
+
+Il en découle quatre conséquences.
+
+(a) Avec $v^\star$ exact, la composante orthogonale de l'échantillonneur vérifie $(I-P)\mathbf{x}(t) = (1-t)\,(I-P)\mathbf{x}(0)$ : l'échantillon final est exactement dans $S$.
+
+(b) Dans la limite d'un apprentissage parfait, la génération libre, la projection finale, le flot projeté et la génération par potentiels produisent la même loi $\mu$. Les différences observées entre ces mécanismes viennent de l'erreur d'approximation et du biais inductif, pas de la cible.
+
+(c) Si le réseau ne reproduit pas la singularité en $t = 1$, par exemple si, le long d'une trajectoire, $(I-P)\,v_\theta = -\kappa(t)\,(I-P)\mathbf{x} + \mathbf{r}(t)$ avec $0 \le \kappa(t) \le K$ et $\|\mathbf{r}(t)\| \le \rho$, alors $\|(I-P)\mathbf{x}(1)\| \ge e^{-K}\,\|(I-P)\mathbf{x}(0)\| - \rho$. La divergence résiduelle d'un modèle libre est donc d'ordre un tant que le réseau ne représente pas un taux de contraction qui diverge quand $t \to 1$.
+
+(d) Le terme $-(I-P)\mathbf{x}/(1-t)$ est raide près de $t = 1$ : un schéma explicite à pas fixe $h$ le résout mal sur les derniers pas, où $h/(1-t)$ est d'ordre un.
+
+::: proof
+*Décomposition.* Le bruit $\mathbf{x}_0$ est gaussien isotrope, donc $P\mathbf{x}_0$ et $(I-P)\mathbf{x}_0$ sont des vecteurs gaussiens non corrélés, donc indépendants. Comme $\mathbf{x}_1 \in S$ presque sûrement, $P\mathbf{x}_t = (1-t)P\mathbf{x}_0 + t\,\mathbf{x}_1$ et $(I-P)\mathbf{x}_t = (1-t)(I-P)\mathbf{x}_0$. La variable $(I-P)\mathbf{x}_t$ est donc indépendante du triplet $(P\mathbf{x}_t, \mathbf{x}_1, P\mathbf{x}_0)$. On écrit la cible $\mathbf{x}_1 - \mathbf{x}_0 = (\mathbf{x}_1 - P\mathbf{x}_0) - (I-P)\mathbf{x}_0$ et l'on conditionne par $\mathbf{x}_t$, c'est-à-dire par le couple $(P\mathbf{x}_t, (I-P)\mathbf{x}_t)$. Pour le premier terme, l'indépendance donne $\mathbb{E}[\mathbf{x}_1 - P\mathbf{x}_0 \mid P\mathbf{x}_t, (I-P)\mathbf{x}_t] = \mathbb{E}[\mathbf{x}_1 - P\mathbf{x}_0 \mid P\mathbf{x}_t] = m(P\mathbf{x}_t, t)$, qui appartient à $S$ car $\mathbf{x}_1 - P\mathbf{x}_0 \in S$ et que l'espérance conditionnelle commute avec l'application linéaire $I - P$. Pour le second, $(I-P)\mathbf{x}_0 = (I-P)\mathbf{x}_t/(1-t)$ est une fonction de $(I-P)\mathbf{x}_t$ quand $t < 1$, donc égal à sa propre espérance conditionnelle.
+
+*(a)* La composante $\mathbf{y} = (I-P)\mathbf{x}$ vérifie $\dot{\mathbf{y}} = -\mathbf{y}/(1-t)$, dont la solution est $\mathbf{y}(t) = (1-t)\,\mathbf{y}(0)$, nulle en $t = 1$. La composante $P\mathbf{x}$ vérifie l'équation $\dot{\mathbf{w}} = m(\mathbf{w}, t)$, qui ne fait intervenir que $P\mathbf{x}$.
+
+*(b)* Le flot de $v^\star$ transporte $\mathcal{N}(0, I)$ sur $\mu$ (Lipman et al. 2023). La projection finale ne change pas la loi, car $P$ est l'identité sur $S$, qui porte $\mu$. Pour le flot projeté, $P\,v^\star(\mathbf{x}, t) = m(P\mathbf{x}, t)$ ne dépend que de $P\mathbf{x}$ : en projetant à chaque pas, $\mathbf{w} = P\mathbf{x}$ suit exactement la même équation, avec la même condition initiale $P\mathbf{x}(0)$, et arrive au même point que la trajectoire libre, dont la composante orthogonale finale est nulle par (a). Enfin, si $\mathcal{C}$ est une bijection linéaire d'un espace de coefficients sur $S$ (comme $\hat\psi_{\mathbf{k}} \mapsto i\,\mathbf{k}^\perp\hat\psi_{\mathbf{k}}$ pour $\mathbf{k} \neq 0$), la cible du flow matching en potentiels est la loi $(\mathcal{C}^{-1})_\#\mu$, que $\mathcal{C}$ renvoie sur $\mu$.
+
+*(c)* Le long d'une trajectoire, $\mathbf{y} = (I-P)\mathbf{x}$ vérifie l'équation linéaire $\dot{\mathbf{y}} = -\kappa(t)\,\mathbf{y} + \mathbf{r}(t)$, d'où $\mathbf{y}(1) = e^{-\int_0^1\kappa}\,\mathbf{y}(0) + \int_0^1 e^{-\int_s^1\kappa}\,\mathbf{r}(s)\,\mathrm{d}s$. Le premier terme a une norme au moins $e^{-K}\|\mathbf{y}(0)\|$, le second une norme au plus $\rho$, et l'inégalité triangulaire conclut.
+
+*(d)* Sur la composante orthogonale, le champ exact a la constante de Lipschitz $1/(1-t)$ ; un schéma explicite de pas $h$ n'est précis que si $h/(1-t)$ est petit, ce qui échoue sur les derniers pas. [∎]{.qed}
+:::
+::::
+
+::: note
+[Remarque 3.6 — Une erreur bornée ne laisse pas de divergence ; une contraction absente en laisse]{.tag}
+On pourrait croire que la composante orthogonale finale d'un modèle libre égale l'erreur du réseau au temps final. Le calcul dit autre chose. Si l'erreur s'**ajoute** au champ exact, $(I-P)v_\theta = -(I-P)\mathbf{x}/(1-t) + \mathbf{r}(t)$ avec $\|\mathbf{r}\| \le \rho$, la solution s'écrit $\mathbf{y}(t) = (1-t)\big[\mathbf{y}(0) + \int_0^t \mathbf{r}(s)/(1-s)\,\mathrm{d}s\big]$, dont le second terme est majoré par $\rho\,(1-t)\ln\frac{1}{1-t}$, qui tend vers 0 : la contraction efface l'erreur. Ce qui laisse une divergence finie, c'est l'incapacité d'un réseau borné à représenter le taux $1/(1-t)$ (point (c)), combinée au pas fini de l'intégrateur (point (d)). La divergence résiduelle mesurée dans E2 pour la génération libre se lit donc comme un défaut de représentation du terme raide, pas comme une petite erreur uniforme.
+:::
+
+:::: prop
+[Proposition 3 — Pénalité sur la prédiction de fin de chemin : sans biais pour une contrainte linéaire, biaisée sinon]{.tag}
+La prédiction de fin de chemin $\hat{\mathbf{x}}_1 = \mathbf{x}_t + (1-t)\,v(\mathbf{x}_t, t)$ vaut $\mathbb{E}[\mathbf{x}_1\mid\mathbf{x}_t]$ quand $v = v^\star$. Si $A$ est linéaire et $A\mathbf{x}_1 = 0$ presque sûrement, la pénalité $\mathbb{E}\|A\hat{\mathbf{x}}_1\|^2$ s'annule en $v^\star$ : ajoutée à la perte de flow matching, elle ne déplace pas l'optimum. Pour une contrainte non linéaire $c$, on a en général $c(\mathbb{E}[\mathbf{x}_1\mid\mathbf{x}_t]) \neq \mathbb{E}[c(\mathbf{x}_1)\mid\mathbf{x}_t] = 0$ : la pénalité ne s'annule pas en $v^\star$ et biaise l'optimum. C'est l'écart de Jensen discuté par Bastek, Sun & Kochmann (2025).
+
+::: proof
+Sur le chemin linéaire, $\mathbf{x}_t + (1-t)(\mathbf{x}_1 - \mathbf{x}_0) = (1-t)\mathbf{x}_0 + t\,\mathbf{x}_1 + (1-t)\mathbf{x}_1 - (1-t)\mathbf{x}_0 = \mathbf{x}_1$. En prenant l'espérance conditionnelle sachant $\mathbf{x}_t$, et puisque $v^\star(\mathbf{x}_t, t) = \mathbb{E}[\mathbf{x}_1 - \mathbf{x}_0\mid\mathbf{x}_t]$, on obtient $\hat{\mathbf{x}}_1 = \mathbb{E}[\mathbf{x}_1\mid\mathbf{x}_t]$. Si $A$ est linéaire, $A\hat{\mathbf{x}}_1 = \mathbb{E}[A\mathbf{x}_1\mid\mathbf{x}_t] = 0$ presque sûrement, donc la pénalité, positive, est nulle en $v^\star$ ; comme $v^\star$ minimise aussi $\mathcal{J}$, il minimise la somme. Pour une contrainte non linéaire, un exemple suffit : en dimension 1, $c(x) = x^2 - 1$ et $\mu = \tfrac12(\delta_{-1} + \delta_{1})$ ; par symétrie, $\mathbb{E}[\mathbf{x}_1\mid\mathbf{x}_t = 0] = 0$, donc $c(\hat{\mathbf{x}}_1) = -1$ en $\mathbf{x}_t = 0$, et, par continuité, $\hat{\mathbf{x}}_1$ parcourt tout l'intervalle $(-1, 1)$ quand $\mathbf{x}_t$ décrit $\mathbb{R}$. La pénalité $\mathbb{E}[c(\hat{\mathbf{x}}_1)^2]$ est donc strictement positive en $v^\star$, et sa dérivée dans une direction $\delta v$ localisée là où $0 < \hat{\mathbf{x}}_1 < 1$ vaut $2(1-t)\,\mathbb{E}[c(\hat{\mathbf{x}}_1)\,c'(\hat{\mathbf{x}}_1)\,\delta v] \neq 0$, alors que le gradient de $\mathcal{J}$ s'annule en $v^\star$ : l'optimum de la somme est déplacé. [∎]{.qed}
+:::
+::::
+
+### Symétrie : Proposition 4 {#prop-symetrie}
+
+:::: prop
+[Proposition 4 — Symétrie exacte par équivariance]{.tag}
+Soit $G$ un groupe fini agissant sur $\mathbb{R}^D$ par isométries linéaires. Si le champ de vitesse vérifie $v(g\mathbf{x}, t, \boldsymbol\lambda) = g\,v(\mathbf{x}, t, \boldsymbol\lambda)$ pour tous $g$, $\mathbf{x}$, $t$, $\boldsymbol\lambda$, et si la loi de base $\gamma$ est $G$-invariante (c'est le cas de $\mathcal{N}(0, I)$), alors la loi générée $q(\cdot\mid\boldsymbol\lambda)$ est $G$-invariante pour **tout** $\boldsymbol\lambda$, y compris sans données. La symétrisation $v_{\mathrm{sym}} = \frac{1}{|G|}\sum_{g\in G} g^{-1}\,v(g\,\cdot)$ est équivariante, et si les lois $\mu_{\boldsymbol\lambda}$ sont $G$-invariantes, la perte de flow matching en population vérifie $\mathcal{J}(v_{\mathrm{sym}}) \le \mathcal{J}(v)$.
+
+::: proof
+*Invariance.* Soit $\Phi_t$ le flot de $v$ à $\boldsymbol\lambda$ fixé. La courbe $t \mapsto g\,\Phi_t(\mathbf{z})$ vérifie $\frac{\mathrm{d}}{\mathrm{d}t}\,g\Phi_t(\mathbf{z}) = g\,v(\Phi_t(\mathbf{z}), t) = v(g\Phi_t(\mathbf{z}), t)$, avec la valeur initiale $g\mathbf{z}$ ; c'est donc la solution issue de $g\mathbf{z}$, et l'unicité des solutions donne $g\,\Phi_t(\mathbf{z}) = \Phi_t(g\mathbf{z})$. Alors $g_\#q = (g\circ\Phi_1)_\#\gamma = (\Phi_1\circ g)_\#\gamma = (\Phi_1)_\#(g_\#\gamma) = (\Phi_1)_\#\gamma = q$.
+
+*Équivariance de la symétrisation.* Pour $h \in G$, $v_{\mathrm{sym}}(h\mathbf{x}) = \frac{1}{|G|}\sum_g g^{-1}v(gh\mathbf{x}) = h\,\frac{1}{|G|}\sum_g (gh)^{-1}v(gh\mathbf{x}) = h\,v_{\mathrm{sym}}(\mathbf{x})$, en réindexant la somme par $g' = gh$.
+
+*Perte.* Notons $(T_g v)(\mathbf{x}) = g^{-1}v(g\mathbf{x})$. Comme $g$ est une isométrie, $\mathcal{J}(T_g v) = \mathbb{E}\|v(g\mathbf{x}_t) - g(\mathbf{x}_1 - \mathbf{x}_0)\|^2$. Or $(g\mathbf{x}_0, g\mathbf{x}_1)$ a la même loi que $(\mathbf{x}_0, \mathbf{x}_1)$, puisque les deux lois sont invariantes et les variables indépendantes ; donc $\mathcal{J}(T_g v) = \mathcal{J}(v)$. La perte est convexe en $v$ (quadratique), et l'inégalité de Jensen donne $\mathcal{J}(v_{\mathrm{sym}}) = \mathcal{J}\big(\frac{1}{|G|}\sum_g T_g v\big) \le \frac{1}{|G|}\sum_g\mathcal{J}(T_g v) = \mathcal{J}(v)$. [∎]{.qed}
+:::
+::::
+
+Ce résultat est classique pour les flots normalisants équivariants ; nous l'énonçons parce qu'il s'articule avec la stationnarité de la façon suivante.
+
+::: note
+[Remarque 3.7 — Les identités de stationnarité ne fixent pas les poids des composantes symétriques]{.tag}
+L'ensemble des mesures invariantes d'une dynamique est convexe ; ses points extrémaux sont les mesures ergodiques. Sous le seuil des renversements, la dynamique de Gissinger a deux mesures ergodiques symétriques $\mu_+$ (polarité $D > 0$) et $\mu_- = S_\#\mu_+$, et **toute** combinaison $p\,\mu_+ + (1-p)\,\mu_-$ est invariante : $\mathbb{E}_{p\mu_+ + (1-p)\mu_-}[\mathcal{L}\varphi] = p\cdot0 + (1-p)\cdot 0 = 0$ pour toute fonction test. Les identités de stationnarité, si nombreuses soient-elles, ne peuvent donc pas fixer $p$. Or les données d'entraînement, faites d'un nombre fini de trajectoires dont chacune reste sur sa polarité, donnent en général $p \neq 1/2$. La symétrie doit être imposée séparément, par la Proposition 4 ; c'est l'objet de la comparaison des variantes A, B et C de E1.
+:::
+
+### Stationnarité : Proposition 5, Corollaire 6 et Proposition 7 {#props-stationnarite}
+
+:::: prop
+[Proposition 5 — Identités de stationnarité]{.tag}
+Si $\mu$ est invariante pour la dynamique de générateur $\mathcal{L}$, alors $\mathbb{E}_\mu[\mathcal{L}\varphi] = 0$ pour toute fonction $\varphi$ régulière à croissance contrôlée. C'est la forme faible de l'équation de Liouville ($\Sigma = 0$) ou de l'équation de Fokker–Planck stationnaire $\nabla\cdot(\mu F) = \tfrac12\nabla^2 : (\Sigma\Sigma^\top\mu)$. Le bilan d'énergie moyen est le cas $\varphi = E$.
+
+::: proof
+*Cas déterministe.* Soit $\mathbf{x}(0) \sim \mu$ et $\mathbf{x}(t)$ la solution correspondante. Par la règle de dérivation des fonctions composées, $\varphi(\mathbf{x}(t)) - \varphi(\mathbf{x}(0)) = \int_0^t \mathcal{L}\varphi(\mathbf{x}(s))\,\mathrm{d}s$. Comme $\mu$ est invariante, $\mathbf{x}(s) \sim \mu$ pour tout $s$ ; en prenant l'espérance et en échangeant espérance et intégrale (Fubini, permis par la croissance contrôlée), le membre de gauche est nul et le membre de droite vaut $t\,\mathbb{E}_\mu[\mathcal{L}\varphi]$.
+
+*Cas stochastique.* La formule d'Itô donne $\varphi(\mathbf{x}(t)) - \varphi(\mathbf{x}(0)) = \int_0^t \mathcal{L}\varphi(\mathbf{x}(s))\,\mathrm{d}s + \int_0^t \nabla\varphi(\mathbf{x}(s))\cdot\Sigma\,\mathrm{d}W_s$ ; l'intégrale stochastique est une martingale d'espérance nulle, et l'on conclut de la même façon. [∎]{.qed}
+:::
+::::
+
+::: ex
+[Exemple 3.8 — Les identités utilisées dans E1 et E2]{.tag}
+*Modèle de Gissinger (E1).* Avec $F = (\mu Q - VD,\ -\nu D + VQ,\ \Gamma - V + QD)$, le choix $\varphi = Q$ donne $\mathbb{E}[\mu Q - VD] = 0$, le choix $\varphi = V$ donne $\mathbb{E}[V] = \Gamma + \mathbb{E}[QD]$, et l'énergie $\varphi = \tfrac12(Q^2 + D^2 + V^2)$ donne $\mathbb{E}[\mu Q^2 - \nu D^2 + \Gamma V - V^2 + QDV] = 0$. E1 utilise les neuf monômes de degré au plus 2 comme fonctions test, et garde les dix monômes de degré 3 pour le contrôle.
+
+*MHD 2D forcée (E2).* Le domaine est périodique, $\mathbf{u} = \nabla^\perp\psi$, $\mathbf{B} = \nabla^\perp a$, $\omega = -\Delta\psi$, $j = -\Delta a$, avec un frottement linéaire $\alpha$ et deux forçages aléatoires blancs en temps et indépendants, l'un sur $\omega$, l'autre sur $a$. Les termes non linéaires ne contribuent pas aux bilans de l'énergie $E = \tfrac12\langle|\mathbf{u}|^2 + |\mathbf{B}|^2\rangle$, de l'hélicité croisée $H_C = \langle\mathbf{u}\cdot\mathbf{B}\rangle$ et de $\langle a^2\rangle$, qui sont les invariants quadratiques de la MHD 2D idéale (Krstulovic, Brachet & Pouquet 2011). Avec la dissipation $\mathcal{D}(\mathbf{x}) = \nu\langle\omega^2\rangle + \eta\langle j^2\rangle + \alpha\langle|\mathbf{u}|^2\rangle + \alpha\langle|\mathbf{B}|^2\rangle$, un calcul fait pour ce rapport (intégrations par parties, formule d'Itô) donne trois identités :
+
+$$
+\mathbb{E}_\mu[\mathcal{D}] = \varepsilon_{\mathrm{inj}}, \qquad \mathbb{E}_\mu\big[(\nu + \eta)\langle\omega j\rangle + 2\alpha H_C\big] = 0, \qquad \mathbb{E}_\mu\big[\eta\langle|\mathbf{B}|^2\rangle + \alpha\langle a^2\rangle\big] = \varepsilon_{a^2}.
+$$
+
+Les constantes $\varepsilon_{\mathrm{inj}}$ et $\varepsilon_{a^2}$ sont les taux d'injection d'Itô des forçages : comme $E$ et $\langle a^2\rangle$ sont quadratiques, le terme $\tfrac12\Sigma\Sigma^\top : \nabla^2\varphi$ ne dépend pas de l'état. Pour $H_C$, ce terme est nul, car les deux forçages sont indépendants. Aucune de ces identités n'est vraie pour un instantané isolé : $\mathcal{D}(\mathbf{x})$ fluctue d'un instantané à l'autre.
+:::
+
+Imposer une telle identité à chaque échantillon serait une erreur de catégorie, que le corollaire suivant rend précise.
+
+:::: prop
+[Corollaire 6 — Une contrainte par échantillon sur un bilan stationnaire est incohérente]{.tag}
+Si la variable $\mathcal{L}\varphi(\mathbf{x})$ a une loi à densité sous $\mu$ (cas générique, dès que $\mathrm{Var}_\mu(\mathcal{L}\varphi) > 0$ et que la loi n'a pas d'atome en 0), l'ensemble $\{\mathcal{L}\varphi = 0\}$ est $\mu$-négligeable. Toute loi concentrée sur cet ensemble est étrangère à $\mu$, si bien que sa divergence de Kullback–Leibler à $\mu$ est infinie. Si de plus $\mathcal{L}\varphi$ est $L$-lipschitzienne sur un domaine qui porte les lois considérées, toute loi $\nu$ concentrée sur $\{\mathcal{L}\varphi = 0\}$ vérifie
+
+$$
+W_1(\nu, \mu) \ \ge\ \frac{\mathbb{E}_\mu|\mathcal{L}\varphi|}{L} \ >\ 0 .
+$$
+
+En particulier, projeter chaque échantillon sur $\{\mathcal{L}\varphi = 0\}$ laisse une erreur qui ne s'annule pas, même avec un générateur parfait.
+
+::: proof
+Si $Y = \mathcal{L}\varphi(\mathbf{x})$ a une densité sous $\mu$, $\mu(\{\mathcal{L}\varphi = 0\}) = \mathbb{P}(Y = 0) = 0$. Une loi $\nu$ qui donne la masse 1 à cet ensemble n'est pas absolument continue par rapport à $\mu$, et $\mathrm{KL}(\nu\,\|\,\mu) = +\infty$ par définition. Pour la borne, soit $(\mathbf{X}, \mathbf{Y})$ un couplage de $\nu$ et $\mu$. Comme $\mathcal{L}\varphi(\mathbf{X}) = 0$ presque sûrement, $\mathbb{E}|\mathcal{L}\varphi(\mathbf{Y})| = \mathbb{E}|\mathcal{L}\varphi(\mathbf{Y}) - \mathcal{L}\varphi(\mathbf{X})| \le L\,\mathbb{E}\|\mathbf{X} - \mathbf{Y}\|$ ; en prenant l'infimum sur les couplages, $W_1(\nu, \mu) \ge \mathbb{E}_\mu|\mathcal{L}\varphi|/L$. Un générateur parfait suivi de la projection produit une loi de ce type. [∎]{.qed}
+:::
+::::
+
+Il faut donc imposer les identités **en loi**. Deux voies existent : modifier la loi générée après coup par une inclinaison exponentielle, ou modifier l'entraînement.
+
+:::: prop
+[Proposition 7 — I-projection et inclinaison exponentielle]{.tag}
+Soit $q$ une loi et $\mathbf{g}$ un vecteur de fonctions tel que $Z(\boldsymbol\beta) = \mathbb{E}_q[e^{\boldsymbol\beta\cdot\mathbf{g}}]$ soit fini. Parmi les lois $\nu \ll q$ telles que $\mathbb{E}_\nu[\mathbf{g}] = \mathbf{c}$, la plus proche de $q$ au sens de $\mathrm{KL}(\nu\,\|\,q)$ est la loi inclinée
+
+$$
+\nu^\star = \frac{e^{\boldsymbol\beta^\star\cdot\mathbf{g}}}{Z(\boldsymbol\beta^\star)}\,q ,
+$$
+
+où $\boldsymbol\beta^\star$ minimise le dual convexe $\Lambda(\boldsymbol\beta) = \log Z(\boldsymbol\beta) - \boldsymbol\beta\cdot\mathbf{c}$ (Csiszár 1975), lorsque ce minimum est atteint. Sur un échantillon $\mathbf{x}_1, \dots, \mathbf{x}_N$ de $q$, la loi inclinée est représentée par les poids autonormalisés $w_i \propto e^{\boldsymbol\beta\cdot\mathbf{g}(\mathbf{x}_i)}$, dont la taille effective d'échantillon vaut $\mathrm{ESS} = 1/\sum_i w_i^2$. Un repondérage ne crée pas de masse : le support de $\nu^\star$ est celui de $q$.
+
+::: proof
+Le gradient de $\log Z$ est $\nabla\log Z(\boldsymbol\beta) = \mathbb{E}_{\nu_{\boldsymbol\beta}}[\mathbf{g}]$, où $\nu_{\boldsymbol\beta} = e^{\boldsymbol\beta\cdot\mathbf{g}}q/Z(\boldsymbol\beta)$, et sa hessienne est $\mathrm{Cov}_{\nu_{\boldsymbol\beta}}(\mathbf{g}) \succeq 0$ : $\Lambda$ est convexe, et son minimiseur vérifie $\mathbb{E}_{\nu^\star}[\mathbf{g}] = \mathbf{c}$. Soit $\nu \ll q$ avec $\mathbb{E}_\nu[\mathbf{g}] = \mathbf{c}$. Comme $\nu^\star$ a une densité strictement positive par rapport à $q$, $\nu \ll \nu^\star$, et $\log\frac{\mathrm{d}\nu}{\mathrm{d}q} = \log\frac{\mathrm{d}\nu}{\mathrm{d}\nu^\star} + \boldsymbol\beta^\star\cdot\mathbf{g} - \log Z(\boldsymbol\beta^\star)$. En intégrant contre $\nu$,
+
+$$
+\mathrm{KL}(\nu\,\|\,q) = \mathrm{KL}(\nu\,\|\,\nu^\star) + \boldsymbol\beta^\star\cdot\mathbf{c} - \log Z(\boldsymbol\beta^\star) .
+$$
+
+Appliquée à $\nu = \nu^\star$, cette identité donne $\mathrm{KL}(\nu^\star\,\|\,q) = \boldsymbol\beta^\star\cdot\mathbf{c} - \log Z(\boldsymbol\beta^\star)$, d'où l'identité de Pythagore $\mathrm{KL}(\nu\,\|\,q) = \mathrm{KL}(\nu\,\|\,\nu^\star) + \mathrm{KL}(\nu^\star\,\|\,q) \ge \mathrm{KL}(\nu^\star\,\|\,q)$, avec égalité si et seulement si $\nu = \nu^\star$. La version empirique applique le même calcul à la loi empirique $q_N = \frac1N\sum_i\delta_{\mathbf{x}_i}$, et $\nu^\star \ll q$ montre que le support ne peut pas grandir. [∎]{.qed}
+:::
+::::
+
+La démonstration ci-dessus suppose l'existence de $\boldsymbol\beta^\star$, ce qui demande que $\mathbf{c}$ soit à l'intérieur de l'enveloppe convexe des valeurs de $\mathbf{g}$ sous $q$. Elle indique aussi la limite pratique de la méthode : si $q$ manque une région que $\mu$ charge, par exemple le « pont » $|D| \approx 0$ du modèle de Gissinger près du seuil des renversements, les poids se concentrent sur quelques échantillons et l'ESS s'effondre. D'où la seconde voie, qui agit pendant l'entraînement.
+
+::: def
+[Définition 3.9 — Perte de stationnarité]{.tag}
+Pour des fonctions test $\varphi_1, \dots, \varphi_K$ et des échelles $s_k > 0$, la perte de stationnarité au paramètre $\boldsymbol\lambda$ est
+
+$$
+\mathcal{S}_{\boldsymbol\lambda}(\theta) = \sum_{k=1}^K \left(\frac{\mathbb{E}_{q_\theta(\cdot\mid\boldsymbol\lambda)}\big[\mathcal{L}_{\boldsymbol\lambda}\varphi_k\big]}{s_k}\right)^2 .
+$$
+
+Elle est évaluée par échantillonnage différentiable (on intègre l'équation du flot en quelques pas en gardant le graphe de calcul) et ajoutée, avec un poids $\beta$, à la perte de flow matching. Comme elle n'utilise aucune donnée, elle s'impose aussi à des valeurs de $\boldsymbol\lambda$ **sans données**, tirées entre les valeurs d'entraînement.
+:::
+
+La perte de stationnarité est nulle pour toute mesure invariante ; elle ne remplace donc pas l'attache aux données, elle la complète. La [section 4](#m-stat) explique pourquoi son estimateur doit être construit avec soin. Le schéma interactif ci-dessous compare, sur une variable scalaire, la projection par échantillon et l'inclinaison exponentielle.
+
+```{=html}
+<div class="widget" data-widget="contrainte-loi"></div>
+<script defer src="../assets/interactif/contrainte-loi.js"></script>
+```
+
+### Renversements et seuils : Propositions 8 et 9 {#props-seuils}
+
+Un générateur d'instantanés ne produit pas de trajectoires. Il peut pourtant prédire une grandeur dynamique, la fréquence des passages du dipôle par zéro, si l'on connaît le champ $F$.
+
+:::: prop
+[Proposition 8 — Formule de Rice : la fréquence des renversements à partir de la loi]{.tag}
+Soit $D(t) = \ell(\mathbf{x}(t))$ une observable linéaire (le moment dipolaire) d'un processus stationnaire de loi $\mu$, à trajectoires de classe $C^1$, tel que la loi jointe de $(D, \dot D)$ ait une densité continue $p(u, \dot u)$. Le nombre moyen de passages de $D$ par 0 par unité de temps vaut
+
+$$
+\nu_0 = \int |\dot u|\,p(0, \dot u)\,\mathrm{d}\dot u = \lim_{h\to0}\frac{1}{2h}\,\mathbb{E}_\mu\big[\,|\ell(F(\mathbf{x}))|\,\mathbf{1}_{|\ell(\mathbf{x})| < h}\big]
+$$
+
+(Kac 1943 ; Rice 1944, 1945). Cette quantité ne dépend que de la loi stationnaire et de $F$ : un générateur d'instantanés prédit la fréquence des renversements **sans intégrer en temps**. L'estimateur à fenêtre $h$ a un biais en $O(h^2)$ et une variance en $O(1/(Nh))$ pour $N$ échantillons indépendants.
+
+::: proof
+*Formule de comptage.* Soit une trajectoire $D$ de classe $C^1$ sur $[0, T]$, dont les zéros $t_1, \dots, t_n$ sont transverses ($\dot D(t_i) \neq 0$) et intérieurs. Pour $h$ assez petit, l'ensemble $\{t : |D(t)| < h\}$ est la réunion disjointe de $n$ intervalles autour des $t_i$, sur chacun desquels $D$ est strictement monotone ; le changement de variable $u = D(t)$ donne $\int |\dot D(t)|\,\mathbf{1}_{|D(t)| < h}\,\mathrm{d}t = 2h$ sur chacun. Donc $n = \lim_{h\to0}\frac{1}{2h}\int_0^T|\dot D|\,\mathbf{1}_{|D|<h}\,\mathrm{d}t$.
+
+*Espérance.* Comme $\mathbf{x}(t) \sim \mu$ pour tout $t$ et que $\dot D = \ell(\dot{\mathbf{x}}) = \ell(F(\mathbf{x}))$ par linéarité de $\ell$, l'espérance de l'intégrale vaut $T\,\mathbb{E}_\mu\big[|\ell(F(\mathbf{x}))|\,\mathbf{1}_{|\ell(\mathbf{x})|<h}\big]$. L'échange de la limite et de l'espérance, justifié sous les hypothèses de régularité de Rice, donne $\nu_0 = \mathbb{E}[n]/T$ ; avec la densité, $\frac{1}{2h}\mathbb{E}\big[|\dot D|\mathbf{1}_{|D|<h}\big] = \frac{1}{2h}\int_{-h}^{h} f(u)\,\mathrm{d}u$ avec $f(u) = \int|\dot u|\,p(u, \dot u)\,\mathrm{d}\dot u$, qui tend vers $f(0)$.
+
+*Biais et variance.* Si $f$ est de classe $C^2$, $\frac{1}{2h}\int_{-h}^{h}f = f(0) + f''(0)\,h^2/6 + o(h^2)$. La variance de la moyenne empirique de $|\dot D|\,\mathbf{1}_{|D|<h}/(2h)$ sur $N$ échantillons indépendants est au plus $\mathbb{E}[\dot D^2\,\mathbf{1}_{|D|<h}]/(4h^2N) = O(h)/(4h^2N) = O(1/(Nh))$. [∎]{.qed}
+:::
+::::
+
+En MHD, le moment dipolaire est une fonctionnelle linéaire de $\mathbf{B}$, et $\dot D = \ell\big(\nabla\times(\mathbf{u}\times\mathbf{B}) + \eta\Delta\mathbf{B}\big)$ se calcule sur un instantané généré $(\mathbf{u}, \mathbf{B})$. La formule a trois limites. Il faut connaître $F$. Elle compte tous les passages par zéro, y compris les excursions et les « bavardages » autour de zéro, et pas seulement les renversements francs. Elle ne donne pas la loi des temps d'attente, qui demande la dynamique. Enfin, pour une dynamique déterministe chaotique comme celle de E1, l'hypothèse d'une densité continue de $(D, \dot D)$ n'est pas garantie, puisque la mesure physique peut être singulière ; on travaille alors à fenêtre $h$ finie.
+
+La dernière proposition dit ce qu'un générateur régulier en $\boldsymbol\lambda$ ne peut pas faire.
+
+:::: prop
+[Proposition 9 — Borne inférieure d'erreur près d'un saut de loi]{.tag}
+Supposons $\mathbf{z} \mapsto v_\theta(\mathbf{z}, t, \lambda)$ lipschitzien de constante $L_x$ et $\lambda \mapsto v_\theta(\mathbf{z}, t, \lambda)$ lipschitzien de constante $L_\lambda$, uniformément. Alors
+
+$$
+W_1(q_\lambda, q_{\lambda'}) \le L_\lambda\,\frac{e^{L_x} - 1}{L_x}\,|\lambda - \lambda'| =: K\,|\lambda - \lambda'| .
+$$
+
+Si la vraie famille saute en $\lambda_c$, au sens où $J_\delta = W_1(\mu_{\lambda_c - \delta}, \mu_{\lambda_c + \delta})$ tend vers $J > 0$ quand $\delta \to 0$ (bifurcation sous-critique, multistabilité), alors pour tout $\delta > 0$,
+
+$$
+\max_{\lambda \in \{\lambda_c - \delta,\ \lambda_c + \delta\}} W_1(q_\lambda, \mu_\lambda) \ \ge\ \frac{J_\delta - 2K\delta}{2} .
+$$
+
+Un générateur régulier en $\lambda$ commet donc une erreur d'au moins $J/2$ au voisinage du saut, sauf à avoir une constante $K$ grande ou à être conditionné par l'état (hystérésis).
+
+::: proof
+Pour une même condition initiale $\mathbf{z}$, l'écart $\Delta(t) = \|\Phi^\lambda_t(\mathbf{z}) - \Phi^{\lambda'}_t(\mathbf{z})\|$ vérifie, presque partout, $\dot\Delta \le \|v_\theta(\Phi^\lambda_t, t, \lambda) - v_\theta(\Phi^{\lambda'}_t, t, \lambda)\| + \|v_\theta(\Phi^{\lambda'}_t, t, \lambda) - v_\theta(\Phi^{\lambda'}_t, t, \lambda')\| \le L_x\Delta + L_\lambda|\lambda - \lambda'|$, avec $\Delta(0) = 0$. Le lemme de Grönwall donne $\Delta(1) \le L_\lambda|\lambda - \lambda'|\,(e^{L_x} - 1)/L_x$. Le couplage $(\Phi^\lambda_1(\mathbf{z}), \Phi^{\lambda'}_1(\mathbf{z}))$ avec $\mathbf{z} \sim \mathcal{N}(0, I)$ majore $W_1(q_\lambda, q_{\lambda'})$ par $\mathbb{E}\,\Delta(1)$, d'où la première inégalité. Pour la seconde, avec $\lambda_{1,2} = \lambda_c \mp \delta$, l'inégalité triangulaire donne $J_\delta \le W_1(\mu_{\lambda_1}, q_{\lambda_1}) + W_1(q_{\lambda_1}, q_{\lambda_2}) + W_1(q_{\lambda_2}, \mu_{\lambda_2}) \le 2\max_i W_1(q_{\lambda_i}, \mu_{\lambda_i}) + 2K\delta$. [∎]{.qed}
+:::
+::::
+
+Pour une bifurcation supercritique, comme une dynamo de seuil continu dont l'amplitude croît comme $\sqrt{Rm - Rm_c}$, la loi varie continûment, mais avec une pente infinie au seuil : la même difficulté se présente sous une forme atténuée. Dans E1, la situation est intermédiaire. Pour une trajectoire donnée, la loi saute au seuil des renversements : sous le seuil, elle est $\mu_+$ ou $\mu_-$ selon la polarité initiale ; au-dessus, elle visite les deux. La loi symétrisée, celle que le générateur doit apprendre, varie au contraire continûment, mais la masse du « pont » $|D| \approx 0$ et la fréquence des passages par zéro naissent au seuil avec une pente raide. C'est cette naissance que la grille fine de E1 doit résoudre.
+
+### Portée et limites des énoncés {#limites-theorie}
+
+::: note
+[Remarque 3.10 — Nécessaires, pas suffisantes]{.tag}
+Les identités de stationnarité sont nécessaires, pas suffisantes : toute mesure invariante les vérifie, y compris celles qui sont portées par un point fixe instable ou par une orbite périodique instable. Une perte de stationnarité seule pourrait donc converger vers une mesure non physique ; il faut garder l'attache aux données, ce que font toutes nos variantes (la perte de flow matching reste dans la perte totale). La sélection de la mesure physique par une limite à bruit nul n'est garantie qu'en cadre Axiome A (Young 2002). Enfin, la mesure physique d'un système dissipatif est en général singulière, ce qui justifie la forme faible, par fonctions test, plutôt qu'une équation sur une densité.
+:::
+
+## 4. Méthodes {#methodes}
+
+Cette section décrit exactement ce que font les scripts du dossier `experiences/` (`common.py`, `e1_gissinger.py`, `mhd2d.py`, `e2_donnees.py`, `e2_mhd2d.py`, `e3_abc.py`). Les valeurs de tous les hyperparamètres sont regroupées en [annexe](#a-hyperparametres).
+
+### Flow matching conditionnel {#m-fm}
+
+Tous les modèles sont des flow matchings conditionnels sur le chemin linéaire (Définition 3.2). À chaque itération, on tire un lot de données $\mathbf{x}_1$ avec leur paramètre, un bruit $\mathbf{x}_0 \sim \mathcal{N}(0, I)$ et un temps $t \sim \mathcal{U}[0, 1]$ par exemple, puis on minimise l'écart quadratique moyen entre $v_\theta(\mathbf{x}_t, t, c)$ et $\mathbf{x}_1 - \mathbf{x}_0$.
+
+Le paramètre physique est ramené à un scalaire $c \in [0, 1]$ : $c = (\Gamma - 0{,}78)/0{,}24$ dans E1, et $c = (\ln\eta - \ln 3{,}5\cdot10^{-3})/(\ln 2{,}6\cdot10^{-2} - \ln 3{,}5\cdot10^{-3})$ dans E2. Le temps $t$ et le paramètre $c$ sont plongés par des caractéristiques de Fourier : pour $s \in [0, 1]$, le vecteur $(\sin 2\pi f_j s, \cos 2\pi f_j s)_{j \le 16}$ complété par $s$, avec 16 fréquences $f_j$ réparties géométriquement de 1 à 30 pour $t$ et de 1 à 8 pour $c$. Le réseau est un perceptron multicouche à quatre couches cachées et activations SiLU, de largeur 256 dans E1 et 1024 dans E2, qui reçoit la concaténation de l'état, du plongement de $t$ et de celui de $c$.
+
+L'optimiseur est AdamW, avec un taux d'apprentissage en cycle unique (montée sur les 5 premiers pourcents des itérations, pic à $2\cdot10^{-3}$ dans E1 et $10^{-3}$ dans E2) et un écrêtage de la norme du gradient à 1. Pour échantillonner, on intègre $\dot{\mathbf{x}} = v_\theta(\mathbf{x}, t, c)$ de $t = 0$ à $t = 1$ par le schéma de Heun à 50 pas égaux, $h = 0{,}02$ :
+
+$$
+\tilde{\mathbf{x}} = \mathbf{x}_n + h\,v_\theta(\mathbf{x}_n, t_n, c), \qquad \mathbf{x}_{n+1} = \mathbf{x}_n + \tfrac{h}{2}\big[v_\theta(\mathbf{x}_n, t_n, c) + v_\theta(\tilde{\mathbf{x}}, t_{n+1}, c)\big],
+$$
+
+soit 100 évaluations du réseau par échantillon. La figure 3 et le schéma interactif qui la suit illustrent ces trois étapes sur un exemple en petite dimension où le champ optimal est connu exactement.
+
+![**Figure 3 — Flow matching conditionnel.** Un champ de vitesse $v_\theta(\mathbf{x}, t, \boldsymbol\lambda)$ transporte un bruit gaussien vers la loi des données ; c'est la moyenne des directions de chemins rectilignes tirés entre bruit et données ; il prend le paramètre de contrôle en entrée ; on échantillonne en intégrant son équation en quelques pas. Dans les trois panneaux, l'axe horizontal est le temps du flot $t \in [0, 1]$ et l'axe vertical une coordonnée de l'état. **a**, Les chemins rectilignes $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\,\mathbf{x}_1$ (gris) se croisent ; le champ marginal $v(\mathbf{x}, t) = \mathbb{E}[\mathbf{x}_1 - \mathbf{x}_0 \mid \mathbf{x}_t = \mathbf{x}]$ est la moyenne des directions des chemins qui passent par un point, et c'est le minimiseur de la perte. **b**, Le même réseau, conditionné par deux valeurs du paramètre, transporte les mêmes bruits vers une loi unimodale ou vers une loi bimodale symétrique ; à paramètre fixé, les trajectoires ne se croisent pas. **c**, Échantillonnage par le schéma de Heun en quatre pas : un prédicteur d'Euler, puis un correcteur qui moyenne deux évaluations du champ. Exemple jouet en dimension 1 calculé exactement (loi des données : mélange de deux gaussiennes), sans aucun résultat mesuré.](../figures/flow-matching/figure/out/flow-matching.png){width="100%" fig-alt="Trois panneaux avec le temps du flot en abscisse. a : faisceau de segments gris qui relient des points de bruit à gauche à deux groupes de données à droite, avec une flèche épaisse qui moyenne les directions en un point. b : trajectoires courbes, en vermillon vers une loi unimodale et en bleu vers une loi à deux modes. c : une trajectoire intégrée en quatre pas de Heun avec les points prédicteurs en tirets."}
+
+```{=html}
+<div class="widget" data-widget="flow-matching"></div>
+<script defer src="../assets/interactif/flow-matching.js"></script>
+```
+
+### Symétrisation {#m-sym}
+
+Dans E1, la symétrie $S = \mathrm{diag}(-1, -1, 1)$, qui envoie $(Q, D, V)$ sur $(-Q, -D, V)$, est imposée de deux façons. La variante B **augmente les données** : chaque exemple du lot est remplacé par son image par $S$ avec probabilité 1/2, ce qui rend la loi cible symétrique sans contraindre le réseau. La variante C **symétrise le réseau** :
+
+$$
+v_{\mathrm{sym}}(\mathbf{x}, t, c) = \tfrac12\big[v(\mathbf{x}, t, c) + S\,v(S\mathbf{x}, t, c)\big],
+$$
+
+qui est équivariant par construction (Proposition 4, avec $G = \{I, S\}$). Pour que la normalisation des données commute avec $S$, $Q$ et $D$ sont centrés en 0 et non sur leur moyenne empirique, seule $V$ étant centrée sur sa moyenne ; chaque coordonnée est ensuite divisée par son écart-type. La loi de base $\mathcal{N}(0, I)$ est invariante par $S$.
+
+### Représentation spectrale : base de Fourier et POD {#m-fourier}
+
+Dans E2, les champs sont représentés par leurs coefficients de Fourier. Ce choix n'est pas seulement commode : en turbulence homogène, c'est la base POD.
+
+::: ex
+[Exemple 4.1 — En turbulence homogène, les modes POD sont les modes de Fourier]{.tag}
+La POD d'un champ aléatoire $f$ de moyenne nulle cherche les fonctions propres de son opérateur de covariance, $\int K(\mathbf{x}, \mathbf{x}')\,\phi(\mathbf{x}')\,\mathrm{d}\mathbf{x}' = \sigma\,\phi(\mathbf{x})$ avec $K(\mathbf{x}, \mathbf{x}') = \mathbb{E}[f(\mathbf{x})f(\mathbf{x}')]$. Si le champ est statistiquement homogène sur un domaine périodique, $K(\mathbf{x}, \mathbf{x}') = R(\mathbf{x} - \mathbf{x}')$ et l'opérateur est une convolution. Or $\int R(\mathbf{x} - \mathbf{x}')\,e^{i\mathbf{k}\cdot\mathbf{x}'}\,\mathrm{d}\mathbf{x}' = \hat R(\mathbf{k})\,e^{i\mathbf{k}\cdot\mathbf{x}}$ : les modes de Fourier sont des fonctions propres, de valeurs propres $\hat R(\mathbf{k})$, c'est-à-dire le spectre. Les modes POD sont donc les modes de Fourier, classés par énergie (résultat classique ; voir Holmes, Lumley & Berkooz 1996). Les valeurs propres sont dégénérées sur une couronne $|\mathbf{k}| = $ constante si le champ est isotrope, et la base POD n'est alors définie qu'à une rotation près dans chaque couronne.
+:::
+
+La grille compte $32^2$ points ; avec le désaliasage aux deux tiers, seuls les coefficients tels que $|k_x|, |k_y| \le 10$ sont non nuls. Comme les champs sont réels, on ne garde qu'un représentant de chaque paire $\pm\mathbf{k}$ ($k_x > 0$, ou $k_x = 0$ et $k_y > 0$), soit 220 modes indépendants, dont on sépare les parties réelle et imaginaire. Un échantillon est donc un vecteur de dimension 880 quand on génère les potentiels $(\hat\psi_{\mathbf{k}}, \hat a_{\mathbf{k}})$, et de dimension 1760 quand on génère les composantes $(\hat u_x, \hat u_y, \hat B_x, \hat B_y)$. Chaque coordonnée est divisée par son écart-type sur les données d'entraînement. Le perceptron ne connaît pas la géométrie : il n'a aucun biais inductif spatial.
+
+### Cinq mécanismes pour la divergence nulle {#m-div}
+
+E2 compare cinq façons d'obtenir $\nabla\cdot\mathbf{u} = \nabla\cdot\mathbf{B} = 0$ avec le même réseau et le même budget de 6000 itérations.
+
+| Variante | Ce qui est généré | Ce qui impose la contrainte | Classe de mécanisme |
+|---|---|---|---|
+| V0 libre | $(\hat u_x, \hat u_y, \hat B_x, \hat B_y)$ | rien | aucune contrainte |
+| V1 pénalité | idem | pénalité de poids 10 sur la divergence relative de $\hat{\mathbf{x}}_1 = \mathbf{x}_t + (1-t)\,v_\theta$ | douce, perte (Proposition 3) |
+| V2 projection finale | idem (modèle V0 réutilisé) | projection de Leray des échantillons finaux | dure, après échantillonnage |
+| V3 flot projeté | idem | bruit projeté à l'entraînement et à l'échantillonnage, projection après chaque sous-pas de Heun | dure, à chaque pas |
+| V4 potentiels | $(\hat\psi, \hat a)$, dimension 880 | $\hat{\mathbf{u}} = (ik_y\hat\psi, -ik_x\hat\psi)$, $\hat{\mathbf{B}} = (ik_y\hat a, -ik_x\hat a)$ | dure, architecture (Proposition 1) |
+
+La projection de Leray agit mode par mode, $\hat{\mathbf{u}}_{\mathbf{k}} \mapsto \big(I - \mathbf{k}\mathbf{k}^\top/|\mathbf{k}|^2\big)\hat{\mathbf{u}}_{\mathbf{k}}$, et de même pour $\mathbf{B}$. Dans V3, le bruit $\mathbf{x}_0$ est projeté **aussi à l'entraînement**, si bien que le réseau n'apprend que le champ $m$ de la Proposition 2, dans le sous-espace ; V3 travaille en simple précision, ce qui fixe sa divergence résiduelle à l'arrondi près. La pénalité de V1 porte sur la divergence relative
+
+$$
+\delta(\mathbf{x}) = \frac{\sum_{\mathbf{k}} |\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}}|^2 + |\mathbf{k}\cdot\hat{\mathbf{B}}_{\mathbf{k}}|^2}{\sum_{\mathbf{k}} |\mathbf{k}|^2\big(|\hat{\mathbf{u}}_{\mathbf{k}}|^2 + |\hat{\mathbf{B}}_{\mathbf{k}}|^2\big)},
+$$
+
+moyennée sur le lot. Elle s'annule en $v^\star$, comme l'exige la Proposition 3, mais elle est normalisée : on peut la réduire en diminuant le numérateur, ou en gonflant le dénominateur, c'est-à-dire la partie solénoïdale. Le schéma interactif suivant montre la projection de Leray sur un champ 2D périodique.
+
+```{=html}
+<div class="widget" data-widget="leray"></div>
+<script defer src="../assets/interactif/leray.js"></script>
+```
+
+### Perte de stationnarité et estimateur sans biais {#m-stat}
+
+La perte de stationnarité (Définition 3.9) contient le carré d'une espérance, qu'il faut estimer sur un mini-lot. L'estimateur naïf est biaisé, et son biais pousse précisément dans la mauvaise direction.
+
+::: ex
+[Exemple 4.2 — Le carré d'une moyenne pénalise la variance]{.tag}
+Soit $g_1, \dots, g_n$ des tirages indépendants de $g = \mathcal{L}\varphi(\mathbf{x})$, $\mathbf{x} \sim q_\theta$, et $\bar g$ leur moyenne. Alors
+
+$$
+\mathbb{E}\big[\bar g^{\,2}\big] = \mathrm{Var}(\bar g) + (\mathbb{E}\bar g)^2 = (\mathbb{E}g)^2 + \frac{\mathrm{Var}(g)}{n} .
+$$
+
+Minimiser $\bar g^{\,2}$ revient donc à minimiser aussi la variance de $\mathcal{L}\varphi$ sous la loi générée, c'est-à-dire à rapprocher chaque échantillon de l'ensemble $\{\mathcal{L}\varphi = 0\}$ : c'est la contrainte par échantillon que le Corollaire 6 condamne. Si l'on coupe le lot en deux moitiés indépendantes de moyennes $\bar g_a$ et $\bar g_b$,
+
+$$
+\mathbb{E}\big[\bar g_a\,\bar g_b\big] = \mathbb{E}[\bar g_a]\,\mathbb{E}[\bar g_b] = (\mathbb{E}g)^2 ,
+$$
+
+et le gradient est aussi sans biais : $\mathbb{E}\big[\bar g_b\nabla_\theta\bar g_a + \bar g_a\nabla_\theta\bar g_b\big] = 2\,\mathbb{E}g\,\nabla_\theta\mathbb{E}g = \nabla_\theta(\mathbb{E}g)^2$, puisque les échantillons sont des images différentiables de bruits indépendants. Le produit peut être négatif sur un lot donné ; seule son espérance compte pour la descente de gradient stochastique.
+:::
+
+Dans E1, chaque itération de réglage fin tire 8 valeurs de $\Gamma$ uniformément dans $[0{,}80 ; 1{,}00]$, donc aussi entre les valeurs d'entraînement, et génère 128 échantillons par valeur par un schéma de Heun différentiable à 8 pas. Pour chacun des 9 monômes de degré au plus 2, on calcule le produit des moyennes de $\mathcal{L}\varphi_k/s_k$ sur les deux moitiés de 64 échantillons, où $s_k$ est l'écart-type de $\mathcal{L}\varphi_k$ sur les données d'entraînement, puis on moyenne sur les monômes et les valeurs de $\Gamma$. Le poids est $\beta = 20$, sur 800 itérations, avec Adam au taux $5\cdot10^{-4}$ ; la perte de flow matching sur les données reste dans la perte totale.
+
+Dans E2, une seule identité est imposée, le bilan d'énergie. Chaque itération tire 4 valeurs de $\eta$ uniformément en échelle logarithmique dans $[3{,}5\cdot10^{-3} ; 2{,}6\cdot10^{-2}]$, génère 64 échantillons par valeur en 8 pas de Heun différentiables, calcule la dissipation moyenne de chaque moitié de 32 échantillons, puis le produit des résidus relatifs $(\bar{\mathcal{D}} - \varepsilon_{\mathrm{inj}})/\varepsilon_{\mathrm{inj}}$ des deux moitiés. Le poids est $\beta = 50$, sur 600 itérations à partir du modèle V4, avec Adam au taux $2\cdot10^{-4}$. Le **témoin** reprend exactement le même réglage fin avec $\beta = 0$ : il isole l'effet de la perte de celui des itérations supplémentaires.
+
+Une limite de mise en œuvre est à noter : la perte est imposée à un échantillonneur différentiable à 8 pas, alors que l'évaluation utilise 50 pas. On suppose que les deux échantillonneurs produisent des lois proches.
+
+### Inclinaison exponentielle régularisée {#m-tilt}
+
+L'inclinaison a posteriori applique la Proposition 7 à un nuage d'échantillons générés. Les fonctions de contrainte $\mathbf{g}$ sont standardisées, $\tilde{\mathbf{g}} = (\mathbf{g} - \mathbf{c})/\mathrm{sd}(\mathbf{g})$, et les poids $w_i \propto e^{\boldsymbol\beta\cdot\tilde{\mathbf{g}}_i}$ sont obtenus en minimisant le dual régularisé
+
+$$
+\Phi(\boldsymbol\beta) = \log\Big(\frac1N\sum_{i=1}^N e^{\boldsymbol\beta\cdot\tilde{\mathbf{g}}_i}\Big) + \frac{\rho}{2N}\,\boldsymbol\beta^\top\hat C\,\boldsymbol\beta ,
+$$
+
+où $\hat C$ est la matrice de corrélation empirique de $\tilde{\mathbf{g}}$ et $\rho = 1$, par une méthode de Newton amortie avec recherche linéaire. À l'optimum, $\sum_i w_i\tilde{\mathbf{g}}_i = -(\rho/N)\,\hat C\boldsymbol\beta$ : la contrainte n'est imposée qu'à l'erreur de Monte-Carlo près. Ce dual est celui du problème $\min_w \mathrm{KL}(w\,\|\,\text{uniforme}) + \frac{N}{2\rho}\,\mathbf{r}^\top\hat C^{-1}\mathbf{r}$, où $\mathbf{r} = \sum_i w_i\tilde{\mathbf{g}}_i$ : un maximum d'entropie à contraintes relâchées, qui évite de surajuster un bruit d'échantillonnage.
+
+Pour ne pas évaluer l'inclinaison sur les échantillons qui ont servi à la régler, on coupe les échantillons générés en deux moitiés : $\boldsymbol\beta$ est réglé sur la moitié $a$, puis appliqué à la moitié $b$, que l'on rééchantillonne de façon systématique selon les poids. La comparaison se fait avec la moitié $b$ non pondérée (« base »), de même taille. On rapporte $\mathrm{ESS}/N = 1/(N\sum_i w_i^2)$ sur la moitié $b$. Dans E1, $\mathbf{g}$ contient les 9 termes $\mathcal{L}\varphi_k$ de degré au plus 2 ; dans E2, les trois identités de l'Exemple 3.8.
+
+### Contraintes par échantillon {#m-par-echantillon}
+
+Pour mesurer le Corollaire 6, chaque expérience contient aussi une contrainte de bilan imposée échantillon par échantillon. Dans E1 (variante E), chaque échantillon du modèle C est projeté sur la surface $\{\mathrm{d}E/\mathrm{d}t = 0\}$ par 20 itérations de Newton à déplacement minimal, $\mathbf{y} \leftarrow \mathbf{y} - r(\mathbf{y})\,\nabla r(\mathbf{y})/\|\nabla r(\mathbf{y})\|^2$ avec $r = \mathrm{d}E/\mathrm{d}t$ et un gradient par différences centrées. Dans E2 (« recalage »), chaque échantillon du modèle V4 est coupé en grandes échelles ($|\mathbf{k}| \le 3$) et petites échelles ($|\mathbf{k}| > 3$), et les petites échelles sont multipliées par le facteur $s = \sqrt{\max\big(0, (\varepsilon_{\mathrm{inj}} - \mathcal{D}_{\text{grandes}})/\mathcal{D}_{\text{petites}}\big)}$. Comme $\mathcal{D}$ est une forme quadratique diagonale en Fourier, cela donne $\mathcal{D}(\mathbf{x}) = \varepsilon_{\mathrm{inj}}$ exactement, sauf quand les grandes échelles dissipent déjà plus que $\varepsilon_{\mathrm{inj}}$.
+
+### Estimateur de Rice {#m-rice}
+
+Dans E1, la fréquence des passages de $D$ par zéro est estimée sur un nuage d'échantillons, sans ordre temporel, par la Proposition 8 avec une fenêtre $h = 0{,}2$ :
+
+$$
+\hat\nu_0 = \frac{1}{N}\sum_{i=1}^N \frac{|\dot D_i|\,\mathbf{1}_{|D_i| < h}}{2h}, \qquad \dot D_i = -\nu D_i + V_i Q_i .
+$$
+
+On l'applique à la loi générée par le modèle et à la loi de référence, et on compare les deux au comptage direct dans les simulations, qui compte les changements de signe de $D$ entre deux pas d'intégration successifs, par unité de temps, après le transitoire.
+
+### Métriques {#m-metriques}
+
+Les métriques comparent des **lois** : un champ généré n'a pas de « vrai » champ associé, et les erreurs point à point n'ont pas de sens.
+
+**Distance d'énergie.** Pour deux lois $P$ et $Q$ et des variables indépendantes $X, X' \sim P$, $Y, Y' \sim Q$,
+
+$$
+\mathcal{E}(P, Q) = 2\,\mathbb{E}\|X - Y\| - \mathbb{E}\|X - X'\| - \mathbb{E}\|Y - Y'\| ,
+$$
+
+nulle si et seulement si $P = Q$ (Székely & Rizzo 2013) ; c'est deux fois le carré de la MMD pour le noyau induit par la distance (Sejdinovic et al. 2013). On l'estime avec toutes les paires de deux sous-échantillons, diagonale comprise, ce qui donne un petit plancher positif même pour deux échantillons de la même loi ; ce plancher est mesuré (voir le protocole). Dans E1, elle porte sur l'état $(Q, D, V)$ normalisé, avec 3000 points par loi ; dans E2, sur 21 descripteurs par échantillon (logarithmes décimaux des énergies de $\mathbf{u}$ et de $\mathbf{B}$ dans les couronnes $|\mathbf{k}| = 1$ à 10, et $10\,H_C$), standardisés par la référence, avec jusqu'à 1000 points.
+
+**Wasserstein tranché** (E1). $SW_1(P, Q)$ est la moyenne, sur 256 directions aléatoires $\boldsymbol\theta$ de la sphère, de la distance $W_1$ entre les lois projetées $\boldsymbol\theta^\top_\#P$ et $\boldsymbol\theta^\top_\#Q$, calculée en dimension 1 par tri (Rabin et al. 2012 ; Bonneel et al. 2015).
+
+**Résidus de Liouville normalisés** (E1). Pour chaque monôme $\varphi_k$, $r_k = |\mathbb{E}_q[\mathcal{L}\varphi_k]|/\mathrm{sd}_{\mathrm{ref}}(\mathcal{L}\varphi_k)$, moyenné sur les 9 monômes de degré au plus 2, qui sont imposés par les variantes D et F, et sur les 10 monômes de degré 3, qui ne sont imposés par aucune variante et servent d'identités de contrôle.
+
+**Grandeurs propres à E1.** Écart-type $\sigma(\mathrm{d}E/\mathrm{d}t)$, asymétrie $|\mathbb{P}(D > 0) - 1/2|$, masse du pont $\mathbb{P}(|D| < 0{,}25)$, et erreur de la fréquence de Rice par rapport au comptage dans les simulations.
+
+**Grandeurs propres à E2.**
+
+- Divergence relative, par échantillon puis moyennée : $\delta_{\mathbf{u}} = \big(\langle(\nabla\cdot\mathbf{u})^2\rangle/\langle|\nabla\mathbf{u}|^2\rangle\big)^{1/2}$, calculée en Fourier avec le même opérateur discret ($i\mathbf{k}$) que la projection, et de même pour $\mathbf{B}$.
+- Erreur de spectre : énergies moyennes par couronne $E_u(k)$ et $E_B(k)$, $k = \mathrm{arrondi}(|\mathbf{k}|)$ de 1 à 10, puis $\tfrac12$ moyenne sur $k$ de $|\log_{10}(\bar E^{\mathrm{gen}}_u(k)/\bar E^{\mathrm{ref}}_u(k))|$, plus la même quantité pour $\mathbf{B}$.
+- Erreurs relatives sur les énergies moyennes, $|\langle E_u\rangle_{\mathrm{gen}}/\langle E_u\rangle_{\mathrm{ref}} - 1|$ et de même pour $E_B$.
+- Résidus des trois bilans de l'Exemple 3.8 : $|\mathbb{E}_q[\mathcal{D}] - \varepsilon_{\mathrm{inj}}|/\varepsilon_{\mathrm{inj}}$ pour l'énergie, $|\mathbb{E}_q[(\nu+\eta)\langle\omega j\rangle + 2\alpha H_C]|/\mathrm{sd}_{\mathrm{ref}}$ pour l'hélicité croisée, $|\mathbb{E}_q[\eta\langle|\mathbf{B}|^2\rangle + \alpha\langle a^2\rangle] - \varepsilon_{a^2}|/\varepsilon_{a^2}$ pour $\langle a^2\rangle$.
+- Rapport $\sigma(\mathcal{D})/\sigma_{\mathrm{ref}}(\mathcal{D})$ des écarts-types de la dissipation, qui détecte l'écrasement de la loi prédit par le Corollaire 6.
+
+L'offre de stage demande aussi des métriques de topologie. Nous n'en avons calculé aucune ; la [discussion](#discussion) y revient.
+
+### Protocole {#m-protocole}
+
+**Paramètres de test jamais vus.** Les valeurs de test du paramètre sont intercalées entre les valeurs d'entraînement et n'ont jamais été vues : dans E1, $\Gamma \in \{0{,}81 ; 0{,}83 ; \dots ; 0{,}99\}$ entre les valeurs d'entraînement $\{0{,}80 ; 0{,}82 ; \dots ; 1{,}00\}$ ; dans E2, chaque $\eta$ de test est une valeur d'entraînement multipliée par $2^{1/4}$, au milieu géométrique de deux valeurs d'entraînement successives. Les tests portent donc sur l'**interpolation** en paramètre, jamais sur l'extrapolation.
+
+**Graines.** Dans E1, chaque variante est entraînée avec trois graines (0, 1 et 2), et les métriques sont moyennées sur les graines. Dans E2, chaque variante est entraînée avec une seule graine, ce qui est une limite. Les données d'entraînement et de référence sont simulées avec des graines distinctes.
+
+**Planchers de bruit.** Une métrique entre deux échantillons finis n'est jamais nulle. Pour la lire, on la calcule aussi entre un sous-échantillon des données, de même taille que les échantillons générés, et la référence. Dans E1, le sous-échantillon est tiré de la référence. Dans E2, aux $\eta$ d'entraînement, on compare un sous-échantillon de 1000 instantanés d'entraînement à la référence, issue d'une simulation indépendante : c'est le plancher honnête. Aux $\eta$ de test, il n'existe pas d'autre simulation que la référence, et l'on compare un sous-échantillon de 1000 de ses 1200 instantanés à la référence entière : ce plancher, fait de deux échantillons qui se recouvrent, est optimiste.
+
+**Agrégation.** Les tableaux donnent la moyenne des métriques sur les valeurs de test, puis sur les valeurs d'entraînement, du paramètre ; pour les résidus de bilan, la moyenne porte sur les valeurs absolues.
+
+### Moyens de calcul {#m-calcul}
+
+Tous les calculs ont tourné sur un processeur Intel Xeon à 2,30 GHz, à 4 cœurs, sans GPU, avec deux fils d'exécution par calcul PyTorch. Pour E2, hors génération des données, l'entraînement a pris 1200 s pour V0, 1059 s pour V1, 424 s pour V3 et 305 s pour V4, le réglage fin 460 s pour V5 et 79 s pour son témoin, et la génération de 4,5 à 19 ms par échantillon ; l'expérience complète a pris 4023 s, soit environ 67 minutes. E3 a pris 1366 s, soit environ 23 minutes. La durée de E1 sera rapportée avec ses résultats. Ces durées dépendent de la dimension (1760 pour V0, V1 et V3 contre 880 pour V4) et de la charge de la machine ; elles ne valent que comme ordres de grandeur.
+
 <!-- SUITE-REDACTION -->

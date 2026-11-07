@@ -159,6 +159,9 @@
     var D = TXT[lg];
     Object.keys(D).forEach(function (k) {
       var v = D[k];
+      // « | » autorise une coupure après lui (classe BA d'UAX 14) : gluer |D| et ∫|Ḋ| dans la note
+      // par un gluon de mots (U+2060) ; pas dans les textes dessinés sur le canvas.
+      if (k === "note") v = v.replace(/\|/g, "|\u2060");
       if (typeof v === "string") D[k] = typo(lg, v);
       else if (typeof v === "function") D[k] = function () { return typo(lg, v.apply(null, arguments)); };
     });

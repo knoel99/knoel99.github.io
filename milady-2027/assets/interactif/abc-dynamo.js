@@ -84,7 +84,7 @@
       panelA: "(a) taux de croissance λ en fonction de Rm = 1/η",
       panelB: function (rm) { return "(b) |B|/B_rms, coupe z = 0, Rm = " + rm; },
       lg32: "λ (32³)", lg48: "λ (48³, contrôle)", lgDyn: "dynamo (λ > 0)", lgGF: "seuils publiés (Galloway & Frisch 1986)",
-      lgRef: "−1/Rm : mode exact B = u",
+      lgRef: "−1/Rm : mode exact B = u", lgOut: "point hors cadre",
       dyn: "dynamo", xAxis: "Rm = 1/η", yAxis: "λ",
       tipLam: "λ", tipQ: "dernier quart", tip48: "48³",
       canvas: "Panneau (a) : taux de croissance λ du champ magnétique en fonction de Rm pour l'écoulement ABC, " +
@@ -120,7 +120,7 @@
       panelA: "(a) growth rate λ versus Rm = 1/η",
       panelB: function (rm) { return "(b) |B|/B_rms, slice z = 0, Rm = " + rm; },
       lg32: "λ (32³)", lg48: "λ (48³, check)", lgDyn: "dynamo (λ > 0)", lgGF: "published thresholds (Galloway & Frisch 1986)",
-      lgRef: "−1/Rm: exact mode B = u",
+      lgRef: "−1/Rm: exact mode B = u", lgOut: "off-scale point",
       dyn: "dynamo", xAxis: "Rm = 1/η", yAxis: "λ",
       tipLam: "λ", tipQ: "last quarter", tip48: "48³",
       canvas: "Panel (a): growth rate λ of the magnetic field versus Rm for the ABC flow, with the line λ = 0 and the " +
@@ -441,6 +441,7 @@
       { k: "line", t: T.lg32 }, { k: "sq", t: T.lg48 }, { k: "band", t: T.lgDyn }, { k: "tri", t: T.lgGF }
     ];
     if (this.view === "full") it.push({ k: "dash", t: T.lgRef });
+    else it.push({ k: "chev", t: T.lgOut });
     return it;
   };
 
@@ -691,6 +692,10 @@
           c.fillStyle = C.pal[2]; c.globalAlpha = C.dark ? 0.32 : 0.22;
           c.fillRect(x + 1, y - 11, 14, 13); c.globalAlpha = 1;
         } else if (it.k === "tri") self.marker("tri", x + 8, y - 4, C.ink);
+        else if (it.k === "chev") {
+          c.strokeStyle = C.pal[0]; c.lineWidth = 2;
+          c.beginPath(); c.moveTo(x + 4, y - 6); c.lineTo(x + 8, y - 2); c.lineTo(x + 12, y - 6); c.stroke();
+        }
         else if (it.k === "dash") {
           c.strokeStyle = C.ink; c.lineWidth = 1.5; c.setLineDash([5, 3]);
           c.beginPath(); c.moveTo(x, y - 4); c.lineTo(x + 16, y - 4); c.stroke(); c.setLineDash([]);

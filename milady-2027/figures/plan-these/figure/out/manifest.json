@@ -812,7 +812,7 @@
    "minSize": 6.5,
    "family": "Arial, Helvetica, sans-serif",
    "color": "#8a8a8a",
-   "halo": true,
+   "halo": false,
    "rotate": 0,
    "italic": true,
    "weight": "normal"
@@ -1960,6 +1960,11 @@
   {
    "w": 0.6,
    "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "line",
    "part": ""
   },
   {

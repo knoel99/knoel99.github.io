@@ -34,3 +34,10 @@
 | a | 4 | 5 | 4 | 4 | 5 | 5 | 4 |
 | b | 5 | 5 | 5 | 4 | 5 | 5 | 4 |
 | c | 4 | 4 | 4 | 5 | 5 | 5 | 4 |
+
+## Contrôle indépendant (lecture à froid puis vérification)
+1. Pales : les deux turbines avaient la même courbure dans le repère du dessin, donc étaient images miroir l'une de l'autre ; en contrarotation, l'une tournait côté convexe en avant, l'autre côté concave, ce qui brise la symétrie R_π de VKS. Corrigé (parts.js : angle des pales × side) ; légende et facts.md mis à jour.
+2. Occlusion : le disque de la turbine gauche (vue de dos, opaque) était dessiné avant les boucles poloïdales, qui passaient donc devant lui alors qu'elles sont derrière ; l'ordre annoncé dans facts.md n'était pas celui du code. Corrigé (pales gauches avant les boucles, disque après).
+3. Panneau c : la courbe lente en tirets passait sous l'étiquette « quadripôle Q » (masquée par le halo). Corrigé : échelle Q resserrée (origine 27,2 mm, 17,6 mm par unité).
+4. facts.md : distribution de courants du champ alignée sur make_data.py (densité ∝ r, r ≤ 0,95 R).
+

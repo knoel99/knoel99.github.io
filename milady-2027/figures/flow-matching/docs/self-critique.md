@@ -7,7 +7,7 @@
 | Loi de base | 𝒩(0, 1) en profil ; nuage isotrope 𝒩(0, I₂) en vignette | demande, note §0 | ✓ |
 | Loi des données | deux modes ±1,5 de même poids, 17 + 17 échantillons | demande (« deux modes symétriques ± ») | ✓ (premier jet : tirage 22/12 déséquilibré → corrigé) |
 | Chemins conditionnels | segments rectilignes entre paires indépendantes ; ils se croisent | demande, note §0 | ✓ |
-| Champ marginal | v* exact = 𝔼[x₁ − x₀ ∣ x_t = x], flèches tangentes (1, v) ; signe vérifié en (0,07 ; 2,75) : v = −1,32, flèche vers le bas | note §0 | ✓ |
+| Champ marginal | v* exact = 𝔼[x₁ − x₀ ∣ x_t = x], flèches tangentes (1, v) ; signe vérifié en (0,07 ; 2,75) : v = −2,41, flèche vers le bas | note §0 | ✓ |
 | Éventail | 7 chemins par (0,4 ; 0,3), 5 vers +, 2 vers − (poids a posteriori 0,72 / 0,28) ; flèche moyenne v* = 0,61, moyenne des 7 pentes 0,59 | calcul | ✓ |
 | Symétrie | amas ±(0,85 ; 1,5), réflexion x ↦ −x, double flèche entre eux | note §1, C3 | ✓ |
 | Conditionnement | mêmes 10 bruits pour λ₁ et λ₂ ; deux lois symétriques ; trajectoires d'un même λ sans croisement | demande, unicité EDO | ✓ |
@@ -38,3 +38,9 @@ Below 5, kept deliberately:
 - a / Craft 4 : flèches du champ petites (2,6 mm) et assez horizontales (rapport d'aspect t/x) ; la moitié basse du plan est dense en traits gris clairs.
 - b, c / Links 4 : pas de lignes de zoom de b vers c (elles traverseraient les profils cibles) ; le lien repose sur la couleur, la forme et les extrémités cerclées, et sur la légende.
 - c / Reads 4, Takeaway 4 : écarts Heun / exacte / prédicteur de 1 à 4 mm seulement ; k₁, k₂ et la formule du correcteur ne sont que dans la légende.
+
+## Contrôle indépendant (relecture à froid)
+- facts.md donnait λ₁ = 𝒩(0 ; 0,30²) et des arrivées ±0,49 alors que les données utilisent 0,45² (arrivées ±0,74) : corrigé.
+- Valeur de contrôle du champ en (0,07 ; 2,75) : −2,41 (mélange), pas −1,32 (composante + seule) : corrigé ci-dessus.
+- Panneau c : « h » seul sous l'axe pouvait se lire comme une graduation ; remplacé par une double flèche entre les grilles t = 0,5 et 0,75, avec h au-dessus.
+- Légende : x̃ mis en gras comme les autres vecteurs ; échelle verticale de c (≈ 3,7 × celle de b) signalée.
