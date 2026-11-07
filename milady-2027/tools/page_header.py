@@ -11,10 +11,10 @@ KATEX = "https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js"
 UI = {
     "fr": {"skip": "Aller au contenu", "contents": "Sommaire", "theme": "Thème", "home": "← Accueil",
            "prep": "Préparation", "sup": "Encadrants", "report": "Rapport de stage", "thesis": "Sujet de thèse",
-           "exp": "Expériences", "interactive": "Schémas interactifs"},
+           "exp": "Expériences", "interactive": "Schémas interactifs", "calc": "Calcul et données"},
     "en": {"skip": "Skip to content", "contents": "Contents", "theme": "Theme", "home": "← Home",
            "prep": "Preparation", "sup": "Supervisors", "report": "Internship report", "thesis": "PhD proposal",
-           "exp": "Experiments", "interactive": "Interactive diagrams"},
+           "exp": "Experiments", "interactive": "Interactive diagrams", "calc": "Computing and data"},
 }
 
 
@@ -57,7 +57,7 @@ format:
       - text: |
           </main>
           </div>
-          <footer class="foot"><p><a href="{home}index.html">{u["home"]}</a> · <a href="{home}prep/index.html">{u["prep"]}</a> · <a href="{home}encadrants/index.html">{u["sup"]}</a> · <a href="{home}rapport/index.html">{u["report"]}</a> · <a href="{home}these/index.html">{u["thesis"]}</a> · <a href="{home}interactifs/index.html">{u["interactive"]}</a> · <a href="{home}experiences/index.html">{u["exp"]}</a></p></footer>
+          <footer class="foot"><p><a href="{home}index.html">{u["home"]}</a> · <a href="{home}prep/index.html">{u["prep"]}</a> · <a href="{home}encadrants/index.html">{u["sup"]}</a> · <a href="{home}rapport/index.html">{u["report"]}</a> · <a href="{home}these/index.html">{u["thesis"]}</a> · <a href="{home}interactifs/index.html">{u["interactive"]}</a> · <a href="{home}experiences/index.html">{u["exp"]}</a> · <a href="{home}calcul/index.html">{u["calc"]}</a></p></footer>
           <script defer src="{up}assets/theme.js"></script>
 ---
 '''

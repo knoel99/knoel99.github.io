@@ -34,7 +34,7 @@ format:
       - text: |
           </main>
           </div>
-          <footer class="foot"><p><a href="../index.html">← Accueil</a> · <a href="../prep/index.html">Préparation</a> · <a href="../encadrants/index.html">Encadrants</a> · <a href="../rapport/index.html">Rapport de stage</a> · <a href="../these/index.html">Sujet de thèse</a> · <a href="../interactifs/index.html">Schémas interactifs</a> · <a href="../experiences/index.html">Expériences</a></p></footer>
+          <footer class="foot"><p><a href="../index.html">← Accueil</a> · <a href="../prep/index.html">Préparation</a> · <a href="../encadrants/index.html">Encadrants</a> · <a href="../rapport/index.html">Rapport de stage</a> · <a href="../these/index.html">Sujet de thèse</a> · <a href="../interactifs/index.html">Schémas interactifs</a> · <a href="../experiences/index.html">Expériences</a> · <a href="../calcul/index.html">Calcul et données</a></p></footer>
           <script defer src="../assets/theme.js"></script>
 ---
 
@@ -116,4 +116,4 @@ Résultats : [rapport, section E3](../rapport/index.html#e3). Schéma interactif
 | `resultats/e3_abc.json` | E3 : taux de croissance, convergence en résolution, seuils interpolés. |
 | `resultats/*.npz` | Échantillons générés et modes propres, pour les figures et les widgets. |
 
-Les fichiers sont dans le dépôt : <https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027/experiences>.
+Les fichiers sont dans le dépôt : <https://github.com/knoel99/milady-2027/tree/main/experiences>.

@@ -130,6 +130,7 @@ window.Quarto = {
 </tbody>
 </table>
 <p>Cinq <a href="interactifs/index.html">schémas interactifs</a> accompagnent le parcours : flow matching, projection de Leray, contrainte en loi, renversements du dipôle et dynamo ABC.</p>
+<p>Pour passer à l’échelle pendant la thèse, la page <a href="calcul/index.html">Calcul et données</a> décrit l’infrastructure du dépôt : format de données standard, catalogue des simulations et des résultats, déploiement en une commande sur une VM cloud avec GPU ou sur un cluster Slurm.</p>
 <h2 id="offre">L’offre de stage</h2>
 <p>L’offre est publiée par les encadrants : <a href="https://scheng2024.github.io/stage_milady_2027.pdf">stage_milady_2027.pdf</a>. En voici l’essentiel, traduit de l’anglais.</p>
 <p><strong>Contexte.</strong> Comprendre et modéliser les dynamos magnétohydrodynamiques, où l’écoulement d’un fluide conducteur engendre spontanément un champ magnétique, reste un défi majeur en géophysique et en astrophysique. Simuler leur turbulence multi-échelle produit de grands jeux de données 3D, difficiles à stocker, à interpréter et à réutiliser pour la modélisation et l’assimilation de données. Les champs engendrés peuvent être très sensibles aux paramètres du système et présenter des transitions non linéaires, dont des renversements abrupts de polarité.</p>
@@ -141,7 +142,7 @@ window.Quarto = {
 <h2 id="milady">Le projet MilaDy</h2>
 <p>MilaDy (« Modélisation par apprentissage automatique des dynamos turbulentes ») est le projet ANR-25-CE51-0077, coordonné par Caroline Nore (LISN), avec le laboratoire Lagrange (Observatoire de la Côte d’Azur) et le CEREA (ENPC). Il a commencé en janvier 2026 pour 48 mois. Ses deux objectifs : étudier les inversions de champ magnétique et les dynamos « explosives » avec des modèles réduits fondés sur les données, et optimiser le dispositif DRESDYN (cylindre en précession) avec des modèles réduits paramétriques. Détails et sources : page <a href="encadrants/index.html#milady">Encadrants et projet MilaDy</a>.</p>
 <h2 id="resultats">Ce que montrent les expériences</h2>
-<p>Les expériences sont des bancs d’essai à petite échelle (CPU, sans GPU). Tous les chiffres viennent du <a href="https://github.com/knoel99/knoel99.github.io/blob/main/milady-2027/experiences/resultats/digest.md">condensé des résultats</a>.</p>
+<p>Les expériences sont des bancs d’essai à petite échelle (CPU, sans GPU). Tous les chiffres viennent du <a href="https://github.com/knoel99/milady-2027/blob/main/experiences/resultats/digest.md">condensé des résultats</a>.</p>
 <ul>
 <li><strong>Divergence nulle (MHD 2D, E2).</strong> Générer librement les composantes laisse une divergence relative d’environ 0,4 ; une pénalité douce la réduit peu (environ 0,3) et dégrade l’énergie magnétique. Générer des potentiels, projeter à la fin ou projeter le flot donne une divergence nulle à la précision machine.</li>
 <li><strong>Bilan d’énergie en loi (E2).</strong> Imposer le bilan d’énergie moyen pendant l’entraînement, y compris pour des valeurs de <span class="math inline">\eta</span> sans données, divise par environ 3,6 la distance à la vraie loi sur les valeurs de test (0,70 contre 2,52 pour un témoin entraîné aussi longtemps sans cette perte). Imposer le bilan à chaque échantillon le satisfait exactement, mais en annulant la variance de la dissipation, ce qui est faux physiquement.</li>
@@ -153,12 +154,12 @@ window.Quarto = {
 <li>Offre de stage : <a href="https://scheng2024.github.io/stage_milady_2027.pdf" class="uri">https://scheng2024.github.io/stage_milady_2027.pdf</a> (lue le 6 novembre 2026).</li>
 <li>Projet ANR MilaDy : <a href="https://anr.fr/Projet-ANR-25-CE51-0077" class="uri">https://anr.fr/Projet-ANR-25-CE51-0077</a>.</li>
 <li>Page de Sibo Cheng : <a href="https://scheng2024.github.io/" class="uri">https://scheng2024.github.io/</a>.</li>
-<li>Code et sources de ce site : <a href="https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027" class="uri">https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027</a>.</li>
+<li>Code et sources de ce site : <a href="https://github.com/knoel99/milady-2027" class="uri">https://github.com/knoel99/milady-2027</a>.</li>
 </ul>
 
 </main>
 </div>
-<footer class="foot"><p><a href="index.html">← Accueil</a> · <a href="prep/index.html">Préparation</a> · <a href="encadrants/index.html">Encadrants</a> · <a href="rapport/index.html">Rapport de stage</a> · <a href="these/index.html">Sujet de thèse</a> · <a href="interactifs/index.html">Schémas interactifs</a> · <a href="experiences/index.html">Expériences</a></p></footer>
+<footer class="foot"><p><a href="index.html">← Accueil</a> · <a href="prep/index.html">Préparation</a> · <a href="encadrants/index.html">Encadrants</a> · <a href="rapport/index.html">Rapport de stage</a> · <a href="these/index.html">Sujet de thèse</a> · <a href="interactifs/index.html">Schémas interactifs</a> · <a href="experiences/index.html">Expériences</a> · <a href="calcul/index.html">Calcul et données</a></p></footer>
 <script defer="" src="assets/theme.js"></script>
 
 

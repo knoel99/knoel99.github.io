@@ -34,7 +34,7 @@ format:
       - text: |
           </main>
           </div>
-          <footer class="foot"><p><a href="../index.html">← Accueil</a> · <a href="../prep/index.html">Préparation</a> · <a href="../encadrants/index.html">Encadrants</a> · <a href="../rapport/index.html">Rapport de stage</a> · <a href="../these/index.html">Sujet de thèse</a> · <a href="../interactifs/index.html">Schémas interactifs</a> · <a href="../experiences/index.html">Expériences</a></p></footer>
+          <footer class="foot"><p><a href="../index.html">← Accueil</a> · <a href="../prep/index.html">Préparation</a> · <a href="../encadrants/index.html">Encadrants</a> · <a href="../rapport/index.html">Rapport de stage</a> · <a href="../these/index.html">Sujet de thèse</a> · <a href="../interactifs/index.html">Schémas interactifs</a> · <a href="../experiences/index.html">Expériences</a> · <a href="../calcul/index.html">Calcul et données</a></p></footer>
           <script defer src="../assets/theme.js"></script>
 ---
 
@@ -521,7 +521,7 @@ Ces affirmations négatives ne se prouvent pas : elles devront être revérifié
 
 ## Sources {#sources}
 
-Toutes les références ci-dessous ont été vérifiées le 6 novembre 2026 dans Crossref, arXiv ou HAL (le 7 novembre pour Rice 1944 et pour la liste complète des auteurs de la revue *Information Fusion*), et les pages web ont été ouvertes le 6 novembre 2026. Les bases de faits complètes, avec le détail de chaque vérification et la liste des points non confirmés, sont publiées dans le dépôt : [specs/sources/ sur GitHub](https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027/specs/sources) (fichiers `encadrants.md`, `litterature.md`, `dynamo.md` et `donnees-metriques.md`).
+Toutes les références ci-dessous ont été vérifiées le 6 novembre 2026 dans Crossref, arXiv ou HAL (le 7 novembre pour Rice 1944 et pour la liste complète des auteurs de la revue *Information Fusion*), et les pages web ont été ouvertes le 6 novembre 2026. Les bases de faits complètes, avec le détail de chaque vérification et la liste des points non confirmés, sont publiées dans le dépôt : [specs/sources/ sur GitHub](https://github.com/knoel99/milady-2027/tree/main/specs/sources) (fichiers `encadrants.md`, `litterature.md`, `dynamo.md` et `donnees-metriques.md`).
 
 ### Projet, offres et pages publiques
 
@@ -606,5 +606,5 @@ Toutes les références ci-dessous ont été vérifiées le 6 novembre 2026 dans
 
 ### Bases de faits du dépôt
 
-- Bases de faits vérifiées (encadrants et projet, littérature générative, physique des dynamos, données et métriques) : <https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027/specs/sources>.
-- Note théorique commune au rapport et au sujet de thèse : <https://github.com/knoel99/knoel99.github.io/blob/main/milady-2027/specs/theorie-brief.md>.
+- Bases de faits vérifiées (encadrants et projet, littérature générative, physique des dynamos, données et métriques) : <https://github.com/knoel99/milady-2027/tree/main/specs/sources>.
+- Note théorique commune au rapport et au sujet de thèse : <https://github.com/knoel99/milady-2027/blob/main/specs/theorie-brief.md>.

@@ -366,6 +366,27 @@ def test_train_transformer_with_stationarity(mff_files: list[str], tmp_path: Pat
     assert model.field.base.n_tokens == math.ceil(61 / 8)
 
 
+def test_finetune_anchor_limits_drift(mff_files: list[str], tmp_path: Path) -> None:
+    """Réglage fin par perte de stationnarité : l'ancrage garde les poids près du modèle de départ."""
+    base_cfg = _small_cfg(tmp_path / "base", train__iters=2)
+    base_cfg["catalog"]["enabled"] = False
+    base_cfg["eval"]["after_train"] = False
+    base = fm3d.train(base_cfg, files=mff_files)
+    ref = fm3d.load_checkpoint(base["checkpoint_uri"])["field_state"]
+
+    def drift(anchor: float, sub: str) -> float:
+        cfg = _small_cfg(tmp_path / sub, train__iters=3, train__lr=1e-2, train__init_from=base["checkpoint_uri"])
+        cfg["catalog"]["enabled"] = False
+        cfg["eval"]["after_train"] = False
+        cfg["stationarity"].update(enabled=True, n_cond=2, n_per=2, steps=2, beta=10.0, anchor=anchor, beta_warmup=2)
+        res = fm3d.train(cfg, files=mff_files)
+        assert res["finished"]
+        new = fm3d.load_checkpoint(res["checkpoint_uri"])["field_state"]
+        return float(sum(((new[k].float() - ref[k].float()) ** 2).sum() for k in ref if ref[k].is_floating_point()))
+
+    assert drift(1e6, "ancre") < 0.5 * drift(0.0, "libre")
+
+
 def test_smoke_step() -> None:
     out = fm3d.smoke_step(torch.randn(2, 3, 12, 12, 12))
     assert math.isfinite(out["loss"]) and out["div_rel"] < 1e-6 and out["kmax"] == 4.0 and out["state_dict"]

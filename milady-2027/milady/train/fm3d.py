@@ -25,7 +25,8 @@ Usage ::
     torchrun --standalone --nproc-per-node=4 -m milady.train.fm3d --config infra/configs/train_fm3d.yaml
     # réglage fin avec la perte de stationnarité, depuis un modèle entraîné :
     python -m milady.train.fm3d --config … --init-from s3://milady-models/…/final.pt \\
-        --set stationarity.enabled=true train.iters=2000 train.lr=1e-4
+        --set stationarity.enabled=true stationarity.anchor=1.0 stationarity.beta_warmup=500 \\
+              train.iters=2000 train.lr=1e-4
 """
 
 from __future__ import annotations
@@ -165,6 +166,9 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "injection_param": "eps",
         "growth_rate": 0.0,
         "cond_range": [0.0, 1.0],
+        # Garde-fous du réglage fin (expérience E1 : la perte seule peut diverger depuis un modèle biaisé) :
+        "anchor": 0.0,       # poids de l'ancrage aux poids de départ : anchor × moyenne des (θ − θ₀)²
+        "beta_warmup": 0,    # montée linéaire de beta sur ce nombre d'itérations actives (0 : beta d'emblée)
     },
     "sampling": {"steps": 50},
     "checkpoint": {"uri": None},
@@ -1155,6 +1159,21 @@ def train(
         ema.load_state_dict(payload["ema_state"])
     for p in ema.parameters() if ema is not None else []:
         p.requires_grad_(False)
+    # Ancrage du réglage fin : référence = poids de ``init_from`` s'il est donné (y compris après une
+    # reprise), sinon poids au début de cette exécution.
+    anchor_w = float(cfg["stationarity"].get("anchor") or 0.0)
+    anchor_ref: list[torch.Tensor] = []
+    if anchor_w > 0:
+        ref_field = build_field(model_cfg, space, n_cond).to(device)
+        if init_from:
+            ref_field.load_state_dict(load_checkpoint(str(init_from))["field_state"])
+        else:
+            ref_field.load_state_dict(field.state_dict())
+            if resumed:
+                LOG.warning("stationarity.anchor sans init_from : ancrage aux poids repris, pas au modèle d'origine")
+        anchor_ref = [q.detach().clone() for q in ref_field.parameters()]
+        del ref_field
+    n_anchor = max(1, sum(q.numel() for q in anchor_ref))
     loss_mod = FlowMatchingLoss(
         field,
         space,
@@ -1295,6 +1314,7 @@ def train(
     # -- boucle ---------------------------------------------------------------------------------
     st_cfg = cfg["stationarity"]
     use_stat_any = bool(st_cfg.get("enabled"))
+    beta0 = float(loss_mod.stat["beta"])
     log_every = max(1, int(tcfg.get("log_every", 50)))
     val_every = int(tcfg.get("val_every") or 0)
     ckpt_every = int(tcfg.get("ckpt_every") or 0)
@@ -1324,7 +1344,13 @@ def train(
                     and step >= int(st_cfg.get("start_iter", 0))
                     and ((step - int(st_cfg.get("start_iter", 0))) % max(1, int(st_cfg.get("every", 1))) == 0)
                 )
+                if use_stat and int(st_cfg.get("beta_warmup") or 0) > 0:
+                    n_act = (step - int(st_cfg.get("start_iter", 0))) // max(1, int(st_cfg.get("every", 1))) + 1
+                    loss_mod.stat["beta"] = beta0 * min(1.0, n_act / int(st_cfg["beta_warmup"]))
                 loss, fm, st = ddp(x1, c, use_stat)
+                if anchor_ref:
+                    drift = sum(((q - q0) ** 2).sum() for q, q0 in zip(field.parameters(), anchor_ref)) / n_anchor
+                    loss = loss + anchor_w * drift
                 opt.zero_grad(set_to_none=True)
                 loss.backward()
                 gnorm = torch.nn.utils.clip_grad_norm_(

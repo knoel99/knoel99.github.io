@@ -107,6 +107,9 @@ stationarity:
   injection_param: eps             # pour injection: param (forçage aléatoire de puissance eps)
   growth_rate: 0.0                 # bilan magnetic : λ (nombre ou nom de paramètre) dans P − η⟨j²⟩ = λ⟨B²⟩
   cond_range: [0.0, 1.0]           # [-0.1, 1.1] pour imposer la loi aussi un peu au-delà de la plage
+  # Garde-fous (expérience E1 : depuis un modèle biaisé, la perte seule a divergé pour une graine sur deux) :
+  anchor: 0.0                      # ancrage aux poids de départ (init_from) : anchor × moyenne des (θ − θ₀)²
+  beta_warmup: 0                   # montée linéaire de beta sur ce nombre d'itérations actives
 
 sampling:
   steps: 50                        # pas de Heun à l'échantillonnage

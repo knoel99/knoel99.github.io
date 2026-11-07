@@ -14,6 +14,9 @@ Ressources préparatoires, rapport de stage prospectif et proposition de sujet d
 - **Rapport de stage** (`rapport/`) : état de l'art, formulation (taxonomie des contraintes, propositions démontrées), méthodes, expériences E1–E3 et résultats, discussion, ouverture vers la thèse.
 - **Sujet de thèse** (`these/`) : piste retenue, partie théorique, plan expérimental planifié et évalué (paliers, métriques, risques, calendrier).
 - **Expériences** (`experiences/`) : code, résultats JSON et graphiques.
+- **Schémas interactifs** (`interactifs/`) : cinq widgets dans le navigateur (flow matching, projection de Leray, contrainte en loi, modèle de Gissinger, dynamo ABC).
+- **Calcul et données** (`calcul/`) : l'infrastructure de calcul (format MFF, catalogue, déploiement cloud et Slurm), résumée pour le lecteur.
+- **Version anglaise** (`en/`) : toutes les pages, aux mêmes chemins sous `en/`.
 - **Schémas** (`figures/`) : figures conceptuelles dessinées avec la skill [schematic-figure](https://lgwrightlab.github.io/schematic-figure/) (sources `figure.js`, brief, spec, légende ; sorties SVG/PDF/PNG).
 
 ## Reproduire les expériences
@@ -78,14 +81,9 @@ specs/                    contrats
 tools/                    rendu et contrôles
 ```
 
-## Dépôt dédié
+## Dépôt et publication
 
-Ce dossier est autonome : il peut devenir la racine d'un dépôt `knoel99/milady-2027` (GitHub Pages sur `main`, racine). Depuis le dépôt `knoel99.github.io` :
-
-```bash
-git subtree split --prefix=milady-2027 -b milady-2027-export
-git push git@github.com:knoel99/milady-2027.git milady-2027-export:main
-```
+Ce dépôt (`knoel99/milady-2027`) est publié par GitHub Pages depuis la branche `main`, à la racine : <https://knoel99.github.io/milady-2027/>. La page d'accueil du site personnel (`knoel99/knoel99.github.io`) y renvoie par une carte. Les pages HTML sont rendues et versionnées avec leurs sources `.qmd` : il n'y a pas d'étape de construction côté GitHub.
 
 ## Licence
 

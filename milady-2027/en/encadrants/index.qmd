@@ -34,7 +34,7 @@ format:
       - text: |
           </main>
           </div>
-          <footer class="foot"><p><a href="../../en/index.html">← Home</a> · <a href="../../en/prep/index.html">Preparation</a> · <a href="../../en/encadrants/index.html">Supervisors</a> · <a href="../../en/rapport/index.html">Internship report</a> · <a href="../../en/these/index.html">PhD proposal</a> · <a href="../../en/interactifs/index.html">Interactive diagrams</a> · <a href="../../en/experiences/index.html">Experiments</a></p></footer>
+          <footer class="foot"><p><a href="../../en/index.html">← Home</a> · <a href="../../en/prep/index.html">Preparation</a> · <a href="../../en/encadrants/index.html">Supervisors</a> · <a href="../../en/rapport/index.html">Internship report</a> · <a href="../../en/these/index.html">PhD proposal</a> · <a href="../../en/interactifs/index.html">Interactive diagrams</a> · <a href="../../en/experiences/index.html">Experiments</a> · <a href="../../en/calcul/index.html">Computing and data</a></p></footer>
           <script defer src="../../assets/theme.js"></script>
 ---
 
@@ -521,7 +521,7 @@ These negative claims cannot be proven: they will have to be rechecked through l
 
 ## Sources {#sources}
 
-All the references below were checked on November 6, 2026 in Crossref, arXiv or HAL (on November 7 for Rice 1944 and for the full author list of the *Information Fusion* review), and the web pages were opened on November 6, 2026. The complete fact bases, with the details of each check and the list of unconfirmed points, are published in the repository: [specs/sources/ on GitHub](https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027/specs/sources) (files `encadrants.md`, `litterature.md`, `dynamo.md` and `donnees-metriques.md`).
+All the references below were checked on November 6, 2026 in Crossref, arXiv or HAL (on November 7 for Rice 1944 and for the full author list of the *Information Fusion* review), and the web pages were opened on November 6, 2026. The complete fact bases, with the details of each check and the list of unconfirmed points, are published in the repository: [specs/sources/ on GitHub](https://github.com/knoel99/milady-2027/tree/main/specs/sources) (files `encadrants.md`, `litterature.md`, `dynamo.md` and `donnees-metriques.md`).
 
 ### Project, offers and public pages
 
@@ -606,5 +606,5 @@ All the references below were checked on November 6, 2026 in Crossref, arXiv or 
 
 ### Fact bases in the repository
 
-- Checked fact bases (supervisors and project, generative-model literature, dynamo physics, data and metrics): <https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027/specs/sources>.
-- Theoretical note shared by the report and the PhD proposal: <https://github.com/knoel99/knoel99.github.io/blob/main/milady-2027/specs/theorie-brief.md>.
+- Checked fact bases (supervisors and project, generative-model literature, dynamo physics, data and metrics): <https://github.com/knoel99/milady-2027/tree/main/specs/sources>.
+- Theoretical note shared by the report and the PhD proposal: <https://github.com/knoel99/milady-2027/blob/main/specs/theorie-brief.md>.
