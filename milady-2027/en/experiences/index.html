@@ -188,16 +188,29 @@ window.Quarto = {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e3_abc.py                 <span class="co"># E3, about 25 min</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e2_donnees.py             <span class="co"># E2, data: about 30 min</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e2_mhd2d.py               <span class="co"># E2, models: about 70 min</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e1_gissinger.py           <span class="co"># E1, about 1 h 30 (resumable)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e1_gissinger.py           <span class="co"># E1, about 2 to 3 h (resumable)</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> figures.py <span class="kw">&amp;&amp;</span> <span class="ex">python3</span> digest.py <span class="op">&gt;</span> resultats/digest.md</span></code></pre></div>
-<p>Each script accepts <code>--quick</code> for a reduced version that takes a few minutes, useful for checking the installation. The seeds are fixed in the code (0, 1 and 2 for the three repetitions of E1). The durations given were measured on the machine described above, partly while other computations were running.</p>
+<p>Each script accepts <code>--quick</code> for a reduced version that takes a few minutes, useful for checking the installation. The seeds are fixed in the code (0 and 1 for the two repetitions of E1). The durations given were measured on the machine described above, partly while other computations were running.</p>
 <h2 id="e1">E1 — dipole reversals</h2>
-<p>Gissinger’s three-mode model serves as a “pocket dynamo”: it has the symmetry <span class="math inline">\mathbf{B}\to-\mathbf{B}</span>, an onset threshold for reversals (between <span class="math inline">\Gamma = 0.86</span> and <span class="math inline">0.87</span>) and exactly known dynamics. We learn the stationary distribution <span class="math inline">p(Q, D, V \mid \Gamma)</span> by conditional flow matching, then measure the effect of the symmetry imposed by construction, of the stationarity loss, and of the per-sample projection. The reversal frequency is estimated from the generated distribution alone, through the Rice formula.</p>
+<p>Gissinger’s three-mode model serves as a “pocket dynamo”: it has the symmetry <span class="math inline">\mathbf{B}\to-\mathbf{B}</span>, an onset threshold for reversals (between <span class="math inline">\Gamma = 0.86</span> and <span class="math inline">0.865</span>) and exactly known dynamics. We learn the stationary distribution <span class="math inline">p(Q, D, V \mid \Gamma)</span> by conditional flow matching, then measure the effect of the symmetry imposed by construction, of the stationarity loss, and of the per-sample projection. The reversal frequency is estimated from the generated distribution alone, through the Rice formula.</p>
+<p>In short: the equivariant velocity field keeps the distribution symmetric at every value of <span class="math inline">\Gamma</span>, whereas data augmentation symmetrizes it only at training values; projecting each sample onto <span class="math inline">\mathrm{d}E/\mathrm{d}t = 0</span> multiplies the distance to the true distribution by 9; Rice’s formula recovers the crossing frequency within 14% far from the threshold and within 42% at the threshold; the stationarity loss improves the residuals of a good model but fails on a biased model.</p>
 <p>Results and discussion: <a href="../rapport/index.html#e1">report, section E1</a>. Interactive diagram: <a href="../interactifs/index.html#gissinger">Gissinger model</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img src="../../experiences/figures/e1_seuil.png" style="width:100.0%" alt="Two plots as a function of Gamma from 0.80 to 1.00: on the left, the frequency of zero crossings of D, zero below 0.865 and then increasing; on the right, the probability that |D| is less than 0.25."></p>
+<p><img src="../../experiences/figures/e1_seuil-en.png" style="width:100.0%" alt="Two plots as a function of Gamma from 0.80 to 1.00: on the left, the frequency of zero crossings of D, zero below 0.865 and then increasing; on the right, the probability that |D| is less than 0.25."></p>
 <figcaption>Frequency of zero crossings of <span class="math inline">D</span> and mass of the “bridge” <span class="math inline">|D| &lt; 0.25</span> as a function of <span class="math inline">\Gamma</span>: simulation, Rice formula on the reference distribution and on the generated distributions.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="../../experiences/figures/e1_variantes-en.png" style="width:100.0%" alt="Four horizontal bar charts, one bar per variant, with a dashed line for the noise floor or the reference value."></p>
+<figcaption>Comparison of the variants at test values of <span class="math inline">\Gamma</span>: energy distance, control Liouville residual (degree 3), asymmetry <span class="math inline">|\mathbb{P}(D&gt;0) - 1/2|</span> and ratio <span class="math inline">\sigma(\mathrm{d}E/\mathrm{d}t)/\sigma_{\mathrm{ref}}</span>, with the noise floors.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="../../experiences/figures/e1_symetrie_projection-en.png" style="width:100.0%" alt="Three panels: histograms of dE/dt, then two scatter plots in the Q-D plane over the grey reference."></p>
+<figcaption>Symmetry and per-sample constraint: density of dE/dt at <span class="math inline">\Gamma = 0.93</span> (the projection concentrates everything at zero) and <span class="math inline">(Q, D)</span> scatter plots at <span class="math inline">\Gamma = 0.85</span> for the baseline model, which is asymmetric, and the equivariant model.</figcaption>
 </figure>
 </div>
 <h2 id="e2">E2 — 2D MHD and divergence constraints</h2>
@@ -244,7 +257,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td><code>resultats/e1_gissinger.json</code></td>
-<td>E1: configuration, data statistics, evaluation per variant, per <span class="math inline">\Gamma</span> and per seed, fine grid.</td>
+<td>E1: configuration, data statistics, evaluation per variant and per <span class="math inline">\Gamma</span> (mean and standard deviation across seeds), fine grid, noise floors.</td>
 </tr>
 <tr class="odd">
 <td><code>resultats/e2_mhd2d.json</code></td>

@@ -1540,7 +1540,7 @@ with $\mu = 0.119$ and $\nu = 0.1$ fixed and the forcing $\Gamma$ as the control
 
 Gissinger (2012) describes the scenario as $\mu$ decreases, at fixed $\Gamma = 0.9$ and $\nu = 0.1$: stationary states $N_\pm$ for $\mu > 0.2$, then a periodic orbit around each $N_\pm$, a period-doubling cascade below $\mu \approx 0.138$, and finally the merging crisis at $\mu_c \approx 0.11928$. At $\mu = 0.12$, the chaos remains confined around a single fixed point, without reversal; at $\mu = 0.119$, the reversals are chaotic, with a Lyapunov exponent $\lambda \simeq 0.1$. The waiting times between reversals are quantized at short times (influence of the unstable periodic orbits) and Poissonian at long times.
 
-Experiment E1 of this repository fixes $\mu = 0.119$ and varies $\Gamma$ between $0.80$ and $1.00$. The reversal threshold is **observed numerically between $\Gamma = 0.86$ and $\Gamma = 0.87$**: no zero crossing of $D$ for $\Gamma \le 0.86$, crossings above (see the [report](../../rapport/index.html#e1)). The following code repeats this sweep, with 30 trajectories of 1,500 time units per value of $\Gamma$, after a transient of 600 units.
+Experiment E1 of this repository fixes $\mu = 0.119$ and varies $\Gamma$ between $0.80$ and $1.00$. The reversal threshold is **observed numerically between $\Gamma = 0.86$ and $\Gamma = 0.865$**: on the fine grid of step $0.005$, no zero crossing of $D$ for $\Gamma \le 0.86$, crossings from $0.865$ on (see the [report](../../rapport/index.html#e1)). The following code repeats this sweep, with 30 trajectories of 1,500 time units per value of $\Gamma$, after a transient of 600 units.
 
 ```python
 import numpy as np
@@ -1632,7 +1632,7 @@ Key takeaways — chapter 7
 :::
 - Gissinger model: $\dot Q = \mu Q - VD$, $\dot D = -\nu D + VQ$, $\dot V = \Gamma - V + QD$, with $\mu = 0.119$, $\nu = 0.1$; symmetry $(Q, D, V) \mapsto (-Q, -D, V)$; divergence $-0.981$.
 - All its fixed points are unstable; the dynamics is chaotic ($\lambda_1 \approx 0.09$).
-- Merging crisis: at $\mu = 0.119$, reversal threshold between $\Gamma = 0.86$ and $0.87$ in E1 (between $0.86$ and $0.865$ in the sweep of this module); at $\Gamma = 0.9$, crisis at $\mu_c \approx 0.11928$ (Gissinger, 2012).
+- Merging crisis: at $\mu = 0.119$, reversal threshold between $\Gamma = 0.86$ and $0.865$, in E1 as in the sweep of this module; at $\Gamma = 0.9$, crisis at $\mu_c \approx 0.11928$ (Gissinger, 2012).
 - Below the threshold, the weight of the two attractors is set by the initial conditions and invisible to the stationarity identities; above it, the distribution is unique and symmetric.
 - Symmetry, stationarity identities and the Rice formula are the three physical checks of experiment E1.
 ::::
@@ -1824,7 +1824,7 @@ The MilaDy internship targets conditional generative models of parametric MHD fi
 
 **The three experiments of the repository.**
 
-- **E1** ([report, section E1](../../rapport/index.html#e1)) learns by conditional flow matching the invariant distribution of the Gissinger model as a function of $\Gamma$ (chapter 7). It compares the symmetry imposed by data augmentation or by an equivariant field (definition 3.10, proposition 5.16), the stationarity identities imposed in distribution (theorem 5.11), and the frequency of zero crossings of $D$ estimated by the Rice formula from the generated samples alone (section 6.2). The data bracket the reversal threshold, observed between $\Gamma = 0.86$ and $0.87$: below this threshold, the weight of the two attractors is not determined by the physics (proposition 5.16). The quantitative results are in the report.
+- **E1** ([report, section E1](../../rapport/index.html#e1)) learns by conditional flow matching the invariant distribution of the Gissinger model as a function of $\Gamma$ (chapter 7). It compares the symmetry imposed by data augmentation or by an equivariant field (definition 3.10, proposition 5.16), the stationarity identities imposed in distribution (theorem 5.11), and the frequency of zero crossings of $D$ estimated by the Rice formula from the generated samples alone (section 6.2). The data bracket the reversal threshold, observed between $\Gamma = 0.86$ and $0.865$: below this threshold, the weight of the two attractors is not determined by the physics (proposition 5.16). Two results illustrate this module: only the equivariant field keeps the distribution symmetric between the training values of $\Gamma$, and Rice's formula applied to the generated distribution recovers the crossing frequency within 14% far from the threshold and within 42% near the threshold. The full figures are in the report.
 - **E2** ([report, section E2](../../rapport/index.html#e2)) generates forced 2D MHD fields conditioned on $\eta$ and adds a constraint “in distribution” from the energy budget: this is the identity of example 5.13, mean injection equals mean dissipation.
 - **E3** ([report, section E3](../../rapport/index.html#e3)) measures the growth rate of the kinematic ABC dynamo as a function of $Rm$: it is the largest real part of an eigenvalue of the linearized induction operator, and the dynamo threshold is the value of $Rm$ at which it changes sign (chapters 2 and 3).
 

@@ -188,16 +188,29 @@ window.Quarto = {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e3_abc.py                 <span class="co"># E3, environ 25 min</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e2_donnees.py             <span class="co"># E2, données : environ 30 min</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e2_mhd2d.py               <span class="co"># E2, modèles : environ 70 min</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e1_gissinger.py           <span class="co"># E1, environ 1 h 30 (reprenable)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> e1_gissinger.py           <span class="co"># E1, environ 2 à 3 h (reprenable)</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> figures.py <span class="kw">&amp;&amp;</span> <span class="ex">python3</span> digest.py <span class="op">&gt;</span> resultats/digest.md</span></code></pre></div>
-<p>Chaque script accepte <code>--quick</code> pour une version réduite de quelques minutes, utile pour vérifier l’installation. Les graines sont fixées dans le code (0, 1 et 2 pour les trois répétitions d’E1). Les durées indiquées ont été mesurées sur la machine décrite plus haut, en partie pendant que d’autres calculs tournaient.</p>
+<p>Chaque script accepte <code>--quick</code> pour une version réduite de quelques minutes, utile pour vérifier l’installation. Les graines sont fixées dans le code (0 et 1 pour les deux répétitions d’E1). Les durées indiquées ont été mesurées sur la machine décrite plus haut, en partie pendant que d’autres calculs tournaient.</p>
 <h2 id="e1">E1 — renversements du dipôle</h2>
-<p>Le modèle à trois modes de Gissinger sert de « dynamo de poche » : il a la symétrie <span class="math inline">\mathbf{B}\to-\mathbf{B}</span>, un seuil d’apparition des renversements (entre <span class="math inline">\Gamma = 0{,}86</span> et <span class="math inline">0{,}87</span>) et une dynamique connue exactement. On y apprend la loi stationnaire <span class="math inline">p(Q, D, V \mid \Gamma)</span> par flow matching conditionnel, puis on mesure ce que changent la symétrie imposée par construction, la perte de stationnarité et la projection par échantillon. La fréquence des renversements est estimée à partir de la seule loi générée, par la formule de Rice.</p>
+<p>Le modèle à trois modes de Gissinger sert de « dynamo de poche » : il a la symétrie <span class="math inline">\mathbf{B}\to-\mathbf{B}</span>, un seuil d’apparition des renversements (entre <span class="math inline">\Gamma = 0{,}86</span> et <span class="math inline">0{,}865</span>) et une dynamique connue exactement. On y apprend la loi stationnaire <span class="math inline">p(Q, D, V \mid \Gamma)</span> par flow matching conditionnel, puis on mesure ce que changent la symétrie imposée par construction, la perte de stationnarité et la projection par échantillon. La fréquence des renversements est estimée à partir de la seule loi générée, par la formule de Rice.</p>
+<p>En bref : le champ de vitesse équivariant garde la loi symétrique à toute valeur de <span class="math inline">\Gamma</span>, alors que l’augmentation des données ne la symétrise qu’aux valeurs d’entraînement ; la projection de chaque échantillon sur <span class="math inline">\mathrm{d}E/\mathrm{d}t = 0</span> multiplie par 9 la distance à la vraie loi ; la formule de Rice retrouve la fréquence des passages à 14 % près loin du seuil et à 42 % près au seuil ; la perte de stationnarité améliore les résidus d’un bon modèle, mais échoue sur un modèle biaisé.</p>
 <p>Résultats et discussion : <a href="../rapport/index.html#e1">rapport, section E1</a>. Schéma interactif : <a href="../interactifs/index.html#gissinger">modèle de Gissinger</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img src="figures/e1_seuil.png" style="width:100.0%" alt="Deux graphiques en fonction de Gamma de 0,80 à 1,00 : à gauche la fréquence des passages de D par zéro, nulle sous 0,865 puis croissante ; à droite la probabilité que |D| soit inférieur à 0,25."></p>
 <figcaption>Fréquence des passages de <span class="math inline">D</span> par zéro et masse du « pont » <span class="math inline">|D| &lt; 0{,}25</span> en fonction de <span class="math inline">\Gamma</span> : simulation, formule de Rice sur la loi de référence et sur les lois générées.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="figures/e1_variantes.png" style="width:100.0%" alt="Quatre diagrammes en barres horizontales, une barre par variante, avec une ligne en tirets pour le plancher de bruit ou la valeur de référence."></p>
+<figcaption>Comparaison des variantes aux valeurs de test de <span class="math inline">\Gamma</span> : distance d’énergie, résidu de Liouville de contrôle (degré 3), asymétrie <span class="math inline">|\mathbb{P}(D&gt;0) - 1/2|</span> et rapport <span class="math inline">\sigma(\mathrm{d}E/\mathrm{d}t)/\sigma_{\mathrm{ref}}</span>, avec les planchers de bruit.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="figures/e1_symetrie_projection.png" style="width:100.0%" alt="Trois panneaux : histogrammes de dE/dt, puis deux nuages de points dans le plan Q-D superposés à la référence grise."></p>
+<figcaption>Symétrie et contrainte par échantillon : densité de dE/dt à <span class="math inline">\Gamma = 0{,}93</span> (la projection concentre tout en zéro) et nuages <span class="math inline">(Q, D)</span> à <span class="math inline">\Gamma = 0{,}85</span> pour le modèle de référence, asymétrique, et le modèle équivariant.</figcaption>
 </figure>
 </div>
 <h2 id="e2">E2 — MHD 2D et contraintes de divergence</h2>
@@ -244,7 +257,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td><code>resultats/e1_gissinger.json</code></td>
-<td>E1 : configuration, statistiques des données, évaluation par variante, par <span class="math inline">\Gamma</span> et par graine, grille fine.</td>
+<td>E1 : configuration, statistiques des données, évaluation par variante et par <span class="math inline">\Gamma</span> (moyenne et écart-type entre graines), grille fine, planchers de bruit.</td>
 </tr>
 <tr class="odd">
 <td><code>resultats/e2_mhd2d.json</code></td>

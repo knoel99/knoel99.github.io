@@ -32,6 +32,7 @@ TXT = {
         "rice_F": "Rice, loi générée (F)", "gtrain": "Γ d'entraînement", "rate": "passages de D par 0 par unité de temps",
         "ref": "référence", "genC": "loi générée (C)", "genF": "loi générée (F)",
         "ed": "distance d'énergie", "liou3": "résidu de Liouville (degré 3)", "asym": "|P(D>0) − 1/2|", "mc": " bruit MC",
+        "sig": "σ(dE/dt) / σ_réf", "one": " loi de réf.",
         "density": "densité", "projC": "C projetée sur dE/dt = 0", "genCshort": "C (générée)",
         "var": {"A_reference": "A référence", "B_augmentation": "B augmentation", "C_equivariant": "C équivariant",
                 "C_court": "C budget court", "F_stationnarite_Ccourt": "C court + perte stat.",
@@ -51,6 +52,7 @@ TXT = {
         "rice_F": "Rice, generated law (F)", "gtrain": "training Γ", "rate": "zero crossings of D per unit time",
         "ref": "reference", "genC": "generated law (C)", "genF": "generated law (F)",
         "ed": "energy distance", "liou3": "Liouville residual (degree 3)", "asym": "|P(D>0) − 1/2|", "mc": " MC noise",
+        "sig": "σ(dE/dt) / σ_ref", "one": " reference law",
         "density": "density", "projC": "C projected on dE/dt = 0", "genCshort": "C (generated)",
         "var": {"A_reference": "A baseline", "B_augmentation": "B augmentation", "C_equivariant": "C equivariant",
                 "C_court": "C short budget", "F_stationnarite_Ccourt": "C short + stat. loss",
@@ -125,17 +127,34 @@ def e1(suffix="", lang="fr"):
     keys = ["A_reference", "B_augmentation", "C_equivariant", "C_court", "F_stationnarite_Ccourt", "F0_temoin_Ccourt",
             "F_stationnarite_C", "F0_temoin_C", "D_inclinaison_C", "E_projection_C"]
     keys = [k for k in keys if k in res]
-    fig, ax = plt.subplots(1, 3, figsize=(10, 3.8), sharey=True)
+    from matplotlib.ticker import FuncFormatter, NullFormatter
+    fig, ax = plt.subplots(1, 4, figsize=(12.4, 3.9), sharey=True)
     y = np.arange(len(keys))[::-1]
+    sig_ref = res["reference"]["dEdt_std"]
     for j, (key, lab, floor_key) in enumerate((("energie", t["ed"], "energie"), ("liou_test_moy", t["liou3"], "liou_test_moy"),
-                                               ("asym", t["asym"], None))):
-        vals = [res[k]["test"][key] for k in keys]
+                                               ("asym", t["asym"], "asym"), ("dEdt_std", t["sig"], "one"))):
+        vals = [res[k]["test"][key] / (sig_ref if key == "dEdt_std" else 1.0) for k in keys]
         ax[j].barh(y, vals, color=C[0], height=0.62)
         if floor_key:
-            fl = res["planchers_bruit_MC"]["n_gen"][floor_key]
+            if floor_key == "one":
+                fl = 1.0
+            elif floor_key == "asym":  # E|p̂ − 1/2| pour une loi exactement symétrique : √(2/π) · ½ / √n
+                fl = np.sqrt(2 / np.pi) * 0.5 / np.sqrt(r["config"]["n_gen"])
+            else:
+                fl = res["planchers_bruit_MC"]["n_gen"][floor_key]
             ax[j].axvline(fl, color=INK2, ls="--", lw=1)
-            ax[j].text(fl, len(keys) - 0.45, t["mc"], color=INK2, fontsize=7, va="bottom")
+            ax[j].text(fl, len(keys) - 0.45, t[floor_key if floor_key == "one" else "mc"], color=INK2, fontsize=7, va="bottom")
         ax[j].set_xscale("log"); ax[j].set_xlabel(lab)
+        ax[j].xaxis.set_minor_formatter(NullFormatter())
+        if key in ("asym", "dEdt_std"):  # graduations lisibles (peu de décades)
+            ticks = [0.003, 0.01, 0.03] if key == "asym" else [0.3, 1, 3, 10]
+            ax[j].set_xticks(ticks)
+            ax[j].xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}" if lang == "en" else f"{v:g}".replace(".", ",")))
+        if key == "dEdt_std":  # la projection par échantillon annule dE/dt : barre hors échelle, annotée
+            ax[j].set_xlim(0.2, 30)
+            for yy, v in zip(y, vals):
+                if v < 0.2:
+                    ax[j].text(0.22, yy, "≈ 0 (" + ("exact" if lang == "en" else "exact") + ")", va="center", fontsize=7.5, color=INK2)
     ax[0].set_yticks(y); ax[0].set_yticklabels([t["var"][k] for k in keys])
     for a in ax:
         a._categ = True
@@ -149,7 +168,8 @@ def e1(suffix="", lang="fr"):
     for key, col, lab in (("ref", INK, t["ref"]), ("C_equivariant", C[0], t["genCshort"]), ("E_projection_C", C[1], t["projC"])):
         x = d[f"{key}|{gam2}"]
         ax[0].hist(dEdt(x, float(gam2)), bins=bins, density=True, histtype="step", color=col, lw=1.6, label=lab)
-    ax[0].set_xlabel(f"dE/dt  (Γ = {gam2})"); ax[0].set_ylabel(t["density"]); ax[0].legend(fontsize=7)
+    dec = (lambda v: v) if lang == "en" else (lambda v: v.replace(".", ","))
+    ax[0].set_xlabel(f"dE/dt  (Γ = {dec(gam2)})"); ax[0].set_ylabel(t["density"]); ax[0].legend(fontsize=7)
     ax[0].set_yscale("log")
     for j, key in enumerate(("A_reference", "C_equivariant")):
         ref, x = d[f"ref|{gam}"], d[f"{key}|{gam}"]
@@ -157,7 +177,7 @@ def e1(suffix="", lang="fr"):
         ax[j + 1].scatter(x[:3000, 0], x[:3000, 1], s=1, color=C[0], rasterized=True)
         ax[j + 1].set_xlabel("Q"); ax[j + 1].set_ylabel("D")
         p = f"{(x[:, 1] > 0).mean():.2f}"
-        ax[j + 1].set_title(f"{t['var'][key]}, Γ = {gam} : P(D>0) = {p if lang == 'en' else p.replace('.', ',')}", fontsize=8.5)
+        ax[j + 1].set_title(f"{t['var'][key]}, Γ = {dec(gam)}{':' if lang == 'en' else ' :'} P(D>0) = {dec(p)}", fontsize=8.5)
     finish(fig, f"e1_symetrie_projection{suffix}", lang)
 
 

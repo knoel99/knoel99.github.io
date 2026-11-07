@@ -66,19 +66,25 @@ cd experiences
 python3 e3_abc.py                 # E3, about 25 min
 python3 e2_donnees.py             # E2, data: about 30 min
 python3 e2_mhd2d.py               # E2, models: about 70 min
-python3 e1_gissinger.py           # E1, about 1 h 30 (resumable)
+python3 e1_gissinger.py           # E1, about 2 to 3 h (resumable)
 python3 figures.py && python3 digest.py > resultats/digest.md
 ```
 
-Each script accepts `--quick` for a reduced version that takes a few minutes, useful for checking the installation. The seeds are fixed in the code (0, 1 and 2 for the three repetitions of E1). The durations given were measured on the machine described above, partly while other computations were running.
+Each script accepts `--quick` for a reduced version that takes a few minutes, useful for checking the installation. The seeds are fixed in the code (0 and 1 for the two repetitions of E1). The durations given were measured on the machine described above, partly while other computations were running.
 
 ## E1 — dipole reversals {#e1}
 
-Gissinger's three-mode model serves as a "pocket dynamo": it has the symmetry $\mathbf{B}\to-\mathbf{B}$, an onset threshold for reversals (between $\Gamma = 0.86$ and $0.87$) and exactly known dynamics. We learn the stationary distribution $p(Q, D, V \mid \Gamma)$ by conditional flow matching, then measure the effect of the symmetry imposed by construction, of the stationarity loss, and of the per-sample projection. The reversal frequency is estimated from the generated distribution alone, through the Rice formula.
+Gissinger's three-mode model serves as a "pocket dynamo": it has the symmetry $\mathbf{B}\to-\mathbf{B}$, an onset threshold for reversals (between $\Gamma = 0.86$ and $0.865$) and exactly known dynamics. We learn the stationary distribution $p(Q, D, V \mid \Gamma)$ by conditional flow matching, then measure the effect of the symmetry imposed by construction, of the stationarity loss, and of the per-sample projection. The reversal frequency is estimated from the generated distribution alone, through the Rice formula.
+
+In short: the equivariant velocity field keeps the distribution symmetric at every value of $\Gamma$, whereas data augmentation symmetrizes it only at training values; projecting each sample onto $\mathrm{d}E/\mathrm{d}t = 0$ multiplies the distance to the true distribution by 9; Rice's formula recovers the crossing frequency within 14% far from the threshold and within 42% at the threshold; the stationarity loss improves the residuals of a good model but fails on a biased model.
 
 Results and discussion: [report, section E1](../rapport/index.html#e1). Interactive diagram: [Gissinger model](../interactifs/index.html#gissinger).
 
-![Frequency of zero crossings of $D$ and mass of the "bridge" $|D| < 0.25$ as a function of $\Gamma$: simulation, Rice formula on the reference distribution and on the generated distributions.](../../experiences/figures/e1_seuil.png){width="100%" fig-alt="Two plots as a function of Gamma from 0.80 to 1.00: on the left, the frequency of zero crossings of D, zero below 0.865 and then increasing; on the right, the probability that |D| is less than 0.25."}
+![Frequency of zero crossings of $D$ and mass of the "bridge" $|D| < 0.25$ as a function of $\Gamma$: simulation, Rice formula on the reference distribution and on the generated distributions.](../../experiences/figures/e1_seuil-en.png){width="100%" fig-alt="Two plots as a function of Gamma from 0.80 to 1.00: on the left, the frequency of zero crossings of D, zero below 0.865 and then increasing; on the right, the probability that |D| is less than 0.25."}
+
+![Comparison of the variants at test values of $\Gamma$: energy distance, control Liouville residual (degree 3), asymmetry $|\mathbb{P}(D>0) - 1/2|$ and ratio $\sigma(\mathrm{d}E/\mathrm{d}t)/\sigma_{\mathrm{ref}}$, with the noise floors.](../../experiences/figures/e1_variantes-en.png){width="100%" fig-alt="Four horizontal bar charts, one bar per variant, with a dashed line for the noise floor or the reference value."}
+
+![Symmetry and per-sample constraint: density of dE/dt at $\Gamma = 0.93$ (the projection concentrates everything at zero) and $(Q, D)$ scatter plots at $\Gamma = 0.85$ for the baseline model, which is asymmetric, and the equivariant model.](../../experiences/figures/e1_symetrie_projection-en.png){width="100%" fig-alt="Three panels: histograms of dE/dt, then two scatter plots in the Q-D plane over the grey reference."}
 
 ## E2 — 2D MHD and divergence constraints {#e2}
 
@@ -105,7 +111,7 @@ Results: [report, section E3](../rapport/index.html#e3). Interactive diagram: [A
 | File | Contents |
 |---|---|
 | `resultats/digest.md` | Numerical tables of all the experiments (generated). |
-| `resultats/e1_gissinger.json` | E1: configuration, data statistics, evaluation per variant, per $\Gamma$ and per seed, fine grid. |
+| `resultats/e1_gissinger.json` | E1: configuration, data statistics, evaluation per variant and per $\Gamma$ (mean and standard deviation across seeds), fine grid, noise floors. |
 | `resultats/e2_mhd2d.json` | E2: configuration, evaluation per variant and per $\eta$, "distributional" part. |
 | `resultats/e3_abc.json` | E3: growth rates, resolution convergence, interpolated thresholds. |
 | `resultats/*.npz` | Generated samples and eigenmodes, for the figures and the widgets. |
