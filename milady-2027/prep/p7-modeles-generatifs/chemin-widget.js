@@ -2,11 +2,34 @@
    Cible 1D : mélange 0,3 N(-a, s²) + 0,7 N(a, s²), a = 0,5 + 2λ ; source N(0, 1) ;
    chemin linéaire x_t = (1 - t) x0 + t x1 (t = 0 : bruit, t = 1 : données).
    Densité p_t et vitesse marginale v_t calculées exactement (exemple 4.6 du module).
-   Aucun appel réseau, aucune bibliothèque. */
+   Aucun appel réseau, aucune bibliothèque.
+   Un seul fichier pour les pages française et anglaise : la langue suit <html lang>.
+   One file for the French and English pages: the language follows <html lang>. */
 (function () {
   "use strict";
   var root = document.getElementById("fmw");
   if (!root) return;
+  var LANG = /^en/i.test(document.documentElement.getAttribute("lang") || "") ? "en" : "fr";
+  var TXT = {
+    fr: {
+      axis: "temps du flot t   (0 : bruit, 1 : données)",
+      side: "pₜ(x) et vₜ(x) à t = ",
+      ratio: "Longueur totale des trajectoires du flot marginal rapportée à la somme de leurs cordes : ",
+      straight: " (1 = trajectoires droites).",
+      aria: "Densité du chemin de probabilité dans le plan (t, x) pour λ = ",
+      and: " et s = "
+    },
+    en: {
+      axis: "flow time t   (0: noise, 1: data)",
+      side: "pₜ(x) and vₜ(x) at t = ",
+      ratio: "Total length of the marginal-flow trajectories divided by the sum of their chords: ",
+      straight: " (1 = straight trajectories).",
+      aria: "Density of the probability path in the (t, x) plane for λ = ",
+      and: " and s = "
+    }
+  }[LANG];
+  /* nombre avec virgule décimale en français, point en anglais */
+  function num(x, d) { var s = d === undefined ? String(x) : x.toFixed(d); return LANG === "fr" ? s.replace(".", ",") : s; }
   var cMain = document.getElementById("fmw-main");
   var cSide = document.getElementById("fmw-side");
   var inLam = document.getElementById("fmw-lam");
@@ -106,9 +129,9 @@
 
   function draw() {
     var P = params(), C = colors();
-    outLam.textContent = P.lam.toFixed(2).replace(".", ",");
-    outS.textContent = P.s.toFixed(2).replace(".", ",");
-    outT.textContent = P.t.toFixed(2).replace(".", ",");
+    outLam.textContent = num(P.lam, 2);
+    outS.textContent = num(P.s, 2);
+    outT.textContent = num(P.t, 2);
     var mode = "both";
     for (var i = 0; i < modes.length; i++) if (modes[i].checked) mode = modes[i].value;
 
@@ -166,8 +189,8 @@
     /* axes */
     ctx.strokeStyle = C.hair; ctx.lineWidth = 1; ctx.strokeRect(ml, mt, pw, ph);
     ctx.fillStyle = C.muted; ctx.font = "12px system-ui, sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "top";
-    [0, 0.25, 0.5, 0.75, 1].forEach(function (tt) { ctx.fillText(String(tt).replace(".", ","), X(tt), mt + ph + 4); });
-    ctx.fillText("temps du flot t   (0 : bruit, 1 : données)", ml + pw / 2, mt + ph + 18);
+    [0, 0.25, 0.5, 0.75, 1].forEach(function (tt) { ctx.fillText(num(tt), X(tt), mt + ph + 4); });
+    ctx.fillText(TXT.axis, ml + pw / 2, mt + ph + 18);
     ctx.textAlign = "right"; ctx.textBaseline = "middle";
     [-4, -2, 0, 2, 4].forEach(function (x) { ctx.fillText(String(x).replace("-", "−"), ml - 5, Y(x)); });
 
@@ -197,13 +220,11 @@
     }
     sx.strokeStyle = C.hair; sx.lineWidth = 1; sx.strokeRect(sl, mt, sw, sh);
     sx.fillStyle = C.muted; sx.font = "12px system-ui, sans-serif"; sx.textAlign = "center"; sx.textBaseline = "top";
-    sx.fillText("pₜ(x) et vₜ(x) à t = " + P.t.toFixed(2).replace(".", ","), sl + sw / 2, mt + sh + 4);
+    sx.fillText(TXT.side + num(P.t, 2), sl + sw / 2, mt + sh + 4);
 
-    var txt = "Longueur totale des trajectoires du flot marginal rapportée à la somme de leurs cordes : " +
-      T.ratio.toFixed(3).replace(".", ",") + " (1 = trajectoires droites).";
+    var txt = TXT.ratio + num(T.ratio, 3) + TXT.straight;
     readout.textContent = txt;
-    cMain.setAttribute("aria-label", "Densité du chemin de probabilité dans le plan (t, x) pour λ = " +
-      P.lam.toFixed(2) + " et s = " + P.s.toFixed(2) + ". " + txt);
+    cMain.setAttribute("aria-label", TXT.aria + P.lam.toFixed(2) + TXT.and + P.s.toFixed(2) + ". " + txt);
   }
 
   [inLam, inS, inT].forEach(function (e) { e.addEventListener("input", draw); });
