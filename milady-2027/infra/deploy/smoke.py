@@ -67,12 +67,21 @@ class Runner:
     steps: list[Step] = field(default_factory=list)
     context: dict[str, Any] = field(default_factory=dict)
 
-    def run(self, name: str, fn: Callable[[], str | None], required: bool = True) -> bool:
-        """Lance ``fn`` ; une exception marque l'étape en échec (ou « skip » si facultative)."""
+    def run(self, name: str, fn: Callable[[], str | None], required: bool = True,
+            needs: tuple[str, ...] = ()) -> bool:
+        """Lance ``fn`` ; une exception marque l'étape en échec (ou « skip » si facultative).
+
+        ``needs`` : étapes préalables ; si l'une n'a pas réussi, l'étape est sautée (l'échec est
+        déjà compté sur l'étape préalable).
+        """
         step = Step(name)
         self.steps.append(step)
         t0 = time.perf_counter()
+        status = {s.name: s.status for s in self.steps}
+        missing = [n for n in needs if status.get(n) != "ok"]
         try:
+            if missing:
+                raise SkipStep("prérequis non satisfait : " + ", ".join(missing))
             detail = fn()
             step.status, step.detail = "ok", detail or ""
         except SkipStep as exc:
@@ -279,14 +288,6 @@ def main(argv: list[str] | None = None) -> int:
         params = {"Rm": 10.0, "Re": 1.0, "A": 1.0, "B": 1.0, "C": 1.0}
         grid = {"type": "cartesian", "n": [args.n] * 3, "L": [2 * np.pi] * 3, "periodic": True}
         ctx["params"] = params
-        sim_id = cat.register_simulation(
-            ctx["campaign_id"], "pending", params, grid, code_version="smoke",
-            git_commit=ctx.get("git_commit", ""), host=ctx.get("host", ""),
-            n_gpus=int(ctx.get("n_gpus", 0)), n_cpus=os.cpu_count() or 1)
-        ctx["sim_id"] = sim_id
-        ctx["job_id"] = cat.register_job("simulation", "local", external_id=str(os.getpid()),
-                                         simulation_id=sim_id, status="running")
-        cat.update_simulation(sim_id, status="running")
         t0 = time.perf_counter()
         out = None
         try:
@@ -297,11 +298,19 @@ def main(argv: list[str] | None = None) -> int:
             out = analytic_fields(args.n, args.n_t, rng)
         ctx["sim"] = out
         ctx["wall"] = time.perf_counter() - t0
+        sim_id = cat.register_simulation(
+            ctx["campaign_id"], out["code"], params, grid, code_version="smoke",
+            git_commit=ctx.get("git_commit", ""), host=ctx.get("host", ""),
+            n_gpus=int(ctx.get("n_gpus", 0)), n_cpus=os.cpu_count() or 1)
+        ctx["sim_id"] = sim_id
+        ctx["job_id"] = cat.register_job("simulation", "local", external_id=str(os.getpid()),
+                                         simulation_id=sim_id, status="running")
+        cat.update_simulation(sim_id, status="running")
         b_last = np.asarray(out["fields"]["magnetic_field"])[0, -1]
         ctx["div_rel"] = divergence_rel(b_last.astype(np.float64))
         return f"{out['code']}  n={args.n}  n_t={args.n_t}  div_rel(B)={ctx['div_rel']:.1e}"
 
-    r.run("simulation", step_simulation)
+    r.run("simulation", step_simulation, needs=("environnement", "catalogue"))
 
     # 5. Format MFF -------------------------------------------------------------------------
     def step_format() -> str:
@@ -329,7 +338,7 @@ def main(argv: list[str] | None = None) -> int:
         ctx["mff_path"], ctx["sha256"] = path, sha
         return f"{path.name} {path.stat().st_size / 1024:.0f} Kio  sha256 {sha[:12]}…"
 
-    r.run("format MFF", step_format)
+    r.run("format MFF", step_format, needs=("simulation",))
 
     def step_zarr() -> str:
         from milady.data import format as mff
@@ -342,7 +351,7 @@ def main(argv: list[str] | None = None) -> int:
         shape = np.asarray(back["fields"]["magnetic_field"]).shape
         return f"{zpath.name} relu, B {shape}"
 
-    r.run("variante Zarr", step_zarr, required=False)
+    r.run("variante Zarr", step_zarr, required=False, needs=("format MFF",))
 
     # 6. Téléversement + catalogue ----------------------------------------------------------
     def step_register() -> str:
@@ -366,7 +375,7 @@ def main(argv: list[str] | None = None) -> int:
         ctx["fields_uri"] = uri
         return uri
 
-    r.run("téléversement+catalogue", step_register)
+    r.run("téléversement+catalogue", step_register, needs=("stockage", "format MFF"))
 
     # 7. Jeu de données ---------------------------------------------------------------------
     def step_dataset() -> str:
@@ -375,7 +384,7 @@ def main(argv: list[str] | None = None) -> int:
             description="jeu de données du test de fumée")
         return str(ctx["dataset_id"])
 
-    r.run("jeu de données", step_dataset)
+    r.run("jeu de données", step_dataset, needs=("téléversement+catalogue",))
 
     # 8. Entraînement (une itération) -------------------------------------------------------
     def step_train() -> str:
@@ -430,7 +439,7 @@ def main(argv: list[str] | None = None) -> int:
         mlf = f"  MLflow run {run_id_mlflow[:8]}" if run_id_mlflow else "  (MLflow non configuré)"
         return f"{arch} loss={loss:.3e}{mlf}"
 
-    r.run("entraînement (1 it.)", step_train)
+    r.run("entraînement (1 it.)", step_train, needs=("jeu de données",))
 
     # 9. Évaluation -------------------------------------------------------------------------
     def step_eval() -> str:
@@ -456,7 +465,7 @@ def main(argv: list[str] | None = None) -> int:
             raise RuntimeError("eval_summary() vide")
         return f"div_rel={div:.1e}  E_B={energy:.2e}  ({len(summary)} ligne(s) de résumé)"
 
-    r.run("évaluation", step_eval)
+    r.run("évaluation", step_eval, needs=("entraînement (1 it.)",))
 
     # Rapport -------------------------------------------------------------------------------
     if not args.keep:
