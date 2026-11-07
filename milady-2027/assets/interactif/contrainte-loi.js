@@ -245,6 +245,13 @@
     return lang === "fr" ? s + " %" : s + "%";
   }
 
+  // pas de retour à la ligne autour de = ≤ ≥ ← ‖, ni (en français) avant : ; ! ? » ou après «
+  function typo(lang, s) {
+    s = s.replace(/ ([=≤≥←‖]) /g, "\u00a0$1\u00a0");
+    if (lang === "fr") s = s.replace(/ ([:;!?»])/g, "\u00a0$1").replace(/« /g, "«\u00a0");
+    return s;
+  }
+
   function mk(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -393,7 +400,8 @@
     return res + (GA[n - 1] - y[n - 1]);
   }
 
-  function histo(y, n, w, out) {
+  // cut = {k, x, w} : case k coupée en x = r_c (largeur utile w), ou null
+  function histo(y, n, w, out, cut) {
     for (var k = 0; k < NBIN; k++) out[k] = 0;
     var outL = 0, outR = 0;
     for (var i = 0; i < n; i++) {
@@ -401,12 +409,11 @@
       if (j < 0) outL += wi; else if (j >= NBIN) outR += wi; else out[j] += wi;
     }
     var mxv = 0;
-    for (k = 0; k < NBIN; k++) { out[k] /= DX; if (out[k] > mxv) mxv = out[k]; }
+    for (k = 0; k < NBIN; k++) { out[k] /= (cut && k === cut.k) ? cut.w : DX; if (out[k] > mxv) mxv = out[k]; }
     return { max: mxv, outL: outL, outR: outR };
   }
 
-  function styleButton(b, pressed) {
-    b.setAttribute("aria-pressed", pressed ? "true" : "false");
+  function styleButton(b, pressed) {      // l'état est dit par le libellé (« Animer b » / « Pause »)
     b.style.background = pressed ? "var(--ink)" : "transparent";
     b.style.color = pressed ? "var(--bg)" : "var(--ink)";
   }
@@ -419,7 +426,7 @@
     var T = this.T = TXT[this.lang];
     el.textContent = "";
 
-    el.appendChild(mk("p", "widget-title", T.title));
+    el.appendChild(mk("p", "widget-title", typo(this.lang, T.title)));
     var controls = mk("div", "widget-controls");
     el.appendChild(controls);
 
@@ -470,7 +477,7 @@
     for (var i = 0; i < 5; i++) { var s = mk("span"); s.style.display = "block"; ro.appendChild(s); this.rl.push(s); }
     el.appendChild(ro);
     var note = mk("p", "widget-note");
-    note.innerHTML = T.note;                    // texte fixe du dictionnaire (indices <sub>)
+    note.innerHTML = typo(this.lang, T.note);   // texte fixe du dictionnaire (indices <sub>)
     el.appendChild(note);
 
     /* état */
@@ -589,12 +596,18 @@
     // F_μ et G aux points
     for (i = 0; i < n; i++) { mix(y[i]); this.FA[i] = mF; this.GA[i] = mG; }
     this.rawW1 = wasserstein1(y, n, null, this.FA, this.GA);
-    this.hr = histo(y, n, null, this.hRaw);
+    var cut = null;                         // case qui contient r_c : q n'a pas de masse au-delà
+    if (this.trunc) {
+      var kc = Math.floor((this.rc - XMIN) / DX), left = XMIN + kc * DX;
+      if (kc >= 0 && kc < NBIN && this.rc - left > 1e-9) cut = { k: kc, x: this.rc, w: this.rc - left };
+    }
+    this.cut = cut;
+    this.hr = histo(y, n, null, this.hRaw, cut);
     // inclinaison
     this.tilt = solveTilt(y, n, this.w);
     if (this.tilt.ok) {
       this.tilt.w1 = wasserstein1(y, n, this.w, this.FA, this.GA);
-      this.ht = histo(y, n, this.w, this.hTilt);
+      this.ht = histo(y, n, this.w, this.hTilt, cut);
     } else this.ht = null;
     mix(this.rc);
     this.missMass = 1 - mF;
@@ -604,10 +617,10 @@
   Widget.prototype.updateLabels = function () {
     var lg = this.lang, T = this.T;
     var bs = fmt(lg, this.b, 2), ss = fmt(lg, this.s, 2), ns = fmt(lg, NS[this.nIdx], 0), cs = fmt(lg, this.rc, 2);
-    this.cb.out.textContent = T.bLab + " = " + bs;
-    this.cs.out.textContent = T.sLab + " = " + ss;
-    this.cn.out.textContent = T.nLab + " = " + ns;
-    this.cc.out.innerHTML = T.cLab + " = " + cs;
+    this.cb.out.textContent = T.bLab + "\u00a0=\u00a0" + bs;
+    this.cs.out.textContent = T.sLab + "\u00a0=\u00a0" + ss;
+    this.cn.out.textContent = T.nLab + "\u00a0=\u00a0" + ns;
+    this.cc.out.innerHTML = T.cLab + "\u00a0=\u00a0" + cs;
     this.cb.input.setAttribute("aria-valuetext", bs);
     this.cs.input.setAttribute("aria-valuetext", ss);
     this.cn.input.setAttribute("aria-valuetext", ns);
@@ -629,6 +642,7 @@
     ];
     if (!this.lastLines) this.lastLines = [];
     for (var i = 0; i < 5; i++) {
+      lines[i] = typo(lg, lines[i]);
       if (this.lastLines[i] === lines[i]) continue;
       this.lastLines[i] = lines[i];
       this.rl[i].innerHTML = lines[i];
@@ -902,12 +916,13 @@
   };
 
   Widget.prototype.histPath = function (h, X, Y, p) {
-    var c = this.ctx;
+    var c = this.ctx, cut = this.cut;
     c.beginPath();
     c.moveTo(X(XMIN), p.b);
     for (var k = 0; k < NBIN; k++) {
-      var y = Y(h[k]);
-      c.lineTo(X(XMIN + k * DX), y); c.lineTo(X(XMIN + (k + 1) * DX), y);
+      var y = Y(h[k]), cutK = cut && k === cut.k, xr = cutK ? X(cut.x) : X(XMIN + (k + 1) * DX);
+      c.lineTo(X(XMIN + k * DX), y); c.lineTo(xr, y);
+      if (cutK) c.lineTo(xr, p.b);
     }
     c.lineTo(X(XMAX), p.b);
   };
@@ -922,7 +937,7 @@
     // cases tronquées par l'échelle : chevron
     for (var k = 0; k < NBIN; k++) {
       if (h[k] > ymaxClip && !dashed) {
-        var xm = X(XMIN + (k + 0.5) * DX);
+        var xm = (this.cut && k === this.cut.k) ? 0.5 * (X(XMIN + k * DX) + X(this.cut.x)) : X(XMIN + (k + 0.5) * DX);
         c.fillStyle = col;
         c.beginPath(); c.moveTo(xm - 5, p.t + 9); c.lineTo(xm, p.t + 2); c.lineTo(xm + 5, p.t + 9); c.closePath(); c.fill();
       }

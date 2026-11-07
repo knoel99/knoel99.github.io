@@ -718,7 +718,7 @@ The quantities
 $$
 E = \frac12\langle|\mathbf{u}|^2\rangle, \qquad H_K = \langle\mathbf{u}\cdot\boldsymbol\omega\rangle, \qquad P = \langle\mathbf{f}\cdot\mathbf{u}\rangle, \qquad \varepsilon = \nu\langle|\boldsymbol\omega|^2\rangle
 $$
-are called the **kinetic energy** (per unit mass), the **kinetic helicity**, the **injected power** of the forcing and the **viscous dissipation rate**. In 2D, the quantity $Z = \tfrac12\langle\omega^2\rangle$ is called the **enstrophy** (some authors omit the factor $\tfrac12$; this is the case of the repository's code `experiences/mhd2d.py`, where "enstrophy" refers to $\langle\omega^2\rangle$).
+are called the **kinetic energy** (per unit mass), the **kinetic helicity**, the **injected power** of the forcing and the **viscous dissipation rate**. In 2D, the quantity $Z = \tfrac12\langle\omega^2\rangle$ is called the **enstrophy** (some authors omit the factor $\tfrac12$; this is the case for the repository's code `experiences/mhd2d.py`, where "enstrophy" refers to $\langle\omega^2\rangle$).
 :::
 
 :::: prop
@@ -1001,7 +1001,7 @@ This geometry is at the heart of the MilaDy project. Numerical simulations of VK
 
 ::: ex
 [Example 5.8 — Numerical checks]{.tag}
-The following code solves the Poiseuille problem by finite differences and checks the injection = dissipation budget, checks the budget of the laminar Kolmogorov state, and computes the steady Navier–Stokes residual for the ABC flow. It also illustrates a pitfall: depending on the convention chosen, the laminar Kolmogorov state with $F = 1$, $n = 4$ and $\nu = 0.05$ has a Reynolds number of $6.2$ or $20$.
+The following code solves the Poiseuille problem by finite differences and checks the injection = dissipation budget, verifies the budget of the laminar Kolmogorov state, and computes the steady Navier–Stokes residual for the ABC flow. It also illustrates a pitfall: depending on the convention chosen, the laminar Kolmogorov state with $F = 1$, $n = 4$ and $\nu = 0.05$ has a Reynolds number of $6.2$ or $20$.
 :::
 
 ```python
@@ -1185,7 +1185,7 @@ $\eta/L = L^{-1}(\nu^3L/(C_\varepsilon U^3))^{1/4} = C_\varepsilon^{-1/4}(\nu/(U
 :::
 ::::
 
-Sreenivasan (1998) gathered direct simulations in a periodic box confirming that the dissipation rate, nondimensionalized by the integral scale and the root-mean-square velocity, tends to a constant of order $1$ at large $Re$, independent of the viscosity. For the VKS experiment, $Re = 5\times 10^6$ (Monchaux et al., 2007) gives $Re^{9/4} \approx 10^{15}$: a direct simulation is out of reach. Simulations of VKS therefore resort to lower Reynolds numbers or to large-eddy models (LES), like Nore et al. (2018). For a generative model conditioned on $Re$, this means that **the required resolution depends on the conditioning parameter**: the same network on a fixed grid cannot faithfully represent the small scales over a whole range of $Re$.
+Sreenivasan (1998) gathered direct simulations in a periodic box confirming that the dissipation rate, nondimensionalized by the integral scale and the root-mean-square velocity, tends to a constant of order $1$ at large $Re$, independent of the viscosity. For the VKS experiment, $Re = 5\times 10^6$ (Monchaux et al., 2007) gives $Re^{9/4} \approx 10^{15}$: a direct simulation is out of reach. Simulations of VKS therefore resort to lower Reynolds numbers or to large-eddy models (LES), as Nore et al. (2018) do. For a generative model conditioned on $Re$, this means that **the required resolution depends on the conditioning parameter**: the same network on a fixed grid cannot faithfully represent the small scales over a whole range of $Re$.
 
 ```{=html}
 <div class="widget" id="p2w2" role="group" aria-labelledby="p2w2-title">
@@ -2028,7 +2028,7 @@ The exercises follow the order of the chapters; the stars indicate the difficult
     # no dealiasing      (|k| ≤ 31): dE/dt = +3.7e-06, dZ/dt = +5.0e-04 (relative units)
     ```
 
-    With the 2/3 rule, both rates vanish to machine precision: Proposition 7.6 is verified, and the discrete nonlinear term creates neither energy nor enstrophy. Without dealiasing, they are about $4\times10^{-6}$ and $5\times10^{-4}$ in relative units. These numbers look small, but they recur at every evaluation of the right-hand side, with no controlled sign, and they come from interactions between the smallest represented scales (only two modes such that $|k + q| \ge N/2$ can alias), precisely where dissipation should dominate. In a weakly viscous simulation, this spurious source can make the energy grow until the computation blows up. For a generative model trained on such data, it can moreover introduce a bias in the high-wavenumber end of the spectrum.
+    With the 2/3 rule, both rates vanish to machine precision: Proposition 7.6 is verified, and the discrete nonlinear term creates neither energy nor enstrophy. Without dealiasing, they are about $4\times10^{-6}$ and $5\times10^{-4}$ in relative units. These numbers look small, but they recur at every evaluation of the right-hand side, with no controlled sign, and they come from interactions between the smallest represented scales (only pairs of modes with $|k + q| \ge N/2$ can alias), precisely where dissipation should dominate. In a weakly viscous simulation, this spurious source can make the energy grow until the computation blows up. For a generative model trained on such data, it can moreover introduce a bias in the high-wavenumber end of the spectrum.
     :::
 
 15. **★★ Programming: validating the solver (Chapter 7).** Take the solver of Chapter 7 and (a) check that it reproduces the exact Taylor–Green solution; (b) measure the temporal order of convergence of the Lawson–RK4 scheme on a random field in free decay; (c) check the mean enstrophy budget $\overline{\langle\omega f_\omega\rangle} = \overline{\nu\langle|\nabla\omega|^2\rangle}$ (Theorem 4.5) for the Kolmogorov flow at $Re = 40$.

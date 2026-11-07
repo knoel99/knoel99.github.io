@@ -78,28 +78,29 @@
   /* ---------- textes ---------- */
   var TXT = {
     fr: {
-      title: "Dynamo cinématique ABC (A = B = C = 1) : taux de croissance λ(Rm) et carte de |B|",
+      title: "Dynamo cinématique ABC (A = B = C = 1) : taux de croissance λ(Rm) et carte de |B|",
       cursor: "Point lu", cursorAria: "Point de la courbe λ(Rm) lu par le curseur",
       modes: "Carte du mode à", modesAria: "Rm du mode affiché dans la carte (coupe z = 0)",
       view: "Axe λ", zoom: "zoom près de 0", full: "complet", viewAria: "Échelle de l'axe λ",
       arrows: "flèches (Bx, By)", common: "échelle de couleur commune",
       panelA: "(a) taux de croissance λ en fonction de Rm = 1/η",
+      panelAShort: "(a) taux de croissance λ(Rm)",
       panelB: function (rm) { return "(b) |B|/B_rms, coupe z = 0, Rm = " + rm; },
       lg32: "λ (32³)", lg48: "λ (48³, contrôle)", lgDyn: "dynamo (λ > 0)", lgGF: "seuils publiés (Galloway & Frisch 1986)",
-      lgRef: "−1/Rm : mode exact B = u", lgOut: "point hors cadre",
+      lgRef: "−1/Rm : mode exact B = u", lgOut: "point hors cadre",
       dyn: "dynamo", xAxis: "Rm = 1/η", yAxis: "λ",
       tipLam: "λ", tipQ: "dernier quart", tip48: "48³",
-      canvas: "Panneau (a) : taux de croissance λ du champ magnétique en fonction de Rm pour l'écoulement ABC, " +
-        "avec la ligne λ = 0 et les fenêtres de dynamo (λ > 0) ombrées. Flèches gauche et droite : parcourir les points ; " +
-        "Entrée : afficher la carte du mode si elle existe. Panneau (b) : carte de |B| dans le plan z = 0 pour le Rm choisi.",
+      canvas: "Panneau (a) : taux de croissance λ du champ magnétique en fonction de Rm pour l'écoulement ABC, " +
+        "avec la ligne λ = 0 et les fenêtres de dynamo (λ > 0) ombrées. Flèches gauche et droite : parcourir les points ; " +
+        "Entrée : afficher la carte du mode si elle existe. Panneau (b) : carte de |B| dans le plan z = 0 pour le Rm choisi.",
       l1: function (rm, lam, q, n48, st) {
         return "Rm = " + rm + " : λ = " + lam + " (dernier quart : " + q +
-          (n48 ? " ; 48³ : " + n48 : "") + ") → " + (st > 0 ? "dynamo (λ > 0)" : st < 0 ?
+          (n48 ? " ; 48³ : " + n48 : "") + ") → " + (st > 0 ? "dynamo (λ > 0)" : st < 0 ?
           "pas de dynamo (λ < 0, champ amorti)" : "cas limite : λ ≈ 0, signe incertain (estimations de signes opposés)");
       },
       l2: function (rm, grow, mx, mean, hov) {
         return "Carte : Rm = " + rm + ", " + (grow ? "mode croissant (λ > 0)" : "mode le moins amorti (λ < 0)") +
-          " ; |B|/B_rms dans la coupe : max " + mx + ", moyenne " + mean + (hov ? " ; " + hov : "");
+          " ; |B|/B_rms dans la coupe : max " + mx + ", moyenne " + mean + (hov ? " ; " + hov : "");
       },
       hov: function (x, y, v, bx, by) {
         return "en (x, y) = (" + x + " ; " + y + ") : |B|/B_rms = " + v + ", (Bx, By)/B_rms = (" + bx + " ; " + by + ")";
@@ -107,12 +108,12 @@
       l3: function (s, ref) { return "Seuils interpolés (32³) : Rm ≈ " + s + " — publiés (Galloway & Frisch 1986) : " + ref; },
       listSep: " ; ", approx: "≈ ",
       loading: "Chargement des données…",
-      noSrc: "Données absentes : ajoutez l'attribut data-src (chemin du fichier abc-dynamo.json).",
+      noSrc: "Données absentes : ajoutez l'attribut data-src (chemin du fichier abc-dynamo.json).",
       error: function (src) { return "Données introuvables (" + src + "). La page doit être servie en http(s), pas ouverte en file://."; },
-      note: "u = (A sin z + C cos y, B sin x + A cos z, C sin y + B cos x), [0, 2π)³ périodique, Rm = 1/⁠η ; λ = pente de ln‖B‖ " +
-        "sur t ∈ [75 ; 150] (pseudo-spectral 32³ ; carrés : contrôle en 48³). Fenêtres publiées : 8,9 < Rm < 17,5, puis Rm > 27 environ " +
-        "(Galloway & Frisch 1986). Comme ∇×u = u, B = u est un mode exact de taux −1/Rm (tirets, vue « complet »). " +
-        "Carte : champ final normalisé (B_rms = 1), proche du mode dominant (le moins amorti si λ < 0)."
+      note: "u = (A sin z + C cos y, B sin x + A cos z, C sin y + B cos x), [0, 2π)³ périodique, Rm = 1/⁠η ; λ = pente de ln‖B‖ " +
+        "sur t ∈ [75 ; 150] (pseudo-spectral 32³ ; carrés : contrôle en 48³). Fenêtres publiées : 8,9 < Rm < 17,5, puis Rm > 27 environ " +
+        "(Galloway & Frisch 1986). Comme ∇×u = u, B = u est un mode exact de taux −1/Rm (tirets, vue « complet »). " +
+        "Carte : champ final normalisé (B_rms = 1), proche du mode dominant (le moins amorti si λ < 0)."
     },
     en: {
       title: "Kinematic ABC dynamo (A = B = C = 1): growth rate λ(Rm) and map of |B|",
@@ -121,6 +122,7 @@
       view: "λ axis", zoom: "zoom near 0", full: "full", viewAria: "Scale of the λ axis",
       arrows: "arrows (Bx, By)", common: "common colour scale",
       panelA: "(a) growth rate λ versus Rm = 1/η",
+      panelAShort: "(a) growth rate λ(Rm)",
       panelB: function (rm) { return "(b) |B|/B_rms, slice z = 0, Rm = " + rm; },
       lg32: "λ (32³)", lg48: "λ (48³, check)", lgDyn: "dynamo (λ > 0)", lgGF: "published thresholds (Galloway & Frisch 1986)",
       lgRef: "−1/Rm: exact mode B = u", lgOut: "off-scale point",
@@ -147,7 +149,7 @@
       noSrc: "No data: add the data-src attribute (path of the abc-dynamo.json file).",
       error: function (src) { return "Data not found (" + src + "). The page must be served over http(s), not opened as file://."; },
       note: "u = (A sin z + C cos y, B sin x + A cos z, C sin y + B cos x), periodic [0, 2π)³, Rm = 1/⁠η; λ = slope of ln‖B‖ " +
-        "over t ∈ [75, 150] (pseudo-spectral 32³; squares: 48³ check). Published windows: 8.9 < Rm < 17.5, then Rm > 27 approximately " +
+        "over t ∈ [75, 150] (pseudo-spectral 32³; squares: 48³ check). Published windows: 8.9 < Rm < 17.5, then Rm > 27 approximately " +
         "(Galloway & Frisch 1986). Since ∇×u = u, B = u is an exact mode with rate −1/Rm (dashes, “full” view). " +
         "Map: final field normalised (B_rms = 1), close to the dominant mode (the least damped one if λ < 0)."
     }
@@ -239,7 +241,7 @@
     // curseur (point lu)
     var cl = mk("label");
     cl.style.flexWrap = "wrap";
-    this.cOut = mk("span", null, T.cursor + " : Rm = …");
+    this.cOut = mk("span", null, T.cursor + (this.lang === "fr" ? " : " : ": ") + "Rm = …");
     this.cOut.style.minWidth = "8.5em";
     var ci = this.cIn = document.createElement("input");
     ci.type = "range"; ci.min = "0"; ci.max = "1"; ci.step = "1"; ci.value = "0";
@@ -688,7 +690,8 @@
     var v = VIEWS[this.view], pw = p.r - p.l, ph = p.b - p.t;
     var X = function (r) { return self.X(r); }, Y = function (l) { return self.Y(l); };
 
-    this.text(this.fitText(T.panelA, p.w - 4, 13, "700"), p.x, p.y + 15, "left", C.ink, 13, "700");
+    var pa = this.textWidth(T.panelA, 13, "700") <= p.w - 4 ? T.panelA : T.panelAShort;
+    this.text(this.fitText(pa, p.w - 4, 13, "700"), p.x, p.y + 15, "left", C.ink, 13, "700");
     // légende
     p.leg.forEach(function (row, ri) {
       var y = p.y + 24 + ri * 17 + 9;
@@ -848,8 +851,8 @@
       var y48 = Y(cp.n48);
       if (y48 >= p.t - 1 && y48 <= p.b + 1) this.marker("sq", cx, y48, C.pal[1]);
     }
-    // infobulle limitée au cadre du graphique (en dessous de la légende, qu'elle ne doit pas masquer)
-    if (this.tipOn) this.tooltip({ x: p.x, y: p.t, w: p.w, h: p.y + p.h - p.t }, cx, cyc, [
+    // infobulle au-dessus du point lu (elle peut recouvrir la légende plutôt que les points voisins)
+    if (this.tipOn) this.tooltip(p, cx, cyc, [
       "Rm = " + fmtRm(lg, cp.rm),
       T.tipLam + " = " + fmt(lg, cp.lam, 5, true),
       T.tipQ + " : " + fmt(lg, cp.lamq, 5, true)
