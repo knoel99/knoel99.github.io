@@ -581,8 +581,10 @@ Si l'on augmente lentement $r$ depuis une valeur négative, le système reste en
 Pour la variable complexe $z$ et
 
 $$
-\dot z = (\mu + i\omega)\,z - (1 + i\beta)\,|z|^2 z ,
+\dot z = (\mu + i\omega)\,z - (1 + i\beta)\,|z|^2 z
 $$
+
+(ici $\mu$ est le paramètre de bifurcation, sans rapport avec le coefficient $\mu$ du modèle de Gissinger),
 
 l'écriture polaire $z = \varrho\,e^{i\theta}$ donne $\dot\varrho = \mu\varrho - \varrho^3$ et $\dot\theta = \omega - \beta\varrho^2$. Pour $\mu > 0$, il existe un **cycle limite** stable de rayon $\sqrt\mu$ et de période $2\pi/(\omega - \beta\mu)$.
 
@@ -593,7 +595,7 @@ On calcule $\dot z = (\dot\varrho + i\varrho\dot\theta)\,e^{i\theta}$ et l'on id
 
 :::: thm
 [Théorème 3.9 — Hopf (énoncé)]{.tag}
-Si la jacobienne $DF(\mathbf{x}^*, r)$ a une paire de valeurs propres simples $\alpha(r) \pm i\omega(r)$ avec $\alpha(r_c) = 0$, $\alpha'(r_c) \ne 0$ et $\omega(r_c) \ne 0$, toutes les autres valeurs propres ayant une partie réelle négative, alors une orbite périodique d'amplitude proportionnelle à $\sqrt{|r - r_c|}$ naît en $r_c$. Elle existe après le seuil et est stable (Hopf **supercritique**), ou existe avant le seuil et est instable (Hopf **sous-critique**), selon le signe d'un coefficient calculable, le premier coefficient de Lyapunov.
+Si la jacobienne $DF(\mathbf{x}^*, r)$ a une paire de valeurs propres simples $\alpha(r) \pm i\omega(r)$ avec $\alpha(r_c) = 0$, $\alpha'(r_c) \ne 0$ et $\omega(r_c) \ne 0$, toutes les autres valeurs propres ayant une partie réelle négative, alors une orbite périodique d'amplitude proportionnelle à $\sqrt{|r - r_c|}$ naît en $r_c$. Si un coefficient calculable, le premier coefficient de Lyapunov, est non nul, cette orbite existe après le seuil et est stable (Hopf **supercritique**), ou existe avant le seuil et est instable (Hopf **sous-critique**), selon son signe.
 
 ::: proof
 Admis ; voir Kuznetsov (2023). La démonstration réduit le système à la variété centrale (de dimension 2) puis ramène l'équation réduite à la forme normale 3.8 par des changements de variables polynomiaux. [∎]{.qed}
@@ -614,7 +616,7 @@ Soit $S$ une matrice orthogonale telle que $S^2 = I$. Le champ $F$ est **équiva
 Soit $\dot x = f(x, r)$ en dimension 1 avec $f(-x, r) = -f(x, r)$ (symétrie $x \mapsto -x$), $f$ régulière, $\partial_x f(0, r_c) = 0$, $\partial_r\partial_x f(0, r_c) \ne 0$ et $\partial_x^3 f(0, r_c) \ne 0$. Alors, près de $(0, r_c)$, la dynamique est celle d'une fourche (super- ou sous-critique selon le signe de $\partial_x^3 f$), et non celle d'un nœud-col.
 
 ::: proof
-Une fonction impaire n'a que des puissances impaires dans son développement : $f(x, r) = a(r)\,x + c(r)\,x^3 + O(x^5)$, avec $a(r_c) = 0$. Les termes pairs, qui produiraient un nœud-col, sont interdits par la symétrie. Avec $a(r) \approx a'(r_c)(r - r_c)$ et $c(r_c) \ne 0$, un changement d'échelle sur $x$ et $r$ ramène l'équation à $\dot x = \pm\,\tilde r x \mp x^3$ à des termes d'ordre supérieur près. [∎]{.qed}
+Une fonction impaire n'a que des puissances impaires dans son développement : $f(x, r) = a(r)\,x + c(r)\,x^3 + O(x^5)$, avec $a(r_c) = 0$. Les termes pairs, qui produiraient un nœud-col, sont interdits par la symétrie. On pose $\tilde r = a(r) \approx a'(r_c)(r - r_c)$, qui change de signe en $r_c$, et, comme $c(r_c) \ne 0$, $y = \sqrt{|c(r)|}\,x$ : l'équation devient $\dot y = \tilde r\,y \pm y^3$ à des termes d'ordre supérieur près, avec le signe de $c(r_c)$, c'est-à-dire celui de $\partial_x^3 f(0, r_c)$ (« $-$ » : supercritique, « $+$ » : sous-critique). [∎]{.qed}
 :::
 ::::
 
@@ -646,7 +648,7 @@ Le nombre de racines réelles du polynôme $h + rx - x^3$ change quand une racin
 :::
 ::::
 
-Physiquement, un petit terme $h$ qui brise la symétrie $x \mapsto -x$ (par exemple un champ magnétique extérieur, comme le champ terrestre, dans une expérience de dynamo) **choisit une polarité** : la branche favorisée par le signe de $h$ apparaît continûment, l'autre n'apparaît qu'après le nœud-col $r = 3\,(|h|/2)^{2/3}$. Avec $h = 0{,}05$, ce nœud-col est en $r \approx 0{,}26$ (figure ci-dessous, panneau d). Dans le modèle de Gissinger, la symétrie $\mathbf{B} \mapsto -\mathbf{B}$ reste exacte pour tout $\Gamma$ ; le forçage $\Gamma$ brise une **autre** symétrie, celle de l'écoulement par rapport au plan équatorial, et c'est cette brisure qui couple dipôle et quadripôle (Gissinger, Dormy et Fauve, 2010).
+Physiquement, un petit terme $h$ qui brise la symétrie $x \mapsto -x$ (par exemple un champ magnétique extérieur, comme le champ terrestre, dans une expérience de dynamo) **choisit une polarité** : la branche favorisée par le signe de $h$ apparaît continûment, l'autre n'apparaît qu'après le nœud-col $r = 3\,(|h|/2)^{2/3}$. Avec $h = 0{,}05$, ce nœud-col est en $r \approx 0{,}26$ (figure ci-dessous, panneau d). Dans le modèle de Gissinger, la symétrie $\mathbf{B} \mapsto -\mathbf{B}$ reste exacte pour tout $\Gamma$ ; le forçage $\Gamma$ entretient un mode de vitesse qui brise une **autre** symétrie, celle de l'écoulement par rapport au plan équatorial, et c'est cette brisure qui couple dipôle et quadripôle (Gissinger, Dormy et Fauve, 2010 ; Gissinger, 2012).
 
 ![Diagrammes de bifurcation des quatre formes normales du chapitre. Abscisse : paramètre r ; ordonnée : position des points fixes x*. Trait plein : branches stables ; tirets ou points : branches instables. (a) Nœud-col : deux branches qui se rejoignent en r = 0. (b) Fourche supercritique : l'état x = 0 se déstabilise et deux branches ±√r apparaissent. (c) Fourche sous-critique : les flèches montrent le cycle d'hystérésis, saut vers |x| = 1 en r = 0 et retour vers 0 en r = −1/4. (d) Fourche imparfaite avec h = 0,05 : la branche supérieure est continue, la branche inférieure naît par un nœud-col vers r = 0,26.](figures/bifurcations.png){width="100%" fig-alt="Quatre diagrammes de bifurcation en grille deux par deux. En haut à gauche, une parabole couchée dont la moitié basse est en trait plein bleu et la moitié haute en tirets orange, qui se rejoignent en r égal 0. En haut à droite, une fourche : axe horizontal bleu pour r négatif, orange en tirets pour r positif, et deux branches bleues en racine carrée. En bas à gauche, la fourche sous-critique avec des branches en S, et deux flèches verticales indiquant les sauts en r égal 0 et r égal moins 0,25. En bas à droite, une courbe bleue continue croissante et, à partir de r égal 0,26, une branche bleue et une branche orange qui naissent ensemble sous l'axe."}
 
@@ -742,8 +744,8 @@ Ce qu'il faut retenir — chapitre 3
 :::
 - Une bifurcation locale se produit quand une valeur propre (ou une paire) traverse l'axe imaginaire ; la dynamique se réduit alors à une équation de dimension 1 ou 2 (variété centrale).
 - Nœud-col $\dot x = r + x^2$ : deux points fixes s'annihilent ; temps de passage $\pi/\sqrt r$ après le seuil.
-- Fourche $\dot x = rx - x^3$ : amplitude $\sqrt r$, ralentissement critique ; la version sous-critique donne un saut d'amplitude finie et de l'hystérésis sur $[-1/4, 0]$.
-- Hopf : un cycle limite d'amplitude $\sqrt{\mu}$ naît d'un foyer.
+- Fourche $\dot x = rx - x^3$ : amplitude $\sqrt r$, ralentissement critique ; la version sous-critique donne un saut d'amplitude finie et de l'hystérésis entre $r = -1/4$ et $r = 0$.
+- Hopf supercritique : un cycle limite stable d'amplitude $\sqrt{\mu}$ naît d'un foyer ; dans le cas sous-critique, l'oscillation apparaît brutalement avec une amplitude finie.
 - La symétrie $\mathbf{B} \mapsto -\mathbf{B}$ de la MHD interdit les termes pairs : la fourche est générique, les états $\pm\mathbf{B}$ apparaissent ensemble, et $|\mathbf{B}|^2 \propto Rm - Rm_c$ près d'un seuil supercritique.
 - Une petite brisure de symétrie $h$ déplie la fourche (fronce $27h^2 = 4r^3$) et choisit une polarité.
 ::::
@@ -788,7 +790,7 @@ pour un $\mathbf{v}$ générique. Une petite perturbation croît en moyenne comm
 
 :::: thm
 [Théorème 4.3 — Oseledets (énoncé)]{.tag}
-Si $\mu$ est une mesure invariante ergodique (chapitre 5), alors pour $\mu$-presque tout $\mathbf{x}_0$ il existe $n$ exposants $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n$, indépendants de $\mathbf{x}_0$, tels que les taux de croissance de $|D\Phi^t(\mathbf{x}_0)\mathbf{v}|$ prennent ces valeurs selon la direction de $\mathbf{v}$. Le volume d'un parallélépipède de dimension $k$ croît comme $e^{(\lambda_1 + \dots + \lambda_k)t}$.
+Si $\mu$ est une mesure invariante ergodique (chapitre 5), par exemple à support compact (ce qui garantit la condition d'intégrabilité du théorème), alors pour $\mu$-presque tout $\mathbf{x}_0$ il existe $n$ exposants $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n$, indépendants de $\mathbf{x}_0$, tels que les taux de croissance de $|D\Phi^t(\mathbf{x}_0)\mathbf{v}|$ prennent ces valeurs selon la direction de $\mathbf{v}$. Le volume d'un parallélépipède de dimension $k$ croît comme $e^{(\lambda_1 + \dots + \lambda_k)t}$.
 
 ::: proof
 Admis ; voir Eckmann et Ruelle (1985), qui exposent aussi l'algorithme de calcul. [∎]{.qed}
