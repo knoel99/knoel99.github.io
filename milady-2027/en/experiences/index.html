@@ -129,7 +129,7 @@ window.Quarto = {
 
 
 <div class="note">
-<p><span class="tag">About</span> All the experiments on this site run on an ordinary processor (Intel Xeon, 4 cores, 2.30 GHz, no GPU), in Python 3.13 with NumPy 2.5, SciPy 1.18, Matplotlib 3.11 and PyTorch 2.15 (CPU build). They are <strong>small-scale testbeds</strong>: they test ideas and mechanisms, not performance on real dynamo data. All the figures quoted in the <a href="../rapport/index.html">report</a> come from the result files described here.</p>
+<p><span class="tag">About</span> All the experiments on this site run on an ordinary processor (Intel Xeon, 4 cores, 2.30 GHz, no GPU), in Python 3.13 with NumPy 2.5, SciPy 1.18, Matplotlib 3.11 and PyTorch 2.15 (CPU build). They are <strong>small-scale testbeds</strong>: they test ideas and mechanisms, not performance on real dynamo data. All the numbers quoted in the <a href="../rapport/index.html">report</a> come from the result files described here.</p>
 </div>
 <h2 id="code">Code organization</h2>
 <p>The <code>experiences/</code> folder of the repository contains everything needed to reproduce the results.</p>
@@ -175,7 +175,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td><code>figures.py</code></td>
-<td>Plots in French and English (<code>figures/&lt;nom&gt;.png</code> and <code>figures/&lt;nom&gt;-en.png</code>).</td>
+<td>Plots in French and English (<code>figures/&lt;name&gt;.png</code> and <code>figures/&lt;name&gt;-en.png</code>).</td>
 </tr>
 <tr class="odd">
 <td><code>digest.py</code></td>
@@ -192,7 +192,7 @@ window.Quarto = {
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> figures.py <span class="kw">&amp;&amp;</span> <span class="ex">python3</span> digest.py <span class="op">&gt;</span> resultats/digest.md</span></code></pre></div>
 <p>Each script accepts <code>--quick</code> for a reduced version that takes a few minutes, useful for checking the installation. The seeds are fixed in the code (0, 1 and 2 for the three repetitions of E1). The durations given were measured on the machine described above, partly while other computations were running.</p>
 <h2 id="e1">E1 — dipole reversals</h2>
-<p>Gissinger’s three-mode model serves as a “pocket dynamo”: it has the symmetry <span class="math inline">\mathbf{B}\to-\mathbf{B}</span>, an onset threshold for reversals (between <span class="math inline">\Gamma = 0.86</span> and <span class="math inline">0.87</span>) and exactly known dynamics. We learn the stationary distribution <span class="math inline">p(Q, D, V \mid \Gamma)</span> by conditional flow matching, then measure what changes when the symmetry is imposed by construction, when the stationarity loss is added, and when a per-sample projection is applied. The reversal frequency is estimated from the generated distribution alone, through the Rice formula.</p>
+<p>Gissinger’s three-mode model serves as a “pocket dynamo”: it has the symmetry <span class="math inline">\mathbf{B}\to-\mathbf{B}</span>, an onset threshold for reversals (between <span class="math inline">\Gamma = 0.86</span> and <span class="math inline">0.87</span>) and exactly known dynamics. We learn the stationary distribution <span class="math inline">p(Q, D, V \mid \Gamma)</span> by conditional flow matching, then measure the effect of the symmetry imposed by construction, of the stationarity loss, and of the per-sample projection. The reversal frequency is estimated from the generated distribution alone, through the Rice formula.</p>
 <p>Results and discussion: <a href="../rapport/index.html#e1">report, section E1</a>. Interactive diagram: <a href="../interactifs/index.html#gissinger">Gissinger model</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>

@@ -40,7 +40,7 @@ format:
 
 ::: note
 [About]{.tag}
-Each diagram is a small, self-contained JavaScript program that runs in your browser, with no server. The formulas it uses are written at the top of each file (`assets/interactif/<nom>.js`), together with their references. These diagrams complement the static figures of the [report](../rapport/index.html) and of the [preparation modules](../prep/index.html); they do not replace the proofs.
+Each diagram is a small, self-contained JavaScript program that runs in your browser, with no server. The formulas it uses are written at the top of each file (`assets/interactif/<name>.js`), together with their references. These diagrams complement the static figures of the [report](../rapport/index.html) and of the [preparation modules](../prep/index.html); they do not replace the proofs.
 :::
 
 The five diagrams follow the order of the curriculum: the transport of probability distributions that underlies flow matching, the projection that makes a field divergence-free, the difference between a per-sample constraint and a constraint in distribution, then two dynamical systems from the internship, the reversal model and the ABC kinematic dynamo.
@@ -56,11 +56,11 @@ Notice two things. The conditional paths $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\m
 <script defer src="../../assets/interactif/flow-matching.js"></script>
 ```
 
-To go further: module [p7 — generative models](../prep/p7-modeles-generatifs/index.html), chapter on flow matching.
+Further reading: module [p7 — generative models](../prep/p7-modeles-generatifs/index.html), chapter on flow matching.
 
 ## 2. Leray projection {#leray}
 
-Every periodic vector field decomposes into a divergence-free part and a gradient part (Helmholtz–Hodge decomposition). The Leray projection $\mathbb{P}$ removes exactly the gradient part: in Fourier space, $\hat{\mathbf{u}}_{\mathbf{k}} \mapsto \hat{\mathbf{u}}_{\mathbf{k}} - \mathbf{k}(\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}})/|\mathbf{k}|^2$. The slider $\alpha$ sets the compressible share of the field; the color map shows $\nabla\cdot\mathbf{u}$.
+Every periodic vector field decomposes into a divergence-free part and a gradient part (Helmholtz–Hodge decomposition). The Leray projection $\mathbb{P}$ removes exactly the gradient part: in Fourier space, $\hat{\mathbf{u}}_{\mathbf{k}} \mapsto \hat{\mathbf{u}}_{\mathbf{k}} - \mathbf{k}(\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}})/|\mathbf{k}|^2$. The slider $\alpha$ sets the compressible part of the field; the color map shows $\nabla\cdot\mathbf{u}$.
 
 The projection can only remove energy ($\|\mathbb{P}\mathbf{u}\|^2 \le \|\mathbf{u}\|^2$). On a bounded domain, it would require solving a Poisson problem with boundary conditions: this is one of the reasons why the report prefers to generate potentials.
 
@@ -69,20 +69,20 @@ The projection can only remove energy ($\|\mathbb{P}\mathbf{u}\|^2 \le \|\mathbf
 <script defer src="../../assets/interactif/leray.js"></script>
 ```
 
-To go further: module [p1 — vector calculus and Fourier](../prep/p1-calcul-vectoriel/index.html) and experiment [E2](../rapport/index.html#e2).
+Further reading: module [p1 — vector calculus and Fourier](../prep/p1-calcul-vectoriel/index.html) and experiment [E2](../rapport/index.html#e2).
 
 ## 3. Constraint in distribution or per-sample constraint {#contrainte-loi}
 
 In a statistically stationary state, the energy variation $r = \mathrm{d}E/\mathrm{d}t = P - \varepsilon$ fluctuates: it is zero only **on average**. This diagram compares three distributions of $r$: the true distribution, the distribution of a biased model in which each sample is projected onto $r = 0$, and the same distribution corrected by exponential tilting $w_i \propto e^{\beta r_i}$. The per-sample projection satisfies the constraint by destroying the variance; the tilting corrects the mean while distorting the distribution as little as possible in the Kullback–Leibler sense.
 
-Check "missing support": if the model has never produced the right tail of the true distribution, no reweighting can create it. The effective sample size collapses. This is what experiments [E1](../rapport/index.html#e1) and [E2](../rapport/index.html#e2) observe, and it is why the report instead imposes the constraint during training.
+Check "missing support": if the model has never produced the right tail of the true distribution, no reweighting can create it. The effective sample size collapses. This is what experiments [E1](../rapport/index.html#e1) and [E2](../rapport/index.html#e2) observe, and that is why the report imposes the constraint during training instead.
 
 ```{=html}
 <div class="widget" data-widget="contrainte-loi"></div>
 <script defer src="../../assets/interactif/contrainte-loi.js"></script>
 ```
 
-To go further: module [p5 — probability and optimal transport](../prep/p5-probabilites-transport/index.html) (I-projection) and module [p8 — physical constraints](../prep/p8-contraintes-physiques/index.html).
+Further reading: module [p5 — probability and optimal transport](../prep/p5-probabilites-transport/index.html) (I-projection) and module [p8 — physical constraints](../prep/p8-contraintes-physiques/index.html).
 
 ## 4. Dipole reversals: the Gissinger model {#gissinger}
 
@@ -95,11 +95,11 @@ The diagram counts the zero crossings of $D$ and compares them with the estimate
 <script defer src="../../assets/interactif/gissinger.js"></script>
 ```
 
-To go further: module [p4 — dynamical systems](../prep/p4-systemes-dynamiques/index.html) and experiment [E1](../rapport/index.html#e1).
+Further reading: module [p4 — dynamical systems](../prep/p4-systemes-dynamiques/index.html) and experiment [E1](../rapport/index.html#e1).
 
 ## 5. ABC kinematic dynamo {#abc-dynamo}
 
-The ABC flow ($A = B = C = 1$) is a kinematic dynamo: for some values of the magnetic Reynolds number $Rm = 1/\eta$, an initially weak magnetic field grows exponentially. The curve shows the growth rate $\lambda(Rm)$ computed in this repository on a $32^3$ grid; the shaded areas are the dynamo windows. The map shows a slice of $|\mathbf{B}|$ for the most unstable mode.
+The ABC flow ($A = B = C = 1$) is a kinematic dynamo: for certain values of the magnetic Reynolds number $Rm = 1/\eta$, an initially weak magnetic field grows exponentially. The curve shows the growth rate $\lambda(Rm)$ computed in this repository on a $32^3$ grid; the shaded areas are the dynamo windows. The map shows a slice of $|\mathbf{B}|$ for the most unstable mode.
 
 The measured thresholds ($Rm \approx 8.87$, $17.60$ and $26.80$) recover the known windows ($8.9 < Rm < 17.5$, then $Rm \gtrsim 27$). This computation serves as a 3D test bed for the PhD: generating eigenmodes conditioned on $Rm$ from a vector potential.
 
@@ -108,7 +108,7 @@ The measured thresholds ($Rm \approx 8.87$, $17.60$ and $26.80$) recover the kno
 <script defer src="../../assets/interactif/abc-dynamo.js"></script>
 ```
 
-To go further: module [p3 — MHD and the dynamo effect](../prep/p3-mhd-dynamo/index.html) and experiment [E3](../rapport/index.html#e3).
+Further reading: module [p3 — MHD and the dynamo effect](../prep/p3-mhd-dynamo/index.html) and experiment [E3](../rapport/index.html#e3).
 
 ## Sources {#sources}
 

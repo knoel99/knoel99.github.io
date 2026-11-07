@@ -40,7 +40,7 @@ format:
 
 ::: note
 [About]{.tag}
-All the experiments on this site run on an ordinary processor (Intel Xeon, 4 cores, 2.30 GHz, no GPU), in Python 3.13 with NumPy 2.5, SciPy 1.18, Matplotlib 3.11 and PyTorch 2.15 (CPU build). They are **small-scale testbeds**: they test ideas and mechanisms, not performance on real dynamo data. All the figures quoted in the [report](../rapport/index.html) come from the result files described here.
+All the experiments on this site run on an ordinary processor (Intel Xeon, 4 cores, 2.30 GHz, no GPU), in Python 3.13 with NumPy 2.5, SciPy 1.18, Matplotlib 3.11 and PyTorch 2.15 (CPU build). They are **small-scale testbeds**: they test ideas and mechanisms, not performance on real dynamo data. All the numbers quoted in the [report](../rapport/index.html) come from the result files described here.
 :::
 
 ## Code organization {#code}
@@ -56,7 +56,7 @@ The `experiences/` folder of the repository contains everything needed to reprod
 | `e2_mhd2d.py` | E2: five divergence-constraint mechanisms, distributional stationarity loss, tilting versus per-sample correction. |
 | `e3_abc.py` | E3: kinematic dynamo of the ABC flow, growth rate as a function of $Rm$. |
 | `unet.py` | Small periodic U-Net (not used in the final results: too slow on CPU, see below). |
-| `figures.py` | Plots in French and English (`figures/<nom>.png` and `figures/<nom>-en.png`). |
+| `figures.py` | Plots in French and English (`figures/<name>.png` and `figures/<name>-en.png`). |
 | `digest.py` | Numerical digest `resultats/digest.md`, the single source of the report's tables. |
 
 ## Reproducing the results {#reproduire}
@@ -74,7 +74,7 @@ Each script accepts `--quick` for a reduced version that takes a few minutes, us
 
 ## E1 — dipole reversals {#e1}
 
-Gissinger's three-mode model serves as a "pocket dynamo": it has the symmetry $\mathbf{B}\to-\mathbf{B}$, an onset threshold for reversals (between $\Gamma = 0.86$ and $0.87$) and exactly known dynamics. We learn the stationary distribution $p(Q, D, V \mid \Gamma)$ by conditional flow matching, then measure what changes when the symmetry is imposed by construction, when the stationarity loss is added, and when a per-sample projection is applied. The reversal frequency is estimated from the generated distribution alone, through the Rice formula.
+Gissinger's three-mode model serves as a "pocket dynamo": it has the symmetry $\mathbf{B}\to-\mathbf{B}$, an onset threshold for reversals (between $\Gamma = 0.86$ and $0.87$) and exactly known dynamics. We learn the stationary distribution $p(Q, D, V \mid \Gamma)$ by conditional flow matching, then measure the effect of the symmetry imposed by construction, of the stationarity loss, and of the per-sample projection. The reversal frequency is estimated from the generated distribution alone, through the Rice formula.
 
 Results and discussion: [report, section E1](../rapport/index.html#e1). Interactive diagram: [Gissinger model](../interactifs/index.html#gissinger).
 
