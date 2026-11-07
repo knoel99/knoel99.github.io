@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Parcours de préparation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js" integrity="sha384-QFFtAGzvvj+bfgCGxXJlNZZR1nXEZgvG8tDLCCY1F19xl20WlfTYgguB4VcNdxYk" crossorigin="anonymous"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.css" integrity="sha384-3rdsX6e5mueWyoweR9NIVmtEsUkokpBT/0ALqKKIBMr9j4qhHkaIkAcGgsE6uVlp" crossorigin="anonymous">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/paper.css">
+</head>
+
+<body>
+
+<a class="skip" href="#main">Aller au contenu</a>
+<header class="topbar">
+  <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Sommaire</span></button>
+  <a class="brand" href="../index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+  <span class="tb-title" id="tb-title"></span>
+  <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Thème</span></button>
+</header>
+<div class="layout">
+<nav class="sidetoc" id="sidetoc" aria-label="Sommaire"></nav>
+<main class="paper" id="main">
+
+<header id="title-block-header">
+<h1 class="title">Parcours de préparation</h1>
+<p class="subtitle">Huit modules, du niveau licence 1 au niveau M2 recherche</p>
+
+</header>
+
+
+<p>Ce parcours mène d’un niveau de licence 1 (analyse, algèbre linéaire, un peu de programmation) au niveau requis pour commencer le stage MilaDy : lire un article sur les modèles génératifs sous contraintes physiques, écrire et entraîner un modèle de flow matching conditionnel, et juger un champ MHD généré avec des critères physiques. Il compte <strong>huit modules</strong>, environ <strong>215 heures</strong> de travail et <strong>121 exercices corrigés</strong>.</p>
+<div class="note">
+<p><span class="tag">À propos</span> Ces modules sont des notes indépendantes. Ils ne sont pas un cours officiel de l’ENPC, du LISN ou de l’Université Paris-Saclay. Chaque module donne ses sources ; les faits sur la recherche récente viennent de bases de faits vérifiées (dossier <code>specs/sources/</code> du dépôt).</p>
+</div>
+<h2 id="modules">Les huit modules</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Module</th>
+<th>Niveau</th>
+<th>Durée</th>
+<th>Exercices</th>
+<th>Ce qu’il apporte au stage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="p1-calcul-vectoriel/index.html">1. Calcul vectoriel et analyse de Fourier</a></td>
+<td>L1 → L2</td>
+<td>20 h</td>
+<td>15</td>
+<td>divergence, rotationnel, potentiels, FFT, projection de Leray</td>
+</tr>
+<tr class="even">
+<td><a href="p2-mecanique-fluides/index.html">2. Mécanique des fluides et turbulence</a></td>
+<td>L2 → M1</td>
+<td>25 h</td>
+<td>15</td>
+<td>Navier–Stokes, bilans d’énergie, spectres, méthodes pseudo-spectrales</td>
+</tr>
+<tr class="odd">
+<td><a href="p3-mhd-dynamo/index.html">3. Électromagnétisme, MHD et effet dynamo</a></td>
+<td>L2 → M2</td>
+<td>30 h</td>
+<td>14</td>
+<td>équation d’induction, <span class="math inline">Rm</span>, dynamos de laboratoire, renversements</td>
+</tr>
+<tr class="even">
+<td><a href="p4-systemes-dynamiques/index.html">4. Systèmes dynamiques et mesures invariantes</a></td>
+<td>L2 → M2</td>
+<td>25 h</td>
+<td>15</td>
+<td>bifurcations, chaos, identités de stationnarité, formule de Rice</td>
+</tr>
+<tr class="odd">
+<td><a href="p5-probabilites-transport/index.html">5. Probabilités, statistiques et transport optimal</a></td>
+<td>L2 → M1</td>
+<td>25 h</td>
+<td>15</td>
+<td>mesure image, KL et I-projection, distances entre lois, EDS</td>
+</tr>
+<tr class="even">
+<td><a href="p6-apprentissage-profond/index.html">6. Apprentissage profond pour la physique</a></td>
+<td>L3 → M2</td>
+<td>30 h</td>
+<td>16</td>
+<td>réseaux, POD et autoencodeurs, équivariance, PINNs et opérateurs</td>
+</tr>
+<tr class="odd">
+<td><a href="p7-modeles-generatifs/index.html">7. Modèles génératifs : diffusion et flow matching</a></td>
+<td>M1 → M2</td>
+<td>30 h</td>
+<td>16</td>
+<td>diffusion, score, flow matching, conditionnement, FunDiff</td>
+</tr>
+<tr class="even">
+<td><a href="p8-contraintes-physiques/index.html">8. Modèles génératifs sous contraintes physiques</a></td>
+<td>M2 → recherche</td>
+<td>30 h</td>
+<td>15</td>
+<td>taxonomie des contraintes, projections, pénalités, contraintes en loi</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ordre">Dans quel ordre</h2>
+<p>Les modules 1 à 3 forment la branche <strong>physique</strong>, les modules 5 à 8 la branche <strong>apprentissage</strong> ; le module 4 relie les deux, car il explique pourquoi un état turbulent stationnaire est décrit par une loi de probabilité invariante.</p>
+<ul>
+<li><strong>Physique</strong> : 1 → 2 → 3. Le module 3 utilise les potentiels et la projection du module 1, et les bilans d’énergie du module 2.</li>
+<li><strong>Pont</strong> : 4, après 2 et 5. Il sert pour les renversements (module 3) et pour les contraintes en loi (module 8).</li>
+<li><strong>Apprentissage</strong> : 5 → 6 → 7 → 8. Le module 7 suppose la mesure image et l’équation de continuité du module 5 ; le module 8 suppose tous les autres.</li>
+</ul>
+<p>Un ordre de lecture linéaire qui respecte ces dépendances est 1, 2, 5, 3, 4, 6, 7, 8.</p>
+<h2 id="calendrier">Un calendrier possible</h2>
+<p>Pour une arrivée en stage au printemps 2027, à raison d’environ 15 heures par semaine :</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Semaines</th>
+<th>Modules</th>
+<th>Jalon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1–2</td>
+<td>1</td>
+<td>savoir projeter un champ périodique sur les champs à divergence nulle</td>
+</tr>
+<tr class="even">
+<td>3–4</td>
+<td>2</td>
+<td>avoir fait tourner un solveur pseudo-spectral 2D et vérifié son bilan d’énergie</td>
+</tr>
+<tr class="odd">
+<td>5–6</td>
+<td>5</td>
+<td>savoir calculer une I-projection et une distance d’énergie</td>
+</tr>
+<tr class="even">
+<td>7–8</td>
+<td>3</td>
+<td>savoir expliquer le seuil d’une dynamo cinématique et les renversements de VKS</td>
+</tr>
+<tr class="odd">
+<td>9–10</td>
+<td>4</td>
+<td>savoir vérifier une identité de stationnarité et la formule de Rice sur un modèle simple</td>
+</tr>
+<tr class="even">
+<td>11–12</td>
+<td>6</td>
+<td>avoir comparé POD et autoencodeur sur des champs</td>
+</tr>
+<tr class="odd">
+<td>13–14</td>
+<td>7</td>
+<td>avoir entraîné un flow matching conditionnel</td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td>8</td>
+<td>avoir lu les cinq références de l’offre et refait une expérience du <a href="../rapport/index.html">rapport</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="methode">Comment travailler un module</h2>
+<p>Chaque module suit la même structure : objectifs, prérequis, plan de travail (séances, durées, niveaux de 1 à 3 qui ne redescendent jamais), chapitres avec définitions, théorèmes et démonstrations, code Python exécuté, exercices gradués ★ / ★★ / ★★★ avec solutions, lien avec le stage, lectures pour aller plus loin et sources.</p>
+<ul>
+<li>Lisez un chapitre, puis faites les exercices indiqués dans son plan de travail, avant de lire la solution.</li>
+<li>Exécutez chaque bloc de code et modifiez un paramètre : tous les blocs tournent en moins de 30 secondes sur un ordinateur portable.</li>
+<li>Gardez une page de formules par module ; le module 8 suppose que vous savez les retrouver vite.</li>
+<li>Les <a href="../interactifs/index.html">schémas interactifs</a> illustrent cinq notions clés : flow matching, projection de Leray, contrainte en loi, renversements et dynamo ABC.</li>
+</ul>
+
+</main>
+</div>
+<footer class="foot"><p><a href="../index.html">← Accueil</a> · <a href="../prep/index.html">Préparation</a> · <a href="../encadrants/index.html">Encadrants</a> · <a href="../rapport/index.html">Rapport de stage</a> · <a href="../these/index.html">Sujet de thèse</a> · <a href="../interactifs/index.html">Schémas interactifs</a> · <a href="../experiences/index.html">Expériences</a></p></footer>
+<script defer="" src="../assets/theme.js"></script>
+
+
+
+
+</body></html>

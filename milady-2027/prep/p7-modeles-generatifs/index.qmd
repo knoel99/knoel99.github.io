@@ -1091,7 +1091,7 @@ Si les trajectoires sont des droites, un seul pas d'Euler, $\mathbf{x}_1 = \math
 
 ### 4.5 Interpolants stochastiques et lien avec la diffusion
 
-Albergo et Vanden-Eijnden (2023), puis Albergo, Boffi et Vanden-Eijnden, généralisent le chemin linéaire à un **interpolant** $\mathbf{x}_t = \alpha(t)\,\mathbf{x}_0 + \beta(t)\,\mathbf{x}_1$, avec $\alpha(0) = \beta(1) = 1$ et $\alpha(1) = \beta(0) = 0$ (on peut aussi ajouter un terme de bruit $\gamma(t)\mathbf{z}$). Le champ marginal devient $b_t(\mathbf{x}) = \mathbb{E}[\dot\alpha(t)\mathbf{x}_0 + \dot\beta(t)\mathbf{x}_1 \mid \mathbf{x}_t = \mathbf{x}]$, et les théorèmes 4.4 et 4.7 restent vrais mot pour mot. Ce cadre fait apparaître que diffusion et flow matching apprennent le même objet.
+Albergo et Vanden-Eijnden (2023), puis Albergo, Boffi et Vanden-Eijnden (2025), généralisent le chemin linéaire à un **interpolant** $\mathbf{x}_t = \alpha(t)\,\mathbf{x}_0 + \beta(t)\,\mathbf{x}_1$, avec $\alpha(0) = \beta(1) = 1$ et $\alpha(1) = \beta(0) = 0$ (on peut aussi ajouter un terme de bruit $\gamma(t)\mathbf{z}$). Le champ marginal devient $b_t(\mathbf{x}) = \mathbb{E}[\dot\alpha(t)\mathbf{x}_0 + \dot\beta(t)\mathbf{x}_1 \mid \mathbf{x}_t = \mathbf{x}]$, et les théorèmes 4.4 et 4.7 restent vrais mot pour mot. Ce cadre fait apparaître que diffusion et flow matching apprennent le même objet.
 
 :::: prop
 [Proposition 4.13 — Vitesse et score sont la même information]{.tag}
@@ -1123,7 +1123,7 @@ Son équation de Fokker–Planck est $\partial_t p = -\nabla\cdot\big[(v_t + \tf
 :::
 ::::
 
-Avec la proposition 4.13, un modèle de vitesse fournit aussi le score, donc un échantillonneur stochastique : ODE et EDS ne sont que deux façons d'intégrer le même modèle. C'est le cadre « unificateur » d'Albergo, Boffi et Vanden-Eijnden, qui retrouve aussi le pont de Schrödinger lorsque l'interpolant est optimisé.
+Avec la proposition 4.13, un modèle de vitesse fournit aussi le score, donc un échantillonneur stochastique : ODE et EDS ne sont que deux façons d'intégrer le même modèle. C'est le cadre « unificateur » d'Albergo, Boffi et Vanden-Eijnden (2025), qui retrouve aussi le pont de Schrödinger lorsque l'interpolant est optimisé.
 
 ### 4.6 En pratique
 
@@ -1465,7 +1465,12 @@ Pour la somme partielle $S_n = \sum_{k \le n}\sqrt{\lambda_k}\,\xi_k\,e_k$, l'or
 :::
 ::::
 
-Un modèle génératif en espace de fonctions part donc d'une **mesure gaussienne** de covariance à trace finie, par exemple un champ gaussien de spectre $\lambda_k \propto |k|^{-\alpha}$, et non du bruit blanc. Le bloc suivant évalue un même tirage aléatoire sur des grilles de plus en plus fines : le champ gaussien converge, le bruit blanc non.
+Un modèle génératif en espace de fonctions part donc d'une **mesure gaussienne** de covariance à trace finie, par exemple un champ gaussien de spectre $\lambda_k \propto |k|^{-\alpha}$, et non du bruit blanc.
+
+::: ex
+[Exemple 6.4 — Un même tirage sur des grilles de plus en plus fines]{.tag}
+Sur $[0, 1)$ périodique, on tire une fois pour toutes les coefficients $\xi_k$ de $4096$ modes de Fourier, puis l'on évalue le champ $\mathbf{x}_0 = \sum_k \sqrt{\lambda_k}\,\xi_k\,e^{2i\pi ks}$ sur des grilles de $N = 32$ à $2048$ points, en ne gardant que les modes que chaque grille peut représenter. On compare le bruit blanc ($\lambda_k = 1$) à un champ gaussien de spectre $\lambda_k = k^{-2}$ : si le tirage définit une fonction, sa norme doit se stabiliser et ses valeurs aux mêmes points doivent converger quand la grille se raffine.
+:::
 
 ```python
 import numpy as np
@@ -1524,10 +1529,10 @@ Les contraintes physiques sont placées à l'endroit où elles sont exactes :
 
 - **divergence nulle** (dure) : en 2D, le décodeur produit une fonction de courant et la vitesse en est déduite par dérivation (proposition 6.2) ;
 - **périodicité** (dure) : les coordonnées sont plongées par $(\cos x, \sin x, \cos y, \sin y)$ ;
-- **symétries** (dures) : le décodeur est moyenné sur le groupe de symétries ;
+- **symétries** (dures) : pour l'élasticité linéaire, le décodeur est symétrisé en additionnant ses évaluations aux quatre points images $(x, y)$, $(1 - x, y)$, $(x, 1 - y)$, $(1 - x, 1 - y)$ par les réflexions ;
 - **résidu d'EDP** (douce) : une pénalité $\|R(\hat f)\|^2$ calculée par différentiation automatique.
 
-Les cas tests comprennent l'écoulement de Kolmogorov à $Re = 1000$, l'équation de Burgers et l'élasticité linéaire ; l'article établit aussi des vitesses minimax pour l'estimation de densité en dimension infinie. Deux réserves, relevées en lisant l'article : la réduction de la divergence n'y est montrée qu'en figure, sans valeur numérique, et le coût d'entraînement n'est pas rapporté. Signalons enfin que l'un des auteurs, T.-R. Liu, est affilié au laboratoire Navier de l'École nationale des ponts et chaussées, l'établissement du CEREA.
+Les cas tests comprennent l'écoulement de Kolmogorov à $Re = 1000$, l'équation de Burgers et l'élasticité linéaire ; sur ce dernier cas, la reconstruction d'un champ $256 \times 256$ à partir d'une observation $32 \times 32$ bruitée à 10 % atteint une erreur $L^2$ relative de $5{,}12$ % (Wang et al., 2026). L'article établit aussi des vitesses minimax pour l'estimation de densité en dimension infinie. Deux réserves, relevées en lisant l'article : la réduction de la divergence n'y est montrée qu'en figure, sans valeur numérique, et le coût d'entraînement n'est pas rapporté. Signalons enfin que l'un des auteurs, T.-R. Liu, est affilié au laboratoire Navier de l'École nationale des ponts et chaussées, l'établissement du CEREA.
 
 | | Espace des états (grille) | Espace latent | Espace de fonctions |
 |---|---|---|---|
@@ -1535,7 +1540,7 @@ Les cas tests comprennent l'écoulement de Kolmogorov à $Re = 1000$, l'équatio
 | Résolution | fixe | fixée par le décodeur | quelconque |
 | Source | $\mathcal{N}(0, I)$ | $\mathcal{N}(0, I_d)$ | mesure gaussienne à trace finie |
 | Contrainte linéaire exacte | projection ou paramétrisation | architecture du décodeur | architecture de l'opérateur ou du décodeur |
-| Exemples | DDPM, EDM, expérience E2 | diffusion latente, FunDiff | FFM, DDO, FunDiff (décodeur) |
+| Exemples | DDPM, EDM | diffusion latente, FunDiff, expérience E2 (latent linéaire : modes de Fourier tronqués) | FFM, DDO, FunDiff (décodeur) |
 
 :::: recap
 ::: recap-title
@@ -1966,12 +1971,12 @@ L'offre de stage demande de développer des modèles génératifs conditionnels,
 - **Expérience E3** ([rapport, section E3](../../rapport/index.html#e3)). Le taux de croissance de la dynamo cinématique ABC en fonction de $Rm$ fournit un exemple de dépendance paramétrique avec seuil : un modèle conditionnel en $Rm$ doit traverser ce seuil, ce qui est exactement la situation où l'interpolation en $\boldsymbol\lambda$ n'est garantie par aucun théorème.
 - La **formulation** du problème et la **taxonomie** des contraintes (où agit la contrainte : architecture, perte, échantillonnage ; dure ou douce) sont développées dans le rapport ([formulation](../../rapport/index.html#formulation), [taxonomie](../../rapport/index.html#taxonomie)). Le sujet de thèse en tire une [partie théorique](../../these/index.html#theorie) et un [plan expérimental](../../these/index.html#plan-experimental).
 
-Trois enseignements de ce module orientent ces choix. D'abord, flow matching et diffusion sont deux paramétrisations du même objet (proposition 4.13) : le choix entre eux relève du chemin, du solveur et de la commodité (le flow matching donne directement l'estimée débruitée et des chemins plus droits), pas d'une différence de principe. Ensuite, les contraintes linéaires (divergence) et non linéaires (énergie, résidus) ne se traitent pas de la même façon, à cause de l'écart de Jensen. Enfin, l'évaluation doit comparer chaque mécanisme au plancher statistique, dans et hors de la plage de paramètres, et avec des métriques physiques ; la comparaison la plus proche publiée, celle de Genuist et al. (2026, préprint) sur la seule divergence en hydrodynamique 2D, conclut qu'aucune stratégie ne domine partout.
+Trois enseignements de ce module orientent ces choix. D'abord, flow matching et diffusion sont deux paramétrisations du même objet (proposition 4.13) : le choix entre eux relève du chemin, du solveur et de la commodité (le flow matching donne directement l'estimée débruitée et des chemins plus droits), pas d'une différence de principe. Ensuite, les contraintes linéaires (divergence) et non linéaires (énergie, résidus) ne se traitent pas de la même façon, à cause de l'écart de Jensen. Enfin, l'évaluation doit comparer chaque mécanisme au plancher statistique, dans et hors de la plage de paramètres, et avec des métriques physiques ; la comparaison publiée la plus proche, celle de Genuist et al. (2026, préprint) sur la seule divergence en hydrodynamique 2D, montre qu'aucune stratégie ne domine partout : les contraintes strictes y sont meilleures en distribution, mais une pénalité douce l'emporte parfois hors distribution.
 
 ## Pour aller plus loin {#plus-loin}
 
 1. **Lipman et al. (2024), *Flow Matching Guide and Code*.** Un guide complet, écrit par les auteurs du flow matching, avec les démonstrations générales (chemins conditionnels quelconques, variétés, espaces discrets) et une bibliothèque de code. C'est la suite naturelle du chapitre 4.
-2. **Albergo, Boffi & Vanden-Eijnden, *Stochastic Interpolants: A Unifying Framework for Flows and Diffusions*.** La version la plus générale du cadre de la section 4.5 : interpolants avec bruit, choix du coefficient de diffusion à l'échantillonnage, lien avec le pont de Schrödinger. À lire pour comprendre pourquoi ODE et EDS sont deux faces d'un même modèle.
+2. **Albergo, Boffi & Vanden-Eijnden (2025), *Stochastic Interpolants: A Unifying Framework for Flows and Diffusions*.** La version la plus générale du cadre de la section 4.5 : interpolants avec bruit, choix du coefficient de diffusion à l'échantillonnage, lien avec le pont de Schrödinger. À lire pour comprendre pourquoi ODE et EDS sont deux faces d'un même modèle.
 3. **Karras et al. (2022), *Elucidating the Design Space of Diffusion-Based Generative Models*.** L'article qui démonte chaque choix de conception de la diffusion (planning, préconditionnement, solveur) et le justifie ; ses annexes contiennent les démonstrations de la section 3.4 et une analyse de l'erreur d'intégration.
 4. **Song et al. (2021), *Score-Based Generative Modeling through Stochastic Differential Equations*.** Le texte fondateur de la vue continue (chapitre 3), avec l'échantillonnage prédicteur-correcteur et le calcul exact de la vraisemblance par l'ODE de flot.
 5. **Papamakarios et al. (2021), *Normalizing Flows for Probabilistic Modeling and Inference*.** Une revue pédagogique des flots normalisants (chapitre 1), utile pour comprendre ce que le flow matching a rendu inutile et ce qu'il en a gardé.
@@ -1980,7 +1985,7 @@ Trois enseignements de ce module orientent ces choix. D'abord, flow matching et 
 ## Sources {#sources}
 
 - M. S. Albergo, E. Vanden-Eijnden (2023). « Building Normalizing Flows with Stochastic Interpolants ». *International Conference on Learning Representations (ICLR 2023)*. arXiv:2209.15571. <https://arxiv.org/abs/2209.15571>
-- M. S. Albergo, N. M. Boffi, E. Vanden-Eijnden. « Stochastic Interpolants: A Unifying Framework for Flows and Diffusions ». arXiv:2303.08797 (version 4 du 9 octobre 2025, annotée « JMLR Version » par les auteurs). <https://arxiv.org/abs/2303.08797>
+- M. S. Albergo, N. M. Boffi, E. Vanden-Eijnden (2025). « Stochastic Interpolants: A Unifying Framework for Flows and Diffusions ». *Journal of Machine Learning Research* 26(209), 1–80. arXiv:2303.08797. <https://jmlr.org/papers/v26/23-1605.html>
 - B. D. O. Anderson (1982). « Reverse-time diffusion equation models ». *Stochastic Processes and their Applications* 12(3), 313–326. DOI 10.1016/0304-4149(82)90051-5. <https://doi.org/10.1016/0304-4149(82)90051-5>
 - A. Bansal, H.-M. Chu, A. Schwarzschild, S. Sengupta, M. Goldblum, J. Geiping, T. Goldstein (2024). « Universal Guidance for Diffusion Models ». *ICLR 2024*. arXiv:2302.07121. <https://arxiv.org/abs/2302.07121>
 - J.-H. Bastek, W. Sun, D. M. Kochmann (2025). « Physics-Informed Diffusion Models ». *ICLR 2025*. arXiv:2403.14404. <https://arxiv.org/abs/2403.14404>

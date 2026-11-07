@@ -280,7 +280,7 @@ Le portrait de phase d'une équation scalaire se lit donc sur le signe de $f$ : 
 
 :::: thm
 [Théorème 1.14 — Poincaré–Bendixson (énoncé)]{.tag}
-Dans le plan, si une orbite positive reste dans un compact qui ne contient aucun point fixe, alors elle converge vers une orbite périodique (un cycle limite).
+Dans le plan, si une orbite positive reste dans un compact qui ne contient aucun point fixe, alors son ensemble limite est une orbite périodique : soit l'orbite est elle-même périodique, soit elle s'enroule sur une orbite périodique (un cycle limite).
 
 ::: proof
 Admis ; voir Strogatz (2018) ou Guckenheimer et Holmes (1983). L'idée est qu'une courbe du plan qui ne se recoupe pas (unicité) est piégée par le théorème de Jordan. [∎]{.qed}

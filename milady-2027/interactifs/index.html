@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Schémas interactifs</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js" integrity="sha384-QFFtAGzvvj+bfgCGxXJlNZZR1nXEZgvG8tDLCCY1F19xl20WlfTYgguB4VcNdxYk" crossorigin="anonymous"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.css" integrity="sha384-3rdsX6e5mueWyoweR9NIVmtEsUkokpBT/0ALqKKIBMr9j4qhHkaIkAcGgsE6uVlp" crossorigin="anonymous">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../assets/paper.css">
+</head>
+
+<body>
+
+<a class="skip" href="#main">Aller au contenu</a>
+<header class="topbar">
+  <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Sommaire</span></button>
+  <a class="brand" href="../index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+  <span class="tb-title" id="tb-title"></span>
+  <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Thème</span></button>
+</header>
+<div class="layout">
+<nav class="sidetoc" id="sidetoc" aria-label="Sommaire"></nav>
+<main class="paper" id="main">
+
+<header id="title-block-header">
+<h1 class="title">Schémas interactifs</h1>
+<p class="subtitle">Cinq expériences de pensée à manipuler dans le navigateur</p>
+
+</header>
+
+
+<div class="note">
+<p><span class="tag">À propos</span> Chaque schéma est un petit programme JavaScript autonome qui tourne dans votre navigateur, sans serveur. Les formules utilisées sont écrites en tête de chaque fichier (<code>assets/interactif/&lt;nom&gt;.js</code>), avec leurs références. Ces schémas complètent les schémas statiques du <a href="../rapport/index.html">rapport</a> et des <a href="../prep/index.html">modules de préparation</a> ; ils ne remplacent pas les démonstrations.</p>
+</div>
+<p>Les cinq schémas suivent l’ordre du parcours : le transport de lois qui fonde le flow matching, la projection qui rend un champ à divergence nulle, la différence entre contrainte par échantillon et contrainte en loi, puis deux systèmes dynamiques du stage, le modèle de renversements et la dynamo cinématique ABC.</p>
+<h2 id="flow-matching">1. Flow matching : transporter une loi</h2>
+<p>Un modèle de flow matching transporte une loi simple, ici une gaussienne, vers la loi des données par un champ de vitesse <span class="math inline">v(\mathbf{x}, t)</span>. Ce schéma utilise le champ marginal <strong>exact</strong> pour une loi cible formée de deux gaussiennes symétriques <span class="math inline">\pm\mathbf{m}(\lambda)</span> : c’est le champ qu’un réseau chercherait à apprendre. Le curseur <span class="math inline">\lambda</span> joue le rôle d’un paramètre physique de conditionnement, comme <span class="math inline">Rm</span> dans le stage.</p>
+<p>Observez deux choses. Les chemins conditionnels <span class="math inline">\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1</span> sont droits mais se croisent ; les trajectoires du flot marginal ne se croisent jamais. La loi finale est symétrique parce que le champ l’est : c’est la Proposition 4 du rapport à l’œuvre.</p>
+<div class="widget" data-widget="flow-matching"></div>
+<script defer="" src="../assets/interactif/flow-matching.js"></script>
+<p>Pour aller plus loin : module <a href="../prep/p7-modeles-generatifs/index.html">p7 — modèles génératifs</a>, chapitre sur le flow matching.</p>
+<h2 id="leray">2. Projection de Leray</h2>
+<p>Tout champ de vecteurs périodique se décompose en une partie à divergence nulle et une partie gradient (décomposition de Helmholtz–Hodge). La projection de Leray <span class="math inline">\mathbb{P}</span> retire exactement la partie gradient : en Fourier, <span class="math inline">\hat{\mathbf{u}}_{\mathbf{k}} \mapsto \hat{\mathbf{u}}_{\mathbf{k}} - \mathbf{k}(\mathbf{k}\cdot\hat{\mathbf{u}}_{\mathbf{k}})/|\mathbf{k}|^2</span>. Le curseur <span class="math inline">\alpha</span> règle la part compressible du champ ; la carte de couleur montre <span class="math inline">\nabla\cdot\mathbf{u}</span>.</p>
+<p>La projection ne fait que retirer de l’énergie (<span class="math inline">\|\mathbb{P}\mathbf{u}\|^2 \le \|\mathbf{u}\|^2</span>). Sur un domaine borné, elle exigerait de résoudre un problème de Poisson avec conditions aux limites : c’est l’une des raisons pour lesquelles le rapport préfère générer des potentiels.</p>
+<div class="widget" data-widget="leray"></div>
+<script defer="" src="../assets/interactif/leray.js"></script>
+<p>Pour aller plus loin : module <a href="../prep/p1-calcul-vectoriel/index.html">p1 — calcul vectoriel et Fourier</a> et expérience <a href="../rapport/index.html#e2">E2</a>.</p>
+<h2 id="contrainte-loi">3. Contrainte en loi ou contrainte par échantillon</h2>
+<p>Dans un état statistiquement stationnaire, la variation d’énergie <span class="math inline">r = \mathrm{d}E/\mathrm{d}t = P - \varepsilon</span> fluctue : elle n’est nulle qu’<strong>en moyenne</strong>. Ce schéma compare trois lois de <span class="math inline">r</span> : la vraie loi, la loi d’un modèle biaisé dont on projette chaque échantillon sur <span class="math inline">r = 0</span>, et la même loi corrigée par inclinaison exponentielle <span class="math inline">w_i \propto e^{\beta r_i}</span>. La projection par échantillon satisfait la contrainte en détruisant la variance ; l’inclinaison corrige la moyenne en déformant le moins possible la loi au sens de Kullback–Leibler.</p>
+<p>Cochez « support manquant » : si le modèle n’a jamais produit la queue droite de la vraie loi, aucun repondérage ne peut la créer. La taille d’échantillon effective s’effondre. C’est ce qu’observent les expériences <a href="../rapport/index.html#e1">E1</a> et <a href="../rapport/index.html#e2">E2</a>, et c’est pourquoi le rapport impose plutôt la contrainte pendant l’entraînement.</p>
+<div class="widget" data-widget="contrainte-loi"></div>
+<script defer="" src="../assets/interactif/contrainte-loi.js"></script>
+<p>Pour aller plus loin : module <a href="../prep/p5-probabilites-transport/index.html">p5 — probabilités et transport optimal</a> (I-projection) et module <a href="../prep/p8-contraintes-physiques/index.html">p8 — contraintes physiques</a>.</p>
+<h2 id="gissinger">4. Renversements du dipôle : le modèle de Gissinger</h2>
+<p>Le modèle à trois modes de Gissinger (2012) couple un mode dipolaire <span class="math inline">D</span>, un mode quadripolaire <span class="math inline">Q</span> et un mode de vitesse <span class="math inline">V</span>. Il reproduit des renversements chaotiques du dipôle, analogues à ceux de l’expérience VKS. Faites varier <span class="math inline">\Gamma</span> : en dessous d’environ <span class="math inline">0{,}865</span>, la trajectoire reste d’un côté (pas de renversement) ; au-dessus, les deux attracteurs symétriques ont fusionné et <span class="math inline">D</span> change de signe de façon irrégulière.</p>
+<p>Le schéma compte les passages de <span class="math inline">D</span> par zéro et les compare à l’estimation par la <strong>formule de Rice</strong>, calculée à partir des seuls états visités : <span class="math inline">\nu_0 \approx \mathbb{E}\big[|\dot D|\,\mathbf{1}_{|D|&lt;h}\big]/(2h)</span>. C’est l’idée de la Proposition 8 du rapport : un modèle génératif de la loi stationnaire suffit à prédire la fréquence des renversements, sans intégrer en temps.</p>
+<div class="widget" data-widget="gissinger"></div>
+<script defer="" src="../assets/interactif/gissinger.js"></script>
+<p>Pour aller plus loin : module <a href="../prep/p4-systemes-dynamiques/index.html">p4 — systèmes dynamiques</a> et expérience <a href="../rapport/index.html#e1">E1</a>.</p>
+<h2 id="abc-dynamo">5. Dynamo cinématique ABC</h2>
+<p>L’écoulement ABC (<span class="math inline">A = B = C = 1</span>) est une dynamo cinématique : pour certaines valeurs du nombre de Reynolds magnétique <span class="math inline">Rm = 1/\eta</span>, un champ magnétique initialement faible croît exponentiellement. La courbe montre le taux de croissance <span class="math inline">\lambda(Rm)</span> calculé dans ce dépôt sur une grille <span class="math inline">32^3</span> ; les zones ombrées sont les fenêtres de dynamo. La carte montre une coupe de <span class="math inline">|\mathbf{B}|</span> du mode le plus instable.</p>
+<p>Les seuils mesurés (<span class="math inline">Rm \approx 8{,}87</span>, <span class="math inline">17{,}60</span> et <span class="math inline">26{,}80</span>) retrouvent les fenêtres connues (<span class="math inline">8{,}9 &lt; Rm &lt; 17{,}5</span> puis <span class="math inline">Rm \gtrsim 27</span>). Ce calcul sert de banc d’essai 3D pour la thèse : générer des modes propres conditionnés par <span class="math inline">Rm</span> à partir d’un potentiel vecteur.</p>
+<div class="widget" data-widget="abc-dynamo" data-src="../assets/interactif/data/abc-dynamo.json"></div>
+<script defer="" src="../assets/interactif/abc-dynamo.js"></script>
+<p>Pour aller plus loin : module <a href="../prep/p3-mhd-dynamo/index.html">p3 — MHD et effet dynamo</a> et expérience <a href="../rapport/index.html#e3">E3</a>.</p>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>C. Gissinger, « A new deterministic model for chaotic reversals », <em>Eur. Phys. J. B</em> 85, 137 (2012), arXiv:1109.6569.</li>
+<li>S. O. Rice, « Mathematical analysis of random noise », <em>Bell System Technical Journal</em> 23(3), 282–332 (1944), DOI 10.1002/j.1538-7305.1944.tb00874.x.</li>
+<li>Y. Lipman, R. T. Q. Chen, H. Ben-Hamu, M. Nickel, M. Le, « Flow Matching for Generative Modeling », ICLR 2023, arXiv:2210.02747.</li>
+<li>V. Archontis, S. B. F. Dorch, Å. Nordlund, « Numerical simulations of kinematic dynamo action », <em>Astron. Astrophys.</em> 397, 393–399 (2003), DOI 10.1051/0004-6361:20021568.</li>
+<li>I. Csiszár, « I-divergence geometry of probability distributions and minimization problems », <em>Ann. Probab.</em> 3(1), 146–158 (1975), DOI 10.1214/aop/1176996454.</li>
+</ul>
+
+</main>
+</div>
+<footer class="foot"><p><a href="../index.html">← Accueil</a> · <a href="../prep/index.html">Préparation</a> · <a href="../encadrants/index.html">Encadrants</a> · <a href="../rapport/index.html">Rapport de stage</a> · <a href="../these/index.html">Sujet de thèse</a> · <a href="../interactifs/index.html">Schémas interactifs</a> · <a href="../experiences/index.html">Expériences</a></p></footer>
+<script defer="" src="../assets/theme.js"></script>
+
+
+
+
+</body></html>

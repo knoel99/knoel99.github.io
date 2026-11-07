@@ -36,9 +36,18 @@
        Vérifications : v(x, 0) = E[x1] - x = -x ; v(x, 1) = x - E[x0] = x.
    (5) Coordonnées x = (xi, eta) : d eta/dt = a(t) eta avec a = (1/2) d ln sigma_t^2 / dt,
        donc eta_t = sigma_t eta_0 (exact ; eta_1 = s eta_0 ~ N(0, s^2)).
-       v_xi est impaire en xi : la droite xi = 0 est invariante, les trajectoires du
-       flot ne la traversent jamais (la moitié droite de la base va dans le mode +m),
-       alors que les chemins conditionnels droits x0 -> x1 se croisent.
+       v_xi ne dépend que de (xi, t) et est impaire en xi : la droite xi = 0 est
+       invariante, la moitié droite de la base est envoyée sur la moitié droite de
+       la cible (masse 1/2, au voisinage de +m).
+       v est lisse, donc (unicité de Cauchy-Lipschitz) deux trajectoires du flot ne
+       sont jamais au même point au même instant. Leurs tracés DANS LE PLAN peuvent
+       en revanche se couper à des instants différents : xi_t et eta_t ne sont pas
+       monotones (v(x, 0) = -x contracte d'abord ; sigma_t est minimal en
+       t* = 1/(1 + s^2)). Contrôle numérique (revue) : parmi les 40 trajectoires
+       tracées, 12 à 59 paires sur 780 se coupent dans le plan, contre 136 à 222
+       pour les 40 segments conditionnels. Au contraire, par un même (x, t) passe un
+       continuum de chemins conditionnels x0 -> x1 de directions différentes
+       (loi de (x0, x1) sachant x_t = x non dégénérée) : v en est la moyenne.
    (6) Heun (Runge-Kutta explicite d'ordre 2 ; Hairer, Nørsett & Wanner, Solving
        ODE I, §II.1 ; échantillonneur de Karras et al. 2022), h = 1/N :
            x~ = x_n + h v(x_n, t_n),
@@ -86,10 +95,10 @@
       title: "Flow matching conditionnel : champ de vitesse marginal exact",
       lambda: "λ", lambdaLong: "λ, demi-écart entre les deux modes",
       t: "t", tLong: "temps t du flot",
-      steps: "pas N", stepsLong: "nombre N de pas de Heun",
-      play: "▶ Lecture", pause: "❚❚ Pause", playLabel: "Lancer l'animation", pauseLabel: "Mettre l'animation en pause",
+      steps: "pas N", stepsLong: "pas N : nombre de pas de Heun",
+      play: "Lecture", pause: "Pause", playLabel: "Lancer l'animation", pauseLabel: "Mettre l'animation en pause",
       resample: "Nouveau tirage",
-      paths: "Chemins :", none: "aucun", cond: "conditionnels", flow: "flot",
+      paths: "Chemins :", none: "aucun", cond: "conditionnels", flow: "flot",
       field: "champ v(x, t)",
       canvas: "Nuage de particules transporté de la gaussienne N(0, I₂) vers un mélange de deux gaussiennes de moyennes ±(λ, 0), avec la densité de la première coordonnée en dessous.",
       density: "densité de ξ",
@@ -97,37 +106,41 @@
       legField: "v(x, t)·Δt, Δt = 0,1", legCond: "xₜ = (1 − t)x₀ + t x₁, paires indépendantes",
       legDens: "densité exacte pₜ(ξ)", legHist: "histogramme du nuage",
       readout: function (o) {
-        return "t = " + o.t + " (σₜ = " + o.st + ") · λ = " + o.lam + " · Heun, N = " + o.n + " pas. " +
+        return "t = " + o.t + " (σₜ = " + o.st + ") · λ = " + o.lam + " · Heun, N = " + o.n + "\u00a0pas. " +
           "Nuage final (t = 1) : moyenne de |ξ| = " + o.mabs + " (cible " + o.mabsT + ", écart " + o.gap + ") · " +
           "écart-type de η = " + o.sdy + " (cible " + o.sdyT + ") · à droite : " + o.right + "\u202f% (cible 50\u202f%).";
       },
-      note: "x = (ξ, η). Base x₀ ~ N(0, I₂) ; cible ½ N((λ, 0), s²I₂) + ½ N((−λ, 0), s²I₂), s = 0,35 (symétrie B → −B). " +
-        "Champ exact v(x, t) = Σₖ wₖ(x, t) E[x₁ − x₀ | xₜ = x, k], intégré par Heun en N pas : les chemins conditionnels " +
-        "(segments x₀ → x₁) se croisent, les trajectoires du flot jamais (ξ = 0 est invariante). Survol ou toucher : v et w₊ au point.",
+      note: "x = (ξ, η). Base x₀ ~ N(0, I₂) ; cible ½ N((λ, 0), s²I₂) + ½ N((−λ, 0), s²I₂), s = 0,35, invariante par x → −x (comme B → −B). " +
+        "Champ exact v(x, t) = Σₖ wₖ(x, t) E[x₁ − x₀ | xₜ = x, k], avec w₊ = P(k = + | xₜ = x), intégré par Heun en N pas. " +
+        "Par un même point x passent, au même instant t, des chemins conditionnels (segments x₀ → x₁) de directions différentes : v en est la moyenne. " +
+        "Deux trajectoires du flot ne sont jamais au même point au même instant et aucune ne franchit ξ = 0 ; leurs tracés peuvent se couper dans le plan, " +
+        "mais à des instants différents. Survol ou toucher : v et w₊ au point visé.",
       tipX: "x", tipV: "v", tipW: "w₊"
     },
     en: {
       title: "Conditional flow matching: exact marginal velocity field",
       lambda: "λ", lambdaLong: "λ, half-distance between the two modes",
       t: "t", tLong: "flow time t",
-      steps: "steps N", stepsLong: "number N of Heun steps",
-      play: "▶ Play", pause: "❚❚ Pause", playLabel: "Start the animation", pauseLabel: "Pause the animation",
+      steps: "steps N", stepsLong: "steps N: number of Heun steps",
+      play: "Play", pause: "Pause", playLabel: "Start the animation", pauseLabel: "Pause the animation",
       resample: "New sample",
       paths: "Paths:", none: "none", cond: "conditional", flow: "flow",
       field: "field v(x, t)",
       canvas: "Particle cloud carried from the Gaussian N(0, I₂) to a mixture of two Gaussians with means ±(λ, 0), with the density of the first coordinate below.",
       density: "density of ξ",
-      legRight: "to +m", legLeft: "to −m", legTarget: "target (radius 2s)", legPt: "exact law pₜ (radius 2σₜ)",
+      legRight: "to +m", legLeft: "to −m", legTarget: "target (radius 2s)", legPt: "exact distribution pₜ (radius 2σₜ)",
       legField: "v(x, t)·Δt, Δt = 0.1", legCond: "xₜ = (1 − t)x₀ + t x₁, independent pairs",
       legDens: "exact density pₜ(ξ)", legHist: "cloud histogram",
       readout: function (o) {
-        return "t = " + o.t + " (σₜ = " + o.st + ") · λ = " + o.lam + " · Heun, N = " + o.n + (o.n === "1" ? " step. " : " steps. ") +
+        return "t = " + o.t + " (σₜ = " + o.st + ") · λ = " + o.lam + " · Heun, N = " + o.n + (o.n === "1" ? "\u00a0step. " : "\u00a0steps. ") +
           "Final cloud (t = 1): mean |ξ| = " + o.mabs + " (target " + o.mabsT + ", gap " + o.gap + ") · " +
           "std of η = " + o.sdy + " (target " + o.sdyT + ") · on the right: " + o.right + "% (target 50%).";
       },
-      note: "x = (ξ, η). Base x₀ ~ N(0, I₂); target ½ N((λ, 0), s²I₂) + ½ N((−λ, 0), s²I₂), s = 0.35 (B → −B symmetry). " +
-        "Exact field v(x, t) = Σₖ wₖ(x, t) E[x₁ − x₀ | xₜ = x, k], integrated with Heun in N steps: conditional paths " +
-        "(segments x₀ → x₁) cross, flow trajectories never do (ξ = 0 is invariant). Hover or tap: v and w₊ at that point.",
+      note: "x = (ξ, η). Base x₀ ~ N(0, I₂); target ½ N((λ, 0), s²I₂) + ½ N((−λ, 0), s²I₂), s = 0.35, invariant under x → −x (like B → −B). " +
+        "Exact field v(x, t) = Σₖ wₖ(x, t) E[x₁ − x₀ | xₜ = x, k], with w₊ = P(k = + | xₜ = x), integrated with Heun in N steps. " +
+        "Through a given point x, at a given time t, pass conditional paths (segments x₀ → x₁) with different directions: v is their average. " +
+        "Two flow trajectories are never at the same point at the same time, and none crosses ξ = 0; their traces may intersect in the plane, " +
+        "but at different times. Hover or tap: v and w₊ at that point.",
       tipX: "x", tipV: "v", tipW: "w₊"
     }
   };
@@ -146,6 +159,14 @@
     var neg = x < 0 && parseFloat(s) !== 0;
     if (lang === "fr") s = s.replace(".", ",");
     return (neg ? "\u2212" : "") + s;
+  }
+
+  /* Espaces insécables : pas de coupure autour de « = », « → », « ~ », ni avant
+     « : » / « ; » en français (espace fine pour « ; »). */
+  function nb(s, lang) {
+    s = s.replace(/ = /g, "\u00a0=\u00a0").replace(/ \u2192 /g, "\u00a0\u2192\u00a0").replace(/ ~ /g, "\u00a0~\u00a0");
+    if (lang === "fr") s = s.replace(/ :/g, "\u00a0:").replace(/ ;/g, "\u202f;");
+    return s;
   }
 
   /* ---------------- aléa reproductible ---------------- */
@@ -404,7 +425,7 @@
       var s = el("span");
       s.style.display = "inline-flex"; s.style.alignItems = "center"; s.style.gap = ".35rem";
       var g = swatch(kind);
-      s.appendChild(g); s.appendChild(el("span", null, text));
+      s.appendChild(g); s.appendChild(el("span", null, nb(text, lang)));
       legend.appendChild(s);
       legItems[key] = { root: s, glyph: g };
     }
@@ -419,7 +440,7 @@
 
     var readout = el("p", "widget-readout");
     readout.setAttribute("aria-live", "polite");
-    var note = el("p", "widget-note", L.note);
+    var note = el("p", "widget-note", nb(L.note, lang));
 
     host.appendChild(title);
     host.appendChild(controls);
@@ -813,12 +834,12 @@
     /* ---------- textes ---------- */
     function updateReadout() {
       var s = data.stats;
-      readout.textContent = L.readout({
+      readout.textContent = nb(L.readout({
         t: fmt(st.t, 2, lang), st: fmt(Math.sqrt(sigma2(st.t)), 2, lang), lam: fmt(st.lam, 2, lang),
         n: String(data.N),
         mabs: fmt(s.mabs, 2, lang), mabsT: fmt(s.mabsT, 2, lang), gap: fmt(Math.abs(s.mabs - s.mabsT), 2, lang),
         sdy: fmt(s.sdy, 2, lang), sdyT: fmt(S, 2, lang), right: fmt(100 * s.right, 1, lang)
-      });
+      }), lang);
       sLam.out.textContent = fmt(st.lam, 2, lang);
       sT.out.textContent = fmt(st.t, 2, lang);
       sN.out.textContent = String(NS[st.nIndex]);
@@ -849,8 +870,13 @@
     function syncButtons() {
       Object.keys(modeButtons).forEach(function (m) { setPressed(modeButtons[m], st.mode === m); });
       setPressed(bField, st.field);
-      bPlay.textContent = st.playing ? L.pause : L.play;
-      bPlay.setAttribute("aria-label", st.playing ? L.pauseLabel : L.playLabel);
+      /* nom accessible = texte visible (WCAG 2.5.3) ; pictogramme masqué, forme texte (U+FE0E) */
+      bPlay.textContent = "";
+      var glyph = el("span", null, st.playing ? "\u275a\u275a" : "\u25b6\ufe0e");
+      glyph.setAttribute("aria-hidden", "true");
+      bPlay.appendChild(glyph);
+      bPlay.appendChild(document.createTextNode(" " + (st.playing ? L.pause : L.play)));
+      bPlay.title = st.playing ? L.pauseLabel : L.playLabel;
     }
 
     /* ---------- animation ---------- */

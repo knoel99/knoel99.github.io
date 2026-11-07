@@ -122,7 +122,7 @@ export default async function draw(F, L) {
   ba(50.6, 53.4, 'st.a', 'st.b'); ba(97.4, 100.2, 'st.b2', 'st.c', { fill: '#ffffff', stroke: '#9a9a9a', dash: '1.2 0.8' });   // into the target: hollow, not trained here
   ba(128.6, 131.2, 'st.c2', 'st.d'); ba(160.4, 163, 'st.d2', 'st.e');
   // feedback: stationarity loss (training), from the law constraint back to v_theta
-  const xv = vx + 10, yv = mm(T) + vy - 5.5, yt = mm(2.3), xl = mm(129) - 1.5, yeq = mm(T) + 23;
+  const xv = vx + 10, yv = mm(T) + vy - 5.5, yt = mm(2.3), xl = mm(129) - 4.5, yeq = mm(T) + 23;   // xl: clear of the panel letter d
   L.path(R0, `M${mm(129) + lh.xe - 17.5},${yeq} L${xl},${yeq} L${xl},${yt} L${xv},${yt} L${xv},${yv}`, { stroke: K.mid, width: 0.6, dash: '2 1.3', fill: 'none' });
   L.chevron(R0, [xv, yv], [0, 1], { len: 2.6, spread: 0.6, stroke: K.mid, width: 0.6 });
   L.text(R0, (xl + xv) / 2, yt, 'perte de stationnarité', { size: 5.6, anchor: 'middle', valign: 'middle', color: K.mid, halo: true, italic: true });

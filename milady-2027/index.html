@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>MilaDy 2027</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js" integrity="sha384-QFFtAGzvvj+bfgCGxXJlNZZR1nXEZgvG8tDLCCY1F19xl20WlfTYgguB4VcNdxYk" crossorigin="anonymous"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.css" integrity="sha384-3rdsX6e5mueWyoweR9NIVmtEsUkokpBT/0ALqKKIBMr9j4qhHkaIkAcGgsE6uVlp" crossorigin="anonymous">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="assets/paper.css">
+</head>
+
+<body>
+
+<a class="skip" href="#main">Aller au contenu</a>
+<header class="topbar">
+  <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Sommaire</span></button>
+  <a class="brand" href="index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+  <span class="tb-title" id="tb-title"></span>
+  <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Thème</span></button>
+</header>
+<div class="layout">
+<nav class="sidetoc" id="sidetoc" aria-label="Sommaire"></nav>
+<main class="paper" id="main">
+
+<header id="title-block-header">
+<h1 class="title">MilaDy 2027</h1>
+<p class="subtitle">IA générative sous contraintes physiques pour les dynamos MHD : préparation, rapport de stage et sujet de thèse</p>
+
+</header>
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="figures/cadre/figure/out/cadre.png" style="width:100.0%" alt="Schéma du cadre génératif : paramètres, flow matching dans un espace latent, décodeur de potentiels, champs à divergence nulle, contrôle du bilan d'énergie en loi, usages en aval."></p>
+<figcaption>Le cadre étudié : des paramètres physiques pilotent un modèle génératif dont les champs respectent par construction <span class="math inline">\nabla\cdot\mathbf{u} = 0</span>, <span class="math inline">\nabla\cdot\mathbf{B} = 0</span> et la symétrie <span class="math inline">\mathbf{B}\to-\mathbf{B}</span>, et dont la loi respecte le bilan d’énergie moyen. Schéma dessiné avec la skill <a href="https://lgwrightlab.github.io/schematic-figure/">schematic-figure</a> ; légende complète dans le <a href="rapport/index.html#formulation">rapport</a>.</figcaption>
+</figure>
+</div>
+<div class="note">
+<p><span class="tag">Qu’est-ce que ce site ?</span> Un projet indépendant, préparé pour candidater au stage de M2 « <em>Physics-Constrained Generative AI Modelling of Parametric Dynamical Systems</em> » du projet ANR MilaDy. Il n’est ni produit ni validé par l’École nationale des ponts et chaussées, le LISN, l’Observatoire de la Côte d’Azur, l’ANR ou les encadrants. Le rapport de stage est <strong>prospectif</strong> : écrit comme s’il concluait le stage, il s’appuie sur des expériences réelles mais à petite échelle, réalisées sur un processeur ordinaire et reproductibles depuis le dépôt.</p>
+</div>
+<h2 id="parcours">Le site en trois étapes</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Étape</th>
+<th>Contenu</th>
+<th>Pages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1. Se préparer</strong></td>
+<td>Huit modules gradués, du niveau licence 1 au niveau M2 recherche : calcul vectoriel et Fourier, turbulence, MHD et dynamo, systèmes dynamiques, probabilités et transport, apprentissage profond, diffusion et flow matching, contraintes physiques. Environ 215 heures, 121 exercices corrigés.</td>
+<td><a href="prep/index.html">Parcours de préparation</a></td>
+</tr>
+<tr class="even">
+<td><strong>2. Faire le stage</strong></td>
+<td>Le rapport de stage : état de l’art, une taxonomie des contraintes physiques avec neuf propositions démontrées, trois expériences (modèle de renversements, MHD 2D, dynamo ABC) et leur discussion.</td>
+<td><a href="rapport/index.html">Rapport de stage</a> · <a href="experiences/index.html">Expériences</a></td>
+</tr>
+<tr class="odd">
+<td><strong>3. Préparer la thèse</strong></td>
+<td>Les travaux des quatre encadrants, six pistes évaluées, la piste retenue, sa partie théorique, son plan expérimental chiffré et évalué, son calendrier.</td>
+<td><a href="encadrants/index.html">Encadrants</a> · <a href="these/index.html">Sujet de thèse</a></td>
+</tr>
+</tbody>
+</table>
+<p>Cinq <a href="interactifs/index.html">schémas interactifs</a> accompagnent le parcours : flow matching, projection de Leray, contrainte en loi, renversements du dipôle et dynamo ABC.</p>
+<h2 id="offre">L’offre de stage</h2>
+<p>L’offre est publiée par les encadrants : <a href="https://scheng2024.github.io/stage_milady_2027.pdf">stage_milady_2027.pdf</a>. En voici l’essentiel, traduit de l’anglais.</p>
+<p><strong>Contexte.</strong> Comprendre et modéliser les dynamos magnétohydrodynamiques, où l’écoulement d’un fluide conducteur engendre spontanément un champ magnétique, reste un défi majeur en géophysique et en astrophysique. Simuler leur turbulence multi-échelle produit de grands jeux de données 3D, difficiles à stocker, à interpréter et à réutiliser pour la modélisation et l’assimilation de données. Les champs engendrés peuvent être très sensibles aux paramètres du système et présenter des transitions non linéaires, dont des renversements abrupts de polarité.</p>
+<p><strong>Objectif.</strong> Concevoir et évaluer des modèles génératifs sous contraintes physiques pour des champs dépendant de paramètres dans des systèmes dynamo. Le cadre génératif doit respecter les contraintes physiques clés, dont le bilan d’énergie et la divergence nulle ; encoder les variations selon les paramètres de contrôle (nombre de Reynolds, nombre de Reynolds magnétique, propriétés des matériaux) ; et produire de façon robuste des champs 3D utilisables par les modèles réduits et l’assimilation de données développés ailleurs dans le projet.</p>
+<p><strong>Travaux.</strong> Développer et tester des modèles génératifs conditionnels par diffusion ou flow matching ; conditionner la génération par les paramètres de contrôle et incorporer les contraintes issues des EDP et des conditions aux limites, par la conception du modèle, les pertes d’entraînement ou les procédures d’échantillonnage ; valider d’abord sur des EDP simples, puis évaluer les champs MHD générés avec des métriques statistiques et physiques (spectres d’énergie, hélicité, contrôle de la divergence, préservation de la topologie).</p>
+<p><strong>Résultats attendus.</strong> Une étude comparative des stratégies de modélisation générative sous contraintes physiques pour des champs MHD paramétriques ; un rapport technique concis et un code reproductible intégré à la boîte à outils MilaDy ; des publications possibles ; selon les résultats, une thèse financée dans le projet.</p>
+<p><strong>Encadrement et cadre.</strong> Stage de 5 à 6 mois à partir du printemps 2027, principalement au CEREA (École nationale des ponts et chaussées, Institut Polytechnique de Paris, Champs-sur-Marne), sous la direction de Sibo Cheng (ENPC) et Didier Lucor (LISN, Université Paris-Saclay), en collaboration avec Caroline Nore (LISN) et Yannick Ponty (Observatoire de la Côte d’Azur, CNRS). Télétravail possible jusqu’à 1 à 2 jours par semaine.</p>
+<p><strong>Références recommandées par l’offre.</strong> FunDiff (Wang, Dou, Shan, Liu, Lu, <em>Nature Communications</em>, 2026) ; Fukami et Taira (<em>Nature Communications</em> 14, 6480, 2023) ; puis Bansal et al.&nbsp;(ICLR 2024), Bastek, Sun et Kochmann (ICLR 2025), Solera-Rico et al.&nbsp;(<em>Nature Communications</em> 15, 1361, 2024). Toutes sont présentées dans le <a href="prep/p8-contraintes-physiques/index.html">module 8</a> et dans l’état de l’art du <a href="rapport/index.html#etat-art">rapport</a>.</p>
+<h2 id="milady">Le projet MilaDy</h2>
+<p>MilaDy (« Modélisation par apprentissage automatique des dynamos turbulentes ») est le projet ANR-25-CE51-0077, coordonné par Caroline Nore (LISN), avec le laboratoire Lagrange (Observatoire de la Côte d’Azur) et le CEREA (ENPC). Il a commencé en janvier 2026 pour 48 mois. Ses deux objectifs : étudier les inversions de champ magnétique et les dynamos « explosives » avec des modèles réduits fondés sur les données, et optimiser le dispositif DRESDYN (cylindre en précession) avec des modèles réduits paramétriques. Détails et sources : page <a href="encadrants/index.html#milady">Encadrants et projet MilaDy</a>.</p>
+<h2 id="resultats">Ce que montrent les expériences</h2>
+<p>Les expériences sont des bancs d’essai à petite échelle (CPU, sans GPU). Tous les chiffres viennent du <a href="https://github.com/knoel99/knoel99.github.io/blob/main/milady-2027/experiences/resultats/digest.md">condensé des résultats</a>.</p>
+<ul>
+<li><strong>Divergence nulle (MHD 2D, E2).</strong> Générer librement les composantes laisse une divergence relative d’environ 0,4 ; une pénalité douce la réduit peu (environ 0,3) et dégrade l’énergie magnétique. Générer des potentiels, projeter à la fin ou projeter le flot donne une divergence nulle à la précision machine.</li>
+<li><strong>Bilan d’énergie en loi (E2).</strong> Imposer le bilan d’énergie moyen pendant l’entraînement, y compris pour des valeurs de <span class="math inline">\eta</span> sans données, divise par environ 3,6 la distance à la vraie loi sur les valeurs de test (0,70 contre 2,52 pour un témoin entraîné aussi longtemps sans cette perte). Imposer le bilan à chaque échantillon le satisfait exactement, mais en annulant la variance de la dissipation, ce qui est faux physiquement.</li>
+<li><strong>Dynamo ABC (E3).</strong> Les seuils mesurés, <span class="math inline">Rm \approx 8{,}87</span>, <span class="math inline">17{,}60</span> et <span class="math inline">26{,}80</span>, retrouvent les fenêtres de dynamo connues.</li>
+<li><strong>Renversements (E1).</strong> <!-- E1-ACCUEIL --> Voir le <a href="rapport/index.html#e1">rapport, section E1</a>.</li>
+</ul>
+<h2 id="sources">Sources officielles</h2>
+<ul>
+<li>Offre de stage : <a href="https://scheng2024.github.io/stage_milady_2027.pdf" class="uri">https://scheng2024.github.io/stage_milady_2027.pdf</a> (lue le 6 novembre 2026).</li>
+<li>Projet ANR MilaDy : <a href="https://anr.fr/Projet-ANR-25-CE51-0077" class="uri">https://anr.fr/Projet-ANR-25-CE51-0077</a>.</li>
+<li>Page de Sibo Cheng : <a href="https://scheng2024.github.io/" class="uri">https://scheng2024.github.io/</a>.</li>
+<li>Code et sources de ce site : <a href="https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027" class="uri">https://github.com/knoel99/knoel99.github.io/tree/main/milady-2027</a>.</li>
+</ul>
+
+</main>
+</div>
+<footer class="foot"><p><a href="index.html">← Accueil</a> · <a href="prep/index.html">Préparation</a> · <a href="encadrants/index.html">Encadrants</a> · <a href="rapport/index.html">Rapport de stage</a> · <a href="these/index.html">Sujet de thèse</a> · <a href="interactifs/index.html">Schémas interactifs</a> · <a href="experiences/index.html">Expériences</a></p></footer>
+<script defer="" src="assets/theme.js"></script>
+
+
+
+
+</body></html>

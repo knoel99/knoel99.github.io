@@ -4,7 +4,7 @@ Lancer : python figure/data/make_data.py  (depuis figures/cadre/) -> figure/data
 Contenu :
   flow     : trajectoires du flot marginal de flow matching 1D (chemin linéaire, couplage indépendant),
              base N(0,1) -> mélange symétrique 0.5 N(-m, s^2) + 0.5 N(m, s^2) ; v* exact (posterior gaussien).
-  pot      : potentiels 2D périodiques psi, a (somme de Fourier, |k| <= 4, amplitude ~ k^-2) ;
+  pot      : potentiels 2D périodiques psi, a (somme de Fourier, |k| <= 3, amplitude ~ k^-2.6 et k^-2.1) ;
              isolignes orientées selon u = grad^perp psi = (d_y psi, -d_x psi), B = grad^perp a.
   vks      : fonction de courant de Stokes à deux cellules (u_r = -1/r d_z psi, u_z = 1/r d_r psi) ;
              lignes de champ d'un solénoïde fini (dipôle axial), Biot-Savart par spires (intégrales elliptiques).
@@ -170,7 +170,7 @@ print('vks: u_z(axis, z=+0.45) =', 2 * np.sin(np.pi * 0.45 / h), ' u_r(r=0.5, z=
 # Une ligne qui coupe le plan médian en r0 < a sort de la sphère en sin(theta) = r0/a et suit r = L sin^2(theta), L = a^3/r0^2.
 acore = 0.80
 vks_B = []
-for r0 in [0.40, 0.52, 0.64]:
+for r0 in [0.50, 0.57, 0.64]:   # L = a^3/r0^2 <= 2.05 : chaque boucle se referme dans la station c (pas de coupure au bord)
     L = acore**3 / r0**2
     th_e = np.arcsin(r0 / acore)
     z_e = np.sqrt(acore**2 - r0**2)

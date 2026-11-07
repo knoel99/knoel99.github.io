@@ -976,9 +976,10 @@ def tilt(G, c, iters=50, tol=1e-10):
             break
         H = (G - mean).T @ ((G - mean) * w[:, None])    # covariance pondérée
         step = np.linalg.solve(H + 1e-12 * np.eye(m), grad)
-        t = 1.0                                         # recherche linéaire (Armijo) sur psi
+        t = 1.0                                         # recherche linéaire (Armijo) sur psi,
         psi = lambda l: np.log(np.mean(np.exp(G @ l - (G @ l).max()))) + (G @ l).max() - l @ c
-        while psi(lam - t * step) > psi(lam) - 1e-4 * t * grad @ step and t > 1e-8:
+        # avec une marge de 1e-12 pour les erreurs d'arrondi près de l'optimum
+        while psi(lam - t * step) > psi(lam) - 1e-4 * t * grad @ step + 1e-12 and t > 1e-8:
             t /= 2
         lam = lam - t * step
     a = G @ lam; w = np.exp(a - a.max()); w /= w.sum()

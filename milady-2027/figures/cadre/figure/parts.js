@@ -188,6 +188,9 @@ export function vks(F, L, g, cx, cy, R, D, opts = {}) {
   // meridional plane: faint sheet, u on the left half, B on the right half
   const mer = [P(-R, 0, -h + bh), P(R, 0, -h + bh), P(R, 0, h - bh), P(-R, 0, h - bh)];
   L.polygon(g, mer, { fill: '#ffffff', opacity: 0.55, stroke: 'none' });
+  // glass highlight: near the left wall and under the streamlines (on top it read as a white bar through the u cells)
+  const hl = (a) => [P(R * Math.cos(a), R * Math.sin(a), -Hc + 0.15 * R), P(R * Math.cos(a), R * Math.sin(a), Hc - 0.15 * R)];
+  L.line(g, ...hl(-2.8), { stroke: '#ffffff', width: 1.2, opacity: 0.85, cap: 'round' });
   for (const sg of D.vks.u) {
     if (Math.abs(sg.lev) < 0.04) continue;
     const pts = sg.pts.map(([r, z]) => P(-r * R, 0, z * R));
@@ -214,8 +217,6 @@ export function vks(F, L, g, cx, cy, R, D, opts = {}) {
   L.polygon(g, ell(Hc, R, 0, 2 * PI, 90), { fill: K.glass, opacity: 0.35, stroke: '#5f7f93', width: 0.5 });
   L.line(g, P(-R, 0, -Hc), P(-R, 0, Hc), { stroke: '#5f7f93', width: 0.5 });
   L.line(g, P(R, 0, -Hc), P(R, 0, Hc), { stroke: '#5f7f93', width: 0.5 });
-  const hl = (a) => [P(R * Math.cos(a), R * Math.sin(a), -Hc + 0.15 * R), P(R * Math.cos(a), R * Math.sin(a), Hc - 0.15 * R)];
-  L.line(g, ...hl(-2.35), { stroke: '#ffffff', width: 1.4, opacity: 0.8, cap: 'round' });
   // top shaft
   L.cylinder3(g, P, [0, 0, Hc], [0, 0, Hc + 0.38 * R], 0.07 * R, 0.07 * R, { fill: '#9aa1a8', shading: true, stroke: '#5f656b', width: 0.35 });
   // counter-rotation: arcs on the near side at the two impeller levels, opposite senses
@@ -228,7 +229,9 @@ export function vks(F, L, g, cx, cy, R, D, opts = {}) {
   };
   rot(Hc + 0.2 * R, 1); rot(-Hc - 0.2 * R, -1);
   F.anchor('vks.ucell', g, ...P(-0.88 * R, 0, 0.28 * R));
-  F.anchor('vks.Bloop', g, ...P(1.55 * R, 0, 0.52 * R));
+  const ob = D.vks.B[0].pts, rmax = Math.max(...ob.map((p) => p[0]));
+  const bq = ob.filter((p) => p[1] > 0).reduce((best, p) => (Math.abs(p[0] - 0.8 * rmax) < Math.abs(best[0] - 0.8 * rmax) ? p : best));
+  F.anchor('vks.Bloop', g, ...P(bq[0] * R, 0, bq[1] * R));
   F.anchor('vks.left', g, ...P(-1.2 * R, 0, 0));
   F.anchor('vks.right', g, ...P(1.95 * R, 0, 0));
   F.anchor('vks.top', g, ...P(0, 0, Hc + 0.35 * R));

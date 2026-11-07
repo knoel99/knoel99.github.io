@@ -515,7 +515,7 @@ $$
 \frac{\mathrm{d}H_M}{\mathrm{d}t} = -2\eta\,\langle\mathbf{j}\cdot\mathbf{B}\rangle, \qquad \frac{\mathrm{d}H_C}{\mathrm{d}t} = -(\nu + \eta)\,\langle\boldsymbol\omega\cdot\mathbf{j}\rangle + \langle\mathbf{f}\cdot\mathbf{B}\rangle. \tag{3.6}
 $$
 
-En MHD idéale ($\nu = \eta = 0$, $\mathbf{f} = 0$), l'énergie $E$, l'hélicité magnétique $H_M$ et l'hélicité croisée $H_C$ sont donc conservées (Woltjer, 1958). L'hélicité cinétique, invariante en hydrodynamique idéale, ne l'est plus en MHD.
+En MHD idéale ($\nu = \eta = 0$, $\mathbf{f} = 0$), l'énergie $E$, l'hélicité magnétique $H_M$ et l'hélicité croisée $H_C$ sont donc conservées ; l'invariance de $H_M$ a été établie par Woltjer (1958). L'hélicité cinétique, invariante en hydrodynamique idéale (Moffatt, 1969), ne l'est plus en MHD (Pouquet et al., 2019).
 
 ::: proof
 *Hélicité magnétique.* L'équation d'induction « décurlée » s'écrit $\partial_t\mathbf{A} = \mathbf{u}\times\mathbf{B} - \eta\,\mathbf{j} - \nabla\phi$, où $\phi$ dépend de la jauge. Alors
@@ -1124,6 +1124,11 @@ $$
 
 La seconde partie du code ci-dessus intègre (5.4) avec $\alpha$ étouffé à partir d'un bruit faible : l'énergie saturée coïncide avec (5.7) à quatre chiffres. La loi $|\bar{\mathbf{B}}|^2 \propto C - C_c$ est la signature d'une **bifurcation fourche supercritique** (module 4). Les expériences la retrouvent : dans VKS, $\langle B^2\rangle$ croît linéairement avec $(Rm - Rm_c)/Rm_c$ et regroupe les données prises à différentes températures, sans hystérésis (Monchaux et al., 2007). Ce n'est pas universel : Ponty et al. (2007) ont trouvé une bifurcation **sous-critique**, avec hystérésis, dans l'écoulement de Taylor–Green ; l'hystérésis y est liée aux modifications de l'écoulement induites par la force de Lorentz. La rétroaction peut aussi briser des symétries de l'écoulement : dans les simulations de VKS analysées par POD, la saturation brise la symétrie du champ de vitesse même en contra-rotation exacte (Botez et al., 2025).
 
+::: note
+[Remarque 5.9 — Étouffement « catastrophique » et hélicité magnétique]{.tag}
+La loi d'étouffement de la proposition 5.8 est une hypothèse de fermeture, pas une conséquence des équations. À grand $Rm$, la conservation de l'hélicité magnétique (théorème 3.5) impose une contrainte plus sévère : une dynamo hélicitaire qui crée de l'hélicité d'un signe aux grandes échelles en crée autant de signe opposé aux petites échelles, et cette dernière ne disparaît que par diffusion ohmique. Dans une boîte périodique, cet argument conduit à une loi de la forme $\alpha = \alpha_{\mathrm{kin}}/(1 + Rm\,|\bar{\mathbf{B}}|^2/B_{\mathrm{eq}}^2)$, dite **catastrophique** : l'effet $\alpha$ s'effondre dès que $|\bar{\mathbf{B}}|^2 \sim B_{\mathrm{eq}}^2/Rm$, et le champ moyen ne peut ensuite croître que sur le temps de diffusion résistif, très long à grand $Rm$ (Rincon, 2019, §4.6.3 et éq. 4.85 ; voir aussi la revue de Brandenburg et Subramanian, 2005). Les flux d'hélicité à travers les bords du domaine sont l'une des voies de sortie discutées. Pour le stage, la leçon est que l'hélicité magnétique n'est pas seulement une métrique : elle contraint la dynamique de saturation.
+:::
+
 :::: recap
 ::: recap-title
 Ce qu'il faut retenir — chapitre 5
@@ -1310,7 +1315,7 @@ Cette démarche (des simulations à un modèle réduit contraint, puis à des st
 
 ### 7.4 La géodynamo
 
-Le champ terrestre est engendré dans le noyau externe de fer liquide par la convection en rotation rapide. Les paramètres y sont hors de portée de toute simulation : Rincon (2019) donne $Rm = O(10^3)$, $Pm = O(10^{-6})$, un nombre d'Ekman $E = \nu/(\Omega L^2) = O(10^{-15})$ et un nombre de Rossby $O(10^{-6})$, alors que l'une des simulations les plus poussées qu'il cite fonctionne à $Rm = 514$, $Pm = 0{,}1$ et $E = 10^{-7}$. Contrairement aux expériences, l'énergie magnétique y est estimée environ $10^4$ fois plus grande que l'énergie cinétique (Rincon, 2019). Les simulations directes de dynamos sphériques montrent que les mécanismes de renversement dépendent de $Pm$ : à $Pm < 0{,}5$, les renversements font surtout intervenir le dipôle et le quadrupôle axiaux, couplés par une brisure de symétrie de l'écoulement, comme dans le modèle de Gissinger (Gissinger et al., 2010).
+Le champ terrestre est engendré dans le noyau externe de fer liquide par la convection en rotation rapide. Les paramètres y sont hors de portée de toute simulation : Rincon (2019) donne $Rm = O(10^3)$, $Pm = O(10^{-6})$, un nombre d'Ekman $E = \nu/(\Omega L^2) = O(10^{-15})$ et un nombre de Rossby $O(10^{-6})$, alors que l'une des simulations les plus poussées qu'il cite fonctionne à $Rm = 514$, $Pm = 0{,}1$ et $E = 10^{-7}$. Contrairement aux expériences, le champ y est très fort : Rincon (2019) estime à $O(10^{-2})$ le nombre d'Alfvén $A$ du noyau, dont le carré est le rapport de l'énergie cinétique à l'énergie magnétique ; l'énergie magnétique y est donc environ $10^4$ fois plus grande que l'énergie cinétique. Les simulations directes de dynamos sphériques montrent que les mécanismes de renversement dépendent de $Pm$ : à $Pm < 0{,}5$, les renversements font surtout intervenir le dipôle et le quadrupôle axiaux, couplés par une brisure de symétrie de l'écoulement, comme dans le modèle de Gissinger (Gissinger et al., 2010).
 
 ### 7.5 Les codes de simulation
 
@@ -1614,7 +1619,7 @@ Les numéros d'équations cités pour Rincon (2019) et Tobias (2021) sont ceux d
 - Ponomarenko, Yu. B. (1973). Theory of the hydromagnetic generator. *Journal of Applied Mechanics and Technical Physics*, 14, 775–778. [doi:10.1007/BF00853190](https://doi.org/10.1007/BF00853190)
 - Ponty, Y., Mininni, P. D., Montgomery, D. C., Pinton, J.-F., Politano, H., Pouquet, A. (2005). Numerical study of dynamo action at low magnetic Prandtl numbers. *Physical Review Letters*, 94, 164502. [doi:10.1103/PhysRevLett.94.164502](https://doi.org/10.1103/PhysRevLett.94.164502)
 - Ponty, Y., Laval, J.-P., Dubrulle, B., Daviaud, F., Pinton, J.-F. (2007). Subcritical dynamo bifurcation in the Taylor-Green flow. *Physical Review Letters*, 99, 224501. [doi:10.1103/PhysRevLett.99.224501](https://doi.org/10.1103/PhysRevLett.99.224501)
-- Pouquet, A., Rosenberg, D., Stawarz, J. E., Marino, R. (2019). Helicity dynamics, inverse and bi-directional cascades in fluid and magnetohydrodynamic turbulence: a brief review. *Earth and Space Science*. [arXiv:1807.03239](https://arxiv.org/abs/1807.03239)
+- Pouquet, A., Rosenberg, D., Stawarz, J. E., Marino, R. (2019). Helicity dynamics, inverse and bidirectional cascades in fluid and magnetohydrodynamic turbulence: a brief review. *Earth and Space Science*, 6(3), 351–369. [doi:10.1029/2018EA000432](https://doi.org/10.1029/2018EA000432) ; [arXiv:1807.03239](https://arxiv.org/abs/1807.03239)
 - Rädler, K.-H., Brandenburg, A. (2003). Contributions to the theory of a two-scale homogeneous dynamo experiment. *Physical Review E*, 67, 026401. [doi:10.1103/PhysRevE.67.026401](https://doi.org/10.1103/PhysRevE.67.026401)
 - Rincon, F. (2019). Dynamo theories. *Journal of Plasma Physics*, 85(4), 205850401. [doi:10.1017/S0022377819000539](https://doi.org/10.1017/S0022377819000539) ; [arXiv:1903.07829](https://arxiv.org/abs/1903.07829)
 - Roberts, G. O. (1972). Dynamo action of fluid motions with two-dimensional periodicity. *Philosophical Transactions of the Royal Society A*, 271(1216), 411–454. [doi:10.1098/rsta.1972.0015](https://doi.org/10.1098/rsta.1972.0015)

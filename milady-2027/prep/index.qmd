@@ -1,0 +1,93 @@
+---
+title: "Parcours de préparation"
+subtitle: "Huit modules, du niveau licence 1 au niveau M2 recherche"
+lang: fr
+format:
+  html:
+    theme: none
+    minimal: true
+    toc: false
+    anchor-sections: false
+    html-math-method:
+      method: katex
+      url: "https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js"
+    highlight-style: github
+    embed-resources: false
+    css: ../assets/paper.css
+    include-in-header:
+      - text: |
+          <meta name="color-scheme" content="light dark">
+          <script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    include-before-body:
+      - text: |
+          <a class="skip" href="#main">Aller au contenu</a>
+          <header class="topbar">
+            <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Sommaire</span></button>
+            <a class="brand" href="../index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+            <span class="tb-title" id="tb-title"></span>
+            <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Thème</span></button>
+          </header>
+          <div class="layout">
+          <nav class="sidetoc" id="sidetoc" aria-label="Sommaire"></nav>
+          <main class="paper" id="main">
+    include-after-body:
+      - text: |
+          </main>
+          </div>
+          <footer class="foot"><p><a href="../index.html">← Accueil</a> · <a href="../prep/index.html">Préparation</a> · <a href="../encadrants/index.html">Encadrants</a> · <a href="../rapport/index.html">Rapport de stage</a> · <a href="../these/index.html">Sujet de thèse</a> · <a href="../interactifs/index.html">Schémas interactifs</a> · <a href="../experiences/index.html">Expériences</a></p></footer>
+          <script defer src="../assets/theme.js"></script>
+---
+
+Ce parcours mène d'un niveau de licence 1 (analyse, algèbre linéaire, un peu de programmation) au niveau requis pour commencer le stage MilaDy : lire un article sur les modèles génératifs sous contraintes physiques, écrire et entraîner un modèle de flow matching conditionnel, et juger un champ MHD généré avec des critères physiques. Il compte **huit modules**, environ **215 heures** de travail et **121 exercices corrigés**.
+
+::: note
+[À propos]{.tag}
+Ces modules sont des notes indépendantes. Ils ne sont pas un cours officiel de l'ENPC, du LISN ou de l'Université Paris-Saclay. Chaque module donne ses sources ; les faits sur la recherche récente viennent de bases de faits vérifiées (dossier `specs/sources/` du dépôt).
+:::
+
+## Les huit modules {#modules}
+
+| Module | Niveau | Durée | Exercices | Ce qu'il apporte au stage |
+|---|---|---|---|---|
+| [1. Calcul vectoriel et analyse de Fourier](p1-calcul-vectoriel/index.html) | L1 → L2 | 20 h | 15 | divergence, rotationnel, potentiels, FFT, projection de Leray |
+| [2. Mécanique des fluides et turbulence](p2-mecanique-fluides/index.html) | L2 → M1 | 25 h | 15 | Navier–Stokes, bilans d'énergie, spectres, méthodes pseudo-spectrales |
+| [3. Électromagnétisme, MHD et effet dynamo](p3-mhd-dynamo/index.html) | L2 → M2 | 30 h | 14 | équation d'induction, $Rm$, dynamos de laboratoire, renversements |
+| [4. Systèmes dynamiques et mesures invariantes](p4-systemes-dynamiques/index.html) | L2 → M2 | 25 h | 15 | bifurcations, chaos, identités de stationnarité, formule de Rice |
+| [5. Probabilités, statistiques et transport optimal](p5-probabilites-transport/index.html) | L2 → M1 | 25 h | 15 | mesure image, KL et I-projection, distances entre lois, EDS |
+| [6. Apprentissage profond pour la physique](p6-apprentissage-profond/index.html) | L3 → M2 | 30 h | 16 | réseaux, POD et autoencodeurs, équivariance, PINNs et opérateurs |
+| [7. Modèles génératifs : diffusion et flow matching](p7-modeles-generatifs/index.html) | M1 → M2 | 30 h | 16 | diffusion, score, flow matching, conditionnement, FunDiff |
+| [8. Modèles génératifs sous contraintes physiques](p8-contraintes-physiques/index.html) | M2 → recherche | 30 h | 15 | taxonomie des contraintes, projections, pénalités, contraintes en loi |
+
+## Dans quel ordre {#ordre}
+
+Les modules 1 à 3 forment la branche **physique**, les modules 5 à 8 la branche **apprentissage** ; le module 4 relie les deux, car il explique pourquoi un état turbulent stationnaire est décrit par une loi de probabilité invariante.
+
+- **Physique** : 1 → 2 → 3. Le module 3 utilise les potentiels et la projection du module 1, et les bilans d'énergie du module 2.
+- **Pont** : 4, après 2 et 5. Il sert pour les renversements (module 3) et pour les contraintes en loi (module 8).
+- **Apprentissage** : 5 → 6 → 7 → 8. Le module 7 suppose la mesure image et l'équation de continuité du module 5 ; le module 8 suppose tous les autres.
+
+Un ordre de lecture linéaire qui respecte ces dépendances est 1, 2, 5, 3, 4, 6, 7, 8.
+
+## Un calendrier possible {#calendrier}
+
+Pour une arrivée en stage au printemps 2027, à raison d'environ 15 heures par semaine :
+
+| Semaines | Modules | Jalon |
+|---|---|---|
+| 1–2 | 1 | savoir projeter un champ périodique sur les champs à divergence nulle |
+| 3–4 | 2 | avoir fait tourner un solveur pseudo-spectral 2D et vérifié son bilan d'énergie |
+| 5–6 | 5 | savoir calculer une I-projection et une distance d'énergie |
+| 7–8 | 3 | savoir expliquer le seuil d'une dynamo cinématique et les renversements de VKS |
+| 9–10 | 4 | savoir vérifier une identité de stationnarité et la formule de Rice sur un modèle simple |
+| 11–12 | 6 | avoir comparé POD et autoencodeur sur des champs |
+| 13–14 | 7 | avoir entraîné un flow matching conditionnel |
+| 15 | 8 | avoir lu les cinq références de l'offre et refait une expérience du [rapport](../rapport/index.html) |
+
+## Comment travailler un module {#methode}
+
+Chaque module suit la même structure : objectifs, prérequis, plan de travail (séances, durées, niveaux de 1 à 3 qui ne redescendent jamais), chapitres avec définitions, théorèmes et démonstrations, code Python exécuté, exercices gradués ★ / ★★ / ★★★ avec solutions, lien avec le stage, lectures pour aller plus loin et sources.
+
+- Lisez un chapitre, puis faites les exercices indiqués dans son plan de travail, avant de lire la solution.
+- Exécutez chaque bloc de code et modifiez un paramètre : tous les blocs tournent en moins de 30 secondes sur un ordinateur portable.
+- Gardez une page de formules par module ; le module 8 suppose que vous savez les retrouver vite.
+- Les [schémas interactifs](../interactifs/index.html) illustrent cinq notions clés : flow matching, projection de Leray, contrainte en loi, renversements et dynamo ABC.

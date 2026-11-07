@@ -43,7 +43,7 @@ format:
 Ce module donne les outils d'apprentissage profond dont se servent les modèles génératifs du stage : les réseaux qui paramètrent un champ de vitesse de flot ou un débruiteur, les représentations réduites dans lesquelles on génère, et les mécanismes qui imposent une symétrie ou une contrainte physique. À la fin des trente heures prévues, vous saurez :
 
 1. écrire le risque empirique d'un problème supervisé, démontrer que le prédicteur optimal pour la perte quadratique est l'espérance conditionnelle, et démontrer la convergence linéaire de la descente de gradient pour une fonction fortement convexe et régulière ;
-2. dériver la rétropropagation à partir de la règle de la chaîne, la programmer à la main pour un petit réseau, et vérifier le résultat avec `torch.autograd` et par différences finies ;
+2. dériver la rétropropagation à partir de la règle de la chaîne, la programmer à la main pour un petit réseau, et vérifier le résultat avec `torch.autograd` et par différences finies, en choisissant le pas et la précision ;
 3. expliquer le rôle de l'initialisation (règle de He), de la normalisation (LayerNorm, GroupNorm), des connexions résiduelles et du conditionnement FiLM, et énoncer le théorème d'approximation universelle en sachant ce qu'il ne dit pas ;
 4. démontrer qu'une convolution circulaire commute avec les translations, expliquer pourquoi le *padding* circulaire convient aux domaines périodiques et pourquoi un U-Net n'est équivariant que pour certaines translations ;
 5. écrire l'attention produit scalaire, démontrer l'équivariance par permutation de l'auto-attention, et construire un décodeur fonctionnel par attention croisée évaluable en des points arbitraires, comme dans FunDiff ;
@@ -75,7 +75,7 @@ Le niveau indique la difficulté : 1 pour les fondations, 2 pour le cœur du mod
 | 6 | 4 h | 2 | Chapitre 5, sections 5.1 à 5.4 : POD, Eckart–Young, POD et Fourier, autoencodeurs | 11, 13, 14 |
 | 7 | 3 h | 3 | Chapitre 5, sections 5.5 à 5.7 : VAE, β-VAE, autoencodeurs augmentés, β-VAE + transformeur | 4 |
 | 8 | 4 h | 3 | Chapitre 6 : PINNs, opérateurs neuronaux, symétrisation, contraintes dures par construction | 12, 15, 16 |
-| 9 | 2 h | 3 | Chapitre 7 : pratique de PyTorch sur CPU, reprise de tous les blocs de code | — |
+| 9 | 2 h | 3 | Chapitre 7 : pratique de PyTorch sur CPU, vérification des gradients en double précision, reprise de tous les blocs de code | — |
 | **Total** | **30 h** | | 7 chapitres | 16 exercices |
 
 Chaque séance se termine par les exercices indiqués, à chercher avant de lire leur solution. Les schémas interactifs de la page se manipulent dans le navigateur ; les blocs de code se recopient, s'exécutent, puis se modifient.
@@ -164,7 +164,7 @@ $$
 
 ::: ex
 [Exemple 1.7 — Ce que coûte un mauvais conditionnement]{.tag}
-Pour diviser l'excès de risque par $10^6$, il faut $(1 - 1/\kappa)^k \leq 10^{-6}$, soit environ $k \geq \kappa \ln(10^6) \approx 13{,}8\,\kappa$ itérations. Avec $\kappa = 100$, cela fait environ 1 400 itérations ; avec $\kappa = 10^4$, environ 140 000. En pratique, les pertes des réseaux profonds sont mal conditionnées, ce qui motive le momentum et Adam. Le bloc de code de la section 1.3 vérifie ce comportement sur une régression linéaire de conditionnement $\kappa \approx 100$ : après 300 pas de taille $1/L$, l'excès de risque n'a été divisé que par $e^{300/100} \approx 20$ environ.
+Pour diviser l'excès de risque par $10^6$, il faut $(1 - 1/\kappa)^k \leq 10^{-6}$, soit environ $k \geq \kappa \ln(10^6) \approx 13{,}8\,\kappa$ itérations. Avec $\kappa = 100$, cela fait environ 1 400 itérations ; avec $\kappa = 10^4$, environ 140 000. En pratique, les pertes des réseaux profonds sont mal conditionnées, ce qui motive le momentum et Adam. Le bloc de code de la section 1.3 reprend une régression linéaire de conditionnement $\kappa \approx 100$. Après 300 pas de taille $1/L$, le théorème ne garantit qu'une division de l'excès de risque par $(1 - 1/\kappa)^{-300} \approx e^{3} \approx 20$. On observe beaucoup mieux (l'excès passe de 1,9 à $3{,}3\times 10^{-6}$), car l'essentiel de l'excès initial est porté par les directions raides, qui convergent vite. La borne décrit le pire cas, où tout l'excès serait porté par la direction la plus plate ; c'est la composante restante sur cette direction qui limite la précision finale.
 :::
 
 ### 1.3 Gradient stochastique, momentum et Adam
@@ -661,7 +661,7 @@ où $\mathbf{s}$ et $\mathbf{t}$ sont de petits réseaux.
 
 ::: note
 [Remarque 2.12 — Dans le dépôt]{.tag}
-Le petit U-Net de `experiences/unet.py` combine ces trois ingrédients : blocs résiduels, GroupNorm à 8 groupes, et modulation FiLM par un plongement sinusoïdal du temps $t$ et du paramètre physique. C'est la forme standard d'un réseau conditionnel pour la génération de champs paramétriques.
+Le petit U-Net de `experiences/unet.py` combine ces trois ingrédients : blocs résiduels, GroupNorm à 8 groupes, et modulation FiLM par un plongement sinusoïdal du temps $t$ et du paramètre physique. C'est la forme standard d'un réseau conditionnel pour la génération de champs paramétriques. Précisons ce qui est mesuré dans le dépôt : ce U-Net y est fourni, mais les résultats rapportés des expériences E1 et E2 utilisent le MLP `MLPField`, car E2 génère des coefficients de Fourier et non des champs sur grille (section 5.2).
 :::
 
 :::: recap
@@ -924,7 +924,7 @@ with torch.no_grad():
 # translation 8 : sortie 0.0e+00, goulot (meilleure translation) 0.0e+00
 ```
 
-![Erreur relative d'équivariance $\|U(T_s x) - T_s U(x)\| / \|U(x)\|$ du U-Net à deux sous-échantillonnages, en fonction de la translation $s$ (en pas de grille). Elle est exactement nulle pour les multiples de 4 et de l'ordre de 20 à 35 % sinon, à l'initialisation. Graphique produit par le script [`figures_p6.py`](figures_p6.py) du module, avec les mêmes réglages que le bloc de code.](fig-unet-equiv.png){width="100%" fig-alt="Diagramme en barres : erreur relative d'équivariance du U-Net pour des translations de 0 à 16 pas de grille. Les barres valent environ 0,35 pour les translations impaires, 0,17 pour les translations paires non multiples de 4, et zéro exactement pour 0, 4, 8, 12 et 16."}
+![Erreur relative d'équivariance $\|U(T_s x) - T_s U(x)\| / \|U(x)\|$ du U-Net à deux sous-échantillonnages, en fonction de la translation $s$ (en pas de grille). Elle est exactement nulle pour les multiples de 4, et vaut à l'initialisation environ 17 % pour les autres translations paires et 35 % pour les translations impaires. Graphique produit par le script [`figures_p6.py`](figures_p6.py) du module, avec les mêmes réglages que le bloc de code.](fig-unet-equiv.png){width="100%" fig-alt="Diagramme en barres : erreur relative d'équivariance du U-Net pour des translations de 0 à 16 pas de grille. Les barres valent environ 0,35 pour les translations impaires, 0,17 pour les translations paires non multiples de 4, et zéro exactement pour 0, 4, 8, 12 et 16."}
 
 En pratique, on récupère une équivariance approchée par augmentation de données (translations aléatoires des exemples d'entraînement), ou exacte en symétrisant le réseau sur les translations (chapitre 6), au prix de $2^{2L}$ évaluations en 2D.
 
@@ -1253,7 +1253,7 @@ Les colonnes de $Y$ appartiennent à un sous-espace de dimension $r$ (on complè
 
 ::: note
 [Remarque 5.4 — Méthode des instantanés et produit scalaire]{.tag}
-Quand $D \gg M$ (un champ 3D, quelques milliers d'instantanés), on diagonalise plutôt la petite matrice $X^\top X \in \mathbb{R}^{M\times M}$ : si $X^\top X\mathbf{v}_i = \sigma_i^2\mathbf{v}_i$, alors $\mathbf{u}_i = X\mathbf{v}_i/\sigma_i$ (méthode des instantanés de Sirovich, 1987). Sur une grille non uniforme ou pour plusieurs champs, on remplace le produit scalaire euclidien par $\langle\mathbf{f}, \mathbf{g}\rangle_W = \mathbf{f}^\top W\mathbf{g}$, avec $W$ diagonale des poids de quadrature, et l'on décompose $W^{1/2}X$. Pour la MHD, avec $\mathbf{B}$ en unités d'Alfvén, la norme naturelle est celle de l'énergie totale $\frac12\langle|\mathbf{u}|^2 + |\mathbf{B}|^2\rangle$. Bousquet et al. (2026) appliquent ainsi la POD à 2 000 instantanés de vitesse et de champ magnétique de simulations de l'expérience VKS : quatre modes axisymétriques dominent, dont un dipôle et un quadrupôle.
+Quand $D \gg M$ (un champ 3D, quelques milliers d'instantanés), on diagonalise plutôt la petite matrice $X^\top X \in \mathbb{R}^{M\times M}$ : si $X^\top X\mathbf{v}_i = \sigma_i^2\mathbf{v}_i$, alors $\mathbf{u}_i = X\mathbf{v}_i/\sigma_i$ (méthode des instantanés de Sirovich, 1987). Sur une grille non uniforme ou pour plusieurs champs, on remplace le produit scalaire euclidien par $\langle\mathbf{f}, \mathbf{g}\rangle_W = \mathbf{f}^\top W\mathbf{g}$, avec $W$ diagonale des poids de quadrature, et l'on décompose $W^{1/2}X$. Pour la MHD, avec $\mathbf{B}$ en unités d'Alfvén, la norme naturelle est celle de l'énergie totale $\frac12\langle|\mathbf{u}|^2 + |\mathbf{B}|^2\rangle$. Bousquet et al. (2026) appliquent la POD à 2 000 instantanés de vitesse et de champ magnétique de simulations de l'expérience VKS : quatre modes axisymétriques dominent, dont un dipôle et un quadrupôle.
 :::
 
 Le bloc suivant vérifie le théorème d'Eckart–Young sur une matrice aléatoire et compare la troncature de la SVD à une projection sur un sous-espace quelconque de même dimension.
@@ -1603,7 +1603,7 @@ Fukami et Taira (2023) appliquent cette idée à des interactions extrêmes entr
 
 ### 5.7 β-VAE et transformeur pour un modèle réduit
 
-Solera-Rico et al. (2024) construisent un modèle d'ordre réduit en deux étages : un β-VAE compresse les instantanés d'un écoulement 2D autour de deux plaques planes colinéaires, puis un transformeur prédit l'évolution temporelle des latents à partir d'une fenêtre de 64 pas passés. D'après la prépublication (arXiv:2304.03571v2 ; la version publiée peut différer légèrement), dans le cas chaotique à $Re = 100$, avec $\beta = 0{,}05$ et 20 variables latentes, le β-VAE reconstruit 89,8 % de l'énergie sur les données d'entraînement et 80,1 % sur les données de test, contre 64,4 % pour 20 modes POD ; il faut 69 modes POD pour égaler le β-VAE. Le modèle complet (β-VAE + transformeur) reproduit 78,1 % de l'énergie un temps convectif après le dernier instantané connu et 64,6 % dix temps convectifs après, sur des données non vues. La régularisation $\beta$ rend les latents presque décorrélés, ce qui en facilite l'interprétation.
+Solera-Rico et al. (2024) construisent un modèle d'ordre réduit en deux étages : un β-VAE compresse les instantanés d'un écoulement 2D autour de deux plaques planes colinéaires, puis un transformeur prédit l'évolution temporelle des latents à partir d'une fenêtre de 64 pas passés. D'après la version publiée (chiffres identiques dans la prépublication arXiv:2304.03571v2), dans le cas chaotique à $Re = 100$, avec $\beta = 0{,}05$ et 20 variables latentes, le β-VAE reconstruit 89,8 % de l'énergie sur les données d'entraînement et 80,1 % sur les données de test, contre 64,4 % pour 20 modes POD ; il faut 69 modes POD pour égaler le β-VAE. Le modèle complet (β-VAE + transformeur) reproduit 78,1 % de l'énergie un temps convectif après le dernier instantané connu et 64,6 % dix temps convectifs après, sur des données non vues. La régularisation $\beta$ rend les latents presque décorrélés, ce qui en facilite l'interprétation.
 
 ::: ex
 [Exemple 5.17 — Lire ces chiffres]{.tag}
@@ -2066,7 +2066,7 @@ print("gradcheck :", torch.autograd.gradcheck(f, (torch.randn(3, 4, dtype=torch.
 # gradcheck : True
 ```
 
-Le réseau interpole très bien (1 % d'erreur pour des paramètres non vus dans l'intervalle) mais extrapole très mal (74 %) : rien ne lui apprend la forme de la famille hors de l'intervalle d'entraînement. C'est un point central pour un générateur paramétrique : la qualité aux paramètres non vus doit être mesurée séparément en interpolation et en extrapolation, et une contrainte physique imposée à tout $\boldsymbol\lambda$, y compris sans données, est l'un des rares leviers pour l'extrapolation (c'est l'objet du volet « en loi » de l'expérience E2, voir le [rapport](../../rapport/index.html#e2)).
+Le réseau interpole très bien (1 % d'erreur pour des paramètres non vus dans l'intervalle) mais extrapole très mal (74 %) : rien ne lui apprend la forme de la famille hors de l'intervalle d'entraînement. C'est un point central pour un générateur paramétrique : la qualité aux paramètres non vus doit être mesurée séparément en interpolation et en extrapolation, et une contrainte physique imposée à tout $\boldsymbol\lambda$, y compris sans données, est l'un des rares leviers pour l'extrapolation. C'est l'idée de la contrainte « en loi » du bilan d'énergie dans l'expérience E2 : la perte de stationnarité y est imposée à toutes les valeurs de $\eta$, y compris celles sans données (voir le [rapport](../../rapport/index.html#e2) pour les résultats).
 
 ### 7.3 Spécificités du calcul sur CPU
 
@@ -2078,7 +2078,62 @@ Le réseau interpole très bien (1 % d'erreur pour des paramètres non vus dans 
 | Reproductibilité | `torch.manual_seed`, `np.random.default_rng(seed)`, un seul fil | Les résultats deviennent identiques d'une exécution à l'autre sur la même machine. |
 | Mesure du temps | `time.time()` autour de la boucle, sans les impressions | Les impressions et les évaluations peuvent coûter autant que l'entraînement. |
 
-### 7.4 Déboguer un entraînement
+### 7.4 Vérifier un gradient : différences finies et précision
+
+Les chapitres 1 et 6 recommandent de vérifier toute dérivée écrite à la main par différences finies, en double précision. Cette section justifie ce réglage par un calcul d'erreur élémentaire, qui sert aussi à choisir le pas.
+
+::: def
+[Définition 7.1 — Précision machine]{.tag}
+La **précision machine** $\varepsilon_{\mathrm{mach}}$ d'un format flottant est l'écart entre 1 et le plus petit flottant strictement supérieur à 1 : $2^{-23} \approx 1{,}19\times 10^{-7}$ en simple précision (`float32`) et $2^{-52} \approx 2{,}22\times 10^{-16}$ en double précision (`float64`). Une opération élémentaire correctement arrondie commet une erreur relative d'au plus $\varepsilon_{\mathrm{mach}}/2$ ; une fonction usuelle comme $\sin$ ou $\tanh$ est évaluée avec une erreur relative de quelques $\varepsilon_{\mathrm{mach}}$.
+:::
+
+:::: prop
+[Proposition 7.2 — Pas optimal des différences finies centrées]{.tag}
+Soit $f$ de classe $C^3$ au voisinage de $x$, et $\tilde f$ sa version calculée, avec $|\tilde f(y) - f(y)| \leq \varepsilon F$ pour $|y - x| \leq h$, où $F = \sup|f|$ sur cet intervalle. Notons $M_3 = \sup|f'''|$ sur le même intervalle et $D_h = \big(\tilde f(x + h) - \tilde f(x - h)\big)/(2h)$. Alors
+
+$$
+\left|D_h - f'(x)\right| \leq \frac{M_3\,h^2}{6} + \frac{\varepsilon F}{h}.
+$$
+
+Ce majorant est minimal pour $h^\star = (3\varepsilon F/M_3)^{1/3}$, où il vaut $\frac{3}{2}\,\varepsilon F/h^\star$, c'est-à-dire une quantité d'ordre $\varepsilon^{2/3}$.
+
+::: proof
+*Troncature.* La formule de Taylor avec reste de Lagrange donne $f(x \pm h) = f(x) \pm hf'(x) + \frac{h^2}{2}f''(x) \pm \frac{h^3}{6}f'''(\xi_\pm)$ avec $\xi_\pm$ entre $x$ et $x \pm h$. En soustrayant et en divisant par $2h$, les termes pairs disparaissent : $\frac{f(x + h) - f(x - h)}{2h} - f'(x) = \frac{h^2}{12}\big(f'''(\xi_+) + f'''(\xi_-)\big)$, de valeur absolue au plus $M_3h^2/6$.
+
+*Arrondi.* La différence entre $D_h$ et le quotient exact vaut $\big[(\tilde f - f)(x + h) - (\tilde f - f)(x - h)\big]/(2h)$, de valeur absolue au plus $2\varepsilon F/(2h) = \varepsilon F/h$. L'inégalité triangulaire donne le majorant.
+
+*Optimisation.* La fonction $g(h) = ah^2 + b/h$, avec $a = M_3/6$ et $b = \varepsilon F$, a pour dérivée $2ah - b/h^2$, nulle en $h^{\star 3} = b/(2a) = 3\varepsilon F/M_3$. En ce point, $ah^{\star 2} = b/(2h^\star)$, donc $g(h^\star) = \frac{3}{2}\,b/h^\star$. [∎]{.qed}
+:::
+::::
+
+::: ex
+[Exemple 7.3 — Simple contre double précision]{.tag}
+Pour $f = \sin$ en $x = 1$, on a $F \leq 1$ et $M_3 \leq 1$. En simple précision, avec $\varepsilon \approx \varepsilon_{\mathrm{mach}} = 1{,}19\times 10^{-7}$, le pas optimal vaut $h^\star \approx (3{,}6\times 10^{-7})^{1/3} \approx 7\times 10^{-3}$ et l'erreur minimale est de l'ordre de $\frac32\times 1{,}19\times 10^{-7}/(7\times 10^{-3}) \approx 2{,}5\times 10^{-5}$. En double précision, $h^\star \approx 9\times 10^{-6}$ et l'erreur minimale tombe à environ $4\times 10^{-11}$. Une erreur de programmation qui fausse un gradient de $10^{-6}$ en valeur relative est donc invisible en simple précision et évidente en double précision. Le pas $h = 10^{-6}$, raisonnable en double précision, peut donner en simple précision une erreur allant jusqu'à $10^{-1}$ d'après le majorant ($4\times 10^{-3}$ dans le bloc ci-dessous).
+:::
+
+```python
+import math
+import torch
+
+torch.set_num_threads(1)
+
+# Dérivée de sin en x = 1 par différences finies centrées, en simple et en double précision
+steps = (1e-1, 1e-2, 1e-3, 1e-4, 1e-5, 1e-6, 1e-8)
+print("pas h    " + "".join(f"{h:>8.0e}" for h in steps) + "    h* prédit")
+for dtype in (torch.float32, torch.float64):
+    x = torch.tensor(1.0, dtype=dtype)
+    errs = [abs(((torch.sin(x + h) - torch.sin(x - h)) / (2 * h)).item() - math.cos(1.0)) for h in steps]
+    h_star = (3 * torch.finfo(dtype).eps) ** (1 / 3)      # proposition 7.2 avec F = M3 = 1
+    print(f"{str(dtype)[6:]:<9}" + "".join(f"{e:>8.0e}" for e in errs) + f"    {h_star:.0e}")
+# sortie :
+# pas h       1e-01   1e-02   1e-03   1e-04   1e-05   1e-06   1e-08    h* prédit
+# float32     9e-04   7e-06   1e-05   1e-05   9e-04   4e-03   5e-01    7e-03
+# float64     9e-04   9e-06   9e-08   9e-10   1e-11   3e-11   3e-09    9e-06
+```
+
+Les deux lignes ont la forme en V prévue par la proposition 7.2 : à gauche, l'erreur de troncature décroît comme $h^2$ (elle est la même dans les deux formats tant que l'arrondi reste négligeable) ; à droite, l'erreur d'arrondi croît comme $1/h$. Le minimum se trouve bien près du pas $h^\star$ prédit, avec une erreur d'environ $10^{-5}$ en simple précision et $10^{-11}$ en double précision. C'est la raison pour laquelle `torch.autograd.gradcheck` exige des tenseurs `float64`, et pour laquelle le bloc de rétropropagation du chapitre 1 utilise $h = 10^{-6}$ en double précision.
+
+### 7.5 Déboguer un entraînement
 
 ::: key
 [À retenir — liste de vérification]{.tag}
@@ -2098,6 +2153,7 @@ Ce qu'il faut retenir — chapitre 7
 - Tenseurs, `autograd`, modules et optimiseurs suffisent à tout ce module ; `create_graph=True` permet de dériver un gradient (résidus d'EDP, rotationnels).
 - Une boucle d'entraînement sérieuse normalise, écrête, programme le pas, évalue sans gradient et distingue interpolation et extrapolation en paramètre.
 - Sur CPU : un fil sur machine partagée, `float64` pour les vérifications, gros lots pour amortir le surcoût de Python.
+- Une différence finie centrée a une erreur $M_3h^2/6 + \varepsilon F/h$, minimale pour $h^\star \sim \varepsilon^{1/3}$ : environ $10^{-5}$ d'erreur au mieux en `float32`, $10^{-11}$ en `float64`. On vérifie donc les gradients en double précision.
 ::::
 
 ## Exercices {#exercices}

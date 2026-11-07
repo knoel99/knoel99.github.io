@@ -25,7 +25,7 @@
  *    (Rm_a, λ_a), (Rm_b, λ_b) de signes opposés :
  *        Rm_c = Rm_a + (Rm_b − Rm_a) (−λ_a) / (λ_b − λ_a).
  *    Les zones ombrées sont les intervalles où la courbe affine par morceaux vérifie λ > 0.
- *    Valeurs publiées : 8,9 < Rm < 17,5 puis Rm > ≈ 27 (Galloway & Frisch 1986 ; Dorch 2000).
+ *    Valeurs publiées : 8,9 < Rm < 17,5 puis Rm > ≈ 27 (Galloway & Frisch 1986).
  *
  * 4. Mode exact de référence (courbe −1/Rm) : u est un champ de Beltrami, ∇×u = u
  *    (∇×u = (C cos y + A sin z, A cos z + B sin x, B cos x + C sin y) = u), et chaque composante
@@ -33,7 +33,7 @@
  *        ∂B/∂t = −η B,   λ = −η = −1/Rm   exactement.
  *    Le taux dominant vérifie donc λ(Rm) ≥ −1/Rm (λ → −1/Rm quand Rm → 0, diffusion du mode |k| = 1).
  *
- * 5. Carte : coupe z = 0 (indice i_z = 0) du champ final B(t = 150), dominé par le mode propre de plus
+ * 5. Carte : coupe z = 0 (indice i_z = 0) du champ final B(t = 150), qui approche le mode propre de plus
  *    grande partie réelle (le moins amorti si λ < 0), normalisé par
  *        B_rms = ( ⟨|B|²⟩_volume )^{1/2}  (= 1 par construction),
  *    valeurs |B|/B_rms, Bx/B_rms, By/B_rms aux points de grille x_i = 2π i/32, y_j = 2π j/32
@@ -76,7 +76,7 @@
   /* ---------- textes ---------- */
   var TXT = {
     fr: {
-      title: "Dynamo cinématique de l'écoulement ABC (A = B = C = 1) : taux de croissance λ(Rm) et structure du champ",
+      title: "Dynamo cinématique ABC (A = B = C = 1) : taux de croissance λ(Rm) et carte de |B|",
       cursor: "Point lu", cursorAria: "Point de la courbe λ(Rm) lu par le curseur",
       modes: "Carte du mode à", modesAria: "Rm du mode affiché dans la carte (coupe z = 0)",
       view: "Axe λ", zoom: "zoom près de 0", full: "complet", viewAria: "Échelle de l'axe λ",
@@ -110,11 +110,11 @@
         "λ = pente de ln‖B‖ sur la seconde moitié de t ∈ [0 ; 150] (pseudo-spectral 32³, désaliasage 2/3, RK4 à facteur intégrant, " +
         "dt = 0,05 ; champ moyen k = 0 retiré) ; carrés : contrôle en 48³. Zones vertes : λ > 0, bornes interpolées linéairement. " +
         "Fenêtres attendues ≈ 8,9 < Rm < 17,5 puis Rm > ≈ 27 (Galloway & Frisch 1986). Comme ∇×u = u, B = u est un mode exact " +
-        "de taux −1/Rm, donc λ ≥ −1/Rm (vue « complet »). Carte : champ final normalisé (B_rms = 1 sur le volume), dominé par le " +
-        "mode de plus grand λ ; à Rm = 8 et 20 (λ < 0), c'est le mode le moins amorti. Survolez la carte pour lire |B| et (Bx, By)."
+        "de taux −1/Rm, donc λ ≥ −1/Rm (vue « complet »). Carte : champ final (t = 150) normalisé (B_rms = 1 sur le volume), qui " +
+        "approche le mode propre de plus grand λ ; à Rm = 8 et 20 (λ < 0), c'est le mode le moins amorti. Survolez la carte pour lire |B| et (Bx, By)."
     },
     en: {
-      title: "Kinematic dynamo of the ABC flow (A = B = C = 1): growth rate λ(Rm) and field structure",
+      title: "Kinematic ABC dynamo (A = B = C = 1): growth rate λ(Rm) and map of |B|",
       cursor: "Point read", cursorAria: "Point of the λ(Rm) curve read by the cursor",
       modes: "Map of the mode at", modesAria: "Rm of the mode shown in the map (slice z = 0)",
       view: "λ axis", zoom: "zoom near 0", full: "full", viewAria: "Scale of the λ axis",
@@ -148,8 +148,8 @@
         "λ = slope of ln‖B‖ over the second half of t ∈ [0, 150] (pseudo-spectral 32³, 2/3 dealiasing, integrating-factor RK4, " +
         "dt = 0.05; mean field k = 0 removed); squares: 48³ check. Green zones: λ > 0, edges linearly interpolated. " +
         "Expected windows ≈ 8.9 < Rm < 17.5, then Rm > ≈ 27 (Galloway & Frisch 1986). Since ∇×u = u, B = u is an exact mode " +
-        "with rate −1/Rm, hence λ ≥ −1/Rm (“full” view). Map: final normalised field (B_rms = 1 over the volume), dominated by " +
-        "the mode with the largest λ; at Rm = 8 and 20 (λ < 0) it is the least damped mode. Hover over the map to read |B| and (Bx, By)."
+        "with rate −1/Rm, hence λ ≥ −1/Rm (“full” view). Map: final field (t = 150) normalised (B_rms = 1 over the volume), which " +
+        "approaches the eigenmode with the largest λ; at Rm = 8 and 20 (λ < 0) it is the least damped mode. Hover over the map to read |B| and (Bx, By)."
     }
   };
 
