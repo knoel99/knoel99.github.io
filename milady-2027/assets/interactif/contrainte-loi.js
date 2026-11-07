@@ -104,18 +104,19 @@
   /* ---------- textes ---------- */
   var TXT = {
     fr: {
-      title: "Contrainte en loi ou par échantillon : le bilan d'énergie moyen ⟨dE/dt⟩ = 0",
+      title: "Contrainte en loi ou par échantillon : le bilan d'énergie moyen ⟨dE/dt⟩\u00a0=\u00a00",
       bLab: "biais b", sLab: "largeur s", nLab: "N", cLab: "seuil r<sub>c</sub>",
       bName: "Biais du modèle b : décalage de la moyenne de q",
       sName: "Largeur du modèle s : dilatation de q autour de 0",
       nName: "Nombre N d'échantillons tirés du modèle",
-      cName: "Seuil r_c : le modèle tronqué ne produit jamais r ≥ r_c",
-      trunc: "support manquant", truncName: "Support manquant : le modèle n'a pas la queue droite de la vraie loi (r ≥ r_c)",
+      cName: "Seuil rc : le modèle tronqué ne produit jamais r ≥ rc",
+      trunc: "support manquant", truncName: "Support manquant : le modèle n'a pas la queue droite de la vraie loi (r ≥ rc)",
       redraw: "Nouveau tirage", redrawTip: "Nouvelle graine pour les N tirages du modèle",
       play: "Animer b", pause: "Pause", playTip: "Fait varier le biais b entre −1 et 1, en boucle",
       panelA: "(a) Vérité μ et modèle q", panelAs: "(a) μ et q",
       panelB: "(b) Projection par échantillon : chaque r ← 0", panelBs: "(b) Projection r ← 0",
       panelC: "(c) Inclinaison exponentielle : poids w ∝ exp(βr)", panelCs: "(c) Inclinaison w ∝ exp(βr)",
+      panelAt: "(a) μ et q", panelBt: "(b) Projection", panelCt: "(c) Inclinaison",
       legTruth: "vérité μ (densité exacte)", legQ: "modèle q", legQd: "q avant correction",
       legProj: "projection : Dirac en 0", legTilt: "inclinaison ν*", legMiss: "zone où q n'a aucune masse",
       xAxis: "r = dE/dt = P − ε (unités arbitraires)", yAxis: "densité",
@@ -129,46 +130,47 @@
         "(courbe) et histogramme des N échantillons du modèle q. (b) projection par échantillon : toute la masse " +
         "en r = 0 (flèche, Dirac). (c) histogramme pondéré de l'inclinaison exponentielle, avec le contour de q " +
         "et la densité de μ. Les valeurs numériques sont données sous la figure.",
-      lTruth: function (sd) { return "<b>Vérité μ</b> : moyenne 0 ; écart-type " + sd + "."; },
+      lTruth: function (sd) { return "<b>Vérité μ</b>\u00a0: moyenne 0\u00a0; écart-type " + sd + "."; },
       lModel: function (n, seed, m, sd, w) {
-        return "<b>Modèle q</b> (N = " + n + ", graine " + seed + ") : moyenne " + m + " ; écart-type " + sd +
-          " ; W₁(q, μ) = " + w + ".";
+        return "<b>Modèle q</b> (N\u00a0=\u00a0" + n + ", graine " + seed + ")\u00a0: moyenne " + m + "\u00a0; écart-type " + sd +
+          "\u00a0; W₁(q,\u00a0μ)\u00a0=\u00a0" + w + ".";
       },
       lProj: function (w) {
-        return "<b>Projection r ← 0</b> : moyenne 0 ; écart-type 0 ; W₁ = E<sub>μ</sub>|r| = " + w + " ; KL(δ₀ ‖ q) = ∞.";
+        return "<b>Projection r ← 0</b>\u00a0: moyenne 0\u00a0; écart-type 0\u00a0; W₁\u00a0=\u00a0E<sub>μ</sub>|r|\u00a0=\u00a0" + w + "\u00a0; KL(δ₀\u00a0‖\u00a0q)\u00a0=\u00a0∞.";
       },
       lTilt: function (beta, it, m, sd, w, kl, ess, essN) {
-        return "<b>Inclinaison</b> : β = " + beta + " (" + it + " itér. de Newton) ; moyenne " + m + " ; écart-type " + sd +
-          " ; W₁ = " + w + " ; KL(ν* ‖ q) = " + kl + " nat ; ESS = " + ess + " (ESS/N = " + essN + ").";
+        return "<b>Inclinaison</b>\u00a0: β\u00a0=\u00a0" + beta + " (" + it + " itér. de Newton)\u00a0; moyenne " + m + "\u00a0; écart-type " + sd +
+          "\u00a0; W₁\u00a0=\u00a0" + w + "\u00a0; KL(ν*\u00a0‖\u00a0q)\u00a0=\u00a0" + kl + " nat\u00a0; ESS\u00a0=\u00a0" + ess + " (ESS/N\u00a0=\u00a0" + essN + ").";
       },
       lTiltNo: function (pos) {
-        return "<b>Inclinaison</b> : impossible, tous les r<sub>j</sub> sont " + (pos ? "≤ 0" : "≥ 0") +
-          " : aucun poids positif ne ramène la moyenne à 0.";
+        return "<b>Inclinaison</b>\u00a0: impossible, tous les r<sub>j</sub> sont " + (pos ? "≤ 0" : "≥ 0") +
+          "\u00a0: aucun poids positif ne ramène la moyenne à 0.";
       },
       lMiss: function (rc, p) {
-        return "<b>Support manquant</b> : q ne produit jamais r ≥ r<sub>c</sub> = " + rc + ", où μ met " + p +
-          " de sa masse ; aucun poids ne peut l'y créer.";
+        return "<b>Support manquant</b>\u00a0: q ne produit jamais r ≥ r<sub>c</sub>\u00a0=\u00a0" + rc + ", où μ met " + p +
+          " de sa masse\u00a0; aucun poids ne peut l'y créer.";
       },
       note: "La projection par échantillon met chaque tirage sur r = 0 : la moyenne est juste, mais l'écart-type tombe à 0, " +
-        "la loi obtenue (un Dirac) est étrangère à μ et son erreur W₁ = E_μ|r| ne dépend pas du modèle : un générateur parfait " +
+        "la loi obtenue (un Dirac) est étrangère à μ et son erreur W₁ = E<sub>μ</sub>|r| ne dépend pas du modèle : un générateur parfait " +
         "(b = 0, s = 1) la subit aussi (Corollaire 6). L'inclinaison n'impose que la moyenne, en déformant q le moins possible " +
-        "au sens de KL (Proposition 7). Elle ne crée pas de masse : avec « support manquant », la masse s'entasse sous r_c, " +
-        "l'ESS chute (impossible si r_c ≤ 0), W₁ peut dépasser celui de q et ne baisse pas quand N augmente. W₁ est calculé " +
+        "au sens de KL (Proposition 7). Elle ne crée pas de masse : avec « support manquant », la masse s'entasse sous r<sub>c</sub>, " +
+        "l'ESS chute (impossible si r<sub>c</sub> ≤ 0), W₁ peut dépasser celui de q et ne baisse pas quand N augmente. W₁ est calculé " +
         "exactement contre μ ; même pour q = μ, il reste de l'ordre de 1/√N (bruit d'échantillonnage)."
     },
     en: {
-      title: "Constraint on the law or on each sample: the mean energy balance ⟨dE/dt⟩ = 0",
+      title: "Constraint on the law or on each sample: the mean energy balance ⟨dE/dt⟩\u00a0=\u00a00",
       bLab: "bias b", sLab: "width s", nLab: "N", cLab: "cut-off r<sub>c</sub>",
       bName: "Model bias b: shift of the mean of q",
       sName: "Model width s: dilation of q about 0",
       nName: "Number N of samples drawn from the model",
-      cName: "Cut-off r_c: the truncated model never produces r ≥ r_c",
-      trunc: "missing support", truncName: "Missing support: the model lacks the right tail of the true law (r ≥ r_c)",
+      cName: "Cut-off rc: the truncated model never produces r ≥ rc",
+      trunc: "missing support", truncName: "Missing support: the model lacks the right tail of the true law (r ≥ rc)",
       redraw: "New draw", redrawTip: "New seed for the N model samples",
       play: "Animate b", pause: "Pause", playTip: "Sweeps the bias b between −1 and 1, in a loop",
       panelA: "(a) Truth μ and model q", panelAs: "(a) μ and q",
       panelB: "(b) Per-sample projection: every r ← 0", panelBs: "(b) Projection r ← 0",
       panelC: "(c) Exponential tilting: weights w ∝ exp(βr)", panelCs: "(c) Tilting w ∝ exp(βr)",
+      panelAt: "(a) μ and q", panelBt: "(b) Projection", panelCt: "(c) Tilting",
       legTruth: "truth μ (exact density)", legQ: "model q", legQd: "q before correction",
       legProj: "projection: Dirac at 0", legTilt: "tilted ν*", legMiss: "region where q has no mass",
       xAxis: "r = dE/dt = P − ε (arbitrary units)", yAxis: "density",
@@ -184,29 +186,29 @@
         "The numbers are given below the figure.",
       lTruth: function (sd) { return "<b>Truth μ</b>: mean 0; standard deviation " + sd + "."; },
       lModel: function (n, seed, m, sd, w) {
-        return "<b>Model q</b> (N = " + n + ", seed " + seed + "): mean " + m + "; standard deviation " + sd +
-          "; W₁(q, μ) = " + w + ".";
+        return "<b>Model q</b> (N\u00a0=\u00a0" + n + ", seed " + seed + "): mean " + m + "; standard deviation " + sd +
+          "; W₁(q,\u00a0μ)\u00a0=\u00a0" + w + ".";
       },
       lProj: function (w) {
-        return "<b>Projection r ← 0</b>: mean 0; standard deviation 0; W₁ = E<sub>μ</sub>|r| = " + w + "; KL(δ₀ ‖ q) = ∞.";
+        return "<b>Projection r ← 0</b>: mean 0; standard deviation 0; W₁\u00a0=\u00a0E<sub>μ</sub>|r|\u00a0=\u00a0" + w + "; KL(δ₀\u00a0‖\u00a0q)\u00a0=\u00a0∞.";
       },
       lTilt: function (beta, it, m, sd, w, kl, ess, essN) {
-        return "<b>Tilting</b>: β = " + beta + " (" + it + " Newton iter.); mean " + m + "; standard deviation " + sd +
-          "; W₁ = " + w + "; KL(ν* ‖ q) = " + kl + " nat; ESS = " + ess + " (ESS/N = " + essN + ").";
+        return "<b>Tilting</b>: β\u00a0=\u00a0" + beta + " (" + it + " Newton iter.); mean " + m + "; standard deviation " + sd +
+          "; W₁\u00a0=\u00a0" + w + "; KL(ν*\u00a0‖\u00a0q)\u00a0=\u00a0" + kl + " nat; ESS\u00a0=\u00a0" + ess + " (ESS/N\u00a0=\u00a0" + essN + ").";
       },
       lTiltNo: function (pos) {
         return "<b>Tilting</b>: impossible, all r<sub>j</sub> are " + (pos ? "≤ 0" : "≥ 0") +
           ": no positive weights can bring the mean back to 0.";
       },
       lMiss: function (rc, p) {
-        return "<b>Missing support</b>: q never produces r ≥ r<sub>c</sub> = " + rc + ", where μ puts " + p +
+        return "<b>Missing support</b>: q never produces r ≥ r<sub>c</sub>\u00a0=\u00a0" + rc + ", where μ puts " + p +
           " of its mass; no weights can create it there.";
       },
       note: "Per-sample projection puts every draw at r = 0: the mean is right, but the standard deviation drops to 0, " +
-        "the resulting law (a Dirac) is singular with respect to μ and its error W₁ = E_μ|r| does not depend on the model: " +
+        "the resulting law (a Dirac) is singular with respect to μ and its error W₁ = E<sub>μ</sub>|r| does not depend on the model: " +
         "a perfect generator (b = 0, s = 1) suffers it too (Corollary 6). Tilting only imposes the mean, distorting q as " +
         "little as possible in the KL sense (Proposition 7). It creates no mass: with “missing support”, the mass piles up " +
-        "below r_c, the ESS drops (impossible if r_c ≤ 0), W₁ can exceed that of q and does not decrease as N grows. " +
+        "below r<sub>c</sub>, the ESS drops (impossible if r<sub>c</sub> ≤ 0), W₁ can exceed that of q and does not decrease as N grows. " +
         "W₁ is computed exactly against μ; even for q = μ it stays of order 1/√N (sampling noise)."
     }
   };
@@ -463,7 +465,9 @@
     this.rl = [];
     for (var i = 0; i < 5; i++) { var s = mk("span"); s.style.display = "block"; ro.appendChild(s); this.rl.push(s); }
     el.appendChild(ro);
-    el.appendChild(mk("p", "widget-note", T.note));
+    var note = mk("p", "widget-note");
+    note.innerHTML = T.note;                    // texte fixe du dictionnaire (indices <sub>)
+    el.appendChild(note);
 
     /* état */
     this.b = B_DEF; this.s = S_DEF; this.nIdx = N_DEF; this.trunc = false; this.rc = C_DEF; this.seed = 1;
@@ -756,7 +760,7 @@
     this.drawLegend();
 
     var narrow = (p0.r - p0.l) < 330;
-    var titles = [[T.panelA, T.panelAs], [T.panelB, T.panelBs], [T.panelC, T.panelCs]];
+    var titles = [[T.panelA, T.panelAs, T.panelAt], [T.panelB, T.panelBs, T.panelBt], [T.panelC, T.panelCs, T.panelCt]];
     var t = this.tilt;
     var stats = [
       T.stA(fmt(lg, this.rawMean, 2), fmt(lg, this.rawW1, 2)),
@@ -767,12 +771,15 @@
       var p = L.panels[k];
       var Y = (function (pp) { return function (v) { return pp.b - Math.min(v, ymax) / ymax * (pp.b - pp.t); }; })(p);
       // en-tête : titre (long ou court) + statistique si la place suffit
-      var tx = narrow ? 4 : p.l, avail = p.r - tx;
-      var tl = this.textWidth(titles[k][0], fs + 1, "700"), ts = this.textWidth(titles[k][1], fs + 1, "700");
-      var stw = stats[k] ? this.textWidth(stats[k], fs) + 14 : 0, title, showSt = false;
-      if (tl + stw <= avail) { title = titles[k][0]; showSt = !!stw; }
-      else if (ts + stw <= avail) { title = titles[k][1]; showSt = !!stw; }
-      else title = tl <= avail ? titles[k][0] : titles[k][1];
+      var tx = narrow ? 4 : p.l, avail = p.r - tx, title = null, showSt = false, j;
+      var stw = stats[k] ? this.textWidth(stats[k], fs) + 14 : 0;
+      for (j = 0; j < 3 && !title; j++) {         // le titre le plus long qui laisse la place à la statistique
+        if (this.textWidth(titles[k][j], fs + 1, "700") + stw <= avail) { title = titles[k][j]; showSt = !!stw; }
+      }
+      for (j = 0; j < 3 && !title; j++) {         // sinon, le plus long qui tient seul
+        if (this.textWidth(titles[k][j], fs + 1, "700") <= avail) title = titles[k][j];
+      }
+      if (!title) title = titles[k][2];
       this.text(title, tx, p.t - 6, "left", C.ink, fs + 1, "700");
       if (showSt) this.text(stats[k], p.r, p.t - 6, "right", C.soft, fs);
 
@@ -871,7 +878,7 @@
     var c = this.ctx;
     c.strokeStyle = this.C.pal[3]; c.lineWidth = 1.2; c.globalAlpha = 0.9;
     c.beginPath();
-    for (var s = -h; s < w + h; s += 6) { c.moveTo(x + s, y + h); c.lineTo(x + s + h, y); }
+    for (var s = -h; s < w + h; s += 7) { c.moveTo(x + s, y + h); c.lineTo(x + s + h, y); }
     c.stroke();
     c.globalAlpha = 1;
   };
@@ -883,8 +890,8 @@
     c.fillRect(x, p.t, p.r - x, p.b - p.t);
     c.save();
     c.beginPath(); c.rect(x, p.t, p.r - x, p.b - p.t); c.clip();
-    c.globalAlpha = 0.55;
-    this.hatchRect(x - (x - p.l) % 6, p.t, p.r - x + 12, p.b - p.t);
+    c.globalAlpha = this.C.dark ? 0.32 : 0.5;
+    this.hatchRect(x - (x - p.l) % 7, p.t, p.r - x + 14, p.b - p.t);
     c.restore();
     c.strokeStyle = this.C.pal[3]; c.lineWidth = 1.5;
     c.beginPath(); c.moveTo(Math.round(x) + 0.5, p.t); c.lineTo(Math.round(x) + 0.5, p.b); c.stroke();

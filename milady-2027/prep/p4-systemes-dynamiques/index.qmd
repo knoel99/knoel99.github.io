@@ -68,9 +68,9 @@ Le niveau indique la difficulté : 1 pour les fondations, 2 pour le cœur du mod
 | 1 | 3 h | 1 | Chapitre 1 : équations autonomes, Cauchy–Lipschitz, Grönwall, flot, formule de Liouville, portraits de phase | 1, 2 |
 | 2 | 3 h | 1 | Chapitre 2 : points fixes, systèmes linéaires, linéarisation, fonctions de Lyapunov ; points fixes de Lorenz et de Gissinger | 3, 4 |
 | 3 | 4 h | 2 | Chapitre 3 : nœud-col, fourche, Hopf, symétrie $\mathbf{B} \mapsto -\mathbf{B}$, loi $\sqrt{R - R_c}$, imperfection | 5, 6, 7 |
-| 4 | 3,5 h | 2 | Chapitre 4 : Lorenz, région piège, exposants de Lyapunov, attracteurs étranges, crises | 8, 13 |
-| 5 | 3,5 h | 2 | Chapitre 5, sections 5.1 à 5.3 : mesures invariantes, Krylov–Bogoliubov, Birkhoff, mesure SRB, équation de Liouville | 9 |
-| 6 | 3,5 h | 3 | Chapitre 5, sections 5.4 à 5.6 : Fokker–Planck, forme faible stationnaire, bilan d'énergie, convexité et mesures ergodiques | 12, 15 |
+| 4 | 3,5 h | 2 | Chapitre 4 : Lorenz, région piège, exposants de Lyapunov, attracteurs étranges, crises | 13 |
+| 5 | 3,5 h | 2 | Chapitre 5, sections 5.1 à 5.4 : mesures invariantes, Krylov–Bogoliubov, Birkhoff, mesure SRB, équations de Liouville et de Fokker–Planck | 15 |
+| 6 | 3,5 h | 3 | Chapitre 5, sections 5.5 et 5.6 : forme faible stationnaire, bilan d'énergie, convexité et mesures ergodiques | 8, 9, 12 |
 | 7 | 2,5 h | 3 | Chapitre 6 : double puits, temps de premier passage, loi d'Arrhenius–Kramers, formule de Rice | 10, 11 |
 | 8 | 2 h | 3 | Chapitre 7 : le modèle de Gissinger, seuil des renversements, statistiques invariantes utiles au stage | 14 |
 | **Total** | **25 h** | | 7 chapitres | 15 exercices |
@@ -101,9 +101,9 @@ Une équation d'ordre deux comme celle du pendule, $\ddot\theta = -\sin\theta$, 
 
 ::: ex
 [Exemple 1.3 — Les trois systèmes qui reviennent dans ce module]{.tag}
-(a) L'**oscillateur amorti** $\ddot x + \gamma\dot x + x = 0$, soit $F(x, y) = (y, -x - \gamma y)$.
+*(a)* L'**oscillateur amorti** $\ddot x + \gamma\dot x + x = 0$, soit $F(x, y) = (y, -x - \gamma y)$.
 
-(b) Le **système de Lorenz** (1963), troncature à trois modes de la convection thermique :
+*(b)* Le **système de Lorenz** (1963), troncature à trois modes de la convection thermique :
 
 $$
 \dot x = s\,(y - x), \qquad \dot y = x\,(r - z) - y, \qquad \dot z = xy - b\,z ,
@@ -111,7 +111,7 @@ $$
 
 avec les valeurs classiques $s = 10$ (nombre de Prandtl, souvent noté $\sigma$ ; on réserve ici $\sigma$ au bruit), $b = 8/3$ et $r = 28$.
 
-(c) Le **modèle de Gissinger** (2012), modèle à trois modes des renversements du champ magnétique, avec le quadripôle $Q$, le dipôle $D$ et un mode de vitesse $V$ :
+*(c)* Le **modèle de Gissinger** (2012), modèle à trois modes des renversements du champ magnétique, avec le quadripôle $Q$, le dipôle $D$ et un mode de vitesse $V$ :
 
 $$
 \dot Q = \mu Q - V D, \qquad \dot D = -\nu D + V Q, \qquad \dot V = \Gamma - V + Q D .
@@ -731,7 +731,8 @@ Le schéma interactif suivant permet de déplacer $r$ (et $h$) et de voir, à ga
 <canvas id="wb-c1" role="img" aria-label="Graphe de f(x) en fonction de x pour la valeur choisie de r, avec les points fixes : disques pleins pour les points stables, cercles creux pour les points instables, et des flèches indiquant le sens du mouvement sur l'axe."></canvas>
 <canvas id="wb-c2" role="img" aria-label="Diagramme de bifurcation : position des points fixes en fonction de r, branches stables en trait continu, branches instables en pointillé, et une ligne verticale à la valeur choisie de r."></canvas>
 </div>
-<p class="widget-note"><span class="p4-key"><span class="p4-sw" style="background:var(--s1)"></span>stable (trait plein, disque plein)</span><span class="p4-key"><span class="p4-sw" style="border:2.5px solid var(--s2)"></span>instable (pointillé, cercle creux)</span> Déplacez <em>r</em> lentement à travers 0 et regardez les points fixes naître, s'échanger la stabilité ou disparaître. Avec la fourche imparfaite, le paramètre <em>h</em> brise la symétrie <em>x</em> ↦ −<em>x</em>.</p>
+<p class="widget-note"><span class="p4-key"><span class="p4-sw" style="background:var(--s1)"></span>stable (trait plein, disque plein)</span><span class="p4-key"><span class="p4-sw" style="border:2.5px solid var(--s2)"></span>instable (pointillé, cercle creux)</span></p>
+<p class="widget-note">Déplacez <em>r</em> lentement à travers 0 et regardez les points fixes naître, s'échanger la stabilité ou disparaître. Avec la fourche imparfaite, le paramètre <em>h</em> brise la symétrie <em>x</em> ↦ −<em>x</em>.</p>
 </div>
 ```
 
@@ -796,12 +797,12 @@ Admis ; voir Eckmann et Ruelle (1985), qui exposent aussi l'algorithme de calcul
 
 :::: prop
 [Proposition 4.4 — Somme des exposants, exposant nul]{.tag}
-(i) $\lambda_1 + \dots + \lambda_n = \lim_{t\to\infty}\frac1t\int_0^t \nabla\cdot F(\mathbf{x}(\tau))\,\mathrm{d}\tau$. Pour Lorenz, cette somme vaut $-(s + 1 + b) = -41/3$.
+*(i)* $\lambda_1 + \dots + \lambda_n = \lim_{t\to\infty}\frac1t\int_0^t \nabla\cdot F(\mathbf{x}(\tau))\,\mathrm{d}\tau$. Pour Lorenz, cette somme vaut $-(s + 1 + b) = -41/3$.
 
-(ii) Si la trajectoire est bornée et ne tend pas vers un point fixe, l'un des exposants est nul : celui de la direction du flot.
+*(ii)* Si la trajectoire est bornée et ne tend pas vers un point fixe, l'un des exposants est nul : celui de la direction du flot.
 
 ::: proof
-(i) La somme des $n$ exposants est le taux de croissance du volume d'un parallélépipède de dimension $n$, c'est-à-dire de $|\det D\Phi^t(\mathbf{x}_0)|$ (théorème 4.3), et la formule de Liouville (1.1) donne $\frac1t\ln\det D\Phi^t = \frac1t\int_0^t\nabla\cdot F$. (ii) En dérivant $\frac{\mathrm{d}}{\mathrm{d}t}F(\mathbf{x}(t)) = DF(\mathbf{x}(t))\,\dot{\mathbf{x}} = DF(\mathbf{x}(t))\,F(\mathbf{x}(t))$, on voit que $F(\mathbf{x}(t))$ est solution de l'équation variationnelle : $F(\mathbf{x}(t)) = D\Phi^t(\mathbf{x}_0)\,F(\mathbf{x}_0)$. Le long d'une trajectoire bornée qui ne tend pas vers un point fixe, $|F(\mathbf{x}(t))|$ reste borné et ne tend pas vers $0$, donc son taux de croissance exponentiel est nul. [∎]{.qed}
+*(i)* La somme des $n$ exposants est le taux de croissance du volume d'un parallélépipède de dimension $n$, c'est-à-dire de $|\det D\Phi^t(\mathbf{x}_0)|$ (théorème 4.3), et la formule de Liouville (1.1) donne $\frac1t\ln\det D\Phi^t = \frac1t\int_0^t\nabla\cdot F$. (ii) En dérivant $\frac{\mathrm{d}}{\mathrm{d}t}F(\mathbf{x}(t)) = DF(\mathbf{x}(t))\,\dot{\mathbf{x}} = DF(\mathbf{x}(t))\,F(\mathbf{x}(t))$, on voit que $F(\mathbf{x}(t))$ est solution de l'équation variationnelle : $F(\mathbf{x}(t)) = D\Phi^t(\mathbf{x}_0)\,F(\mathbf{x}_0)$. Le long d'une trajectoire bornée qui ne tend pas vers un point fixe, $|F(\mathbf{x}(t))|$ reste borné et ne tend pas vers $0$, donc son taux de croissance exponentiel est nul. [∎]{.qed}
 :::
 ::::
 
@@ -936,7 +937,7 @@ Une mesure de probabilité $\mu$ sur $\mathbb{R}^n$ est **invariante** par le fl
 
 ::: ex
 [Exemple 5.2 — Trois mesures invariantes]{.tag}
-(a) La masse de Dirac $\delta_{\mathbf{x}^*}$ en un point fixe. (b) Pour une orbite périodique $\mathbf{x}(t)$ de période $T$, la mesure $\frac1T\int_0^T\delta_{\mathbf{x}(t)}\,\mathrm{d}t$, qui charge chaque arc proportionnellement au temps passé : sa densité le long de la courbe est proportionnelle à $1/|F|$. (c) Pour Lorenz, la **mesure naturelle**, limite de l'histogramme d'une longue trajectoire typique.
+*(a)* La masse de Dirac $\delta_{\mathbf{x}^*}$ en un point fixe. (b) Pour une orbite périodique $\mathbf{x}(t)$ de période $T$, la mesure $\frac1T\int_0^T\delta_{\mathbf{x}(t)}\,\mathrm{d}t$, qui charge chaque arc proportionnellement au temps passé : sa densité le long de la courbe est proportionnelle à $1/|F|$. (c) Pour Lorenz, la **mesure naturelle**, limite de l'histogramme d'une longue trajectoire typique.
 :::
 
 :::: thm
@@ -1235,7 +1236,7 @@ La dernière partie du code précédent illustre exactement ce point à $\Gamma 
 
 ::: note
 [Remarque 5.17 — Deux conséquences pour un modèle génératif]{.tag}
-(i) Les Dirac aux points fixes vérifient aussi (5.1), puisque $F(\mathbf{x}^*) = \mathbf{0}$ annule $F\cdot\nabla\varphi$ : un modèle qui s'effondrerait sur $N_+$ satisferait parfaitement la contrainte. Les identités de stationnarité doivent donc être combinées à un terme d'attache aux données ; c'est aussi ce que remarquent les travaux qui apprennent des dynamiques à partir de mesures invariantes, où la non-unicité de ces mesures est explicitement signalée (Schiff et al., 2024). (ii) Avec un bruit non dégénéré, la loi stationnaire est unique ; si le système est symétrique, son image par $S$ est encore stationnaire, donc égale à elle-même : **le bruit choisit le mélange symétrique** $p = 1/2$. L'exercice 15 le vérifie sur le double puits, où toutes les particules partent du même puits et se répartissent pourtant à parts égales.
+*(i)* Les Dirac aux points fixes vérifient aussi (5.1), puisque $F(\mathbf{x}^*) = \mathbf{0}$ annule $F\cdot\nabla\varphi$ : un modèle qui s'effondrerait sur $N_+$ satisferait parfaitement la contrainte. Les identités de stationnarité doivent donc être combinées à un terme d'attache aux données ; c'est aussi ce que remarquent les travaux qui apprennent des dynamiques à partir de mesures invariantes, où la non-unicité de ces mesures est explicitement signalée (Schiff et al., 2024). (ii) Avec un bruit non dégénéré, la loi stationnaire est unique ; si le système est symétrique, son image par $S$ est encore stationnaire, donc égale à elle-même : **le bruit choisit le mélange symétrique** $p = 1/2$. L'exercice 15 le vérifie sur le double puits, où toutes les particules partent du même puits et se répartissent pourtant à parts égales.
 :::
 
 :::: recap
@@ -1390,7 +1391,8 @@ Le schéma interactif suivant reprend cette simulation dans votre navigateur : f
 <canvas id="wk-c1" role="img" aria-label="Trajectoire x(t) de la particule dans le double puits sur les 800 premières unités de temps."></canvas>
 <canvas id="wk-c2" role="img" aria-label="Histogramme des positions comparé à la densité stationnaire proportionnelle à exp(-2U/σ²)."></canvas>
 </div>
-<p class="widget-note"><span class="p4-key"><span class="p4-sw" style="background:var(--s1)"></span>simulation (Euler–Maruyama, pas 0,01, durée 10 000)</span><span class="p4-key"><span class="p4-sw" style="background:var(--s2)"></span>densité stationnaire ρ(x) ∝ exp(−2U(x)/σ²)</span> Le temps moyen de bascule d'un puits à l'autre est estimé par la durée totale divisée par le nombre de bascules. Quand σ diminue, il croît comme exp(2ΔU/σ²) : à σ = 0,30, il n'y a plus que quelques bascules et l'estimation devient imprécise.</p>
+<p class="widget-note"><span class="p4-key"><span class="p4-sw" style="background:var(--s1)"></span>simulation (Euler–Maruyama, pas 0,01, 4 particules × 10 000 unités de temps)</span><span class="p4-key"><span class="p4-sw" style="background:var(--s2)"></span>densité stationnaire ρ(x) ∝ exp(−2U(x)/σ²)</span></p>
+<p class="widget-note">Le temps moyen de bascule d'un puits à l'autre est estimé par la durée totale simulée divisée par le nombre de bascules ; l'incertitude relative vaut environ 1/√(nombre de bascules). Quand σ diminue, il croît comme exp(2ΔU/σ²) : à σ = 0,30, il n'y a plus qu'une trentaine de bascules et l'estimation devient imprécise.</p>
 </div>
 ```
 
@@ -1526,10 +1528,10 @@ avec $\mu = 0{,}119$ et $\nu = 0{,}1$ fixés et le forçage $\Gamma$ comme param
 
 :::: prop
 [Proposition 7.2 — Symétrie, dissipation, points fixes]{.tag}
-(i) Le système est équivariant sous $S : (Q, D, V) \mapsto (-Q, -D, V)$, l'image de $\mathbf{B} \mapsto -\mathbf{B}$. (ii) Sa divergence vaut $\mu - \nu - 1 = -0{,}981$ : il contracte les volumes. (iii) Pour $\mu = 0{,}119$, $\nu = 0{,}1$ et $\Gamma$ entre $0{,}8$ et $1$, ses points fixes sont $O = (0, 0, \Gamma)$, foyer faiblement instable, et $N_\pm$, cols-foyers instables ; les points $M_\pm$ n'existent pas.
+*(i)* Le système est équivariant sous $S : (Q, D, V) \mapsto (-Q, -D, V)$, l'image de $\mathbf{B} \mapsto -\mathbf{B}$. (ii) Sa divergence vaut $\mu - \nu - 1 = -0{,}981$ : il contracte les volumes. (iii) Pour $\mu = 0{,}119$, $\nu = 0{,}1$ et $\Gamma$ entre $0{,}8$ et $1$, ses points fixes sont $O = (0, 0, \Gamma)$, foyer faiblement instable, et $N_\pm$, cols-foyers instables ; les points $M_\pm$ n'existent pas.
 
 ::: proof
-(i) $F(-Q, -D, V) = \big({-\mu Q} + VD,\ \nu D - VQ,\ \Gamma - V + QD\big) = S\,F(Q, D, V)$. (ii) La trace de la jacobienne de l'exemple 2.7 vaut $\mu - \nu - 1$. (iii) Calcul de l'exemple 2.7 : en $O$, la partie réelle $(\mu - \nu)/2 = 0{,}0095$ est positive et le discriminant $(\mu + \nu)^2 - 4\Gamma^2$ est négatif dès que $\Gamma > 0{,}11$ ; $M_\pm$ exigerait $\sqrt{\mu\nu} \approx 0{,}109 > \Gamma$. Pour $N_\pm$ à $\Gamma = 0{,}9$, le code du chapitre 2 donne les valeurs propres $-1{,}17$ et $0{,}094 \pm 0{,}607\,i$ ; en relançant ce code pour $\Gamma = 0{,}80$ et $\Gamma = 1{,}00$, on obtient $0{,}088 \pm 0{,}579\,i$ et $0{,}100 \pm 0{,}632\,i$ (avec une troisième valeur propre proche de $-1{,}17$) : la partie réelle reste positive sur toute la plage. [∎]{.qed}
+*(i)* $F(-Q, -D, V) = \big({-\mu Q} + VD,\ \nu D - VQ,\ \Gamma - V + QD\big) = S\,F(Q, D, V)$. (ii) La trace de la jacobienne de l'exemple 2.7 vaut $\mu - \nu - 1$. (iii) Calcul de l'exemple 2.7 : en $O$, la partie réelle $(\mu - \nu)/2 = 0{,}0095$ est positive et le discriminant $(\mu + \nu)^2 - 4\Gamma^2$ est négatif dès que $\Gamma > 0{,}11$ ; $M_\pm$ exigerait $\sqrt{\mu\nu} \approx 0{,}109 > \Gamma$. Pour $N_\pm$ à $\Gamma = 0{,}9$, le code du chapitre 2 donne les valeurs propres $-1{,}17$ et $0{,}094 \pm 0{,}607\,i$ ; en relançant ce code pour $\Gamma = 0{,}80$ et $\Gamma = 1{,}00$, on obtient $0{,}088 \pm 0{,}579\,i$ et $0{,}100 \pm 0{,}632\,i$ (avec une troisième valeur propre proche de $-1{,}17$) : la partie réelle reste positive sur toute la plage. [∎]{.qed}
 :::
 ::::
 
@@ -1607,7 +1609,8 @@ Le schéma interactif ci-dessous intègre le modèle dans votre navigateur. Plac
 <canvas id="wg-c2" role="img" aria-label="Projection des deux trajectoires dans le plan (Q, D)."></canvas>
 <canvas id="wg-c3" role="img" aria-label="Histogramme de D pour chacune des deux trajectoires."></canvas>
 </div>
-<p class="widget-note"><span class="p4-key"><span class="p4-sw" style="background:var(--s1)"></span>trajectoire partant de (Q₀, D₀, V₀)</span><span class="p4-key"><span class="p4-sw" style="background:var(--s2)"></span>trajectoire partant de l'image (−Q₀, −D₀, V₀)</span> μ = 0,119 et ν = 0,1 sont fixés ; intégration RK4 (pas 0,02) dans votre navigateur, transitoire de 600 unités de temps retiré, 2 000 unités affichées. Sous le seuil (Γ ≤ 0,86), chaque trajectoire reste sur son attracteur et les deux histogrammes sont symétriques l'un de l'autre ; au-dessus (Γ ≥ 0,865), les attracteurs ont fusionné et D change de signe de façon irrégulière.</p>
+<p class="widget-note"><span class="p4-key"><span class="p4-sw" style="background:var(--s1)"></span>trajectoire partant de (Q₀, D₀, V₀)</span><span class="p4-key"><span class="p4-sw" style="background:var(--s2)"></span>trajectoire partant de l'image (−Q₀, −D₀, V₀)</span></p>
+<p class="widget-note">μ = 0,119 et ν = 0,1 sont fixés ; intégration RK4 (pas 0,02) dans votre navigateur, transitoire de 600 unités de temps retiré, 2 000 unités affichées. Sous le seuil (Γ ≤ 0,86), chaque trajectoire reste sur son attracteur et les deux histogrammes sont symétriques l'un de l'autre ; au-dessus (Γ ≥ 0,865), les attracteurs ont fusionné et D change de signe de façon irrégulière.</p>
 </div>
 ```
 

@@ -91,7 +91,7 @@ $$
 $$
 :::
 
-Si $\mathbf{u}$ est assez régulier (lipschitzien en espace), le théorème de Cauchy–Lipschitz garantit que $\mathbf{a} \mapsto \mathbf{X}(\mathbf{a}, t)$ est, pour chaque $t$, un difféomorphisme de $\Omega$ sur lui-même. On appelle **lignes de courant** à l'instant $t$ les courbes tangentes en chaque point à $\mathbf{u}(\cdot, t)$ ; elles coïncident avec les trajectoires lorsque l'écoulement est stationnaire, mais pas en général.
+Si $\mathbf{u}$ est assez régulier (de classe $C^1$ en espace) et tangent au bord $\partial\Omega$ lorsqu'il y en a un, le théorème de Cauchy–Lipschitz et la dérivabilité des solutions par rapport à la condition initiale garantissent que $\mathbf{a} \mapsto \mathbf{X}(\mathbf{a}, t)$ est, pour chaque $t$, un difféomorphisme de $\Omega$ sur lui-même. On appelle **lignes de courant** à l'instant $t$ les courbes tangentes en chaque point à $\mathbf{u}(\cdot, t)$ ; elles coïncident avec les trajectoires lorsque l'écoulement est stationnaire, mais pas en général.
 
 ::: def
 [Définition 1.2 — Dérivée particulaire]{.tag}
@@ -117,11 +117,11 @@ C'est la règle de dérivation des fonctions composées : $\frac{\mathrm{d}}{\ma
 
 ::: ex
 [Exemple 1.4 — Rotation solide]{.tag}
-Considérons $\mathbf{u} = \Omega(-y, x)$ dans le plan. Les trajectoires sont des cercles parcourus à la vitesse angulaire $\Omega$. Le champ est stationnaire ($\partial_t\mathbf{u} = 0$), et pourtant les particules accélèrent :
+Considérons $\mathbf{u} = \Omega_0(-y, x)$ dans le plan (on note $\Omega_0$ la vitesse angulaire, pour ne pas la confondre avec le domaine $\Omega$). Les trajectoires sont des cercles parcourus à la vitesse angulaire $\Omega_0$. Le champ est stationnaire ($\partial_t\mathbf{u} = 0$), et pourtant les particules accélèrent :
 $$
-(\mathbf{u}\cdot\nabla)\mathbf{u} = \Omega(-y)\,\partial_x\big(\Omega(-y, x)\big) + \Omega x\,\partial_y\big(\Omega(-y, x)\big) = -\Omega^2 (x, y).
+(\mathbf{u}\cdot\nabla)\mathbf{u} = \Omega_0(-y)\,\partial_x\big(\Omega_0(-y, x)\big) + \Omega_0 x\,\partial_y\big(\Omega_0(-y, x)\big) = -\Omega_0^2 (x, y).
 $$
-On retrouve l'accélération centripète $-\Omega^2 r$ de la mécanique du point. Le terme $(\mathbf{u}\cdot\nabla)\mathbf{u}$ est **quadratique** en $\mathbf{u}$ : c'est la seule non-linéarité des équations de Navier–Stokes, et l'origine de la turbulence.
+On retrouve l'accélération centripète de la mécanique du point, de norme $\Omega_0^2 r$ et dirigée vers le centre. Le terme $(\mathbf{u}\cdot\nabla)\mathbf{u}$ est **quadratique** en $\mathbf{u}$ : c'est la seule non-linéarité des équations de Navier–Stokes, et l'origine de la turbulence.
 :::
 
 ### 1.2 Jacobien, transport de Reynolds et conservation de la masse
@@ -398,11 +398,11 @@ Sur le tore $\mathbb{T}^d = [0, 2\pi)^d$ (domaine périodique), tout champ de ca
 $$
 \mathbf{v} = \mathbf{w} + \nabla q, \qquad \nabla\cdot\mathbf{w} = 0,
 $$
-et les deux termes sont orthogonaux dans $L^2$. L'application $\mathbb{P}:\mathbf{v}\mapsto\mathbf{w}$ est la **projection de Leray** ; elle réalise le minimum de $\tfrac12\|\mathbf{w} - \mathbf{v}\|^2$ sous la contrainte $\nabla\cdot\mathbf{w} = 0$, et $q$ est le multiplicateur de Lagrange associé. En Fourier, pour $\mathbf{k}\neq 0$,
+($q$ étant défini à une constante près), et les deux termes sont orthogonaux dans $L^2$. L'application $\mathbb{P}:\mathbf{v}\mapsto\mathbf{w}$ est la **projection de Leray** ; elle réalise le minimum de $\tfrac12\|\mathbf{w} - \mathbf{v}\|^2$ sous la contrainte $\nabla\cdot\mathbf{w} = 0$, et $q$ est le multiplicateur de Lagrange associé. En Fourier, pour $\mathbf{k}\neq 0$,
 $$
-\widehat{\mathbb{P}\mathbf{v}}(\mathbf{k}) = \left(I - \frac{\mathbf{k}\mathbf{k}^{\mathsf T}}{|\mathbf{k}|^2}\right)\hat{\mathbf{v}}(\mathbf{k}).
+\widehat{\mathbb{P}\mathbf{v}}(\mathbf{k}) = \left(I - \frac{\mathbf{k}\mathbf{k}^{\mathsf T}}{|\mathbf{k}|^2}\right)\hat{\mathbf{v}}(\mathbf{k}),
 $$
-Les équations de Navier–Stokes s'écrivent alors sans pression : $\partial_t\mathbf{u} = \mathbb{P}\big[-(\mathbf{u}\cdot\nabla)\mathbf{u} + \nu\Delta\mathbf{u} + \mathbf{f}\big]$.
+et $\widehat{\mathbb{P}\mathbf{v}}(\mathbf{0}) = \hat{\mathbf{v}}(\mathbf{0})$ : la moyenne de $\mathbf{v}$, qui est un champ constant donc solénoïdal, est entièrement conservée. Les équations de Navier–Stokes s'écrivent alors sans pression : $\partial_t\mathbf{u} = \mathbb{P}\big[-(\mathbf{u}\cdot\nabla)\mathbf{u} + \nu\Delta\mathbf{u} + \mathbf{f}\big]$.
 
 ::: proof
 *Lagrangien.* Introduisons $\mathcal{L}(\mathbf{w}, q) = \tfrac12\|\mathbf{w} - \mathbf{v}\|^2 + \langle q, \nabla\cdot\mathbf{w}\rangle$, où $\langle\cdot,\cdot\rangle$ est le produit scalaire $L^2$. Par intégration par parties sur le tore (pas de bord), $\langle q, \nabla\cdot\mathbf{w}\rangle = -\langle\nabla q, \mathbf{w}\rangle$. La stationnarité en $\mathbf{w}$ donne $\mathbf{w} - \mathbf{v} - \nabla q = 0$, donc $\mathbf{v} = \mathbf{w} - \nabla q$ ; quitte à changer $q$ en $-q$, c'est la décomposition annoncée. La stationnarité en $q$ redonne la contrainte $\nabla\cdot\mathbf{w} = 0$. En prenant la divergence, $q$ résout $\Delta q = \nabla\cdot\mathbf{v}$.
@@ -460,7 +460,7 @@ C'est cette propriété qui justifie les maquettes en soufflerie, et c'est elle 
 
 ::: ex
 [Exemple 2.10 — Ordres de grandeur]{.tag}
-Avec $\nu \approx 10^{-6}$ m²/s pour l'eau : une goutte qui tombe dans un tube capillaire ($U = 1$ mm/s, $L = 1$ mm) donne $Re \approx 1$ ; une rivière ($U = 1$ m/s, $L = 10$ m) donne $Re \approx 10^7$. Dans l'expérience VKS de dynamo au sodium liquide, Monchaux et al. (2007) définissent $Re = KR^2\Omega/\nu$ (avec $R$ le rayon de la cuve, $\Omega$ la vitesse angulaire des turbines et un coefficient d'efficacité $K = 0{,}6$) et indiquent que $Re$ peut atteindre $5\times 10^6$, le nombre de Reynolds magnétique correspondant étant $Rm \approx 49$. L'écoulement y est pleinement turbulent.
+Avec $\nu \approx 10^{-6}$ m²/s pour l'eau : l'écoulement lent de l'eau dans un tube capillaire ($U = 1$ mm/s, $L = 1$ mm) donne $Re \approx 1$ ; une rivière ($U = 1$ m/s, $L = 10$ m) donne $Re \approx 10^7$. Dans l'expérience VKS de dynamo au sodium liquide, Monchaux et al. (2007) définissent $Re = KR^2\Omega/\nu$ (avec $R$ le rayon de la cuve, $\Omega$ la vitesse angulaire des turbines et un coefficient d'efficacité $K = 0{,}6$) et indiquent que $Re$ peut atteindre $5\times 10^6$, le nombre de Reynolds magnétique pouvant alors atteindre $49$ (sodium à 120 °C). L'écoulement y est pleinement turbulent.
 :::
 
 ::: ex
@@ -543,7 +543,7 @@ La **vorticité** est le rotationnel de la vitesse, $\boldsymbol\omega = \nabla\
 
 ::: ex
 [Exemple 3.2 — Rotation solide et cisaillement]{.tag}
-Pour la rotation solide $\mathbf{u} = \Omega(-y, x)$, on trouve $\omega = 2\Omega$ : la vorticité vaut deux fois la vitesse angulaire locale. Pour le cisaillement simple $\mathbf{u} = (\gamma y, 0)$, on trouve $\omega = -\gamma$, alors que les trajectoires sont des droites : la vorticité mesure la rotation d'un petit élément de fluide sur lui-même, pas la courbure des trajectoires.
+Pour la rotation solide $\mathbf{u} = \Omega_0(-y, x)$ de l'exemple 1.4, on trouve $\omega = 2\Omega_0$ : la vorticité vaut deux fois la vitesse angulaire locale. Pour le cisaillement simple $\mathbf{u} = (\gamma y, 0)$, on trouve $\omega = -\gamma$, alors que les trajectoires sont des droites : la vorticité mesure la rotation d'un petit élément de fluide sur lui-même, pas la courbure des trajectoires.
 :::
 
 :::: prop
@@ -593,7 +593,7 @@ Pour un écoulement plan, $(\boldsymbol\omega\cdot\nabla)\mathbf{u} = 0$ et la v
 $$
 \frac{\partial\omega}{\partial t} + \mathbf{u}\cdot\nabla\omega = \nu\Delta\omega + (\nabla\times\mathbf{f})_z.
 $$
-En l'absence de viscosité et de forçage, $\omega$ est simplement transportée par l'écoulement : pour toute fonction $G$, la quantité $\langle G(\omega)\rangle$ est conservée sur le tore.
+En l'absence de viscosité et de forçage, $\omega$ est simplement transportée par l'écoulement : pour toute fonction $G$ de classe $C^1$, la quantité $\langle G(\omega)\rangle$ est conservée sur le tore.
 
 ::: proof
 $\boldsymbol\omega = \omega\mathbf{e}_z$ et $\mathbf{u}$ ne dépend pas de $z$, donc $(\boldsymbol\omega\cdot\nabla)\mathbf{u} = \omega\,\partial_z\mathbf{u} = 0$. Pour la conservation, $\frac{\mathrm{d}}{\mathrm{d}t}\langle G(\omega)\rangle = -\langle G'(\omega)\,\mathbf{u}\cdot\nabla\omega\rangle = -\langle\mathbf{u}\cdot\nabla G(\omega)\rangle = \langle(\nabla\cdot\mathbf{u})G(\omega)\rangle = 0$, par intégration par parties sur le tore. [∎]{.qed}
@@ -726,7 +726,7 @@ l'**énergie cinétique** (par unité de masse), l'**hélicité cinétique**, la
 Pour un champ solénoïdal périodique, $\langle|\nabla\mathbf{u}|^2\rangle = \langle|\boldsymbol\omega|^2\rangle$, où $|\nabla\mathbf{u}|^2 = \sum_{i,j}(\partial_j u_i)^2$.
 
 ::: proof
-L'identité $\epsilon_{kij}\epsilon_{klm} = \delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}$ donne, point par point, $|\boldsymbol\omega|^2 = |\nabla\mathbf{u}|^2 - \partial_j u_i\,\partial_i u_j$. Or, par deux intégrations par parties, $\langle\partial_j u_i\,\partial_i u_j\rangle = -\langle u_i\,\partial_j\partial_i u_j\rangle = -\langle u_i\,\partial_i(\nabla\cdot\mathbf{u})\rangle = 0$. [∎]{.qed}
+L'identité $\epsilon_{kij}\epsilon_{klm} = \delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}$ donne, point par point, $|\boldsymbol\omega|^2 = |\nabla\mathbf{u}|^2 - \partial_j u_i\,\partial_i u_j$. Or, par une intégration par parties en $x_j$, $\langle\partial_j u_i\,\partial_i u_j\rangle = -\langle u_i\,\partial_j\partial_i u_j\rangle = -\langle u_i\,\partial_i(\nabla\cdot\mathbf{u})\rangle = 0$. [∎]{.qed}
 :::
 ::::
 
@@ -750,7 +750,7 @@ Il reste $\frac{\mathrm{d}}{\mathrm{d}t}\tfrac12\langle|\mathbf{u}|^2\rangle = \
 
 :::: prop
 [Corollaire 4.4 — Injection moyenne = dissipation moyenne]{.tag}
-Si l'énergie reste bornée au cours du temps (ce qui est le cas d'un écoulement forcé en régime statistiquement stationnaire), les moyennes temporelles $\overline{g} = \lim_{T\to\infty}\frac1T\int_0^T g(t)\,\mathrm{d}t$ vérifient
+Si l'énergie reste bornée au cours du temps (ce qui est le cas d'un écoulement forcé en régime statistiquement stationnaire), les moyennes temporelles $\overline{g} = \lim_{T\to\infty}\frac1T\int_0^T g(t)\,\mathrm{d}t$, lorsqu'elles existent, vérifient
 $$
 \overline{P} = \overline{\varepsilon}.
 $$
@@ -816,8 +816,9 @@ Moffatt (1969) a montré que l'hélicité mesure le degré d'enlacement des lign
 [Définition 4.9 — Spectre d'énergie]{.tag}
 Écrivons $\mathbf{u}(\mathbf{x}) = \sum_{\mathbf{k}\in\mathbb{Z}^d}\hat{\mathbf{u}}_{\mathbf{k}}\,e^{\mathrm{i}\mathbf{k}\cdot\mathbf{x}}$ sur $[0, 2\pi)^d$. Par Parseval, $E = \tfrac12\sum_{\mathbf{k}}|\hat{\mathbf{u}}_{\mathbf{k}}|^2$. Le **spectre d'énergie** (par couronnes) est
 $$
-E(k) = \frac12\sum_{k - \frac12 \le |\mathbf{k}| < k + \frac12}|\hat{\mathbf{u}}_{\mathbf{k}}|^2, \qquad \text{de sorte que} \qquad E = \sum_{k\ge 1}E(k).
+E(k) = \frac12\sum_{k - \frac12 \le |\mathbf{k}| < k + \frac12}|\hat{\mathbf{u}}_{\mathbf{k}}|^2, \qquad \text{de sorte que} \qquad E = \sum_{k\ge 1}E(k)
 $$
+pour un champ de moyenne nulle ($\hat{\mathbf{u}}_{\mathbf{0}} = 0$, voir la proposition 2.7).
 Comme $\hat{\boldsymbol\omega}_{\mathbf{k}} = \mathrm{i}\mathbf{k}\times\hat{\mathbf{u}}_{\mathbf{k}}$ et $\mathbf{k}\perp\hat{\mathbf{u}}_{\mathbf{k}}$, on a $|\hat{\boldsymbol\omega}_{\mathbf{k}}|^2 = |\mathbf{k}|^2|\hat{\mathbf{u}}_{\mathbf{k}}|^2$, d'où $\varepsilon = 2\nu\sum_{\mathbf{k}}|\mathbf{k}|^2\tfrac12|\hat{\mathbf{u}}_{\mathbf{k}}|^2 \approx 2\nu\sum_k k^2E(k)$.
 :::
 
@@ -985,7 +986,7 @@ On appelle écoulement de **von Kármán** (au sens des expériences de turbulen
 
 Dans l'expérience VKS de Cadarache, décrite par Monchaux et al. (2007), le cylindre a un diamètre intérieur $2R = 412$ mm et une longueur de 524 mm ; les deux disques, de rayon 154,5 mm et distants de 371 mm, portent chacun 8 pales courbes et tournent jusqu'à 26 Hz. L'**écoulement moyen** a la structure suivante : le fluide est éjecté radialement par les disques, ce qui crée un écoulement axial dirigé vers chaque disque le long de l'axe et une recirculation en sens inverse le long de la paroi latérale ; à cette circulation dite poloïdale s'ajoute une rotation azimutale (toroïdale) de sens opposé dans chaque moitié de la cuve. Il en résulte un fort cisaillement de la vitesse azimutale dans le plan médian. L'écoulement est si turbulent que ses fluctuations ont une énergie comparable à celle de l'écoulement moyen : VKS est la première dynamo obtenue dans un écoulement fortement turbulent (Monchaux et al., 2007). Avec des disques en fer doux, un champ magnétique est auto-entretenu au-delà de $Rm \simeq 30$ ; Berhanu et al. (2007) y ont observé des **renversements** de ce champ, analogues aux inversions du champ magnétique terrestre.
 
-Cette géométrie est au cœur du projet MilaDy. Les simulations numériques de VKS par la méthode hybride Fourier–éléments finis SFEMaNS (Nore et al., 2018) ou par pénalisation dans un code pseudo-spectral (Kreuzahler et al., 2014) produisent les champs 3D que le projet cherche à modéliser ; Bousquet et al. (2024) en ont fait une analyse à grande échelle, et Bousquet et al. (2026) y étudient les renversements du champ magnétique. Contrairement aux quatre exemples précédents, l'écoulement de von Kármán n'a pas de solution analytique et n'est pas périodique : il possède des parois, des pales en rotation et, pour la MHD, des conditions aux limites magnétiques. C'est l'une des difficultés du passage des EDP « jouets » aux données de dynamo (voir le [sujet de thèse](../../these/index.html#plan-experimental)).
+Cette géométrie est au cœur du projet MilaDy. Les simulations numériques de VKS par la méthode hybride Fourier–éléments finis SFEMaNS (Nore et al., 2018) ou par pénalisation dans un code pseudo-spectral (Kreuzahler et al., 2014) produisent les champs 3D que le projet cherche à modéliser ; Bousquet et al. (2024) en ont analysé les structures à grande échelle (simulations aux grandes échelles, puis décomposition orthogonale aux valeurs propres), et Bousquet et al. (2026) y étudient les renversements du champ magnétique. Contrairement aux quatre exemples précédents, l'écoulement de von Kármán n'a pas de solution analytique et n'est pas périodique : il possède des parois, des pales en rotation et, pour la MHD, des conditions aux limites magnétiques. C'est l'une des difficultés du passage des EDP « jouets » aux données de dynamo (voir le [sujet de thèse](../../these/index.html#plan-experimental)).
 
 | Écoulement | Géométrie | Solution exacte ? | Ce qu'il teste |
 |---|---|---|---|
@@ -1601,7 +1602,7 @@ $$
 Les quantités $g_1, \dots, g_4$ sont les quatre étages de Runge–Kutta.
 :::
 
-L'intérêt est de traiter la viscosité **exactement**. Avec un schéma explicite ordinaire, la stabilité imposerait $\nu k_{\max}^2\Delta t \lesssim 2{,}8$, contrainte très sévère quand $k_{\max}$ est grand ; avec le facteur intégrant, seule l'advection limite le pas de temps. Une variante plus précise pour les problèmes raides, ETDRK4, est décrite par Kassam et Trefethen (2005).
+L'intérêt est de traiter la viscosité **exactement**. Avec un schéma explicite ordinaire comme RK4, dont l'intervalle de stabilité sur l'axe réel négatif est d'environ $[-2{,}8;\ 0]$, la stabilité imposerait $\nu k_{\max}^2\Delta t \lesssim 2{,}8$, contrainte très sévère quand $k_{\max}$ est grand ; avec le facteur intégrant, seule l'advection limite le pas de temps. Une variante plus précise pour les problèmes raides, ETDRK4, est décrite par Kassam et Trefethen (2005).
 
 :::: prop
 [Proposition 7.8 — Condition CFL pour RK4 spectral]{.tag}
@@ -1798,7 +1799,7 @@ print(f"pente log-log de E(k) sur 6 ≤ k ≤ 16 : {p:.2f}")
 - **Bilan moyen.** $\overline{P} = 0{,}1283$ et $\overline{\varepsilon} = 0{,}1279$ diffèrent de 0,26 % ; cet écart est, aux arrondis près, $(E(T) - E(0))/T \approx 3\times10^{-4}$ : sur 200 unités de temps, le corollaire 4.4 est vérifié à la précision statistique près. La figure montre qu'à un instant donné, en revanche, $P$ et $\varepsilon$ peuvent différer nettement.
 - **Régime chaotique.** La dissipation moyenne vaut environ 10 % de celle de l'état laminaire ($1{,}25$) et l'énergie moyenne 43 % de l'énergie laminaire : l'écoulement a quitté l'état laminaire instable, conformément au diagramme de bifurcation décrit par Chandler et Kerswell (2013) pour $n = 4$.
 - **Contrainte de divergence.** $\max|\nabla\cdot\mathbf{u}| \approx 10^{-14}$ : la formulation en fonction de courant garantit l'incompressibilité à la précision machine, sans aucune projection.
-- **Résolution.** Le spectre perd plus de six décades entre $k = 4$ et $k = 20$ ; à $Re = 40$, il n'y a pas de zone inertielle, et la pente mesurée (environ $-9$) n'a rien à voir avec $-3$ ou $-5/3$. Il faudrait des $Re$ et des grilles bien plus grands pour voir la cascade d'enstrophie. Le nombre de Courant maximal reste inférieur à la borne de la proposition 7.8.
+- **Résolution.** Le spectre perd plus de six décades entre $k = 4$ et $k = 20$ ; à $Re = 40$, il n'y a pas de zone inertielle, et la pente mesurée (environ $-9$) n'a rien à voir avec $-3$ ou $-5/3$. Il faudrait des $Re$ et des grilles bien plus grands pour voir la cascade d'enstrophie. Le nombre de Courant maximal, relevé tous les 50 pas avec $|u_x|_{\max} + |u_y|_{\max}$ (la version 2D de la proposition 7.8), vaut $1{,}01$ et reste inférieur à la borne $1{,}35$.
 :::
 
 :::: recap
@@ -1958,7 +1959,7 @@ Les exercices suivent l'ordre des chapitres ; les étoiles indiquent la difficul
     ::: sol
     *Solution.* (a) $\nabla\cdot\mathbf{u} = \lambda^{-1}\nabla\cdot(\nabla\times\mathbf{u}) = 0$. Ensuite $\nabla\times\nabla\times\mathbf{u} = \lambda\nabla\times\mathbf{u} = \lambda^2\mathbf{u}$, et l'identité $\nabla\times\nabla\times\mathbf{u} = \nabla(\nabla\cdot\mathbf{u}) - \Delta\mathbf{u} = -\Delta\mathbf{u}$ donne $\Delta\mathbf{u} = -\lambda^2\mathbf{u}$. Par la forme de Lamb, $(\mathbf{u}\cdot\nabla)\mathbf{u} = \nabla(|\mathbf{u}|^2/2) - \lambda\,\mathbf{u}\times\mathbf{u} = \nabla(|\mathbf{u}|^2/2)$, compensé par la pression $p = -|\mathbf{u}|^2/2$.
 
-    **(b)** $\mathbf{u}(\mathbf{x}, t) = e^{-\nu\lambda^2t}\mathbf{u}_0(\mathbf{x})$, avec $\mathbf{u}_0$ de Beltrami, reste de Beltrami à tout instant ; $\partial_t\mathbf{u} = -\nu\lambda^2\mathbf{u} = \nu\Delta\mathbf{u}$ et le terme non linéaire est compensé par $p = -e^{-2\nu\lambda^2t}|\mathbf{u}_0|^2/2$. Taylor–Green 2D et ABC (avec $\lambda = 1$) en sont des exemples.
+    **(b)** $\mathbf{u}(\mathbf{x}, t) = e^{-\nu\lambda^2t}\mathbf{u}_0(\mathbf{x})$, avec $\mathbf{u}_0$ de Beltrami, reste de Beltrami à tout instant ; $\partial_t\mathbf{u} = -\nu\lambda^2\mathbf{u} = \nu\Delta\mathbf{u}$ et le terme non linéaire est compensé par $p = -e^{-2\nu\lambda^2t}|\mathbf{u}_0|^2/2$. Les écoulements ABC (avec $\lambda = 1$) en sont des exemples. Attention : Taylor–Green 2D décroît aussi en $e^{-2\nu t}$ (proposition 5.3), mais ce n'est **pas** un champ de Beltrami, puisque sa vorticité $2\sin x\sin y\,\mathbf{e}_z$ est perpendiculaire à la vitesse. Son terme non linéaire est un gradient pour une autre raison : en 2D, $\omega$ y est une fonction de $\psi$ (exemple 3.9).
 
     **(c)** $H_K = \langle\mathbf{u}\cdot\lambda\mathbf{u}\rangle = 2\lambda E$. En général, l'inégalité de Cauchy–Schwarz donne $|H_K| \le \langle|\mathbf{u}|^2\rangle^{1/2}\langle|\boldsymbol\omega|^2\rangle^{1/2}$ ; si tous les modes vérifient $|\mathbf{k}| = |\lambda|$, Parseval et $|\hat{\boldsymbol\omega}_{\mathbf{k}}| = |\mathbf{k}||\hat{\mathbf{u}}_{\mathbf{k}}|$ donnent $\langle|\boldsymbol\omega|^2\rangle = \lambda^2\langle|\mathbf{u}|^2\rangle$, d'où $|H_K| \le |\lambda|\langle|\mathbf{u}|^2\rangle = 2|\lambda|E$. L'égalité dans Cauchy–Schwarz impose $\boldsymbol\omega = \pm|\lambda|\mathbf{u}$ : ce sont les champs de Beltrami.
     :::
@@ -2126,7 +2127,7 @@ Le stage MilaDy consiste à apprendre des **lois** de champs MHD paramétrés pa
 
 **Conditionnement par $Re$.** L'adimensionnement du chapitre 2 justifie de conditionner un modèle par des nombres sans dimension, et l'exercice 3 rappelle que leur définition varie d'un article à l'autre. La proposition 6.9 et l'exercice 12 montrent que la résolution nécessaire dépend du paramètre de conditionnement ($L/\eta \sim Re^{3/4}$) : c'est une contrainte forte pour un modèle sur grille fixe, discutée dans le [plan expérimental du sujet de thèse](../../these/index.html#plan-experimental).
 
-**Écoulements de référence et dynamos.** La progression « EDP simples, puis dynamos » de l'offre passe par les écoulements du chapitre 5. L'écoulement ABC est celui de l'expérience E3 du dépôt, qui mesure le taux de croissance de la dynamo cinématique en fonction de $Rm$ ([rapport, section E3](../../rapport/index.html#e3)). L'écoulement de von Kármán est la géométrie de VKS, où des renversements du champ magnétique ont été observés (Berhanu et al., 2007) ; le modèle à trois modes de Gissinger (2012) étudié dans l'expérience E1 en est une description de basse dimension ([rapport, section E1](../../rapport/index.html#e1)).
+**Écoulements de référence et dynamos.** La progression « EDP simples, puis dynamos » de l'offre passe par les écoulements du chapitre 5. L'écoulement ABC est celui de l'expérience E3 du dépôt, qui mesure le taux de croissance de la dynamo cinématique en fonction de $Rm$ ([rapport, section E3](../../rapport/index.html#e3)). L'écoulement de von Kármán est la géométrie de VKS, où des renversements du champ magnétique ont été observés (Berhanu et al., 2007). Le modèle à trois modes de Gissinger (2012), étudié dans l'expérience E1, décrit de tels renversements en basse dimension, avec un mode dipolaire, un mode quadrupolaire et un mode de vitesse ; son auteur le compare aux inversions du champ magnétique terrestre ([rapport, section E1](../../rapport/index.html#e1)).
 
 **Données d'apprentissage.** L'hypothèse ergodique (chapitre 6) justifie de constituer un jeu de données à partir d'une longue trajectoire, après un transitoire, en tenant compte de la corrélation entre instantanés successifs. Le solveur du chapitre 7 est, à petite échelle, du même type que les codes pseudo-spectraux qui produisent ces données ; le module [Systèmes dynamiques, bifurcations et mesures invariantes](../p4-systemes-dynamiques/index.html) donne le cadre mathématique des lois stationnaires $\mu_{\boldsymbol\lambda}$, et la [partie théorique du sujet de thèse](../../these/index.html#theorie) s'appuie sur ces notions.
 

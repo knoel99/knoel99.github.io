@@ -23,7 +23,7 @@ Aucun appareil physique n'est dessiné (le VKS n'apparaît que comme nom d'exemp
 | « 𝔼_μ[ℒφ] = 0 » (affiché « 𝔼μ[ℒφ] = 0 ») | [D] « identités de stationnarité E[𝓛φ] = 0 » ; [N] §1 et Prop. 5 | ℒ (U+2112) pour le générateur 𝓛 |
 | « dE/dt », « 0 » | [N] §1 remarque clé : d*E*/d*t* = *P* − ε | |
 | « ∇·u = 0,  ∇·B = 0 » | [D], [N] §1 | |
-| « Conditions aux limites » | [D] « conditions aux limites linéaires » ; [N] « conditions aux limites linéaires homogènes » | « linéaires homogènes » est porté par l'en-tête « Locale linéaire » et la légende (place) |
+| « Conditions aux limites », « linéaires homogènes » (deux lignes) | [D] « conditions aux limites linéaires » ; [N] « conditions aux limites linéaires homogènes » | troisième ligne ajoutée au contrôle indépendant : sans « linéaires homogènes », des CL non homogènes (sous-espace affine, pas ker *A*) passeraient pour C1 |
 | « Résidu d'EDP stationnaire » (deux lignes « Résidu d'EDP », « stationnaire ») | [D] « résidu d'une EDP stationnaire » ; [N] « état stationnaire d'une EDP (Darcy dans PIDM) » | |
 | « B ↦ −B » | [D] « B → −B » ; [N] §1 | flèche « ↦ » (application) pour la lisibilité de la police |
 | « Rotation Rπ (VKS) » | [D] « rotation Rπ de VKS » ; [N] §1 | |
@@ -38,6 +38,7 @@ Aucun appareil physique n'est dessiné (le VKS n'apparaît que comme nom d'exemp
 | « Loi de base invariante » | [D] ; [N] Prop. 4 | |
 | « Perte de stationnarité » | [D] ; [N] Prop. 7 | |
 | « Inclinaison exponentielle » | [D] ; [N] §1, Prop. 7 | |
+| « ou » (C1, C2, C4), « et » (C3) entre les deux mécanismes | [N] §1 « architecture (potentiels) ou projection », « projection non linéaire (PCFM, ECI) ou pénalité/guidage », « perte en loi à l'entraînement ; inclinaison exponentielle à l'échantillonnage » ; Prop. 4 : équivariance de *v*_θ **et** loi de base invariante, les deux ensemble | ajouté au contrôle indépendant : un simple trait laissait lire C3 comme deux options |
 
 ## Panneau b — chaînes affichées
 | Chaîne (exacte) | Source | Remarque |

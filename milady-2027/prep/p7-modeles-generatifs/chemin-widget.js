@@ -58,8 +58,9 @@
     var v = tot > 0 ? (g0 * vk0 + g1 * vk1) / tot : 0;
     return [p, v];
   }
+  /* trajectoires du flot (Heun, 120 pas) ; rapport longueur totale / corde totale (1 = droites) */
   function trajectories(P) {
-    var steps = 120, h = 1 / steps, out = [], lenRatio = 0;
+    var steps = 120, h = 1 / steps, out = [], Ltot = 0, Ctot = 0;
     for (var j = 0; j < NTRAJ; j++) {
       var x = STARTS[j], path = [x], L = 0;
       for (var k = 0; k < steps; k++) {
@@ -68,11 +69,10 @@
         L += Math.abs(xn - x);
         x = xn; path.push(x);
       }
-      var chord = Math.abs(x - STARTS[j]);
-      lenRatio += chord > 1e-6 ? L / chord : 1;
+      Ltot += L; Ctot += Math.abs(x - STARTS[j]);
       out.push(path);
     }
-    return { paths: out, ratio: lenRatio / NTRAJ };
+    return { paths: out, ratio: Ctot > 1e-9 ? Ltot / Ctot : 1 };
   }
 
   /* couleurs : jetons du site ; teintes de série choisies selon le fond (clair ou sombre) */
@@ -121,16 +121,19 @@
     function Y(x) { return mt + (XMAX - x) / (XMAX - XMIN) * ph; }
     ctx.fillStyle = rgb(C.bg); ctx.fillRect(0, 0, M.w, M.h);
 
-    /* carte de densité p_t(x) */
-    var nt = 120, nx = 100, img = ctx.createImageData(nt, nx), vals = [], vmax = 0;
-    for (var a = 0; a < nt; a++) for (var b = 0; b < nx; b++) {
-      var t = (a + 0.5) / nt, x = XMAX - (b + 0.5) / nx * (XMAX - XMIN);
-      var p = pv(P, x, t)[0]; vals.push(p); if (p > vmax) vmax = p;
+    /* carte de densité p_t(x), normalisée par son maximum à chaque instant t */
+    var nt = 120, nx = 100, img = ctx.createImageData(nt, nx), vals = [], cmax = [];
+    for (var a = 0; a < nt; a++) {
+      var mx = 0;
+      for (var b = 0; b < nx; b++) {
+        var t = (a + 0.5) / nt, x = XMAX - (b + 0.5) / nx * (XMAX - XMIN);
+        var p = pv(P, x, t)[0]; vals.push(p); if (p > mx) mx = p;
+      }
+      cmax.push(mx);
     }
-    vmax *= 0.85;
     var k = 0;
     for (a = 0; a < nt; a++) for (b = 0; b < nx; b++) {
-      var f = Math.min(1, vals[k++] / vmax), idx = 4 * (b * nt + a);
+      var f = Math.pow(vals[k++] / cmax[a], 0.8), idx = 4 * (b * nt + a);
       for (var c = 0; c < 3; c++) img.data[idx + c] = Math.round(C.bg[c] + f * (C.blue[c] - C.bg[c]));
       img.data[idx + 3] = 255;
     }
@@ -194,9 +197,9 @@
     }
     sx.strokeStyle = C.hair; sx.lineWidth = 1; sx.strokeRect(sl, mt, sw, sh);
     sx.fillStyle = C.muted; sx.font = "12px system-ui, sans-serif"; sx.textAlign = "center"; sx.textBaseline = "top";
-    sx.fillText("p_t(x) et v_t(x) à t = " + P.t.toFixed(2).replace(".", ","), sl + sw / 2, mt + sh + 4);
+    sx.fillText("pₜ(x) et vₜ(x) à t = " + P.t.toFixed(2).replace(".", ","), sl + sw / 2, mt + sh + 4);
 
-    var txt = "Rapport longueur / corde moyen des trajectoires du flot marginal : " +
+    var txt = "Longueur totale des trajectoires du flot marginal rapportée à la somme de leurs cordes : " +
       T.ratio.toFixed(3).replace(".", ",") + " (1 = trajectoires droites).";
     readout.textContent = txt;
     cMain.setAttribute("aria-label", "Densité du chemin de probabilité dans le plan (t, x) pour λ = " +

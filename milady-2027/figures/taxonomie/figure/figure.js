@@ -30,14 +30,15 @@ export default async function draw(F, L) {
     L.line(a, [g.x0, m(7)], [g.x1, m(7)], { stroke: g.col, width: 1.0, cap: 'butt' });
   }
   const classes = [
-    { id: 'C1', name: 'Locale\nlinéaire', g: 0, form: '*A***x** = 0', ex: ['∇·**u** = 0,  ∇·**B** = 0', 'Conditions aux limites'],
-      mech: ['Potentiels\n**B** = ∇×**A**', 'Projection\nde Leray'] },
+    // join : « ou » = deux mécanismes possibles ; « et » (C3) = deux conditions qui vont ensemble (Prop. 4)
+    { id: 'C1', name: 'Locale\nlinéaire', g: 0, form: '*A***x** = 0', ex: ['∇·**u** = 0,  ∇·**B** = 0', 'Conditions aux limites', 'linéaires homogènes'],
+      mech: ['Potentiels\n**B** = ∇×**A**', 'Projection\nde Leray'], join: 'ou' },
     { id: 'C2', name: 'Locale non\nlinéaire', g: 0, form: '*c*(**x**) = 0', ex: ['Résidu d\'EDP', 'stationnaire'],
-      mech: ['Projection\nnon linéaire', 'Pénalité,\nguidage'] },
+      mech: ['Projection\nnon linéaire', 'Pénalité,\nguidage'], join: 'ou' },
     { id: 'C3', name: 'Symétrie', g: 1, form: '*g*_#μ = μ', ex: ['**B** ↦ −**B**', 'Rotation *R*_π (VKS)'],
-      mech: ['*v*_θ équivariant', 'Loi de base\ninvariante'] },
+      mech: ['*v*_θ équivariant', 'Loi de base\ninvariante'], join: 'et' },
     { id: 'C4', name: 'Statistique\nen loi', g: 1, form: '𝔼_μ[ℒφ] = 0', ex: ['Bilan d\'énergie', '𝔼[ε] = 𝔼[*P*]'],
-      mech: ['Perte de\nstationnarité', 'Inclinaison\nexponentielle'] },
+      mech: ['Perte de\nstationnarité', 'Inclinaison\nexponentielle'], join: 'ou' },
   ];
   const fy0 = m(16.3), fh = m(24);        // vignette frame
   const glyphs = [];
@@ -53,12 +54,16 @@ export default async function draw(F, L) {
     glyphs.push(g);
     // form, examples
     L.text(a, x + colW / 2, m(44.2), c.form, { size: T.head, anchor: 'middle', valign: 'middle', color: TXT });
-    L.text(a, x + colW / 2, m(48.6), c.ex[0], { size: T.small, anchor: 'middle', valign: 'middle', color: SUB });
-    L.text(a, x + colW / 2, m(51.8), c.ex[1], { size: T.small, anchor: 'middle', valign: 'middle', color: SUB });
+    c.ex.forEach((s, j) => L.text(a, x + colW / 2, m(48.3 + 2.7 * j), s, { size: T.small, anchor: 'middle', valign: 'middle', color: SUB }));
     // mechanism box
     const by = m(59.2), bh = m(19.3);
     L.rect(a, x, by, colW, bh, { r: m(1.2), fill: G.col === BLUE ? BLUE_T : OR_T, stroke: G.col, width: 0.6 });
-    L.line(a, [x + m(3), by + bh / 2], [x + colW - m(3), by + bh / 2], { stroke: G.col, width: 0.35, opacity: 0.6 });
+    {
+      const jt = L.text(a, x + colW / 2, by + bh / 2, c.join, { size: T.small, anchor: 'middle', valign: 'middle', color: G.txt, italic: true });
+      const jb = jt.getBBox();
+      L.line(a, [x + m(3), by + bh / 2], [jb.x - m(1.2), by + bh / 2], { stroke: G.col, width: 0.35, opacity: 0.6 });
+      L.line(a, [jb.x + jb.width + m(1.2), by + bh / 2], [x + colW - m(3), by + bh / 2], { stroke: G.col, width: 0.35, opacity: 0.6 });
+    }
     L.text(a, x + colW / 2, by + bh * 0.25, c.mech[0], { size: T.label, anchor: 'middle', valign: 'middle', color: TXT, lineGap: 1.12 });
     L.text(a, x + colW / 2, by + bh * 0.75, c.mech[1], { size: T.label, anchor: 'middle', valign: 'middle', color: TXT, lineGap: 1.12 });
   });
@@ -197,18 +202,19 @@ export default async function draw(F, L) {
 
   // ---- sample rows : lois empiriques (masses de Dirac pondérées), mêmes axes que les densités ---------
   const sb = m(60.2), h0 = m(2.6), N = D.samples_mu.length;      // h0 = hauteur d'un poids uniforme 1/N
-  const stem = (x, h, col, edge) => { L.line(b, [x, sb], [x, sb - h], { stroke: edge, width: 0.6, cap: 'butt' }); L.circle(b, x, sb - h, m(0.5), { fill: col, stroke: edge, width: 0.35 }); };
+  const stem = (x, h, col, edge) => { L.line(b, [x, sb], [x, sb - h], { stroke: edge, width: 0.6, cap: 'butt' }); L.circle(b, x, sb - h, m(0.42), { fill: col, stroke: edge, width: 0.35 }); };
   for (const k of [0, 2]) L.line(b, [px[k] + m(1), sb], [px[k] + pw - m(1), sb], { stroke: GREY, width: 0.4, cap: 'butt' });
   for (const v of D.samples_mu) stem(Xs(0)(v), h0, DOT, DOT);
   L.text(b, px[0] + pw / 2, m(63.3), 'Échantillons', { size: T.small, anchor: 'middle', valign: 'middle', color: SUB });
   // projection : chaque échantillon envoyé sur 0
   {
     const X = Xs(1), tgt = [X(0), sb];
-    for (const v of D.samples_q) {
-      const s = [X(v), m(52.4)];
+    // anneaux décalés en hauteur un sur deux : les quantiles centraux ne sont qu'à 0,95 mm l'un de l'autre
+    D.samples_q.forEach((v, i) => {
+      const s = [X(v), m(i % 2 ? 51.2 : 52.4)];
       L.line(b, s, [tgt[0] + (s[0] - tgt[0]) * 0.14, tgt[1] + (s[1] - tgt[1]) * 0.14], { stroke: BLUE, width: 0.4, opacity: 0.85 });
-      ring(b, ...s, m(0.5), '#8a8a8a');
-    }
+      ring(b, ...s, m(0.45), '#8a8a8a');
+    });
     dot(b, ...tgt, m(1.0), BLUE);
   }
   // inclinaison exponentielle : mêmes échantillons, poids w_i

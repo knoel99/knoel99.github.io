@@ -16,7 +16,7 @@
 | Poids *w*_i décroissants vers la droite | *q*_θ est décalé à droite, β < 0 | conforme (calculé) |
 | Aucun nombre sur les axes de b | brief, P29 | conforme ; « Allures illustratives » sur la figure |
 
-Écart conscient : l'exemple C1 dit « Conditions aux limites » sans « linéaires homogènes » (place dans la colonne de 25,5 mm) ; l'en-tête « Locale linéaire » et la légende portent la précision.
+Écart levé au contrôle indépendant : l'exemple C1 dit maintenant « Conditions aux limites / linéaires homogènes » (troisième ligne). Même contrôle : « ou » / « et » (C3) dans les cases de mécanisme, anneaux et points des rangées de b réduits et décalés (plus de chevauchement), légende précisée (β = −1,11 des poids, quantiles de μ à gauche, tirets pour *q*_θ).
 
 ## Grille (style.md §4), notes 1–5
 | Critère | a | b | Raison d'une note < 5 |

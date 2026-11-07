@@ -141,7 +141,7 @@ window.P4 = window.P4 || (function () {
   var en = P.lang() === "en";
   var ss = box.querySelector("#wk-s"), sv = box.querySelector("#wk-sv"), btn = box.querySelector("#wk-run"), out = box.querySelector("#wk-out");
   var c1 = box.querySelector("#wk-c1"), c2 = box.querySelector("#wk-c2");
-  var DT = 0.01, T = 10000, SHOW = 800, EVERY = 20, NB = 60, LO = -2.2, HI = 2.2, seed = 11, data = null;
+  var DT = 0.01, T = 10000, NP = 4, SHOW = 800, EVERY = 20, NB = 60, LO = -2.2, HI = 2.2, seed = 11, data = null;
   function U(x) { return x * x * x * x / 4 - x * x / 2; }
   function tauExact(s) {
     var a = -3, b = 1, N = 4000, h = (b - a) / N, inner = 0, outer = 0, prevI = 0, prevO = null;
@@ -154,16 +154,19 @@ window.P4 = window.P4 || (function () {
     return 2 / (s * s) * outer;
   }
   function compute() {
-    var s = +ss.value, g = P.gauss(P.rng(seed)), x = -1, well = -1, nsw = 0, sq = s * Math.sqrt(DT);
+    var s = +ss.value, g = P.gauss(P.rng(seed)), sq = s * Math.sqrt(DT), nsw = 0;
     var path = new Float32Array(SHOW / DT / EVERY), hist = new Array(NB).fill(0), N = Math.round(T / DT);
-    for (var n = 0; n < N; n++) {
-      x += -(x * x * x - x) * DT + sq * g();
-      if ((well < 0 && x > 1) || (well > 0 && x < -1)) { well = -well; nsw++; }
-      if (n < SHOW / DT && n % EVERY === 0) path[n / EVERY] = x;
-      var b = Math.floor((x - LO) / (HI - LO) * NB); if (b >= 0 && b < NB) hist[b]++;
+    for (var p = 0; p < NP; p++) {
+      var x = -1, well = -1;
+      for (var n = 0; n < N; n++) {
+        x += -(x * x * x - x) * DT + sq * g();
+        if ((well < 0 && x > 1) || (well > 0 && x < -1)) { well = -well; nsw++; }
+        if (p === 0 && n < SHOW / DT && n % EVERY === 0) path[n / EVERY] = x;
+        var b = Math.floor((x - LO) / (HI - LO) * NB); if (b >= 0 && b < NB) hist[b]++;
+      }
     }
     var Z = 0, hz = 0.001; for (var y = -3; y <= 3; y += hz) Z += Math.exp(-2 * U(y) / (s * s)) * hz;
-    data = { s: s, path: path, hist: hist.map(function (c) { return c / (N * (HI - LO) / NB); }), nsw: nsw, Z: Z,
+    data = { s: s, path: path, hist: hist.map(function (c) { return c / (NP * N * (HI - LO) / NB); }), nsw: nsw, Z: Z,
              tauK: 2 * Math.PI / Math.SQRT2 * Math.exp(0.5 / (s * s)), tauE: tauExact(s) };
   }
   function draw() {
@@ -185,7 +188,7 @@ window.P4 = window.P4 || (function () {
     hx.fillStyle = s1; hx.globalAlpha = 0.55;
     for (var b = 0; b < NB; b++) { var x0 = LO + b * (HI - LO) / NB, x1 = x0 + (HI - LO) / NB; hx.fillRect(fh.X(x0) + 1, fh.Y(data.hist[b]), fh.X(x1) - fh.X(x0) - 2, fh.Y(0) - fh.Y(data.hist[b])); }
     hx.globalAlpha = 1; P.polyline(hx, fh, xs, ys, s2, 2.5); hx.restore();
-    var est = data.nsw > 0 ? P.fmt(T / data.nsw, 1) : "> " + T;
+    var est = data.nsw > 0 ? P.fmt(NP * T / data.nsw, 1) + " (± " + Math.round(100 / Math.sqrt(data.nsw)) + " %)" : "> " + NP * T;
     out.textContent = (en ? "Switches: " : "Bascules : ") + data.nsw + (en ? " — simulated mean time τ ≈ " : " — temps moyen simulé τ ≈ ") + est +
       (en ? " ; exact (integral formula) " : " ; exact (formule intégrale) ") + P.fmt(data.tauE, 1) + (en ? " ; Kramers asymptotics " : " ; asymptotique de Kramers ") + P.fmt(data.tauK, 1) + ".";
   }

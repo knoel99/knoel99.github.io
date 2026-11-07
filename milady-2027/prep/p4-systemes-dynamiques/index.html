@@ -190,21 +190,21 @@ window.Quarto = {
 <td style="text-align: center;">3,5 h</td>
 <td style="text-align: center;">2</td>
 <td>Chapitre 4 : Lorenz, région piège, exposants de Lyapunov, attracteurs étranges, crises</td>
-<td style="text-align: center;">8, 13</td>
+<td style="text-align: center;">13</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">5</td>
 <td style="text-align: center;">3,5 h</td>
 <td style="text-align: center;">2</td>
-<td>Chapitre 5, sections 5.1 à 5.3 : mesures invariantes, Krylov–Bogoliubov, Birkhoff, mesure SRB, équation de Liouville</td>
-<td style="text-align: center;">9</td>
+<td>Chapitre 5, sections 5.1 à 5.4 : mesures invariantes, Krylov–Bogoliubov, Birkhoff, mesure SRB, équations de Liouville et de Fokker–Planck</td>
+<td style="text-align: center;">15</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">6</td>
 <td style="text-align: center;">3,5 h</td>
 <td style="text-align: center;">3</td>
-<td>Chapitre 5, sections 5.4 à 5.6 : Fokker–Planck, forme faible stationnaire, bilan d’énergie, convexité et mesures ergodiques</td>
-<td style="text-align: center;">12, 15</td>
+<td>Chapitre 5, sections 5.5 et 5.6 : forme faible stationnaire, bilan d’énergie, convexité et mesures ergodiques</td>
+<td style="text-align: center;">8, 9, 12</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">7</td>
@@ -244,17 +244,13 @@ window.Quarto = {
 <p><span class="tag">Remarque 1.2 — Tout se ramène à cette forme</span> Une équation d’ordre deux comme celle du pendule, <span class="math inline">\ddot\theta = -\sin\theta</span>, devient un système d’ordre un en posant <span class="math inline">\mathbf{x} = (\theta, \omega)</span> avec <span class="math inline">\dot\theta = \omega</span> et <span class="math inline">\dot\omega = -\sin\theta</span>. Un système non autonome <span class="math inline">\dot{\mathbf{x}} = F(\mathbf{x}, t)</span> devient autonome en ajoutant le temps comme variable : <span class="math inline">\dot\tau = 1</span>. Enfin, une équation aux dérivées partielles comme l’équation d’induction, une fois discrétisée en espace (différences finies, éléments finis, Fourier), est un système de ce type avec <span class="math inline">n</span> égal au nombre d’inconnues.</p>
 </div>
 <div class="ex">
-<p><span class="tag">Exemple 1.3 — Les trois systèmes qui reviennent dans ce module</span> (a) L’<strong>oscillateur amorti</strong> <span class="math inline">\ddot x + \gamma\dot x + x = 0</span>, soit <span class="math inline">F(x, y) = (y, -x - \gamma y)</span>.</p>
-<ol start="2" type="a">
-<li>Le <strong>système de Lorenz</strong> (1963), troncature à trois modes de la convection thermique :</li>
-</ol>
+<p><span class="tag">Exemple 1.3 — Les trois systèmes qui reviennent dans ce module</span> <em>(a)</em> L’<strong>oscillateur amorti</strong> <span class="math inline">\ddot x + \gamma\dot x + x = 0</span>, soit <span class="math inline">F(x, y) = (y, -x - \gamma y)</span>.</p>
+<p><em>(b)</em> Le <strong>système de Lorenz</strong> (1963), troncature à trois modes de la convection thermique :</p>
 <p><span class="math display">
 \dot x = s\,(y - x), \qquad \dot y = x\,(r - z) - y, \qquad \dot z = xy - b\,z ,
 </span></p>
 <p>avec les valeurs classiques <span class="math inline">s = 10</span> (nombre de Prandtl, souvent noté <span class="math inline">\sigma</span> ; on réserve ici <span class="math inline">\sigma</span> au bruit), <span class="math inline">b = 8/3</span> et <span class="math inline">r = 28</span>.</p>
-<ol start="3" type="a">
-<li>Le <strong>modèle de Gissinger</strong> (2012), modèle à trois modes des renversements du champ magnétique, avec le quadripôle <span class="math inline">Q</span>, le dipôle <span class="math inline">D</span> et un mode de vitesse <span class="math inline">V</span> :</li>
-</ol>
+<p><em>(c)</em> Le <strong>modèle de Gissinger</strong> (2012), modèle à trois modes des renversements du champ magnétique, avec le quadripôle <span class="math inline">Q</span>, le dipôle <span class="math inline">D</span> et un mode de vitesse <span class="math inline">V</span> :</p>
 <p><span class="math display">
 \dot Q = \mu Q - V D, \qquad \dot D = -\nu D + V Q, \qquad \dot V = \Gamma - V + Q D .
 </span></p>
@@ -749,7 +745,8 @@ T(r) = \frac{2}{\sqrt r}\arctan\frac{a}{\sqrt r} = \frac{\pi}{\sqrt r} - \frac{2
 <canvas id="wb-c1" role="img" aria-label="Graphe de f(x) en fonction de x pour la valeur choisie de r, avec les points fixes : disques pleins pour les points stables, cercles creux pour les points instables, et des flèches indiquant le sens du mouvement sur l'axe."></canvas>
 <canvas id="wb-c2" role="img" aria-label="Diagramme de bifurcation : position des points fixes en fonction de r, branches stables en trait continu, branches instables en pointillé, et une ligne verticale à la valeur choisie de r."></canvas>
 </div>
-<p class="widget-note"><span class="p4-key"><span class="p4-sw" style="background:var(--s1)"></span>stable (trait plein, disque plein)</span><span class="p4-key"><span class="p4-sw" style="border:2.5px solid var(--s2)"></span>instable (pointillé, cercle creux)</span> Déplacez <em>r</em> lentement à travers 0 et regardez les points fixes naître, s'échanger la stabilité ou disparaître. Avec la fourche imparfaite, le paramètre <em>h</em> brise la symétrie <em>x</em> ↦ −<em>x</em>.</p>
+<p class="widget-note"><span class="p4-key"><span class="p4-sw" style="background:var(--s1)"></span>stable (trait plein, disque plein)</span><span class="p4-key"><span class="p4-sw" style="border:2.5px solid var(--s2)"></span>instable (pointillé, cercle creux)</span></p>
+<p class="widget-note">Déplacez <em>r</em> lentement à travers 0 et regardez les points fixes naître, s'échanger la stabilité ou disparaître. Avec la fourche imparfaite, le paramètre <em>h</em> brise la symétrie <em>x</em> ↦ −<em>x</em>.</p>
 </div>
 <div class="recap">
 <div class="recap-title">
@@ -794,15 +791,10 @@ T(r) = \frac{2}{\sqrt r}\arctan\frac{a}{\sqrt r} = \frac{\pi}{\sqrt r} - \frac{2
 </div>
 </div>
 <div class="prop">
-<p><span class="tag">Proposition 4.4 — Somme des exposants, exposant nul</span> (i) <span class="math inline">\lambda_1 + \dots + \lambda_n = \lim_{t\to\infty}\frac1t\int_0^t \nabla\cdot F(\mathbf{x}(\tau))\,\mathrm{d}\tau</span>. Pour Lorenz, cette somme vaut <span class="math inline">-(s + 1 + b) = -41/3</span>.</p>
-<ol start="2" type="i">
-<li>Si la trajectoire est bornée et ne tend pas vers un point fixe, l’un des exposants est nul : celui de la direction du flot.</li>
-</ol>
+<p><span class="tag">Proposition 4.4 — Somme des exposants, exposant nul</span> <em>(i)</em> <span class="math inline">\lambda_1 + \dots + \lambda_n = \lim_{t\to\infty}\frac1t\int_0^t \nabla\cdot F(\mathbf{x}(\tau))\,\mathrm{d}\tau</span>. Pour Lorenz, cette somme vaut <span class="math inline">-(s + 1 + b) = -41/3</span>.</p>
+<p><em>(ii)</em> Si la trajectoire est bornée et ne tend pas vers un point fixe, l’un des exposants est nul : celui de la direction du flot.</p>
 <div class="proof">
-<p><span class="proof-title"><em>Preuve</em>. </span></p>
-<ol type="i">
-<li>La somme des <span class="math inline">n</span> exposants est le taux de croissance du volume d’un parallélépipède de dimension <span class="math inline">n</span>, c’est-à-dire de <span class="math inline">|\det D\Phi^t(\mathbf{x}_0)|</span> (théorème 4.3), et la formule de Liouville (1.1) donne <span class="math inline">\frac1t\ln\det D\Phi^t = \frac1t\int_0^t\nabla\cdot F</span>. (ii) En dérivant <span class="math inline">\frac{\mathrm{d}}{\mathrm{d}t}F(\mathbf{x}(t)) = DF(\mathbf{x}(t))\,\dot{\mathbf{x}} = DF(\mathbf{x}(t))\,F(\mathbf{x}(t))</span>, on voit que <span class="math inline">F(\mathbf{x}(t))</span> est solution de l’équation variationnelle : <span class="math inline">F(\mathbf{x}(t)) = D\Phi^t(\mathbf{x}_0)\,F(\mathbf{x}_0)</span>. Le long d’une trajectoire bornée qui ne tend pas vers un point fixe, <span class="math inline">|F(\mathbf{x}(t))|</span> reste borné et ne tend pas vers <span class="math inline">0</span>, donc son taux de croissance exponentiel est nul. <span class="qed">∎</span></li>
-</ol>
+<p><span class="proof-title"><em>Preuve</em>. </span><em>(i)</em> La somme des <span class="math inline">n</span> exposants est le taux de croissance du volume d’un parallélépipède de dimension <span class="math inline">n</span>, c’est-à-dire de <span class="math inline">|\det D\Phi^t(\mathbf{x}_0)|</span> (théorème 4.3), et la formule de Liouville (1.1) donne <span class="math inline">\frac1t\ln\det D\Phi^t = \frac1t\int_0^t\nabla\cdot F</span>. (ii) En dérivant <span class="math inline">\frac{\mathrm{d}}{\mathrm{d}t}F(\mathbf{x}(t)) = DF(\mathbf{x}(t))\,\dot{\mathbf{x}} = DF(\mathbf{x}(t))\,F(\mathbf{x}(t))</span>, on voit que <span class="math inline">F(\mathbf{x}(t))</span> est solution de l’équation variationnelle : <span class="math inline">F(\mathbf{x}(t)) = D\Phi^t(\mathbf{x}_0)\,F(\mathbf{x}_0)</span>. Le long d’une trajectoire bornée qui ne tend pas vers un point fixe, <span class="math inline">|F(\mathbf{x}(t))|</span> reste borné et ne tend pas vers <span class="math inline">0</span>, donc son taux de croissance exponentiel est nul. <span class="qed">∎</span></p>
 </div>
 </div>
 <div class="key">
@@ -912,7 +904,7 @@ T_p \approx \frac{1}{\lambda_1}\ln\frac{\Delta}{\delta_0}.
 <p><span class="tag">Définition 5.1 — Mesure invariante</span> Une mesure de probabilité <span class="math inline">\mu</span> sur <span class="math inline">\mathbb{R}^n</span> est <strong>invariante</strong> par le flot si <span class="math inline">\mu\big((\Phi^t)^{-1}(A)\big) = \mu(A)</span> pour tout ensemble mesurable <span class="math inline">A</span> et tout <span class="math inline">t \ge 0</span>. De façon équivalente, <span class="math inline">\mathbb{E}_\mu[g\circ\Phi^t] = \mathbb{E}_\mu[g]</span> pour toute fonction <span class="math inline">g</span> continue bornée. Autrement dit : si la condition initiale <span class="math inline">X_0</span> suit la loi <span class="math inline">\mu</span>, alors <span class="math inline">X_t = \Phi^t(X_0)</span> suit encore la loi <span class="math inline">\mu</span> à tout instant (stationnarité en loi).</p>
 </div>
 <div class="ex">
-<p><span class="tag">Exemple 5.2 — Trois mesures invariantes</span> (a) La masse de Dirac <span class="math inline">\delta_{\mathbf{x}^*}</span> en un point fixe. (b) Pour une orbite périodique <span class="math inline">\mathbf{x}(t)</span> de période <span class="math inline">T</span>, la mesure <span class="math inline">\frac1T\int_0^T\delta_{\mathbf{x}(t)}\,\mathrm{d}t</span>, qui charge chaque arc proportionnellement au temps passé : sa densité le long de la courbe est proportionnelle à <span class="math inline">1/|F|</span>. (c) Pour Lorenz, la <strong>mesure naturelle</strong>, limite de l’histogramme d’une longue trajectoire typique.</p>
+<p><span class="tag">Exemple 5.2 — Trois mesures invariantes</span> <em>(a)</em> La masse de Dirac <span class="math inline">\delta_{\mathbf{x}^*}</span> en un point fixe. (b) Pour une orbite périodique <span class="math inline">\mathbf{x}(t)</span> de période <span class="math inline">T</span>, la mesure <span class="math inline">\frac1T\int_0^T\delta_{\mathbf{x}(t)}\,\mathrm{d}t</span>, qui charge chaque arc proportionnellement au temps passé : sa densité le long de la courbe est proportionnelle à <span class="math inline">1/|F|</span>. (c) Pour Lorenz, la <strong>mesure naturelle</strong>, limite de l’histogramme d’une longue trajectoire typique.</p>
 </div>
 <div class="thm">
 <p><span class="tag">Théorème 5.3 — Krylov–Bogoliubov</span> Si le flot laisse invariant un compact <span class="math inline">K</span> (par exemple une région piège), il existe au moins une mesure de probabilité invariante portée par <span class="math inline">K</span>.</p>
@@ -1129,7 +1121,7 @@ T_p \approx \frac{1}{\lambda_1}\ln\frac{\Delta}{\delta_0}.
 <p>Voici la conséquence pour le stage. Sous le seuil de la crise (<span class="math inline">\Gamma \le 0{,}86</span> dans le modèle de Gissinger avec <span class="math inline">\mu = 0{,}119</span>), il existe deux attracteurs séparés et deux mesures physiques ergodiques <span class="math inline">\mu^+_\Gamma</span> (dipôle positif) et <span class="math inline">\mu^-_\Gamma = S_\#\mu^+_\Gamma</span>. Aucune identité de stationnarité ne peut dire si les données doivent être réparties moitié-moitié, aux trois quarts, ou entièrement d’un côté : ce poids est fixé par la répartition des conditions initiales, c’est-à-dire par la façon dont les données ont été produites. Au-dessus du seuil, l’attracteur est unique et symétrique, et le poids est déterminé (la fraction du temps passée avec <span class="math inline">D &gt; 0</span> tend vers <span class="math inline">1/2</span>).</p>
 <p>La dernière partie du code précédent illustre exactement ce point à <span class="math inline">\Gamma = 0{,}84</span> : sur 40 trajectoires, 15 sont sur l’attracteur <span class="math inline">D &gt; 0</span> ; les mélanges <span class="math inline">p = 1</span>, <span class="math inline">0{,}75</span>, <span class="math inline">0{,}5</span> et <span class="math inline">0</span> ont des moyennes <span class="math inline">\mathbb{E}[D]</span> très différentes (<span class="math inline">+1{,}07</span> à <span class="math inline">-1{,}07</span>), mais leurs six résidus restent tous de l’ordre de <span class="math inline">10^{-2}</span>, c’est-à-dire du niveau du bruit d’échantillonnage. Les identités ne voient pas la différence.</p>
 <div class="note">
-<p><span class="tag">Remarque 5.17 — Deux conséquences pour un modèle génératif</span> (i) Les Dirac aux points fixes vérifient aussi (5.1), puisque <span class="math inline">F(\mathbf{x}^*) = \mathbf{0}</span> annule <span class="math inline">F\cdot\nabla\varphi</span> : un modèle qui s’effondrerait sur <span class="math inline">N_+</span> satisferait parfaitement la contrainte. Les identités de stationnarité doivent donc être combinées à un terme d’attache aux données ; c’est aussi ce que remarquent les travaux qui apprennent des dynamiques à partir de mesures invariantes, où la non-unicité de ces mesures est explicitement signalée (Schiff et al., 2024). (ii) Avec un bruit non dégénéré, la loi stationnaire est unique ; si le système est symétrique, son image par <span class="math inline">S</span> est encore stationnaire, donc égale à elle-même : <strong>le bruit choisit le mélange symétrique</strong> <span class="math inline">p = 1/2</span>. L’exercice 15 le vérifie sur le double puits, où toutes les particules partent du même puits et se répartissent pourtant à parts égales.</p>
+<p><span class="tag">Remarque 5.17 — Deux conséquences pour un modèle génératif</span> <em>(i)</em> Les Dirac aux points fixes vérifient aussi (5.1), puisque <span class="math inline">F(\mathbf{x}^*) = \mathbf{0}</span> annule <span class="math inline">F\cdot\nabla\varphi</span> : un modèle qui s’effondrerait sur <span class="math inline">N_+</span> satisferait parfaitement la contrainte. Les identités de stationnarité doivent donc être combinées à un terme d’attache aux données ; c’est aussi ce que remarquent les travaux qui apprennent des dynamiques à partir de mesures invariantes, où la non-unicité de ces mesures est explicitement signalée (Schiff et al., 2024). (ii) Avec un bruit non dégénéré, la loi stationnaire est unique ; si le système est symétrique, son image par <span class="math inline">S</span> est encore stationnaire, donc égale à elle-même : <strong>le bruit choisit le mélange symétrique</strong> <span class="math inline">p = 1/2</span>. L’exercice 15 le vérifie sur le double puits, où toutes les particules partent du même puits et se répartissent pourtant à parts égales.</p>
 </div>
 <div class="recap">
 <div class="recap-title">
@@ -1258,7 +1250,8 @@ T_p \approx \frac{1}{\lambda_1}\ln\frac{\Delta}{\delta_0}.
 <canvas id="wk-c1" role="img" aria-label="Trajectoire x(t) de la particule dans le double puits sur les 800 premières unités de temps."></canvas>
 <canvas id="wk-c2" role="img" aria-label="Histogramme des positions comparé à la densité stationnaire proportionnelle à exp(-2U/σ²)."></canvas>
 </div>
-<p class="widget-note"><span class="p4-key"><span class="p4-sw" style="background:var(--s1)"></span>simulation (Euler–Maruyama, pas 0,01, durée 10 000)</span><span class="p4-key"><span class="p4-sw" style="background:var(--s2)"></span>densité stationnaire ρ(x) ∝ exp(−2U(x)/σ²)</span> Le temps moyen de bascule d'un puits à l'autre est estimé par la durée totale divisée par le nombre de bascules. Quand σ diminue, il croît comme exp(2ΔU/σ²) : à σ = 0,30, il n'y a plus que quelques bascules et l'estimation devient imprécise.</p>
+<p class="widget-note"><span class="p4-key"><span class="p4-sw" style="background:var(--s1)"></span>simulation (Euler–Maruyama, pas 0,01, 4 particules × 10 000 unités de temps)</span><span class="p4-key"><span class="p4-sw" style="background:var(--s2)"></span>densité stationnaire ρ(x) ∝ exp(−2U(x)/σ²)</span></p>
+<p class="widget-note">Le temps moyen de bascule d'un puits à l'autre est estimé par la durée totale simulée divisée par le nombre de bascules ; l'incertitude relative vaut environ 1/√(nombre de bascules). Quand σ diminue, il croît comme exp(2ΔU/σ²) : à σ = 0,30, il n'y a plus qu'une trentaine de bascules et l'estimation devient imprécise.</p>
 </div>
 <h3 id="la-formule-de-rice">6.2 La formule de Rice</h3>
 <p>L’expérience E1 cherche à prédire la fréquence des renversements à partir d’un modèle génératif qui ne produit que des <strong>échantillons de la loi stationnaire</strong>, sans aucune information temporelle. C’est possible grâce à une formule de Rice (1944, 1945).</p>
@@ -1365,12 +1358,9 @@ T_p \approx \frac{1}{\lambda_1}\ln\frac{\Delta}{\delta_0}.
 <p>avec <span class="math inline">\mu = 0{,}119</span> et <span class="math inline">\nu = 0{,}1</span> fixés et le forçage <span class="math inline">\Gamma</span> comme paramètre de contrôle. Selon Gissinger (2012), <span class="math inline">V</span> représente un mode de l’écoulement qui brise la symétrie miroir par rapport au plan équatorial, entretenu par le forçage <span class="math inline">\Gamma</span>, et le terme <span class="math inline">QD</span> de la troisième équation représente la rétroaction de la force de Lorentz ; <span class="math inline">V</span> ne change pas de signe lors des renversements. Dans l’article de 2010 (Gissinger, Dormy et Fauve), les rôles de <span class="math inline">D</span> et <span class="math inline">Q</span> sont échangés ; on suit ici la convention de 2012, celle de l’expérience E1.</p>
 </div>
 <div class="prop">
-<p><span class="tag">Proposition 7.2 — Symétrie, dissipation, points fixes</span> (i) Le système est équivariant sous <span class="math inline">S : (Q, D, V) \mapsto (-Q, -D, V)</span>, l’image de <span class="math inline">\mathbf{B} \mapsto -\mathbf{B}</span>. (ii) Sa divergence vaut <span class="math inline">\mu - \nu - 1 = -0{,}981</span> : il contracte les volumes. (iii) Pour <span class="math inline">\mu = 0{,}119</span>, <span class="math inline">\nu = 0{,}1</span> et <span class="math inline">\Gamma</span> entre <span class="math inline">0{,}8</span> et <span class="math inline">1</span>, ses points fixes sont <span class="math inline">O = (0, 0, \Gamma)</span>, foyer faiblement instable, et <span class="math inline">N_\pm</span>, cols-foyers instables ; les points <span class="math inline">M_\pm</span> n’existent pas.</p>
+<p><span class="tag">Proposition 7.2 — Symétrie, dissipation, points fixes</span> <em>(i)</em> Le système est équivariant sous <span class="math inline">S : (Q, D, V) \mapsto (-Q, -D, V)</span>, l’image de <span class="math inline">\mathbf{B} \mapsto -\mathbf{B}</span>. (ii) Sa divergence vaut <span class="math inline">\mu - \nu - 1 = -0{,}981</span> : il contracte les volumes. (iii) Pour <span class="math inline">\mu = 0{,}119</span>, <span class="math inline">\nu = 0{,}1</span> et <span class="math inline">\Gamma</span> entre <span class="math inline">0{,}8</span> et <span class="math inline">1</span>, ses points fixes sont <span class="math inline">O = (0, 0, \Gamma)</span>, foyer faiblement instable, et <span class="math inline">N_\pm</span>, cols-foyers instables ; les points <span class="math inline">M_\pm</span> n’existent pas.</p>
 <div class="proof">
-<p><span class="proof-title"><em>Preuve</em>. </span></p>
-<ol type="i">
-<li><span class="math inline">F(-Q, -D, V) = \big({-\mu Q} + VD,\ \nu D - VQ,\ \Gamma - V + QD\big) = S\,F(Q, D, V)</span>. (ii) La trace de la jacobienne de l’exemple 2.7 vaut <span class="math inline">\mu - \nu - 1</span>. (iii) Calcul de l’exemple 2.7 : en <span class="math inline">O</span>, la partie réelle <span class="math inline">(\mu - \nu)/2 = 0{,}0095</span> est positive et le discriminant <span class="math inline">(\mu + \nu)^2 - 4\Gamma^2</span> est négatif dès que <span class="math inline">\Gamma &gt; 0{,}11</span> ; <span class="math inline">M_\pm</span> exigerait <span class="math inline">\sqrt{\mu\nu} \approx 0{,}109 &gt; \Gamma</span>. Pour <span class="math inline">N_\pm</span> à <span class="math inline">\Gamma = 0{,}9</span>, le code du chapitre 2 donne les valeurs propres <span class="math inline">-1{,}17</span> et <span class="math inline">0{,}094 \pm 0{,}607\,i</span> ; en relançant ce code pour <span class="math inline">\Gamma = 0{,}80</span> et <span class="math inline">\Gamma = 1{,}00</span>, on obtient <span class="math inline">0{,}088 \pm 0{,}579\,i</span> et <span class="math inline">0{,}100 \pm 0{,}632\,i</span> (avec une troisième valeur propre proche de <span class="math inline">-1{,}17</span>) : la partie réelle reste positive sur toute la plage. <span class="qed">∎</span></li>
-</ol>
+<p><span class="proof-title"><em>Preuve</em>. </span><em>(i)</em> <span class="math inline">F(-Q, -D, V) = \big({-\mu Q} + VD,\ \nu D - VQ,\ \Gamma - V + QD\big) = S\,F(Q, D, V)</span>. (ii) La trace de la jacobienne de l’exemple 2.7 vaut <span class="math inline">\mu - \nu - 1</span>. (iii) Calcul de l’exemple 2.7 : en <span class="math inline">O</span>, la partie réelle <span class="math inline">(\mu - \nu)/2 = 0{,}0095</span> est positive et le discriminant <span class="math inline">(\mu + \nu)^2 - 4\Gamma^2</span> est négatif dès que <span class="math inline">\Gamma &gt; 0{,}11</span> ; <span class="math inline">M_\pm</span> exigerait <span class="math inline">\sqrt{\mu\nu} \approx 0{,}109 &gt; \Gamma</span>. Pour <span class="math inline">N_\pm</span> à <span class="math inline">\Gamma = 0{,}9</span>, le code du chapitre 2 donne les valeurs propres <span class="math inline">-1{,}17</span> et <span class="math inline">0{,}094 \pm 0{,}607\,i</span> ; en relançant ce code pour <span class="math inline">\Gamma = 0{,}80</span> et <span class="math inline">\Gamma = 1{,}00</span>, on obtient <span class="math inline">0{,}088 \pm 0{,}579\,i</span> et <span class="math inline">0{,}100 \pm 0{,}632\,i</span> (avec une troisième valeur propre proche de <span class="math inline">-1{,}17</span>) : la partie réelle reste positive sur toute la plage. <span class="qed">∎</span></p>
 </div>
 </div>
 <h3 id="le-seuil-des-renversements">7.2 Le seuil des renversements</h3>
@@ -1441,7 +1431,8 @@ T_p \approx \frac{1}{\lambda_1}\ln\frac{\Delta}{\delta_0}.
 <canvas id="wg-c2" role="img" aria-label="Projection des deux trajectoires dans le plan (Q, D)."></canvas>
 <canvas id="wg-c3" role="img" aria-label="Histogramme de D pour chacune des deux trajectoires."></canvas>
 </div>
-<p class="widget-note"><span class="p4-key"><span class="p4-sw" style="background:var(--s1)"></span>trajectoire partant de (Q₀, D₀, V₀)</span><span class="p4-key"><span class="p4-sw" style="background:var(--s2)"></span>trajectoire partant de l'image (−Q₀, −D₀, V₀)</span> μ = 0,119 et ν = 0,1 sont fixés ; intégration RK4 (pas 0,02) dans votre navigateur, transitoire de 600 unités de temps retiré, 2 000 unités affichées. Sous le seuil (Γ ≤ 0,86), chaque trajectoire reste sur son attracteur et les deux histogrammes sont symétriques l'un de l'autre ; au-dessus (Γ ≥ 0,865), les attracteurs ont fusionné et D change de signe de façon irrégulière.</p>
+<p class="widget-note"><span class="p4-key"><span class="p4-sw" style="background:var(--s1)"></span>trajectoire partant de (Q₀, D₀, V₀)</span><span class="p4-key"><span class="p4-sw" style="background:var(--s2)"></span>trajectoire partant de l'image (−Q₀, −D₀, V₀)</span></p>
+<p class="widget-note">μ = 0,119 et ν = 0,1 sont fixés ; intégration RK4 (pas 0,02) dans votre navigateur, transitoire de 600 unités de temps retiré, 2 000 unités affichées. Sous le seuil (Γ ≤ 0,86), chaque trajectoire reste sur son attracteur et les deux histogrammes sont symétriques l'un de l'autre ; au-dessus (Γ ≥ 0,865), les attracteurs ont fusionné et D change de signe de façon irrégulière.</p>
 </div>
 <h3 id="ce-que-la-loi-invariante-apprend-au-modèle-génératif">7.3 Ce que la loi invariante apprend au modèle génératif</h3>
 <p>Les chapitres précédents fournissent une liste de propriétés de <span class="math inline">\mu_\Gamma</span> qu’un modèle génératif conditionnel <span class="math inline">q_\theta(\cdot \mid \Gamma)</span> doit reproduire, et que l’expérience E1 contrôle :</p>
