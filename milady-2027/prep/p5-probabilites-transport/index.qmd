@@ -684,7 +684,7 @@ $$
 
 :::: prop
 [Proposition 3.11 — Propriétés de l'ESS]{.tag}
-(i) $1 \le \mathrm{ESS} \le N$, avec $\mathrm{ESS} = N$ si et seulement si tous les poids sont égaux, et $\mathrm{ESS} = 1$ si un seul poids est non nul.
+(i) Si les poids ne sont pas tous nuls, $1 \le \mathrm{ESS} \le N$, avec $\mathrm{ESS} = N$ si et seulement si tous les poids sont égaux, et $\mathrm{ESS} = 1$ si un seul poids est non nul.
 
 (ii) Quand $N \to \infty$, $\mathrm{ESS}/N \to \mathbb{E}_q[w]^2/\mathbb{E}_q[w^2] = 1/\mathbb{E}_q[(w/\mathbb{E}_q w)^2]$.
 
@@ -693,7 +693,7 @@ $$
 :::
 ::::
 
-L'interprétation usuelle est que la variance de $\hat I_N^{\mathrm{AN}}$ est à peu près celle d'une moyenne de $\mathrm{ESS}$ tirages indépendants de $p$. C'est une heuristique, utile mais pas un théorème : Elvira, Martino et Robert (2022) en discutent les limites. L'exercice 7 montre que pour une cible $\mathcal{N}(0, 1)$ et une proposition $\mathcal{N}(\mu, 1)$, $\mathrm{ESS}/N \to e^{-\mu^2}$ : décaler la proposition de 2 écarts-types ne laisse que 1,8 % de tirages utiles.
+L'interprétation usuelle est que la variance de $\hat I_N^{\mathrm{AN}}$ est à peu près celle d'une moyenne de $\mathrm{ESS}$ tirages indépendants de $p$. C'est une heuristique, utile mais pas un théorème : Elvira, Martino et Robert (2022) en discutent les limites. L'exercice 7 montre que pour une cible $\mathcal{N}(0, 1)$ et une proposition $\mathcal{N}(a, 1)$, $\mathrm{ESS}/N \to e^{-a^2}$ : décaler la proposition de 2 écarts-types ne laisse que 1,8 % de tirages utiles.
 
 ```python
 import numpy as np
@@ -750,7 +750,7 @@ for mu_q in [0.0, 1.0, 2.0, 3.0]:                     # proposition N(mu_q, 1), 
 # q = N(3, 1) : ESS/N = 0.00101 (théorie exp(-mu^2) = 0.000123) ; E_p[X^2] ~ 0.882
 ```
 
-Trois enseignements. Le produit $|\text{erreur}|\times\sqrt N$ reste de l'ordre de $\sigma \approx 0{,}45$ (pour une erreur gaussienne, sa moyenne vaut $\sigma\sqrt{2/\pi} \approx 0{,}36$) ; l'intervalle de confiance couvre la vraie valeur dans 95,5 % des répétitions. L'échantillonnage d'importance transforme un événement invisible en une estimation précise à $0{,}3$ % près. Enfin, la dernière ligne contient un piège : pour $\mu = 3$, l'ESS **estimé** ($10^{-3}$) est huit fois plus grand que l'ESS **limite** ($1{,}2\times10^{-4}$). Les tirages n'ont pas encore visité la région qui porte les plus gros poids, si bien que l'ESS empirique est optimiste et que l'estimation $0{,}882$ de $\mathbb{E}_p[X^2] = 1$ est fausse sans que rien ne l'annonce. Un ESS faible est un signal d'alarme fiable ; un ESS correct n'est pas une garantie.
+Trois enseignements. Le produit $|\text{erreur}|\times\sqrt N$ reste de l'ordre de $\sigma \approx 0{,}45$ (pour une erreur gaussienne, sa moyenne vaut $\sigma\sqrt{2/\pi} \approx 0{,}36$) ; l'intervalle de confiance couvre la vraie valeur dans 95,5 % des répétitions. L'échantillonnage d'importance transforme un événement invisible en une estimation précise à $0{,}3$ % près. Enfin, la dernière ligne contient un piège : pour une proposition décalée de $a = 3$ (variable `mu_q` du code), l'ESS **estimé** ($10^{-3}$) est huit fois plus grand que l'ESS **limite** ($1{,}2\times10^{-4}$). Les tirages n'ont pas encore visité la région qui porte les plus gros poids, si bien que l'ESS empirique est optimiste et que l'estimation $0{,}882$ de $\mathbb{E}_p[X^2] = 1$ est fausse sans que rien ne l'annonce. Un ESS faible est un signal d'alarme fiable ; un ESS correct n'est pas une garantie.
 
 :::: recap
 ::: recap-title
@@ -1409,7 +1409,7 @@ Un mouvement brownien standard est un processus $(W_t)_{t \ge 0}$ à valeurs ré
 [Proposition 6.2 — Covariance et variation quadratique]{.tag}
 (i) $\mathbb{E}[W_t] = 0$ et $\mathbb{E}[W_sW_t] = \min(s, t)$.
 
-(ii) Pour une subdivision $0 = t_0 < t_1 < \dots < t_n = t$ de pas maximal $\delta$, $\sum_k(W_{t_{k+1}} - W_{t_k})^2$ a pour espérance $t$ et pour variance $2\sum_k(t_{k+1} - t_k)^2 \le 2t\delta$ : elle tend vers $t$ quand $\delta \to 0$.
+(ii) Pour une subdivision $0 = t_0 < t_1 < \dots < t_n = t$ de pas maximal $\delta$, $\sum_k(W_{t_{k+1}} - W_{t_k})^2$ a pour espérance $t$ et pour variance $2\sum_k(t_{k+1} - t_k)^2 \le 2t\delta$ : elle tend vers $t$ en moyenne quadratique quand $\delta \to 0$.
 
 ::: proof
 (i) Pour $s < t$, $W_t = W_s + (W_t - W_s)$ avec un accroissement indépendant de $W_s$ et centré, donc $\mathbb{E}[W_sW_t] = \mathbb{E}[W_s^2] = s$. (ii) Chaque $\Delta_k = W_{t_{k+1}} - W_{t_k}$ est $\mathcal{N}(0, h_k)$ avec $h_k = t_{k+1} - t_k$, donc $\mathbb{E}[\Delta_k^2] = h_k$ et $\mathrm{Var}(\Delta_k^2) = \mathbb{E}[\Delta_k^4] - h_k^2 = 3h_k^2 - h_k^2 = 2h_k^2$ ; on somme, les $\Delta_k$ étant indépendants. [∎]{.qed}
@@ -1801,7 +1801,7 @@ Par la formule de transfert, $\mathbb{E}[Y] = \mathbb{E}[e^X] = \int e^x\,\frac{
 7. **★★ ESS d'une proposition décalée, et fléau de la dimension.** Cible $p = \mathcal{N}(0, I_d)$, proposition $q = \mathcal{N}(\mathbf{a}, I_d)$. (a) Calculer $w = p/q$, $\mathbb{E}_q[w]$ et $\mathbb{E}_q[w^2]$. (b) En déduire la limite de $\mathrm{ESS}/N$. (c) Application : un modèle génératif de champs à $d = 10^4$ points de grille dont chaque valeur est biaisée de $0{,}1$ écart-type. Que vaut l'ESS limite si l'on veut corriger ce biais par repondération ?
 
 ::: sol
-*Solution.* (a) $\log w(\mathbf{y}) = -\frac{|\mathbf{y}|^2}{2} + \frac{|\mathbf{y} - \mathbf{a}|^2}{2} = -\mathbf{a}\cdot\mathbf{y} + \frac{|\mathbf{a}|^2}{2}$. Comme $\mathbf{a}\cdot\mathbf{Y} \sim \mathcal{N}(|\mathbf{a}|^2, |\mathbf{a}|^2)$ sous $q$ et que $\mathbb{E}[e^{tG}] = e^{t\mu + t^2v/2}$ pour $G \sim \mathcal{N}(\mu, v)$, on obtient $\mathbb{E}_q[w] = e^{|\mathbf{a}|^2/2}\,e^{-|\mathbf{a}|^2 + |\mathbf{a}|^2/2} = 1$ (normal : $\int p = 1$) et $\mathbb{E}_q[w^2] = e^{|\mathbf{a}|^2}\,e^{-2|\mathbf{a}|^2 + 2|\mathbf{a}|^2} = e^{|\mathbf{a}|^2}$. (b) Par la proposition 3.11, $\mathrm{ESS}/N \to 1/e^{|\mathbf{a}|^2} = e^{-|\mathbf{a}|^2}$ ; en dimension 1 on retrouve $e^{-\mu^2}$, vérifié par le code du chapitre 3. (c) $|\mathbf{a}|^2 = 10^4\times0{,}1^2 = 100$, donc $\mathrm{ESS}/N \approx e^{-100} \approx 4\times10^{-44}$ : aucune repondération ne peut corriger un biais petit mais systématique sur toutes les coordonnées d'un champ. L'inclinaison exponentielle n'est utilisable que pour quelques contraintes globales (un bilan d'énergie, quelques moments), pas pour corriger le champ point par point.
+*Solution.* (a) $\log w(\mathbf{y}) = -\frac{|\mathbf{y}|^2}{2} + \frac{|\mathbf{y} - \mathbf{a}|^2}{2} = -\mathbf{a}\cdot\mathbf{y} + \frac{|\mathbf{a}|^2}{2}$. Comme $\mathbf{a}\cdot\mathbf{Y} \sim \mathcal{N}(|\mathbf{a}|^2, |\mathbf{a}|^2)$ sous $q$ et que $\mathbb{E}[e^{tG}] = e^{t\mu + t^2v/2}$ pour $G \sim \mathcal{N}(\mu, v)$, on obtient $\mathbb{E}_q[w] = e^{|\mathbf{a}|^2/2}\,e^{-|\mathbf{a}|^2 + |\mathbf{a}|^2/2} = 1$ (normal : $\int p = 1$) et $\mathbb{E}_q[w^2] = e^{|\mathbf{a}|^2}\,e^{-2|\mathbf{a}|^2 + 2|\mathbf{a}|^2} = e^{|\mathbf{a}|^2}$. (b) Par la proposition 3.11, $\mathrm{ESS}/N \to 1/e^{|\mathbf{a}|^2} = e^{-|\mathbf{a}|^2}$ ; en dimension 1 on retrouve $e^{-a^2}$, vérifié par le code du chapitre 3. (c) $|\mathbf{a}|^2 = 10^4\times0{,}1^2 = 100$, donc $\mathrm{ESS}/N \approx e^{-100} \approx 4\times10^{-44}$ : aucune repondération ne peut corriger un biais petit mais systématique sur toutes les coordonnées d'un champ. L'inclinaison exponentielle n'est utilisable que pour quelques contraintes globales (un bilan d'énergie, quelques moments), pas pour corriger le champ point par point.
 :::
 
 8. **★★ Divergence de Kullback–Leibler entre gaussiennes.** Démontrer la formule $\mathrm{KL}(\mathcal{N}(m_1, s_1^2)\,\|\,\mathcal{N}(m_2, s_2^2)) = \log\frac{s_2}{s_1} + \frac{s_1^2 + (m_1 - m_2)^2}{2s_2^2} - \frac12$, puis calculer les deux divergences entre $\mathcal{N}(0, 1)$ et $\mathcal{N}(0, 4)$.
