@@ -12,6 +12,7 @@ Sous-paquets et modules :
 
 Les sous-modules ne sont pas importés ici : ``import milady`` reste léger (pas de torch, h5py ni SQLAlchemy).
 """
+
 from __future__ import annotations
 
 import os
@@ -46,16 +47,41 @@ def git_commit(path: str | os.PathLike[str] | None = None) -> str:
     Ordre : variable ``MILADY_GIT_COMMIT`` (fixée à la construction des images Docker/Apptainer, où
     ``.git`` est absent), puis ``git rev-parse`` dans ``path`` (défaut : racine du projet). Renvoie
     une chaîne vide si rien n'est disponible : la provenance ne doit jamais faire échouer un calcul.
+    ``safe.directory=*`` : dans un conteneur, le dépôt monté appartient souvent à un autre UID que
+    l'utilisateur courant (« dubious ownership ») ; la lecture du commit reste sans risque.
     """
     env = os.environ.get("MILADY_GIT_COMMIT")
     if env:
         return env.strip()
     cwd = Path(path) if path is not None else project_root()
     try:
-        head = subprocess.run(["git", "rev-parse", "--short=12", "HEAD"], cwd=cwd, capture_output=True,
-                              text=True, timeout=5, check=True).stdout.strip()
-        dirty = subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"], cwd=cwd,
-                               capture_output=True, text=True, timeout=10, check=True).stdout.strip()
+        head = subprocess.run(
+            ["git", "-c", "safe.directory=*", "rev-parse", "--short=12", "HEAD"],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+            timeout=5,
+            check=True,
+        ).stdout.strip()
+        dirty = subprocess.run(
+            # core.fsmonitor désactivé : avec safe.directory=*, « git status » ne doit lancer aucune
+            # commande définie dans la configuration d'un dépôt appartenant à un autre utilisateur.
+            [
+                "git",
+                "-c",
+                "safe.directory=*",
+                "-c",
+                "core.fsmonitor=false",
+                "status",
+                "--porcelain",
+                "--untracked-files=no",
+            ],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=True,
+        ).stdout.strip()
     except (OSError, subprocess.SubprocessError):
         return ""
     return f"{head}-dirty" if dirty else head

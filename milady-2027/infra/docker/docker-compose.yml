@@ -16,6 +16,10 @@
 # Sécurité : tous les ports sont liés à ${BIND_ADDR} (127.0.0.1 par défaut). Sur une VM cloud,
 # on y accède par tunnel SSH (voir infra/README.md) ; ne pas ouvrir 5432/9000/5000 sur Internet.
 #
+# Construction des images : `make image` / `make image-gpu` / `make image-mlflow` (mêmes noms
+# d'images que ci-dessous ; seule cette voie accepte MILADY_BUILD_CACERT, certificat d'un proxy TLS
+# d'entreprise) ; à défaut, compose construit les images manquantes au premier `up`/`run`.
+#
 # NB sur l'image MinIO : MinIO Inc. ne publie plus d'images Docker de l'édition communautaire
 # (minio/minio et quay.io/minio/minio ne sont plus téléchargeables). On utilise par défaut le
 # fork communautaire pgsty/minio (même binaire AGPLv3, mêmes commandes), remplaçable par
@@ -33,8 +37,11 @@ x-milady-env: &milady-env
   MILADY_STORAGE_URI: ${MILADY_STORAGE_URI:-s3://milady-data}
   MILADY_MODELS_URI: ${MILADY_MODELS_URI:-s3://milady-models}
   MILADY_S3_ENDPOINT: ${MILADY_S3_ENDPOINT:-http://s3:9000}
-  AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:?définir S3_ACCESS_KEY dans .env}
-  AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:?définir S3_SECRET_KEY dans .env}
+  # Clés du stockage des fichiers : celles d'un bucket du fournisseur si MILADY_S3_ACCESS_KEY est défini
+  # (.env, §2.5 de infra/README.md), sinon le compte applicatif MinIO. Les clés du fournisseur ne sont
+  # ainsi jamais confiées à MinIO (s3-init crée son compte avec S3_ACCESS_KEY / S3_SECRET_KEY).
+  AWS_ACCESS_KEY_ID: ${MILADY_S3_ACCESS_KEY:-${S3_ACCESS_KEY:?définir S3_ACCESS_KEY dans .env}}
+  AWS_SECRET_ACCESS_KEY: ${MILADY_S3_SECRET_KEY:-${S3_SECRET_KEY:?définir S3_SECRET_KEY dans .env}}
   AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-us-east-1}
   # Suivi des entraînements.
   MLFLOW_TRACKING_URI: http://mlflow:5000
@@ -42,11 +49,8 @@ x-milady-env: &milady-env
   # Divers.
   MILADY_ROOT: /opt/milady
   MILADY_HOST: ${MILADY_HOST:-docker}
-
-# Certificat facultatif d'un proxy TLS (réseau d'entreprise/HPC) pour pip pendant la construction :
-# MILADY_BUILD_CACERT=/chemin/ca.pem dans l'environnement ou .env ; /dev/null (vide) sinon.
-x-build-secrets: &build-secrets
-  - cacert
+  # Commit du dépôt monté (calculé par le Makefile sur l'hôte : le .git n'est pas toujours monté).
+  MILADY_GIT_COMMIT: ${GIT_COMMIT:-}
 
 x-milady-build-args: &milady-build-args
   MILADY_UID: ${MILADY_UID:-1000}
@@ -84,7 +88,9 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ../db/init.sql:/docker-entrypoint-initdb.d/10-init.sql:ro
+      # Scripts exécutés une seule fois (volume neuf), par ordre alphabétique : init.sql (bases
+      # milady et mlflow) puis schema.sql (tables du catalogue) s'il est présent.
+      - ../db:/docker-entrypoint-initdb.d:ro
     ports:
       - "${BIND_ADDR:-127.0.0.1}:${DB_PORT:-5432}:5432"
     # Connexion TCP (127.0.0.1) : n'est possible qu'après la fin des scripts d'initialisation,
@@ -155,7 +161,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.mlflow
-      secrets: *build-secrets
     image: milady-mlflow:3.17.2
     restart: unless-stopped
     depends_on:
@@ -168,13 +173,16 @@ services:
       AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:?définir S3_ACCESS_KEY dans .env}
       AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:?définir S3_SECRET_KEY dans .env}
       AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-us-east-1}
+      # URI de la base (avec mot de passe) passée par l'environnement (option --backend-store-uri de
+      # `mlflow server`) plutôt qu'en argument : invisible dans la liste des processus de l'hôte (ps).
+      # Pilote explicite : SQLAlchemy 2.1 associe désormais « postgresql:// » à psycopg 3.
+      MLFLOW_BACKEND_STORE_URI: postgresql+psycopg2://${POSTGRES_USER:-milady}:${POSTGRES_PASSWORD:?définir POSTGRES_PASSWORD dans .env}@db:5432/mlflow
     command:
       - mlflow
       - server
       - --host=0.0.0.0
       - --port=5000
       - --workers=2
-      - --backend-store-uri=postgresql://${POSTGRES_USER:-milady}:${POSTGRES_PASSWORD:?définir POSTGRES_PASSWORD dans .env}@db:5432/mlflow
       - --artifacts-destination=${MLFLOW_ARTIFACTS_DESTINATION:-s3://mlflow}
       - --serve-artifacts
       # En-têtes Host acceptés (protection DNS rebinding de MLflow 3) : nom du service dans le
@@ -200,7 +208,6 @@ services:
       context: ../..
       dockerfile: infra/docker/Dockerfile
       args: *milady-build-args
-      secrets: *build-secrets
     image: ${MILADY_IMAGE:-milady}:cpu
 
   worker-gpu:
@@ -210,7 +217,6 @@ services:
       context: ../..
       dockerfile: infra/docker/Dockerfile.gpu
       args: *milady-build-args
-      secrets: *build-secrets
     image: ${MILADY_IMAGE:-milady}:gpu
     # Mémoire partagée pour NCCL / DataLoader multi-processus.
     shm_size: "16gb"
@@ -237,9 +243,12 @@ services:
       args:
         <<: *milady-build-args
         WITH_JUPYTER: "1"
-      secrets: *build-secrets
     image: ${MILADY_IMAGE:-milady}:cpu-jupyter
     restart: unless-stopped
+    # Jeton lu par Jupyter Server dans la variable JUPYTER_TOKEN (pas en argument : invisible dans ps).
+    environment:
+      <<: *milady-env
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:?définir JUPYTER_TOKEN dans .env}
     ports:
       - "${BIND_ADDR:-127.0.0.1}:${JUPYTER_PORT:-8888}:8888"
     command:
@@ -249,12 +258,13 @@ services:
       - --port=8888
       - --no-browser
       - --ServerApp.root_dir=/opt/milady
-      - --IdentityProvider.token=${JUPYTER_TOKEN:?définir JUPYTER_TOKEN dans .env}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8888/api', timeout=4)"]
+      interval: 10s
+      timeout: 6s
+      retries: 30
+      start_period: 10s
 
 volumes:
   pgdata:
   s3data:
-
-secrets:
-  cacert:
-    file: ${MILADY_BUILD_CACERT:-/dev/null}

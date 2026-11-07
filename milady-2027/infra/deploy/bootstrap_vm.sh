@@ -34,7 +34,7 @@ while [[ $# -gt 0 ]]; do
         --cpu) FORCE_CPU=1 ;;
         --no-smoke) RUN_SMOKE=0 ;;
         --no-build) DO_BUILD=0 ;;
-        -h|--help) sed -n '2,27p' "$0"; exit 0 ;;
+        -h|--help) sed -n '2,25p' "$0"; exit 0 ;;
         *) echo "Option inconnue : $1 (voir --help)" >&2; exit 2 ;;
     esac
     shift
@@ -67,22 +67,45 @@ export DEBIAN_FRONTEND=noninteractive
 log "1/7 Paquets système de base"
 apt-get update -y
 apt-get install -y --no-install-recommends \
-    ca-certificates curl gnupg git make openssl rsync jq pciutils htop tmux unzip
+    ca-certificates curl gnupg git make openssl rsync jq pciutils htop tmux unzip python3 python3-yaml
 
 # --- 2. Docker (dépôt officiel) ---------------------------------------------------------------
 log "2/7 Docker Engine + compose"
 if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
     echo "Docker déjà installé : $(docker --version) ; $(docker compose version)"
 else
+    # Procédure de https://docs.docker.com/engine/install/ubuntu/ (vérifiée le 2026-11-07).
+    # a) Paquets concurrents (docker.io d'Ubuntu, podman-docker…) : ils empêchent l'installation de
+    #    docker-ce. « apt-get remove » (et non purge) conserve /var/lib/docker (images, volumes).
+    mapfile -t conflicts < <(dpkg-query -W -f='${binary:Package} ${db:Status-Status}\n' \
+        docker.io docker-compose docker-compose-v2 docker-doc docker-buildx podman-docker containerd runc \
+        2>/dev/null | awk '$2 == "installed" {print $1}')
+    if [[ ${#conflicts[@]} -gt 0 ]]; then
+        warn "paquets incompatibles avec Docker CE, retirés : ${conflicts[*]}"
+        apt-get remove -y "${conflicts[@]}"
+    fi
+    # b) Clé GPG et dépôt officiels, au format deb822 de la documentation actuelle.
     install -m 0755 -d /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
     chmod a+r /etc/apt/keyrings/docker.asc
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu ${CODENAME} stable" \
-        > /etc/apt/sources.list.d/docker.list
+    rm -f /etc/apt/sources.list.d/docker.list   # ancienne syntaxe d'une ligne : pas de source en double
+    printf '%s\n' \
+        "Types: deb" \
+        "URIs: https://download.docker.com/linux/ubuntu" \
+        "Suites: ${CODENAME}" \
+        "Components: stable" \
+        "Architectures: $(dpkg --print-architecture)" \
+        "Signed-By: /etc/apt/keyrings/docker.asc" \
+        > /etc/apt/sources.list.d/docker.sources
     apt-get update -y
     apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 fi
-systemctl enable --now docker
+# systemd absent (WSL, conteneur) : Docker est supposé déjà lancé.
+has_systemd() { command -v systemctl >/dev/null 2>&1 && [[ -d /run/systemd/system ]]; }
+if has_systemd; then
+    systemctl enable --now docker
+fi
+docker info >/dev/null 2>&1 || die "le démon Docker ne répond pas (systemctl status docker)"
 if [[ "${OWNER}" != "root" ]] && ! id -nG "${OWNER}" | tr ' ' '\n' | grep -qx docker; then
     usermod -aG docker "${OWNER}"
     echo "Utilisateur ${OWNER} ajouté au groupe docker (effectif à la prochaine connexion SSH)."
@@ -98,6 +121,7 @@ elif command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi -L >/dev/null 2>&1; the
     nvidia-smi -L
     nvidia-smi --query-gpu=driver_version,memory.total --format=csv,noheader | head -n 1
     if ! command -v nvidia-ctk >/dev/null 2>&1; then
+        # Procédure de la documentation NVIDIA (install-guide, dépôt « stable », vérifiée le 2026-11-07).
         curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey \
             | gpg --dearmor --yes -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
         curl -fsSL https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list \
@@ -108,9 +132,15 @@ elif command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi -L >/dev/null 2>&1; the
     else
         echo "NVIDIA Container Toolkit déjà installé : $(nvidia-ctk --version | head -n 1)"
     fi
-    # Déclare le runtime nvidia dans /etc/docker/daemon.json (idempotent) puis redémarre Docker.
+    # Déclare le runtime nvidia dans /etc/docker/daemon.json (idempotent). Docker n'est redémarré que
+    # si le fichier a changé : relancer le script n'interrompt pas les conteneurs en cours.
+    daemon_before="$(sha256sum /etc/docker/daemon.json 2>/dev/null || true)"
     nvidia-ctk runtime configure --runtime=docker
-    systemctl restart docker
+    if [[ "$(sha256sum /etc/docker/daemon.json 2>/dev/null || true)" != "${daemon_before}" ]]; then
+        if has_systemd; then systemctl restart docker; else warn "redémarrer le démon Docker à la main"; fi
+    else
+        echo "Runtime nvidia déjà déclaré à Docker : pas de redémarrage."
+    fi
 elif lspci 2>/dev/null | grep -qi nvidia; then
     warn "carte NVIDIA présente mais pilote absent (nvidia-smi ne répond pas)."
     cat >&2 <<'MSG'
@@ -142,13 +172,20 @@ sed -i "s/^MILADY_WORKER=.*/MILADY_WORKER=${WORKER}/" "${ENV_FILE}"
 GIT_COMMIT="$(sudo -u "${OWNER}" git -C "${REPO_ROOT}" rev-parse --short=12 HEAD 2>/dev/null || true)"
 export GIT_COMMIT
 
-# Données locales (montées dans les conteneurs) appartenant au propriétaire du dépôt.
-install -d -o "${OWNER}" -g "$(id -gn "${OWNER}")" "${REPO_ROOT}/data"
+# Données locales (dépôt monté dans les conteneurs) : data/ appartient à l'UID du conteneur.
+CUID="$(sed -n 's/^MILADY_UID=//p' "${ENV_FILE}" | tail -n 1)"
+CGID="$(sed -n 's/^MILADY_GID=//p' "${ENV_FILE}" | tail -n 1)"
+install -d -o "${CUID:-1000}" -g "${CGID:-1000}" "${REPO_ROOT}/data"
 
 # --- 5. Images ----------------------------------------------------------------------------------
 log "5/7 Construction des images (${WORKER}, mlflow)"
 if [[ ${DO_BUILD} -eq 1 ]]; then
-    "${COMPOSE[@]}" --profile cpu --profile gpu build "${WORKER}" mlflow
+    # Via le Makefile (docker build) : accepte MILADY_BUILD_CACERT, mêmes noms d'images que compose.
+    if [[ ${GPU} -eq 1 ]]; then
+        make -C "${REPO_ROOT}" image-gpu image-mlflow
+    else
+        make -C "${REPO_ROOT}" image image-mlflow
+    fi
 else
     echo "--no-build : construction sautée."
 fi

@@ -7,10 +7,21 @@ index_files/
 .quarto/
 figures/**/node_modules/
 experiences/resultats/cache_e1/
-data/
+/data/
 .env
 infra/docker/.env
 *.sif
 .pytest_cache/
 *.egg-info/
-mlruns/
+/mlruns/
+
+# --- Infrastructure (déploiement) : secrets, données, artefacts locaux -----------------------
+/backups/
+.venv/
+.venv-front/
+/build/
+/dist/
+milady-sim-*.out
+milady-train-*.out
+milady-eval-*.out
+infra/env/*.lock.tmp

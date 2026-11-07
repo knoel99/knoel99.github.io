@@ -8,7 +8,7 @@
 # et infra/env/requirements-gpu.txt (CUDA) ; ici on ne donne que des bornes basses.
 
 [build-system]
-requires = ["setuptools>=69", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -16,13 +16,15 @@ name = "milady"
 version = "0.1.0"
 description = "MilaDy 2027 : modèles génératifs conditionnels sous contraintes physiques pour des champs MHD paramétriques (format MFF, catalogue, solveur, entraînement)."
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 requires-python = ">=3.11"
 authors = [{ name = "MilaDy 2027" }]
 keywords = ["MHD", "dynamo", "flow matching", "HDF5", "The Well", "HPC"]
 classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Physics",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
@@ -42,6 +44,8 @@ dependencies = [
     "jsonschema>=4.20",
     "torch>=2.4",
     "mlflow-skinny>=3.0",
+    # Base SQLite de MLflow sur les clusters sans Internet (le stockage « fichiers » est refusé par MLflow 3).
+    "alembic>=1.13",
     "matplotlib>=3.8",
 ]
 

@@ -1,0 +1,138 @@
+# Entraînement du palier 2 (thèse) : flow matching conditionnel de champs MHD 3D (u, B) sous contraintes dures.
+#
+# Données : campagne palier2_tg3d (MHD forcée Taylor–Green, Re × Pm), fichiers MFF enregistrés au catalogue.
+# Représentation : potentiels vecteurs A_u, A_B en jauge de Coulomb, coefficients de Fourier |m| ≤ kmax
+# (base de Craya–Herring, normalisation par mode) ; décodage u = ∇×A_u, B = ∇×A_B : ∇·u = ∇·B = 0 exactement.
+# Conditionnement : log Re, log Pm (normalisés sur la plage d'entraînement).
+#
+# Lancer (depuis la racine du dépôt) :
+#   make train CONFIG=infra/configs/train_fm3d.yaml [NGPUS=4]              VM GPU (torchrun, un processus par GPU)
+#   sbatch infra/slurm/train.sbatch infra/configs/train_fm3d.yaml           cluster Slurm (multi-nœuds possible)
+#   python -m milady.train.fm3d --config infra/configs/train_fm3d.yaml --files data/store/…/fields.h5   (portable)
+#   make eval  CONFIG=infra/configs/train_fm3d.yaml [MODEL=<uuid>]          évaluation (dernier modèle « name » sinon)
+# Réglage fin avec la perte de stationnarité (variante V5 de E2, en 3D), depuis un modèle entraîné :
+#   python -m milady.train.fm3d --config infra/configs/train_fm3d.yaml --init-from <…/final.pt> \
+#       --set stationarity.enabled=true train.iters=2000 train.lr=1e-4 train.warmup=0
+# Toute clé se surcharge en ligne de commande : --set train.batch_size=32 model.architecture=transformer
+#
+# Ordres de grandeur (kmax = 8 : 1054 modes × 8 canaux = 8432 dimensions ; MLP 1024 × 6 ≈ 30 M paramètres) :
+# quelques ms par itération sur un GPU A100/H100 en bf16 ; la perte de stationnarité ajoute ≈ 2 × steps
+# évaluations du réseau sur n_cond × n_per échantillons par itération où elle est active.
+
+name: fm3d_tg3d
+description: >-
+  Flow matching conditionnel (Re, Pm) de champs (u, B) 3D Taylor–Green à 64³, potentiels vecteurs de Fourier
+  tronqués à |m| ≤ 8, symétrie B → −B exacte.
+
+data:
+  # Source : jeu de données du catalogue (« nom » ou « nom:version »), remplacé par --dataset ou --files.
+  dataset: milady_palier2_tg3d
+  version: null                    # null : dernière version
+  # S'il n'existe pas encore, il est créé à partir des simulations terminées de cette campagne
+  # (fichiers « fields ») ; les points listés vont en validation / test, les autres en entraînement.
+  campaign: palier2_tg3d
+  auto_dataset:
+    val:
+      - {Re: 100, Pm: 1.0}
+    test:
+      - {Re: 50, Pm: 2.0}
+  files: []                        # liste explicite d'URI (file://, s3://, .zarr) : prime sur dataset
+  fields: [velocity, magnetic_field]
+  kmax: 8                          # rayon de troncature (indices entiers) ; grille ≥ 2 kmax + 1 points
+  conditioning:
+    - {name: Re, transform: log}
+    - {name: Pm, transform: log}
+  t_min: null                      # écarter le transitoire (temps simulé), ex. 110.0
+  stride: 1                        # un instantané sur « stride »
+  max_snapshots_per_file: null
+  read_chunk: 8                    # instantanés lus à la fois (mémoire bornée)
+  cache_dir: ${MILADY_CACHE_DIR:-/tmp/milady-cache}   # copies locales des fichiers s3://
+  on_device: true                  # latents sur le GPU (≈ 34 Ko par instantané à kmax = 8)
+
+model:
+  architecture: mlp                # mlp | transformer
+  symmetry_b_sign: true            # symétrisation équivariante A_B → −A_B (loi générée invariante par B → −B)
+  mlp:
+    width: 1024
+    depth: 6
+    expansion: 2
+    emb_dim: 256
+    n_freq: 16
+    dropout: 0.0
+  transformer:                     # transformeur léger (DiT) sur des jetons de modes voisins en |m|
+    d_model: 192
+    depth: 6
+    heads: 6
+    mlp_ratio: 4
+    modes_per_token: 4
+    emb_dim: 256
+    n_freq: 16
+    dropout: 0.0
+
+train:
+  iters: null                      # null : epochs × (lots par époque)
+  epochs: 200
+  batch_size: 64                   # par processus (lot effectif = batch_size × nombre de GPU)
+  lr: 3.0e-4
+  lr_min: 1.0e-5                   # décroissance cosinus après l'échauffement
+  warmup: 500
+  weight_decay: 0.0
+  grad_clip: 1.0
+  ema: 0.999                       # moyenne exponentielle des poids (utilisée à l'échantillonnage)
+  precision: auto                  # auto : bf16 sur GPU qui le permet, fp32 sinon ; bf16 | fp32
+  seed: 0
+  log_every: 50
+  val_every: 500
+  ckpt_every: 1000                 # last.pt (local ou S3) ; reprise automatique au redémarrage (--run-name, Slurm)
+  augment_b_sign: false            # retournement aléatoire de B (inutile si symmetry_b_sign)
+  t_sampling: uniform              # uniform | logit_normal
+  device: auto                     # auto | cuda | cpu
+  num_threads: null
+  init_from: null                  # point de contrôle d'initialisation (réglage fin)
+  resume: auto                     # auto | never | <chemin ou URI>
+  workdir: ${MILADY_RUN_DIR:-data/runs}   # journal local quand les points de contrôle vont dans S3
+
+stationarity:
+  # Perte de stationnarité en loi : E[injection − ν⟨|ω|²⟩ − η⟨|j|²⟩] = 0 à toute condition (tirée dans
+  # cond_range, plage normalisée [0, 1] = plage d'entraînement), estimateur sans biais par deux demi-lots.
+  enabled: false
+  beta: 10.0
+  start_iter: 0
+  every: 1                         # une itération sur « every »
+  n_cond: 4                        # conditions par itération
+  n_per: 16                        # échantillons par condition (pair)
+  steps: 8                         # pas de Heun différentiables
+  balance: total                   # total | kinetic | magnetic
+  injection: forcing               # forcing (⟨f·u⟩, forçage ABC/TG du jeu) | param (valeur d'un paramètre) | none
+  injection_param: eps             # pour injection: param (forçage aléatoire de puissance eps)
+  growth_rate: 0.0                 # bilan magnetic : λ (nombre ou nom de paramètre) dans P − η⟨j²⟩ = λ⟨B²⟩
+  cond_range: [0.0, 1.0]           # [-0.1, 1.1] pour imposer la loi aussi un peu au-delà de la plage
+
+sampling:
+  steps: 50                        # pas de Heun à l'échantillonnage
+
+checkpoint:
+  uri: null                        # null : MILADY_MODELS_URI (s3://milady-models dans le compose), sinon
+                                   # {MILADY_STORAGE_URI}/_models ; rangement {uri}/{name}/{run}/last.pt, final.pt
+
+mlflow:
+  experiment: milady-fm3d          # utilisé si MLFLOW_TRACKING_URI est défini
+  log_checkpoint: false            # copier aussi final.pt dans les artefacts MLflow
+
+catalog:
+  enabled: true                    # modèle, tâche et évaluations dans le catalogue (MILADY_DB_URL)
+  url: null
+  required: false                  # true : une panne du catalogue arrête l'entraînement
+
+eval:
+  after_train: true                # évaluation rapide en fin d'entraînement, enregistrée au catalogue
+  points: []                       # [] : points des fichiers d'entraînement, validation et test
+  max_points: 12
+  n_samples: 64
+  seed: 0
+  steps: 50
+  grid: null                       # null : grille paire ≥ 3 kmax + 1 (produits sans repliement)
+  batch_size: 16
+  n_ref: 128                       # instantanés de référence au plus par point
+  reference_dataset: null          # null : jeu d'entraînement (toutes partitions, appariées par paramètres)
+  reference_split: null

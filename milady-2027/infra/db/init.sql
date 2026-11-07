@@ -4,12 +4,13 @@
 -- Bases :
 --   milady  catalogue des campagnes, simulations, fichiers, jeux de données, modèles, évaluations
 --           (créée par l'image à partir de POSTGRES_DB ; recréée ici si on a choisi un autre nom) ;
---           les tables sont créées par milady.catalog (SQLAlchemy) ou par infra/db/schema.sql ;
+--           les tables sont créées par infra/db/schema.sql (exécuté juste après ce fichier, par
+--           ordre alphabétique) ou, à défaut, par milady.catalog (SQLAlchemy, create_all) ;
 --   mlflow  métadonnées du serveur MLflow (tables créées par MLflow au premier démarrage).
 --
 -- Idempotent : peut être rejoué à la main sans erreur :
 --   docker compose -f infra/docker/docker-compose.yml --env-file infra/docker/.env \
---     exec -T db psql -U milady -d postgres -f /docker-entrypoint-initdb.d/10-init.sql
+--     exec -T db psql -U milady -d postgres -f /docker-entrypoint-initdb.d/init.sql
 
 SELECT 'CREATE DATABASE milady'
 WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'milady')\gexec

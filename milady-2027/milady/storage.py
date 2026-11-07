@@ -17,6 +17,7 @@ Configuration (variables d'environnement, jamais de secret dans le dépôt) :
 Convention de rangement : ``{MILADY_STORAGE_URI}/{campagne}/{uuid_simulation}/{kind}.h5``
 (voir :func:`simulation_uri`).
 """
+
 from __future__ import annotations
 
 import builtins
@@ -32,8 +33,24 @@ import fsspec
 from milady import project_root
 
 __all__ = [
-    "DEFAULT_BUCKETS", "base_uri", "ensure_bucket", "exists", "filesystem", "get", "is_local", "join", "local_path",
-    "ls", "open", "put", "rm", "sha256", "simulation_uri", "size", "split_uri", "storage_options",
+    "DEFAULT_BUCKETS",
+    "base_uri",
+    "ensure_bucket",
+    "exists",
+    "filesystem",
+    "get",
+    "is_local",
+    "join",
+    "local_path",
+    "ls",
+    "open",
+    "put",
+    "rm",
+    "sha256",
+    "simulation_uri",
+    "size",
+    "split_uri",
+    "storage_options",
 ]
 
 #: Buckets créés par le docker-compose (données, modèles, artefacts MLflow).
@@ -97,8 +114,9 @@ def join(base: str | os.PathLike[str], *parts: str) -> str:
     return out
 
 
-def simulation_uri(campaign: str, simulation_id: str, kind: str = "fields", ext: str = ".h5",
-                   base: str | None = None) -> str:
+def simulation_uri(
+    campaign: str, simulation_id: str, kind: str = "fields", ext: str = ".h5", base: str | None = None
+) -> str:
     """URI conventionnelle d'un fichier de simulation : ``{base}/{campagne}/{uuid}/{kind}{ext}``."""
     return join(base or base_uri(), campaign, simulation_id, f"{kind}{ext}")
 
@@ -148,10 +166,18 @@ def ensure_bucket(uri: str) -> None:
             return
     except (PermissionError, OSError):
         pass
+    # Appel direct à CreateBucket : s3fs.mkdir enverrait LocationConstraint = us-east-1, que AWS refuse.
+    params: dict[str, Any] = {"Bucket": bucket}
+    region = storage_options(uri)["client_kwargs"]["region_name"]
+    if region != "us-east-1":
+        params["CreateBucketConfiguration"] = {"LocationConstraint": region}
     try:
-        fs.mkdir(bucket)
+        fs.call_s3("create_bucket", **params)
     except FileExistsError:
         pass
+    except OSError as exc:
+        if "BucketAlready" not in repr(exc) and "already" not in str(exc).lower():
+            raise
     fs.invalidate_cache(bucket)
 
 

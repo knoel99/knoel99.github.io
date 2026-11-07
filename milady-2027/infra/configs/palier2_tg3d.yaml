@@ -1,0 +1,61 @@
+# Campagne du palier 2 (thèse) : MHD 3D dynamique forcée Taylor–Green, balayage en Re et Pm.
+#
+# Navier–Stokes + induction, force de Lorentz, forçage Taylor–Green constant au mode kf = 2 de la
+# boîte 2π (cellules TG de taille π, configuration usuelle des études de dynamo Taylor–Green) ;
+# L_ref = 1/k_f = 0,5, U_ref = 1 ; Re = U_ref L_ref/ν, Rm = Re × Pm.
+# Règle de forçage « turbulent » : amplitude |k| U_ref² avec |k| = √3 k_f pour la forme TG (vise
+# u_rms ~ U_ref en régime turbulent, ordre de grandeur seulement) ; le Reynolds effectif
+# u_rms L_ref/ν se lit a posteriori dans les diagnostics (u_rms).
+# Germe magnétique faible (rms 1e-3) : phase cinématique (croissance exponentielle si Rm > Rm_c,
+# taux = growth_rate_fit au catalogue) puis saturation non linéaire.
+#
+# Résolution : 64³ (k_max = 21). Pour les plus grands Re et Rm (Re = 200, Pm = 2 : Rm = 400), vérifier
+# la résolution sur une première simulation (spectres E_u(k), E_B(k) qui décroissent de plusieurs
+# décades avant k_max : milady.sim.mhd3d.MHD3D.energy_spectra) et passer à N = 128 si besoin.
+#
+# Lancer :   make sweep CONFIG=infra/configs/palier2_tg3d.yaml
+#            python -m milady.sweep infra/configs/palier2_tg3d.yaml --scheduler slurm
+name: palier2_tg3d
+description: >-
+  MHD 3D forcée Taylor–Green (kf = 2) à 64³ : Re ∈ {25, 50, 100, 200} × Pm ∈ {0,5 ; 1 ; 2} (12 simulations),
+  germe magnétique 1e-3, 40 instantanés (u, B) après 100 unités de temps.
+code: mhd3d_torch
+grid:
+  N: 64
+  domain: 2pi
+fixed:
+  mode: dynamic
+  forcing: tg
+  kf: 2
+  U_ref: 1.0
+  forcing_amp: turbulent   # ou laminar (ν |k|² U_ref, |k|² = 3 k_f² pour TG), ou un nombre
+  u0: laminar              # écoulement TG d'amplitude U_ref au départ
+  u_noise: 0.01            # brise les symétries TG (sinon la dynamique reste dans le sous-espace symétrique)
+  b0_amp: 1.0e-3
+sweep:
+  Re: [25, 50, 100, 200]
+  Pm: [0.5, 1.0, 2.0]
+runtime:
+  dt: 0.005               # pas maximal ; réduit par la condition CFL si u ou B grandissent
+  cfl: 1.0
+  t_burn: 100.0
+  t_keep: 40.0
+  every: 1.0              # 40 instantanés
+  diag_every: 0.1
+  n_traj: 1
+  device: auto
+  dtype: float32
+  checkpoint_every_s: 900
+  checkpoint_to_storage: false
+resources:
+  gpus: 1
+  cpus: 8
+  time: "10:00:00"
+  mem: null
+  max_parallel: 12
+output:
+  format: mff
+  uri: ${MILADY_STORAGE_URI}
+  fields: [velocity, magnetic_field]
+  spectral: false
+  dataset_name: milady_palier2_tg3d

@@ -19,11 +19,12 @@
 #   infra/deploy/deploy_remote.sh ubuntu@51.15.0.10 -i ~/.ssh/id_ed25519 -- --no-smoke
 #   infra/deploy/deploy_remote.sh ubuntu@gpu-vm --git https://github.com/knoel99/milady-2027.git
 #
-# La copie exclut les secrets (infra/docker/.env : la VM génère les siens), les données (data/),
-# l'environnement virtuel et les images Apptainer. Relancer le script met la VM à jour (idempotent).
+# La copie exclut les secrets (tout fichier .env, dont infra/docker/.env : la VM génère les siens),
+# les données (data/), les environnements virtuels et les images Apptainer. Relancer le script met la
+# VM à jour (idempotent).
 set -euo pipefail
 
-usage() { sed -n '2,25p' "$0"; }
+usage() { sed -n '2,24p' "$0"; }
 
 [[ $# -ge 1 ]] || { usage; exit 2; }
 case "$1" in -h|--help) usage; exit 0 ;; esac
@@ -51,9 +52,11 @@ while [[ $# -gt 0 ]]; do
 done
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+# shellcheck disable=SC2029  # les arguments sont volontairement développés côté portable
 ssh_run() { ssh "${SSH_OPTS[@]}" "${TARGET}" "$@"; }
 
 echo "==> Connexion à ${TARGET}"
+# shellcheck disable=SC2016  # développé sur la VM
 ssh_run 'echo "   $(hostname) : $(. /etc/os-release && echo "$PRETTY_NAME"), $(nproc) CPU, $(free -g | awk "/Mem:/{print \$2}") Go RAM"; command -v nvidia-smi >/dev/null && nvidia-smi -L || echo "   (pas de nvidia-smi)"'
 
 if [[ -n "${GIT_URL}" ]]; then
@@ -72,12 +75,13 @@ else
     echo "==> Copie de l'arbre local vers ${TARGET}:${REMOTE_DIR} (rsync)"
     ssh_run "command -v rsync >/dev/null || { sudo apt-get update -y && sudo apt-get install -y rsync make; }; mkdir -p '${REMOTE_DIR}'"
     # Les fichiers exclus ne sont ni copiés ni supprimés côté VM (--delete ne touche pas aux exclus).
+    # Motifs ancrés (« /data/ ») : le paquet milady/data/ doit, lui, être copié.
     rsync -az --delete --info=stats1 \
         -e "ssh ${SSH_OPTS[*]}" \
-        --exclude '.venv/' --exclude 'data/' --exclude 'backups/' \
-        --exclude 'infra/docker/.env' --exclude '*.sif' --exclude '*.tar' \
+        --exclude '/.venv/' --exclude '/.venv-front/' --exclude '/data/' --exclude '/backups/' \
+        --exclude '/mlruns/' --exclude '.env' --exclude '/*.sif' --exclude '*.tar' \
         --exclude '__pycache__/' --exclude '.pytest_cache/' --exclude '.quarto/' \
-        --exclude 'node_modules/' --exclude 'mlruns/' \
+        --exclude 'node_modules/' \
         "${REPO_ROOT}/" "${TARGET}:${REMOTE_DIR}/"
 fi
 

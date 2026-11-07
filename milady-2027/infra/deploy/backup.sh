@@ -40,7 +40,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-ENV_FILE="${REPO_ROOT}/infra/docker/.env"
+ENV_FILE="${MILADY_ENV_FILE:-${REPO_ROOT}/infra/docker/.env}"
 [[ -f "${ENV_FILE}" ]] || { echo "infra/docker/.env absent : rien à sauvegarder ici." >&2; exit 1; }
 COMPOSE=(docker compose -f "${REPO_ROOT}/infra/docker/docker-compose.yml" --env-file "${ENV_FILE}")
 env_get() { sed -n "s/^$1=//p" "${ENV_FILE}" | tail -n 1; }
@@ -72,11 +72,13 @@ for db in "${PGDB_}" mlflow; do
     # Format personnalisé (-Fc) compressé (-Z 6) : restauration sélective avec pg_restore.
     "${COMPOSE[@]}" exec -T db pg_dump -U "${PGUSER_}" -d "${db}" -Fc -Z 6 > "${out}.part"
     mv "${out}.part" "${out}"
-    ls -lh "${out}" | awk '{print "    " $5}'
+    du -h "${out}" | awk '{print "    " $1}'
 done
 if [[ ${REMOTE} -eq 0 ]]; then
     # Rotation : on garde les KEEP derniers dumps de chaque base.
     for db in "${PGDB_}" mlflow; do
+        # Noms horodatés sans caractère spécial : ls -t suffit pour trier.
+        # shellcheck disable=SC2012
         mapfile -t old < <(ls -1t "${WORK}/db/${db}-"*.dump 2>/dev/null | tail -n "+$((KEEP + 1))")
         [[ ${#old[@]} -eq 0 ]] || rm -f -- "${old[@]}"
     done
@@ -84,6 +86,7 @@ fi
 
 # --- 2. Miroir du stockage objet (mc, conteneur s3-init) ---------------------------------------
 # Le conteneur mc rejoint le réseau compose (accès à http://s3:9000) ; la cible est montée sur /backup.
+# shellcheck disable=SC2016  # développé dans le conteneur mc, pas ici
 MC_SCRIPT='set -eu
 mc alias set src http://s3:9000 "$S3_ROOT_USER" "$S3_ROOT_PASSWORD" >/dev/null
 if [ -n "${DEST_URL:-}" ]; then
@@ -98,14 +101,16 @@ else
         for b in milady-data milady-models mlflow; do mc mirror --overwrite "src/$b" "/backup/objects/$b"; done
     fi
 fi'
+# Identifiants transmis au conteneur par leur nom (-e VAR) : jamais visibles dans la liste des processus.
+export BACKUP_S3_ENDPOINT="${BACKUP_S3_ENDPOINT:-}" BACKUP_ACCESS_KEY="${BACKUP_ACCESS_KEY:-}" \
+       BACKUP_SECRET_KEY="${BACKUP_SECRET_KEY:-}"
 dest_url=""
 [[ ${REMOTE} -eq 1 ]] && dest_url="${TARGET}"
 echo "==> Miroir du stockage objet → ${TARGET}"
 "${COMPOSE[@]}" run --rm --no-deps -T \
     --user "$(id -u):$(id -g)" \
     -e MC_CONFIG_DIR=/tmp/mc -e OBJECTS="${OBJECTS}" -e DEST_URL="${dest_url}" \
-    -e BACKUP_S3_ENDPOINT="${BACKUP_S3_ENDPOINT:-}" \
-    -e BACKUP_ACCESS_KEY="${BACKUP_ACCESS_KEY:-}" -e BACKUP_SECRET_KEY="${BACKUP_SECRET_KEY:-}" \
+    -e BACKUP_S3_ENDPOINT -e BACKUP_ACCESS_KEY -e BACKUP_SECRET_KEY \
     -v "${WORK}:/backup" \
     --entrypoint /bin/sh s3-init -c "${MC_SCRIPT}"
 

@@ -6,19 +6,22 @@ Chaîne vérifiée, en quelques dizaines de secondes sur CPU :
 1. environnement (versions, GPU, variables de configuration, sans afficher de secret) ;
 2. stockage (``milady.storage`` : aller-retour d'un petit fichier vers ``MILADY_STORAGE_URI``) ;
 3. catalogue (``milady.catalog.api.Catalog`` : campagne, simulation, tâche) ;
-4. simulation 3D minuscule (solveur ``milady.sim.mhd3d`` si disponible, sinon champ ABC analytique
-   à divergence nulle) ;
+4. simulation 3D minuscule (solveur ``milady.sim.mhd3d``) ;
 5. fichier MFF (``milady.data.format`` : écriture, validation, relecture ; variante Zarr) ;
 6. téléversement vers le stockage, enregistrement du fichier et des diagnostics au catalogue ;
 7. jeu de données (``register_dataset``) ;
-8. entraînement d'une itération (``milady.train.fm3d`` si disponible, sinon petit réseau de
-   secours), journalisé dans MLflow si ``MLFLOW_TRACKING_URI`` est défini, point de contrôle stocké ;
+8. entraînement d'une itération (``milady.train.fm3d``), journalisé dans MLflow si
+   ``MLFLOW_TRACKING_URI`` est défini, point de contrôle stocké ;
 9. évaluation (divergence relative, énergie) enregistrée au catalogue, puis résumé ``eval_summary``.
 
 Le script s'exécute tel quel dans le conteneur ``worker`` (PostgreSQL + MinIO + MLflow) ou en mode
 portable (SQLite + ``./data/store``). Code de retour 0 si toutes les étapes obligatoires réussissent.
 
-Usage : ``python infra/deploy/smoke.py [--n 16] [--keep] [--json rapport.json]``
+Les modules réels (solveur, entraînement, métriques) sont exigés : une panne de l'un d'eux fait
+échouer l'étape. ``--allow-fallback`` autorise les remplacements de secours (champ ABC analytique,
+petit réseau convolutif, divergence spectrale locale) pour tester l'infrastructure seule.
+
+Usage : ``python infra/deploy/smoke.py [--n 16] [--keep] [--json rapport.json] [--allow-fallback]``
 """
 from __future__ import annotations
 
@@ -212,6 +215,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--n-t", type=int, default=3, help="nombre de pas de temps écrits, défaut 3")
     ap.add_argument("--keep", action="store_true", help="conserver les fichiers temporaires locaux")
     ap.add_argument("--json", type=Path, default=None, help="écrire le rapport JSON dans ce fichier")
+    ap.add_argument("--allow-fallback", action="store_true",
+                    help="autoriser les remplacements de secours si solveur, entraînement ou métriques échouent")
     args = ap.parse_args(argv)
 
     run_id = time.strftime("%Y%m%dT%H%M%S") + "-" + uuid.uuid4().hex[:6]
@@ -225,8 +230,9 @@ def main(argv: list[str] | None = None) -> int:
 
     # 1. Environnement ----------------------------------------------------------------------
     def step_env() -> str:
-        import milady
         import torch
+
+        import milady
 
         ctx["torch"] = torch
         ctx["device"] = "cuda" if torch.cuda.is_available() else "cpu"
@@ -292,12 +298,19 @@ def main(argv: list[str] | None = None) -> int:
         out = None
         try:
             out = solver_fields(args.n, args.n_t)
-        except Exception as exc:  # noqa: BLE001 — repli sur le champ analytique
+        except Exception as exc:  # repli sur le champ analytique si autorisé
+            if not args.allow_fallback:
+                raise
             print(f"       solveur 3D indisponible ({type(exc).__name__}: {exc}) : champ analytique")
         if out is None:
+            if not args.allow_fallback:
+                raise RuntimeError("milady.sim.mhd3d.smoke_run introuvable (--allow-fallback : champ analytique)")
             out = analytic_fields(args.n, args.n_t, rng)
         ctx["sim"] = out
         ctx["wall"] = time.perf_counter() - t0
+        if isinstance(out.get("params"), dict):  # paramètres physiques réels du solveur
+            params = {k: float(v) for k, v in out["params"].items() if isinstance(v, (int, float))}
+            ctx["params"] = params
         sim_id = cat.register_simulation(
             ctx["campaign_id"], out["code"], params, grid, code_version="smoke",
             git_commit=ctx.get("git_commit", ""), host=ctx.get("host", ""),
@@ -398,6 +411,8 @@ def main(argv: list[str] | None = None) -> int:
             loss = float(info["loss"]) if isinstance(info, dict) else float(info)
             model_state = info.get("state_dict", {}) if isinstance(info, dict) else {}
             arch = "fm3d"
+        elif not args.allow_fallback:
+            raise RuntimeError("milady.train.fm3d.smoke_step introuvable (--allow-fallback : réseau de secours)")
         else:
             torch.manual_seed(0)
             net = torch.nn.Sequential(torch.nn.Conv3d(4, 8, 3, padding=1, padding_mode="circular"),
@@ -412,7 +427,7 @@ def main(argv: list[str] | None = None) -> int:
             opt.zero_grad()
             loss_t.backward()
             opt.step()
-            loss, model_state, arch = float(loss_t), net.state_dict(), "smoke_conv3d"
+            loss, model_state, arch = loss_t.item(), net.state_dict(), "smoke_conv3d"
         ckpt = workdir / "checkpoint.pt"
         torch.save({"state_dict": model_state, "loss": loss}, ckpt)
         storage = ctx["storage"]
@@ -452,9 +467,13 @@ def main(argv: list[str] | None = None) -> int:
             if callable(fn):
                 try:
                     div = float(fn(b_last))
-                except Exception:  # noqa: BLE001 — convention de forme différente : repli
+                except Exception:  # convention de forme différente : repli si autorisé
+                    if not args.allow_fallback:
+                        raise
                     div = None
         if div is None:
+            if not args.allow_fallback:
+                raise RuntimeError("milady.eval.metrics.divergence_relative introuvable (--allow-fallback)")
             div = divergence_rel(b_last)
         energy = float(0.5 * (b_last**2).sum(-1).mean())
         for metric, value in (("div_rel", div), ("energy_magnetic", energy)):

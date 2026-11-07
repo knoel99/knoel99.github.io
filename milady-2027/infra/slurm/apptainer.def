@@ -1,0 +1,59 @@
+# Définition Apptainer (ou SingularityCE) de l'image MilaDy GPU pour clusters Slurm.
+#
+# Trois façons d'obtenir milady.sif (voir infra/slurm/README-slurm.md) :
+#   1. depuis l'image Docker du projet (recommandé, identique à la VM cloud) :
+#        make image-gpu && make sif          # apptainer build milady.sif docker-daemon://milady:gpu
+#      ou, si l'image est publiée dans un registre :
+#        apptainer build milady.sif docker://ghcr.io/knoel99/milady:gpu
+#   2. depuis CE fichier (base docker://pytorch/pytorch, sans Docker installé) :
+#        apptainer build --fakeroot milady.sif infra/slurm/apptainer.def   # depuis la racine du dépôt
+#   3. Jean Zay : la construction depuis un fichier .def y est impossible (ni root ni fakeroot) ;
+#      construire ailleurs (VM, portable) puis copier le .sif sur $WORK et l'autoriser :
+#        idrcontmgr cp milady.sif
+#
+# À l'exécution, le dépôt est monté sur /opt/milady (installation éditable) : modifier le code ne
+# demande pas de reconstruire l'image (infra/slurm/env.sh, fonction milady_run).
+
+Bootstrap: docker
+From: pytorch/pytorch:2.14.1-cuda12.6-cudnn9-runtime
+
+%labels
+    org.opencontainers.image.title MilaDy GPU
+    org.opencontainers.image.source https://github.com/knoel99/milady-2027
+    milady.torch 2.14.1
+    milady.cuda 12.6
+
+%help
+    Image MilaDy (Python 3.12, PyTorch 2.14.1, CUDA 12.6). Exemple :
+      apptainer exec --nv --bind $PWD:/opt/milady milady.sif python -m milady.sweep --help
+
+%files
+    pyproject.toml /opt/milady/pyproject.toml
+    README.md /opt/milady/README.md
+    LICENSE /opt/milady/LICENSE
+    milady /opt/milady/milady
+    infra/env/requirements-gpu.txt /opt/milady/infra/env/requirements-gpu.txt
+
+%environment
+    export MILADY_ROOT=/opt/milady
+    export PYTHONUNBUFFERED=1
+    export PYTHONNOUSERSITE=1
+    export MPLBACKEND=Agg
+
+%post
+    set -eu
+    # Python système d'Ubuntu 24.04 (PEP 668) : installation pip autorisée dans l'image.
+    export DEBIAN_FRONTEND=noninteractive PIP_NO_CACHE_DIR=1 PIP_ROOT_USER_ACTION=ignore PIP_BREAK_SYSTEM_PACKAGES=1
+    apt-get update
+    apt-get install -y --no-install-recommends git make ca-certificates
+    rm -rf /var/lib/apt/lists/*
+    # Dépendances épinglées SANS la pile CUDA (torch, triton, nvidia-*, cuda-*) de l'image de base.
+    grep -vE '^(torch|triton|cuda-[a-z-]+|nvidia-[a-z0-9-]+-cu1[0-9])==' /opt/milady/infra/env/requirements-gpu.txt \
+        | grep -vE '^--extra-index-url' > /tmp/requirements-nocuda.txt
+    pip install -r /tmp/requirements-nocuda.txt
+    pip install --no-deps -e /opt/milady
+    mkdir -p /opt/milady/data
+    chmod -R a+rX /opt/milady
+
+%test
+    python -c "import milady, torch, h5py, sqlalchemy; print('milady', milady.__version__, 'torch', torch.__version__, 'cuda', torch.version.cuda)"

@@ -47,6 +47,13 @@ rand() {
 
 uid="$(id -u "${owner}")"
 gid="$(id -g "${owner}")"
+if [[ "${uid}" -eq 0 ]]; then
+    # Les conteneurs tournent sans root : dépôt possédé par root → UID/GID 1000 dans le conteneur
+    # (bootstrap_vm.sh donne alors data/ à l'UID 1000).
+    echo "Propriétaire root : conteneurs en UID/GID 1000 (cloner le dépôt avec un utilisateur normal est préférable)."
+    uid=1000
+    gid=1000
+fi
 host="$(hostname -s 2>/dev/null || hostname)"
 
 if [[ -f "${TARGET}" ]]; then
@@ -95,6 +102,6 @@ trap - EXIT
 chmod 600 "${TARGET}"
 # Le propriétaire du dépôt doit pouvoir lire .env (make sans sudo).
 if [[ "$(id -u)" -eq 0 && "${owner}" != "root" ]]; then
-    chown "${uid}:${gid}" "${TARGET}"
+    chown "$(id -u "${owner}"):$(id -g "${owner}")" "${TARGET}"
 fi
 echo "Créé : ${TARGET} (conteneur de calcul : ${worker}, UID ${uid})."

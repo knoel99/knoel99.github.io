@@ -5,7 +5,9 @@
 #   docker build -f infra/docker/Dockerfile.gpu -t milady:gpu .
 #   ou : make image-gpu
 #
-# Base : image officielle PyTorch, Python 3.12, torch 2.14.1, CUDA 12.6, cuDNN 9.
+# Base : image officielle PyTorch (Ubuntu 24.04, Python 3.12 du système, torch 2.14.1, CUDA 12.6,
+# cuDNN 9). Ce Python est « externally managed » (PEP 668) : dans un conteneur, on installe
+# quand même par pip (PIP_BREAK_SYSTEM_PACKAGES=1), c'est l'usage pour ces images.
 # CUDA 12.6 fonctionne avec un pilote NVIDIA >= 525 (compatibilité mineure CUDA 12) et couvre
 # V100, A100, L4, L40S, H100. Pour des GPU Blackwell (B200, RTX 50xx), choisir une base CUDA 13 :
 #   --build-arg BASE_IMAGE=pytorch/pytorch:2.14.1-cuda13.0-cudnn9-runtime
@@ -17,17 +19,13 @@
 ARG BASE_IMAGE=pytorch/pytorch:2.14.1-cuda12.6-cudnn9-runtime
 FROM ${BASE_IMAGE}
 
-ARG MILADY_UID=1000
-ARG MILADY_GID=1000
-ARG WITH_JUPYTER=0
-ARG GIT_COMMIT=""
-
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_ROOT_USER_ACTION=ignore \
+    PIP_BREAK_SYSTEM_PACKAGES=1 \
     MILADY_ROOT=/opt/milady \
-    MILADY_GIT_COMMIT=${GIT_COMMIT} \
     MPLBACKEND=Agg \
     DEBIAN_FRONTEND=noninteractive
 
@@ -35,13 +33,20 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends git make curl ca-certificates postgresql-client tini \
  && rm -rf /var/lib/apt/lists/*
 
-# Utilisateur non root (l'UID 1000 peut déjà exister dans certaines bases Ubuntu : on le réutilise).
-RUN if getent passwd "${MILADY_UID}" >/dev/null; then \
-        old="$(getent passwd "${MILADY_UID}" | cut -d: -f1)"; \
-        usermod -l milady -d /home/milady -m "${old}"; \
-        groupmod -n milady "$(id -gn milady)" || true; \
+# Les ARG sont déclarés au plus près de leur usage : une valeur différente n'invalide le cache
+# de construction qu'à partir de cette ligne (apt et pip restent en cache).
+ARG MILADY_UID=1000
+ARG MILADY_GID=1000
+
+# Utilisateur non root, aligné sur l'UID/GID de l'hôte. Robuste aux identifiants déjà pris dans
+# l'image de base (ex. GID 20 des Mac, UID 1000 « ubuntu ») : on réutilise le groupe, on renomme
+# l'utilisateur existant.
+RUN set -eu; \
+    [ "${MILADY_UID}" != "0" ] || { echo "MILADY_UID=0 refusé : le conteneur tourne sans root" >&2; exit 1; }; \
+    getent group "${MILADY_GID}" >/dev/null || groupadd --gid "${MILADY_GID}" milady; \
+    if getent passwd "${MILADY_UID}" >/dev/null; then \
+        usermod -l milady -d /home/milady -m -g "${MILADY_GID}" "$(getent passwd "${MILADY_UID}" | cut -d: -f1)"; \
     else \
-        (getent group "${MILADY_GID}" >/dev/null || groupadd --gid "${MILADY_GID}" milady); \
         useradd --uid "${MILADY_UID}" --gid "${MILADY_GID}" --create-home --shell /bin/bash milady; \
     fi
 
@@ -50,6 +55,7 @@ WORKDIR /opt/milady
 # Dépendances épinglées SANS la pile CUDA (torch, triton, nvidia-*, cuda-*), déjà fournie par
 # l'image de base : on ne la réinstalle pas, on vérifie seulement la version de torch.
 COPY infra/env/requirements-gpu.txt /tmp/requirements-gpu.txt
+ARG WITH_JUPYTER=0
 RUN --mount=type=secret,id=cacert,required=false \
     if [ -s /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
  && grep -vE '^(torch|triton|cuda-[a-z-]+|nvidia-[a-z0-9-]+-cu1[0-9])==' /tmp/requirements-gpu.txt \
@@ -58,12 +64,15 @@ RUN --mount=type=secret,id=cacert,required=false \
  && if [ "${WITH_JUPYTER}" = "1" ]; then pip install "jupyterlab==4.6.4"; fi \
  && python -c "import torch; v = torch.__version__.split('+')[0]; assert v == '2.14.1', v; print('torch', torch.__version__, 'cuda', torch.version.cuda)"
 
-COPY --chown=milady:milady . /opt/milady
+# Provenance : déclarée APRÈS les dépendances, sinon chaque nouveau commit réinstallerait torch.
+ARG GIT_COMMIT=""
+ENV MILADY_GIT_COMMIT=${GIT_COMMIT}
+COPY --chown=${MILADY_UID}:${MILADY_GID} . /opt/milady
 RUN --mount=type=secret,id=cacert,required=false \
     if [ -s /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
  && pip install --no-deps -e . \
  && mkdir -p /opt/milady/data \
- && chown -R milady:milady /opt/milady \
+ && chown -R "${MILADY_UID}:${MILADY_GID}" /opt/milady \
  && python -c "import milady, h5py, torch; print('milady', milady.__version__)"
 
 USER milady

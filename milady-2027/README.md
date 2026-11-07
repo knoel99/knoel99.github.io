@@ -31,6 +31,22 @@ python3 figures.py                 # graphiques
 
 Chaque script accepte `--quick` (version réduite, quelques minutes).
 
+## Calcul HPC et cloud (paquet `milady`, dossier `infra/`)
+
+Le paquet Python `milady` et le dossier `infra/` industrialisent les expériences pour la thèse :
+format de données MFF (HDF5 compatible The Well), catalogue PostgreSQL/SQLite des simulations,
+modèles et évaluations, stockage S3, suivi MLflow, solveur MHD 3D (PyTorch), entraînement
+contraint et évaluation. Guide complet : [`infra/README.md`](infra/README.md) ; contrat :
+[`specs/infra.md`](specs/infra.md).
+
+```bash
+git clone https://github.com/knoel99/milady-2027.git && cd milady-2027
+sudo infra/deploy/bootstrap_vm.sh            # VM cloud (GPU détecté) : Docker, PostgreSQL, MinIO, MLflow, test de bout en bout
+make setup && make smoke RUN=local           # portable, sans Docker (catalogue SQLite, fichiers dans data/)
+python -m milady.sweep infra/configs/palier2_abc3d.yaml --scheduler slurm   # cluster Slurm, depuis la frontale
+                                             # (image .sif + petit venv : infra/slurm/README-slurm.md)
+```
+
 ## Construire le site
 
 Prérequis : [Quarto](https://quarto.org) 1.7.32, Python 3, Node.js (vérification KaTeX).
@@ -53,6 +69,9 @@ encadrants/               travaux des encadrants, pistes de thèse
 rapport/                  rapport de stage
 these/                    sujet de thèse
 experiences/              code, resultats/*.json, figures/*.png
+milady/                   paquet Python (format MFF, catalogue, stockage, solveur 3D, entraînement, évaluation)
+infra/                    déploiement : Docker, VM cloud, Slurm/Apptainer, configurations, schéma SQL
+tests/                    pytest (make test)
 figures/<nom>/            schémas (figure/figure.js, docs/, figure/out/)
 assets/                   paper.css, theme.js (repris de knoel99/master-mva)
 specs/                    contrats

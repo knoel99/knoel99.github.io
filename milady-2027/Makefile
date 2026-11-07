@@ -38,14 +38,20 @@ BACKUP_TARGET ?= $(ROOT)/backups
 GPU        ?= 0
 
 # Valeur d'une variable de infra/docker/.env (vide si absente).
-env_get = $(shell [ -f $(ENV_FILE) ] && sed -n 's/^$(1)=//p' $(ENV_FILE) | tail -n 1)
+env_get = $(shell [ -f $(ENV_FILE) ] && sed -n 's/^$(1)=//p' $(ENV_FILE) | tail -n 1 || true)
+# Nombre de GPU NVIDIA visibles sur l'hôte (0 sans pilote). Les $(shell) ne doivent jamais échouer.
+GPU_COUNT = $(shell (nvidia-smi -L 2>/dev/null || true) | grep -c '^GPU' || true)
 
 RUN    ?= $(if $(wildcard $(ENV_FILE)),docker,local)
 WORKER ?= $(or $(call env_get,MILADY_WORKER),worker)
 # UID/GID de l'utilisateur du conteneur : ceux de .env (propriétaire du dépôt), sinon l'utilisateur courant.
 UID_   := $(or $(call env_get,MILADY_UID),$(shell id -u))
 GID_   := $(or $(call env_get,MILADY_GID),$(shell id -g))
-GIT_COMMIT ?= $(shell git -C $(ROOT) rev-parse --short=12 HEAD 2>/dev/null || true)
+# Jamais root dans le conteneur : UID/GID 0 → 1000.
+UID_   := $(if $(filter 0,$(UID_)),1000,$(UID_))
+GID_   := $(if $(filter 0,$(GID_)),1000,$(GID_))
+# Commit courant (suffixe -dirty si l'arbre suivi est modifié) : provenance des fichiers MFF.
+GIT_COMMIT ?= $(shell c=$$(git -C $(ROOT) rev-parse --short=12 HEAD 2>/dev/null) && { git -C $(ROOT) diff --quiet HEAD -- 2>/dev/null && echo $$c || echo $$c-dirty; } || true)
 export GIT_COMMIT
 # Certificat facultatif d'un proxy TLS pour pip pendant `docker build` (réseau d'entreprise/HPC).
 MILADY_BUILD_CACERT ?=
@@ -55,16 +61,19 @@ BUILD_SECRET := $(if $(MILADY_BUILD_CACERT),--secret id=cacert$(comma)src=$(MILA
 
 ifeq ($(RUN),docker)
   PY := $(COMPOSE) run --rm $(WORKER) python
+  # Tests : S3 et PostgreSQL de la pile (MinIO du compose, base temporaire créée par les tests).
+  TEST_PY := $(COMPOSE) run --rm -e MILADY_TEST_S3_ENDPOINT=http://s3:9000 -e MILADY_TEST_DOCKER=0 $(WORKER) python
   # Nombre de GPU visibles dans le conteneur (0 → entraînement sur CPU, 1 processus).
-  NGPUS ?= $(if $(filter worker-gpu,$(WORKER)),$(shell nvidia-smi -L 2>/dev/null | wc -l),1)
+  NGPUS ?= $(if $(filter worker-gpu,$(WORKER)),$(GPU_COUNT),1)
 else
   PY := $(if $(wildcard $(VENV)/bin/python),$(VENV)/bin/python,$(PYTHON))
-  NGPUS ?= $(shell nvidia-smi -L 2>/dev/null | wc -l | sed 's/^0$$/1/')
+  TEST_PY := $(PY)
+  NGPUS ?= $(GPU_COUNT)
 endif
 NPROC := $(if $(filter 0,$(NGPUS)),1,$(NGPUS))
 
 .PHONY: help setup env up down ps logs shell jupyter smoke sweep train eval backup image image-gpu \
-        sif test lock clean check-config check-env
+        image-mlflow image-jupyter sif test lock clean check-config check-env
 
 help: ## Affiche cette aide
 	@echo "MilaDy — cibles disponibles (mode courant : RUN=$(RUN), WORKER=$(WORKER)) :"
@@ -85,6 +94,9 @@ setup: ## Portable/cluster : crée .venv et installe les dépendances épinglée
 
 env: ## Génère infra/docker/.env avec des mots de passe aléatoires (jamais écrasé s'il existe)
 	@$(ROOT)/infra/deploy/gen_env.sh $(if $(filter 1,$(GPU)),--gpu,)
+	@# data/ est monté dans les conteneurs, qui tournent sous MILADY_UID (jamais root) : si le dépôt
+	@# appartient à root (VM sans utilisateur normal), data/ doit appartenir à cet UID (comme bootstrap_vm.sh).
+	@if [ "$$(id -u)" = 0 ]; then install -d -o $(UID_) -g $(GID_) $(ROOT)/data; else mkdir -p $(ROOT)/data; fi
 
 check-env:
 	@[ -f $(ENV_FILE) ] || { echo "infra/docker/.env absent : lancer 'make env' (ou bootstrap_vm.sh)"; exit 1; }
@@ -97,8 +109,8 @@ check-config:
 # Pile Docker
 # ---------------------------------------------------------------------------------------------
 up: check-env ## Démarre db, s3 (+ buckets), mlflow et attend les healthchecks
-	$(COMPOSE) build mlflow
-	$(COMPOSE) up -d --wait db s3 mlflow
+	@docker image inspect milady-mlflow:3.17.2 >/dev/null 2>&1 || $(MAKE) image-mlflow
+	$(COMPOSE) up -d --wait --wait-timeout 300 db s3 mlflow
 	@$(COMPOSE) ps --all
 	@echo "Services prêts. MLflow : http://localhost:$(or $(call env_get,MLFLOW_PORT),5000) (tunnel SSH sur une VM)."
 
@@ -115,7 +127,8 @@ shell: check-env ## Shell interactif dans le conteneur de calcul
 	$(COMPOSE) run --rm $(WORKER) bash
 
 jupyter: check-env ## Lance JupyterLab (port 8888, jeton JUPYTER_TOKEN de .env)
-	$(COMPOSE) --profile jupyter up -d --build jupyter
+	@docker image inspect $(IMAGE):cpu-jupyter >/dev/null 2>&1 || $(MAKE) image-jupyter
+	$(COMPOSE) --profile jupyter up -d --wait jupyter
 	@echo "JupyterLab : http://localhost:$(or $(call env_get,JUPYTER_PORT),8888)/lab?token=<JUPYTER_TOKEN>"
 
 # ---------------------------------------------------------------------------------------------
@@ -125,7 +138,9 @@ smoke: ## Test de bout en bout minuscule (quelques dizaines de secondes sur CPU)
 	$(PY) infra/deploy/smoke.py
 
 sweep: check-config ## Campagne de simulations : make sweep CONFIG=… [SCHEDULER=local|docker|slurm]
-	$(PY) -m milady.sweep $(CONFIG) --scheduler $(SCHEDULER) $(SWEEP_ARGS)
+	@# local : dans le conteneur de calcul (mode docker) ou le venv ; docker : piloté depuis l'hôte
+	@# (un conteneur par simulation, python3 + PyYAML suffisent) ; slurm : sur la frontale du cluster.
+	$(if $(filter docker,$(SCHEDULER)),$(PYTHON),$(PY)) -m milady.sweep $(CONFIG) --scheduler $(SCHEDULER) $(SWEEP_ARGS)
 
 train: check-config ## Entraînement (torchrun, NGPUS processus) : make train CONFIG=… [NGPUS=n]
 	$(PY) -m torch.distributed.run --standalone --nnodes=1 --nproc-per-node=$(NPROC) \
@@ -135,7 +150,7 @@ eval: ## Évaluation d'un modèle : make eval CONFIG=… [MODEL=<uuid du catalog
 	$(PY) -m milady.eval $(if $(CONFIG),--config $(CONFIG),) $(if $(MODEL),--model $(MODEL),) $(EVAL_ARGS)
 
 test: ## Tests pytest (courts)
-	$(PY) -m pytest -q -m "not slow" tests
+	$(TEST_PY) -m pytest -q -rs -p no:cacheprovider -m "not slow" tests $(TEST_ARGS)
 
 # ---------------------------------------------------------------------------------------------
 # Images et conteneurs
@@ -147,6 +162,13 @@ image: ## Construit l'image CPU milady:cpu
 image-gpu: ## Construit l'image GPU milady:gpu (CUDA 12.6)
 	docker build -f $(ROOT)/infra/docker/Dockerfile.gpu -t $(IMAGE):gpu \
 	  --build-arg MILADY_UID=$(UID_) --build-arg MILADY_GID=$(GID_) --build-arg GIT_COMMIT=$(GIT_COMMIT) $(BUILD_SECRET) $(ROOT)
+
+image-jupyter: ## Construit l'image CPU avec JupyterLab (milady:cpu-jupyter)
+	docker build -f $(ROOT)/infra/docker/Dockerfile -t $(IMAGE):cpu-jupyter --build-arg WITH_JUPYTER=1 \
+	  --build-arg MILADY_UID=$(UID_) --build-arg MILADY_GID=$(GID_) --build-arg GIT_COMMIT=$(GIT_COMMIT) $(BUILD_SECRET) $(ROOT)
+
+image-mlflow: ## Construit l'image du serveur MLflow (milady-mlflow:3.17.2)
+	docker build -f $(ROOT)/infra/docker/Dockerfile.mlflow -t milady-mlflow:3.17.2 $(BUILD_SECRET) $(ROOT)/infra/docker
 
 sif: ## Image Apptainer milady.sif (depuis milady:gpu si présente, sinon apptainer.def)
 	@command -v apptainer >/dev/null || { echo "apptainer introuvable (voir infra/slurm/README-slurm.md)"; exit 1; }
@@ -163,7 +185,7 @@ sif: ## Image Apptainer milady.sif (depuis milady:gpu si présente, sinon apptai
 # Exploitation
 # ---------------------------------------------------------------------------------------------
 backup: check-env ## Sauvegarde : pg_dump + miroir S3 vers BACKUP_TARGET (dossier ou s3://…)
-	$(ROOT)/infra/deploy/backup.sh $(BACKUP_TARGET)
+	MILADY_ENV_FILE=$(ENV_FILE) $(ROOT)/infra/deploy/backup.sh $(BACKUP_TARGET)
 
 lock: ## Régénère les verrous infra/env/requirements*.txt (nécessite uv)
 	@command -v uv >/dev/null || { echo "installer uv : pip install uv"; exit 1; }

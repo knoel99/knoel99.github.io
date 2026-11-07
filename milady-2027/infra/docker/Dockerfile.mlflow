@@ -6,5 +6,11 @@ FROM ghcr.io/mlflow/mlflow:v3.17.2
 
 RUN --mount=type=secret,id=cacert,required=false \
     if [ -s /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
- && pip install --no-cache-dir "psycopg2-binary==2.9.13" "boto3==1.43.117" \
+ && pip install --no-cache-dir --root-user-action=ignore "psycopg2-binary==2.9.13" "boto3==1.43.117" \
  && python -c "import mlflow, psycopg2, boto3; print('mlflow', mlflow.__version__)"
+
+# Serveur sans root (l'image officielle tourne en root) : les métadonnées sont dans PostgreSQL et les
+# artefacts dans S3, rien n'est écrit localement hors de $HOME ; port 5000 (> 1024).
+RUN useradd --uid 10001 --create-home --shell /usr/sbin/nologin mlflow
+USER mlflow
+WORKDIR /home/mlflow

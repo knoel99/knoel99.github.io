@@ -17,17 +17,12 @@
 
 FROM python:3.12.15-slim-trixie
 
-ARG MILADY_UID=1000
-ARG MILADY_GID=1000
-ARG WITH_JUPYTER=0
-ARG GIT_COMMIT=""
-
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_ROOT_USER_ACTION=ignore \
     MILADY_ROOT=/opt/milady \
-    MILADY_GIT_COMMIT=${GIT_COMMIT} \
     MPLBACKEND=Agg
 
 # Outils système minimaux : git (provenance), make (cibles du Makefile), curl (contrôles),
@@ -36,14 +31,28 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends git make curl ca-certificates postgresql-client tini \
  && rm -rf /var/lib/apt/lists/*
 
-# Utilisateur non root.
-RUN groupadd --gid "${MILADY_GID}" milady \
- && useradd --uid "${MILADY_UID}" --gid "${MILADY_GID}" --create-home --shell /bin/bash milady
+# Les ARG sont déclarés au plus près de leur usage : une valeur différente n'invalide le cache
+# de construction qu'à partir de cette ligne (apt et pip restent en cache).
+ARG MILADY_UID=1000
+ARG MILADY_GID=1000
+
+# Utilisateur non root, aligné sur l'UID/GID de l'hôte. Robuste aux identifiants déjà pris dans
+# l'image de base (ex. GID 20 des Mac, UID 1000 « ubuntu ») : on réutilise le groupe, on renomme
+# l'utilisateur existant.
+RUN set -eu; \
+    [ "${MILADY_UID}" != "0" ] || { echo "MILADY_UID=0 refusé : le conteneur tourne sans root" >&2; exit 1; }; \
+    getent group "${MILADY_GID}" >/dev/null || groupadd --gid "${MILADY_GID}" milady; \
+    if getent passwd "${MILADY_UID}" >/dev/null; then \
+        usermod -l milady -d /home/milady -m -g "${MILADY_GID}" "$(getent passwd "${MILADY_UID}" | cut -d: -f1)"; \
+    else \
+        useradd --uid "${MILADY_UID}" --gid "${MILADY_GID}" --create-home --shell /bin/bash milady; \
+    fi
 
 WORKDIR /opt/milady
 
 # 1) Dépendances épinglées d'abord (couche mise en cache tant que le verrou ne change pas).
 COPY infra/env/requirements.txt /tmp/requirements.txt
+ARG WITH_JUPYTER=0
 RUN --mount=type=secret,id=cacert,required=false \
     if [ -s /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
  && pip install -r /tmp/requirements.txt \
@@ -51,12 +60,15 @@ RUN --mount=type=secret,id=cacert,required=false \
 
 # 2) Code du projet, installé en mode éditable : un dépôt monté sur /opt/milady
 #    (docker-compose) remplace le code sans reconstruire l'image.
-COPY --chown=milady:milady . /opt/milady
+# Provenance : déclarée APRÈS les dépendances, sinon chaque nouveau commit réinstallerait torch.
+ARG GIT_COMMIT=""
+ENV MILADY_GIT_COMMIT=${GIT_COMMIT}
+COPY --chown=${MILADY_UID}:${MILADY_GID} . /opt/milady
 RUN --mount=type=secret,id=cacert,required=false \
     if [ -s /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
  && pip install --no-deps -e . \
  && mkdir -p /opt/milady/data \
- && chown -R milady:milady /opt/milady \
+ && chown -R "${MILADY_UID}:${MILADY_GID}" /opt/milady \
  && python -c "import milady, numpy, h5py, torch; print('milady', milady.__version__, 'torch', torch.__version__)"
 
 USER milady

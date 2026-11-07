@@ -448,7 +448,11 @@ def main(quick=False, reverse=False, train_only=False):
     store = {f"{v}|{g}": gens[(v, seeds[0], float(g))][:4000] for v in names for g in grid}
     store.update({f"ref|{g}": ref_data[g]["x"][:8000] for g in ref_data})
     store.update({f"{k[0]}|{k[2]}": v for k, v in gens.items() if k[0] == "C_grand"})
-    np.savez_compressed(RESULTS / f"e1_echantillons{suffix}.npz", **store)
+    CACHE.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(CACHE / f"e1_echantillons_complet{suffix}.npz", **store)  # complet (≈ 30 Mo, non versionné)
+    keep = {"0.85", "0.87", "0.9", "0.93"}  # version publiée : les Γ des figures, en float32 (≈ 3 Mo)
+    np.savez_compressed(RESULTS / f"e1_echantillons{suffix}.npz",
+                        **{k: v.astype(np.float32) for k, v in store.items() if k.split("|")[1] in keep})
     for k, v in summary.items():
         print(k, v, flush=True)
     print(f"durée totale {time.time() - t_start:.0f} s")
