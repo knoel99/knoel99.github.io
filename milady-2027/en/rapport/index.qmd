@@ -1,0 +1,130 @@
+---
+title: "Physics-constrained conditional generative models for parametric MHD fields"
+subtitle: "M2 internship report (prospective) · ANR MilaDy project · CEREA–LISN"
+lang: en
+format:
+  html:
+    theme: none
+    minimal: true
+    toc: false
+    anchor-sections: false
+    html-math-method:
+      method: katex
+      url: "https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js"
+    highlight-style: github
+    embed-resources: false
+    css: ../../assets/paper.css
+    include-in-header:
+      - text: |
+          <meta name="color-scheme" content="light dark">
+          <script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    include-before-body:
+      - text: |
+          <a class="skip" href="#main">Skip to content</a>
+          <header class="topbar">
+            <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Contents</span></button>
+            <a class="brand" href="../../en/index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+            <span class="tb-title" id="tb-title"></span>
+            <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Theme</span></button>
+          </header>
+          <div class="layout">
+          <nav class="sidetoc" id="sidetoc" aria-label="Contents"></nav>
+          <main class="paper" id="main">
+    include-after-body:
+      - text: |
+          </main>
+          </div>
+          <footer class="foot"><p><a href="../../en/index.html">← Home</a> · <a href="../../en/prep/index.html">Preparation</a> · <a href="../../en/encadrants/index.html">Supervisors</a> · <a href="../../en/rapport/index.html">Internship report</a> · <a href="../../en/these/index.html">PhD proposal</a> · <a href="../../en/interactifs/index.html">Interactive diagrams</a> · <a href="../../en/experiences/index.html">Experiments</a> · <a href="../../en/calcul/index.html">Computing and data</a></p></footer>
+          <script defer src="../../assets/theme.js"></script>
+---
+
+## Internship fact sheet {#fiche}
+
+| Item | Content |
+|---|---|
+| Title of the offer | *Physics-Constrained Generative AI Modelling of Parametric Dynamical Systems (with potential PhD position)*, end-of-studies internship 2027 (Master 2 or final year of engineering school). |
+| Framework | ANR project MilaDy, "Modélisation par apprentissage automatique des dynamos turbulentes" (machine-learning modelling of turbulent dynamos), ANR-25-CE51-0077 (committee CE51, starting January 2026, 48 months). Coordination: Caroline Nore (LISN). Partners: LISN, Lagrange laboratory (Observatoire de la Côte d'Azur), CEREA (École nationale des ponts et chaussées). |
+| Location | CEREA, École nationale des ponts et chaussées (Institut Polytechnique de Paris), Champs-sur-Marne; the offer mentions possible remote work of up to one or two days per week. |
+| Supervision | Sibo Cheng (ENPC, CEREA) and Didier Lucor (LISN, Université Paris-Saclay), in collaboration with Caroline Nore (LISN) and Yannick Ponty (Observatoire de la Côte d'Azur, CNRS), within the MilaDy consortium. |
+| Period | Five to six months starting in spring 2027, according to the offer. |
+| Deliverables expected by the offer | "A comparative study of physics-constrained generative modelling strategies for parameter-dependent MHD fields", a concise technical report and reproducible code integrated into the project toolbox. |
+| Status of this document | **Prospective.** The internship has not taken place. The results come from the small-scale experiments, run on a processor (CPU), in the `experiences/` folder of this site. Nothing has been reviewed or validated by the supervisors. |
+
+::: note
+[Disclaimer — a report written before the internship]{.tag}
+This document is written as the final report of an internship that has not yet taken place. Its purpose is to prepare that internship: it sets out a theoretical framework, confronts it with three toy experiments, and states what is missing to move on to the project's data.
+
+Three statuses are distinguished throughout the text. What is **measured** comes exclusively from the experiments in the `experiences/` folder of this site, run on a 4-core processor without a GPU, on toy models: Gissinger's three-mode reversal model (E1), forced 2D MHD on a 32² grid (E2) and the kinematic ABC dynamo on a 32³ grid (E3). The figures are copied from the digest `experiences/resultats/digest.md` or from the JSON files it is built from. What is **published** is cited with its reference, based on bibliographic records checked against the primary sources on November 6, 2026. What is **conjectured** is flagged as such.
+
+No data from the MilaDy consortium (SFEMaNS or LATU simulations) has been used. Nothing in this document has been reviewed, discussed or validated by Sibo Cheng, Didier Lucor, Caroline Nore or Yannick Ponty, and no sentence should be read as expressing their opinion.
+:::
+
+## Résumé {#resume}
+
+Le projet ANR MilaDy cherche des modèles appris des dynamos turbulentes, capables de reproduire la sensibilité du champ magnétique aux paramètres de contrôle et ses renversements de polarité. Ce rapport prospectif étudie des modèles génératifs conditionnels, entraînés par flow matching, qui produisent des instantanés de champs conditionnés par un paramètre physique, et la façon d'y faire respecter la physique.
+
+Le cadre repose sur une taxonomie des contraintes. Les contraintes locales linéaires, comme la divergence nulle, valent pour chaque échantillon et peuvent être imposées exactement par l'architecture ou par projection. La symétrie $\mathbf{B} \to -\mathbf{B}$ et les identités de stationnarité, dont le bilan d'énergie moyen, ne valent que pour la loi. Imposer un bilan stationnaire à chaque échantillon produit une loi étrangère à la vraie loi (Corollaire 6) ; il faut l'imposer en loi, par une perte d'entraînement ou par une inclinaison exponentielle de la loi générée.
+
+Trois expériences sur CPU testent ces énoncés. Sur le modèle à trois modes de Gissinger conditionné par son forçage $\Gamma$ (E1), on compare symétrie imposée, contraintes en loi et contrainte par échantillon, et l'on prédit la fréquence des renversements par la formule de Rice à partir de la seule loi générée. Le champ de vitesse équivariant garde la loi symétrique à toutes les valeurs de $\Gamma$, alors que l'augmentation des données ne la symétrise qu'aux valeurs d'entraînement ; il divise la distance d'énergie aux valeurs de test par 4,6. La projection de chaque échantillon sur $\mathrm{d}E/\mathrm{d}t = 0$ la multiplie par 9. La formule de Rice retrouve la fréquence des passages de $D$ par zéro à 14 % près loin du seuil, et à 42 % près au voisinage du seuil, où le générateur lisse le saut de la loi. Sur ce banc, la perte de stationnarité divise par deux les résidus de stationnarité d'un bon modèle, mais elle resserre la loi de $\mathrm{d}E/\mathrm{d}t$ et échoue sur un modèle biaisé. Sur la MHD 2D forcée conditionnée par la diffusivité magnétique $\eta$ (E2), la génération libre laisse une divergence relative de 0,41, alors que les potentiels et les projections l'annulent à la précision machine. Une perte de stationnarité en loi, imposée à toute valeur de $\eta$, y compris sans données, ramène la distance d'énergie moyenne aux $\eta$ de test de 2,58 à 0,70 et les erreurs sur les énergies cinétique et magnétique de 26 % et 37 % à 7 % et 6 %, alors qu'un témoin sans cette perte ne gagne rien. L'inclinaison exponentielle a posteriori réduit le résidu du bilan mais effondre la taille effective d'échantillon (0,29 en moyenne), et le recalage de chaque échantillon annule la variance de la dissipation. Une dynamo cinématique ABC (E3) valide un banc d'essai 3D : seuils mesurés 8,87, 17,6 et 26,8, en accord avec les valeurs publiées, et divergence de l'ordre de $10^{-16}$.
+
+Les modèles restent faibles : leurs erreurs de spectre (0,07 à 0,23 en $\log_{10}$) dépassent nettement celles de deux échantillons de données (0,002 à 0,011). Le passage aux données SFEMaNS et LATU du consortium est discuté en conclusion.
+
+## Abstract {#abstract}
+
+The ANR project MilaDy seeks machine-learned models of turbulent dynamos that reproduce the sensitivity of the magnetic field to control parameters and its polarity reversals. This prospective report studies conditional generative models trained by flow matching, which produce snapshots of fields conditioned on a physical parameter, and how to make them respect physics.
+
+The framework rests on a taxonomy of constraints. Local linear constraints, such as zero divergence, hold for every sample and can be enforced exactly by the architecture or by projection. The symmetry $\mathbf{B} \to -\mathbf{B}$ and the stationarity identities, including the mean energy balance, hold for the law only. Enforcing a stationary balance on each sample yields a law that is singular with respect to the true one (Corollary 6); it must be enforced in law, through a training loss or through an exponential tilting of the generated law.
+
+Three CPU experiments test these statements. On Gissinger's three-mode reversal model conditioned on its forcing $\Gamma$ (E1), we compare enforced symmetry, constraints in law and per-sample constraints, and we predict the reversal frequency with Rice's formula from the generated law alone. The equivariant velocity field keeps the law symmetric at every value of $\Gamma$, whereas data augmentation symmetrizes it only at training values; it divides the energy distance at test values by 4.6. Projecting each sample onto $\mathrm{d}E/\mathrm{d}t = 0$ multiplies it by 9. Rice's formula recovers the frequency of zero crossings of $D$ within 14% far from the threshold, and within 42% near the threshold, where the generator smooths the jump of the law. On this test bench, the stationarity loss halves the stationarity residuals of a good model, but it narrows the law of $\mathrm{d}E/\mathrm{d}t$ and fails on a biased model. On forced 2D MHD conditioned on the magnetic diffusivity $\eta$ (E2), free generation leaves a relative divergence of 0.41, whereas potentials and projections cancel it to machine precision. A stationarity loss in law, imposed at every value of $\eta$, including values without data, lowers the mean energy distance at test values of $\eta$ from 2.58 to 0.70 and the errors on kinetic and magnetic energies from 26% and 37% to 7% and 6%, while a control run without this loss gains nothing. A posteriori exponential tilting reduces the balance residual but collapses the effective sample size (0.29 on average), and per-sample rescaling cancels the variance of the dissipation. A kinematic ABC dynamo (E3) validates a 3D test bench: measured thresholds 8.87, 17.6 and 26.8, in agreement with published values, and divergence of order $10^{-16}$.
+
+The models remain weak: their spectral errors (0.07 to 0.23 in $\log_{10}$) clearly exceed those of two data samples (0.002 to 0.011). The move to the consortium's SFEMaNS and LATU data is discussed in the conclusion.
+
+## 1. Introduction {#introduction}
+
+### Context {#contexte}
+
+The dynamo effect is the amplification and maintenance of a magnetic field by the flow of an electrically conducting fluid, against ohmic dissipation. It explains the magnetic field of the Earth and that of stars. It is hard to reproduce in the laboratory: according to the summary of the MilaDy project, only three liquid-sodium experiments, including the one in Cadarache, have achieved a dynamo, and the DRESDYN experiment, under way in Germany, seeks to achieve one with a precessing cylinder.
+
+Numerical simulation of dynamos is expensive, because it couples the Navier–Stokes equations and the induction equation in turbulent regimes. According to the internship offer, it produces "large 3D datasets that are difficult to store, interpret and reuse" (our translation) for modelling and data assimilation. The MilaDy project aims to derive learned reduced models from them; its summary also mentions learning-based data assimilation, made more accessible by the TorchDA platform (Cheng et al. 2025).
+
+Two properties make these data hard to learn. The first is **sensitivity to parameters**. The dynamo onset threshold depends on the magnetic Reynolds number $Rm$, but also on the materials and the boundary conditions: the VKS experiment only worked with soft-iron impellers (Monchaux et al. 2007), and, in the simulations of Nore et al. (2018), the threshold goes from $Rm_c = 90 \pm 5$ to $130 \pm 10$ when the "pseudo-vacuum" condition is replaced by the vacuum condition, at $Re = 1.5\cdot 10^3$ and $\mu_r = 50$. The second is the existence of **abrupt transitions**, including polarity reversals of the field, observed in VKS (Berhanu et al. 2007) and reproduced numerically by Bousquet et al. (2026). The first objective of the project is precisely about these reversals, with reduced models able to identify their phases: precursor, reversal and rebound.
+
+The proposed internship explores conditional generative models, based on diffusion or flow matching, that generate physical fields conditioned on the parameters of the system and that respect constraints derived from the equations and the boundary conditions. According to the offer, these methods will first be evaluated on simple PDE test benches, with possible applications to turbulent dynamo flows.
+
+### Research questions {#problematiques}
+
+The internship offer defines three objectives and three work packages. We reformulate them as five research questions, labeled P1 to P5, which the report answers section by section.
+
+| | Reformulated question | Wording of the offer | Where the report answers it |
+|---|---|---|---|
+| P1 | **Parametric conditioning.** Learn a family of laws $\mu_{\boldsymbol\lambda}$ and generate at values of $\boldsymbol\lambda$ never seen, including near a threshold. | "Encode variations across control parameters (e.g., Reynolds number, magnetic Reynolds number, material properties…)" | [Framework](#cadre), Proposition 9, [protocol](#m-protocole), [E1](#e1), [E2](#e2) |
+| P2 | **Exact local constraints.** Enforce zero divergence and the boundary conditions, through the architecture, the loss or the sampling, and measure what each choice costs. | "Respect key physical constraints, including energy balance and divergence-free conditions"; "through model design, training losses, or sampling procedures" | [Taxonomy](#taxonomie), Propositions 1 to 3, [E2](#e2), [E3](#e3) |
+| P3 | **Energy balance.** State what "respecting the energy balance" means for a snapshot generator, and enforce it. | "energy balance" | Propositions 5 and 7, Corollary 6, [E1](#e1), [E2](#e2) |
+| P4 | **Evaluation.** Choose statistical and physical metrics that genuinely discriminate between models. | "energy spectra, helicity, divergence control, and topology preservation" | [Metrics](#m-metriques), [experiments](#experiences), [discussion](#discussion) |
+| P5 | **Toward 3D dynamos.** Prepare the generation of 3D fields usable by reduced models or data assimilation, and the capture of reversals and thresholds. | "Enable robust generation of 3D fields that can serve as input for reduced-order models or data assimilation frameworks"; context: "abrupt reversals of the magnetic field polarity" | Propositions 4, 8 and 9, [E1](#e1), [E3](#e3), [discussion](#discussion) |
+
+### Contributions {#contributions}
+
+This report mostly assembles known results. What is already published is cited and not claimed:
+
+- the equivalence between the invariance of a measure and the identities $\mathbb{E}_\mu[\mathcal{L}\varphi] = 0$ on a core of test functions (Echeverría 1982; Ethier & Kurtz 1986), and the generator approach to Stein discrepancies (Barbour 1988, 1990; Gorham & Mackey 2015; Gorham et al. 2019; Liu, Lee & Jordan 2016);
+- the weak form of the stationary Fokker–Planck equation used as the loss of a sample generator, in the *Weak Generative Sampler* (Cai et al. 2026), with a min-max antecedent (Zang et al. 2020);
+- learning from the invariant measure (Yang et al. 2023; Botvinick-Greenhouse, Martin & Yang 2023; Jiang et al. 2023; Schiff et al. 2024; Chen et al. 2026);
+- the I-projection and the exponential tilting of a pre-trained generator under moment constraints (Csiszár 1975; Jaynes 1957; Pitera & Chodera 2012; Khalifa, Elsahar & Dymetman 2021; Mun 2026), and the tilting of a flow matching model by a weak-form PDE residual (Tauberschmidt et al. 2026);
+- zero divergence in generative models: stream function (Wang et al. 2026), Leray projection (Genuist et al. 2026; Li, Buzzicotti et al. 2026; Li, Zhang et al. 2026), divergence-free networks (Richter-Powell, Lipman & Chen 2022);
+- the transmission of a symmetry by an equivariant flow (Proposition 4), a classical result for equivariant normalizing flows;
+- Propositions 2 and 3, elementary consequences of the definitions, probably known in other forms.
+
+What this work claims is stated with caution: **to our knowledge, after a literature search closed on November 6, 2026**, no publication contains the following points.
+
+1. Using the stationarity identities of a **field PDE** (balances of energy, cross helicity and $\langle a^2\rangle$ in MHD) as constraints **in law** on a **parametric conditional** generative model, enforceable at parameter values **without data** (fine-tuning in E1, loss in law in E2). Unlike the external moments of Khalifa et al. (2021) or Mun (2026), these identities require no target value: they hold for every invariant measure of the dynamics.
+2. Stating the inconsistency of a per-sample constraint on a stationary balance (Corollary 6) and measuring it (E1 and E2).
+3. Applying Rice's formula to a snapshot generator to predict the frequency of reversals **without time integration** (Proposition 8). We found no prior work.
+4. Showing the complementarity of symmetry and stationarity: the stationarity identities do not fix the relative weights of two symmetric ergodic components, and equivariance is necessary (consequence of Proposition 4, tested in E1).
+5. A technical point: the naive estimator of a stationarity loss, the square of a mini-batch mean, has expectation $(\mathbb{E}g)^2 + \mathrm{Var}(g)/n$ and therefore penalizes the spread of the law; the product of the means of two independent half-batches removes this bias. The problem appeared while developing E1, on its quick version.
+6. A lower bound on the error of a generator that is regular in $\boldsymbol\lambda$ near a jump of the law (Proposition 9), applied to the reversal threshold and the dynamo threshold.
+
+### Outline of the report {#organisation}
+
+[Section 2](#etat-art) reviews the state of the art: dynamos, model reduction, generative models, hard constraints and constraints in law. [Section 3](#formulation) sets out the framework, the taxonomy of constraints and nine proven statements. [Section 4](#methodes) describes exactly the methods and the protocol of the experiments, [Section 5](#experiences) their results, and [Section 6](#discussion) answers the research questions P1 to P5 and discusses the validity of the conclusions. [Section 7](#conclusion) concludes and opens toward the PhD. The [appendices](#annexes) give the reproduction commands, the hyperparameters and a glossary.
+

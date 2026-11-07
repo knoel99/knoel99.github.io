@@ -1,0 +1,164 @@
+---
+title: "Conditional generative models with hard and distributional physical constraints for turbulent dynamos"
+subtitle: "PhD topic proposal · ANR MilaDy project · co-supervision by S. Cheng (ENPC/CEREA) and D. Lucor (LISN)"
+lang: en
+format:
+  html:
+    theme: none
+    minimal: true
+    toc: false
+    anchor-sections: false
+    html-math-method:
+      method: katex
+      url: "https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js"
+    highlight-style: github
+    embed-resources: false
+    css: ../../assets/paper.css
+    include-in-header:
+      - text: |
+          <meta name="color-scheme" content="light dark">
+          <script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    include-before-body:
+      - text: |
+          <a class="skip" href="#main">Skip to content</a>
+          <header class="topbar">
+            <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Contents</span></button>
+            <a class="brand" href="../../en/index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+            <span class="tb-title" id="tb-title"></span>
+            <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Theme</span></button>
+          </header>
+          <div class="layout">
+          <nav class="sidetoc" id="sidetoc" aria-label="Contents"></nav>
+          <main class="paper" id="main">
+    include-after-body:
+      - text: |
+          </main>
+          </div>
+          <footer class="foot"><p><a href="../../en/index.html">← Home</a> · <a href="../../en/prep/index.html">Preparation</a> · <a href="../../en/encadrants/index.html">Supervisors</a> · <a href="../../en/rapport/index.html">Internship report</a> · <a href="../../en/these/index.html">PhD proposal</a> · <a href="../../en/interactifs/index.html">Interactive diagrams</a> · <a href="../../en/experiences/index.html">Experiments</a> · <a href="../../en/calcul/index.html">Computing and data</a></p></footer>
+          <script defer src="../../assets/theme.js"></script>
+---
+
+
+| Item | Content |
+|---|---|
+| Title | Conditional generative models with hard and distributional physical constraints for turbulent dynamos |
+| Project | ANR MilaDy, “Modélisation par apprentissage automatique des dynamos turbulentes” [Machine-learning modeling of turbulent dynamos], ANR-25-CE51-0077 (collaborative research project, committee CE51). Coordination: C. Nore (LISN). Partners: LISN, Lagrange laboratory (Observatoire de la Côte d'Azur, Nice), CEREA (École nationale des ponts et chaussées). Start in January 2026, duration 48 months (ANR page). |
+| Envisaged supervision | S. Cheng (CEREA, ENPC) and D. Lucor (LISN, CNRS). S. Cheng's “Opportunities” page states: “The PhD student will be co-supervised by Sibo Cheng and Didier Lucor”; the 2027 internship offer specifies that a funded PhD within the project “may be offered” depending on the results of the internship. |
+| Collaborations | C. Nore (LISN: SFEMaNS code, simulations of VKS and of precession) and Y. Ponty (Lagrange, OCA: pseudo-spectral codes, LATU code, Taylor–Green and ABC dynamos), as in the internship offer. |
+| Locations | CEREA (ENPC, Champs-sur-Marne); proposed visits to LISN (Université Paris-Saclay) and to OCA (Nice), see the [schedule](#calendrier). |
+| Duration | 36 months. Working assumption: start in fall 2027, after the spring 2027 internship. |
+| Keywords | conditional flow matching; hard constraints (vector potential, gauge, matching conditions); distributional constraints (stationarity identities, I-projection); equivariance; Rice formula; reversals; dynamo threshold; VKS; DRESDYN; model reduction; data assimilation |
+| Starting point | the [prospective internship report](../rapport/index.html) and its three experiments E1 to E3; the [preparation](../prep/index.html) modules |
+
+: Topic summary {.kv}
+
+::: note
+[Status of this document]{.tag}
+This PhD topic is an **independent proposal**, written to prepare the MilaDy 2027 internship. It was neither requested nor validated by S. Cheng, D. Lucor, C. Nore, Y. Ponty or the MilaDy consortium: the supervision indicated is only “envisaged”, based on S. Cheng's page cited in the summary table (<https://scheng2024.github.io/opportunities/>). The internship has not yet taken place. The results called “internship results” come from the small-scale, processor-based (CPU) experiments of this repository (`experiences/`), and their figures are taken from the digest `experiences/resultats/digest.md`. Published results are attributed to their authors; what this work claims is written “to our knowledge, after a literature search as of November 6, 2026”; conjectures are labeled as such. The schedule, the quantitative criteria and the computing budget are working assumptions to be discussed.
+:::
+
+## Abstract {#resume}
+
+A turbulent dynamo generates a magnetic field whose statistics depend strongly on the control parameters (kinetic and magnetic Reynolds numbers, permeability of the materials, forcing asymmetry) and which can reverse abruptly, as in the von Kármán Sodium (VKS) experiment. Direct simulations of these flows are costly, so that only a few points in parameter space are available, with few reversals per simulation. The ANR MilaDy project aims to derive reduced models from them, to study reversals and to explore the DRESDYN device; the associated internship offer calls for generative models conditioned on the parameters, which respect the energy balance and zero divergence.
+
+The proposed thesis builds **conditional snapshot generators** of $(\mathbf{u}, \mathbf{B})$ by flow matching and imposes the physical constraints on them at the level at which they hold. **Hard** constraints, which hold for each field (zero divergence, matching conditions to the vacuum, permeability jumps), go through the architecture: functional decoders based on a vector potential in a bounded domain. **Distributional** constraints, which hold only for the ensemble of fields, go through the generated distribution: the symmetries $\mathbf{B} \to -\mathbf{B}$ and $R_\pi$ through equivariance, the stationarity identities $\mathbb{E}_{\mu_{\boldsymbol\lambda}}[\mathcal{L}_{\boldsymbol\lambda}\varphi] = 0$ (energy and helicity budgets) through a training loss that also applies to parameters without data, or through exponential tilting at sampling time.
+
+The topic then connects the generated distribution to reversals. The Rice formula gives the frequency of zero crossings of the dipole moment from the stationary distribution alone and from the right-hand side of the equations, which can be computed on a snapshot: a snapshot generator thus predicts a reversal rate without time integration. The thesis establishes its conditions of validity and its limits (chattering around zero, waiting times that the distribution does not determine), and quantifies the unavoidable error of a generator that is smooth in $\boldsymbol\lambda$ near a dynamo threshold (Proposition 9 of the shared theoretical note). Finally, the generated fields are used to identify reduced models of DQVU type and as a prior distribution for data assimilation, whose posterior is bimodal in $\pm\mathbf{B}$.
+
+The experimental plan climbs a ladder of five tiers: reduced models of reversals (Gissinger, DQVU), periodic 2D MHD, periodic 3D dynamos (ABC, Taylor–Green), VKS in cylindrical geometry (SFEMaNS, LATU), then DRESDYN (precession). The first three tiers extend experiments E1 to E3 of the internship. Each tier has its own quantitative success criteria and stopping conditions; the budget is estimated at about $10^4$ GPU hours, under explicit assumptions (§3.7).
+
+## 1. Context and chosen direction {#piste}
+
+### 1.1 Two directions, one thesis
+
+The [Supervisors](../encadrants/index.html#evaluation) page compares six PhD directions located at the intersection of the work of S. Cheng, D. Lucor, C. Nore and Y. Ponty; directions A and B come out on top there under all three sets of weights tried. This topic merges these two directions. **Direction A** targets a conditional generator of parametric 3D MHD fields, $p(\mathbf{u}, \mathbf{B} \mid Re, Rm, \mu_r, \text{asymmetry})$, for VKS; its bottlenecks are generalization beyond the few simulated points, the preservation of $\nabla\cdot\mathbf{u} = 0$ and $\nabla\cdot\mathbf{B} = 0$ after decoding, the symmetries, and the hybrid Fourier × finite element representation of the data. **Direction B** targets the generation and probabilistic forecasting of reversals and rare events; its bottlenecks are the scarcity of reversals, heavy-tailed statistics, and the consistency between generated fields and reduced dynamics.
+
+Three reasons justify the merger. The first is institutional: the two official objectives of MilaDy are the study of reversals and of “explosive” dynamos through reduced models able to distinguish precursor, reversal and recovery, and the optimization of DRESDYN through parametric reduced models (ANR page); the internship offer calls for 3D fields conditioned on the parameters, which respect “energy balance and divergence-free conditions” and which then feed reduced models and assimilation. A conditional generator (A) from which the statistics of reversals can be extracted (B) addresses both objectives at once.
+
+The second reason is theoretical, and it is the core of the topic. Two results connect a **snapshot** generator to the statistics of reversals without requiring long time series. The stationarity identities (class C4 of the [taxonomy](#theorie)) constrain the generated distribution, including at parameters where no data are available. The Rice formula turns the stationary distribution and the right-hand side $F_{\boldsymbol\lambda}$ of the equations into a frequency of zero crossings of the dipole. The symmetry $\mathbf{B} \to -\mathbf{B}$ links the two: it fixes the weights of the two polarities, which the stationarity identities do not fix (Proposition 4 of the shared note and §2.4).
+
+The third reason has to do with risk. Direction B alone requires long series to estimate frequencies of rare events, whereas each simulation contains only a few of them. The merger extracts from snapshots everything the stationary distribution contains (means, budgets, mean crossing frequency) and reserves temporal information for what the distribution does not contain, such as the distribution of waiting times: this is an explicit limit of question Q3, proved in §2.5. The other directions are not abandoned: data assimilation with a generative prior becomes the downstream use of question Q4; DRESDYN becomes tier 4; hard constraints on hybrid meshes become question Q1; testbeds and physical metrics become the common evaluation protocol of §3.1.
+
+![Proposed generative framework. The physical parameters $\boldsymbol\lambda = (Re, Rm, \mu_r)$ drive a latent flow matching; a functional decoder based on potentials makes $\nabla\cdot\mathbf{u} = 0$ and $\nabla\cdot\mathbf{B} = 0$ exact (class C1, through the architecture); the symmetry $\mathbf{B} \to -\mathbf{B}$ is imposed through equivariance of the flow's velocity field (C3); the energy budget is imposed in distribution (C4), through exponential tilting at sampling time or through a stationarity loss during training, and not sample by sample. **a**, transport of the noise toward a symmetric bimodal latent distribution. **b**, decoder that can be queried at any point and outputs potentials. **c**, target geometry, of VKS type (the model has not been trained on VKS). **d**, distributional control of the dissipation. **e**, downstream uses: reduced models, assimilation, reversal frequency through the Rice formula. All data glyphs are schematic.](../figures/cadre/figure/out/cadre.png){width="100%" fig-alt="Five-panel diagram: physical parameters conditioning a latent flow, a potential-based decoder producing divergence-free fields, a VKS-type cylinder with counter-rotating impellers and an axial dipole, a histogram of the dissipation corrected in distribution, and three downstream uses (reduced models, assimilation, reversal frequency)."}
+
+### 1.2 What the internship established
+
+The three experiments of the internship, detailed in the [Experiments section of the report](../rapport/index.html#experiences), run on a processor in a few hours. They prove nothing at the scale of laboratory dynamos; they validate the computational pipeline and test the propositions of the theoretical note on cases where the truth is known. The figures below come from the digest of results; the [E1 section of the report](../rapport/index.html#e1) details those of E1.
+
+**E1, Gissinger's three-mode model.** Gissinger's (2012) $(Q, D, V)$ model produces chaotic reversals of the dipole $D$; E1 learns the stationary distribution $p(Q, D, V \mid \Gamma)$ by conditional flow matching, around the value of the forcing parameter where reversals appear. It compares a baseline model, data augmentation by the symmetry, an equivariant velocity field, exponential tilting on nine stationarity identities (monomials of degree at most 2), fine-tuning with a stationarity loss imposed at values of $\Gamma$ drawn across the whole interval $[0.80 ; 1.00]$, hence also between the training values, and the projection of each sample onto $\mathrm{d}E/\mathrm{d}t = 0$. It also estimates the frequency of zero crossings of $D$ through the Rice formula from the generated samples alone, and compares it with the count on the simulations. At values of $\Gamma$ never seen, the equivariant field keeps the distribution symmetric (asymmetry at the noise floor, 0.004), whereas augmentation symmetrizes it only at the training values; it divides the energy distance by 4.6 relative to the baseline model. The per-sample projection multiplies it by 9, as predicted by Corollary 6. The Rice formula recovers the crossing frequency within 4–6% on the reference distribution, within 14% on the generated distribution far from the threshold, and within 42% near the threshold, where the generator smooths out the jump in the distribution (Proposition 9). Two negative results matter for the thesis: the stationarity loss halves the residuals of a good model, imposed and non-imposed alike, but narrows the distribution of $\mathrm{d}E/\mathrm{d}t$ by a quarter, and it fails on a biased model (one seed out of two diverges); a posteriori tilting improves no distribution.
+
+**E2, forced 2D MHD.** E2 generates snapshots $(\mathbf{u}, \mathbf{B})$ of a periodic 2D MHD forced by white noise, on a $32^2$ grid, conditioned on the magnetic diffusivity $\eta$ (six training values, five interleaved test values, $2400$ training snapshots per $\eta$). The representation consists of $220$ independent Fourier modes (dimension $880$ in potentials, $1760$ in components), and the network is a multilayer perceptron of width $1024$ trained for $6000$ iterations. At the test values of $\eta$, the measurements are as follows.
+
+- The relative divergence of $\mathbf{u}$ is $0.41$ for the free model, $0.34$ with a soft penalty, $2.0 \times 10^{-8}$ with the projected flow, $5.1 \times 10^{-17}$ with the final projection and $1.8 \times 10^{-17}$ with the potentials $(\psi, a)$. The potentials therefore reach machine precision without degrading quality: their energy distance between distributions of descriptors ($2.58$) is that of the final projection ($2.61$).
+- The soft penalty, although unbiased at the optimum for a linear constraint (Proposition 3 of the note), degrades the magnetic energy: relative error of $1.68$ on $\mathbb{E}[E_B]$, against $0.37$ for the potentials. Absence of bias at the population level says nothing about optimization on a finite budget.
+- Fine-tuning the potentials with a **stationarity loss** (mean energy budget imposed at randomly drawn $\eta$, hence also at the test $\eta$ without data) brings the relative residual of the energy budget in distribution from $0.46$ (control fine-tuned without the loss) down to $0.061$, the spectrum error from $0.165$ to $0.070$ and the energy distance from $2.52$ to $0.70$. The Monte Carlo noise floor (subsample of the data of the same size) is at $0.0018$: the model remains far from the data.
+- **Rescaling each sample** onto the energy budget cancels the residual in distribution ($8.3 \times 10^{-6}$) but crushes the spread of the dissipation: its standard deviation is only $8.6 \times 10^{-4}$ times that of the data, as Corollary 6 of the note predicts. **Exponential tilting** on three identities (energy, cross helicity, $\langle a^2\rangle$) reduces the energy residual from $0.47$ to $0.19$, but with a mean effective sample size of $0.29$ times the number of samples, a reduced spread (ratio of standard deviations $0.20$) and an energy distance that increases ($2.62$ to $4.15$): reweighting a model that is too far from the data is not enough.
+
+**E3, kinematic ABC dynamo.** E3 computes the growth rate $\lambda(Rm)$ of the magnetic field in the ABC flow ($A = B = C = 1$, $Rm = 1/\eta$) with a $32^3$ pseudo-spectral scheme in curl form. The interpolated thresholds are $8.87$, $17.6$ and $26.8$, to be compared with the published windows $8.9 < Rm < 17.5$ and $Rm > 27$ (Archontis et al. 2003, who cite Galloway and Frisch). The relative divergence stays below $1.6 \times 10^{-16}$ at all $Rm$. Near the second threshold, precision is limited: at $Rm = 17.5$, the rate is $2.3 \times 10^{-4}$ over the second half of the simulation, $-2.2 \times 10^{-4}$ over the last quarter and $-5.2 \times 10^{-4}$ at resolution $48^3$. E3 contains no generative model: it validates the 3D tier and the curl form that preserves $\nabla\cdot\mathbf{B} = 0$.
+
+![Experiment E2 (2D MHD, $32^2$), averages over the five test values of $\eta$. Left, relative divergence of $\mathbf{u}$ (logarithmic scale); middle, spectrum error (mean deviation of the $\log_{10}$ of the kinetic and magnetic energy spectra per shell); right, relative residual of the energy budget in distribution, $\lvert\mathbb{E}[\varepsilon] - \varepsilon_{\mathrm{inj}}\rvert/\varepsilon_{\mathrm{inj}}$ (written with $D$ for the dissipation in the figure). V0: free generation of the components; V1: soft divergence penalty; V2: final Leray projection; V3: projected flow; V4: potentials $(\psi, a)$; V5: potentials and stationarity loss; V5 control: same fine-tuning without the loss; in gray, subsample of the data of the same size (Monte Carlo noise floor). A single seed.](../experiences/figures/e2_mecanismes.png){width="100%" fig-alt="Three horizontal bar charts comparing eight variants: relative divergence, spectrum error and energy budget residual; the potentials reach machine precision in divergence, and the variant with the stationarity loss has the smallest spectrum and budget errors."}
+
+![Experiment E2, “in distribution” part, averages over the test $\eta$. From top to bottom: samples of V4 (held-out half), V4 exponentially tilted on three stationarity identities, V4 rescaled sample by sample onto the energy budget, V5 (stationarity loss during training). Left, relative residual of the energy budget; middle, standard deviation of the dissipation relative to that of the data (dashes: value 1); right, energy distance between distributions of descriptors (log-spectra and cross helicity). Rescaling cancels the residual but crushes the spread (Corollary 6); tilting reduces the residual while degrading the distance; the stationarity loss improves all three indicators.](../experiences/figures/e2_en_loi.png){width="100%" fig-alt="Three bar charts for four methods: energy budget residual, ratio of the standard deviations of the dissipation and energy distance; per-sample rescaling has an almost zero residual and an almost zero spread, the stationarity loss keeps a spread close to that of the data."}
+
+![Experiment E3: growth rate $\lambda$ of the magnetic field in the ABC flow ($A = B = C = 1$) as a function of $Rm = 1/\eta$, $32^3$ grid (circles) and check at $48^3$ (squares). Shaded areas: $\lambda > 0$ (dynamo); dotted lines: interpolated thresholds. The published windows are $8.9 < Rm < 17.5$ then $Rm > 27$ (Archontis et al. 2003).](../experiences/figures/e3_abc.png){width="100%" fig-alt="Curve of the growth rate as a function of the magnetic Reynolds number, positive between about 8.9 and 17.6 and then beyond about 26.8, with two check points at higher resolution."}
+
+These experiments do not demonstrate feasibility in 3D, in a bounded domain or at high resolution; §4.3 details what they establish and what they leave open.
+
+### 1.3 Research questions
+
+The thesis is organized around four questions. Each is taken up in the theoretical part (§2), translated into experiments by tier (§3) and into risks (§4).
+
+**Q1 — Hard constraints in 3D in bounded geometry.** In a periodic box, zero divergence is imposed through the Leray projection in Fourier space or through a vector potential in Coulomb gauge, $\hat{\mathbf{A}} = \mathrm{i}\mathbf{k}\times\hat{\mathbf{B}}/|\mathbf{k}|^2$; E2 and E3 confirm this. Experimental dynamos are in cylindrical geometry, with walls, matching to the external field and permeability jumps. The sub-questions are the following.
+
+- Which space of potentials should be described so that $\mathbf{B} = \nabla\times\mathbf{A}$ covers exactly the space of admissible fields, with which gauge and which boundary conditions on $\mathbf{A}$ (§2.1)?
+- How can the matching to an external potential field (“vacuum” condition), which is linear but nonlocal, be imposed without solving an exterior Laplace problem per sample?
+- How can the permeability jumps $\mu_r$ of the soft-iron impellers be represented, where $\mathbf{B}\cdot\mathbf{n}$ is continuous but so is the tangential component of $\mathbf{B}/\mu_r$, which forces a kink in the potential?
+- How can one decode in the native representation of SFEMaNS, a Fourier decomposition in azimuth and Lagrange finite elements in the meridian plane, with regularity on the axis and a discrete control of the divergence comparable to that of the code?
+- Is a poloidal–toroidal decomposition with two scalars preferable to the three-component vector potential plus a gauge?
+
+**Q2 — Distributional constraints for field PDEs.** The stationarity identities are known (Echeverría 1982; Ethier and Kurtz 1986), and the weak form of Fokker–Planck has already served as a loss for a sample generator in dimension at most $100$ (Cai et al. 2026). The thesis applies them to the generator of a field PDE, conditioned on parameters. The sub-questions are the following.
+
+- Which test functions should be chosen: energy, magnetic and cross helicities, energy per spectral band (scale-by-scale budget), random functions? How should the identities be weighted and normalized?
+- How can the loss be estimated without bias and with controlled variance when each evaluation requires sampling the generator differentiably (§2.3)?
+- What does the loss guarantee at parameters **without data**, where it is the only information? E2 shows a gain at these parameters; one needs to understand when it persists.
+- How to live with the non-uniqueness of invariant measures: every invariant measure (fixed point, unstable periodic orbit, mixture) satisfies the identities, so that the data-fitting term remains indispensable (§2.2)?
+
+**Q3 — Dynamo threshold and reversals.** The conditional generator must cross the dynamo threshold and the region where reversals appear. The sub-questions are the following.
+
+- Under which conditions does the Rice formula apply to the dipole moment $D = \ell(\mathbf{B})$ of an MHD dynamo, with $\dot D = \ell(\nabla\times(\mathbf{u}\times\mathbf{B}) + \eta\Delta\mathbf{B})$ computed on the generated snapshot; how can the chattering around zero be corrected (§2.5)?
+- What error does a generator that is smooth in $\boldsymbol\lambda$ make near a bifurcation, subcritical (jump in the distribution) or supercritical (square-root amplitude) (§2.6)?
+- In a hysteresis region, should the generator be conditioned on the state or on the history, and how?
+- How can one estimate what the stationary distribution does not give, such as the distribution of waiting times between reversals, from short trajectories launched from generated samples?
+
+**Q4 — Downstream uses.** The generated fields must serve the project. The sub-questions are the following.
+
+- Can a reduced model of DQVU type (Bousquet et al. 2026) be identified from generated snapshots and the right-hand side $F_{\boldsymbol\lambda}$, without differentiating time series, and under which conditions does the reduced drift inherit the stationarity identities (§2.7)?
+- How can the generator be used as a prior distribution in data assimilation (background ensembles, latent variable) with TorchDA (Cheng et al. 2025), when the posterior is bimodal in $\pm\mathbf{B}$ near a reversal?
+
+![The von Kármán Sodium (VKS) experiment. **a**, two counter-rotating impellers stir liquid sodium in a cylinder; the mean flow (blue) has two toroidal cells and a poloidal recirculation; the mean field (vermilion) is dominated by an axial dipole, sustained by dynamo action with soft-iron impellers. **b**, qualitative time series of the dipole: long phases around $\pm D^\ast$, fast reversals and one excursion. **c**, same trajectory in the dipole–quadrupole plane: the reversal crosses $D = 0$ with $Q \neq 0$. Qualitative curves drawn from the normal form of Pétrélis and Fauve (2008), without VKS values; observations of reversals: Berhanu et al. (2007).](../figures/vks/figure/out/vks.png){width="100%" fig-alt="Cylindrical VKS vessel with two counter-rotating impellers, mean flow and field lines of an axial dipole; time series of the dipole with two reversals and one excursion; trajectory in the quadrupole–dipole plane."}
+
+### 1.4 Prior work and positioning
+
+The topic relies on published results that must be cited, not claimed. The table separates what is known from what the thesis adds.
+
+| Building block | Already published (to be cited) | What the thesis adds |
+|---|---|---|
+| Invariance and identities $\mathbb{E}_\mu[\mathcal{L}\varphi] = 0$ | criterion through the generator on a core of test functions (Echeverría 1982; Ethier and Kurtz 1986; Liggett, via Behme and Schnurr 2015); Stein's method through the generator (Barbour 1988, 1990; Gorham and Mackey 2015; Gorham et al. 2019; Liu, Lee and Jordan 2016) | classical budgets of forced MHD rewritten as stationarity identities of the truncated system (energy, helicities, spectral bands), with the Itô term |
+| Weak form of Fokker–Planck as a generator loss | Weak Generative Sampler (Cai, Cao, Huang, Zhou, SIAM J. Sci. Comput. 2026), dimension at most $100$; min-max antecedent WAN (Zang et al. 2020) | **parametric conditional** loss for a field PDE, imposed at parameters without data; unbiased estimator through half-batches |
+| Learning through the invariant measure | Yang et al. 2023; Botvinick-Greenhouse et al. 2023; Jiang et al. 2023; DySLIM (Schiff et al. 2024); PINN-IMSM (Chen et al. 2026) | application to the budgets of a dynamo, with the symmetry imposed separately |
+| I-projection, exponential tilting of a generator | Csiszár 1975; Jaynes 1957; Khalifa et al. 2021; Pitera and Chodera 2012; Mun 2026 (moments, at inference); Tauberschmidt et al. 2026 (weak PDE residual, per-sample reward) | identities **without a target value**, linear in the distribution, instead of external moments |
+| Zero divergence in generative models | stream function (FunDiff, Wang et al. 2026); Leray (Genuist et al. 2026; PCDM, Li et al. 2026; Li X. et al. 2026); divergence-free networks (Richter-Powell et al. 2022) | vector potential **in a bounded domain** with vacuum matching and $\mu_r$ jumps |
+| Equivariant flows and invariant distributions | classical result for equivariant normalizing flows | direct extension to a joint state–parameter action, applied to $R_\pi$ (forcing asymmetry) |
+| Zero-crossing frequency | Rice formula (Rice 1944, 1945; Azaïs and Wschebor 2009) | application to a dynamo **snapshot generator**, without time integration |
+
+What this work claims is formulated with caution: **to our knowledge, after a literature search as of November 6, 2026**, no publication combines the following elements.
+
+1. The stationarity identities of a **field PDE** (MHD: budgets of energy, cross helicity and $\langle a^2\rangle$ in 2D) used as **distributional** constraints of a **parametric conditional** generative model, which can be imposed at parameters without data, and which are identities **without a target value** (unlike the external moments of Khalifa et al. 2021 or Mun 2026).
+2. The statement and the **measurement** of the inconsistency of a per-sample constraint for a stationary budget (Corollary 6 of the note, measured in E1 and E2).
+3. The Rice formula applied to a snapshot generator to predict the frequency of reversals without time integration (no prior work found).
+4. The complementarity between symmetry and stationarity: the identities do not fix the weights of the symmetric ergodic components, so equivariance is necessary.
+5. A technical point: the naive estimator (square of a mini-batch mean) of a stationarity loss equals $(\mathbb{E}g)^2 + \mathrm{Var}(g)/n$ and penalizes the spread of the distribution; the estimator based on the product of the means of two half-batches removes this bias.
+6. The lower bound on the error near a jump in the distribution (Proposition 9 of the note), applied to the dynamo threshold.
+
+The absence of any diffusion or flow matching model trained on dynamo simulations is a negative claim: the search did not find one (the closest MHD work, Kacmaz et al. 2025, is in 2D and its generative model does not impose $\nabla\cdot\mathbf{B} = 0$), but an absence cannot be proved. A new literature watch will be carried out before each submission.
+

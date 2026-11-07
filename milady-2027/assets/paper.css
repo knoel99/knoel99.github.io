@@ -523,7 +523,8 @@ figure.schema figcaption { font-size: .95rem; color: var(--soft); margin-top: .5
 .widget { margin: 1.6rem 0; padding: 1rem; border: 2px solid var(--rule); border-radius: .6rem; background: var(--bg); }
 .widget-title { font-weight: 800; margin: 0 0 .6rem; }
 .widget-controls { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; align-items: center; margin: .4rem 0 .8rem; font-size: .95rem; }
-.widget-controls label { display: inline-flex; align-items: center; gap: .45rem; }
+.widget-controls label { display: inline-flex; align-items: center; gap: .45rem; max-width: 100%; min-width: 0; }
+.widget-controls select { font: inherit; min-width: 0; max-width: 100%; flex: 1 1 auto; }
 .widget-controls input[type=range] { width: 11rem; max-width: 100%; }
 .widget-controls button { font: inherit; font-weight: 700; padding: .3rem .8rem; border: 2px solid var(--ink); border-radius: .4rem; background: transparent; color: var(--ink); cursor: pointer; }
 .widget canvas, .widget svg { display: block; width: 100%; height: auto; max-width: 100%; }
