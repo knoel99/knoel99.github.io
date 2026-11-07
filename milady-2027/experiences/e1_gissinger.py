@@ -205,7 +205,7 @@ def finetune(model, batcher, iters, beta, sd, mean, std, cnorm, n_gamma=8, n_per
 
 
 # ---------------------------------------------------------------------------
-def main(quick=False):
+def main(quick=False, reverse=False, train_only=False):
     torch.set_num_threads(2)
     t_start = time.time()
     n_traj, t_keep = (8, 800) if quick else (16, 3000)
@@ -266,8 +266,11 @@ def main(quick=False):
                           "inclinaison_reg": 1.0, "reglage_fin": {"beta": 20.0, "gammas_par_pas": 8, "echantillons_par_gamma": 128, "pas_Heun_differentiable": 8, "lr": 5e-4}},
                "donnees": stats, "entrainement": {}}
     gens, models = {}, {}
-    for vname, (kind, aug, n_it) in variants.items():
-        for seed in seeds:
+    jobs = [(vname, cfg, seed) for vname, cfg in variants.items() for seed in seeds]
+    if reverse:
+        jobs = jobs[::-1]
+    for vname, (kind, aug, n_it), seed in jobs:
+        if True:
             base = MLPField(3, width=256, depth=4)
             model = SymmetrizedField(base, S) if kind == "sym" else base
 
@@ -297,10 +300,14 @@ def main(quick=False):
     sd = generator_terms(np.concatenate([train_data[g]["x"] for g in G_TRAIN]),
                          np.concatenate([np.full(len(train_data[g]["x"]), g) for g in G_TRAIN]), MONO_TRAIN).std(0)
     ft_iters = 200 if quick else 800
-    for base_name, tag in (("C_equivariant", "C"), ("C_court", "Ccourt")):
-        for beta, prefix in ((20.0, "F_stationnarite_"), (0.0, "F0_temoin_")):
-            vname = prefix + tag
-            for seed in seeds:
+    ft_jobs = [(b, t, beta, pre, seed) for b, t in (("C_equivariant", "C"), ("C_court", "Ccourt"))
+               for beta, pre in ((20.0, "F_stationnarite_"), (0.0, "F0_temoin_")) for seed in seeds]
+    if reverse:
+        ft_jobs = ft_jobs[::-1]
+    for base_name, tag, beta, prefix, seed in ft_jobs:
+        vname = prefix + tag
+        if True:
+            if True:
                 model = copy.deepcopy(models[(base_name, seed)])
 
                 def run_ft(model=model, beta=beta, vname=vname, seed=seed):
@@ -322,6 +329,9 @@ def main(quick=False):
                     gens[(vname, seed, gam)] = xg
                 results["entrainement"].setdefault(vname, {})[f"seed{seed}"] = out["info"]
 
+    if train_only:
+        print("entraînement seul : cache rempli, arrêt", flush=True)
+        return
     # Post-traitements en loi (D) et par échantillon (E)
     tilt_info = {}
     for base_name, dname in (("C_equivariant", "D_inclinaison_C"), ("C_court", "D_inclinaison_Ccourt"),
@@ -447,4 +457,7 @@ def main(quick=False):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--quick", action="store_true")
-    main(ap.parse_args().quick)
+    ap.add_argument("--reverse", action="store_true", help="entraîne les modèles dans l'ordre inverse (processus d'appoint)")
+    ap.add_argument("--train-only", action="store_true", help="remplit seulement le cache des modèles puis s'arrête")
+    a = ap.parse_args()
+    main(a.quick, a.reverse, a.train_only)
