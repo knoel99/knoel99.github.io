@@ -399,7 +399,7 @@ The interpretation is one of mass conservation: the probability contained in a s
 
 ```{=html}
 <figure class="schema">
-<img src="../../../prep/p5-probabilites-transport/fig-mesure-image.png" alt="On the left, the density of the standard normal distribution cut into eight colored slices of equal probability. On the right, the density of sinh(X), more peaked at the center and with heavier tails, with the eight image slices, the histogram of one million draws and the curve given by the Jacobian formula, which coincide." loading="lazy">
+<img src="../../../prep/p5-probabilites-transport/fig-mesure-image-en.png" alt="On the left, the density of the standard normal distribution cut into eight colored slices of equal probability. On the right, the density of sinh(X), more peaked at the center and with heavier tails, with the eight image slices, the histogram of one million draws and the curve given by the Jacobian formula, which coincide." loading="lazy">
 <figcaption>Figure 1 — Pushforward of N(0, 1) by T(x) = sinh(x). Each colored slice keeps its probability 1/8; where T stretches the axis (large |x|), the pushforward density flattens out, and where T' = cosh(x) equals 1 (near 0), it is unchanged. The histogram of 10⁶ draws of sinh(X) coincides with formula (2.1).</figcaption>
 </figure>
 ```
@@ -626,7 +626,7 @@ whatever the dimension of $\mathbf{X}$. Dividing the error by 10 costs 100 times
 
 ```{=html}
 <figure class="schema">
-<img src="../../../prep/p5-probabilites-transport/fig-monte-carlo.png" alt="On the left, the running estimate of E[cos X] as a function of the number of draws, on a logarithmic scale, with the 95% confidence band narrowing around the exact value 0.6065. On the right, the root-mean-square error over 200 repetitions as a function of N, on a log-log scale: the points line up on a straight line of slope −1/2." loading="lazy">
+<img src="../../../prep/p5-probabilites-transport/fig-monte-carlo-en.png" alt="On the left, the running estimate of E[cos X] as a function of the number of draws, on a logarithmic scale, with the 95% confidence band narrowing around the exact value 0.6065. On the right, the root-mean-square error over 200 repetitions as a function of N, on a log-log scale: the points line up on a straight line of slope −1/2." loading="lazy">
 <figcaption>Figure 2 — Monte Carlo for I = E[cos X] = e^(−1/2), X ~ N(0, 1). On the left, one estimate and its 95% confidence interval; on the right, the root-mean-square error over 200 repetitions closely follows σ/√N, with σ² = Var(cos X) = (1 + e⁻²)/2 − e⁻¹.</figcaption>
 </figure>
 ```
@@ -1023,7 +1023,7 @@ print("\ntwo constraints : lambda =", lam.round(4), "; moments obtained =", (w @
 
 ```{=html}
 <figure class="schema">
-<img src="../../../prep/p5-probabilites-transport/fig-inclinaison.png" alt="On the left, the bimodal base density, with two equal bumps at −2 and 2, and three tilted distributions for imposed means 0.5, 1.5 and 2.5: the left bump gradually fades away and, for 2.5, the right bump shifts to the right. On the right, the ESS divided by N on a logarithmic scale as a function of the imposed mean: close to 1 up to c = 1, then a rapid drop beyond 2; the estimated points stay above the limiting curve for c > 2.5." loading="lazy">
+<img src="../../../prep/p5-probabilites-transport/fig-inclinaison-en.png" alt="On the left, the bimodal base density, with two equal bumps at −2 and 2, and three tilted distributions for imposed means 0.5, 1.5 and 2.5: the left bump gradually fades away and, for 2.5, the right bump shifts to the right. On the right, the ESS divided by N on a logarithmic scale as a function of the imposed mean: close to 1 up to c = 1, then a rapid drop beyond 2; the estimated points stay above the limiting curve for c > 2.5." loading="lazy">
 <figcaption>Figure 3 — I-projection of a bimodal distribution q under the constraint E[X] = c. As long as c stays within the interval [−2, 2] covered by the two modes, the tilt mainly rebalances their weights (each mode is shifted by only λs²) and the ESS remains high; beyond it, the tilt has to move the right mode toward a sparsely populated region and the ESS collapses. For c > 2.5, the ESS estimated on 20,000 draws overestimates its limit, as in Chapter 3.</figcaption>
 </figure>
 ```
@@ -1154,7 +1154,7 @@ For $\mathcal{N}(0, 1)$ and $\mathcal{N}(1, 2^2)$, $W_2 = \sqrt2 \approx 1.414$,
 
 ```{=html}
 <figure class="schema">
-<img src="../../../prep/p5-probabilites-transport/fig-wasserstein-1d.png" alt="On the left, two S-shaped cumulative distribution functions, that of N(0,1) steeper and that of N(1, 4) more spread out, crossing near x = −1; the region between the two curves is shaded. On the right, twelve blue points on a top line and twelve orange points on a bottom line, connected by segments in increasing order; no segment crosses another." loading="lazy">
+<img src="../../../prep/p5-probabilites-transport/fig-wasserstein-1d-en.png" alt="On the left, two S-shaped cumulative distribution functions, that of N(0,1) steeper and that of N(1, 4) more spread out, crossing near x = −1; the region between the two curves is shaded. On the right, twelve blue points on a top line and twelve orange points on a bottom line, connected by segments in increasing order; no segment crosses another." loading="lazy">
 <figcaption>Figure 4 — Optimal transport in dimension 1. On the left, W₁ between μ = N(0, 1) and ν = N(1, 2²) is the area of the shaded region between the CDFs. On the right, the optimal coupling between two samples pairs the i-th smallest point of one with the i-th smallest of the other: the segments never cross.</figcaption>
 </figure>
 ```
@@ -1574,7 +1574,7 @@ for dt in [0.01, 0.1, 0.4]:
 
 ```{=html}
 <figure class="schema">
-<img src="../../../prep/p5-probabilites-transport/fig-ornstein-uhlenbeck.png" alt="On the left, eight noisy paths starting from 1.5 and relaxing toward 0, with the exact mean as a thick line and a blue band mean plus or minus two standard deviations that widens and then stabilizes between −1 and 1. On the right, two histograms: at t = 0.25, centered near 0.9 and narrow, overlaid with the exact Gaussian as a dashed line; at t = 4, centered at 0, overlaid with the stationary density as a solid line." loading="lazy">
+<img src="../../../prep/p5-probabilites-transport/fig-ornstein-uhlenbeck-en.png" alt="On the left, eight noisy paths starting from 1.5 and relaxing toward 0, with the exact mean as a thick line and a blue band mean plus or minus two standard deviations that widens and then stabilizes between −1 and 1. On the right, two histograms: at t = 0.25, centered near 0.9 and narrow, overlaid with the exact Gaussian as a dashed line; at t = 4, centered at 0, overlaid with the stationary density as a solid line." loading="lazy">
 <figcaption>Figure 5 — Ornstein–Uhlenbeck (θ = 2, σ = 1, x₀ = 1.5) simulated with Euler–Maruyama (Δt = 0.002). On the left, paths and the exact band mean ± 2 standard deviations; on the right, the histograms of 10⁵ particles follow the Fokker–Planck solution at t = 0.25, then the stationary distribution N(0, σ²/(2θ)) at t = 4.</figcaption>
 </figure>
 ```
@@ -1724,7 +1724,7 @@ The residual of the continuity equation is of order $10^{-5}$, that is, the trun
 
 ```{=html}
 <figure class="schema">
-<img src="../../../prep/p5-probabilites-transport/fig-flot-continuite.png" alt="Two panels sharing the vertical axis x between −4 and 4 and the horizontal axis t between 0 and 1, with the density p_t in blue in the background, which starts as a bump centered at 0 and splits into two bands toward −2 and 2. On the left, 24 straight orange segments that cross a lot. On the right, 24 orange curves that never cross, first remain almost horizontal and then spread out toward the two modes." loading="lazy">
+<img src="../../../prep/p5-probabilites-transport/fig-flot-continuite-en.png" alt="Two panels sharing the vertical axis x between −4 and 4 and the horizontal axis t between 0 and 1, with the density p_t in blue in the background, which starts as a bump centered at 0 and splits into two bands toward −2 and 2. On the left, 24 straight orange segments that cross a lot. On the right, 24 orange curves that never cross, first remain almost horizontal and then spread out toward the two modes." loading="lazy">
 <figcaption>Figure 6 — Same evolution of distributions p_t (blue background), two families of trajectories. On the left, the conditional paths x_t = (1 − t)x₀ + t x₁ for independent pairs: straight lines that cross. On the right, the trajectories of the ODE dx/dt = v(x, t) with the marginal velocity: they do not cross and transport exactly the same distribution at every time (Proposition 6.15).</figcaption>
 </figure>
 ```
