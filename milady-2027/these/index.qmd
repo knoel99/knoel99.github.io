@@ -1,0 +1,51 @@
+---
+title: "Modèles génératifs conditionnels à contraintes physiques dures et en loi pour les dynamos turbulentes"
+subtitle: "Proposition de sujet de thèse · projet ANR MilaDy · co-encadrement S. Cheng (ENPC/CEREA) et D. Lucor (LISN)"
+lang: fr
+format:
+  html:
+    theme: none
+    minimal: true
+    toc: false
+    anchor-sections: false
+    html-math-method:
+      method: katex
+      url: "https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js"
+    highlight-style: github
+    embed-resources: false
+    css: ../assets/paper.css
+    include-in-header:
+      - text: |
+          <meta name="color-scheme" content="light dark">
+          <script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    include-before-body:
+      - text: |
+          <a class="skip" href="#main">Aller au contenu</a>
+          <header class="topbar">
+            <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Sommaire</span></button>
+            <a class="brand" href="../index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+            <span class="tb-title" id="tb-title"></span>
+            <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Thème</span></button>
+          </header>
+          <div class="layout">
+          <nav class="sidetoc" id="sidetoc" aria-label="Sommaire"></nav>
+          <main class="paper" id="main">
+    include-after-body:
+      - text: |
+          </main>
+          </div>
+          <footer class="foot"><p><a href="../index.html">← Accueil</a> · <a href="../prep/index.html">Préparation</a> · <a href="../encadrants/index.html">Encadrants</a> · <a href="../rapport/index.html">Rapport de stage</a> · <a href="../these/index.html">Sujet de thèse</a> · <a href="../interactifs/index.html">Schémas interactifs</a> · <a href="../experiences/index.html">Expériences</a></p></footer>
+          <script defer src="../assets/theme.js"></script>
+---
+
+
+| Rubrique | Contenu |
+|---|---|
+| Titre | Test $\lvert x \rvert$ |
+| Encadrement | test |
+
+: Fiche du sujet {.kv}
+
+## Résumé {#resume}
+
+Texte.

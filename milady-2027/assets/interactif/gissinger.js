@@ -17,7 +17,9 @@
  *
  * 3. Points fixes (calcul direct, F = 0) : (0, 0, Γ) et la paire échangée par S
  *        V* = −√(μν),  D*² = μ (Γ + √(μν)) / √(μν),  Q* = −√(ν/μ) D*.
- *    (μQ = VD et νD = VQ imposent V² = μν si QD ≠ 0 ; seule la racine négative donne D*² > 0.)
+ *    (μQ = VD et νD = VQ imposent Q = VD/μ puis V² = μν si D ≠ 0 ; la troisième équation donne
+ *    D² = μ (V − Γ) / V : avec V = +√(μν), D² > 0 exigerait Γ < √(μν) ≈ 0,109, donc seule la
+ *    racine négative convient sur [0,80 ; 1,00].)
  *    Ils sont marqués « × » dans le portrait de phase (Q, D).
  *
  * 4. Intégration : Runge–Kutta classique d'ordre 4 à pas fixe dt = 0,01 (Hairer, Nørsett,
@@ -51,9 +53,13 @@
  *    instable de taux (μ − ν)/2 ≈ 0,0095 seulement, qui donnerait des transitoires (oscillations de D
  *    autour de 0, période ≈ 2π/Γ) plus longs que les 200 u.t. ignorées.
  *
- * 8. Seuil des renversements : sous Γ ≈ 0,865, D garde son signe (deux attracteurs symétriques
+ * 8. Seuil des renversements : jusqu'à Γ = 0,86, D garde son signe (deux attracteurs symétriques
  *    disjoints) ; ils fusionnent par une crise (Grebogi, Ott, Romeiras, Yorke 1987) entre
- *    Γ = 0,86 et 0,87 dans les simulations de l'expérience E1 du site (experiences/e1_gissinger.py).
+ *    Γ = 0,86 et 0,865 avec cet intégrateur (RK4, dt = 0,01 ; contrôle indépendant sur
+ *    16 × 10 000 u.t. : 0 passage à Γ = 0,86, taux 0,0007 à 0,8625, 0,0012 à 0,865, 0,0042 à 0,9,
+ *    0,0113 à 1,0), intervalle compatible avec ]0,86 ; 0,87] de l'expérience E1 du site
+ *    (experiences/e1_gissinger.py). Aux valeurs du curseur (pas 0,005) : aucun renversement pour
+ *    Γ ≤ 0,86, renversements dès Γ = 0,865.
  *
  * Références
  *  - C. Gissinger, « A new deterministic model for chaotic reversals », Eur. Phys. J. B 85, 137 (2012).
@@ -100,20 +106,21 @@
       reset: "Réinitialiser", resetTip: "Nouvelle condition initiale aléatoire, compteurs remis à zéro",
       sym: "Symétrie", symTip: "Applique (Q, D, V) → (−Q, −D, V) à l'état courant",
       panelA: "(a) dipôle D(t)", panelB: "(b) portrait de phase (Q, D)",
-      pos: "D > 0", neg: "D < 0", band: "|D| < h", transient: "transitoire", symMark: "sym.",
+      pos: "D > 0", neg: "D < 0", band: "|D| < h", transient: "transitoire", symMark: "sym.", colon: " :",
       canvas: "Panneau (a) : dipôle D en fonction du temps sur les 600 dernières unités de temps, " +
         "avec la ligne D = 0, en bleu quand D > 0 et en orange quand D < 0. Panneau (b) : portrait de " +
-        "phase (Q, D) avec la traînée des 200 dernières unités de temps et les deux points fixes non triviaux.",
+        "phase (Q, D) avec la traînée des 200 dernières unités de temps, les deux points fixes non triviaux (croix) et l'état courant (point).",
       l1: function (g, t) { return "Γ\u00a0=\u00a0" + g + " · durée depuis le dernier changement\u00a0: " + t + " u.t."; },
       l2: function (n, np) { return "Passages de D par 0\u00a0: " + n + ", dont " + np + " après le transitoire (200 premières u.t. ignorées)"; },
-      l3: function (np, T, f, h, r) { return "Fréquence par u.t.\u00a0: comptage " + np + " / " + T + "\u00a0=\u00a0" + f + " ; Rice (h\u00a0=\u00a0" + h + ")\u00a0: " + r; },
+      l3: function (np, T, f, h, r) { return "Fréquence par u.t.\u00a0: comptage " + np + "\u00a0/\u00a0" + T + "\u00a0=\u00a0" + f + " ; Rice (h\u00a0=\u00a0" + h + ")\u00a0: " + r; },
       l3wait: function (left) { return "Fréquence\u00a0: transitoire en cours, encore " + left + " u.t. avant l'estimation"; },
       note: "μ = 0,119, ν = 0,1 ; RK4, dt = 0,01 ; u.t. = unité de temps (×1 = 10 u.t./s). " +
-        "Bleu : D > 0, orange : D < 0, bande verte : |D| < h, × : points fixes non triviaux. " +
-        "Sous Γ ≈ 0,865, pas de renversement : les deux attracteurs symétriques (D > 0, D < 0) ne fusionnent (crise) " +
-        "qu'entre 0,86 et 0,87 dans les expériences du site. Le long d'une trajectoire, chaque traversée de la bande " +
-        "apporte ∫|Ḋ| dt ≈ 2h, d'où l'accord avec le comptage ; mais Rice n'utilise que la loi des états, pas leur ordre : " +
-        "elle vaut donc aussi pour les échantillons d'un modèle génératif. En pause, changer Γ ou réinitialiser calcule d'un coup 800 u.t."
+        "Bleu : D > 0, orange : D < 0, bande verte : |D| < h, × : points fixes non triviaux, ● : état courant. " +
+        "Jusqu'à Γ = 0,86, pas de renversement : la trajectoire reste sur l'un des deux attracteurs symétriques " +
+        "(D > 0 ou D < 0). Ils fusionnent par une crise entre 0,86 et 0,865 ; dès Γ = 0,865, D change de signe " +
+        "de façon irrégulière. Le long d'une trajectoire, chaque traversée de la bande apporte ∫|Ḋ|\u00a0dt ≈ 2h, " +
+        "d'où l'accord avec le comptage ; mais Rice n'utilise que la loi des états, pas leur ordre : elle vaut donc " +
+        "aussi pour les échantillons d'un modèle génératif. En pause, changer Γ ou réinitialiser calcule d'un coup 800 u.t."
     },
     en: {
       title: "Dipole reversals in Gissinger's three-mode model",
@@ -123,22 +130,39 @@
       reset: "Reset", resetTip: "New random initial condition, counters set to zero",
       sym: "Symmetry", symTip: "Applies (Q, D, V) → (−Q, −D, V) to the current state",
       panelA: "(a) dipole D(t)", panelB: "(b) phase portrait (Q, D)",
-      pos: "D > 0", neg: "D < 0", band: "|D| < h", transient: "transient", symMark: "sym.",
+      pos: "D > 0", neg: "D < 0", band: "|D| < h", transient: "transient", symMark: "sym.", colon: ":",
       canvas: "Panel (a): dipole D versus time over the last 600 time units, with the line D = 0, " +
         "blue where D > 0 and orange where D < 0. Panel (b): phase portrait (Q, D) with the trail of the " +
-        "last 200 time units and the two non-trivial fixed points.",
+        "last 200 time units, the two non-trivial fixed points (crosses) and the current state (dot).",
       l1: function (g, t) { return "Γ\u00a0=\u00a0" + g + " · time since last change: " + t + " t.u."; },
       l2: function (n, np) { return "Zero crossings of D: " + n + ", of which " + np + " after the transient (first 200 t.u. ignored)"; },
-      l3: function (np, T, f, h, r) { return "Rate per t.u.: count " + np + " / " + T + "\u00a0=\u00a0" + f + "; Rice (h\u00a0=\u00a0" + h + "): " + r; },
+      l3: function (np, T, f, h, r) { return "Rate per t.u.: count " + np + "\u00a0/\u00a0" + T + "\u00a0=\u00a0" + f + "; Rice (h\u00a0=\u00a0" + h + "): " + r; },
       l3wait: function (left) { return "Rate: transient in progress, " + left + " t.u. left before estimating"; },
       note: "μ = 0.119, ν = 0.1; RK4, dt = 0.01; t.u. = time unit (×1 = 10 t.u./s). " +
-        "Blue: D > 0, orange: D < 0, green band: |D| < h, ×: non-trivial fixed points. " +
-        "Below Γ ≈ 0.865 there is no reversal: the two symmetric attractors (D > 0, D < 0) only merge (crisis) " +
-        "between 0.86 and 0.87 in the site's experiments. Along a trajectory, each traversal of the band contributes " +
-        "∫|Ḋ| dt ≈ 2h, hence the agreement with the count; but Rice uses only the distribution of states, not their order, " +
-        "so it also holds for samples from a generative model. While paused, changing Γ or resetting computes 800 t.u. at once."
+        "Blue: D > 0, orange: D < 0, green band: |D| < h, ×: non-trivial fixed points, ●: current state. " +
+        "Up to Γ = 0.86 there is no reversal: the trajectory stays on one of the two symmetric attractors " +
+        "(D > 0 or D < 0). They merge in a crisis between 0.86 and 0.865; from Γ = 0.865 on, D changes sign " +
+        "irregularly. Along a trajectory, each traversal of the band contributes ∫|Ḋ|\u00a0dt ≈ 2h, hence the " +
+        "agreement with the count; but Rice uses only the distribution of states, not their order, so it also " +
+        "holds for samples from a generative model. While paused, changing Γ or resetting computes 800 t.u. at once."
     }
   };
+
+  // Typographie : espaces insécables autour de =, <, >, ≈, → et entre un nombre et « u.t. » ;
+  // en français, espace insécable avant « : » et fine insécable avant « ; ».
+  function typo(lang, s) {
+    s = s.replace(/ ([=<>≈→]) /g, "\u00a0$1\u00a0").replace(/(\d) (u\.t\.|t\.u\.)/g, "$1\u00a0$2");
+    if (lang === "fr") s = s.replace(/ :/g, "\u00a0:").replace(/ ;/g, "\u202f;");
+    return s;
+  }
+  Object.keys(TXT).forEach(function (lg) {
+    var D = TXT[lg];
+    Object.keys(D).forEach(function (k) {
+      var v = D[k];
+      if (typeof v === "string") D[k] = typo(lg, v);
+      else if (typeof v === "function") D[k] = function () { return typo(lg, v.apply(null, arguments)); };
+    });
+  });
 
   /* ---------- utilitaires ---------- */
   function langOf() {
@@ -250,7 +274,7 @@
     sg.title = T.speedTip;
     sg.style.display = "inline-flex"; sg.style.flexWrap = "wrap";
     sg.style.alignItems = "center"; sg.style.gap = ".35rem";
-    sg.appendChild(mk("span", null, T.speed + (this.lang === "fr" ? " :" : ":")));
+    sg.appendChild(mk("span", null, T.speed + T.colon));
     this.speedBtns = [];
     SPEEDS.forEach(function (s) {
       var b = mk("button", null, "×" + s);
@@ -271,7 +295,7 @@
     br.addEventListener("click", function () { self.reset(); });
     var bs = mk("button", null, T.sym);
     bs.type = "button"; bs.title = T.symTip;
-    bs.setAttribute("aria-label", T.sym + " : " + T.symTip);
+    bs.setAttribute("aria-label", T.sym + T.colon + " " + T.symTip);
     bs.addEventListener("click", function () { self.symmetry(); });
     controls.appendChild(bp); controls.appendChild(br); controls.appendChild(bs);
 
@@ -536,9 +560,9 @@
   Widget.prototype.updateLabels = function () {
     var lg = this.lang;
     var gs = fmt(lg, this.g, 3), hs = fmt(lg, this.h, 2);
-    this.gOut.textContent = "Γ = " + gs;
+    this.gOut.textContent = "Γ\u00a0=\u00a0" + gs;
     this.gIn.setAttribute("aria-valuetext", gs);
-    this.hOut.textContent = "h = " + hs;
+    this.hOut.textContent = "h\u00a0=\u00a0" + hs;
     this.hIn.setAttribute("aria-valuetext", hs);
   };
 
@@ -693,7 +717,7 @@
       else { c.strokeStyle = C.pal[3]; c.setLineDash([2, 2]); }
       c.beginPath(); c.moveTo(xm, p.t); c.lineTo(xm, p.b); c.stroke();
       c.setLineDash([]);
-      var s = m.type === "g" ? "Γ = " + fmt(lg, m.g, 3) : T.symMark;
+      var s = m.type === "g" ? "Γ\u00a0=\u00a0" + fmt(lg, m.g, 3) : T.symMark;
       var w = self.textWidth(s, 11, "600");
       var xl = Math.min(xm + 3, p.r - w - 2);
       for (var row = 0; row < 2; row++) {            // deux rangées d'étiquettes, sans chevauchement

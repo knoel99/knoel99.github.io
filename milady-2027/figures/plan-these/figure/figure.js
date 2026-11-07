@@ -113,14 +113,14 @@ export default async function draw(F, L) {
     ['**Modèles réduits**', 'Gissinger, DQVU'],
     ['**MHD 2D**', 'périodique'],
     ['**Dynamos 3D**', '**périodiques**', 'ABC, Taylor–Green'],
-    ['**VKS**', 'cylindrique', 'SFEMaNS, LATU'],
-    ['**DRESDYN**', 'précession', 'HZDR'],
+    ['**VKS**', 'SFEMaNS, LATU'],
+    ['**DRESDYN**', 'précession, HZDR'],
   ];
   for (let k = 0; k < NT; k++) {
     const x = m(colX(k) + 5.2);
     NAMES[k].forEach((s, i) => {
       const bold = s.startsWith('**');
-      L.text(P, x, m(tread(k) + 3.75 + 2.75 * i), s, { size: bold ? 6.5 : 6, color: bold ? C.txt : C.sub });
+      L.text(P, x, m(tread(k) + 3.8 + 2.95 * i), s, { size: bold ? 7 : 6.5, color: bold ? C.txt : C.sub });
     });
   }
 
@@ -141,7 +141,8 @@ export default async function draw(F, L) {
   // ---- vignette 1 : MHD 2D (carte de j, isolignes de a), données E2 ----
   {
     const s = IH - 2.2, bx = colC(1) - s / 2, by = vtop(1) + 1.6;
-    const rows = D.mhd2d.j.slice().reverse();
+    const rows0 = D.mhd2d.j.slice().reverse(), NU = 120;          // suréchantillonnage bilinéaire périodique (48 → 120)
+    const rows = Array.from({ length: NU }, (_, r) => Array.from({ length: NU }, (_, c) => bilinP(rows0, (r + 0.5) / NU, (c + 0.5) / NU)));
     L.pixelImage(P, m(bx), m(by), m(s), rows, { palette: ['#fafafa', '#cdcdcd', '#6f6f6f'], overlap: 0.6, skipBelow: 0 });
     const clip = L.clipPath(P.node, `M${m(bx)},${m(by)} h${m(s)} v${m(s)} h${-m(s)} Z`);
     const g = L.group(P, { clip }).node;
@@ -155,7 +156,7 @@ export default async function draw(F, L) {
     const P3 = L.obliqueProj({ preset: 'angles', angle: 32, depth: 0.55 });
     const box = L.obliqueBox(P, P3, [e, e, e], { at: [m(colC(2) - 0.8), m(vtop(2) + IH / 2 + 0.6)], anchor: 'center', fill: '#ffffff', stroke: 'none' });
     const lerp = (v) => L.ramp(['#f9f9f9', '#c9c9c9', '#8a8a8a', '#3f3f3f'], Math.min(1, Math.max(0, v)));
-    const N = 40, F_ = D.abc;
+    const N = 48, F_ = D.abc;
     const sample = (key, w) => {
       const f = w.map((c) => c / e);
       if (key === 'x1') return bilinP(F_.x1, f[1], f[2]);
@@ -175,11 +176,9 @@ export default async function draw(F, L) {
     }
     for (const key of ['y0', 'x1', 'z1']) L.polygon(P, box.faces[key].corners, { fill: 'none', stroke: C.ink, width: 0.5, join: 'round' });
     // périodicité : sortie par la face x = 2π, rentrée par x = 0 (flèches courtes)
-    const xo = box.faces.x1.world(0.5, 0.78), xi = box.faces.y0.world(0.0, 0.78);
-    const pOut0 = P3(...xo), pOut1 = P3(xo[0] + m(2.4), xo[1], xo[2]);
-    L.arrow(P, pOut0, pOut1, { stroke: '#4d4d4d', width: 0.5, head: 1.9 });
-    const pIn0 = P3(xi[0] - m(2.6), xi[1], xi[2]), pIn1 = P3(xi[0] - m(0.2), xi[1], xi[2]);
-    L.arrow(P, pIn0, pIn1, { stroke: '#4d4d4d', width: 0.5, head: 1.9 });
+    const BP = box.P, xo = box.faces.x1.world(1.0, 0.72), xi = box.faces.y0.world(0.0, 0.72);
+    L.arrow(P, BP(...xo), BP(xo[0] + m(2.8), xo[1], xo[2]), { stroke: '#4d4d4d', width: 0.5, head: 1.9 });
+    L.arrow(P, BP(xi[0] - m(2.8), xi[1], xi[2]), BP(xi[0] - m(0.3), xi[1], xi[2]), { stroke: '#4d4d4d', width: 0.5, head: 1.9 });
   }
 
   // ---- vignette 3 : cuve VKS (cylindre horizontal, deux turbines en fer doux contrarotatives) ----
@@ -238,8 +237,8 @@ export default async function draw(F, L) {
     post(-back);
     // rotation propre (autour de l'axe du cylindre), au-dessus du couvercle visible
     rotArrow(L, g, PD, add3(c1, sc3(ax, m(1.0))), ax, R * 0.55, 0.9, 0.9 + 4.6, { head: 2.0 });
-    // précession : arc au bord avant du plateau
-    rotArrow(L, g, PD, [0, 0, -m(0.6)], [0, 0, 1], rT + m(1.4), -0.35 * Math.PI - 1.1, -0.35 * Math.PI + 1.1, { head: 2.0 });
+    // précession : flèche de rotation autour de l'axe vertical, au-dessus du cylindre
+    rotArrow(L, g, PD, [0, 0, zt + m(1.5)], [0, 0, 1], m(2.3), -2.3, -2.3 + 4.6, { head: 2.0 });
   }
 
   // complexité croissante : flèche parallèle à l'escalier, au-dessus des vignettes
@@ -247,18 +246,17 @@ export default async function draw(F, L) {
     const yAt = (x) => vtop(0) - 2.4 - (x - colC(0)) * 2.0 / CW;
     const a = [m(colX(0) + 1.0), m(yAt(colX(0) + 1.0))], b = [m(XR - 1.0), m(yAt(XR - 1.0))];
     L.arrow(P, a, b, { stroke: '#8a8a8a', width: 0.5, head: 2.6 });
-    L.text(P, m(colX(0) + 1.0), m(yAt(colX(0) + 1.0) - 1.5), 'complexité croissante', { size: 6, italic: true, color: C.sub });
+    L.text(P, m(colX(0) + 1.0), m(yAt(colX(0) + 1.0) - 3.0), 'complexité croissante', { size: 6.5, italic: true, color: C.sub });
   }
   // en-têtes de ligne
   L.text(P, m(1.2), m(tread(0) + 2.6), '**Bancs d\'essai**', { size: 7.5, color: C.txt });
-  L.text(P, m(1.2), m(tread(0) + 5.9), 'cinq paliers', { size: 6, color: C.sub });
 
   // ---- rangée « acquis du stage » : E1, E2, E3 sous les paliers 0, 1, 2 ----
   {
     L.rect(P, m(colX(0) + 0.6), m(ST_Y), m(3 * CW - 1.2), m(ST_H), { r: m(ST_H / 2), fill: '#F3F3F3', stroke: '#a6a6a6', width: 0.4 });
     for (let k = 1; k < 3; k++) L.line(P, [m(colX(k)), m(ST_Y + 0.6)], [m(colX(k)), m(ST_Y + ST_H - 0.6)], { stroke: '#c4c4c4', width: 0.35 });
-    for (let k = 0; k < 3; k++) L.text(P, m(colC(k)), m(ST_Y + ST_H / 2), 'E' + (k + 1), { size: 6, anchor: 'middle', valign: 'middle', color: C.sub });
-    L.text(P, m(1.2), m(ST_Y + ST_H / 2), 'Acquis du stage', { size: 6, valign: 'middle', color: C.sub });
+    for (let k = 0; k < 3; k++) L.text(P, m(colC(k)), m(ST_Y + ST_H / 2), 'E' + (k + 1), { size: 6.5, anchor: 'middle', valign: 'middle', color: C.sub });
+    L.text(P, m(1.2), m(ST_Y + ST_H / 2), 'Acquis du stage', { size: 6.5, valign: 'middle', color: C.sub });
   }
 
   // =================================================================================================
@@ -289,18 +287,18 @@ export default async function draw(F, L) {
     }
     F.anchor(`axe${i + 1}.end`, P.node, m(XR + 2.6), m(ym));
     L.text(P, m(1.2), m(y0 + 3.3), `**${HEAD[i][0]}**`, { size: 7, color: ax.t });
-    L.text(P, m(1.2), m(y0 + 6.1), HEAD[i][1], { size: 6, color: C.txt, lineGap: 1.1 });
+    L.text(P, m(1.2), m(y0 + 6.2), HEAD[i][1], { size: 6.5, color: C.txt, lineGap: 1.08 });
     for (let k = 0; k < NT; k++) {
       const s = ST[i][k];
       if (s) pill(L, P, m(colC(k) + 0.4), m(ym), s, ax);
     }
   }
   // trous signifiants
-  L.text(P, m(colC(0)), m(BAND_Y[0] + BAND_H / 2), 'sans objet', { size: 6, italic: true, color: C.grey, anchor: 'middle', valign: 'middle' });
+  L.text(P, m(colC(0)), m(BAND_Y[0] + BAND_H / 2), 'sans objet', { size: 6.5, italic: true, color: C.grey, anchor: 'middle', valign: 'middle' });
   {
     const ym = BAND_Y[2] + BAND_H / 2;
     L.line(P, [m(colX(1) - 0.5), m(ym)], [m(colX(2) + 0.5), m(ym)], { stroke: C.a3, width: 0.5, dash: '1.2 1.1' });
-    L.text(P, m(colC(1)), m(ym - 0.2), 'pas de dynamo 2D', { size: 6, italic: true, color: C.grey, anchor: 'middle', valign: 'middle', halo: true });
+    L.text(P, m(colC(1)), m(ym - 0.2), 'pas de dynamo 2D', { size: 6.5, italic: true, color: C.grey, anchor: 'middle', valign: 'middle', halo: true });
   }
 
   // =================================================================================================
@@ -359,7 +357,7 @@ export default async function draw(F, L) {
     const yM = 92.0, yY0 = 94.4, yY1 = 97.8, yG = 99.9, dG = 2.3, yAx = 114.2;
     for (let a = 0; a < 3; a++) {
       L.rect(P, m(mo(12 * a)), m(yY0), m(mo(12) - mo(0)), m(yY1 - yY0), { fill: a % 2 ? '#E4E4E4' : '#EFEFEF', stroke: '#ffffff', width: 0.6 });
-      L.text(P, m(mo(12 * a + 6)), m((yY0 + yY1) / 2), `Année ${a + 1}`, { size: 6, anchor: 'middle', valign: 'middle', color: C.txt });
+      L.text(P, m(mo(12 * a + 6)), m((yY0 + yY1) / 2), `Année ${a + 1}`, { size: 6.5, anchor: 'middle', valign: 'middle', color: C.txt });
     }
     for (const k of [12, 24]) L.line(P, [m(mo(k)), m(yY1)], [m(mo(k)), m(yAx)], { stroke: '#cfcfcf', width: 0.35, dash: '1 1.2' });
     // barres des paliers (calendrier proposé)
@@ -372,7 +370,7 @@ export default async function draw(F, L) {
     {
       const y = yG + 5 * dG;
       L.rect(P, m(mo(30)), m(y + 0.25), m(mo(36) - mo(30)), m(1.5), { r: m(0.75), fill: '#ffffff', stroke: '#9a9a9a', width: 0.45, dash: '1 0.8' });
-      L.text(P, m(mo(30) - 1.2), m(y + 1.0), 'rédaction', { size: 6, anchor: 'end', valign: 'middle', color: C.sub });
+      L.text(P, m(mo(30) - 1.2), m(y + 1.0), 'rédaction', { size: 6.5, anchor: 'end', valign: 'middle', color: C.sub });
     }
     L.line(P, [m(mo(0)), m(yAx)], [m(mo(36)), m(yAx)], { stroke: '#6b6b6b', width: 0.45 });
     for (let k = 0; k <= 36; k += 6) {
@@ -389,17 +387,17 @@ export default async function draw(F, L) {
       const x = m(mo(36)), y = m(yM);
       L.line(P, [x, m(yY0)], [x, y - m(1.9)], { stroke: '#2b2b2b', width: 0.6 });
       L.polygon(P, [[x, y - m(1.9)], [x + m(2.4), y - m(1.2)], [x, y - m(0.5)]], { fill: '#2b2b2b', stroke: 'none' });
-      L.text(P, x + m(3.0), y - m(0.6), 'soutenance', { size: 6, anchor: 'start', valign: 'middle', color: C.txt });
+      L.text(P, x + m(3.0), y - m(0.6), 'soutenance', { size: 6.5, anchor: 'start', valign: 'middle', color: C.txt });
     }
     L.text(P, m(1.2), m(yY0 + 2.6), '**Calendrier**', { size: 7.5, color: C.txt });
-    L.text(P, m(1.2), m(yY0 + 6.1), '36 mois', { size: 6, color: C.sub });
+    L.text(P, m(1.2), m(yY0 + 6.1), '36 mois', { size: 6.5, color: C.sub });
     // légende des jalons
     {
       const lx = RX + 0.4, ly = 101.4;
       [0, 1, 2].forEach((i) => diamond(L, P, m(lx + 1.3 + i * 2.2), m(ly), m(2.8), AX[i].c));
-      L.text(P, m(lx + 8.0), m(ly), 'article', { size: 6, valign: 'middle', color: C.txt });
+      L.text(P, m(lx + 8.0), m(ly), 'article', { size: 6.5, valign: 'middle', color: C.txt });
       codeGlyph(L, P, m(lx + 1.3), m(ly + 4.4), m(2.5));
-      L.text(P, m(lx + 3.4), m(ly + 4.4), 'version du code', { size: 6, valign: 'middle', color: C.txt });
+      L.text(P, m(lx + 3.4), m(ly + 4.4), 'version du code', { size: 6.5, valign: 'middle', color: C.txt });
     }
   }
 }

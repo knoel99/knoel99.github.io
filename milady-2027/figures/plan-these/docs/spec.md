@@ -20,7 +20,7 @@ Retenu : **A**.
 ---
 
 **Takeaway (one sentence):** la thèse monte une échelle de cinq bancs d'essai, du modèle à 3 modes à DRESDYN, et fait avancer à chaque palier trois axes (contraintes dures, contraintes en loi et symétries, seuil et renversements), en 36 mois jalonnés d'articles et de versions du code MilaDy, vers la réduction de modèle et l'assimilation.
-**Size:** width 183 mm × height ≈ 120 mm
+**Size:** width 183 mm × height 120 mm
 **Hero:** l'escalier des cinq bancs ; vignettes VKS, DRESDYN et boîte périodique en vector 3D (`L.cylinder3` avec ombrage, `L.circle3`, `L.obliqueBox` + faces cartographiées), illustrated finish activé ; vignettes 0 et 1 calculées (série et carte). Route vector3d (Blender absent ; à cette taille, 20 mm par vignette, le dessin vectoriel suffit et reste dans le style des parties plates).
 
 ## Panels
@@ -35,18 +35,19 @@ Retenu : **A**.
 ## Components
 | Panel | Component | Label (exact text) | Look (type, colour role, 2D/3D) | Source |
 |---|---|---|---|---|
-| échelle | marches 0–4 | pastilles "0"…"4" | blocs gris clair, arête supérieure plus foncée, pastille gris foncé à chiffre blanc | draw (`L.rect`, `L.circle`) |
+| échelle | marches 0–4 | pastilles "0"…"4" + nom du palier (gras) + codes (gris) sur la contremarche | blocs gris clair, arête supérieure plus foncée, pastille gris foncé à chiffre blanc ; montée 2 mm par marche (rang, pas valeur) | draw (`L.polygon`, `L.circle`) |
+| échelle | rangée « Acquis du stage » | "Acquis du stage", "E1", "E2", "E3" | bandeau gris pâle sous les paliers 0–2 | draw |
 | échelle | vignette 0 | "Modèles réduits" / "Gissinger, DQVU" ; "E1" | série *D*(*t*) encre sombre, ligne 0 en tirets | compute (`make_data.py`, [G12]) |
 | échelle | vignette 1 | "MHD 2D" / "périodique" ; "E2" | carte *j* en niveaux de gris + isolignes de *a* | compute (données E2), `L.pixelImage` |
 | échelle | vignette 2 | "Dynamos 3D" / "périodiques" / "ABC, Taylor–Green" ; "E3" | cube oblique, |**B**| du mode ABC sur 3 faces, flèches de périodicité | compute (données E3) + draw (`L.obliqueBox`, faces) |
 | échelle | vignette 3 | "VKS" / "SFEMaNS, LATU" | cuve translucide, 2 turbines gris foncé à 8 pales, flèches de contrarotation | draw (`L.cylinder3`, `L.circle3`) d'après la fiche |
-| échelle | vignette 4 | "DRESDYN" / "précession, HZDR" | cylindre incliné, axe de précession vertical, plateau, deux flèches de rotation | draw (`L.cylinder3`, `L.circle3`) d'après la fiche |
-| échelle | flèche diagonale | "complexité croissante" | trait gris fin parallèle à l'escalier | draw |
+| échelle | vignette 4 | "DRESDYN" / "précession, HZDR" | cylindre incliné (couvercle supérieur visible) dans un étrier à deux montants, plateau tournant, axe de précession vertical en tirets, deux flèches de rotation | draw (`L.cylinder3`, `L.line3`) d'après la fiche |
+| échelle | flèche diagonale | "complexité croissante" | trait gris fin parallèle à l'escalier, au-dessus des vignettes, sur toute la largeur des paliers | draw |
 | bandes | en-têtes de ligne | "Axe 1" / "Contraintes dures 3D", etc. | texte, "Axe k" en gras à la couleur de l'axe | draw |
 | bandes | bandes | — | teinte claire de l'axe, bord gauche net, extrémité droite en flèche vers la boîte à outils | draw |
 | bandes | stations | voir facts.md (grille) | pastille blanche bord coloré, texte foncé de la teinte | draw |
 | bandes | trous | "sans objet", "pas de dynamo 2D" | tirets fins gris, italique gris | draw |
-| droite | boîte à outils | "Boîte à outils MilaDy" | cadre gris arrondi, glyphe « code » (carré) | draw |
+| droite | boîte à outils | "Boîte à outils MilaDy" | cadre gris arrondi ; trois modules (un par axe, bord et glyphe « code » à la couleur de l'axe, à la hauteur de la bande) | draw |
 | droite | débouchés | "Débouchés", "Réduction de modèle", "Assimilation (TorchDA)" | deux mini-glyphes gris (cartes → modes ; ensemble resserré sur observations) | draw |
 | frise | années | "Année 1/2/3" | bandeau à trois segments gris alternés | draw |
 | frise | barres de palier | pastilles 0–4, "rédaction" | barres grises fines | draw (calendrier proposé) |
@@ -56,7 +57,7 @@ Retenu : **A**.
 ## Relations
 | From | To | Kind | Drawn as |
 |---|---|---|---|
-| bande axe 1, 2, 3 (fin) | boîte à outils | flow | pointe de bande (chevron) entrant dans la boîte (`F.drew`) |
+| bande axe 1, 2, 3 (fin) | module 1, 2, 3 de la boîte à outils | flow | pointe de bande entrant dans le module de même couleur (`F.drew`) |
 | boîte à outils | débouchés | flow | flèche grise (`L.connect`) |
 | marche k | barre k de la frise | identité | même pastille numérotée (pas de trait) |
 | article (frise) | axe (bandes) | identité | même couleur |

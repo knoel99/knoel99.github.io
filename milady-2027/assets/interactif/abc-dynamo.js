@@ -106,12 +106,10 @@
       loading: "Chargement des données…",
       noSrc: "Données absentes : ajoutez l'attribut data-src (chemin du fichier abc-dynamo.json).",
       error: function (src) { return "Données introuvables (" + src + "). La page doit être servie en http(s), pas ouverte en file://."; },
-      note: "Écoulement u = (A sin z + C cos y, B sin x + A cos z, C sin y + B cos x) dans [0, 2π)³ périodique, Rm = 1/η. " +
-        "λ = pente de ln‖B‖ sur la seconde moitié de t ∈ [0 ; 150] (pseudo-spectral 32³, désaliasage 2/3, RK4 à facteur intégrant, " +
-        "dt = 0,05 ; champ moyen k = 0 retiré) ; carrés : contrôle en 48³. Zones vertes : λ > 0, bornes interpolées linéairement. " +
-        "Fenêtres attendues ≈ 8,9 < Rm < 17,5 puis Rm > ≈ 27 (Galloway & Frisch 1986). Comme ∇×u = u, B = u est un mode exact " +
-        "de taux −1/Rm, donc λ ≥ −1/Rm (vue « complet »). Carte : champ final (t = 150) normalisé (B_rms = 1 sur le volume), qui " +
-        "approche le mode propre de plus grand λ ; à Rm = 8 et 20 (λ < 0), c'est le mode le moins amorti. Survolez la carte pour lire |B| et (Bx, By)."
+      note: "u = (A sin z + C cos y, B sin x + A cos z, C sin y + B cos x), [0, 2π)³ périodique, Rm = 1/η ; λ = pente de ln‖B‖ " +
+        "sur t ∈ [75 ; 150] (pseudo-spectral 32³ ; carrés : contrôle en 48³). Fenêtres attendues ≈ 8,9 < Rm < 17,5 puis Rm > ≈ 27 " +
+        "(Galloway & Frisch 1986). Comme ∇×u = u, B = u est un mode exact de taux −1/Rm (tirets, vue « complet »). " +
+        "Carte : champ final normalisé (B_rms = 1), proche du mode dominant (le moins amorti si λ < 0)."
     },
     en: {
       title: "Kinematic ABC dynamo (A = B = C = 1): growth rate λ(Rm) and map of |B|",
@@ -144,12 +142,10 @@
       loading: "Loading data…",
       noSrc: "No data: add the data-src attribute (path of the abc-dynamo.json file).",
       error: function (src) { return "Data not found (" + src + "). The page must be served over http(s), not opened as file://."; },
-      note: "Flow u = (A sin z + C cos y, B sin x + A cos z, C sin y + B cos x) in the periodic box [0, 2π)³, Rm = 1/η. " +
-        "λ = slope of ln‖B‖ over the second half of t ∈ [0, 150] (pseudo-spectral 32³, 2/3 dealiasing, integrating-factor RK4, " +
-        "dt = 0.05; mean field k = 0 removed); squares: 48³ check. Green zones: λ > 0, edges linearly interpolated. " +
-        "Expected windows ≈ 8.9 < Rm < 17.5, then Rm > ≈ 27 (Galloway & Frisch 1986). Since ∇×u = u, B = u is an exact mode " +
-        "with rate −1/Rm, hence λ ≥ −1/Rm (“full” view). Map: final field (t = 150) normalised (B_rms = 1 over the volume), which " +
-        "approaches the eigenmode with the largest λ; at Rm = 8 and 20 (λ < 0) it is the least damped mode. Hover over the map to read |B| and (Bx, By)."
+      note: "u = (A sin z + C cos y, B sin x + A cos z, C sin y + B cos x), periodic [0, 2π)³, Rm = 1/η; λ = slope of ln‖B‖ " +
+        "over t ∈ [75, 150] (pseudo-spectral 32³; squares: 48³ check). Expected windows ≈ 8.9 < Rm < 17.5, then Rm > ≈ 27 " +
+        "(Galloway & Frisch 1986). Since ∇×u = u, B = u is an exact mode with rate −1/Rm (dashes, “full” view). " +
+        "Map: final field normalised (B_rms = 1), close to the dominant mode (the least damped one if λ < 0)."
     }
   };
 
@@ -786,11 +782,14 @@
     });
 
     // étiquettes des zones et des seuils (en haut du cadre)
-    var lastR = -1e9;
+    // étiquettes des seuils : première ligne, sinon seconde ligne si elles se chevauchent (écrans étroits)
+    var lastR = [-1e9, -1e9];
     d.thr.forEach(function (r) {
       var s = fmt(lg, r, 2), w = self.textWidth(s, 11, "600"), x = X(r) + 4;
       if (x + w > p.r - 2) x = X(r) - 4 - w;
-      if (x > lastR + 4) { self.text(s, x, p.t + 13, "left", C.soft, 11, "600", true); lastR = x + w; }
+      for (var row = 0; row < 2; row++) {
+        if (x > lastR[row] + 4) { self.text(s, x, p.t + 13 + 13 * row, "left", C.soft, 11, "600", true); lastR[row] = x + w; break; }
+      }
     });
     d.zones.forEach(function (z) {
       var xa = X(z[0]), xb = X(z[1]), s = T.dyn + (z[2] ? " →" : ""), w = self.textWidth(s, 11, "700");

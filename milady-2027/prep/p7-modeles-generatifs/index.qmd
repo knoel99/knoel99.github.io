@@ -300,7 +300,7 @@ Apprendre d'un seul coup un transport du bruit vers des champs turbulents est di
 
 ::: def
 [Définition 2.1 — Processus de bruitage gaussien]{.tag}
-Soit une suite $0 < \beta_1 < \dots < \beta_K < 1$ (le **planning de bruit**). Le processus direct est la chaîne de Markov
+Soient des nombres $\beta_1, \dots, \beta_K \in\, ]0, 1[$, en général croissants (le **planning de bruit**). Le processus direct est la chaîne de Markov
 
 $$
 q(\mathbf{y}_k \mid \mathbf{y}_{k-1}) = \mathcal{N}\big(\sqrt{1 - \beta_k}\,\mathbf{y}_{k-1},\; \beta_k I\big), \qquad k = 1, \dots, K, \qquad \mathbf{y}_0 \sim \mu.
@@ -414,7 +414,7 @@ $$
 \tilde{\boldsymbol\mu}_k = \frac{1}{\sqrt{\alpha_k}}\Big(\mathbf{y}_k - \frac{\beta_k}{\sqrt{1 - \bar\alpha_k}}\,\boldsymbol\varepsilon\Big).
 $$
 
-Avec la paramétrisation $\mathbf{m}_\theta(\mathbf{y}_k, k) = \frac{1}{\sqrt{\alpha_k}}\big(\mathbf{y}_k - \frac{\beta_k}{\sqrt{1 - \bar\alpha_k}}\,\boldsymbol\varepsilon_\theta(\mathbf{y}_k, k)\big)$, le terme $L_{k-1}$ devient, à une constante près,
+Avec la paramétrisation $\mathbf{m}_\theta(\mathbf{y}_k, k) = \frac{1}{\sqrt{\alpha_k}}\big(\mathbf{y}_k - \frac{\beta_k}{\sqrt{1 - \bar\alpha_k}}\,\boldsymbol\varepsilon_\theta(\mathbf{y}_k, k)\big)$, le terme $L_{k-1}$, moyenné sur la donnée $\mathbf{y}_0 \sim \mu$, devient, à une constante près,
 
 $$
 L_{k-1} = \frac{\beta_k^2}{2\sigma_k^2\,\alpha_k(1 - \bar\alpha_k)}\;\mathbb{E}_{\mathbf{y}_0, \boldsymbol\varepsilon}\Big\|\boldsymbol\varepsilon - \boldsymbol\varepsilon_\theta\big(\sqrt{\bar\alpha_k}\,\mathbf{y}_0 + \sqrt{1 - \bar\alpha_k}\,\boldsymbol\varepsilon,\; k\big)\Big\|^2.
@@ -696,7 +696,7 @@ print("constante théorique 1/σ² - E[(∇log p_σ)²] =", round(1 / sig**2 - n
 # constante théorique 1/σ² - E[(∇log p_σ)²] = 0.4825
 ```
 
-Les deux pertes varient d'un facteur vingt d'un modèle à l'autre, mais leur différence reste égale à $0{,}483 \pm 0{,}001$, la constante prédite. Minimiser la perte de débruitage, calculable, revient donc exactement à minimiser l'erreur sur le score, incalculable.
+L'erreur sur le score $J_{\mathrm{ESM}}$ varie d'un facteur vingt d'un modèle à l'autre (et $J_{\mathrm{DSM}}$ d'un facteur deux et demi), mais la différence des deux pertes reste égale à $0{,}483 \pm 0{,}001$, la constante prédite. Minimiser la perte de débruitage, calculable, revient donc exactement à minimiser l'erreur sur le score, incalculable.
 
 ### 3.4 EDM : séparer les choix de conception
 
@@ -880,7 +880,7 @@ v_t(\mathbf{x}) = \frac{1}{p_t(\mathbf{x})}\int u_t(\mathbf{x} \mid \mathbf{x}_1
 $$
 
 ::: proof
-Si $\mathbf{x}_t = \mathbf{x}$ et $\mathbf{x}_1$ sont connus, alors $\mathbf{x}_0 = (\mathbf{x} - t\mathbf{x}_1)/(1 - t)$, donc $\mathbf{x}_1 - \mathbf{x}_0 = (\mathbf{x}_1 - \mathbf{x})/(1 - t)$. La loi de $\mathbf{x}_1$ sachant $\mathbf{x}_t = \mathbf{x}$ a pour densité $p_t(\mathbf{x} \mid \mathbf{x}_1)\,\mu(\mathrm{d}\mathbf{x}_1)/p_t(\mathbf{x})$ (formule de Bayes) ; on intègre la vitesse conditionnelle contre cette loi. [∎]{.qed}
+Si $\mathbf{x}_t = \mathbf{x}$ et $\mathbf{x}_1$ sont connus, alors $\mathbf{x}_0 = (\mathbf{x} - t\mathbf{x}_1)/(1 - t)$, donc $\mathbf{x}_1 - \mathbf{x}_0 = (\mathbf{x}_1 - \mathbf{x})/(1 - t)$. La loi de $\mathbf{x}_1$ sachant $\mathbf{x}_t = \mathbf{x}$ est $p_t(\mathbf{x} \mid \mathbf{x}_1)\,\mu(\mathrm{d}\mathbf{x}_1)/p_t(\mathbf{x})$ (formule de Bayes) ; on intègre la vitesse conditionnelle contre cette loi. [∎]{.qed}
 :::
 ::::
 
@@ -1087,7 +1087,7 @@ L'égalité centrale utilise que $Z_t$ et $X_t$ ont même loi et que $v(\cdot, t
 :::
 ::::
 
-Si les trajectoires sont des droites, un seul pas d'Euler, $\mathbf{x}_1 = \mathbf{x}_0 + v(\mathbf{x}_0, 0)$, intègre l'EDO exactement : c'est la génération en une étape. Liu et al. (2023) rapportent ainsi, après redressement et distillation, un FID de $4{,}85$ en une étape sur CIFAR-10. En dimension 1, le flot marginal est croissant, donc égal au transport monotone $F_\mu^{-1}\circ\Phi$ de la proposition 1.3, et un seul redressement donne des droites (exercice 11). Une autre façon de redresser les chemins sans réentraîner est de coupler $\mathbf{x}_0$ et $\mathbf{x}_1$ par transport optimal à l'intérieur de chaque mini-lot (OT-CFM, Tong et al., 2024).
+Si les trajectoires sont des droites, un seul pas d'Euler, $\mathbf{x}_1 = \mathbf{x}_0 + v(\mathbf{x}_0, 0)$, intègre l'EDO exactement : c'est la génération en une étape. Liu et al. (2023) rapportent ainsi, après un redressement (*2-rectified flow*) suivi d'une distillation, un FID de $4{,}85$ en une étape sur CIFAR-10. En dimension 1, le flot marginal est croissant, donc égal au transport monotone $F_\mu^{-1}\circ\Phi$ de la proposition 1.3, et un seul redressement donne des droites (exercice 11). Une autre façon de redresser les chemins sans réentraîner est de coupler $\mathbf{x}_0$ et $\mathbf{x}_1$ par transport optimal à l'intérieur de chaque mini-lot (OT-CFM, Tong et al., 2024).
 
 ### 4.5 Interpolants stochastiques et lien avec la diffusion
 
@@ -1192,7 +1192,7 @@ $$
 \nabla_{\mathbf{x}}\log p_t(\mathbf{x} \mid c) = \nabla_{\mathbf{x}}\log p_t(\mathbf{x}) + \nabla_{\mathbf{x}}\log p_t(c \mid \mathbf{x}).
 $$
 
-Dhariwal et Nichol (2021) entraînent un classifieur $p_t(c \mid \mathbf{x}_t)$ sur des données **bruitées** et ajoutent son gradient au score, multiplié par un poids $w$. Cela exige un classifieur par niveau de bruit, ce qui motive les deux méthodes suivantes.
+Dhariwal et Nichol (2021) entraînent un classifieur $p_t(c \mid \mathbf{x}_t)$ sur des données **bruitées** et ajoutent son gradient au score, multiplié par un poids $w$. Cela exige d'entraîner un classifieur supplémentaire, qui reçoit le niveau de bruit en entrée et doit reconnaître la classe sur des données bruitées à tous les niveaux : c'est ce coût qui motive les deux méthodes suivantes.
 
 ### 5.3 Guidage sans classifieur
 
@@ -1452,65 +1452,65 @@ Un champ physique est une **fonction** $\mathbf{u} : \Omega \to \mathbb{R}^d$, d
 
 :::: prop
 [Proposition 6.3 — Bruit gaussien en dimension infinie]{.tag}
-Soit $(e_k)_{k \ge 1}$ une base orthonormée de $L^2(\Omega)$, $(\xi_k)$ des variables gaussiennes centrées réduites indépendantes et $\lambda_k \ge 0$. Le champ aléatoire $\mathbf{x}_0 = \sum_k \sqrt{\lambda_k}\,\xi_k\,e_k$ vérifie
+Soit $(e_k)_{k \ge 1}$ une base orthonormée de $L^2(\Omega)$, $(\xi_k)$ des variables gaussiennes centrées réduites indépendantes et $\kappa_k \ge 0$ des variances (on les note $\kappa_k$ pour ne pas les confondre avec les paramètres physiques $\boldsymbol\lambda$). Le champ aléatoire $\mathbf{x}_0 = \sum_k \sqrt{\kappa_k}\,\xi_k\,e_k$ vérifie
 
 $$
-\mathbb{E}\,\|\mathbf{x}_0\|_{L^2}^2 = \sum_k \lambda_k.
+\mathbb{E}\,\|\mathbf{x}_0\|_{L^2}^2 = \sum_k \kappa_k.
 $$
 
-La série converge dans $L^2(\Omega, L^2)$ si et seulement si la covariance est **à trace finie**, $\sum_k\lambda_k < \infty$. Le bruit blanc ($\lambda_k = 1$ pour tout $k$) n'en fait pas partie : sur une grille de $N$ points, sa norme $L^2$ discrète croît comme $\sqrt{N}$.
+La série converge en moyenne quadratique, c'est-à-dire dans $L^2\big(\mathbb{P}; L^2(\Omega)\big)$, si et seulement si la covariance est **à trace finie**, $\sum_k\kappa_k < \infty$. Le bruit blanc ($\kappa_k = 1$ pour tout $k$) n'en fait pas partie : sur une grille de $N$ points, sa norme $L^2$ discrète croît comme $\sqrt{N}$.
 
 ::: proof
-Pour la somme partielle $S_n = \sum_{k \le n}\sqrt{\lambda_k}\,\xi_k\,e_k$, l'orthonormalité donne $\|S_n\|^2 = \sum_{k \le n}\lambda_k\,\xi_k^2$, d'espérance $\sum_{k \le n}\lambda_k$. De même $\mathbb{E}\|S_n - S_m\|^2 = \sum_{m < k \le n}\lambda_k$ : la suite $(S_n)$ est de Cauchy dans $L^2(\Omega, L^2)$ si et seulement si $\sum\lambda_k < \infty$. Sur une grille de $N$ points, seuls environ $N$ modes sont représentables, d'où $\mathbb{E}\|\mathbf{x}_0\|^2 \approx N$ pour le bruit blanc. [∎]{.qed}
+Pour la somme partielle $S_n = \sum_{k \le n}\sqrt{\kappa_k}\,\xi_k\,e_k$, l'orthonormalité donne $\|S_n\|^2 = \sum_{k \le n}\kappa_k\,\xi_k^2$, d'espérance $\sum_{k \le n}\kappa_k$. De même $\mathbb{E}\|S_n - S_m\|^2 = \sum_{m < k \le n}\kappa_k$ : la suite $(S_n)$ est de Cauchy dans $L^2\big(\mathbb{P}; L^2(\Omega)\big)$ si et seulement si $\sum\kappa_k < \infty$. Sur une grille de $N$ points, seuls environ $N$ modes sont représentables, d'où $\mathbb{E}\|\mathbf{x}_0\|^2 \approx N$ pour le bruit blanc. [∎]{.qed}
 :::
 ::::
 
-Un modèle génératif en espace de fonctions part donc d'une **mesure gaussienne** de covariance à trace finie, par exemple un champ gaussien de spectre $\lambda_k \propto |k|^{-\alpha}$, et non du bruit blanc.
+Un modèle génératif en espace de fonctions part donc d'une **mesure gaussienne** de covariance à trace finie, par exemple un champ gaussien de spectre $\kappa_k \propto |k|^{-\alpha}$, et non du bruit blanc.
 
 ::: ex
 [Exemple 6.4 — Un même tirage sur des grilles de plus en plus fines]{.tag}
-Sur $[0, 1)$ périodique, on tire une fois pour toutes les coefficients $\xi_k$ de $4096$ modes de Fourier, puis l'on évalue le champ $\mathbf{x}_0 = \sum_k \sqrt{\lambda_k}\,\xi_k\,e^{2i\pi ks}$ sur des grilles de $N = 32$ à $2048$ points, en ne gardant que les modes que chaque grille peut représenter. On compare le bruit blanc ($\lambda_k = 1$) à un champ gaussien de spectre $\lambda_k = k^{-2}$ : si le tirage définit une fonction, sa norme doit se stabiliser et ses valeurs aux mêmes points doivent converger quand la grille se raffine.
+Sur $[0, 1)$ périodique, on tire une fois pour toutes les coefficients $\xi_k$ de $4096$ modes de Fourier, puis l'on évalue le champ $\mathbf{x}_0 = \sum_k \sqrt{\kappa_k}\,\xi_k\,e^{2i\pi ks}$ sur des grilles de $N = 32$ à $2048$ points, en ne gardant que les modes que chaque grille peut représenter. On compare le bruit blanc ($\kappa_k = 1$) à un champ gaussien de spectre $\kappa_k = k^{-2}$ : si le tirage définit une fonction, sa norme doit se stabiliser et ses valeurs aux mêmes points doivent converger quand la grille se raffine.
 :::
 
 ```python
 import numpy as np
 
 # Un même tirage aléatoire, évalué sur des grilles de plus en plus fines de [0, 1) périodique :
-# x0(s) = Σ_{1 ≤ |k| ≤ 4096} sqrt(λ_k) ξ_k e^{2iπks}, ξ_k gaussiens complexes (champ réel).
+# x0(s) = Σ_{1 ≤ |k| ≤ 4096} sqrt(κ_k) ξ_k e^{2iπks}, ξ_k gaussiens complexes (champ réel).
 rng = np.random.default_rng(0)
 kmax = 4096
 k = np.arange(1, kmax + 1)
 xi = (rng.standard_normal(kmax) + 1j * rng.standard_normal(kmax)) / np.sqrt(2)
 
-def champ(lam_k, N):
+def champ(kap_k, N):
     """Évalue le champ sur N points en ne gardant que les modes représentables (|k| < N/2)."""
     c = np.zeros(N, dtype=complex)
     kk = k[k < N // 2]
-    c[kk] = np.sqrt(lam_k[: len(kk)]) * xi[: len(kk)]
+    c[kk] = np.sqrt(kap_k[: len(kk)]) * xi[: len(kk)]
     return 2 * np.real(np.fft.ifft(c) * N)          # somme des modes k et -k
 
-spectres = {"bruit blanc (λ_k = 1)": np.ones(kmax), "champ gaussien (λ_k = k^-2)": k ** -2.0}
-for nom, lam_k in spectres.items():
+spectres = {"bruit blanc (κ_k = 1)": np.ones(kmax), "champ gaussien (κ_k = k^-2)": k ** -2.0}
+for nom, kap_k in spectres.items():
     print(nom)
     for N in [32, 128, 512, 2048]:
-        u = champ(lam_k, N)
-        u_fin = champ(lam_k, 2 * N)[::2]              # même tirage, grille deux fois plus fine
+        u = champ(kap_k, N)
+        u_fin = champ(kap_k, 2 * N)[::2]              # même tirage, grille deux fois plus fine
         print(f"  N = {N:5d} : ||x0||_L2 = {np.sqrt(np.mean(u ** 2)):7.3f},  "
               f"écart avec la grille 2N aux mêmes points = {np.sqrt(np.mean((u - u_fin) ** 2)):.3f}")
 # sortie :
-# bruit blanc (λ_k = 1)
+# bruit blanc (κ_k = 1)
 #   N =    32 : ||x0||_L2 =   5.376,  écart avec la grille 2N aux mêmes points = 4.170
 #   N =   128 : ||x0||_L2 =  10.704,  écart avec la grille 2N aux mêmes points = 11.083
 #   N =   512 : ||x0||_L2 =  22.955,  écart avec la grille 2N aux mêmes points = 22.677
 #   N =  2048 : ||x0||_L2 =  44.400,  écart avec la grille 2N aux mêmes points = 45.695
-# champ gaussien (λ_k = k^-2)
+# champ gaussien (κ_k = k^-2)
 #   N =    32 : ||x0||_L2 =   2.171,  écart avec la grille 2N aux mêmes points = 0.191
 #   N =   128 : ||x0||_L2 =   2.187,  écart avec la grille 2N aux mêmes points = 0.126
 #   N =   512 : ||x0||_L2 =   2.193,  écart avec la grille 2N aux mêmes points = 0.063
 #   N =  2048 : ||x0||_L2 =   2.194,  écart avec la grille 2N aux mêmes points = 0.032
 ```
 
-La norme du bruit blanc double quand $N$ est multiplié par quatre ($\sqrt{N}$), et raffiner la grille change complètement les valeurs aux mêmes points : ce n'est pas une fonction. Le champ gaussien de spectre $k^{-2}$ a une norme stable et des valeurs qui convergent, l'écart étant divisé par deux à chaque doublement de résolution.
+La norme du bruit blanc double quand $N$ est multiplié par quatre ($\sqrt{N}$), et raffiner la grille change complètement les valeurs aux mêmes points : ce n'est pas une fonction. Le champ gaussien de spectre $k^{-2}$ a une norme stable et des valeurs qui convergent, l'écart étant divisé par deux chaque fois que $N$ est multiplié par quatre. Cette décroissance en $N^{-1/2}$ est celle de la norme des modes $N/2 \le k < N$ qu'ajoute le raffinement, $\big(2\sum_{N/2 \le k < N} k^{-2}\big)^{1/2} \approx (2/N)^{1/2}$.
 
 ### 6.3 Flow matching et diffusion en espace de fonctions
 
@@ -1573,7 +1573,7 @@ $$
 
 :::: thm
 [Théorème 7.2 — La distance d'énergie caractérise l'égalité des lois]{.tag}
-On a $D_{\mathcal{E}}(P, Q) \ge 0$, avec égalité si et seulement si $P = Q$, et $\sqrt{D_{\mathcal{E}}}$ est une distance. De plus, $D_{\mathcal{E}}$ coïncide avec le carré de la *maximum mean discrepancy* (MMD) associée à un noyau défini par la distance (Sejdinovic et al., 2013).
+On a $D_{\mathcal{E}}(P, Q) \ge 0$, avec égalité si et seulement si $P = Q$, et $\sqrt{D_{\mathcal{E}}}$ est une distance. De plus, $D_{\mathcal{E}}$ vaut deux fois le carré de la *maximum mean discrepancy* (MMD) associée au noyau induit par la distance, $k(\mathbf{x}, \mathbf{y}) = \tfrac12\big(\|\mathbf{x}\| + \|\mathbf{y}\| - \|\mathbf{x} - \mathbf{y}\|\big)$ (Sejdinovic et al., 2013).
 
 ::: proof
 Résultat admis. L'idée (Székely & Rizzo, 2013) est l'identité $D_{\mathcal{E}}(P, Q) = c_D\int_{\mathbb{R}^D}|\varphi_P(\boldsymbol\omega) - \varphi_Q(\boldsymbol\omega)|^2\,\|\boldsymbol\omega\|^{-(D+1)}\,\mathrm{d}\boldsymbol\omega$, où $\varphi_P$ et $\varphi_Q$ sont les fonctions caractéristiques et $c_D > 0$ : l'intégrale est positive, et nulle si et seulement si les fonctions caractéristiques coïncident, c'est-à-dire si $P = Q$. En dimension 1, une démonstration élémentaire passe par la formule $D_{\mathcal{E}} = 2\int(F - G)^2$ (exercice 16). [∎]{.qed}
@@ -1806,7 +1806,7 @@ Les exercices sont gradués : ★ application directe du cours, ★★ calcul ou
    \mathbb{E}[y_0 \mid y] = \mathbb{P}(y_0 = 1 \mid y) - \mathbb{P}(y_0 = -1 \mid y) = \tanh(y/\sigma^2).
    $$
 
-   (b) Avec $a = 1$, la proposition 3.7 donne $\partial_y\log p(y) = \big(\tanh(y/\sigma^2) - y\big)/\sigma^2$, ce que l'on vérifie en dérivant directement $\log\big(e^{-(y-1)^2/(2\sigma^2)} + e^{-(y+1)^2/(2\sigma^2)}\big)$. (c) Quand $\sigma \to 0$, $\tanh(y/\sigma^2) \to \mathrm{signe}(y)$ : le débruiteur choisit le point le plus proche. Quand $\sigma \to \infty$, $\tanh(y/\sigma^2) \approx y/\sigma^2 \to 0$ : il renvoie la moyenne des données, comme le notent Karras et al. (2022) pour un débruiteur à fort bruit.
+   (b) Avec $a = 1$, la proposition 3.7 donne $\partial_y\log p(y) = \big(\tanh(y/\sigma^2) - y\big)/\sigma^2$, ce que l'on vérifie en dérivant directement $\log\big(e^{-(y-1)^2/(2\sigma^2)} + e^{-(y+1)^2/(2\sigma^2)}\big)$. (c) Quand $\sigma \to 0$, $\tanh(y/\sigma^2) \to \mathrm{signe}(y)$ : le débruiteur choisit le point le plus proche. Quand $\sigma \to \infty$, $\tanh(y/\sigma^2) \approx y/\sigma^2 \to 0$ : à très fort bruit, le débruiteur optimal renvoie la moyenne des données.
 
 6. **★★ ODE de flot de probabilité pour des données gaussiennes.** Dans la paramétrisation d'EDM, $y = x + \sigma n$ avec $x \sim \mathcal{N}(0, \tau^2)$. (a) Calculer le débruiteur $D(y; \sigma)$ et le score. (b) Résoudre l'ODE $\mathrm{d}y/\mathrm{d}\sigma = (y - D(y; \sigma))/\sigma$ de $\sigma_{\max}$ à $0$. (c) Si l'on part de $y \sim \mathcal{N}(0, \sigma_{\max}^2)$ au lieu de $\mathcal{N}(0, \tau^2 + \sigma_{\max}^2)$, quelle variance obtient-on à l'arrivée ? Application : $\tau = 0{,}5$, $\sigma_{\max} = 80$.
 
@@ -1848,7 +1848,7 @@ Les exercices sont gradués : ★ application directe du cours, ★★ calcul ou
 
 11. **★★★ Rectified flow en dimension 1.** Soit $\mu$ une loi sur $\mathbb{R}$ à densité, $\phi_1$ le flot au temps 1 du champ marginal (théorème 4.4) partant de $\mathcal{N}(0, 1)$. (a) Montrer que $\phi_1$ est strictement croissante et en déduire $\phi_1 = F_\mu^{-1}\circ\Phi$. (b) Montrer qu'après un redressement, les trajectoires du nouveau flot marginal sont des droites. (c) Pourquoi ce couplage minimise-t-il tous les coûts convexes $\mathbb{E}\,c(Z_1 - Z_0)$ ?
 
-    *Solution* : (a) Deux trajectoires d'une EDO à champ régulier ne peuvent se croiser (unicité de Cauchy–Lipschitz) ; en dimension 1, si $x < x'$ alors $\phi_t(x) < \phi_t(x')$ pour tout $t$, sinon les trajectoires se rencontreraient par le théorème des valeurs intermédiaires. Donc $\phi_1$ est strictement croissante et pousse $\mathcal{N}(0, 1)$ sur $\mu$. Pour tout $z$, $F_\mu(\phi_1(z)) = \mathbb{P}(\phi_1(Z) \le \phi_1(z)) = \mathbb{P}(Z \le z) = \Phi(z)$, d'où $\phi_1 = F_\mu^{-1}\circ\Phi$. (b) Le nouveau couplage est $(Z_0, T(Z_0))$ avec $T = \phi_1$ croissante. L'interpolant $Z_t = \big((1 - t)\,\mathrm{id} + t\,T\big)(Z_0)$ est l'image de $Z_0$ par une fonction strictement croissante, donc inversible : connaître $Z_t$ détermine $Z_0$, et $\mathbb{E}[Z_1 - Z_0 \mid Z_t] = T(Z_0) - Z_0$ exactement. Le champ marginal fait donc suivre à chaque point la droite $z_0 + t\,(T(z_0) - z_0)$, et un pas d'Euler intègre l'EDO sans erreur. (c) En dimension 1, le couplage monotone (le « réarrangement croissant ») minimise $\mathbb{E}\,c(Z_1 - Z_0)$ simultanément pour toutes les fonctions convexes $c$ ; c'est un résultat classique du transport optimal unidimensionnel (module [p5](../p5-probabilites-transport/index.html)), cohérent avec le théorème 4.12. En dimension supérieure, le flot marginal n'est pas en général le transport optimal, et un seul redressement ne suffit pas.
+    *Solution* : (a) Deux trajectoires d'une EDO à champ régulier ne peuvent se croiser (unicité de Cauchy–Lipschitz) ; en dimension 1, si $x < x'$ alors $\phi_t(x) < \phi_t(x')$ pour tout $t$, sinon les trajectoires se rencontreraient par le théorème des valeurs intermédiaires. Donc $\phi_1$ est strictement croissante et pousse $\mathcal{N}(0, 1)$ sur $\mu$. Pour tout $z$, $F_\mu(\phi_1(z)) = \mathbb{P}(\phi_1(Z) \le \phi_1(z)) = \mathbb{P}(Z \le z) = \Phi(z)$, d'où $\phi_1 = F_\mu^{-1}\circ\Phi$. (b) Le nouveau couplage est $(Z_0, T(Z_0))$ avec $T = \phi_1$ croissante. L'interpolant $Z_t = \big((1 - t)\,\mathrm{id} + t\,T\big)(Z_0)$ est l'image de $Z_0$ par une fonction strictement croissante, donc inversible : connaître $Z_t$ détermine $Z_0$, et $\mathbb{E}[Z_1 - Z_0 \mid Z_t] = T(Z_0) - Z_0$ exactement. Le champ marginal fait donc suivre à chaque point la droite $z_0 + t\,(T(z_0) - z_0)$, et un pas d'Euler intègre l'EDO sans erreur. (c) En dimension 1, le couplage monotone (le « réarrangement croissant ») minimise $\mathbb{E}\,c(Z_1 - Z_0)$ simultanément pour toutes les fonctions convexes $c$ ; c'est un résultat classique du transport optimal unidimensionnel (module [p5](../p5-probabilites-transport/index.html)), cohérent avec le théorème 4.12. En dimension supérieure, le flot marginal n'est pas en général le transport optimal, et un seul redressement ne suffit pas, en général, à rendre les trajectoires droites.
 
 12. **★★ Guidage sans classifieur sur des gaussiennes.** On suppose $p(x \mid c) = \mathcal{N}(c, 1)$ et $c \sim \mathcal{N}(0, \tau^2)$, de sorte que $p(x) = \mathcal{N}(0, 1 + \tau^2)$. (a) Calculer le score guidé $\tilde s = (1 + w)\,s(x \mid c) - w\,s(x)$ et montrer que c'est le score d'une gaussienne dont on donnera la moyenne et la variance. (b) Interpréter pour $\tau = 1$ et $w = 1$.
 
@@ -1872,9 +1872,9 @@ Les exercices sont gradués : ★ application directe du cours, ★★ calcul ou
 
     indépendante de la valeur de $x_t$. (b) Par la proposition 5.9 (iii), $\mathcal{J}_R = s^2(1 - t)^2/\sigma_t^2$, et $\mathbb{E}[\hat x_1^2] = \mathbb{E}[x_1^2] - s^2(1 - t)^2/\sigma_t^2$ : l'estimée débruitée manque exactement de cette énergie. (c) Pour $t = 0{,}5$ : $\sigma_t^2 = 0{,}3125$ et l'écart vaut $0{,}2$, soit 80 % de $s^2$. Pour $t = 0{,}9$ : $\sigma_t^2 = 0{,}2125$ et l'écart vaut $0{,}0118$. Dans l'exemple 5.10, la cible est un mélange de deux gaussiennes de même écart-type $0{,}5$ ; à $t = 0{,}9$, le mode est déjà choisi et l'écart mesuré, $0{,}0118$, coïncide avec la valeur intra-mode calculée ici. À $t = 0{,}5$, l'écart du mélange ($0{,}45$) est plus grand, car l'incertitude sur le mode s'ajoute à la variance intra-mode.
 
-14. **★★★ Programmation : le guidage déforme la loi.** Reprendre le travail pratique de la section 5.6 en entraînant un seul réseau conditionnel et non conditionnel ($p_{\mathrm{uncond}} = 0{,}2$), puis échantillonner en $\lambda = 0{,}5$ avec le champ guidé $\tilde v = (1 + w)\,v(\mathbf{x}, t, \lambda) - w\,v(\mathbf{x}, t, \varnothing)$ pour $w \in \{0, 1, 3\}$. Mesurer l'écart-type à l'intérieur des modes, la proportion de points éloignés de tous les modes, le rayon médian et la distance d'énergie aux données.
+14. **★★★ Programmation : le guidage déforme la loi.** Reprendre le travail pratique de la section 5.6 en entraînant un seul réseau conditionnel et non conditionnel ($p_{\mathrm{uncond}} = 0{,}2$), puis échantillonner en $\lambda = 0{,}5$ avec le champ guidé $\tilde v = (1 + w)\,v(\mathbf{x}, t, \lambda) - w\,v(\mathbf{x}, t, \varnothing)$ pour $w \in \{0, 1, 3\}$. Mesurer la largeur des modes, leur décalage par rapport aux positions exactes, la proportion de points éloignés de tous les modes, le rayon médian et la distance d'énergie aux données.
 
-    *Solution* : Le jeton vide est codé par une entrée supplémentaire $c \in \{0, 1\}$ (et $\lambda$ mis à $0$ quand $c = 0$). L'écart-type intra-mode est estimé de façon robuste par la médiane de la distance au centre le plus proche, qui suit une loi de Rayleigh de médiane $\sigma\sqrt{2\ln 2}$.
+    *Solution* : Le jeton vide est codé par une entrée supplémentaire $c \in \{0, 1\}$ (et $\lambda$ mis à $0$ quand $c = 0$). L'écart-type intra-mode est estimé de façon robuste par la médiane de la distance au centre du mode, qui suit une loi de Rayleigh de médiane $\sigma\sqrt{2\ln 2}$. On le calcule deux fois : autour des centres exacts, puis autour des centres empiriques des modes générés, ce qui sépare un élargissement d'un simple déplacement des modes.
 
     ```python
     import math
@@ -1928,17 +1928,22 @@ Les exercices sont gradués : ★ application directe du cours, ★★ calcul ou
     ref = echantillons(lam, n)
     ang = torch.arange(4) * math.pi / 2 + lam * math.pi / 4
     centres = (1 + lam) * torch.stack([torch.cos(ang), torch.sin(ang)], 1)
+    RAYLEIGH = math.sqrt(2 * math.log(2))                       # loi de Rayleigh : médiane = σ √(2 ln 2)
     def resume(x):
-        d = torch.cdist(x, centres).min(1).values               # distance au centre le plus proche
-        sigma = d.median().item() / math.sqrt(2 * math.log(2))  # loi de Rayleigh : médiane = σ √(2 ln 2)
-        return sigma, (d > 0.6).float().mean().item(), x.norm(dim=1).median().item()   # + rayon médian
-    s_ref, h_ref, r_ref = resume(ref)
-    print(f"données   : écart-type intra-mode = {s_ref:.3f}, entre les modes = {h_ref:.4f}, rayon = {r_ref:.3f}")
+        dmin, j = torch.cdist(x, centres).min(1)                # distance au centre exact le plus proche
+        proche = dmin < 0.6
+        cg = torch.stack([x[proche & (j == q)].mean(0) for q in range(4)])   # centres empiriques des modes
+        dg = (x[proche] - cg[j[proche]]).norm(dim=1)
+        return (dmin.median().item() / RAYLEIGH, dg.median().item() / RAYLEIGH,
+                (cg - centres).norm(dim=1).mean().item(), (~proche).float().mean().item(),
+                x.norm(dim=1).median().item())
+    print("            largeur   largeur      décalage   entre les   rayon    D_E")
+    print("            (exacts)  (empiriques) des modes  modes       médian")
+    print("données   : {:.3f}     {:.3f}        {:.3f}      {:.4f}      {:.3f}".format(*resume(ref)))
     for w in [0.0, 1.0, 3.0]:
         x = echantillonner(lam, n, w)
-        s_w, h_w, r_w = resume(x)
-        print(f"w = {w:3.1f}   : écart-type intra-mode = {s_w:.3f}, entre les modes = {h_w:.4f}, rayon = {r_w:.3f}, "
-              f"D_E = {distance_energie(x, ref):.4f}")
+        print("w = {:3.1f}   : {:.3f}     {:.3f}        {:.3f}      {:.4f}      {:.3f}   {:.4f}".format(
+              w, *resume(x), distance_energie(x, ref)))
     # sortie :
     # données   : écart-type intra-mode = 0.150, entre les modes = 0.0000, rayon = 1.499
     # w = 0.0   : écart-type intra-mode = 0.150, entre les modes = 0.0620, rayon = 1.476, D_E = 0.0026
@@ -1948,9 +1953,9 @@ Les exercices sont gradués : ★ application directe du cours, ★★ calcul ou
 
     Sans guidage ($w = 0$), la largeur des modes est correcte mais 6 % des points restent entre les modes : ce modèle, qui partage sa capacité entre les tâches conditionnelle et non conditionnelle, est un peu moins bon que celui de la section 5.6. Le guidage nettoie l'espace entre les modes (6 % → 2 % → 0,25 %), mais il déforme la loi : à $w = 1$ les modes sont trop étroits (écart-type $0{,}097$ au lieu de $0{,}15$), comme le prévoit l'exercice 12 ; à $w = 3$ ils sont repoussés vers l'extérieur (rayon $1{,}53$ au lieu de $1{,}50$). La distance d'énergie est multipliée par 4 puis par 20. Pour reproduire une loi physique, il faut donc $w = 0$ et investir plutôt dans le modèle lui-même ; le guidage n'a d'intérêt que si l'on accepte de sacrifier la fidélité statistique.
 
-15. **★ Bruit en espace de fonctions.** Sur $[0, 1)$ périodique, on considère $x_0 = \sum_{k \ne 0}\sqrt{\lambda_k}\,\xi_k\,e^{2i\pi ks}$ avec $\lambda_k = |k|^{-\alpha}$ (et $\xi_{-k} = \bar\xi_k$ pour un champ réel). (a) Pour quelles valeurs de $\alpha$ a-t-on $\mathbb{E}\|x_0\|_{L^2}^2 < \infty$ ? (b) Sur une grille de $N$ points, combien vaut $\mathbb{E}\|x_0\|^2$ pour le bruit blanc ? Comparer à la sortie du bloc de la section 6.2. (c) Pour $\alpha = 2$, que vaut $\mathbb{E}\|x_0\|^2$ ?
+15. **★ Bruit en espace de fonctions.** Sur $[0, 1)$ périodique, on considère $x_0 = \sum_{k \ne 0}\sqrt{\kappa_k}\,\xi_k\,e^{2i\pi ks}$ avec $\kappa_k = |k|^{-\alpha}$ (et $\xi_{-k} = \bar\xi_k$ pour un champ réel). (a) Pour quelles valeurs de $\alpha$ a-t-on $\mathbb{E}\|x_0\|_{L^2}^2 < \infty$ ? (b) Sur une grille de $N$ points, combien vaut $\mathbb{E}\|x_0\|^2$ pour le bruit blanc ? Comparer à la sortie du bloc de la section 6.2. (c) Pour $\alpha = 2$, que vaut $\mathbb{E}\|x_0\|^2$ ?
 
-    *Solution* : (a) Par la proposition 6.3, $\mathbb{E}\|x_0\|^2 = \sum_{k \ne 0}|k|^{-\alpha} = 2\sum_{k \ge 1}k^{-\alpha}$, finie si et seulement si $\alpha > 1$ (série de Riemann). (b) Sur $N$ points, seuls les modes $1 \le |k| < N/2$ sont représentés, soit environ $N$ modes de variance $1$ : $\mathbb{E}\|x_0\|^2 \approx N$ et la norme croît comme $\sqrt N$. Le bloc donne $5{,}4$ ; $10{,}7$ ; $23{,}0$ ; $44{,}4$ pour $N = 32, 128, 512, 2048$, à comparer à $\sqrt N = 5{,}7$ ; $11{,}3$ ; $22{,}6$ ; $45{,}3$. (c) $\mathbb{E}\|x_0\|^2 = 2\zeta(2) = \pi^2/3 \approx 3{,}29$, soit une norme typique de l'ordre de $1{,}8$ ; la réalisation du bloc ($2{,}19$) est compatible, les premiers modes, peu nombreux, dominant la fluctuation. Plus généralement, $\mathbb{E}\|x_0\|_{H^r}^2 = 2\sum_k k^{2r - \alpha}$ est fini si $\alpha > 2r + 1$ : la décroissance du spectre fixe la régularité des échantillons.
+    *Solution* : (a) Par la proposition 6.3, $\mathbb{E}\|x_0\|^2 = \sum_{k \ne 0}|k|^{-\alpha} = 2\sum_{k \ge 1}k^{-\alpha}$, finie si et seulement si $\alpha > 1$ (série de Riemann). (b) Sur $N$ points, seuls les modes $1 \le |k| < N/2$ sont représentés, soit environ $N$ modes de variance $1$ : $\mathbb{E}\|x_0\|^2 \approx N$ et la norme croît comme $\sqrt N$. Le bloc donne $5{,}4$ ; $10{,}7$ ; $23{,}0$ ; $44{,}4$ pour $N = 32, 128, 512, 2048$, à comparer à $\sqrt N = 5{,}7$ ; $11{,}3$ ; $22{,}6$ ; $45{,}3$. (c) $\mathbb{E}\|x_0\|^2 = 2\zeta(2) = \pi^2/3 \approx 3{,}29$, soit une norme typique de l'ordre de $1{,}8$ ; la réalisation du bloc ($2{,}19$) est compatible, les premiers modes, peu nombreux, dominant la fluctuation. Plus généralement, comme la norme de Sobolev $H^r$ pondère le mode $k$ par un facteur de l'ordre de $(2\pi k)^{2r}$, $\mathbb{E}\|x_0\|_{H^r}^2$ est fini si et seulement si $\sum_{k \ge 1} k^{2r - \alpha}$ l'est, c'est-à-dire si $\alpha > 2r + 1$ : la décroissance du spectre fixe la régularité des échantillons.
 
 16. **★★★ Distance d'énergie en dimension 1.** Soient $P$ et $Q$ deux lois sur $\mathbb{R}$ à premier moment fini, de fonctions de répartition $F$ et $G$. (a) Montrer que $D_{\mathcal{E}}(P, Q) = 2\int_{\mathbb{R}}(F(u) - G(u))^2\,\mathrm{d}u$. (b) En déduire que $D_{\mathcal{E}} \ge 0$ avec égalité si et seulement si $P = Q$. (c) Calculer $D_{\mathcal{E}}\big(\mathcal{N}(0, 1), \mathcal{N}(\delta, 1)\big)$ pour $\delta$ petit.
 

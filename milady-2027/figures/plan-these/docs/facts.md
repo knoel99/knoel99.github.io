@@ -69,6 +69,12 @@ Sources : [D] description technique de l'appelant (verbatim dans `brief.md`) ; [
 | Article 3 (axe 3 : seuil et renversements, paliers 2–4) | 33 | proposé |
 | Soutenance | 36 | durée de 36 mois : [D] |
 
+## Boîte à outils (proposé)
+| Élément | Ce qui est dessiné | Source |
+|---|---|---|
+| Boîte à outils MilaDy | cadre gris, trois modules (un par axe, couleur de l'axe), sans texte ; chaque bande d'axe se termine par une pointe qui entre dans son module | [D] « code intégré à la boîte à outils MilaDy » ; découpage en un module par axe : proposé |
+| Lien vers les débouchés | flèche grise de la boîte vers « Débouchés » | [D] |
+
 ## Débouchés
 | Élément | Source |
 |---|---|
@@ -79,19 +85,20 @@ Sources : [D] description technique de l'appelant (verbatim dans `brief.md`) ; [
 | Chaîne à l'écran | Source |
 |---|---|
 | "Bancs d'essai" | [D] « échelle de bancs d'essai » |
+| "Dynamos 3D", "périodiques" (deux lignes) | [D] palier 2 |
 | "complexité croissante" | [D] |
-| "E1–E3 : stage M2", "E1", "E2", "E3" | [T] §3 |
+| "Acquis du stage", "E1", "E2", "E3" | [T] §3 (E1 → palier 0, E2 → palier 1, E3 → palier 2) |
 | "0", "1", "2", "3", "4" (numéros de palier) | [D] |
 | "Modèles réduits" | [D] palier 0 |
 | "Gissinger, DQVU" | [D], [G12], [B26] |
 | "MHD 2D" , "périodique" | [D] palier 1 |
 | "Dynamos 3D" , "périodiques" , "ABC, Taylor–Green" | [D] palier 2 |
-| "VKS" , "SFEMaNS, LATU" | [D] palier 3, [R] |
+| "VKS" , "SFEMaNS, LATU" | [D] palier 3, [R] (la géométrie cylindrique est montrée par la vignette, nommée en légende) |
 | "DRESDYN" , "précession, HZDR" | [D] palier 4 |
 | "D" , "t" (italiques, vignette du palier 0) | [G12] |
 | "Axe 1" , "Contraintes dures 3D" | [D] axe 1 |
-| "Axe 2" , "Contraintes en loi" , "et symétries" | [D] axe 2 |
-| "Axe 3" , "Seuil dynamo" , "et renversements" | [D] axe 3 |
+| "Axe 2" , "Contraintes en loi" , "et symétries" (deux lignes ; chaîne rendue "Contraintes en loiet symétries") | [D] axe 2 |
+| "Axe 3" , "Seuil dynamo" , "et renversements" (deux lignes ; chaîne rendue "Seuil dynamoet renversements") | [D] axe 3 |
 | "sans objet" | grille ci-dessus (axe 1, palier 0) |
 | "potentiels ψ, a" (a italique) | [T] Prop. 1, [N] |
 | "∇×A, jauge" (A gras) | [D], [T] Prop. 1 |

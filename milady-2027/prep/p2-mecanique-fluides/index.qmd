@@ -175,7 +175,7 @@ et, d'après le théorème 1.5, à $J \equiv 1$ : **le flot conserve les volumes
 
 ::: note
 [Remarque 1.9 — Quand l'hypothèse est-elle raisonnable ?]{.tag}
-Un liquide n'est jamais rigoureusement incompressible, mais les ondes acoustiques s'y propagent à une vitesse $c$ bien supérieure aux vitesses d'écoulement $U$ (dans l'eau, $c$ est de l'ordre de $1{,}5$ km/s). L'analyse classique (voir Batchelor, 2000) montre que les variations relatives de masse volumique induites par l'écoulement sont d'ordre $Ma^2$, où $Ma = U/c$ est le nombre de Mach. Pour $U = 10$ m/s dans l'eau, $Ma^2 \approx 4\times 10^{-5}$ : la contrainte $\nabla\cdot\mathbf{u} = 0$ est alors une excellente approximation. C'est aussi le cas du sodium liquide des expériences de dynamo.
+Un liquide n'est jamais rigoureusement incompressible, mais les ondes acoustiques s'y propagent à une vitesse $c$ bien supérieure aux vitesses d'écoulement $U$ (dans l'eau, $c$ est de l'ordre de $1{,}5$ km/s). L'analyse classique (voir Batchelor, 2000) montre que, pour un écoulement stationnaire, les variations relatives de masse volumique induites par l'écoulement sont d'ordre $Ma^2$, où $Ma = U/c$ est le nombre de Mach ; pour un écoulement instationnaire de fréquence typique $f$, il faut en outre que $fL/c \ll 1$. Pour $U = 10$ m/s dans l'eau, $Ma^2 \approx 4\times 10^{-5}$ : la contrainte $\nabla\cdot\mathbf{u} = 0$ est alors une excellente approximation. C'est aussi le cas du sodium liquide des expériences de dynamo.
 :::
 
 ::: ex
@@ -424,12 +424,12 @@ Arnold (1966) a montré que les équations d'Euler ($\nu = 0$) décrivent les g�
 [Définition 2.6 — Conditions aux limites usuelles]{.tag}
 - **Adhérence** (paroi solide de vitesse $\mathbf{U}_p$) : $\mathbf{u} = \mathbf{U}_p$ sur $\partial\Omega$. C'est la condition naturelle pour un fluide visqueux : le fluide colle à la paroi.
 - **Imperméabilité** seule : $\mathbf{u}\cdot\mathbf{n} = 0$ sur $\partial\Omega$. C'est la seule condition que l'on peut imposer pour un fluide parfait ($\nu = 0$), car l'équation d'Euler est d'ordre un en espace.
-- **Périodicité** : $\Omega = [0, L)^d$ et tous les champs sont $L$-périodiques dans chaque direction. Il n'y a pas de bord ; c'est le cadre des méthodes spectrales (chapitre 7) et de la plupart des jeux de données d'apprentissage.
+- **Périodicité** : $\Omega = [0, L)^d$ et tous les champs sont $L$-périodiques dans chaque direction. Il n'y a pas de bord ; c'est le cadre des méthodes spectrales (chapitre 7) et de nombreux jeux de données d'apprentissage (écoulement de Kolmogorov, turbulence homogène).
 :::
 
 :::: prop
 [Proposition 2.7 — Vitesse moyenne en domaine périodique]{.tag}
-Sur le tore, la vitesse moyenne $\langle\mathbf{u}\rangle$ vérifie $\frac{\mathrm{d}}{\mathrm{d}t}\langle\mathbf{u}\rangle = \langle\mathbf{f}\rangle$. Si la force est de moyenne nulle, on peut donc supposer $\langle\mathbf{u}\rangle = 0$ sans perte de généralité.
+Sur le tore, la vitesse moyenne $\langle\mathbf{u}\rangle$ vérifie $\frac{\mathrm{d}}{\mathrm{d}t}\langle\mathbf{u}\rangle = \langle\mathbf{f}\rangle$. Si la force est de moyenne nulle, la vitesse moyenne est donc constante : elle reste nulle si elle l'est à l'instant initial, et l'on se place dans ce cas dans toute la suite. (Sans forçage, on peut aussi s'y ramener par un changement de référentiel galiléen ; avec une force fixe dans l'espace, comme celle de Kolmogorov, ce changement rendrait la force dépendante du temps, et la moyenne nulle est alors une hypothèse sur la condition initiale.)
 
 ::: proof
 On moyenne l'équation de quantité de mouvement. La moyenne d'une dérivée d'une fonction périodique est nulle, donc $\langle\nabla p\rangle = 0$ et $\langle\Delta\mathbf{u}\rangle = 0$ ; de plus $(\mathbf{u}\cdot\nabla)\mathbf{u} = \nabla\cdot(\mathbf{u}\otimes\mathbf{u})$ car $\nabla\cdot\mathbf{u} = 0$, et sa moyenne est nulle aussi. [∎]{.qed}
@@ -460,7 +460,7 @@ C'est cette propriété qui justifie les maquettes en soufflerie, et c'est elle 
 
 ::: ex
 [Exemple 2.10 — Ordres de grandeur]{.tag}
-Avec $\nu \approx 10^{-6}$ m²/s pour l'eau : l'écoulement lent de l'eau dans un tube capillaire ($U = 1$ mm/s, $L = 1$ mm) donne $Re \approx 1$ ; une rivière ($U = 1$ m/s, $L = 10$ m) donne $Re \approx 10^7$. Dans l'expérience VKS de dynamo au sodium liquide, Monchaux et al. (2007) définissent $Re = KR^2\Omega/\nu$ (avec $R$ le rayon de la cuve, $\Omega$ la vitesse angulaire des turbines et un coefficient d'efficacité $K = 0{,}6$) et indiquent que $Re$ peut atteindre $5\times 10^6$, le nombre de Reynolds magnétique pouvant alors atteindre $49$ (sodium à 120 °C). L'écoulement y est pleinement turbulent.
+Avec $\nu \approx 10^{-6}$ m²/s pour l'eau : l'écoulement lent de l'eau dans un tube capillaire ($U = 1$ mm/s, $L = 1$ mm) donne $Re \approx 1$ ; une rivière ($U = 1$ m/s, $L = 10$ m) donne $Re \approx 10^7$. Dans l'expérience VKS de dynamo au sodium liquide, Monchaux et al. (2007) définissent $Re = KR^2\Omega_0/\nu$ (avec $R$ le rayon de la cuve, $\Omega_0$ la vitesse angulaire des turbines, notée comme à l'exemple 1.4 pour ne pas la confondre avec le domaine $\Omega$, et un coefficient d'efficacité $K = 0{,}6$) et indiquent que $Re$ peut atteindre $5\times 10^6$, le nombre de Reynolds magnétique pouvant alors atteindre $49$ (sodium à 120 °C). L'écoulement y est pleinement turbulent.
 :::
 
 ::: ex
@@ -625,7 +625,7 @@ $$
 :::
 ::::
 
-Le point (iii) est la version 2D d'un fait qui servira tout au long du stage : **paramétrer un champ par un potentiel garantit la contrainte de divergence par construction**. C'est le mécanisme « potentiels » de l'expérience E2 du [rapport](../../rapport/index.html#e2), et celui de FunDiff (Wang et al., 2026), dont le décodeur produit une fonction de courant pour l'écoulement de Kolmogorov. En 3D, le rôle de $\psi$ est tenu par un potentiel vecteur $\mathbf{A}$, avec $\mathbf{u} = \nabla\times\mathbf{A}$.
+Le point (iii) est la version 2D d'un fait qui servira tout au long du stage : **paramétrer un champ par un potentiel garantit la contrainte de divergence par construction**. C'est le mécanisme « potentiels » de l'expérience E2 du [rapport](../../rapport/index.html#e2), et celui de FunDiff (Wang et al., 2026), dont le décodeur produit une fonction de courant pour l'écoulement de Kolmogorov. En 3D, le rôle de $\psi$ est tenu par un potentiel vecteur $\boldsymbol\Psi$, avec $\mathbf{u} = \nabla\times\boldsymbol\Psi$ ; pour le champ magnétique, ce potentiel est noté $\mathbf{A}$ ($\mathbf{B} = \nabla\times\mathbf{A}$, voir les notations communes).
 
 ::: ex
 [Exemple 3.9 — Tourbillons de Taylor–Green 2D]{.tag}
@@ -917,7 +917,7 @@ Pour $\mathbf{u} = (U(y), 0)$, on a $\nabla\cdot\mathbf{u} = 0$ et $(\mathbf{u}\
 
 ::: note
 [Remarque 5.2 — Transition vers la turbulence]{.tag}
-La solution de Poiseuille existe pour tout $Re$, mais elle n'est observée qu'à petit $Re$. Reynolds (1883) a montré par l'expérience que l'écoulement dans un tuyau devient « sinueux » au-delà d'une valeur critique du nombre sans dimension qui porte aujourd'hui son nom. Pour le tuyau circulaire, Avila et al. (2011) situent à $Re \approx 2040$ le seuil à partir duquel la turbulence devient durable. Une solution exacte n'est donc pas forcément l'état observé : il faut aussi étudier sa **stabilité** (module [Systèmes dynamiques](../p4-systemes-dynamiques/index.html)).
+La solution de Poiseuille existe pour tout $Re$, mais elle n'est observée qu'à petit $Re$. Reynolds (1883) a montré par l'expérience que l'écoulement dans un tuyau devient « sinueux » au-delà d'une valeur critique du nombre sans dimension qui porte aujourd'hui son nom. Pour le tuyau circulaire (avec $Re$ construit sur la vitesse moyenne et le diamètre), Avila et al. (2011) situent à $Re \approx 2040$ le seuil à partir duquel la turbulence devient durable, en comparant les temps de vie et de division des « bouffées » turbulentes ; Mukund et Hof (2018), par une autre méthode, placent ce point critique entre $2020$ et $2060$. Une solution exacte n'est donc pas forcément l'état observé : il faut aussi étudier sa **stabilité** (module [Systèmes dynamiques](../p4-systemes-dynamiques/index.html)).
 :::
 
 ### 5.2 Tourbillons de Taylor–Green
@@ -986,7 +986,7 @@ On appelle écoulement de **von Kármán** (au sens des expériences de turbulen
 
 Dans l'expérience VKS de Cadarache, décrite par Monchaux et al. (2007), le cylindre a un diamètre intérieur $2R = 412$ mm et une longueur de 524 mm ; les deux disques, de rayon 154,5 mm et distants de 371 mm, portent chacun 8 pales courbes et tournent jusqu'à 26 Hz. L'**écoulement moyen** a la structure suivante : le fluide est éjecté radialement par les disques, ce qui crée un écoulement axial dirigé vers chaque disque le long de l'axe et une recirculation en sens inverse le long de la paroi latérale ; à cette circulation dite poloïdale s'ajoute une rotation azimutale (toroïdale) de sens opposé dans chaque moitié de la cuve. Il en résulte un fort cisaillement de la vitesse azimutale dans le plan médian. L'écoulement est si turbulent que ses fluctuations ont une énergie comparable à celle de l'écoulement moyen : VKS est la première dynamo obtenue dans un écoulement fortement turbulent (Monchaux et al., 2007). Avec des disques en fer doux, un champ magnétique est auto-entretenu au-delà de $Rm \simeq 30$ ; Berhanu et al. (2007) y ont observé des **renversements** de ce champ, analogues aux inversions du champ magnétique terrestre.
 
-Cette géométrie est au cœur du projet MilaDy. Les simulations numériques de VKS par la méthode hybride Fourier–éléments finis SFEMaNS (Nore et al., 2018) ou par pénalisation dans un code pseudo-spectral (Kreuzahler et al., 2014) produisent les champs 3D que le projet cherche à modéliser ; Bousquet et al. (2024) en ont analysé les structures à grande échelle (simulations aux grandes échelles, puis décomposition orthogonale aux valeurs propres), et Bousquet et al. (2026) y étudient les renversements du champ magnétique. Contrairement aux quatre exemples précédents, l'écoulement de von Kármán n'a pas de solution analytique et n'est pas périodique : il possède des parois, des pales en rotation et, pour la MHD, des conditions aux limites magnétiques. C'est l'une des difficultés du passage des EDP « jouets » aux données de dynamo (voir le [sujet de thèse](../../these/index.html#plan-experimental)).
+Cette géométrie est au cœur du projet MilaDy. Les simulations numériques de VKS par la méthode hybride Fourier–éléments finis SFEMaNS (Nore et al., 2018) ou par pénalisation dans un code pseudo-spectral (Kreuzahler et al., 2014) produisent les champs 3D que le projet cherche à modéliser ; Bousquet et al. (2024) en ont analysé les structures à grande échelle (simulations aux grandes échelles, puis décomposition orthogonale aux valeurs propres), et Bousquet et al. (2026) y étudient les renversements du champ magnétique. Contrairement aux quatre exemples précédents, l'écoulement de von Kármán n'a pas de solution analytique ; et, contrairement aux écoulements de Taylor–Green, de Kolmogorov et ABC, il n'est pas périodique : il possède des parois, des pales en rotation et, pour la MHD, des conditions aux limites magnétiques. C'est l'une des difficultés du passage des EDP « jouets » aux données de dynamo (voir le [sujet de thèse](../../these/index.html#plan-experimental)).
 
 | Écoulement | Géométrie | Solution exacte ? | Ce qu'il teste |
 |---|---|---|---|
@@ -1115,6 +1115,8 @@ Le **tenseur de Reynolds** $\mathbb{E}[\mathbf{u}'\otimes\mathbf{u}']$ est une n
 ::: note
 [Remarque 6.5 — La cascade de Richardson]{.tag}
 Richardson (1922) a résumé l'image de la turbulence tridimensionnelle par une comptine restée célèbre : « *Big whirls have little whirls that feed on their velocity, and little whirls have lesser whirls and so on to viscosity — in the molecular sense* » (les grands tourbillons ont de petits tourbillons qui se nourrissent de leur vitesse, et les petits tourbillons en ont de plus petits, et ainsi de suite jusqu'à la viscosité, au sens moléculaire). L'énergie est injectée à grande échelle $L$, transférée sans perte vers des échelles de plus en plus petites par l'étirement (chapitre 3), puis dissipée à une très petite échelle $\eta$.
+
+Attention à la notation : dans ce chapitre, $\eta$ désigne l'échelle de Kolmogorov, comme dans tous les ouvrages de turbulence. Dans le reste du site (notations communes, module [MHD et effet dynamo](../p3-mhd-dynamo/index.html), expérience E2 conditionnée par $\eta$), la même lettre désigne la diffusivité magnétique $\eta = 1/(\mu_0\sigma)$.
 :::
 
 ::: def
@@ -1588,7 +1590,7 @@ Sans désaliasage, ces identités ne sont plus exactes et l'énergie peut croît
 
 ::: def
 [Définition 7.7 — Facteur intégrant (schéma de Lawson)]{.tag}
-Écrivons le système tronqué sous la forme $\frac{\mathrm{d}\hat\omega_{\mathbf{k}}}{\mathrm{d}t} = -\nu|\mathbf{k}|^2\hat\omega_{\mathbf{k}} + \hat{\mathcal{N}}_{\mathbf{k}}(\hat\omega)$. Le changement de variable $\hat w_{\mathbf{k}} = e^{\nu|\mathbf{k}|^2t}\hat\omega_{\mathbf{k}}$ donne $\frac{\mathrm{d}\hat w_{\mathbf{k}}}{\mathrm{d}t} = e^{\nu|\mathbf{k}|^2t}\hat{\mathcal{N}}_{\mathbf{k}}$, où le terme visqueux a disparu. On applique Runge–Kutta d'ordre 4 à cette équation ; en revenant à $\hat\omega$, avec $\mathcal{E} = e^{-\nu|\mathbf{k}|^2\Delta t}$ et $\mathcal{E}_{1/2} = e^{-\nu|\mathbf{k}|^2\Delta t/2}$ :
+Écrivons le système tronqué sous la forme $\frac{\mathrm{d}\hat\omega_{\mathbf{k}}}{\mathrm{d}t} = -\nu|\mathbf{k}|^2\hat\omega_{\mathbf{k}} + \hat{\mathcal{N}}_{\mathbf{k}}(\hat\omega)$. Le changement de variable $\hat w_{\mathbf{k}} = e^{\nu|\mathbf{k}|^2t}\hat\omega_{\mathbf{k}}$ donne $\frac{\mathrm{d}\hat w_{\mathbf{k}}}{\mathrm{d}t} = e^{\nu|\mathbf{k}|^2t}\hat{\mathcal{N}}_{\mathbf{k}}$, où le terme visqueux a disparu. On applique Runge–Kutta d'ordre 4 à cette équation (c'est l'idée de Lawson, 1967) ; en revenant à $\hat\omega$, avec $\mathcal{E} = e^{-\nu|\mathbf{k}|^2\Delta t}$ et $\mathcal{E}_{1/2} = e^{-\nu|\mathbf{k}|^2\Delta t/2}$ :
 $$
 \begin{aligned}
 g_1 &= \hat{\mathcal{N}}(\hat\omega^n), &\quad g_2 &= \hat{\mathcal{N}}\big(\mathcal{E}_{1/2}(\hat\omega^n + \tfrac{\Delta t}{2}g_1)\big),\\
@@ -1838,7 +1840,7 @@ Les exercices suivent l'ordre des chapitres ; les étoiles indiquent la difficul
    **(c)** $\partial_t\rho + \partial_x(\rho u) = -\frac{\rho_0}{(1 + t)^2} + \frac{\rho_0}{1 + t}\cdot\frac{1}{1 + t} = 0$. Comme $\rho$ ne dépend pas de $x$, $\mathrm{D}\rho/\mathrm{D}t = \partial_t\rho = -\rho_0/(1 + t)^2 = -\rho\,\partial_x u$. Ici $\nabla\cdot\mathbf{u} > 0$ : le gaz se détend et sa masse volumique diminue. Un écoulement incompressible est exactement celui pour lequel ce mécanisme est absent.
    :::
 
-3. **★ Nombres de Reynolds et conventions (chapitre 2).** Nore et al. (2018) rappellent les données de l'expérience VKS2 : rayon du cylindre $R = 206$ mm, viscosité cinématique du sodium $\nu = 6{,}78\times10^{-7}$ m²/s à 120 °C, et définissent $Re = 2\pi fR^2/\nu$, où $f$ est la fréquence de rotation des turbines. (a) Calculer $Re$ pour $f = 16$ Hz et $f = 22$ Hz. (b) Monchaux et al. (2007) définissent plutôt $Re = KR^2\Omega/\nu$ avec $\Omega = 2\pi f$ et $K = 0{,}6$. Quel est le rapport entre les deux définitions ? (c) On adimensionne Navier–Stokes avec le temps visqueux $L^2/\nu$ au lieu de $L/U$ (et toujours $\mathbf{u} = U\mathbf{u}^*$). Écrire l'équation obtenue et discuter la limite $Re \to 0$.
+3. **★ Nombres de Reynolds et conventions (chapitre 2).** Nore et al. (2018) rappellent les données de l'expérience VKS2 : rayon du cylindre $R = 206$ mm, viscosité cinématique du sodium $\nu = 6{,}78\times10^{-7}$ m²/s à 120 °C, et définissent $Re = 2\pi fR^2/\nu$, où $f$ est la fréquence de rotation des turbines. (a) Calculer $Re$ pour $f = 16$ Hz et $f = 22$ Hz. (b) Monchaux et al. (2007) définissent plutôt $Re = KR^2\Omega_0/\nu$ avec $\Omega_0 = 2\pi f$ et $K = 0{,}6$. Quel est le rapport entre les deux définitions ? (c) On adimensionne Navier–Stokes avec le temps visqueux $L^2/\nu$ au lieu de $L/U$ (et toujours $\mathbf{u} = U\mathbf{u}^*$). Écrire l'équation obtenue et discuter la limite $Re \to 0$.
 
    ::: sol
    *Solution.* (a) $R^2 = 0{,}0424$ m². Pour $f = 16$ Hz : $Re = 2\pi\times16\times0{,}0424/(6{,}78\times10^{-7}) \approx 6{,}3\times10^6$. Pour $f = 22$ Hz : $Re \approx 8{,}7\times10^6$. On retrouve l'intervalle $6{,}3\times10^6 \le Re \le 8{,}7\times10^6$ donné par Nore et al. (2018) pour les régimes dynamo.
@@ -1883,7 +1885,7 @@ Les exercices suivent l'ordre des chapitres ; les étoiles indiquent la difficul
 
    en utilisant $\cos^2 = \tfrac12(1 + \cos 2\cdot)$ et $\sin^2 = \tfrac12(1 - \cos 2\cdot)$ (on a remis à part le facteur $e^{-4\nu t}$).
 
-   **(c)** $p$ est maximale là où $\cos 2x = \cos 2y = 1$, c'est-à-dire aux points $(0, 0)$, $(\pi, 0)$, $(0, \pi)$, $(\pi, \pi)$ : ce sont les points d'arrêt, où $\mathbf{u} = 0$ et où le fluide « bute ». Elle est minimale aux centres des tourbillons $(\pi/2, \pi/2)$, etc. : une particule qui tourne autour d'un centre doit subir une force centripète, fournie par une pression plus basse au centre. C'est pourquoi le cœur d'un tourbillon intense est une zone de basse pression.
+   **(c)** $p$ est maximale là où $\cos 2x = \cos 2y = 1$, c'est-à-dire aux points $(0, 0)$, $(\pi, 0)$, $(0, \pi)$, $(\pi, \pi)$ : ce sont les points d'arrêt hyperboliques (points-selles de $\psi$, à la jonction de quatre cellules), où $\mathbf{u} = 0$ et où deux courants opposés se rencontrent et « butent ». Elle est minimale aux centres des tourbillons $(\pi/2, \pi/2)$, etc., qui sont aussi des points où $\mathbf{u} = 0$, mais elliptiques (extrema de $\psi$) : une particule qui tourne autour d'un centre doit subir une force centripète, fournie par une pression plus basse au centre. C'est pourquoi le cœur d'un tourbillon intense est une zone de basse pression.
    :::
 
 6. **★★ Le tourbillon de Lamb–Oseen (chapitre 3).** Dans le plan, on considère la vorticité axisymétrique $\omega(r, t) = \frac{\Gamma}{4\pi\nu t}\exp\!\left(-\frac{r^2}{4\nu t}\right)$, $t > 0$. (a) Montrer que la vitesse est purement azimutale et calculer $u_\theta(r, t)$ grâce au théorème de Stokes. (b) Montrer que $\mathbf{u}\cdot\nabla\omega = 0$ et que $\omega$ est solution de l'équation de la vorticité 2D sans forçage. (c) Que valent la circulation totale et le rayon du cœur ? Que se passe-t-il loin du cœur ?
@@ -2026,7 +2028,7 @@ Les exercices suivent l'ordre des chapitres ; les étoiles indiquent la difficul
     # sans désaliasage   (|k| ≤ 31) : dE/dt = +3.7e-06, dZ/dt = +5.0e-04 (unités relatives)
     ```
 
-    Avec la règle des 2/3, les deux taux sont nuls à la précision machine : la proposition 7.6 est vérifiée, le terme non linéaire discret ne crée ni énergie ni enstrophie. Sans désaliasage, ils valent environ $4\times10^{-6}$ et $5\times10^{-4}$ en unités relatives. Ces nombres paraissent petits, mais ils se répètent à chaque évaluation du second membre, sans signe contrôlé, et ils sont concentrés sur les plus petites échelles, où la dissipation devrait dominer. Dans une simulation peu visqueuse, cette source parasite peut faire croître l'énergie jusqu'à l'explosion numérique. Pour un modèle génératif entraîné sur de telles données, elle introduit de plus un biais systématique dans le haut du spectre.
+    Avec la règle des 2/3, les deux taux sont nuls à la précision machine : la proposition 7.6 est vérifiée, le terme non linéaire discret ne crée ni énergie ni enstrophie. Sans désaliasage, ils valent environ $4\times10^{-6}$ et $5\times10^{-4}$ en unités relatives. Ces nombres paraissent petits, mais ils se répètent à chaque évaluation du second membre, sans signe contrôlé, et ils proviennent des interactions entre les plus petites échelles représentées (seuls deux modes tels que $|k + q| \ge N/2$ peuvent se replier), là où la dissipation devrait dominer. Dans une simulation peu visqueuse, cette source parasite peut faire croître l'énergie jusqu'à l'explosion numérique. Pour un modèle génératif entraîné sur de telles données, elle peut de plus introduire un biais dans le haut du spectre.
     :::
 
 15. **★★ Programmation : valider le solveur (chapitre 7).** Reprendre le solveur du chapitre 7 et (a) vérifier qu'il reproduit la solution exacte de Taylor–Green ; (b) mesurer l'ordre de convergence en temps du schéma de Lawson–RK4 sur un champ aléatoire en décroissance libre ; (c) vérifier le bilan d'enstrophie moyen $\overline{\langle\omega f_\omega\rangle} = \overline{\nu\langle|\nabla\omega|^2\rangle}$ (théorème 4.5) pour l'écoulement de Kolmogorov à $Re = 40$.
@@ -2168,8 +2170,10 @@ Le stage MilaDy consiste à apprendre des **lois** de champs MHD paramétrés pa
 - Kolmogorov, A. N. (1941b). Dissipation of energy in the locally isotropic turbulence. *Doklady Akademii Nauk SSSR* 32, 16–18 ; traduction anglaise : *Proceedings of the Royal Society A* 434 (1991), 15–17. <https://doi.org/10.1098/rspa.1991.0076>
 - Kraichnan, R. H. (1967). Inertial ranges in two-dimensional turbulence. *The Physics of Fluids* 10(7), 1417–1423. <https://doi.org/10.1063/1.1762301>
 - Kreuzahler, S., Schulz, D., Homann, H., Ponty, Y., Grauer, R. (2014). Numerical study of impeller-driven von Kármán flows via a volume penalization method. *New Journal of Physics* 16, 103001. <https://doi.org/10.1088/1367-2630/16/10/103001>
+- Lawson, J. D. (1967). Generalized Runge–Kutta processes for stable systems with large Lipschitz constants. *SIAM Journal on Numerical Analysis* 4(3), 372–380. <https://doi.org/10.1137/0704033>
 - Moffatt, H. K. (1969). The degree of knottedness of tangled vortex lines. *Journal of Fluid Mechanics* 35(1), 117–129. <https://doi.org/10.1017/S0022112069000991>
 - Monchaux, R., Berhanu, M., Bourgoin, M., Moulin, M., Odier, P., Pinton, J.-F., et al. (2007). Generation of a magnetic field by dynamo action in a turbulent flow of liquid sodium. *Physical Review Letters* 98, 044502. <https://doi.org/10.1103/PhysRevLett.98.044502>
+- Mukund, V., Hof, B. (2018). The critical point of the transition to turbulence in pipe flow. *Journal of Fluid Mechanics* 839, 76–94. <https://doi.org/10.1017/jfm.2017.923>
 - Nore, C., Castanon Quiroz, D., Cappanera, L., Guermond, J.-L. (2018). Numerical simulation of the von Kármán sodium dynamo experiment. *Journal of Fluid Mechanics* 854, 164–195. <https://doi.org/10.1017/jfm.2018.582>
 - Orszag, S. A. (1971). On the elimination of aliasing in finite-difference schemes by filtering high-wavenumber components. *Journal of the Atmospheric Sciences* 28(6), 1074. <https://doi.org/10.1175/1520-0469(1971)028%3C1074:OTEOAI%3E2.0.CO;2>
 - Ponty, Y., Mininni, P. D., Montgomery, D. C., Pinton, J.-F., Politano, H., Pouquet, A. (2005). Numerical study of dynamo action at low magnetic Prandtl numbers. *Physical Review Letters* 94, 164502. <https://doi.org/10.1103/PhysRevLett.94.164502>

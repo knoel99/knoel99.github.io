@@ -71,10 +71,10 @@ Le niveau indique la difficulté : 1 pour les fondations, 2 pour le cœur du mod
 | 4 | 4 h | 2 | Chapitre 3 : projection de Leray, flot optimal sur un sous-espace, flot projeté, expérience numérique | 3, 6 |
 | 5 | 3 h | 2 | Chapitre 4 : pénalités, écart de Jensen, PIDM, DiffusionPDE, comparaison de Genuist et al. | 7, 8 |
 | 6 | 3 h | 3 | Chapitre 5 : guidage à l'échantillonnage (DPS, Universal guidance) | 12 |
-| 7 | 4 h | 3 | Chapitre 6 : identités de stationnarité, I-projection, perte de stationnarité | 9, 10, 11, 14 |
+| 7 | 4 h | 3 | Chapitre 6 : identités de stationnarité, I-projection, perte de stationnarité | 9, 10, 11, 14, 16 |
 | 8 | 3,5 h | 3 | Chapitre 7 : évaluation physique (spectres, hélicités, bilans, topologie) | 13 |
 | 9 | 4 h | 3 | Chapitre 8 : lecture guidée des cinq références de l'offre ; protocole de comparaison | 15 |
-| **Total** | **30 h** | | 8 chapitres | 15 exercices |
+| **Total** | **30 h** | | 8 chapitres | 16 exercices |
 
 Chaque séance se termine par les exercices indiqués, à faire avant de lire leur solution. Les blocs de code sont courts (moins de 30 secondes chacun sur un processeur, un seul fil d'exécution) : recopiez-les, exécutez-les, puis modifiez-les. Les sorties recopiées en commentaire sont celles obtenues en exécutant les blocs tels quels.
 
@@ -741,7 +741,7 @@ for nom, x in res.items():
 
 ![Résultat du bloc de code ci-dessus (mesuré sur cette page, une graine, 1000 itérations d'entraînement par modèle). Barres : erreur relative sur la loi de l'énergie, $W_1(E)/\langle E\rangle$ ; la ligne pointillée est le plancher dû à l'échantillonnage (deux tirages de la vraie loi). À droite : divergence relative médiane. En bleu, les mécanismes qui rendent la divergence nulle à la précision machine ; en gris, ceux qui ne le font pas. Une seconde graine donne le même classement.](fig-mecanismes-divergence.png){width="100%" fig-alt="Diagramme en barres horizontales. Libre : 0,65 et divergence 7,1·10⁻² ; pénalité douce : 0,56 et 7,7·10⁻² ; libre plus projection finale : 0,65, divergence nulle ; flot projeté : 0,72, divergence nulle ; flot dans S : 0,18, divergence nulle ; potentiel psi : 0,15, divergence nulle. Plancher d'échantillonnage à 0,02."}
 
-Quatre constats, à lire comme des observations sur un petit exemple et non comme des lois générales. (1) Les quatre mécanismes exacts annulent la divergence (ici exactement, car les produits en jeu sont exacts en arithmétique binaire ; en général, à la précision machine de la simple précision). (2) La pénalité douce ne réduit pas la divergence : la proposition 4.3 expliquera pourquoi. (3) La projection finale annule la divergence de la génération libre sans améliorer la loi de l'énergie : elle corrige ce qui est hors de $S$, pas ce qui est dans $S$. (4) À budget égal, les deux variantes qui ne demandent jamais au réseau d'apprendre la composante orthogonale raide (flot dans $S$ et potentiel) sont nettement meilleures que les autres, et proches l'une de l'autre, comme le prévoit le corollaire 3.3 (b) ; le flot projeté, qui évalue un réseau entraîné avec un bruit plein sur des entrées sans composante orthogonale, est le moins bon. Dans la limite d'un apprentissage parfait, toutes les variantes donneraient la même loi : l'écart mesure ce qu'il en coûte d'apprendre un terme inutile.
+Quatre constats, à lire comme des observations sur un petit exemple et non comme des lois générales. (1) Les quatre mécanismes exacts annulent la divergence, ici exactement (zéro sur les 2000 échantillons) : les composantes de $\mathbf{k}$ valent $0$, $\pm1$ ou $\pm2$, si bien que les rapports entre les coefficients en jeu sont des puissances de 2 et que les erreurs d'arrondi se compensent exactement ; en général, on obtient la précision machine (de l'ordre de $10^{-7}$ en simple précision). (2) La pénalité douce ne réduit pas la divergence : la proposition 4.3 expliquera pourquoi. (3) La projection finale annule la divergence de la génération libre sans améliorer la loi de l'énergie : elle corrige ce qui est hors de $S$, pas ce qui est dans $S$. (4) À budget égal, les deux variantes qui ne demandent jamais au réseau d'apprendre la composante orthogonale raide (flot dans $S$ et potentiel) sont nettement meilleures que les autres, et proches l'une de l'autre, comme le prévoit le corollaire 3.3 (b) ; le flot projeté, qui évalue un réseau entraîné avec un bruit plein sur des entrées sans composante orthogonale, est le moins bon. Dans la limite d'un apprentissage parfait, toutes les variantes donneraient la même loi : l'écart mesure ce qu'il en coûte d'apprendre un terme inutile.
 
 Le stage compare ces mécanismes sur des champs MHD 2D forcés conditionnés par la diffusivité $\eta$, avec un vrai réseau convolutif et cinq variantes (libre, pénalité, projection finale, flot projeté, potentiels) : les résultats sont dans le [rapport, expérience E2](../../rapport/index.html#e2).
 
@@ -939,7 +939,7 @@ Huang, Yang, Wang et Park (NeurIPS 2024) génèrent conjointement le coefficient
 
 ### 4.4 Une comparaison publiée : aucune stratégie ne domine
 
-La comparaison la plus directe entre contrainte dure et contrainte douce pour la divergence est celle de Genuist, Savin, Gatti et Clouteau (2026, préprint non évalué par les pairs). Sur des écoulements 2D périodiques (champs $256^2$), ils comparent les variantes décrites au chapitre 3 à une pénalité douce de type PINN sur la divergence (« L »). En distribution et en déroulement autorégressif, la pénalité est la moins bonne : les auteurs écrivent qu'elle « performs poorly across all metrics », avec une erreur quadratique de $2{,}07\times10^{-4}$ et une divergence résiduelle de $5{,}21\times10^{-3}$ en déroulement, contre $1{,}15\times10^{-4}$ et une divergence nulle pour la projection progressive. Mais sur un cas **hors distribution** de type Taylor–Green, c'est la variante douce qui obtient la meilleure performance globale (erreur $4{,}53\times10^{-4}$ contre $1{,}49\times10^{-3}$ pour le modèle sans contrainte). Leur conclusion est nuancée : les contraintes strictes sont meilleures près de la distribution d'entraînement et à court horizon, des contraintes plus souples peuvent être préférables en déroulement long et hors distribution, et « no single strategy dominates ». Cette comparaison porte sur la seule divergence, en hydrodynamique 2D : le livrable du stage, une étude comparative pour des champs MHD paramétriques, comble un manque réel.
+La comparaison la plus directe entre contrainte dure et contrainte douce pour la divergence est celle de Genuist, Savin, Gatti et Clouteau (2026, préprint non évalué par les pairs). Leur modèle est une diffusion à score autorégressive (de base EDM) entraînée sur des écoulements 2D périodiques : simulations de Fourier–Galerkin en $512^2$ ramenées à des champs $256^2$, que les auteurs appellent « Kolmogorov flow » mais qui sont, d'après leur description, une turbulence en déclin non forcée avec frottement d'Ekman. Ils comparent un modèle sans contrainte (« $\mathcal{V}$ »), les variantes à projection de Leray décrites au chapitre 3, et une pénalité douce de type PINN sur la divergence (« L »). En distribution et en déroulement autorégressif, la pénalité est la moins bonne : les auteurs écrivent qu'elle « performs poorly across all metrics », avec une erreur quadratique de $2{,}07\times10^{-4}$ et une divergence résiduelle de $5{,}21\times10^{-3}$ en déroulement, contre $1{,}15\times10^{-4}$ et une divergence nulle pour la projection progressive. Mais sur un cas **hors distribution** de type Taylor–Green, c'est la variante douce qui obtient la meilleure performance globale (erreur $4{,}53\times10^{-4}$ contre $1{,}49\times10^{-3}$ pour le modèle sans contrainte), avec pourtant une divergence résiduelle de $1{,}84\times10^{-2}$ ; seule la projection progressive garde une divergence nulle sur ce cas. Leur conclusion est nuancée : les contraintes strictes sont meilleures près de la distribution d'entraînement et à court horizon, des contraintes plus souples peuvent être préférables en déroulement long et hors distribution, et « no single strategy dominates ». Cette comparaison porte sur la seule divergence, en hydrodynamique 2D : le livrable du stage, une étude comparative pour des champs MHD paramétriques, comble un manque réel.
 
 :::: recap
 ::: recap-title
@@ -1314,9 +1314,90 @@ estimée par Monte Carlo sur des échantillons générés de façon différentia
 
 Trois propriétés distinguent cette perte. Elle ne demande aucune donnée : seulement le champ de la dynamique $F_{\boldsymbol\lambda}$, connu par la physique. On peut donc l'imposer à des valeurs de $\boldsymbol\lambda$ **sans données** d'entraînement, pour régulariser l'interpolation ou l'extrapolation en paramètres. Elle est quadratique en une espérance, donc ne pousse pas chaque échantillon vers $\mathcal{L}\varphi = 0$ (ce qui serait la faute du corollaire 6.4) mais la moyenne. Enfin, elle est nécessaire et non suffisante (remarque 6.5) : elle complète l'attache aux données et ne la remplace pas. Son coût est celui du calcul de $F_{\boldsymbol\lambda}(\mathbf{x})$ (dérivées spatiales, pression par projection de Leray) et de $\nabla\varphi$, simple pour des $\varphi$ quadratiques comme l'énergie ou les hélicités.
 
+Quand la famille de modèles est assez rigide, un petit nombre d'identités peut suffire à fixer la loi. La proposition suivante le montre sur le double puits, et le code qui la suit l'utilise pour imposer la physique à des valeurs du paramètre où l'on n'a aucune donnée.
+
+:::: prop
+[Proposition 6.9 — Deux identités fixent la loi dans une famille exponentielle]{.tag}
+Soit la dynamique $\mathrm{d}x = (x - x^3)\,\mathrm{d}t + \sigma\,\mathrm{d}W$ et la famille de lois $q_{a,b}(x) \propto e^{-U(x)}$ avec $U(x) = a x^4 - b x^2$, $a > 0$. Les deux identités $\mathbb{E}_{q_{a,b}}[\mathcal{L}\varphi] = 0$ pour $\varphi = x^2/2$ et $\varphi = x^4/4$ sont vérifiées si et seulement si $a = 1/(2\sigma^2)$ et $b = 1/\sigma^2$, c'est-à-dire si et seulement si $q_{a,b}$ est la loi stationnaire $\mu_\sigma$.
+
+::: proof
+Pour une densité $q \propto e^{-U}$ à décroissance rapide, l'intégration par parties donne $\mathbb{E}_q[\varphi''] = \mathbb{E}_q[\varphi'\,U']$ (identité de Stein ; c'est le calcul des opérateurs de Stein de diffusions de Gorham, Duncan, Vollmer et Mackey 2019). Donc $\mathbb{E}_q[\mathcal{L}\varphi] = \mathbb{E}_q\big[\varphi'\,\big(F + \tfrac{\sigma^2}{2}U'\big)\big]$. Avec $F = x - x^3$ et $U' = 4ax^3 - 2bx$, on obtient $F + \tfrac{\sigma^2}{2}U' = \alpha x + \beta x^3$, où $\alpha = 1 - b\sigma^2$ et $\beta = 2a\sigma^2 - 1$. Les deux identités ($\varphi' = x$ puis $\varphi' = x^3$) forment le système linéaire
+
+$$
+\alpha\,\mathbb{E}_q[x^2] + \beta\,\mathbb{E}_q[x^4] = 0, \qquad \alpha\,\mathbb{E}_q[x^4] + \beta\,\mathbb{E}_q[x^6] = 0.
+$$
+
+Son déterminant $\mathbb{E}_q[x^2]\,\mathbb{E}_q[x^6] - \mathbb{E}_q[x^4]^2$ est strictement positif par l'inégalité de Cauchy–Schwarz appliquée à $x$ et $x^3$ (l'égalité demanderait $x^3 = cx$ presque sûrement, impossible pour une loi à densité). Donc $\alpha = \beta = 0$, soit $b = 1/\sigma^2$ et $a = 1/(2\sigma^2)$. Réciproquement, ces valeurs donnent $U = 2V/\sigma^2$ avec $V = x^4/4 - x^2/2$, qui est la loi stationnaire ; elle vérifie les identités par la proposition 6.3. [∎]{.qed}
+:::
+::::
+
+Le code suivant met la proposition au travail. On dispose de données (2000 instantanés) pour deux valeurs seulement du paramètre, $\sigma = 0{,}5$ et $\sigma = 0{,}6$. Un modèle conditionnel $q_\theta(x\mid\sigma) \propto \exp(-a_\theta(\sigma)x^4 + b_\theta(\sigma)x^2)$, dont les coefficients sont donnés par un petit réseau de $\log\sigma$, est entraîné par maximum de vraisemblance, avec ou sans la perte de stationnarité de la définition 6.8 imposée sur une grille de onze valeurs $\sigma \in [0{,}4\,;\,1{,}4]$, sans aucune donnée. L'échelle choisie est $s_k = \sigma^2$. Comme le modèle est à densité explicite et en dimension 1, les espérances sont calculées par quadrature ; pour un générateur de champs, on utiliserait des échantillons générés.
+
+```python
+import numpy as np, torch
+torch.set_num_threads(1); rng = np.random.default_rng(0)
+
+# Famille de dynamiques indexée par sigma : dx = (x - x^3) dt + sigma dW (double puits),
+# de loi stationnaire mu_sigma ∝ exp(-2V/sigma^2), V = x^4/4 - x^2/2 (connue ici, pour juger le modèle).
+X = torch.linspace(-3, 3, 601, dtype=torch.float64); dx = float(X[1] - X[0])
+def loi_vraie(s):
+    p = torch.exp(-2 * (X**4 / 4 - X**2 / 2) / s**2); return p / (p.sum() * dx)
+def tirage(s, N):
+    F = np.cumsum(loi_vraie(s).numpy()); F /= F[-1]; return torch.tensor(np.interp(rng.uniform(size=N), F, X.numpy()))
+sig_obs = [0.5, 0.6]                                   # données : DEUX valeurs du paramètre seulement
+data = {s: tirage(s, 2000) for s in sig_obs}
+
+# Modèle conditionnel à densité explicite q(x | sigma) ∝ exp(-a x^4 + b x^2), (log a, b) = réseau(log sigma).
+# En dimension 1, les espérances sous q se calculent par quadrature ; en grande dimension, par Monte Carlo.
+def coefs(net, s):
+    o = net(torch.tensor([[np.log(s)]], dtype=torch.float64))[0]; return torch.exp(o[0]), o[1]
+def log_q(net, s):                                     # log-densité normalisée sur la grille X
+    a, b = coefs(net, s); l = -a * X**4 + b * X**2
+    return l - torch.logsumexp(l, 0) - np.log(dx)
+def nll(net, s, x):                                    # - log-vraisemblance moyenne des données
+    a, b = coefs(net, s)
+    return -(-a * x**4 + b * x**2).mean() + torch.logsumexp(-a * X**4 + b * X**2, 0) + np.log(dx)
+F = X - X**3
+def residus(net, s):                                   # E_q[L phi] / sigma^2 pour phi = x^2/2 et x^4/4
+    q = torch.exp(log_q(net, s))
+    Lphi = torch.stack([X * F + s**2 / 2, X**3 * F + 1.5 * s**2 * X**2])
+    return (Lphi * q).sum(1) * dx / s**2
+sig_grille = np.linspace(0.4, 1.4, 11)                 # grille de paramètres SANS données
+
+def entraine(beta, steps=1500):
+    torch.manual_seed(0)
+    net = torch.nn.Sequential(torch.nn.Linear(1, 32), torch.nn.Tanh(), torch.nn.Linear(32, 2)).double()
+    opt = torch.optim.Adam(net.parameters(), lr=2e-2); sch = torch.optim.lr_scheduler.CosineAnnealingLR(opt, steps)
+    for _ in range(steps):
+        loss = sum(nll(net, s, data[s]) for s in sig_obs)
+        if beta: loss = loss + beta * sum((residus(net, s)**2).sum() for s in sig_grille)
+        opt.zero_grad(); loss.backward(); opt.step(); sch.step()
+    return net
+
+def W1(p, s):                                          # W1 = int |F_p - F_mu| (fonctions de répartition)
+    return float((torch.cumsum(p - loi_vraie(s), 0) * dx).abs().sum() * dx)
+sig_test = [0.5, 0.6, 0.8, 1.0, 1.2, 1.4]
+print("sigma :                     " + "  ".join(f"{s:5.2f}" for s in sig_test))
+for nom, beta in [("données seules", 0.0), ("données + stationnarité", 1.0)]:
+    net = entraine(beta)
+    with torch.no_grad():
+        w = [W1(torch.exp(log_q(net, s)), s) for s in sig_test]
+        a, b = coefs(net, 1.2)
+    print(f"W1(q, mu) {nom:24s} " + "  ".join(f"{v:5.3f}" for v in w),
+          f"| sigma = 1,2 : a = {float(a):.3f}, b = {float(b):.3f}")
+print(f"valeurs exactes en sigma = 1,2 : a = 1/(2 sigma^2) = {1 / (2 * 1.2**2):.3f}, b = 1/sigma^2 = {1 / 1.2**2:.3f}")
+# sortie :
+# sigma :                      0.50   0.60   0.80   1.00   1.20   1.40
+# W1(q, mu) données seules           0.006  0.008  0.202  0.374  0.475  0.545 | sigma = 1,2 : a = 0.376, b = -1.801
+# W1(q, mu) données + stationnarité  0.010  0.019  0.028  0.012  0.009  0.035 | sigma = 1,2 : a = 0.331, b = 0.631
+# valeurs exactes en sigma = 1,2 : a = 1/(2 sigma^2) = 0.347, b = 1/sigma^2 = 0.694
+```
+
+Le modèle entraîné sur les seules données est excellent aux deux valeurs observées et faux ailleurs : en $\sigma = 1{,}2$, il donne $b < 0$, donc une loi à un seul mode, alors que la vraie loi a encore deux bosses ; la distance $W_1$ atteint $0{,}5$. Avec la perte de stationnarité, l'erreur reste de l'ordre de $0{,}01$ à $0{,}04$ sur toute la plage, y compris en $\sigma = 1{,}4$, à plus du double des valeurs observées. Le prix est une légère dégradation aux valeurs observées ($0{,}006 \to 0{,}010$ et $0{,}008 \to 0{,}019$), qui reflète un compromis d'optimisation entre les deux termes, puisque la vraie loi les annule tous les deux. Deux mises en garde. D'abord, ce succès tient à la proposition 6.9 : dans cette famille à deux paramètres, deux identités suffisent ; un générateur de champs a des millions de paramètres, et un nombre fini de fonctions test laisse beaucoup de lois admissibles (remarque 6.5), d'où la nécessité de l'attache aux données. Ensuite, sans l'échelle $s_k = \sigma^2$, l'optimisation se passe nettement moins bien dans nos essais : le choix des échelles $s_k$ de la définition 6.8 n'est pas un détail (exercice 16).
+
 ::: note
-[Remarque 6.9 — Ce qui est publié et ce qui semble nouveau]{.tag}
-Les briques sont publiées. La forme faible de Fokker–Planck stationnaire comme perte d'un générateur d'échantillons est celle du *weak generative sampler* (Cai, Cao, Huang et Zhou 2024, préprint), avec des fonctions test gaussiennes aléatoires, jusqu'en dimension 100. Apprendre une dynamique par sa mesure invariante est l'objet de DySLIM (Schiff et al. 2024), qui ajoute une distance MMD entre mesures invariantes. Imposer des contraintes statistiques (une covariance) à un générateur de turbulence remonte au moins à Wu et al. (2020) pour des GAN. L'I-projection d'un générateur préentraîné sous contraintes de moments est celle de Khalifa et al. (2021). Tauberschmidt, Fellenz, Vollmer et Duncan (2025, préprint) inclinent un modèle de flow matching par un résidu d'EDP en forme faible, mais calculé **sur chaque échantillon** (EDP stationnaire), avec une température libre. Ce qui semble nouveau, sous réserve d'une veille complémentaire (aucune publication trouvée qui combine ces éléments), est la combinaison visée par le stage : prendre comme contrainte le générateur physique d'une EDP de champs (Navier–Stokes ou MHD), dans un modèle conditionnel par $(Re, Rm)$, avec des fonctions test interprétables (énergie, hélicités, énergie par bande spectrale), en entraînement et à l'échantillonnage.
+[Remarque 6.10 — Ce qui est publié et ce qui semble nouveau]{.tag}
+Les briques sont publiées. La forme faible de Fokker–Planck stationnaire comme perte d'un générateur d'échantillons est celle du *weak generative sampler* (Cai, Cao, Huang et Zhou, SIAM J. Sci. Comput. 2026 ; préprint arXiv 2024), avec des fonctions test gaussiennes aléatoires, jusqu'en dimension 100. Apprendre une dynamique par sa mesure invariante est l'objet de DySLIM (Schiff et al. 2024), qui ajoute une distance MMD entre mesures invariantes. Imposer des contraintes statistiques (une covariance) à un générateur de turbulence remonte au moins à Wu et al. (2020) pour des GAN. L'I-projection d'un générateur préentraîné sous contraintes de moments est celle de Khalifa et al. (2021). Tauberschmidt, Fellenz, Vollmer et Duncan (ICLR 2026) inclinent un modèle de flow matching par un résidu d'EDP en forme faible, mais calculé **sur chaque échantillon** (EDP stationnaire), avec une température libre. Ce qui semble nouveau, sous réserve d'une veille complémentaire (aucune publication trouvée qui combine ces éléments), est la combinaison visée par le stage : prendre comme contrainte le générateur physique d'une EDP de champs (Navier–Stokes ou MHD), dans un modèle conditionnel par $(Re, Rm)$, avec des fonctions test interprétables (énergie, hélicités, énergie par bande spectrale), en entraînement et à l'échantillonnage.
 :::
 
 Le stage applique cette contrainte en loi au bilan d'énergie de la MHD 2D forcée, ainsi qu'à l'hélicité croisée et à $\langle a^2\rangle$ : voir le [rapport, expérience E2](../../rapport/index.html#e2), et la [partie théorique du sujet de thèse](../../these/index.html#theorie).
@@ -1329,7 +1410,7 @@ Ce qu'il faut retenir — chapitre 6
 - Identités de stationnarité : $\mathbb{E}_\mu[\mathcal{L}\varphi] = 0$ pour toute fonction test ; nécessaires, pas suffisantes (plusieurs mesures invariantes).
 - Imposer $\mathcal{L}\varphi = 0$ à chaque échantillon produit une loi étrangère à $\mu$ ($\mathrm{KL} = \infty$), même avec un générateur parfait.
 - I-projection : $\nu^\star \propto e^{\boldsymbol\beta\cdot\mathbf{g}}q$, $\boldsymbol\beta$ par un problème dual convexe ; coût $\mathrm{ESS}/N \approx e^{-m^2/s^2}$ dans le cas gaussien ; aucune masse créée hors du support de $q$.
-- Perte de stationnarité à l'entraînement : sans données, imposable à des $\boldsymbol\lambda$ non observés, à combiner avec l'attache aux données.
+- Perte de stationnarité à l'entraînement : sans données, imposable à des $\boldsymbol\lambda$ non observés, à combiner avec l'attache aux données ; sur le double puits, elle ramène l'erreur hors données de 0,2–0,5 à 0,01–0,04, à condition de bien choisir les échelles $s_k$.
 ::::
 
 ## 7. Évaluation physique {#ch7}
@@ -1538,6 +1619,73 @@ L'offre de stage cite deux références principales (FunDiff ; Fukami et Taira) 
 
 **Questions de lecture.** Pourquoi la pénalité sur le résidu de Burgers est-elle possible alors que, selon la proposition 1.4, un instantané ne vérifie pas une EDP d'évolution ? (Indice : que représente le champ généré pour Burgers ?) La symétrisation du décodeur rend-elle la **loi** symétrique, ou chaque **champ** ? Que faudrait-il ajouter pour imposer $\mathbf{B} \to -\mathbf{B}$ à la loi ?
 
+Le code suivant répond aux deux dernières questions sur un décodeur fonctionnel jouet, dans l'esprit de FunDiff : un réseau qui prend un latent $\mathbf{z}$ et un point $(x, y)$, avec le plongement périodique du papier. Le réseau n'est pas entraîné, et c'est voulu : les propriétés vérifiées sont garanties par l'architecture, quels que soient les poids (proposition 2.1). Les dérivées sont calculées exactement par différentiation automatique, en double précision.
+
+```python
+import math, torch
+torch.set_num_threads(1); torch.manual_seed(0); torch.set_default_dtype(torch.float64)
+
+# Décodeur fonctionnel jouet, dans l'esprit de FunDiff : (latent z, point (x, y)) -> valeur en ce point.
+# Plongement périodique gamma(x, y) = [cos x, cos y, sin x, sin y] : périodicité 2 pi exacte.
+dz = 8
+net = torch.nn.Sequential(torch.nn.Linear(4 + dz, 64), torch.nn.Tanh(), torch.nn.Linear(64, 64),
+                          torch.nn.Tanh(), torch.nn.Linear(64, 2))
+def tete(z, xy):
+    return net(torch.cat([torch.cos(xy), torch.sin(xy), z.expand(len(xy), dz)], 1))
+
+def vitesse(z, xy, mode):
+    xy = xy.clone().requires_grad_(True)
+    if mode == "psi":                                     # le décodeur produit psi, puis u = grad^perp psi
+        dpsi, = torch.autograd.grad(tete(z, xy)[:, 0].sum(), xy, create_graph=True)
+        u = torch.stack([dpsi[:, 1], -dpsi[:, 0]], 1)
+    else:                                                 # le décodeur produit u directement
+        u = tete(z, xy)
+    return u, xy
+
+def div_rel(z, xy, mode):                                 # ||div u|| / ||grad u|| aux points xy (dérivées exactes)
+    u, xy = vitesse(z, xy, mode)
+    gx, = torch.autograd.grad(u[:, 0].sum(), xy, retain_graph=True)
+    gy, = torch.autograd.grad(u[:, 1].sum(), xy)
+    return float((gx[:, 0] + gy[:, 1]).norm() / torch.sqrt((gx**2).sum() + (gy**2).sum()))
+
+z = torch.randn(1, dz)
+for n in [16, 64, 256]:                                   # la même fonction, évaluée à trois résolutions
+    g = torch.arange(n) * 2 * math.pi / n
+    xy = torch.stack(torch.meshgrid(g, g, indexing="ij"), -1).reshape(-1, 2)
+    print(f"grille {n:3d}^2 : divergence relative  psi -> u : {div_rel(z, xy, 'psi'):.1e}   u direct : {div_rel(z, xy, 'u'):.1e}")
+xy = 2 * math.pi * torch.rand(1000, 2)
+u0, _ = vitesse(z, xy, "psi"); u1, _ = vitesse(z, xy + torch.tensor([2 * math.pi, -4 * math.pi]), "psi")
+print(f"périodicité : max |u(x + 2 pi, y - 4 pi) - u(x, y)| = {(u1 - u0).abs().max():.1e}")
+
+# Deux façons d'utiliser une symétrie R : (x, y) -> (-x, y), pour le champ scalaire psi.
+# (1) Symétriser le décodeur en x (comme FunDiff pour une réflexion) : CHAQUE champ devient pair en x.
+# (2) Rendre le décodeur impair en z : psi(-z) = -psi(z) ; avec z ~ N(0, I), c'est la LOI qui devient
+#     invariante par psi -> -psi (analogue de B -> -B), mais chaque champ garde son signe.
+psi = lambda z, xy: tete(z, xy)[:, 0]
+psi_sym = lambda z, xy: 0.5 * (psi(z, xy) + psi(z, xy * torch.tensor([-1.0, 1.0])))
+psi_imp = lambda z, xy: 0.5 * (psi(z, xy) - psi(-z, xy))
+Z = torch.randn(2000, 1, dz); p0 = torch.tensor([[1.0, 2.0]]); R = torch.tensor([-1.0, 1.0])
+with torch.no_grad():
+    e1 = max(float((psi_sym(zz, xy) - psi_sym(zz, xy * R)).abs().max()) for zz in Z[:20])
+    e2 = max(float((psi_imp(-zz, xy) + psi_imp(zz, xy)).abs().max()) for zz in Z[:20])
+    v = {nom: torch.cat([f(zz, p0) for zz in Z]) for nom, f in [("brut", psi), ("impair en z", psi_imp)]}
+print(f"(1) max |psi_sym(x, y) - psi_sym(-x, y)| sur 20 champs = {e1:.1e}  (chaque champ est symétrique)")
+print(f"(2) max |psi_imp(-z) + psi_imp(z)| = {e2:.1e} ; |psi_imp(z)| moyen en (1, 2) = {v['impair en z'].abs().mean():.3f} (non nul)")
+for nom, val in v.items():
+    print(f"    décodeur {nom:12s}: E[psi(1, 2)] sur 2000 latents = {val.mean():+.3f} ± {val.std() / math.sqrt(len(val)):.3f}")
+# sortie :
+# grille  16^2 : divergence relative  psi -> u : 3.3e-17   u direct : 6.5e-01
+# grille  64^2 : divergence relative  psi -> u : 3.4e-17   u direct : 6.5e-01
+# grille 256^2 : divergence relative  psi -> u : 3.5e-17   u direct : 6.5e-01
+# périodicité : max |u(x + 2 pi, y - 4 pi) - u(x, y)| = 1.5e-16
+# (1) max |psi_sym(x, y) - psi_sym(-x, y)| sur 20 champs = 0.0e+00  (chaque champ est symétrique)
+# (2) max |psi_imp(-z) + psi_imp(z)| = 0.0e+00 ; |psi_imp(z)| moyen en (1, 2) = 0.062 (non nul)
+#     décodeur brut        : E[psi(1, 2)] sur 2000 latents = +0.086 ± 0.002
+#     décodeur impair en z : E[psi(1, 2)] sur 2000 latents = -0.003 ± 0.002
+```
+
+Trois enseignements se dégagent. D'abord, la fonction de courant donne une divergence nulle à la précision machine **à toute résolution**, puisque la contrainte porte sur la fonction et non sur une grille ; le décodeur qui produit $\mathbf{u}$ directement a une divergence relative de 65 % avant entraînement, et rien ne garantit qu'elle s'annule après. Ensuite, le plongement $[\cos x, \cos y, \sin x, \sin y]$ rend la périodicité exacte. Enfin, les deux usages d'une symétrie ne sont pas interchangeables. Symétriser le décodeur en espace impose la symétrie à **chaque** champ : c'est une contrainte par échantillon, de classe C1, puisque les champs pairs forment un sous-espace. Rendre le décodeur impair en $\mathbf{z}$, avec une loi latente symétrique, rend au contraire la **loi** invariante par $\psi \to -\psi$ sans rien imposer à chaque champ ; l'écart à 0 de la moyenne ($-0{,}003 \pm 0{,}002$) est d'ordre statistique, et il serait nul en tirant les latents par paires $(\mathbf{z}, -\mathbf{z})$. C'est la seconde construction, combinée à un flot latent équivariant (proposition 2.8), qu'il faut pour la symétrie $\mathbf{B} \to -\mathbf{B}$ ; la première imposerait à chaque champ une parité que la physique n'impose pas.
+
 ### 8.2 Fukami et Taira : un latent de dimension 3 pour l'aérodynamique extrême (2023)
 
 **Référence.** K. Fukami, K. Taira, *Nature Communications* 14, 6480 (2023) ; préprint arXiv:2305.08024.
@@ -1584,7 +1732,7 @@ L'offre de stage cite deux références principales (FunDiff ; Fukami et Taira) 
 
 **Méthode.** Un autoencodeur variationnel de type β-VAE compresse l'écoulement 2D autour de deux plaques colinéaires ; le terme β favorise des variables latentes presque orthogonales. Un transformeur (auto-attention ou *easy-attention*) prédit ensuite l'évolution du latent.
 
-**Résultats publiés** (chiffres du préprint arXiv ; la version publiée peut différer légèrement). Dans le cas chaotique à $Re = 100$, avec $\beta = 0{,}05$ et $d = 20$ variables latentes, le β-VAE capture 89,8 % de l'énergie sur l'entraînement et 80,1 % en test, quand vingt modes POD n'en capturent que 64,4 % ; il faut 69 modes POD pour égaler le β-VAE. Le modèle réduit complet reproduit 78,1 % de l'énergie à un temps convectif et 64,6 % à dix temps convectifs sur des données non vues.
+**Résultats publiés** (chiffres identiques dans le préprint et dans la version publiée). Dans le cas chaotique à $Re = 100$, avec $\beta = 0{,}05$ et $d = 20$ variables latentes, le β-VAE capture 89,8 % de l'énergie sur l'entraînement et 80,1 % en test, quand vingt modes POD n'en capturent que 64,4 % ; il faut 69 modes POD pour égaler le β-VAE. Le modèle réduit complet reproduit 78,1 % de l'énergie à un temps convectif et 64,6 % à dix temps convectifs sur des données non vues.
 
 **À retenir pour le stage.** Un latent compact et presque orthogonal est un bon espace pour un modèle génératif (diffusion ou flow matching latents) et pour une dynamique réduite. Mais le β-VAE n'impose aucune contrainte physique : si le décodeur produit $\mathbf{B}$ directement, la divergence n'est pas nulle. La leçon du chapitre 2 s'applique : faire produire au décodeur des potentiels.
 
@@ -1605,6 +1753,7 @@ Ce qu'il faut retenir — chapitre 8
 - FunDiff fournit le plan d'ensemble (latent fonctionnel, flot, contraintes dans le décodeur) ; la 3D demande un potentiel vecteur et une jauge.
 - Fukami et Taira, Solera-Rico et al. : des latents compacts et interprétables, sans contrainte physique dure.
 - Bansal et al. : guider sans réentraîner, au prix d'un biais sur la loi ; Bastek et al. : pénaliser un résidu, en tenant compte de l'écart de Jensen.
+- Un décodeur fonctionnel qui produit $\psi$ garantit la divergence nulle à toute résolution ; symétriser le décodeur en espace contraint chaque champ, le rendre impair en $\mathbf{z}$ contraint la loi.
 - Aucune de ces références ne traite la MHD, les contraintes en loi ou le conditionnement par $(Re, Rm)$ : c'est l'espace du stage.
 ::::
 
@@ -1686,7 +1835,7 @@ La composante orthogonale finale coïncide exactement avec $h$ fois l'erreur au 
 
 12. **★★★ Pourquoi DPS est trop confiant.** A priori $\mathbf{x}_1 \sim \mathcal{N}(\mathbf{m}, s^2 I)$ dans $\mathbb{R}^d$, observation $y = \mathbf{a}\cdot\mathbf{x}_1 + \epsilon$ avec $\epsilon \sim \mathcal{N}(0, \sigma_y^2)$. (a) Calculer $\mathbb{E}[\mathbf{x}_1\mid\mathbf{x}_t]$ et $\mathrm{Cov}[\mathbf{x}_1\mid\mathbf{x}_t]$. (b) En déduire la vraisemblance exacte $p_t(y\mid\mathbf{x})$ et la comparer à l'approximation DPS $p(y\mid\hat{\mathbf{x}}_1)$. (c) Calculer le rapport des gradients DPS et exact, et l'évaluer pour $s = 0{,}4$, $|\mathbf{a}|^2 = 2$, $\sigma_y = 0{,}3$ (valeurs du code de la section 5.4) en $t = 0{,}1$ et $t = 0{,}5$. Conclure.
 
-*Solution.* (a) Le couple $(\mathbf{x}_1, \mathbf{x}_t)$ est gaussien avec $\mathbf{x}_t = t\mathbf{x}_1 + (1-t)\mathbf{x}_0$. Avec $\Delta_t = t^2s^2 + (1-t)^2$, le conditionnement gaussien donne $\mathbb{E}[\mathbf{x}_1\mid\mathbf{x}_t] = \mathbf{m} + \frac{ts^2}{\Delta_t}(\mathbf{x}_t - t\mathbf{m})$ et $\mathrm{Cov}[\mathbf{x}_1\mid\mathbf{x}_t] = c_t I$ avec $c_t = s^2 - \frac{t^2s^4}{\Delta_t} = \frac{s^2(1-t)^2}{\Delta_t}$. (b) Sachant $\mathbf{x}_t$, $y = \mathbf{a}\cdot\mathbf{x}_1 + \epsilon$ est gaussien : $p_t(y\mid\mathbf{x}) = \mathcal{N}\big(y;\,\mathbf{a}\cdot\mathbb{E}[\mathbf{x}_1\mid\mathbf{x}],\,\sigma_y^2 + c_t|\mathbf{a}|^2\big)$. L'approximation DPS a la même moyenne (car $\hat{\mathbf{x}}_1 = \mathbb{E}[\mathbf{x}_1\mid\mathbf{x}]$ pour le champ exact) mais la variance $\sigma_y^2$ : elle oublie l'incertitude $c_t|\mathbf{a}|^2$ sur $\mathbf{x}_1$. (c) Les deux log-vraisemblances sont quadratiques en le même résidu ; le rapport des gradients est $(\sigma_y^2 + c_t|\mathbf{a}|^2)/\sigma_y^2$. Pour $t = 0{,}1$ : $\Delta_t = 0{,}0016 + 0{,}81 = 0{,}8116$, $c_t = 0{,}16\times0{,}81/0{,}8116 \approx 0{,}160$, rapport $\approx (0{,}09 + 0{,}319)/0{,}09 \approx 4{,}5$. Pour $t = 0{,}5$ : $\Delta_t = 0{,}04 + 0{,}25 = 0{,}29$, $c_t = 0{,}04/0{,}29 \approx 0{,}138$, rapport $\approx 4{,}1$. Le guidage DPS est donc environ quatre fois trop fort sur une grande partie du chemin, ce qui explique les échantillons trop concentrés (écart type du résidu 0,06 au lieu de 0,27) observés à la section 5.4. Le facteur ne tend vers 1 que quand $t \to 1$, où $c_t \to 0$.
+*Solution.* (a) Le couple $(\mathbf{x}_1, \mathbf{x}_t)$ est gaussien avec $\mathbf{x}_t = t\mathbf{x}_1 + (1-t)\mathbf{x}_0$. Avec $\Delta_t = t^2s^2 + (1-t)^2$, le conditionnement gaussien donne $\mathbb{E}[\mathbf{x}_1\mid\mathbf{x}_t] = \mathbf{m} + \frac{ts^2}{\Delta_t}(\mathbf{x}_t - t\mathbf{m})$ et $\mathrm{Cov}[\mathbf{x}_1\mid\mathbf{x}_t] = c_t I$ avec $c_t = s^2 - \frac{t^2s^4}{\Delta_t} = \frac{s^2(1-t)^2}{\Delta_t}$. (b) Sachant $\mathbf{x}_t$, $y = \mathbf{a}\cdot\mathbf{x}_1 + \epsilon$ est gaussien : $p_t(y\mid\mathbf{x}) = \mathcal{N}\big(y;\,\mathbf{a}\cdot\mathbb{E}[\mathbf{x}_1\mid\mathbf{x}],\,\sigma_y^2 + c_t|\mathbf{a}|^2\big)$. L'approximation DPS a la même moyenne (car $\hat{\mathbf{x}}_1 = \mathbb{E}[\mathbf{x}_1\mid\mathbf{x}]$ pour le champ exact) mais la variance $\sigma_y^2$ : elle oublie l'incertitude $c_t|\mathbf{a}|^2$ sur $\mathbf{x}_1$. (c) Les deux log-vraisemblances sont quadratiques en le même résidu ; le rapport des gradients est $(\sigma_y^2 + c_t|\mathbf{a}|^2)/\sigma_y^2$. Pour $t = 0{,}1$ : $\Delta_t = 0{,}0016 + 0{,}81 = 0{,}8116$, $c_t = 0{,}16\times0{,}81/0{,}8116 \approx 0{,}160$, rapport $\approx (0{,}09 + 0{,}319)/0{,}09 \approx 4{,}5$. Pour $t = 0{,}5$ : $\Delta_t = 0{,}04 + 0{,}25 = 0{,}29$, $c_t = 0{,}04/0{,}29 \approx 0{,}138$, rapport $\approx 4{,}1$. Le guidage DPS est donc environ quatre fois trop fort sur une grande partie du chemin, ce qui éclaire les échantillons trop concentrés (écart type du résidu 0,06 au lieu de 0,27) observés à la section 5.4, où l'a priori est un mélange de trois gaussiennes de même écart type $s$ (le calcul exact pour un mélange fait intervenir en plus les poids a posteriori des composantes). Le facteur ne tend vers 1 que quand $t \to 1$, où $c_t \to 0$.
 
 13. **★★★ Homologie persistante en dimension 0 (exercice de code).** (a) Écrire un algorithme qui calcule le diagramme de persistance de dimension 0 de la filtration par sur-niveaux $\{f \ge c\}$ d'un signal 1D périodique (union-find, « règle de l'aîné » : quand deux composantes fusionnent, la plus jeune meurt). (b) L'appliquer à $f(x) = \sin 3x + 0{,}4\sin(7x + 1)$ et à $f$ plus un petit bruit, et vérifier le théorème de stabilité (proposition 7.6). (c) Pourquoi la persistance est-elle une meilleure métrique que le simple nombre de maxima pour comparer des champs générés ?
 
@@ -1740,6 +1889,19 @@ Le signal bruité a 142 maxima locaux contre 5, mais seules quatre paires finies
 
 *Solution (une proposition).* **Variantes** : (1) génération libre ; (2) libre + projection de Leray finale ; (3) flot projeté ; (4) flot dans $S$ (bruit gaussien projeté, c'est-à-dire mesure de référence à divergence nulle) ; (5) potentiel vecteur en jauge de Coulomb, plus le champ moyen généré à part ; (6) pénalité sur $\hat{\mathbf{x}}_1$. **Contrôles** : même réseau (nombre de paramètres égal, en comptant la sortie), même nombre d'itérations et même temps de calcul, plusieurs graines (au moins trois), mêmes données, même solveur (Euler, $N$ fixé, plus une variante à $N$ doublé), mêmes valeurs de $(Re, Rm)$ en distribution et hors distribution (interpolation entre valeurs d'entraînement, extrapolation en $Rm$). **Métriques** : celles du tableau du chapitre 7, calculées avec l'opérateur spectral de la contrainte ; en plus, temps d'échantillonnage, et le taux de croissance ou la saturation magnétique en fonction de $Rm$ (le seuil dynamo doit être placé correctement). **Hypothèses** : H1, (4) et (5) sont meilleurs que (1)–(3) à budget égal (section 3.5) ; H2, (6) ne réduit pas la divergence (proposition 4.3) ; H3, les mécanismes exacts ne dégradent pas les spectres ; H4, hors distribution en $Rm$, l'écart entre mécanismes change de signe, comme chez Genuist et al. (2026) ; H5, la symétrie $\mathbf{B} \to -\mathbf{B}$ imposée par équivariance améliore les statistiques de polarité sans coût mesurable. **Pièges** : mesurer la divergence avec un autre opérateur (remarque 2.5) ; modes de Nyquist ; mode moyen oublié par le potentiel ; jauge non fixée dans les données ; comparer des réseaux de tailles différentes ; une seule graine ; conclure d'une métrique unique. Le passage aux domaines bornés (cylindre) est hors protocole : il demande la remarque 2.4.
 
+16. **★★★ Le piège d'une perte de stationnarité mal normalisée (exercice de code).** (a) Dans le code de la section 6.4, remplacez l'échelle $s_k = \sigma^2$ par $s_k = 1$ (supprimer la division par `s**2` dans `residus`), relancez, et décrivez la loi apprise en $\sigma = 1{,}2$. (b) Pour la sous-famille gaussienne $q = \mathcal{N}(0, \tau^2)$ (le cas $a = 0$, $b = -1/(2\tau^2)$), calculez les deux résidus $r_1(\tau) = \mathbb{E}_q[\mathcal{L}\varphi_1]$ et $r_2(\tau) = \mathbb{E}_q[\mathcal{L}\varphi_2]$ pour $\varphi_1 = x^2/2$ et $\varphi_2 = x^4/4$. Montrez que $r_1^2$ décroît quand $\tau^2$ décroît vers 0 tant que $\tau^2 < 1/6$, et que $r_1$ ne s'annule qu'en $\tau^2 = \big(1 + \sqrt{1 + 6\sigma^2}\big)/6$. (c) En déduire le mécanisme de l'échec, et le lien avec la remarque 6.5.
+
+*Solution.* (a) Le code modifié affiche, sur la même ligne de valeurs de $\sigma$ :
+
+```python
+# sortie (code de la section 6.4 avec s_k = 1) :
+# sigma :                      0.50   0.60   0.80   1.00   1.20   1.40
+# W1(q, mu) données seules           0.006  0.008  0.202  0.374  0.475  0.545 | sigma = 1,2 : a = 0.376, b = -1.801
+# W1(q, mu) données + stationnarité  0.041  0.053  0.671  0.727  0.758  0.788 | sigma = 1,2 : a = 0.000, b = -32.814
+```
+
+La perte de stationnarité dégrade tout, y compris aux valeurs observées. En $\sigma = 1{,}2$, le modèle a $a \approx 0$ et $b \approx -32{,}8$ : c'est une gaussienne centrée de variance $1/(2\times32{,}8) \approx 0{,}015$, presque un Dirac en 0. (b) Avec $\mathbb{E}[x^2] = \tau^2$, $\mathbb{E}[x^4] = 3\tau^4$ et $\mathbb{E}[x^6] = 15\tau^6$ : $r_1 = \mathbb{E}[x^2 - x^4] + \sigma^2/2 = \sigma^2/2 + \tau^2 - 3\tau^4$ et $r_2 = \mathbb{E}[x^4 - x^6] + \tfrac32\sigma^2\mathbb{E}[x^2] = \tfrac32\sigma^2\tau^2 + 3\tau^4 - 15\tau^6$. Comme $\partial r_1/\partial(\tau^2) = 1 - 6\tau^2 > 0$ pour $\tau^2 < 1/6$ et $r_1 \ge \sigma^2/2 > 0$ sur cet intervalle, $r_1^2$ décroît quand $\tau^2$ décroît : le minimum local de $r_1^2$ dans cette région est au bord, $\tau = 0$, où $r_1 = \sigma^2/2 \ne 0$ et $r_2 = 0$. Le zéro de $r_1$ est la racine positive de $3\tau^4 - \tau^2 - \sigma^2/2 = 0$, soit $\tau^2 = (1 + \sqrt{1 + 6\sigma^2})/6 > 1/3$ ; pour l'atteindre depuis une loi étroite, il faut d'abord **augmenter** $r_1^2$ (jusqu'à $\tau^2 = 1/6$). (c) Sans normalisation, les grandes valeurs de $\sigma$ dominent la perte (les résidus croissent comme $\sigma^2$, et les moments d'ordre 6 d'une loi large sont grands) ; la descente de gradient réduit d'abord la largeur des lois, entre dans le bassin $\tau^2 < 1/6$, et y reste, attirée par la loi dégénérée $\delta_0$. Ce n'est pas un hasard : $\delta_0$ est une mesure invariante de la dynamique **sans bruit** (0 est un point fixe), et elle annule toutes les identités à $\sigma = 0$ ; le bruit ne la disqualifie que par le terme constant $\sigma^2/2$ de $r_1$, que la descente ne peut pas réduire localement : au voisinage de $\delta_0$, réduire $r_1^2$ pousse vers $\delta_0$. C'est la non-unicité de la remarque 6.5 vue du côté de l'optimisation : une perte de stationnarité possède des minima locaux près des mesures invariantes non physiques. Diviser par $s_k = \sigma^2$ équilibre les valeurs du paramètre ; dans notre essai, une montée progressive du poids $\beta$ (de 0 à 1 sur la première moitié de l'entraînement) sans cette normalisation n'a pas suffi à éviter le piège. D'autres remèdes (initialiser par le modèle entraîné sur les données, normaliser par l'écart type de $\mathcal{L}\varphi_k$ sous le modèle) restent à tester.
+
 ## Lien avec le stage {#lien-stage}
 
 L'offre de stage décrit trois tâches : construire des modèles génératifs conditionnels (diffusion ou flow matching) de champs physiques paramétrés ; imposer les contraintes issues des EDP et des conditions aux limites « through model design, training losses, or sampling procedures » (par la conception du modèle, les pertes d'entraînement ou les procédures d'échantillonnage) ; valider sur des EDP simples puis sur des champs MHD avec des métriques de spectres, d'hélicité, de divergence et de topologie. Ce module couvre la deuxième et la troisième tâche. Les chapitres 2 et 3 correspondent à la conception du modèle (potentiels, équivariance, projection), les chapitres 4 et 6 aux pertes (pénalité, perte de stationnarité), les chapitres 3, 5 et 6 à l'échantillonnage (projection, guidage, inclinaison), et le chapitre 7 aux métriques.
@@ -1752,26 +1914,26 @@ Le [sujet de thèse](../../these/index.html) prolonge le chapitre 6 dans sa [par
 
 - **Albergo, Boffi et Vanden-Eijnden, *Stochastic interpolants: a unifying framework for flows and diffusions* (arXiv:2303.08797).** Le cadre général qui contient le flow matching et la diffusion ; utile pour concevoir des chemins adaptés à une contrainte (bruit porté par $S$, chemins équivariants) et pour comprendre le choix entre échantillonnage déterministe et stochastique.
 - **Köhler, Klein et Noé, *Equivariant flows* (ICML 2020).** La référence pour les flots équivariants et la condition suffisante d'invariance de la loi générée (proposition 2.8), avec des exemples de systèmes de particules ; à lire avec Cohen et Welling (2016) pour les convolutions équivariantes.
-- **Cai, Cao, Huang et Zhou, *Weak generative sampler* (arXiv:2405.19256).** L'antériorité la plus proche de la perte de stationnarité (définition 6.8) : forme faible de Fokker–Planck, fonctions test gaussiennes aléatoires, dimension jusqu'à 100. Le passage aux champs d'EDP est la question ouverte.
+- **Cai, Cao, Huang et Zhou, *Weak generative sampler* (SIAM J. Sci. Comput. 2026 ; arXiv:2405.19256).** L'antériorité la plus proche de la perte de stationnarité (définition 6.8) : forme faible de Fokker–Planck, fonctions test gaussiennes aléatoires, dimension jusqu'à 100. Le passage aux champs d'EDP est la question ouverte.
 - **Kacmaz, Huerta et Haas, *Resolving turbulent magnetohydrodynamics: a hybrid operator–diffusion framework* (Machine Learning: Science and Technology, 2025).** Le travail génératif le plus proche de la MHD : 2D, opérateur neuronal plus diffusion conditionnelle ; $\nabla\cdot\mathbf{B} = 0$ n'y est garanti que par le solveur qui produit les données, et aucune hélicité n'est évaluée. C'est un bon exemple de ce que le stage doit dépasser.
 - **Biferale et Buzzicotti, *Generative AI in turbulence: foundations, applications, validations and benchmarks* (arXiv:2610.35123, 2026).** Une revue récente qui plaide pour une validation physique des générateurs (transferts d'énergie, fonctions de structure, queues de lois, lois de conservation), complément du chapitre 7.
-- **Tauberschmidt, Fellenz, Vollmer et Duncan, *Physics-constrained fine-tuning of flow-matching models* (arXiv:2508.09156).** Une inclinaison exponentielle d'un modèle de flow matching par un résidu d'EDP en forme faible, réalisée par contrôle optimal (*adjoint matching*) : la version « réentraînée » de l'inclinaison du chapitre 6, mais pour une contrainte par échantillon.
+- **Tauberschmidt, Fellenz, Vollmer et Duncan, *Physics-constrained fine-tuning of flow-matching models* (ICLR 2026 ; arXiv:2508.09156).** Une inclinaison exponentielle d'un modèle de flow matching par un résidu d'EDP en forme faible, réalisée par contrôle optimal (*adjoint matching*) : la version « réentraînée » de l'inclinaison du chapitre 6, mais pour une contrainte par échantillon.
 
 ## Sources {#sources}
 
 Références vérifiées (DOI, arXiv ou page de l'éditeur). Les préprints non évalués par les pairs sont signalés.
 
-- Albergo, M. S., Boffi, N. M., Vanden-Eijnden, E. *Stochastic Interpolants: A Unifying Framework for Flows and Diffusions.* arXiv:2303.08797 (version JMLR). <https://arxiv.org/abs/2303.08797>
+- Albergo, M. S., Boffi, N. M., Vanden-Eijnden, E. (2025). *Stochastic Interpolants: A Unifying Framework for Flows and Diffusions.* Journal of Machine Learning Research 26(209), 1–80. arXiv:2303.08797. <https://arxiv.org/abs/2303.08797>
 - Amrouche, C., Bernardi, C., Dauge, M., Girault, V. (1998). *Vector potentials in three-dimensional non-smooth domains.* Mathematical Methods in the Applied Sciences 21(9), 823–864. <https://doi.org/10.1002/(SICI)1099-1476(199806)21:9%3C823::AID-MMA976%3E3.0.CO;2-B>
-- Amrouche, C., Seloula, N. El H. (2011). *L^p-theory for vector potentials and Sobolev's inequalities for vector fields.* Comptes Rendus Mathématique 349(9–10), 529–534. <https://doi.org/10.1016/j.crma.2011.04.008>
+- Amrouche, C., Seloula, N. (2011). *L^p-theory for vector potentials and Sobolev's inequalities for vector fields.* Comptes Rendus Mathématique 349(9–10), 529–534. <https://doi.org/10.1016/j.crma.2011.04.008>
 - Bansal, A., Chu, H.-M., Schwarzschild, A., Sengupta, S., Goldblum, M., Geiping, J., Goldstein, T. (2024). *Universal Guidance for Diffusion Models.* ICLR 2024. arXiv:2302.07121. <https://arxiv.org/abs/2302.07121>
 - Bastek, J.-H., Sun, W., Kochmann, D. M. (2025). *Physics-Informed Diffusion Models.* ICLR 2025. arXiv:2403.14404. <https://arxiv.org/abs/2403.14404>
 - Behme, A., Schnurr, A. (2015). *A criterion for invariant measures of Itô processes based on the symbol.* Bernoulli 21(3), 1697–1718. <https://doi.org/10.3150/14-BEJ618>
 - Berger, M. A., Field, G. B. (1984). *The topological properties of magnetic helicity.* Journal of Fluid Mechanics 147, 133–148. <https://doi.org/10.1017/S0022112084002019>
-- Biferale, L., Buzzicotti, M. (2026). *Generative AI in Turbulence: Foundations, Applications, Validations and Benchmarks.* Préprint, arXiv:2610.35123. <https://arxiv.org/abs/2610.35123>
-- Cai, Z., Cao, Y., Huang, Y., Zhou, X. (2024). *Weak Generative Sampler to Efficiently Sample Invariant Distribution of Stochastic Differential Equation.* Préprint, arXiv:2405.19256. <https://arxiv.org/abs/2405.19256>
+- Biferale, L., Buzzicotti, M. (2026). *Generative AI in Turbulence: Foundations, Applications, Validations and Benchmarks.* Préprint (soumis à JFM Perspectives), arXiv:2610.35123. <https://arxiv.org/abs/2610.35123>
+- Cai, Z., Cao, Y., Huang, Y., Zhou, X. (2026). *Weak Generative Sampler to Efficiently Sample Invariant Distribution of Stochastic Differential Equation.* SIAM Journal on Scientific Computing 48(4), C708–C735. <https://doi.org/10.1137/24M1665271> ; arXiv:2405.19256 (2024).
 - Cheng, C., Han, B., Maddix, D. C., Ansari, A. F., Stuart, A., Mahoney, M. W., Wang, Y. (2025). *Gradient-Free Generation for Hard-Constrained Systems* (ECI). ICLR 2025. arXiv:2412.01786. <https://arxiv.org/abs/2412.01786>
-- Christopher, J. K., Baek, S., Fioretto, F. (2024). *Constrained Synthesis with Projected Diffusion Models.* NeurIPS 2024. arXiv:2402.03559. <https://arxiv.org/abs/2402.03559>
+- Christopher, J. K., Baek, S., Fioretto, F. (2024). *Constrained Synthesis with Projected Diffusion Models.* NeurIPS 2024. <https://doi.org/10.52202/079017-2834> ; arXiv:2402.03559.
 - Chung, H., Kim, J., McCann, M. T., Klasky, M. L., Ye, J. C. (2023). *Diffusion Posterior Sampling for General Noisy Inverse Problems.* ICLR 2023. arXiv:2209.14687. <https://arxiv.org/abs/2209.14687>
 - Cohen, T. S., Welling, M. (2016). *Group Equivariant Convolutional Networks.* ICML 2016, PMLR 48, 2990–2999. <https://proceedings.mlr.press/v48/cohenc16.html>
 - Cohen-Steiner, D., Edelsbrunner, H., Harer, J. (2007). *Stability of Persistence Diagrams.* Discrete & Computational Geometry 37(1), 103–120. <https://doi.org/10.1007/s00454-006-1276-5>
@@ -1781,6 +1943,7 @@ Références vérifiées (DOI, arXiv ou page de l'éditeur). Les préprints non 
 - Fukami, K., Taira, K. (2023). *Grasping extreme aerodynamics on a low-dimensional manifold.* Nature Communications 14, 6480. <https://doi.org/10.1038/s41467-023-42213-6>
 - Genuist, W., Savin, É., Gatti, F., Clouteau, D. (2026). *Divergence-Free Diffusion Models for Incompressible Fluid Flows.* Préprint, arXiv:2601.19368. <https://arxiv.org/abs/2601.19368>
 - Gissinger, C. (2012). *A new deterministic model for chaotic reversals.* European Physical Journal B 85(4), 137. <https://doi.org/10.1140/epjb/e2012-20799-5>
+- Gorham, J., Duncan, A. B., Vollmer, S. J., Mackey, L. (2019). *Measuring sample quality with diffusions.* Annals of Applied Probability 29(5), 2884–2928. <https://doi.org/10.1214/19-AAP1467>
 - Gretton, A., Borgwardt, K. M., Rasch, M. J., Schölkopf, B., Smola, A. (2012). *A Kernel Two-Sample Test.* Journal of Machine Learning Research 13(25), 723–773. <https://jmlr.org/papers/v13/gretton12a.html>
 - Haynes, A. L., Parnell, C. E. (2007). *A trilinear method for finding null points in a three-dimensional vector space.* Physics of Plasmas 14(8), 082107. <https://doi.org/10.1063/1.2756751>
 - Huang, J., Yang, G., Wang, Z., Park, J. J. (2024). *DiffusionPDE: Generative PDE-Solving under Partial Observation.* NeurIPS 2024. <https://doi.org/10.52202/079017-4140> ; arXiv:2406.17763.
@@ -1794,12 +1957,12 @@ Références vérifiées (DOI, arXiv ou page de l'éditeur). Les préprints non 
 - Liu, X., Gong, C., Liu, Q. (2023). *Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow.* ICLR 2023. arXiv:2209.03003. <https://arxiv.org/abs/2209.03003>
 - Makarenko, I., Shukurov, A., Henderson, R., Rodrigues, L. F. S., Bushby, P., Fletcher, A. (2018). *Topological signatures of interstellar magnetic fields – I. Betti numbers and persistence diagrams.* Monthly Notices of the Royal Astronomical Society 475(2), 1843–1858. <https://doi.org/10.1093/mnras/stx3337>
 - Parnell, C. E., Smith, J. M., Neukirch, T., Priest, E. R. (1996). *The structure of three-dimensional magnetic neutral points.* Physics of Plasmas 3(3), 759–770. <https://doi.org/10.1063/1.871810>
-- Richter-Powell, J., Lipman, Y., Chen, R. T. Q. (2022). *Neural Conservation Laws: A Divergence-Free Perspective.* NeurIPS 2022. <https://doi.org/10.52202/068431-2759> ; arXiv:2210.01741.
+- Richter-Powell, J., Lipman, Y., Chen, R. T. Q. (2022). *Neural Conservation Laws: A Divergence-Free Perspective.* NeurIPS 2022, 38075–38088. <https://doi.org/10.52202/068431-2759> ; arXiv:2210.01741.
 - Schiff, Y., Wan, Z. Y., Parker, J. B., Hoyer, S., Kuleshov, V., Sha, F., Zepeda-Núñez, L. (2024). *DySLIM: Dynamics Stable Learning by Invariant Measure for Chaotic Systems.* ICML 2024, PMLR 235, 43649–43684. <https://proceedings.mlr.press/v235/schiff24b.html>
 - Solera-Rico, A., Sanmiguel Vila, C., Gómez-López, M., Wang, Y., Almashjary, A., Dawson, S. T. M., Vinuesa, R. (2024). *β-Variational autoencoders and transformers for reduced-order modelling of fluid flows.* Nature Communications 15, 1361. <https://doi.org/10.1038/s41467-024-45578-4>
 - Székely, G. J., Rizzo, M. L. (2013). *Energy statistics: A class of statistics based on distances.* Journal of Statistical Planning and Inference 143(8), 1249–1272. <https://doi.org/10.1016/j.jspi.2013.03.018>
-- Tauberschmidt, J., Fellenz, S., Vollmer, S. J., Duncan, A. B. (2025). *Physics-Constrained Fine-Tuning of Flow-Matching Models for Generation and Inverse Problems.* Préprint, arXiv:2508.09156. <https://arxiv.org/abs/2508.09156>
-- Utkarsh, Cai, P., Edelman, A., Gómez-Bombarelli, R., Rackauckas, C. (2025). *Physics-Constrained Flow Matching: Sampling Generative Models with Hard Constraints* (PCFM). NeurIPS 2025. arXiv:2506.04171. <https://arxiv.org/abs/2506.04171>
+- Tauberschmidt, J., Fellenz, S., Vollmer, S. J., Duncan, A. B. (2026). *Physics-Constrained Fine-Tuning of Flow-Matching Models for Generation and Inverse Problems.* ICLR 2026. arXiv:2508.09156. <https://arxiv.org/abs/2508.09156>
+- Utkarsh, Cai, P., Edelman, A., Gómez-Bombarelli, R., Rackauckas, C. (2025). *Physics-Constrained Flow Matching: Sampling Generative Models with Hard Constraints* (PCFM). NeurIPS 2025. <https://doi.org/10.52202/085713-5354> ; arXiv:2506.04171.
 - Wang, S., Dou, Z., Shan, S., Liu, T.-R., Lu, L. (2026). *FunDiff: diffusion models over function spaces for physics-informed generative modeling.* Nature Communications 17, 5749. <https://doi.org/10.1038/s41467-026-72292-0>
 - Wu, J.-L., Kashinath, K., Albert, A., Chirila, D., Prabhat, Xiao, H. (2020). *Enforcing statistical constraints in generative adversarial networks for modeling chaotic dynamical systems.* Journal of Computational Physics 406, 109209. <https://doi.org/10.1016/j.jcp.2019.109209>
 - Young, L.-S. (2002). *What Are SRB Measures, and Which Dynamical Systems Have Them?* Journal of Statistical Physics 108(5–6), 733–754. <https://doi.org/10.1023/A:1019762724717>
