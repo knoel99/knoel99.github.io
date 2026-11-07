@@ -42,12 +42,12 @@ The experiments in the [report](../rapport/index.html#experiences) run on an ord
 
 ::: note
 [What has been tested]{.tag}
-The whole pipeline has run end to end on a machine **without a GPU** (laptop, full Docker stack, Slurm templates executed with a simulated scheduler): 66 automated tests pass. What could **not** be run: a GPU card, a real Slurm cluster, Apptainer, and a VM rented from a provider. The [last section](#tests) details what has been verified and what remains to be verified on site.
+The whole pipeline has run end to end on a machine **without a GPU** (laptop, full Docker stack, Slurm templates executed with a simulated scheduler): the suite of 68 automated tests passes (66 passed and 1 skipped when measured with PostgreSQL and MinIO; the anchor test, added since, also passes). What could **not** be run: a GPU card, a real Slurm cluster, Apptainer, and a VM rented from a provider. The [last section](#tests) details what has been verified and what remains to be verified on site.
 :::
 
 ## Getting started {#demarrer}
 
-Three targets share the same code, the same software image, and the same data format.
+Three targets share the same code, pinned dependencies, and the same data format; the VM and the cluster also use the same software image.
 
 | Target | What for | Main command |
 |---|---|---|
@@ -63,7 +63,7 @@ git clone https://github.com/knoel99/milady-2027.git && cd milady-2027
 sudo infra/deploy/bootstrap_vm.sh
 ```
 
-The script, which can safely be rerun, installs Docker and, if a GPU is present, the NVIDIA Container Toolkit; it generates random passwords in a `.env` file that is never committed; it builds the image (`milady:gpu`, CUDA 12.6, or `milady:cpu`); it starts the PostgreSQL database, the MinIO object storage, and the MLflow server; finally, it runs an end-to-end test (tiny 3D simulation, file, catalog, one training iteration, evaluation). Measured duration without a GPU: 3 minutes, including the image build. You can also pass the file `infra/deploy/cloud-init.yaml` when creating the VM, without logging into it, or deploy from your laptop with `infra/deploy/deploy_remote.sh ubuntu@IP`.
+The script, which can safely be rerun, installs Docker and, if a GPU is present, the NVIDIA Container Toolkit; it generates random passwords in a `.env` file that is never committed; it builds the image (`milady:gpu`, CUDA 12.6, or `milady:cpu`); it starts the PostgreSQL database, the MinIO object storage, and the MLflow server; finally, it runs an end-to-end test (tiny 3D simulation, file, catalog, one training iteration, evaluation). Measured duration without a GPU, with Docker already installed: 3 minutes, including the image build. You can also pass the file `infra/deploy/cloud-init.yaml` when creating the VM, without logging into it, or deploy from your laptop with `infra/deploy/deploy_remote.sh ubuntu@IP`.
 
 Then, from the VM:
 
@@ -73,27 +73,27 @@ make train CONFIG=infra/configs/train_fm3d.yaml         # training (all GPUs, to
 make eval  CONFIG=infra/configs/train_fm3d.yaml         # evaluation, results to the catalog
 ```
 
-The web interfaces (MLflow, MinIO console, JupyterLab) listen only on the VM: you reach them through an SSH tunnel, `ssh -N -L 5000:localhost:5000 -L 9001:localhost:9001 ubuntu@IP`.
+The web interfaces (MLflow, MinIO console, JupyterLab) listen only on the VM: you reach them through an SSH tunnel, `ssh -N -L 5000:localhost:5000 -L 9001:localhost:9001 -L 8888:localhost:8888 ubuntu@IP`.
 
-**On a Slurm cluster.** The GPU image is converted into an Apptainer image (`make image-gpu && make sif`), then copied to the cluster. Each simulation of a campaign is one element of a job array (one GPU each); training launches one `torchrun` per node. The compute nodes of Jean Zay have no Internet access: the catalog is then an SQLite file on `$WORK`, merged afterwards into the central database (`python -m milady.catalog ingest`). The guide [`README-slurm.md`](https://github.com/knoel99/milady-2027/blob/main/infra/slurm/README-slurm.md) gives the options specific to Jean Zay, checked against the IDRIS documentation.
+**On a Slurm cluster.** The GPU image is converted into an Apptainer image (`make image-gpu && make sif`), then copied to the cluster. Each simulation of a campaign is one element of a job array (one GPU each); training launches one `torchrun` per node. The compute nodes of Jean Zay have no Internet access: the catalog is then an SQLite file on `$WORK`; the simulations are subsequently registered in the central database from their MFF files (`python -m milady.catalog ingest`), under the same identifiers. The models, evaluations, and jobs of the SQLite catalog are not transferred by this command. The guide [`README-slurm.md`](https://github.com/knoel99/milady-2027/blob/main/infra/slurm/README-slurm.md) gives the options specific to Jean Zay, checked against the IDRIS documentation.
 
 **On a laptop.** `make setup` creates a virtual environment with pinned versions (68 s measured), and `make smoke RUN=local` runs the same end-to-end test with an SQLite catalog and local files (4 s).
 
 ## The processing pipeline {#chaine}
 
-A campaign described in a YAML file becomes simulations, then files, then a dataset, models, and evaluations. Each step writes its record to the catalog, with a unique identifier (UUID) and the exact commit of the code.
+A campaign described in a YAML file becomes simulations, then files, then a dataset, models, and evaluations. Each step writes its record to the catalog under a unique identifier (UUID); the simulations, their files, and the models also carry the code commit (with a `-dirty` suffix if the working tree had been modified).
 
 | Step | Module | What is produced | Where it is recorded |
 |---|---|---|---|
 | 1. Campaign | YAML file in `infra/configs/` | grid of physical parameters ($Re$, $Rm$, $Pm$…) | `campaign` table (full copy of the YAML) |
-| 2. Launch | `milady.sweep` | one task per grid point: locally, one container per simulation, or a Slurm job array | `simulation` and `job` tables |
+| 2. Launch | `milady.sweep` | one task per grid point: locally, one process per simulation; with Docker, one container per simulation; on a cluster, a Slurm job array | `simulation` and `job` tables |
 | 3. Simulation | `milady.sim` (3D MHD solver, PyTorch) | fields $(\mathbf{u}, \mathbf{B})$ and diagnostics | MFF file; `diagnostic` table |
-| 4. Storage | `milady.storage` | immutable file `{campaign}/{uuid}/fields.h5`, on S3, MinIO, or disk | `file` table (SHA-256 checksum, size) |
+| 4. Storage | `milady.storage` | file `{campaign}/{uuid}/fields.h5`, never modified in normal use (`--force` rewrites it, and its SHA-256 checksum is then updated in the catalog), on S3, MinIO, or disk | `file` table (SHA-256 checksum, size) |
 | 5. Dataset | `milady.catalog` | selection of simulations and split into training, validation, and test sets | `dataset` and `dataset_member` tables |
 | 6. Training | `milady.train.fm3d` | conditional flow matching on vector potentials; checkpoints | `model` table; MLflow (curves, hyperparameters) |
 | 7. Evaluation | `milady.eval` | statistical and physical metrics of the generated fields | `evaluation` table; `v_eval_summary` view |
 
-Since the simulation carries the same UUID in the file and in the catalog, a catalog can always be rebuilt or merged from the files alone. This is what makes it possible to work on a cluster without network access.
+Since the simulation carries the same UUID in the file and in the catalog, the simulation part of the catalog (simulations, files, diagnostics) can always be rebuilt or merged from the files alone; datasets, models, and evaluations, by contrast, exist only in the catalog. This is what makes it possible to work on a cluster without network access.
 
 ## The data format {#format}
 
@@ -112,7 +112,7 @@ fields.h5
 └── milady_spectral/     Fourier coefficients of the fields (periodic domains, optional)
 ```
 
-Following The Well makes the data readable by the reference loaders and models of the community: we checked that a 3D MFF file is read back identically by the `WellDataset` loader (the_well 1.2.0). The `milady_*` attributes are invisible to a The Well reader and are validated by a JSON schema. A **Zarr** variant, with the same hierarchy, makes it possible to read a chunk of a file on S3 without downloading it. An extension is planned for the outputs of SFEMaNS (azimuthal Fourier modes on a meridional finite-element mesh), without destructive interpolation. The validation function detects corrupted files: the 18 corruptions tested (types, shapes, non-finite values, identifiers…) are all flagged. Full specification: [`specs/format-donnees.md`](https://github.com/knoel99/milady-2027/blob/main/specs/format-donnees.md).
+Following The Well makes the data readable by the reference loaders and models of the community: we checked, by replaying the HDF5 accesses of the `WellDataset` loader (the_well 1.2.0) without running the package itself, that a 3D MFF file is read back identically. The `milady_*` attributes are invisible to a The Well reader and are validated by a JSON schema. A **Zarr** variant, with the same hierarchy, makes it possible to read a chunk of a file on S3 without downloading it. An extension is planned for the outputs of SFEMaNS (azimuthal Fourier modes on a meridional finite-element mesh), without destructive interpolation. The validation function detects corrupted files: the 18 corruptions tested (types, shapes, non-finite values, identifiers…) are all flagged. Full specification: [`specs/format-donnees.md`](https://github.com/knoel99/milady-2027/blob/main/specs/format-donnees.md).
 
 ## The results catalog {#catalogue}
 
@@ -152,7 +152,7 @@ and, from the command line, `python -m milady.catalog sims --campaign palier2_ab
 | `palier2_tg3d` | Taylor–Green forced 3D MHD at $64^3$: $Re \in \{25, 50, 100, 200\}$ and $Pm \in \{0.5 ; 1 ; 2\}$ (12 simulations) |
 | `train_fm3d` | flow matching of the Taylor–Green fields conditioned on $(Re, Pm)$, vector potentials truncated at $|\mathbf{m}| \le 8$, exact $\mathbf{B} \to -\mathbf{B}$ symmetry |
 
-**Training.** `milady.train.fm3d` carries over to 3D the choices validated by the experiments: vector potentials in the Coulomb gauge (zero divergence by construction, like variant V4 of E2), a velocity field equivariant under $\mathbf{B} \to -\mathbf{B}$ (variant C of E1), and optional fine-tuning with an unbiased estimate of the stationarity loss. Experiment E1 showed that this fine-tuning can diverge when started from a biased model: it is launched only from an already good model, with two safeguards added for this reason, an anchor to the starting weights (`stationarity.anchor`) and a gradual ramp-up of the weight $\beta$ (`stationarity.beta_warmup`), and the spread of the balances is monitored. The same code runs on one GPU or on several nodes (DDP), resumes after an interruption, and logs to MLflow.
+**Training.** `milady.train.fm3d` carries over to 3D the choices validated by the experiments: vector potentials in the Coulomb gauge (zero divergence by construction, like variant V4 of E2), a velocity field equivariant under $\mathbf{B} \to -\mathbf{B}$ (variant C of E1), and optional fine-tuning with an unbiased estimate of the stationarity loss. Experiment E1 showed that this fine-tuning can diverge when started from a biased model: it is launched only from an already good model, with two safeguards added for this reason, an anchor to the starting weights (`stationarity.anchor`) and a gradual ramp-up of the weight $\beta$ (`stationarity.beta_warmup`), and the spread of the balances must be monitored: the per-sample standard deviation of the balances is not yet computed automatically, because the evaluation records only the mean residuals. The same code runs on one GPU or on several nodes (DDP), resumes after an interruption, and logs to MLflow.
 
 ## Costs {#couts}
 
@@ -162,7 +162,7 @@ $$
 \text{cost} \approx \sum_{\text{tasks}} \text{duration (h)} \times \text{number of GPUs} \times \text{hourly price of the instance} \;+\; \text{storage} \;+\; \text{outbound data} .
 $$
 
-First measure a single representative simulation; its duration is recorded in the catalog and extrapolated to the whole campaign. As for memory, a state $(\mathbf{u}, \mathbf{B})$ in single precision takes $6 \times N^3 \times 4$ bytes, i.e., about 0.4 GB at $256^3$; the scheme keeps about ten copies of it, so a 24 GB GPU is enough at $256^3$ and 80 GB are needed at $512^3$ (an estimate to be checked with `nvidia-smi`). Three rules reduce the bill: preemptible instances for the simulation arrays, which are independent and can be restarted; a VM deleted as soon as it is no longer in use, after a backup (`make backup`); and data in a bucket rather than on the VM's disk.
+First measure a single representative simulation; its duration is recorded in the catalog and extrapolated to the whole campaign. As for memory, a state $(\mathbf{u}, \mathbf{B})$ in single precision takes $6 \times N^3 \times 4$ bytes, i.e., about 0.4 GB at $256^3$; the peak memory measured on CPU is about 14 times this state at $128^3$, i.e., about 6 GB at $256^3$ and 45 GB at $512^3$: a 24 GB GPU is enough at $256^3$, and an 80 GB GPU is needed at $512^3$ (an estimate to be checked with `nvidia-smi`). Three rules reduce the bill: preemptible instances for the simulation arrays, which are independent and can be restarted; a VM deleted as soon as it is no longer in use, after a backup (`make backup`); and data in a bucket rather than on the VM's disk.
 
 ## What is tested, what remains to be verified {#tests}
 
@@ -171,10 +171,10 @@ First measure a single representative simulation; its duration is recorded in th
 | laptop installation (`make setup`) and end-to-end test (`make smoke RUN=local`) | 68 s and 4 s |
 | CPU Docker image built from scratch; PostgreSQL, MinIO, MLflow stack healthy | 2 min; 14 s |
 | end-to-end test in the Docker stack: objects in MinIO, MLflow run completed, catalog populated | 10 s |
-| full installation by `bootstrap_vm.sh --cpu` on a fresh copy of the repository, then a rerun | 3 min; 33 s |
-| automated tests (`make test`), with PostgreSQL and MinIO | 66 passed, 1 skipped |
+| installation by `bootstrap_vm.sh --cpu` (Docker already present) on a fresh copy of the repository, then a rerun | 3 min; 33 s |
+| automated tests (`make test`), with PostgreSQL and MinIO | 66 passed, 1 skipped (before a 68th test was added, which also passes) |
 | Slurm templates executed with a simulated scheduler, including stopping at the end of the time limit and resuming | a few seconds |
-| MFF file read back by The Well's loader; backup readable by `pg_restore` | — |
+| MFF file read back by replaying the HDF5 accesses of The Well's loader; backup readable by `pg_restore` | — |
 
 Still to be verified on site, at the first rental: the full GPU image and the NVIDIA Container Toolkit, the solver and training on CUDA (and on several GPUs), a real Slurm with Apptainer, the installation of Docker on a fresh Ubuntu, the providers' S3 buckets, and the campaigns at their real size. The [deployment guide](https://github.com/knoel99/milady-2027/blob/main/infra/README.md) (§ 11 and 12) gives the details.
 
