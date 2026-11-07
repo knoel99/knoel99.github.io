@@ -848,7 +848,8 @@
       var y48 = Y(cp.n48);
       if (y48 >= p.t - 1 && y48 <= p.b + 1) this.marker("sq", cx, y48, C.pal[1]);
     }
-    if (this.tipOn) this.tooltip(p, cx, cyc, [
+    // infobulle limitée au cadre du graphique (en dessous de la légende, qu'elle ne doit pas masquer)
+    if (this.tipOn) this.tooltip({ x: p.x, y: p.t, w: p.w, h: p.y + p.h - p.t }, cx, cyc, [
       "Rm = " + fmtRm(lg, cp.rm),
       T.tipLam + " = " + fmt(lg, cp.lam, 5, true),
       T.tipQ + " : " + fmt(lg, cp.lamq, 5, true)
