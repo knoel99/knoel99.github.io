@@ -1,0 +1,2285 @@
+{
+ "name": "plan-these",
+ "mode": "design",
+ "format": "journal",
+ "widthMM": 183,
+ "heightMM": 120,
+ "W": 518.740157480315,
+ "H": 340.15748031496065,
+ "texts": [
+  {
+   "s": "0",
+   "role": "label",
+   "box": {
+    "x": 77.1353988647461,
+    "y": 129.19474029541016,
+    "w": 3.90244197845459,
+    "h": 7.500188827514648
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "1",
+   "role": "label",
+   "box": {
+    "x": 150.836181640625,
+    "y": 118.9900131225586,
+    "w": 3.90244197845459,
+    "h": 7.500188827514648
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "2",
+   "role": "label",
+   "box": {
+    "x": 224.53697204589844,
+    "y": 108.7852783203125,
+    "w": 3.90244197845459,
+    "h": 7.500188827514648
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "3",
+   "role": "label",
+   "box": {
+    "x": 298.2377624511719,
+    "y": 98.58056640625,
+    "w": 3.90244197845459,
+    "h": 7.500188827514648
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "4",
+   "role": "label",
+   "box": {
+    "x": 371.9385681152344,
+    "y": 88.3758316040039,
+    "w": 4.500113487243652,
+    "h": 7.500188827514648
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "E1",
+   "role": "label",
+   "box": {
+    "x": 129.2980499267578,
+    "y": 129.56975555419922,
+    "w": 6.726731777191162,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "E2",
+   "role": "label",
+   "box": {
+    "x": 202.99884033203125,
+    "y": 119.36502838134766,
+    "w": 6.726731777191162,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "E3",
+   "role": "label",
+   "box": {
+    "x": 276.69964599609375,
+    "y": 109.16029357910156,
+    "w": 6.726731777191162,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Gissinger, DQVU",
+   "role": "label",
+   "box": {
+    "x": 84.9171371459961,
+    "y": 65.89947509765625,
+    "w": 45.76689910888672,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Modèles réduits",
+   "role": "label",
+   "box": {
+    "x": 81.08501434326172,
+    "y": 57.77937316894531,
+    "w": 53.2630615234375,
+    "h": 7.500188827514648
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "périodique",
+   "role": "label",
+   "box": {
+    "x": 167.4306640625,
+    "y": 55.69475173950195,
+    "w": 28.38808250427246,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "MHD 2D",
+   "role": "label",
+   "box": {
+    "x": 168.00489807128906,
+    "y": 47.57465362548828,
+    "w": 27.017847061157227,
+    "h": 7.500188827514648
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "ABC, Taylor–Green",
+   "role": "label",
+   "box": {
+    "x": 229.37721252441406,
+    "y": 45.49002456665039,
+    "w": 51.48176574707031,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Dynamos 3Dpériodiques",
+   "role": "label",
+   "box": {
+    "x": 233.92420959472656,
+    "y": 29.57465362548828,
+    "w": 42.57841491699219,
+    "h": 15.340187072753906
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "SFEMaNS, LATU",
+   "role": "label",
+   "box": {
+    "x": 305.5800476074219,
+    "y": 35.28530502319336,
+    "w": 46.64985656738281,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "VKS",
+   "role": "label",
+   "box": {
+    "x": 321.6234436035156,
+    "y": 27.165205001831055,
+    "w": 14.390987396240234,
+    "h": 7.500188827514648
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "précession, HZDR",
+   "role": "label",
+   "box": {
+    "x": 378.0561828613281,
+    "y": 25.080575942993164,
+    "w": 49.094696044921875,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "DRESDYN",
+   "role": "label",
+   "box": {
+    "x": 385.4098815917969,
+    "y": 16.960479736328125,
+    "w": 34.406978607177734,
+    "h": 7.500188827514648
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "D",
+   "role": "label",
+   "box": {
+    "x": 72.48285675048828,
+    "y": 79.93687438964844,
+    "w": 4.500113487243652,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "t",
+   "role": "label",
+   "box": {
+    "x": 137.23355102539062,
+    "y": 103.77447509765625,
+    "w": 2.250056743621826,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "complexité croissante",
+   "role": "label",
+   "box": {
+    "x": 80.78739929199219,
+    "y": 45.77348709106445,
+    "w": 57.9998664855957,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "Bancs d'essai",
+   "role": "label",
+   "box": {
+    "x": 3.4015748500823975,
+    "y": 97.46441650390625,
+    "w": 49.8209228515625,
+    "h": 8.250207901000977
+   },
+   "size": 7.5,
+   "minSize": 7.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "E1–E3 : stage M2",
+   "role": "label",
+   "box": {
+    "x": 3.4015748500823975,
+    "y": 108.13569641113281,
+    "w": 48.023033142089844,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Axe 1",
+   "role": "label",
+   "box": {
+    "x": 3.4015748500823975,
+    "y": 153.8738555908203,
+    "w": 18.680158615112305,
+    "h": 7.500188827514648
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#005E92",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Contraintes dures 3D",
+   "role": "label",
+   "box": {
+    "x": 3.4015748500823975,
+    "y": 162.84434509277344,
+    "w": 56.76155090332031,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "potentiels ψ, a",
+   "role": "label",
+   "box": {
+    "x": 161.8201904296875,
+    "y": 160.65931701660156,
+    "w": 41.59089660644531,
+    "h": 7.50018310546875
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#005E92",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "∇×A, jauge",
+   "role": "label",
+   "box": {
+    "x": 239.32968139648438,
+    "y": 160.65931701660156,
+    "w": 33.226348876953125,
+    "h": 7.50018310546875
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#005E92",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "vide, saut de μ",
+   "role": "label",
+   "box": {
+    "x": 308.8584899902344,
+    "y": 160.65931701660156,
+    "w": 42.376068115234375,
+    "h": 7.50018310546875
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#005E92",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "parois conductrices",
+   "role": "label",
+   "box": {
+    "x": 375.68603515625,
+    "y": 160.65931701660156,
+    "w": 56.43704605102539,
+    "h": 7.500188827514648
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#005E92",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Axe 2",
+   "role": "label",
+   "box": {
+    "x": 3.4015748500823975,
+    "y": 187.88961791992188,
+    "w": 18.680158615112305,
+    "h": 7.500188827514648
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#8A5A00",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Contraintes en loiet symétries",
+   "role": "label",
+   "box": {
+    "x": 3.4015748500823975,
+    "y": 196.86009216308594,
+    "w": 46.77301788330078,
+    "h": 13.35015869140625
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "B → −B",
+   "role": "label",
+   "box": {
+    "x": 97.20166015625,
+    "y": 194.675048828125,
+    "w": 23.297470092773438,
+    "h": 7.50018310546875
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#8A5A00",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "𝔼[P − ε] = 0",
+   "role": "label",
+   "box": {
+    "x": 165.55270385742188,
+    "y": 194.675048828125,
+    "w": 34.13316345214844,
+    "h": 7.50018310546875
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#8A5A00",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "bilans d'hélicité",
+   "role": "label",
+   "box": {
+    "x": 234.33737182617188,
+    "y": 194.675048828125,
+    "w": 43.96589660644531,
+    "h": 7.500188827514648
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#8A5A00",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "symétrie Rπ",
+   "role": "label",
+   "box": {
+    "x": 312.81951904296875,
+    "y": 193.7650488615036,
+    "w": 34.793853759765625,
+    "h": 9.3201904296875
+   },
+   "size": 6.5,
+   "minSize": 4.68,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#8A5A00",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "centro-symétrie",
+   "role": "label",
+   "box": {
+    "x": 381.2818908691406,
+    "y": 194.675048828125,
+    "w": 44.875701904296875,
+    "h": 7.500188827514648
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#8A5A00",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Axe 3",
+   "role": "label",
+   "box": {
+    "x": 3.4015748500823975,
+    "y": 221.90536499023438,
+    "w": 18.680158615112305,
+    "h": 7.500188827514648
+   },
+   "size": 7,
+   "minSize": 7,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#006E4F",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Seuil dynamoet renversements",
+   "role": "label",
+   "box": {
+    "x": 3.4015748500823975,
+    "y": 230.8758544921875,
+    "w": 46.27006912231445,
+    "h": 13.350173950195312
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "formule de Rice",
+   "role": "label",
+   "box": {
+    "x": 86.11544799804688,
+    "y": 228.6907958984375,
+    "w": 45.604835510253906,
+    "h": 7.500188827514648
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#006E4F",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "borne près de Rmc",
+   "role": "label",
+   "box": {
+    "x": 229.0989532470703,
+    "y": 227.7807959318161,
+    "w": 54.30607604980469,
+    "h": 9.3201904296875
+   },
+   "size": 6.5,
+   "minSize": 4.68,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#006E4F",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "renversements",
+   "role": "label",
+   "box": {
+    "x": 308.47760009765625,
+    "y": 228.6907958984375,
+    "w": 43.44284439086914,
+    "h": 7.500188827514648
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#006E4F",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Rmc(Po)",
+   "role": "label",
+   "box": {
+    "x": 391.2958068847656,
+    "y": 227.7807959318161,
+    "w": 24.797515869140625,
+    "h": 9.3201904296875
+   },
+   "size": 6.5,
+   "minSize": 4.68,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#006E4F",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "sans objet",
+   "role": "label",
+   "box": {
+    "x": 94.06385803222656,
+    "y": 161.03433227539062,
+    "w": 27.885147094726562,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#8a8a8a",
+   "halo": false,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "pas de dynamo 2D",
+   "role": "label",
+   "box": {
+    "x": 155.52996826171875,
+    "y": 228.49888610839844,
+    "w": 51.19270324707031,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#8a8a8a",
+   "halo": true,
+   "rotate": 0,
+   "italic": true,
+   "weight": "normal"
+  },
+  {
+   "s": "Boîte à outilsMilaDy",
+   "role": "label",
+   "box": {
+    "x": 461.5045166015625,
+    "y": 196.96047973632812,
+    "w": 40.900421142578125,
+    "h": 14.975204467773438
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Débouchés",
+   "role": "label",
+   "box": {
+    "x": 447.8740234375,
+    "y": 7.039217948913574,
+    "w": 40.699283599853516,
+    "h": 8.250207901000977
+   },
+   "size": 7.5,
+   "minSize": 7.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Réduction de modèle",
+   "role": "label",
+   "box": {
+    "x": 447.8740234375,
+    "y": 48.425045013427734,
+    "w": 61.49651336669922,
+    "h": 7.500188827514648
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Assimilation (TorchDA)",
+   "role": "label",
+   "box": {
+    "x": 447.8740234375,
+    "y": 96.61402893066406,
+    "w": 65.7467269897461,
+    "h": 7.500188827514648
+   },
+   "size": 6.5,
+   "minSize": 6.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Année 1",
+   "role": "label",
+   "box": {
+    "x": 121.1269302368164,
+    "y": 266.483154296875,
+    "w": 22.730060577392578,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Année 2",
+   "role": "label",
+   "box": {
+    "x": 243.96156311035156,
+    "y": 266.483154296875,
+    "w": 22.730072021484375,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Année 3",
+   "role": "label",
+   "box": {
+    "x": 366.7962341308594,
+    "y": 266.483154296875,
+    "w": 22.73004913330078,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "0",
+   "role": "label",
+   "box": {
+    "x": 64.51790618896484,
+    "y": 281.2232971191406,
+    "w": 3.05867075920105,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "1",
+   "role": "label",
+   "box": {
+    "x": 64.51790618896484,
+    "y": 287.8847351074219,
+    "w": 3.05867075920105,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "2",
+   "role": "label",
+   "box": {
+    "x": 115.69901275634766,
+    "y": 294.546142578125,
+    "w": 3.05867075920105,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "3",
+   "role": "label",
+   "box": {
+    "x": 207.8249969482422,
+    "y": 301.2075500488281,
+    "w": 3.05867075920105,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "4",
+   "role": "label",
+   "box": {
+    "x": 299.95098876953125,
+    "y": 307.86895751953125,
+    "w": 3.750094413757324,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#ffffff",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "bold"
+  },
+  {
+   "s": "rédaction",
+   "role": "label",
+   "box": {
+    "x": 349.906005859375,
+    "y": 314.5303955078125,
+    "w": 24.645153045654297,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "0",
+   "role": "label",
+   "box": {
+    "x": 69.33680725097656,
+    "y": 326.11993408203125,
+    "w": 3.05867075920105,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "6",
+   "role": "label",
+   "box": {
+    "x": 130.75411987304688,
+    "y": 326.11993408203125,
+    "w": 3.05867075920105,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "12",
+   "role": "label",
+   "box": {
+    "x": 190.6421356201172,
+    "y": 326.11993408203125,
+    "w": 6.1173415184021,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "18",
+   "role": "label",
+   "box": {
+    "x": 252.05943298339844,
+    "y": 326.11993408203125,
+    "w": 6.1173415184021,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "24",
+   "role": "label",
+   "box": {
+    "x": 313.4767761230469,
+    "y": 326.11993408203125,
+    "w": 6.1173415184021,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "30",
+   "role": "label",
+   "box": {
+    "x": 374.8940734863281,
+    "y": 326.11993408203125,
+    "w": 6.1173415184021,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "36",
+   "role": "label",
+   "box": {
+    "x": 436.3114013671875,
+    "y": 326.11993408203125,
+    "w": 6.1173415184021,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "mois",
+   "role": "label",
+   "box": {
+    "x": 445.6062927246094,
+    "y": 326.11993408203125,
+    "w": 11.856331825256348,
+    "h": 6.7501702308654785
+   },
+   "size": 5.5,
+   "minSize": 5.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "soutenance",
+   "role": "label",
+   "box": {
+    "x": 447.8740234375,
+    "y": 254.57762145996094,
+    "w": 31.38520622253418,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "Calendrier",
+   "role": "label",
+   "box": {
+    "x": 3.4015748500823975,
+    "y": 266.1258239746094,
+    "w": 37.12604904174805,
+    "h": 8.250207901000977
+   },
+   "size": 7.5,
+   "minSize": 7.5,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "36 mois",
+   "role": "label",
+   "box": {
+    "x": 3.4015748500823975,
+    "y": 276.797119140625,
+    "w": 20.977092742919922,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#555555",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "article",
+   "role": "label",
+   "box": {
+    "x": 471.6850280761719,
+    "y": 278.9555969238281,
+    "w": 16.39366340637207,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  },
+  {
+   "s": "version du code",
+   "role": "label",
+   "box": {
+    "x": 458.6456604003906,
+    "y": 291.42803955078125,
+    "w": 42.698341369628906,
+    "h": 6.7501702308654785
+   },
+   "size": 6,
+   "minSize": 6,
+   "family": "Arial, Helvetica, sans-serif",
+   "color": "#1a1a1a",
+   "halo": false,
+   "rotate": 0,
+   "italic": false,
+   "weight": "normal"
+  }
+ ],
+ "strokes": [
+  {
+   "w": 0.4,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.9,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.9,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.9,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.9,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.9,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "path",
+   "part": "circle3"
+  },
+  {
+   "w": 0.3,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.3,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.4,
+   "tag": "path",
+   "part": "circle3"
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.25,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "path",
+   "part": "circle3"
+  },
+  {
+   "w": 0.3,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.3,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.9,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.4,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": "line3"
+  },
+  {
+   "w": 0.3,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.3,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.3,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.3,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.3,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.3,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.3,
+   "tag": "path",
+   "part": "cylinder-body"
+  },
+  {
+   "w": 0.3,
+   "tag": "path",
+   "part": "cylinder-cap"
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": "line3"
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.55,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.35,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.8333858267716537,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.8333858267716537,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.8333858267716537,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.5,
+   "tag": "path",
+   "part": "arrow-shaft"
+  },
+  {
+   "w": 0.4,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "polyline",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "circle",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "circle",
+   "part": ""
+  },
+  {
+   "w": 0.3,
+   "tag": "circle",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.35,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "rect",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.45,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.5357480314960631,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.5357480314960631,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.5357480314960631,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.5357480314960631,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.5357480314960631,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.5357480314960631,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.6,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.4,
+   "tag": "polygon",
+   "part": ""
+  },
+  {
+   "w": 0.49606299212598437,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.49606299212598437,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.49606299212598437,
+   "tag": "line",
+   "part": ""
+  },
+  {
+   "w": 0.7,
+   "tag": "path",
+   "part": "arrow-shaft"
+  }
+ ],
+ "images": [],
+ "anchors": {
+  "cube.x1": {
+   "x": 267.8740157480316,
+   "y": 78.51968503937007
+  },
+  "axe1.end": {
+   "x": 446.74015748031496,
+   "y": 164.40944881889766
+  },
+  "axe2.end": {
+   "x": 446.74015748031496,
+   "y": 198.42519685039372
+  },
+  "axe3.end": {
+   "x": 446.74015748031496,
+   "y": 232.44094488188978
+  },
+  "outils.in1": {
+   "x": 447.8740157480315,
+   "y": 164.40944881889766
+  },
+  "outils.in2": {
+   "x": 447.8740157480315,
+   "y": 198.42519685039372
+  },
+  "outils.in3": {
+   "x": 447.8740157480315,
+   "y": 232.44094488188978
+  },
+  "outils.top": {
+   "x": 481.8897637795276,
+   "y": 153.0708661417323
+  },
+  "debouches.bottom": {
+   "x": 481.8897637795276,
+   "y": 108.28346456692915
+  }
+ },
+ "relations": [
+  {
+   "from": "axe1.end",
+   "to": "outils.in1",
+   "kind": "flow"
+  },
+  {
+   "from": "axe2.end",
+   "to": "outils.in2",
+   "kind": "flow"
+  },
+  {
+   "from": "axe3.end",
+   "to": "outils.in3",
+   "kind": "flow"
+  },
+  {
+   "from": "outils.top",
+   "to": "debouches.bottom",
+   "kind": "flow"
+  }
+ ],
+ "drawn": [
+  {
+   "from": "axe1.end",
+   "to": "outils.in1",
+   "kind": "flow"
+  },
+  {
+   "from": "axe2.end",
+   "to": "outils.in2",
+   "kind": "flow"
+  },
+  {
+   "from": "axe3.end",
+   "to": "outils.in3",
+   "kind": "flow"
+  },
+  {
+   "from": "outils.top",
+   "to": "debouches.bottom",
+   "kind": "flow"
+  }
+ ],
+ "panels": [
+  {
+   "label": "",
+   "x": 0,
+   "y": 0,
+   "w": 518.740157480315,
+   "h": 340.15748031496065
+  }
+ ]
+}

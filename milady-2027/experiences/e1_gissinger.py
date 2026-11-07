@@ -34,6 +34,25 @@ import torch
 from common import (MLPField, SymmetrizedField, energy_distance, exp_tilt, save_json, sample_ode,
                     seed_all, sliced_w1, systematic_resample, train, RESULTS)
 
+import pickle
+
+CACHE = RESULTS / "cache_e1"
+
+
+def cached(name, fn):
+    """Calcule fn() une seule fois : le résultat est gardé dans resultats/cache_e1/ (reprise après interruption)."""
+    CACHE.mkdir(exist_ok=True)
+    path = CACHE / f"{name}.pkl"
+    if path.is_file():
+        print(f"(cache) {name}", flush=True)
+        return pickle.loads(path.read_bytes())
+    out = fn()
+    tmp = path.with_suffix(".tmp")
+    tmp.write_bytes(pickle.dumps(out))
+    tmp.replace(path)
+    return out
+
+
 MU, NU = 0.119, 0.1
 S = np.array([-1.0, -1.0, 1.0])
 G_TRAIN = np.round(np.arange(0.80, 1.0001, 0.02), 3)
@@ -191,13 +210,16 @@ def main(quick=False):
     t_start = time.time()
     n_traj, t_keep = (8, 800) if quick else (16, 3000)
     print("simulation (entraînement)…", flush=True)
-    train_data = simulate(G_TRAIN, n_traj, 300, t_keep, every=2.0, seed=1)
+    q = "_quick" if quick else ""
+    train_data = cached(f"sim_train{q}", lambda: simulate(G_TRAIN, n_traj, 300, t_keep, every=2.0, seed=1))
     print("simulation (référence)…", flush=True)
-    ref_data = simulate(np.concatenate([G_TRAIN, G_TEST]), 2 * n_traj, 300, t_keep, every=2.0, seed=2)
+    ref_data = cached(f"sim_ref{q}", lambda: simulate(np.concatenate([G_TRAIN, G_TEST]), 2 * n_traj, 300, t_keep, every=2.0, seed=2))
+    ref_data = {k: dict(v) for k, v in ref_data.items()}
     for k in ref_data:  # référence exactement symétrique (conditions initiales symétriques)
         ref_data[k]["x"] = np.concatenate([ref_data[k]["x"], ref_data[k]["x"] * S])
     print("simulation (grille fine)…", flush=True)
-    fine_data = simulate(G_FINE, n_traj, 300, t_keep, every=2.0, seed=3)
+    fine_data = cached(f"sim_fine{q}", lambda: simulate(G_FINE, n_traj, 300, t_keep, every=2.0, seed=3))
+    fine_data = {k: dict(v) for k, v in fine_data.items()}
     for k in fine_data:
         fine_data[k]["x"] = np.concatenate([fine_data[k]["x"], fine_data[k]["x"] * S])
 
@@ -246,21 +268,29 @@ def main(quick=False):
     gens, models = {}, {}
     for vname, (kind, aug, n_it) in variants.items():
         for seed in seeds:
-            seed_all(seed)
             base = MLPField(3, width=256, depth=4)
             model = SymmetrizedField(base, S) if kind == "sym" else base
-            hist, tsec = train(model, batcher(aug), n_it, lr=2e-3, log_every=max(n_it // 4, 1), name=f"{vname}/s{seed}")
-            model.eval()
+
+            def run(model=model, aug=aug, n_it=n_it, vname=vname, seed=seed):
+                seed_all(seed)
+                hist, tsec = train(model, batcher(aug), n_it, lr=2e-3, log_every=max(n_it // 4, 1), name=f"{vname}/s{seed}")
+                model.eval()
+                t0 = time.time()
+                g = {}
+                for gam in grid:
+                    torch.manual_seed(1000 + seed)
+                    c = torch.full((n_gen,), float(cnorm(gam)))
+                    z = sample_ode(model, c, (n_gen, 3), steps=50)
+                    g[float(gam)] = from_z(z.numpy().astype(np.float64))
+                info = {"temps_entrainement_s": tsec, "perte_finale": hist[-1][1],
+                        "temps_generation_s_par_1000": (time.time() - t0) / (len(grid) * n_gen / 1000)}
+                return {"state": {k: v.clone() for k, v in model.state_dict().items()}, "gens": g, "info": info}
+            out = cached(f"{vname}_s{seed}{q}", run)
+            model.load_state_dict(out["state"]); model.eval()
             models[(vname, seed)] = model
-            t0 = time.time()
-            for gam in grid:
-                torch.manual_seed(1000 + seed)
-                c = torch.full((n_gen,), float(cnorm(gam)))
-                z = sample_ode(model, c, (n_gen, 3), steps=50)
-                gens[(vname, seed, float(gam))] = from_z(z.numpy().astype(np.float64))
-            results["entrainement"].setdefault(vname, {})[f"seed{seed}"] = {
-                "temps_entrainement_s": tsec, "perte_finale": hist[-1][1],
-                "temps_generation_s_par_1000": (time.time() - t0) / (len(grid) * n_gen / 1000)}
+            for gam, xg in out["gens"].items():
+                gens[(vname, seed, gam)] = xg
+            results["entrainement"].setdefault(vname, {})[f"seed{seed}"] = out["info"]
 
     # Réglages fins (F : avec perte de stationnarité ; F0 : témoin sans la perte)
     import copy
@@ -271,17 +301,26 @@ def main(quick=False):
         for beta, prefix in ((20.0, "F_stationnarite_"), (0.0, "F0_temoin_")):
             vname = prefix + tag
             for seed in seeds:
-                seed_all(100 + seed)
                 model = copy.deepcopy(models[(base_name, seed)])
-                model.train()
-                tsec = finetune(model, batcher(False), ft_iters, beta, sd, mean, std, cnorm, name=f"{vname}/s{seed}")
-                model.eval()
+
+                def run_ft(model=model, beta=beta, vname=vname, seed=seed):
+                    seed_all(100 + seed)
+                    model.train()
+                    tsec = finetune(model, batcher(False), ft_iters, beta, sd, mean, std, cnorm, name=f"{vname}/s{seed}")
+                    model.eval()
+                    g = {}
+                    for gam in grid:
+                        torch.manual_seed(1000 + seed)
+                        z = sample_ode(model, torch.full((n_gen,), float(cnorm(gam))), (n_gen, 3), steps=50)
+                        g[float(gam)] = from_z(z.numpy().astype(np.float64))
+                    return {"state": {k: v.clone() for k, v in model.state_dict().items()}, "gens": g,
+                            "info": {"temps_reglage_fin_s": tsec, "iters": ft_iters, "beta": beta}}
+                out = cached(f"{vname}_s{seed}{q}", run_ft)
+                model.load_state_dict(out["state"]); model.eval()
                 models[(vname, seed)] = model
-                for gam in grid:
-                    torch.manual_seed(1000 + seed)
-                    z = sample_ode(model, torch.full((n_gen,), float(cnorm(gam))), (n_gen, 3), steps=50)
-                    gens[(vname, seed, float(gam))] = from_z(z.numpy().astype(np.float64))
-                results["entrainement"].setdefault(vname, {})[f"seed{seed}"] = {"temps_reglage_fin_s": tsec, "iters": ft_iters, "beta": beta}
+                for gam, xg in out["gens"].items():
+                    gens[(vname, seed, gam)] = xg
+                results["entrainement"].setdefault(vname, {})[f"seed{seed}"] = out["info"]
 
     # Post-traitements en loi (D) et par échantillon (E)
     tilt_info = {}

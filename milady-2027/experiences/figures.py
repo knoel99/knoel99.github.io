@@ -41,7 +41,7 @@ TXT = {
                   "V3_flot_projete": "V3 flot projeté", "V4_potentiels": "V4 potentiels",
                   "V5_potentiels_stat": "V5 potentiels + perte stat.", "V5_temoin": "V5 témoin",
                   "reference_sous_echantillon": "données (sous-éch.)"},
-        "div": "divergence relative ⟨|∇·u|²⟩^½ / ⟨|∇u|²⟩^½", "spec": "erreur de spectre (log₁₀, moyenne)",
+        "div": "divergence relative de u", "spec": "erreur de spectre (log₁₀, moyenne)",
         "bal": "|E[D] − ε_inj| / ε_inj", "k": "nombre d'onde k", "Eu": "E_u(k)", "Eb": "E_B(k)",
         "diss": "dissipation D(x) / ε_inj", "base": "V4 (générée)", "tilt": "V4 + inclinaison", "resc": "V4 + recalage/éch.",
         "rm": "Rm = 1/η", "lam": "taux de croissance λ",
@@ -60,7 +60,7 @@ TXT = {
                   "V3_flot_projete": "V3 projected flow", "V4_potentiels": "V4 potentials",
                   "V5_potentiels_stat": "V5 potentials + stat. loss", "V5_temoin": "V5 control",
                   "reference_sous_echantillon": "data (subsample)"},
-        "div": "relative divergence ⟨|∇·u|²⟩^½ / ⟨|∇u|²⟩^½", "spec": "spectrum error (log₁₀, mean)",
+        "div": "relative divergence of u", "spec": "spectrum error (log₁₀, mean)",
         "bal": "|E[D] − ε_inj| / ε_inj", "k": "wavenumber k", "Eu": "E_u(k)", "Eb": "E_B(k)",
         "diss": "dissipation D(x) / ε_inj", "base": "V4 (generated)", "tilt": "V4 + tilting", "resc": "V4 + per-sample rescaling",
         "rm": "Rm = 1/η", "lam": "growth rate λ",
@@ -83,7 +83,7 @@ def finish(fig, name, lang):
         for ax in fig.axes:
             if ax.get_xscale() == "linear":
                 ax.xaxis.set_major_formatter(f)
-            if ax.get_yscale() == "linear":
+            if ax.get_yscale() == "linear" and not getattr(ax, "_categ", False):
                 ax.yaxis.set_major_formatter(f)
     fig.tight_layout()
     stem = name if lang == "fr" else f"{name}-en"
@@ -137,6 +137,8 @@ def e1(suffix="", lang="fr"):
             ax[j].text(fl, len(keys) - 0.45, t["mc"], color=INK2, fontsize=7, va="bottom")
         ax[j].set_xscale("log"); ax[j].set_xlabel(lab)
     ax[0].set_yticks(y); ax[0].set_yticklabels([t["var"][k] for k in keys])
+    for a in ax:
+        a._categ = True
     finish(fig, f"e1_variantes{suffix}", lang)
 
     d = np.load(RESULTS / f"e1_echantillons{suffix}.npz")
@@ -174,6 +176,8 @@ def e2(suffix="", lang="fr"):
         ax[j].barh(y, vals, color=cols, height=0.62)
         ax[j].set_xscale("log"); ax[j].set_xlabel(lab, fontsize=8)
     ax[0].set_yticks(y); ax[0].set_yticklabels([t["e2var"][k] for k in keys])
+    for a in ax:
+        a._categ = True
     finish(fig, f"e2_mecanismes{suffix}", lang)
 
     # spectres moyens à un η de test
@@ -199,18 +203,24 @@ def e2(suffix="", lang="fr"):
     finish(fig, f"e2_spectres{suffix}", lang)
 
     # volet en loi : moyennes sur η de test
-    law = res["en_loi"]
-    fig, ax = plt.subplots(1, 3, figsize=(10, 3.0), sharey=True)
-    modes = [("base", t["base"]), ("inclinaison", t["tilt"]), ("recalage", t["resc"])]
-    y = np.arange(3)[::-1]
+    law = dict(res["en_loi"])
+    law["V5"] = res["V5_potentiels_stat"]
+    fig, ax = plt.subplots(1, 3, figsize=(10, 3.4), sharey=True)
+    modes = [("base", t["base"]), ("inclinaison", t["tilt"]), ("recalage", t["resc"]), ("V5", t["e2var"]["V5_potentiels_stat"])]
+    y = np.arange(len(modes))[::-1]
     for j, (key, lab) in enumerate((("residu_bilan_energie", t["bal"]), ("std_diss_rel", "σ(D) / σ_ref(D)"),
                                     ("dist_energie_features", t["ed"]))):
         vals = [law[m]["test"][key] for m, _ in modes]
-        ax[j].barh(y, vals, color=[C[0], C[2], C[1]], height=0.6)
+        ax[j].barh(y, vals, color=[C[0], C[2], C[1], C[3]], height=0.6)
+        for yy, v in zip(y, vals):
+            txt = f"{v:.2g}" if lang == "en" else f"{v:.2g}".replace(".", ",")
+            ax[j].text(v, yy, " " + txt, va="center", fontsize=7.5, color=INK2)
         ax[j].set_xlabel(lab, fontsize=8)
         if key == "std_diss_rel":
             ax[j].axvline(1, color=INK2, ls="--", lw=1)
     ax[0].set_yticks(y); ax[0].set_yticklabels([lab for _, lab in modes])
+    for a in ax:
+        a._categ = True
     finish(fig, f"e2_en_loi{suffix}", lang)
 
 

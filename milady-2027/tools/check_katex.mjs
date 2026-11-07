@@ -1,6 +1,6 @@
 // Vérifie que toutes les formules d'une page rendue passent KaTeX (throwOnError).
 // Usage : NODE_PATH=<dossier node_modules> node tools/check_katex.mjs page1/index.html [page2/index.html …]
-// Quarto écrit les formules dans <span class="math inline">\(…\)</span> et <span class="math display">\[…\]</span>.
+// Quarto 1.7 écrit les formules dans <span class="math inline">…</span> et <span class="math display">…</span> (sans \( \)).
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
@@ -9,7 +9,7 @@ const decode = (s) => s.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&qu
 let bad = 0, total = 0;
 for (const file of process.argv.slice(2)) {
   const html = readFileSync(file, "utf8");
-  const re = /<span class="math (inline|display)">\\[\(\[]([\s\S]*?)\\[\)\]]<\/span>/g;
+  const re = /<span class="math (inline|display)">(?:\\[\(\[])?([\s\S]*?)(?:\\[\)\]])?<\/span>/g;
   let m;
   while ((m = re.exec(html))) {
     total++;
