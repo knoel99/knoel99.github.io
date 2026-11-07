@@ -1,0 +1,187 @@
+---
+title: "Computing and data"
+subtitle: "From CPU experiments to 3D campaigns: data format, results catalog, deployment on a cloud VM or a Slurm cluster"
+lang: en
+format:
+  html:
+    theme: none
+    minimal: true
+    toc: false
+    anchor-sections: false
+    html-math-method:
+      method: katex
+      url: "https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js"
+    highlight-style: github
+    embed-resources: false
+    css: ../../assets/paper.css
+    include-in-header:
+      - text: |
+          <meta name="color-scheme" content="light dark">
+          <script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    include-before-body:
+      - text: |
+          <a class="skip" href="#main">Skip to content</a>
+          <header class="topbar">
+            <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Contents</span></button>
+            <a class="brand" href="../../en/index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+            <span class="tb-title" id="tb-title"></span>
+            <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Theme</span></button>
+          </header>
+          <div class="layout">
+          <nav class="sidetoc" id="sidetoc" aria-label="Contents"></nav>
+          <main class="paper" id="main">
+    include-after-body:
+      - text: |
+          </main>
+          </div>
+          <footer class="foot"><p><a href="../../en/index.html">← Home</a> · <a href="../../en/prep/index.html">Preparation</a> · <a href="../../en/encadrants/index.html">Supervisors</a> · <a href="../../en/rapport/index.html">Internship report</a> · <a href="../../en/these/index.html">PhD proposal</a> · <a href="../../en/interactifs/index.html">Interactive diagrams</a> · <a href="../../en/experiences/index.html">Experiments</a> · <a href="../../en/calcul/index.html">Computing and data</a></p></footer>
+          <script defer src="../../assets/theme.js"></script>
+---
+
+The experiments in the [report](../rapport/index.html#experiences) run on an ordinary CPU. The [thesis plan](../these/index.html#plan-experimental) calls for more: campaigns of tens to hundreds of 3D simulations, GPU training runs, and a record of every result. This page describes the ready-to-use infrastructure of the repository: the Python package `milady` and the `infra/` folder. You rent a machine, run `git clone`, and a single command installs everything.
+
+::: note
+[What has been tested]{.tag}
+The whole pipeline has run end to end on a machine **without a GPU** (laptop, full Docker stack, Slurm templates executed with a simulated scheduler): 66 automated tests pass. What could **not** be run: a GPU card, a real Slurm cluster, Apptainer, and a VM rented from a provider. The [last section](#tests) details what has been verified and what remains to be verified on site.
+:::
+
+## Getting started {#demarrer}
+
+Three targets share the same code, the same software image, and the same data format.
+
+| Target | What for | Main command |
+|---|---|---|
+| **A. Cloud VM with GPU**, rented by the hour | 3D campaigns and training, without a computing center | `sudo infra/deploy/bootstrap_vm.sh` |
+| **B. Slurm cluster** (Jean Zay, regional HPC center) | large campaigns, multi-node training | `python -m milady.sweep … --scheduler slurm` |
+| **C. Laptop**, no GPU | development, tests, small grids | `make setup && make smoke` |
+
+**On a cloud VM.** Create an Ubuntu 22.04 or 24.04 VM, preferably with the provider's "GPU" image (NVIDIA driver preinstalled), a 100 to 200 GB disk, and a firewall that opens only SSH. Then:
+
+```bash
+ssh ubuntu@VM_IP_ADDRESS
+git clone https://github.com/knoel99/milady-2027.git && cd milady-2027
+sudo infra/deploy/bootstrap_vm.sh
+```
+
+The script, which can safely be rerun, installs Docker and, if a GPU is present, the NVIDIA Container Toolkit; it generates random passwords in a `.env` file that is never committed; it builds the image (`milady:gpu`, CUDA 12.6, or `milady:cpu`); it starts the PostgreSQL database, the MinIO object storage, and the MLflow server; finally, it runs an end-to-end test (tiny 3D simulation, file, catalog, one training iteration, evaluation). Measured duration without a GPU: 3 minutes, including the image build. You can also pass the file `infra/deploy/cloud-init.yaml` when creating the VM, without logging into it, or deploy from your laptop with `infra/deploy/deploy_remote.sh ubuntu@IP`.
+
+Then, from the VM:
+
+```bash
+make sweep CONFIG=infra/configs/palier2_abc3d.yaml      # simulation campaign
+make train CONFIG=infra/configs/train_fm3d.yaml         # training (all GPUs, torchrun)
+make eval  CONFIG=infra/configs/train_fm3d.yaml         # evaluation, results to the catalog
+```
+
+The web interfaces (MLflow, MinIO console, JupyterLab) listen only on the VM: you reach them through an SSH tunnel, `ssh -N -L 5000:localhost:5000 -L 9001:localhost:9001 ubuntu@IP`.
+
+**On a Slurm cluster.** The GPU image is converted into an Apptainer image (`make image-gpu && make sif`), then copied to the cluster. Each simulation of a campaign is one element of a job array (one GPU each); training launches one `torchrun` per node. The compute nodes of Jean Zay have no Internet access: the catalog is then an SQLite file on `$WORK`, merged afterwards into the central database (`python -m milady.catalog ingest`). The guide [`README-slurm.md`](https://github.com/knoel99/milady-2027/blob/main/infra/slurm/README-slurm.md) gives the options specific to Jean Zay, checked against the IDRIS documentation.
+
+**On a laptop.** `make setup` creates a virtual environment with pinned versions (68 s measured), and `make smoke RUN=local` runs the same end-to-end test with an SQLite catalog and local files (4 s).
+
+## The processing pipeline {#chaine}
+
+A campaign described in a YAML file becomes simulations, then files, then a dataset, models, and evaluations. Each step writes its record to the catalog, with a unique identifier (UUID) and the exact commit of the code.
+
+| Step | Module | What is produced | Where it is recorded |
+|---|---|---|---|
+| 1. Campaign | YAML file in `infra/configs/` | grid of physical parameters ($Re$, $Rm$, $Pm$…) | `campaign` table (full copy of the YAML) |
+| 2. Launch | `milady.sweep` | one task per grid point: locally, one container per simulation, or a Slurm job array | `simulation` and `job` tables |
+| 3. Simulation | `milady.sim` (3D MHD solver, PyTorch) | fields $(\mathbf{u}, \mathbf{B})$ and diagnostics | MFF file; `diagnostic` table |
+| 4. Storage | `milady.storage` | immutable file `{campaign}/{uuid}/fields.h5`, on S3, MinIO, or disk | `file` table (SHA-256 checksum, size) |
+| 5. Dataset | `milady.catalog` | selection of simulations and split into training, validation, and test sets | `dataset` and `dataset_member` tables |
+| 6. Training | `milady.train.fm3d` | conditional flow matching on vector potentials; checkpoints | `model` table; MLflow (curves, hyperparameters) |
+| 7. Evaluation | `milady.eval` | statistical and physical metrics of the generated fields | `evaluation` table; `v_eval_summary` view |
+
+Since the simulation carries the same UUID in the file and in the catalog, a catalog can always be rebuilt or merged from the files alone. This is what makes it possible to work on a cluster without network access.
+
+## The data format {#format}
+
+Each simulation produces a file in the **MFF** format (*MilaDy Field Format*): an HDF5 file that follows exactly the convention of [The Well](https://polymathic-ai.org/the_well/data_format/) (Ohana et al., NeurIPS 2024), the reference collection of physics simulations for machine learning, and adds metadata prefixed with `milady_`.
+
+```
+fields.h5
+├── attributes: dataset_name, grid_type, n_spatial_dims, n_trajectories, simulation_parameters…
+│               milady_uuid, milady_code, milady_git_commit, milady_parameters (JSON)…
+├── dimensions/          time, x, y, z
+├── boundary_conditions/ periodic conditions along each axis
+├── scalars/             physical parameters (Re, Rm, Pm…)
+├── t0_fields/           scalar fields
+├── t1_fields/           u, B: (trajectories, time, x, y, z, components)
+├── milady_diagnostics/  energies, dissipations, helicities, growth rates, max |∇·u|, max |∇·B|
+└── milady_spectral/     Fourier coefficients of the fields (periodic domains, optional)
+```
+
+Following The Well makes the data readable by the reference loaders and models of the community: we checked that a 3D MFF file is read back identically by the `WellDataset` loader (the_well 1.2.0). The `milady_*` attributes are invisible to a The Well reader and are validated by a JSON schema. A **Zarr** variant, with the same hierarchy, makes it possible to read a chunk of a file on S3 without downloading it. An extension is planned for the outputs of SFEMaNS (azimuthal Fourier modes on a meridional finite-element mesh), without destructive interpolation. The validation function detects corrupted files: the 18 corruptions tested (types, shapes, non-finite values, identifiers…) are all flagged. Full specification: [`specs/format-donnees.md`](https://github.com/knoel99/milady-2027/blob/main/specs/format-donnees.md).
+
+## The results catalog {#catalogue}
+
+The results of a thesis are relational: campaign, simulations, files, datasets, models, evaluations. They are stored in a **PostgreSQL** database (locally or on the VM), or in an **SQLite** file with the same schema on a laptop or on a cluster without network access.
+
+| Table | Contents |
+|---|---|
+| `campaign` | name, description, full YAML configuration |
+| `simulation` | physical parameters (indexed JSON), status, machine, GPUs and cores, duration, code commit |
+| `file` | URI, SHA-256 checksum, size, number of snapshots |
+| `diagnostic` | time series of the physical diagnostics |
+| `dataset`, `dataset_member` | versioned datasets and their split |
+| `model` | hyperparameters, dataset, MLflow run, checkpoint, commit |
+| `evaluation` | metric, value, parameters, seed, number of samples |
+| `job` | scheduler identifier (Slurm, Docker), status, logs |
+
+The catalog is queried in SQL or from the command line. For example, the GPU hours consumed per campaign:
+
+```sql
+SELECT c.name, round(sum(s.wall_time_s * greatest(s.n_gpus, 1)) / 3600.0, 1) AS heures_gpu
+FROM simulation s JOIN campaign c ON c.id = s.campaign_id
+WHERE s.status = 'done' GROUP BY c.name ORDER BY heures_gpu DESC;
+```
+
+and, from the command line, `python -m milady.catalog sims --campaign palier2_abc3d --param Rm__gt=8` lists the simulations of a campaign above a threshold. The heavy files live in object storage with an S3 API: MinIO on the VM, or a provider's bucket so that they survive the deletion of the VM. Training runs are tracked by **MLflow**, self-hosted, and linked to the catalog through the run identifier.
+
+## The solver, the campaigns, and training {#solveur}
+
+**Solver.** `milady.sim.mhd3d` solves periodic 3D incompressible MHD with a pseudo-spectral method in PyTorch, on CPU or GPU: fourth-order Runge–Kutta with an integrating factor, dealiasing with the 2/3 rule, Leray projection of $\mathbf{u}$ and of $\mathbf{B}$, so that both divergences remain at machine precision. It has two modes: dynamic (coupled Navier–Stokes and induction equations, ABC, Taylor–Green, or random forcing) and kinematic (imposed flow, as in experiment [E3](../rapport/index.html#e3)). Several trajectories advance together on the same GPU. The energy balance $\mathrm{d}(E_u + E_B)/\mathrm{d}t = \text{injection} - \nu\langle|\boldsymbol\omega|^2\rangle - \eta\langle|\mathbf{j}|^2\rangle$ is checked by the tests. On the development CPU, one step takes 0.08 s at $64^3$ in dynamic mode (2 threads); no GPU timing is given, for lack of a GPU, and the command `python -m milady.sim.mhd3d bench --device cuda` measures it on site.
+
+**Ready-made campaigns.** They follow the tiers of the [thesis plan](../these/index.html#plan-experimental).
+
+| Campaign | Contents |
+|---|---|
+| `palier1_mhd2d` | forced 2D MHD from experiment E2: 11 values of $\eta$, 16 trajectories per value |
+| `palier2_abc3d` | ABC kinematic dynamo at $64^3$: $Rm$ from 4 to 40 (37 simulations), magnetic eigenmodes |
+| `palier2_tg3d` | Taylor–Green forced 3D MHD at $64^3$: $Re \in \{25, 50, 100, 200\}$ and $Pm \in \{0.5 ; 1 ; 2\}$ (12 simulations) |
+| `train_fm3d` | flow matching of the Taylor–Green fields conditioned on $(Re, Pm)$, vector potentials truncated at $|\mathbf{m}| \le 8$, exact $\mathbf{B} \to -\mathbf{B}$ symmetry |
+
+**Training.** `milady.train.fm3d` carries over to 3D the choices validated by the experiments: vector potentials in the Coulomb gauge (zero divergence by construction, like variant V4 of E2), a velocity field equivariant under $\mathbf{B} \to -\mathbf{B}$ (variant C of E1), and optional fine-tuning with an unbiased estimate of the stationarity loss. Experiment E1 showed that this fine-tuning can diverge when started from a biased model: it is launched only from an already good model, with two safeguards added for this reason, an anchor to the starting weights (`stationarity.anchor`) and a gradual ramp-up of the weight $\beta$ (`stationarity.beta_warmup`), and the spread of the balances is monitored. The same code runs on one GPU or on several nodes (DDP), resumes after an interruption, and logs to MLflow.
+
+## Costs {#couts}
+
+Prices change with the provider, the region, and the rental mode: the guide gives no prices, but a method.
+
+$$
+\text{cost} \approx \sum_{\text{tasks}} \text{duration (h)} \times \text{number of GPUs} \times \text{hourly price of the instance} \;+\; \text{storage} \;+\; \text{outbound data} .
+$$
+
+First measure a single representative simulation; its duration is recorded in the catalog and extrapolated to the whole campaign. As for memory, a state $(\mathbf{u}, \mathbf{B})$ in single precision takes $6 \times N^3 \times 4$ bytes, i.e., about 0.4 GB at $256^3$; the scheme keeps about ten copies of it, so a 24 GB GPU is enough at $256^3$ and 80 GB are needed at $512^3$ (an estimate to be checked with `nvidia-smi`). Three rules reduce the bill: preemptible instances for the simulation arrays, which are independent and can be restarted; a VM deleted as soon as it is no longer in use, after a backup (`make backup`); and data in a bucket rather than on the VM's disk.
+
+## What is tested, what remains to be verified {#tests}
+
+| Verified on the development machine (no GPU) | Measured duration |
+|---|---|
+| laptop installation (`make setup`) and end-to-end test (`make smoke RUN=local`) | 68 s and 4 s |
+| CPU Docker image built from scratch; PostgreSQL, MinIO, MLflow stack healthy | 2 min; 14 s |
+| end-to-end test in the Docker stack: objects in MinIO, MLflow run completed, catalog populated | 10 s |
+| full installation by `bootstrap_vm.sh --cpu` on a fresh copy of the repository, then a rerun | 3 min; 33 s |
+| automated tests (`make test`), with PostgreSQL and MinIO | 66 passed, 1 skipped |
+| Slurm templates executed with a simulated scheduler, including stopping at the end of the time limit and resuming | a few seconds |
+| MFF file read back by The Well's loader; backup readable by `pg_restore` | — |
+
+Still to be verified on site, at the first rental: the full GPU image and the NVIDIA Container Toolkit, the solver and training on CUDA (and on several GPUs), a real Slurm with Apptainer, the installation of Docker on a fresh Ubuntu, the providers' S3 buckets, and the campaigns at their real size. The [deployment guide](https://github.com/knoel99/milady-2027/blob/main/infra/README.md) (§ 11 and 12) gives the details.
+
+## Further reading {#fichiers}
+
+- [Deployment guide](https://github.com/knoel99/milady-2027/blob/main/infra/README.md): cloud VM, laptop, backup, costs, troubleshooting, security.
+- [Architecture](https://github.com/knoel99/milady-2027/blob/main/infra/ARCHITECTURE.md): data flows, technical choices, provenance.
+- [Slurm and Jean Zay guide](https://github.com/knoel99/milady-2027/blob/main/infra/slurm/README-slurm.md).
+- [MFF format](https://github.com/knoel99/milady-2027/blob/main/specs/format-donnees.md) and [infrastructure contract](https://github.com/knoel99/milady-2027/blob/main/specs/infra.md).
+- Code: [`milady/`](https://github.com/knoel99/milady-2027/tree/main/milady), configurations: [`infra/configs/`](https://github.com/knoel99/milady-2027/tree/main/infra/configs), tests: [`tests/`](https://github.com/knoel99/milady-2027/tree/main/tests).

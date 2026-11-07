@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Computing and data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<meta name="color-scheme" content="light dark">
+<script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js" integrity="sha384-QFFtAGzvvj+bfgCGxXJlNZZR1nXEZgvG8tDLCCY1F19xl20WlfTYgguB4VcNdxYk" crossorigin="anonymous"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.css" integrity="sha384-3rdsX6e5mueWyoweR9NIVmtEsUkokpBT/0ALqKKIBMr9j4qhHkaIkAcGgsE6uVlp" crossorigin="anonymous">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../assets/paper.css">
+</head>
+
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Contents</span></button>
+  <a class="brand" href="../../en/index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+  <span class="tb-title" id="tb-title"></span>
+  <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Theme</span></button>
+</header>
+<div class="layout">
+<nav class="sidetoc" id="sidetoc" aria-label="Contents"></nav>
+<main class="paper" id="main">
+
+<header id="title-block-header">
+<h1 class="title">Computing and data</h1>
+<p class="subtitle">From CPU experiments to 3D campaigns: data format, results catalog, deployment on a cloud VM or a Slurm cluster</p>
+
+</header>
+
+
+<p>The experiments in the <a href="../rapport/index.html#experiences">report</a> run on an ordinary CPU. The <a href="../these/index.html#plan-experimental">thesis plan</a> calls for more: campaigns of tens to hundreds of 3D simulations, GPU training runs, and a record of every result. This page describes the ready-to-use infrastructure of the repository: the Python package <code>milady</code> and the <code>infra/</code> folder. You rent a machine, run <code>git clone</code>, and a single command installs everything.</p>
+<div class="note">
+<p><span class="tag">What has been tested</span> The whole pipeline has run end to end on a machine <strong>without a GPU</strong> (laptop, full Docker stack, Slurm templates executed with a simulated scheduler): 66 automated tests pass. What could <strong>not</strong> be run: a GPU card, a real Slurm cluster, Apptainer, and a VM rented from a provider. The <a href="#tests">last section</a> details what has been verified and what remains to be verified on site.</p>
+</div>
+<h2 id="demarrer">Getting started</h2>
+<p>Three targets share the same code, the same software image, and the same data format.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Target</th>
+<th>What for</th>
+<th>Main command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>A. Cloud VM with GPU</strong>, rented by the hour</td>
+<td>3D campaigns and training, without a computing center</td>
+<td><code>sudo infra/deploy/bootstrap_vm.sh</code></td>
+</tr>
+<tr class="even">
+<td><strong>B. Slurm cluster</strong> (Jean Zay, regional HPC center)</td>
+<td>large campaigns, multi-node training</td>
+<td><code>python -m milady.sweep … --scheduler slurm</code></td>
+</tr>
+<tr class="odd">
+<td><strong>C. Laptop</strong>, no GPU</td>
+<td>development, tests, small grids</td>
+<td><code>make setup &amp;&amp; make smoke</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>On a cloud VM.</strong> Create an Ubuntu 22.04 or 24.04 VM, preferably with the provider’s “GPU” image (NVIDIA driver preinstalled), a 100 to 200 GB disk, and a firewall that opens only SSH. Then:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> ubuntu@VM_IP_ADDRESS</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/knoel99/milady-2027.git <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> milady-2027</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> infra/deploy/bootstrap_vm.sh</span></code></pre></div>
+<p>The script, which can safely be rerun, installs Docker and, if a GPU is present, the NVIDIA Container Toolkit; it generates random passwords in a <code>.env</code> file that is never committed; it builds the image (<code>milady:gpu</code>, CUDA 12.6, or <code>milady:cpu</code>); it starts the PostgreSQL database, the MinIO object storage, and the MLflow server; finally, it runs an end-to-end test (tiny 3D simulation, file, catalog, one training iteration, evaluation). Measured duration without a GPU: 3 minutes, including the image build. You can also pass the file <code>infra/deploy/cloud-init.yaml</code> when creating the VM, without logging into it, or deploy from your laptop with <code>infra/deploy/deploy_remote.sh ubuntu@IP</code>.</p>
+<p>Then, from the VM:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> sweep CONFIG=infra/configs/palier2_abc3d.yaml      <span class="co"># simulation campaign</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> train CONFIG=infra/configs/train_fm3d.yaml         <span class="co"># training (all GPUs, torchrun)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> eval  CONFIG=infra/configs/train_fm3d.yaml         <span class="co"># evaluation, results to the catalog</span></span></code></pre></div>
+<p>The web interfaces (MLflow, MinIO console, JupyterLab) listen only on the VM: you reach them through an SSH tunnel, <code>ssh -N -L 5000:localhost:5000 -L 9001:localhost:9001 ubuntu@IP</code>.</p>
+<p><strong>On a Slurm cluster.</strong> The GPU image is converted into an Apptainer image (<code>make image-gpu &amp;&amp; make sif</code>), then copied to the cluster. Each simulation of a campaign is one element of a job array (one GPU each); training launches one <code>torchrun</code> per node. The compute nodes of Jean Zay have no Internet access: the catalog is then an SQLite file on <code>$WORK</code>, merged afterwards into the central database (<code>python -m milady.catalog ingest</code>). The guide <a href="https://github.com/knoel99/milady-2027/blob/main/infra/slurm/README-slurm.md"><code>README-slurm.md</code></a> gives the options specific to Jean Zay, checked against the IDRIS documentation.</p>
+<p><strong>On a laptop.</strong> <code>make setup</code> creates a virtual environment with pinned versions (68 s measured), and <code>make smoke RUN=local</code> runs the same end-to-end test with an SQLite catalog and local files (4 s).</p>
+<h2 id="chaine">The processing pipeline</h2>
+<p>A campaign described in a YAML file becomes simulations, then files, then a dataset, models, and evaluations. Each step writes its record to the catalog, with a unique identifier (UUID) and the exact commit of the code.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Module</th>
+<th>What is produced</th>
+<th>Where it is recorded</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Campaign</td>
+<td>YAML file in <code>infra/configs/</code></td>
+<td>grid of physical parameters (<span class="math inline">Re</span>, <span class="math inline">Rm</span>, <span class="math inline">Pm</span>…)</td>
+<td><code>campaign</code> table (full copy of the YAML)</td>
+</tr>
+<tr class="even">
+<td>2. Launch</td>
+<td><code>milady.sweep</code></td>
+<td>one task per grid point: locally, one container per simulation, or a Slurm job array</td>
+<td><code>simulation</code> and <code>job</code> tables</td>
+</tr>
+<tr class="odd">
+<td>3. Simulation</td>
+<td><code>milady.sim</code> (3D MHD solver, PyTorch)</td>
+<td>fields <span class="math inline">(\mathbf{u}, \mathbf{B})</span> and diagnostics</td>
+<td>MFF file; <code>diagnostic</code> table</td>
+</tr>
+<tr class="even">
+<td>4. Storage</td>
+<td><code>milady.storage</code></td>
+<td>immutable file <code>{campaign}/{uuid}/fields.h5</code>, on S3, MinIO, or disk</td>
+<td><code>file</code> table (SHA-256 checksum, size)</td>
+</tr>
+<tr class="odd">
+<td>5. Dataset</td>
+<td><code>milady.catalog</code></td>
+<td>selection of simulations and split into training, validation, and test sets</td>
+<td><code>dataset</code> and <code>dataset_member</code> tables</td>
+</tr>
+<tr class="even">
+<td>6. Training</td>
+<td><code>milady.train.fm3d</code></td>
+<td>conditional flow matching on vector potentials; checkpoints</td>
+<td><code>model</code> table; MLflow (curves, hyperparameters)</td>
+</tr>
+<tr class="odd">
+<td>7. Evaluation</td>
+<td><code>milady.eval</code></td>
+<td>statistical and physical metrics of the generated fields</td>
+<td><code>evaluation</code> table; <code>v_eval_summary</code> view</td>
+</tr>
+</tbody>
+</table>
+<p>Since the simulation carries the same UUID in the file and in the catalog, a catalog can always be rebuilt or merged from the files alone. This is what makes it possible to work on a cluster without network access.</p>
+<h2 id="format">The data format</h2>
+<p>Each simulation produces a file in the <strong>MFF</strong> format (<em>MilaDy Field Format</em>): an HDF5 file that follows exactly the convention of <a href="https://polymathic-ai.org/the_well/data_format/">The Well</a> (Ohana et al., NeurIPS 2024), the reference collection of physics simulations for machine learning, and adds metadata prefixed with <code>milady_</code>.</p>
+<pre><code>fields.h5
+├── attributes: dataset_name, grid_type, n_spatial_dims, n_trajectories, simulation_parameters…
+│               milady_uuid, milady_code, milady_git_commit, milady_parameters (JSON)…
+├── dimensions/          time, x, y, z
+├── boundary_conditions/ periodic conditions along each axis
+├── scalars/             physical parameters (Re, Rm, Pm…)
+├── t0_fields/           scalar fields
+├── t1_fields/           u, B: (trajectories, time, x, y, z, components)
+├── milady_diagnostics/  energies, dissipations, helicities, growth rates, max |∇·u|, max |∇·B|
+└── milady_spectral/     Fourier coefficients of the fields (periodic domains, optional)</code></pre>
+<p>Following The Well makes the data readable by the reference loaders and models of the community: we checked that a 3D MFF file is read back identically by the <code>WellDataset</code> loader (the_well 1.2.0). The <code>milady_*</code> attributes are invisible to a The Well reader and are validated by a JSON schema. A <strong>Zarr</strong> variant, with the same hierarchy, makes it possible to read a chunk of a file on S3 without downloading it. An extension is planned for the outputs of SFEMaNS (azimuthal Fourier modes on a meridional finite-element mesh), without destructive interpolation. The validation function detects corrupted files: the 18 corruptions tested (types, shapes, non-finite values, identifiers…) are all flagged. Full specification: <a href="https://github.com/knoel99/milady-2027/blob/main/specs/format-donnees.md"><code>specs/format-donnees.md</code></a>.</p>
+<h2 id="catalogue">The results catalog</h2>
+<p>The results of a thesis are relational: campaign, simulations, files, datasets, models, evaluations. They are stored in a <strong>PostgreSQL</strong> database (locally or on the VM), or in an <strong>SQLite</strong> file with the same schema on a laptop or on a cluster without network access.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Table</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>campaign</code></td>
+<td>name, description, full YAML configuration</td>
+</tr>
+<tr class="even">
+<td><code>simulation</code></td>
+<td>physical parameters (indexed JSON), status, machine, GPUs and cores, duration, code commit</td>
+</tr>
+<tr class="odd">
+<td><code>file</code></td>
+<td>URI, SHA-256 checksum, size, number of snapshots</td>
+</tr>
+<tr class="even">
+<td><code>diagnostic</code></td>
+<td>time series of the physical diagnostics</td>
+</tr>
+<tr class="odd">
+<td><code>dataset</code>, <code>dataset_member</code></td>
+<td>versioned datasets and their split</td>
+</tr>
+<tr class="even">
+<td><code>model</code></td>
+<td>hyperparameters, dataset, MLflow run, checkpoint, commit</td>
+</tr>
+<tr class="odd">
+<td><code>evaluation</code></td>
+<td>metric, value, parameters, seed, number of samples</td>
+</tr>
+<tr class="even">
+<td><code>job</code></td>
+<td>scheduler identifier (Slurm, Docker), status, logs</td>
+</tr>
+</tbody>
+</table>
+<p>The catalog is queried in SQL or from the command line. For example, the GPU hours consumed per campaign:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> c.name, <span class="fu">round</span>(<span class="fu">sum</span>(s.wall_time_s <span class="op">*</span> <span class="fu">greatest</span>(s.n_gpus, <span class="dv">1</span>)) <span class="op">/</span> <span class="fl">3600.0</span>, <span class="dv">1</span>) <span class="kw">AS</span> heures_gpu</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> simulation s <span class="kw">JOIN</span> campaign c <span class="kw">ON</span> c.<span class="kw">id</span> <span class="op">=</span> s.campaign_id</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> s.status <span class="op">=</span> <span class="st">'done'</span> <span class="kw">GROUP</span> <span class="kw">BY</span> c.name <span class="kw">ORDER</span> <span class="kw">BY</span> heures_gpu <span class="kw">DESC</span>;</span></code></pre></div>
+<p>and, from the command line, <code>python -m milady.catalog sims --campaign palier2_abc3d --param Rm__gt=8</code> lists the simulations of a campaign above a threshold. The heavy files live in object storage with an S3 API: MinIO on the VM, or a provider’s bucket so that they survive the deletion of the VM. Training runs are tracked by <strong>MLflow</strong>, self-hosted, and linked to the catalog through the run identifier.</p>
+<h2 id="solveur">The solver, the campaigns, and training</h2>
+<p><strong>Solver.</strong> <code>milady.sim.mhd3d</code> solves periodic 3D incompressible MHD with a pseudo-spectral method in PyTorch, on CPU or GPU: fourth-order Runge–Kutta with an integrating factor, dealiasing with the 2/3 rule, Leray projection of <span class="math inline">\mathbf{u}</span> and of <span class="math inline">\mathbf{B}</span>, so that both divergences remain at machine precision. It has two modes: dynamic (coupled Navier–Stokes and induction equations, ABC, Taylor–Green, or random forcing) and kinematic (imposed flow, as in experiment <a href="../rapport/index.html#e3">E3</a>). Several trajectories advance together on the same GPU. The energy balance <span class="math inline">\mathrm{d}(E_u + E_B)/\mathrm{d}t = \text{injection} - \nu\langle|\boldsymbol\omega|^2\rangle - \eta\langle|\mathbf{j}|^2\rangle</span> is checked by the tests. On the development CPU, one step takes 0.08 s at <span class="math inline">64^3</span> in dynamic mode (2 threads); no GPU timing is given, for lack of a GPU, and the command <code>python -m milady.sim.mhd3d bench --device cuda</code> measures it on site.</p>
+<p><strong>Ready-made campaigns.</strong> They follow the tiers of the <a href="../these/index.html#plan-experimental">thesis plan</a>.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Campaign</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>palier1_mhd2d</code></td>
+<td>forced 2D MHD from experiment E2: 11 values of <span class="math inline">\eta</span>, 16 trajectories per value</td>
+</tr>
+<tr class="even">
+<td><code>palier2_abc3d</code></td>
+<td>ABC kinematic dynamo at <span class="math inline">64^3</span>: <span class="math inline">Rm</span> from 4 to 40 (37 simulations), magnetic eigenmodes</td>
+</tr>
+<tr class="odd">
+<td><code>palier2_tg3d</code></td>
+<td>Taylor–Green forced 3D MHD at <span class="math inline">64^3</span>: <span class="math inline">Re \in \{25, 50, 100, 200\}</span> and <span class="math inline">Pm \in \{0.5 ; 1 ; 2\}</span> (12 simulations)</td>
+</tr>
+<tr class="even">
+<td><code>train_fm3d</code></td>
+<td>flow matching of the Taylor–Green fields conditioned on <span class="math inline">(Re, Pm)</span>, vector potentials truncated at <span class="math inline">|\mathbf{m}| \le 8</span>, exact <span class="math inline">\mathbf{B} \to -\mathbf{B}</span> symmetry</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Training.</strong> <code>milady.train.fm3d</code> carries over to 3D the choices validated by the experiments: vector potentials in the Coulomb gauge (zero divergence by construction, like variant V4 of E2), a velocity field equivariant under <span class="math inline">\mathbf{B} \to -\mathbf{B}</span> (variant C of E1), and optional fine-tuning with an unbiased estimate of the stationarity loss. Experiment E1 showed that this fine-tuning can diverge when started from a biased model: it is launched only from an already good model, with two safeguards added for this reason, an anchor to the starting weights (<code>stationarity.anchor</code>) and a gradual ramp-up of the weight <span class="math inline">\beta</span> (<code>stationarity.beta_warmup</code>), and the spread of the balances is monitored. The same code runs on one GPU or on several nodes (DDP), resumes after an interruption, and logs to MLflow.</p>
+<h2 id="couts">Costs</h2>
+<p>Prices change with the provider, the region, and the rental mode: the guide gives no prices, but a method.</p>
+<p><span class="math display">
+\text{cost} \approx \sum_{\text{tasks}} \text{duration (h)} \times \text{number of GPUs} \times \text{hourly price of the instance} \;+\; \text{storage} \;+\; \text{outbound data} .
+</span></p>
+<p>First measure a single representative simulation; its duration is recorded in the catalog and extrapolated to the whole campaign. As for memory, a state <span class="math inline">(\mathbf{u}, \mathbf{B})</span> in single precision takes <span class="math inline">6 \times N^3 \times 4</span> bytes, i.e., about 0.4 GB at <span class="math inline">256^3</span>; the scheme keeps about ten copies of it, so a 24 GB GPU is enough at <span class="math inline">256^3</span> and 80 GB are needed at <span class="math inline">512^3</span> (an estimate to be checked with <code>nvidia-smi</code>). Three rules reduce the bill: preemptible instances for the simulation arrays, which are independent and can be restarted; a VM deleted as soon as it is no longer in use, after a backup (<code>make backup</code>); and data in a bucket rather than on the VM’s disk.</p>
+<h2 id="tests">What is tested, what remains to be verified</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Verified on the development machine (no GPU)</th>
+<th>Measured duration</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>laptop installation (<code>make setup</code>) and end-to-end test (<code>make smoke RUN=local</code>)</td>
+<td>68 s and 4 s</td>
+</tr>
+<tr class="even">
+<td>CPU Docker image built from scratch; PostgreSQL, MinIO, MLflow stack healthy</td>
+<td>2 min; 14 s</td>
+</tr>
+<tr class="odd">
+<td>end-to-end test in the Docker stack: objects in MinIO, MLflow run completed, catalog populated</td>
+<td>10 s</td>
+</tr>
+<tr class="even">
+<td>full installation by <code>bootstrap_vm.sh --cpu</code> on a fresh copy of the repository, then a rerun</td>
+<td>3 min; 33 s</td>
+</tr>
+<tr class="odd">
+<td>automated tests (<code>make test</code>), with PostgreSQL and MinIO</td>
+<td>66 passed, 1 skipped</td>
+</tr>
+<tr class="even">
+<td>Slurm templates executed with a simulated scheduler, including stopping at the end of the time limit and resuming</td>
+<td>a few seconds</td>
+</tr>
+<tr class="odd">
+<td>MFF file read back by The Well’s loader; backup readable by <code>pg_restore</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Still to be verified on site, at the first rental: the full GPU image and the NVIDIA Container Toolkit, the solver and training on CUDA (and on several GPUs), a real Slurm with Apptainer, the installation of Docker on a fresh Ubuntu, the providers’ S3 buckets, and the campaigns at their real size. The <a href="https://github.com/knoel99/milady-2027/blob/main/infra/README.md">deployment guide</a> (§ 11 and 12) gives the details.</p>
+<h2 id="fichiers">Further reading</h2>
+<ul>
+<li><a href="https://github.com/knoel99/milady-2027/blob/main/infra/README.md">Deployment guide</a>: cloud VM, laptop, backup, costs, troubleshooting, security.</li>
+<li><a href="https://github.com/knoel99/milady-2027/blob/main/infra/ARCHITECTURE.md">Architecture</a>: data flows, technical choices, provenance.</li>
+<li><a href="https://github.com/knoel99/milady-2027/blob/main/infra/slurm/README-slurm.md">Slurm and Jean Zay guide</a>.</li>
+<li><a href="https://github.com/knoel99/milady-2027/blob/main/specs/format-donnees.md">MFF format</a> and <a href="https://github.com/knoel99/milady-2027/blob/main/specs/infra.md">infrastructure contract</a>.</li>
+<li>Code: <a href="https://github.com/knoel99/milady-2027/tree/main/milady"><code>milady/</code></a>, configurations: <a href="https://github.com/knoel99/milady-2027/tree/main/infra/configs"><code>infra/configs/</code></a>, tests: <a href="https://github.com/knoel99/milady-2027/tree/main/tests"><code>tests/</code></a>.</li>
+</ul>
+
+</main>
+</div>
+<footer class="foot"><p><a href="../../en/index.html">← Home</a> · <a href="../../en/prep/index.html">Preparation</a> · <a href="../../en/encadrants/index.html">Supervisors</a> · <a href="../../en/rapport/index.html">Internship report</a> · <a href="../../en/these/index.html">PhD proposal</a> · <a href="../../en/interactifs/index.html">Interactive diagrams</a> · <a href="../../en/experiences/index.html">Experiments</a> · <a href="../../en/calcul/index.html">Computing and data</a></p></footer>
+<script defer="" src="../../assets/theme.js"></script>
+
+
+
+
+</body></html>
