@@ -164,7 +164,9 @@
   /* Espaces insécables : pas de coupure autour de « = », « → », « ~ », ni avant
      « : » / « ; » en français (espace fine pour « ; »). */
   function nb(s, lang) {
-    s = s.replace(/ = /g, "\u00a0=\u00a0").replace(/ \u2192 /g, "\u00a0\u2192\u00a0").replace(/ ~ /g, "\u00a0~\u00a0");
+    s = s.replace(/ = /g, "\u00a0=\u00a0").replace(/ \u2192 /g, "\u00a0\u2192\u00a0").replace(/ ~ /g, "\u00a0~\u00a0")
+      .replace(/ \| /g, "\u00a0|\u00a0")
+      .replace(/\(([^() ]{1,6}), ([^() ]{1,6})\)/g, "($1,\u00a0$2)");   /* (x, t), (ξ, η), (λ, 0)… */
     if (lang === "fr") s = s.replace(/ :/g, "\u00a0:").replace(/ ;/g, "\u202f;");
     return s;
   }
@@ -526,7 +528,9 @@
       if (!(W > 0)) return false;
       if (geo && geo.W === W) return false;
       var small = W < 520;
-      var padL = small ? 26 : 32, padR = 8, padT = 6, gap = 12;
+      /* gap : place pour l'étiquette « densité de ξ » AU-DESSUS de la bande
+         (dans la bande, elle masquait le mode gauche quand λ est grand) */
+      var padL = small ? 26 : 32, padR = 8, padT = 6, gap = small ? 19 : 21;
       var k = Math.min((W - padL - padR) / (XMAX - XMIN), 80);
       var plotW = k * (XMAX - XMIN);
       var x0 = padL + ((W - padL - padR) - plotW) / 2;
@@ -777,8 +781,8 @@
       c.stroke();
       c.strokeStyle = th.rule; c.lineWidth = 1;
       c.strokeRect(g.left + 0.5, g.sTop + 0.5, g.right - g.left - 1, sH - 1);
-      c.font = fs + "px " + FONT; c.fillStyle = th.soft; c.textAlign = "left"; c.textBaseline = "top";
-      c.fillText(L.density, g.left + 6, g.sTop + 4);
+      c.font = fs + "px " + FONT; c.fillStyle = th.soft; c.textAlign = "left"; c.textBaseline = "bottom";
+      c.fillText(L.density, g.left + 1, g.sTop - 3);
 
       /* graduations ξ (partagées) */
       c.textAlign = "center"; c.textBaseline = "top"; c.fillStyle = th.soft;

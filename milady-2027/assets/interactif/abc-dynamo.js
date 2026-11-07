@@ -840,11 +840,12 @@
     var w = 0;
     lines.forEach(function (s, i) { w = Math.max(w, self.textWidth(s, 12, i ? "400" : "700")); });
     w += 16; var h = lines.length * 16 + 10;
+    // à droite du point, sinon à gauche, sinon centré ; au-dessus, sinon en dessous : jamais sur le point lu
     var bx = x + 12, by = y - h - 10;
     if (bx + w > p.x + p.w) bx = x - 12 - w;
-    if (bx < p.x) bx = p.x;
+    if (bx < p.x) bx = Math.max(p.x, Math.min(p.x + p.w - w, x - w / 2));
     if (by < p.y) by = y + 12;
-    if (by + h > p.y + p.h) by = p.y + p.h - h;
+    if (by + h > p.y + p.h) by = Math.max(p.y, y - h - 10);
     c.fillStyle = C.bg; c.strokeStyle = C.rule; c.lineWidth = 1;
     c.beginPath();
     if (c.roundRect) c.roundRect(bx + 0.5, by + 0.5, w, h, 5); else c.rect(bx + 0.5, by + 0.5, w, h);
@@ -947,7 +948,7 @@
     if (this.hoverCell) {
       var hi = this.hoverCell.i, hj = this.hoverCell.j;
       var tx = p.l + (hi + 0.5) * cell, ty2 = p.t + (N - 1 - hj + 0.5) * cell;
-      this.tooltip({ x: p.l, y: p.t, w: s, h: s }, tx, ty2, [
+      this.tooltip({ x: 0, y: 0, w: this.W, h: this.H }, tx, ty2, [
         "(x, y) = (" + fmt(lg, TWO_PI * hi / N, 2) + (lg === "fr" ? " ; " : ", ") + fmt(lg, TWO_PI * hj / N, 2) + ")",
         "|B|/B_rms = " + fmt(lg, m.abs[hj][hi], 2)
       ]);
