@@ -1,0 +1,61 @@
+#cloud-config
+# Données utilisateur (« user-data ») pour créer une VM MilaDy prête à l'emploi depuis la console
+# d'un fournisseur cloud (Scaleway, OVHcloud, AWS, GCP, Azure, Lambda, RunPod… : champ « cloud-init »,
+# « user data » ou « script de démarrage »). Équivalent de :
+#   git clone $MILADY_REPO_URL && cd milady-2027 && sudo infra/deploy/bootstrap_vm.sh
+#
+# AVANT DE COLLER : adapter les variables du fichier /etc/milady/bootstrap.env ci-dessous.
+#   MILADY_REPO_URL        URL du dépôt (HTTPS public, ou dépôt privé : voir infra/README.md —
+#                          clé de déploiement, ou utiliser plutôt deploy_remote.sh depuis le portable)
+#   MILADY_BRANCH          branche ou étiquette à déployer
+#   MILADY_USER            utilisateur propriétaire du dépôt (ubuntu sur la plupart des images Ubuntu)
+#   MILADY_BOOTSTRAP_ARGS  options de bootstrap_vm.sh (--cpu, --no-smoke)
+#
+# Suivi de l'installation (5 à 20 min selon le débit et le GPU) :
+#   ssh ubuntu@IP 'sudo tail -f /var/log/milady-bootstrap.log'
+#   cloud-init status --wait
+# Aucun secret ici : les mots de passe sont générés sur la VM (infra/docker/.env).
+
+write_files:
+  - path: /etc/milady/bootstrap.env
+    permissions: "0644"
+    content: |
+      MILADY_REPO_URL=https://github.com/knoel99/milady-2027.git
+      MILADY_BRANCH=main
+      MILADY_USER=ubuntu
+      MILADY_BOOTSTRAP_ARGS=
+  - path: /usr/local/sbin/milady-cloud-init.sh
+    permissions: "0755"
+    content: |
+      #!/usr/bin/env bash
+      # Clone (ou met à jour) le dépôt puis lance bootstrap_vm.sh ; idempotent.
+      set -euo pipefail
+      # shellcheck disable=SC1091
+      . /etc/milady/bootstrap.env
+      if ! id "${MILADY_USER}" >/dev/null 2>&1; then
+          useradd --create-home --shell /bin/bash --groups sudo "${MILADY_USER}"
+      fi
+      home="$(getent passwd "${MILADY_USER}" | cut -d: -f6)"
+      dir="${home}/milady-2027"
+      if [[ -d "${dir}/.git" ]]; then
+          sudo -u "${MILADY_USER}" git -C "${dir}" fetch --tags origin
+          sudo -u "${MILADY_USER}" git -C "${dir}" checkout "${MILADY_BRANCH}"
+          sudo -u "${MILADY_USER}" git -C "${dir}" pull --ff-only || true
+      else
+          sudo -u "${MILADY_USER}" git clone --branch "${MILADY_BRANCH}" "${MILADY_REPO_URL}" "${dir}"
+      fi
+      cd "${dir}"
+      # shellcheck disable=SC2086
+      SUDO_USER="${MILADY_USER}" infra/deploy/bootstrap_vm.sh ${MILADY_BOOTSTRAP_ARGS}
+
+package_update: true
+packages:
+  - git
+  - make
+  - curl
+  - ca-certificates
+
+runcmd:
+  - [bash, -c, "set -o pipefail; /usr/local/sbin/milady-cloud-init.sh 2>&1 | tee -a /var/log/milady-bootstrap.log"]
+
+final_message: "MilaDy : cloud-init terminé après $UPTIME s — journal : /var/log/milady-bootstrap.log"
