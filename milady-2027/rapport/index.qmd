@@ -683,4 +683,264 @@ L'offre de stage demande aussi des métriques de topologie. Nous n'en avons calc
 
 Tous les calculs ont tourné sur un processeur Intel Xeon à 2,30 GHz, à 4 cœurs, sans GPU, avec deux fils d'exécution par calcul PyTorch. Pour E2, hors génération des données, l'entraînement a pris 1200 s pour V0, 1059 s pour V1, 424 s pour V3 et 305 s pour V4, le réglage fin 460 s pour V5 et 79 s pour son témoin, et la génération de 4,5 à 19 ms par échantillon ; l'expérience complète a pris 4023 s, soit environ 67 minutes. E3 a pris 1366 s, soit environ 23 minutes. La durée de E1 sera rapportée avec ses résultats. Ces durées dépendent de la dimension (1760 pour V0, V1 et V3 contre 880 pour V4) et de la charge de la machine ; elles ne valent que comme ordres de grandeur.
 
+## 5. Expériences et résultats {#experiences}
+
+Les trois expériences vont du plus simple au plus proche des dynamos. E1 teste la symétrie, la stationnarité et la formule de Rice sur un système de dimension 3 dont la vraie loi est connue. E2 teste les contraintes locales et les bilans sur des champs MHD 2D de dimension 880 à 1760. E3 valide un banc d'essai 3D pour la suite. Tous les chiffres de cette section sont mesurés dans ce dépôt ; ils sont recopiés de `experiences/resultats/digest.md` ou des JSON correspondants, avec la virgule décimale.
+
+### E1 — modèle de renversements de Gissinger {#e1}
+
+#### Question {#e1-question}
+
+Un flow matching conditionné par le forçage $\Gamma$ peut-il apprendre la loi stationnaire du modèle de Gissinger de part et d'autre du seuil des renversements, y compris aux valeurs de $\Gamma$ jamais vues ? Cinq sous-questions découlent de la [section 3](#formulation) :
+
+1. faut-il imposer la symétrie $(Q, D, V) \to (-Q, -D, V)$, et par quel moyen (Proposition 4 et Remarque 3.7) ?
+2. une perte de stationnarité imposée à des valeurs de $\Gamma$ sans données améliore-t-elle la loi, par rapport à un témoin qui fait les mêmes itérations sans cette perte (Définition 3.9) ?
+3. l'inclinaison exponentielle a posteriori améliore-t-elle la loi, et sa taille effective d'échantillon tient-elle près du seuil (Proposition 7) ?
+4. la projection de chaque échantillon sur $\mathrm{d}E/\mathrm{d}t = 0$ dégrade-t-elle la loi comme le prédit le Corollaire 6 ?
+5. la formule de Rice appliquée à la loi générée retrouve-t-elle la fréquence des passages de $D$ par zéro, et jusqu'où près du seuil (Propositions 8 et 9) ?
+
+#### Dispositif {#e1-dispositif}
+
+Le modèle est celui de Gissinger (2012), dans sa convention ($\mu$ sur $Q$), avec $\mu = 0{,}119$ et $\nu = 0{,}1$ ; le paramètre de contrôle est $\Gamma \in [0{,}80 ; 1{,}00]$. D'après Gissinger (2012), le point $(\mu, \nu, \Gamma) = (0{,}119 ; 0{,}1 ; 0{,}9)$ est dans le régime de renversements chaotiques ; en faisant décroître $\Gamma$ à $\mu$ fixé, on traverse la crise de fusion des deux attracteurs symétriques. La position de ce seuil dans notre grille est un résultat de l'expérience.
+
+**Données.** Les trajectoires sont intégrées par Runge–Kutta d'ordre 4 avec un pas $\Delta t = 0{,}01$, à partir de conditions initiales gaussiennes d'écart-type 0,8 (avec $V \ge 0$). On retire un transitoire de 300 unités de temps, puis on garde 3000 unités de temps, avec un instantané toutes les 2 unités, soit 1500 instantanés par trajectoire. Les données d'entraînement comptent 16 trajectoires pour chacune des 11 valeurs $\Gamma \in \{0{,}80 ; 0{,}82 ; \dots ; 1{,}00\}$, soit 24 000 instantanés par valeur. La référence compte 32 trajectoires indépendantes à chacune des 21 valeurs d'entraînement et de test, complétées par leurs images par $S$, ce qui la rend exactement symétrique. Une grille fine de 41 valeurs, au pas de 0,005, sert à suivre le seuil (16 trajectoires par valeur, symétrisées). Les passages de $D$ par zéro sont comptés pendant l'intégration.
+
+**Variantes.** Toutes utilisent le même perceptron (largeur 256, quatre couches cachées).
+
+| Variante | Description |
+|---|---|
+| A — référence | flow matching conditionnel, 12 000 itérations |
+| B — augmentation | A, avec chaque exemple remplacé par son image par $S$ avec probabilité 1/2 |
+| C — équivariant | champ symétrisé $v_{\mathrm{sym}}$, 12 000 itérations |
+| C court | C avec un budget réduit à 1200 itérations : un modèle volontairement biaisé |
+| D — inclinaison | inclinaison exponentielle (9 identités, régularisée) de A, C et C court, réglée sur une moitié des échantillons, appliquée à l'autre |
+| E — projection | chaque échantillon de C projeté sur $\mathrm{d}E/\mathrm{d}t = 0$ (contrainte par échantillon) |
+| F — perte de stationnarité | réglage fin de C et de C court avec la perte de stationnarité ($\beta = 20$, 800 itérations, $\Gamma$ tirés dans tout l'intervalle) |
+| F0 — témoin | même réglage fin avec $\beta = 0$ |
+
+Chaque variante est entraînée avec trois graines. Pour chaque graine et chaque valeur de $\Gamma$, on génère 10 000 échantillons par le schéma de Heun à 50 pas. Sur la grille fine, les modèles C et F de la graine 0 génèrent 20 000 échantillons par valeur, pour que l'estimateur de Rice dispose d'assez de points dans la fenêtre $|D| < 0{,}2$.
+
+#### Lecture des figures {#e1-figures}
+
+Les trois figures ci-dessous sont produites par `experiences/figures.py` à partir des résultats complets de E1.
+
+![**Figure 4 — Le seuil des renversements vu par la loi générée.** À gauche, nombre de passages de $D$ par zéro par unité de temps en fonction de $\Gamma$, sur la grille fine : comptage direct dans les simulations (trait noir épais), formule de Rice appliquée à la loi de référence (tirets gris), à la loi générée par le modèle C (bleu) et par le modèle F (orange) ; les petits traits verticaux sur l'axe marquent les valeurs d'entraînement de $\Gamma$. À droite, masse du « pont » $\mathbb{P}(|D| < 0{,}25)$ pour la référence et pour les modèles C et F. Pour lire la figure : l'écart entre le comptage et la formule de Rice appliquée à la référence mesure l'erreur de l'estimateur lui-même (fenêtre finie, dynamique déterministe) ; l'écart entre la courbe de Rice de la référence et celle d'un modèle mesure l'erreur du générateur sur la région $|D| \approx 0$ ; la position et la raideur de la montée au seuil testent la Proposition 9 ; les valeurs de $\Gamma$ situées entre les traits verticaux n'ont jamais été vues.](../experiences/figures/e1_seuil.png){width="100%" fig-alt="Deux graphiques en fonction de Gamma. À gauche, la fréquence des passages de D par zéro : une courbe noire de simulation, une courbe grise en tirets pour Rice sur la référence, une courbe bleue pour le modèle C et une orange pour le modèle F, nulles sous le seuil puis croissantes. À droite, la probabilité que D soit proche de zéro pour la référence et les deux modèles."}
+
+![**Figure 5 — Comparaison des variantes aux valeurs de test de $\Gamma$.** Barres horizontales, en échelle logarithmique, de trois métriques moyennées sur les valeurs de test et sur les graines : distance d'énergie entre la loi générée et la référence (à gauche), résidu de Liouville moyen sur les monômes de degré 3, qui ne sont imposés par aucune variante (au centre), et asymétrie $|\mathbb{P}(D > 0) - 1/2|$ (à droite). La ligne en tirets marque le plancher de bruit de Monte-Carlo, calculé avec un sous-échantillon de la référence de même taille que les échantillons générés. Pour lire la figure : une barre proche du plancher signifie que la loi générée est indiscernable de la référence à cette taille d'échantillon ; le résidu de degré 3 est un contrôle indépendant des identités imposées ; une asymétrie non nulle trahit une loi qui ne respecte pas $\mathbf{B} \to -\mathbf{B}$.](../experiences/figures/e1_variantes.png){width="100%" fig-alt="Trois diagrammes en barres horizontales, un par métrique, avec une barre par variante : A référence, B augmentation, C équivariant, C budget court, C court avec perte de stationnarité, C court avec témoin, C avec perte de stationnarité, C avec témoin, C avec inclinaison, C avec projection par échantillon. Une ligne verticale en tirets marque le plancher de bruit."}
+
+![**Figure 6 — Symétrie et contrainte par échantillon.** À gauche, densité de $\mathrm{d}E/\mathrm{d}t$ à $\Gamma = 0{,}93$, en échelle logarithmique, pour la référence (noir), pour le modèle C (bleu) et pour les échantillons de C projetés sur $\mathrm{d}E/\mathrm{d}t = 0$ (orange). Au centre et à droite, nuages $(Q, D)$ à $\Gamma = 0{,}85$ pour les modèles A et C (bleu) superposés à la référence (gris) ; le titre de chaque panneau donne la proportion d'échantillons avec $D > 0$. Pour lire la figure : la projection par échantillon concentre toute la masse de $\mathrm{d}E/\mathrm{d}t$ en zéro, ce que prédit le Corollaire 6 ; sous le seuil, un modèle non symétrisé peut reproduire le déséquilibre des polarités de ses données d'entraînement, alors que le modèle équivariant est symétrique par construction (Proposition 4).](../experiences/figures/e1_symetrie_projection.png){width="100%" fig-alt="Trois panneaux. À gauche, histogrammes de dE/dt en échelle logarithmique : la référence et le modèle C sont étalés, la version projetée est concentrée en zéro. Au centre et à droite, nuages de points dans le plan Q-D pour les modèles A et C sur fond gris de la référence, avec deux lobes symétriques."}
+
+Le schéma interactif suivant intègre le modèle de Gissinger dans le navigateur. On peut y faire varier $\Gamma$, appliquer la symétrie à l'état courant, compter les passages de $D$ par zéro et comparer ce comptage à l'estimateur de Rice calculé sur les seuls états visités, sans leur ordre temporel.
+
+```{=html}
+<div class="widget" data-widget="gissinger"></div>
+<script defer src="../assets/interactif/gissinger.js"></script>
+```
+
+#### Prédictions de la théorie {#e1-predictions}
+
+Avant les résultats, voici ce que la [section 3](#formulation) prédit, sous forme d'hypothèses que les mesures doivent confirmer ou infirmer.
+
+- **Symétrie.** Sous le seuil, les données d'entraînement ne sont pas exactement symétriques, puisque chaque trajectoire reste sur sa polarité ; la variante A peut donc hériter de cette asymétrie, l'augmentation B la corriger en moyenne, et la variante C l'annuler exactement (Proposition 4). Les identités de stationnarité ne peuvent pas la corriger (Remarque 3.7) : l'inclinaison de A ne devrait pas réduire son asymétrie.
+- **Stationnarité.** Sur le modèle C court, volontairement biaisé, la perte de stationnarité devrait réduire les résidus de Liouville imposés (degré au plus 2) et, si elle améliore vraiment la loi, aussi les résidus de contrôle (degré 3) et la distance d'énergie ; le témoin F0 sépare cet effet de celui des itérations supplémentaires.
+- **Inclinaison.** Elle devrait réduire les résidus imposés à faible coût là où le modèle est déjà proche de la référence, et voir son ESS s'effondrer là où le modèle manque une région, en particulier le pont $|D| \approx 0$ près du seuil (Proposition 7).
+- **Projection par échantillon.** Elle annule $\sigma(\mathrm{d}E/\mathrm{d}t)$ par construction ; le Corollaire 6 prédit qu'elle dégrade la distance d'énergie par rapport au modèle C qu'elle corrige.
+- **Formule de Rice.** Appliquée à la référence, elle devrait reproduire le comptage direct au biais de fenêtre près ; appliquée à un modèle, elle hérite de son erreur sur le pont, qui devrait être maximale juste au-dessus du seuil (Proposition 9).
+
+#### Résultats {#e1-resultats}
+
+<!-- E1-RESULTATS : à compléter -->
+
+#### Points de vigilance {#e1-vigilance}
+
+Quatre réserves s'appliquent à E1 quels que soient ses chiffres. Le modèle de Gissinger est un modèle jouet de dimension 3 : un générateur de lois en dimension 3 est un problème facile, et la réussite ici ne dit rien de la dimension $10^6$ d'un champ de VKS. La dynamique est déterministe, si bien que l'hypothèse de densité de la Proposition 8 n'est pas garantie et que l'estimateur de Rice dépend de la fenêtre $h = 0{,}2$. La référence est symétrisée par construction : elle représente la loi physique symétrique, pas la loi d'une trajectoire particulière sous le seuil. Enfin, le seuil lui-même n'est connu qu'à la résolution de la grille fine et des durées d'intégration, puisque le temps de séjour dans chaque polarité diverge à l'approche de la crise.
+
+### E2 — MHD 2D forcée {#e2}
+
+#### Question {#e2-question}
+
+On veut générer des champs couplés $(\mathbf{u}, \mathbf{B})$ de MHD 2D conditionnés par la diffusivité magnétique $\eta$, y compris aux valeurs jamais vues. Trois questions se posent. Parmi les cinq mécanismes de la [section 4](#m-div), lesquels donnent une divergence exactement nulle, et, à divergence nulle égale, lesquels donnent la meilleure loi (Propositions 1 à 3) ? Une perte de stationnarité en loi, imposée à des valeurs de $\eta$ sans données, améliore-t-elle la loi par rapport à un témoin (Définition 3.9) ? Que valent l'inclinaison exponentielle a posteriori et le recalage de chaque échantillon sur le bilan d'énergie (Proposition 7 et Corollaire 6) ?
+
+#### Dispositif {#e2-dispositif}
+
+**Équations.** Le domaine est $[0, 2\pi)^2$ périodique. Les inconnues sont la vorticité $\omega$ et le potentiel magnétique $a$, avec $\mathbf{u} = \nabla^\perp\psi$, $\omega = -\Delta\psi$, $\mathbf{B} = \nabla^\perp a$ et $j = -\Delta a$ :
+
+$$
+\partial_t\omega + \mathbf{u}\cdot\nabla\omega = \mathbf{B}\cdot\nabla j + \nu\Delta\omega - \alpha\omega + f_\omega, \qquad \partial_t a + \mathbf{u}\cdot\nabla a = \eta\Delta a - \alpha a + f_a .
+$$
+
+Les forçages $f_\omega$ et $f_a$ sont des bruits blancs en temps, indépendants, portés par la couronne $2 \le |\mathbf{k}| \le 3$, et le frottement linéaire $\alpha = 0{,}02$ évacue l'énergie des grandes échelles. Le solveur est pseudo-spectral sur une grille $32^2$, désaliasé aux deux tiers, avec un schéma de Runge–Kutta d'ordre 4 à facteur intégrant pour la partie déterministe et un pas d'Euler–Maruyama pour le forçage, au pas $\Delta t = 0{,}01$. Par construction, $\nabla\cdot\mathbf{u} = \nabla\cdot\mathbf{B} = 0$ dans les données.
+
+**Paramètres.** La viscosité vaut $\nu = 8\cdot10^{-3}$. Les taux d'injection d'Itô, estimés sur 400 tirages du bruit, valent $\varepsilon_u = 0{,}04479$ et $\varepsilon_b = 0{,}04476$ pour l'énergie, d'où $\varepsilon_{\mathrm{inj}} = \varepsilon_u + \varepsilon_b$, et $\varepsilon_{a^2} = 0{,}00726$ pour $\tfrac12\langle a^2\rangle$. Les six valeurs d'entraînement de $\eta$ forment une suite géométrique de raison $\sqrt2$, de $0{,}004$ à $0{,}02263$, soit $Pm = \nu/\eta$ de 2 à environ 0,35 ; les cinq valeurs de test sont $0{,}00476$, $0{,}00673$, $0{,}00951$, $0{,}01345$ et $0{,}01903$.
+
+**Échantillons.** Pour chaque $\eta$, 16 réalisations indépendantes sont intégrées ; après un transitoire de 30 unités de temps, on garde un instantané par unité de temps. Les données d'entraînement comptent 2400 instantanés par valeur d'entraînement (150 par réalisation). La référence, simulée avec d'autres graines, compte 1200 instantanés par valeur, d'entraînement comme de test (75 par réalisation). Les instantanés successifs d'une même réalisation sont corrélés.
+
+**Modèles.** Les cinq variantes V0 à V4 de la [section 4](#m-div), puis V5 et son témoin (réglages fins de V4), utilisent le même perceptron de largeur 1024, entraîné 6000 itérations sur des lots de 256. On génère 1000 échantillons par valeur de $\eta$. Le volet « en loi » applique à V4 l'inclinaison exponentielle sur les trois identités de l'Exemple 3.8 et le recalage par échantillon sur le bilan d'énergie.
+
+Ce banc n'est **pas** une dynamo : en 2D, le théorème de Zel'dovich l'interdit, et le champ magnétique est entretenu ici par le forçage $f_a$. E2 teste la génération de champs MHD couplés, avec leurs contraintes exactes et leurs bilans, pas l'effet dynamo.
+
+#### Résultats {#e2-resultats}
+
+Les quatre tableaux suivants recopient le condensé des résultats. Les deux premiers portent sur les valeurs de **test** de $\eta$, jamais vues ; les deux suivants sur les valeurs d'entraînement. Les trois dernières lignes de chaque tableau (« en loi ») comparent sur la même moitié d'échantillons de V4 la base non pondérée, l'inclinaison exponentielle et le recalage par échantillon. La ligne « données » est le plancher de bruit décrit dans le [protocole](#m-protocole) ; aux valeurs de test, il est optimiste.
+
+Tableau 1 — Valeurs de test de $\eta$ : contraintes locales, spectre et énergies (moyennes sur les cinq valeurs).
+
+| Variante | div. rel. $\mathbf{u}$ | div. rel. $\mathbf{B}$ | err. spectre | err. $E_u$ | err. $E_B$ |
+|---|---|---|---|---|---|
+| V0 libre | 0,408 | 0,408 | 0,23 | 0,464 | 0,562 |
+| V1 pénalité | 0,34 | 0,162 | 0,18 | 0,0995 | 1,68 |
+| V2 projection finale | $5{,}05\cdot10^{-17}$ | $5{,}00\cdot10^{-17}$ | 0,168 | 0,222 | 0,337 |
+| V3 flot projeté | $2{,}03\cdot10^{-8}$ | $2{,}03\cdot10^{-8}$ | 0,135 | 0,0922 | 0,236 |
+| V4 potentiels | $1{,}78\cdot10^{-17}$ | $1{,}68\cdot10^{-17}$ | 0,168 | 0,261 | 0,369 |
+| V5 potentiels + perte de stationnarité | $1{,}74\cdot10^{-17}$ | $1{,}62\cdot10^{-17}$ | 0,0696 | 0,0668 | 0,0621 |
+| V5 témoin | $1{,}78\cdot10^{-17}$ | $1{,}67\cdot10^{-17}$ | 0,165 | 0,252 | 0,355 |
+| données (sous-échantillon) | $1{,}52\cdot10^{-17}$ | 0 | 0,00212 | 0,00261 | 0,00248 |
+| en loi : base (V4, moitié $b$) | $1{,}78\cdot10^{-17}$ | $1{,}69\cdot10^{-17}$ | 0,168 | 0,268 | 0,36 |
+| en loi : inclinaison (V4, moitié $b$) | $1{,}76\cdot10^{-17}$ | $1{,}59\cdot10^{-17}$ | 0,143 | 0,098 | 0,115 |
+| en loi : recalage (V4, moitié $b$) | $2{,}75\cdot10^{-17}$ | $2{,}71\cdot10^{-17}$ | 0,0804 | 0,113 | 0,188 |
+
+Tableau 2 — Valeurs de test de $\eta$ : bilans et loi (moyennes sur les cinq valeurs).
+
+| Variante | résidu énergie | résidu $H_C$ | résidu $\langle a^2\rangle$ | $\sigma(\mathcal{D})/\sigma_{\mathrm{ref}}$ | dist. d'énergie |
+|---|---|---|---|---|---|
+| V0 libre | 0,491 | 0,0182 | 0,543 | 0,68 | 4,31 |
+| V1 pénalité | 0,895 | 0,00798 | 1,35 | 1,21 | 5,86 |
+| V2 projection finale | 0,469 | 0,0172 | 0,421 | 0,677 | 2,61 |
+| V3 flot projeté | 0,335 | 0,00595 | 0,322 | 0,565 | 1,85 |
+| V4 potentiels | 0,472 | 0,0169 | 0,443 | 0,672 | 2,58 |
+| V5 potentiels + perte de stationnarité | 0,0611 | 0,0237 | 0,0612 | 0,788 | 0,699 |
+| V5 témoin | 0,462 | 0,0143 | 0,43 | 0,663 | 2,52 |
+| données (sous-échantillon) | 0,00661 | 0,0782 | 0,0265 | 0,998 | 0,00178 |
+| en loi : base (V4, moitié $b$) | 0,47 | 0,0272 | 0,438 | 0,644 | 2,62 |
+| en loi : inclinaison (V4, moitié $b$) | 0,193 | 0,388 | 0,143 | 0,204 | 4,15 |
+| en loi : recalage (V4, moitié $b$) | $8{,}27\cdot10^{-6}$ | 0,015 | 0,299 | $8{,}64\cdot10^{-4}$ | 1,1 |
+
+Tableau 3 — Valeurs d'entraînement de $\eta$ : contraintes locales, spectre et énergies (moyennes sur les six valeurs).
+
+| Variante | div. rel. $\mathbf{u}$ | div. rel. $\mathbf{B}$ | err. spectre | err. $E_u$ | err. $E_B$ |
+|---|---|---|---|---|---|
+| V0 libre | 0,459 | 0,459 | 0,15 | 0,205 | 0,3 |
+| V1 pénalité | 0,312 | 0,14 | 0,177 | 0,0242 | 1,61 |
+| V2 projection finale | $5{,}46\cdot10^{-17}$ | $5{,}42\cdot10^{-17}$ | 0,096 | 0,0526 | 0,105 |
+| V3 flot projeté | $1{,}94\cdot10^{-8}$ | $1{,}95\cdot10^{-8}$ | 0,109 | 0,118 | 0,153 |
+| V4 potentiels | $1{,}70\cdot10^{-17}$ | $1{,}58\cdot10^{-17}$ | 0,0925 | 0,0374 | 0,114 |
+| V5 potentiels + perte de stationnarité | $1{,}69\cdot10^{-17}$ | $1{,}60\cdot10^{-17}$ | 0,0826 | 0,0543 | 0,0814 |
+| V5 témoin | $1{,}70\cdot10^{-17}$ | $1{,}59\cdot10^{-17}$ | 0,0955 | 0,0487 | 0,121 |
+| données (sous-échantillon) | $1{,}50\cdot10^{-17}$ | 0 | 0,0114 | 0,0226 | 0,0164 |
+| en loi : base (V4, moitié $b$) | $1{,}70\cdot10^{-17}$ | $1{,}59\cdot10^{-17}$ | 0,0931 | 0,0406 | 0,115 |
+| en loi : inclinaison (V4, moitié $b$) | $1{,}74\cdot10^{-17}$ | $1{,}63\cdot10^{-17}$ | 0,0878 | 0,149 | 0,0843 |
+| en loi : recalage (V4, moitié $b$) | $2{,}85\cdot10^{-17}$ | $2{,}81\cdot10^{-17}$ | 0,0472 | 0,0688 | 0,0515 |
+
+Tableau 4 — Valeurs d'entraînement de $\eta$ : bilans et loi (moyennes sur les six valeurs).
+
+| Variante | résidu énergie | résidu $H_C$ | résidu $\langle a^2\rangle$ | $\sigma(\mathcal{D})/\sigma_{\mathrm{ref}}$ | dist. d'énergie |
+|---|---|---|---|---|---|
+| V0 libre | 0,146 | 0,031 | 0,288 | 0,573 | 2,35 |
+| V1 pénalité | 0,857 | 0,0147 | 1,28 | 1,07 | 5,57 |
+| V2 projection finale | 0,135 | 0,03 | 0,184 | 0,57 | 1,09 |
+| V3 flot projeté | 0,172 | 0,0187 | 0,203 | 0,612 | 1,12 |
+| V4 potentiels | 0,174 | 0,0289 | 0,17 | 0,666 | 1,03 |
+| V5 potentiels + perte de stationnarité | 0,0708 | 0,0299 | 0,0884 | 0,568 | 0,863 |
+| V5 témoin | 0,185 | 0,0292 | 0,179 | 0,653 | 1,11 |
+| données (sous-échantillon) | 0,0112 | 0,0251 | 0,0125 | 1,01 | 0,0304 |
+| en loi : base (V4, moitié $b$) | 0,175 | 0,0365 | 0,171 | 0,674 | 1,03 |
+| en loi : inclinaison (V4, moitié $b$) | 0,0253 | 0,133 | 0,0324 | 0,396 | 1,59 |
+| en loi : recalage (V4, moitié $b$) | $2{,}07\cdot10^{-16}$ | 0,0294 | 0,116 | $1{,}40\cdot10^{-15}$ | 0,422 |
+
+La taille effective d'échantillon de l'inclinaison, $\mathrm{ESS}/N$, vaut 0,287 en moyenne sur les onze valeurs de $\eta$.
+
+![**Figure 7 — Cinq mécanismes pour la divergence nulle, aux valeurs de test de $\eta$.** Barres horizontales en échelle logarithmique, une par variante : divergence relative de $\mathbf{u}$ (à gauche), erreur de spectre moyenne en $\log_{10}$ (au centre) et résidu relatif du bilan d'énergie $|\mathbb{E}[\mathcal{D}] - \varepsilon_{\mathrm{inj}}|/\varepsilon_{\mathrm{inj}}$ (à droite). La barre grise est le plancher des données (sous-échantillon). Pour lire la figure : les variantes V2, V4 et V5 ont une divergence au niveau de l'arrondi en double précision, V3 au niveau de l'arrondi en simple précision ; à divergence nulle égale, les différences d'erreur de spectre et de bilan viennent de l'erreur d'approximation du réseau ; seule V5 s'approche du plancher sur le bilan d'énergie, qu'elle impose.](../experiences/figures/e2_mecanismes.png){width="100%" fig-alt="Trois diagrammes en barres horizontales en échelle logarithmique pour les variantes V0 libre, V1 pénalité, V2 projection finale, V3 flot projeté, V4 potentiels, V5 potentiels avec perte de stationnarité, V5 témoin et données. Les divergences de V2, V4 et V5 sont de l'ordre de dix puissance moins dix-sept, celle de V3 de l'ordre de dix puissance moins huit, celles de V0 et V1 de l'ordre de 0,3 à 0,4."}
+
+![**Figure 8 — Spectres d'énergie moyens à $\eta = 0{,}00951$ (valeur de test).** Énergie par couronne $|\mathbf{k}| = k$ de la vitesse (à gauche) et du champ magnétique (à droite), en échelles logarithmiques, pour les données de référence (noir), la génération libre V0 (orange) et la génération par potentiels V4 (bleu). Les spectres sont calculés sur les huit échantillons conservés par variante pour les figures : la figure illustre l'allure des écarts, les tableaux en donnent la mesure.](../experiences/figures/e2_spectres.png){width="100%" fig-alt="Deux graphiques log-log de l'énergie en fonction du nombre d'onde, de 1 à 13. La référence en noir décroît avec un maximum vers k égal 2 ou 3. La courbe orange de V0 est au-dessus de la référence ; la courbe bleue de V4 est plus proche de la référence."}
+
+![**Figure 9 — Contraintes en loi contre contrainte par échantillon, aux valeurs de test de $\eta$.** Pour la base V4 (moitié $b$), son inclinaison exponentielle, son recalage par échantillon et le modèle V5 : résidu relatif du bilan d'énergie (à gauche), rapport $\sigma(\mathcal{D})/\sigma_{\mathrm{ref}}(\mathcal{D})$ des écarts-types de la dissipation, avec la valeur 1 en tirets (au centre), et distance d'énergie sur les descripteurs (à droite). Pour lire la figure : le recalage annule le résidu en écrasant la variance de la dissipation (Corollaire 6) ; l'inclinaison réduit le résidu mais dégrade la loi ; seule la perte de stationnarité réduit à la fois le résidu et la distance.](../experiences/figures/e2_en_loi.png){width="100%" fig-alt="Trois diagrammes en barres horizontales pour quatre méthodes : V4 générée, V4 avec inclinaison, V4 avec recalage par échantillon et V5 avec perte de stationnarité. Le recalage a un résidu de bilan quasi nul et un rapport d'écarts-types quasi nul ; V5 a le résidu le plus faible après le recalage et la plus petite distance d'énergie."}
+
+#### Lecture critique {#e2-lecture}
+
+**La génération libre ne trouve pas le sous-espace.** Sans contrainte, V0 laisse une divergence relative de 0,408 pour $\mathbf{u}$ comme pour $\mathbf{B}$ aux valeurs de test (0,459 aux valeurs d'entraînement). C'est la situation du point (c) de la Proposition 2 : un perceptron borné ne représente pas la contraction en $1/(1-t)$ qui ramènerait le bruit orthogonal à zéro, et le schéma à 50 pas ne la résout pas non plus (Remarque 3.6). Cette divergence n'est pas un petit défaut : elle s'accompagne d'énergies surestimées (erreurs de 46 % sur $E_u$ et de 56 % sur $E_B$) et de la pire distance d'énergie hors V1 (4,31).
+
+**La pénalité douce réduit peu la divergence et dégrade fortement l'énergie magnétique.** V1 ramène la divergence relative à 0,34 pour $\mathbf{u}$ et 0,162 pour $\mathbf{B}$, loin de zéro. Son erreur relative sur $E_B$ vaut 1,68 aux valeurs de test : une erreur relative supérieure à 1 ne peut venir que d'un excès, si bien que l'énergie magnétique moyenne générée dépasse en moyenne 2,6 fois celle de la référence. Notre interprétation, qui reste une hypothèse, est que la pénalité normalisée de la [section 4](#m-div) peut être réduite en gonflant la partie solénoïdale du champ, qui figure au dénominateur, plutôt qu'en supprimant la partie divergente : la pénalité est sans biais en $v^\star$ (Proposition 3), mais un réseau imparfait trouve une autre façon de la satisfaire. V1 a aussi les pires résidus de bilan (0,895 pour l'énergie, 1,35 pour $\langle a^2\rangle$) et la pire distance d'énergie (5,86). Ce constat rejoint celui de Genuist et al. (2026) en distribution, sans contredire leur nuance hors distribution, que notre protocole d'interpolation ne teste pas.
+
+**Projection finale, flot projeté et potentiels donnent une divergence nulle à la précision machine.** Les divergences relatives valent environ $5\cdot10^{-17}$ pour V2 et $1{,}7\cdot10^{-17}$ pour V4, au niveau de l'arrondi en double précision, et $2{,}03\cdot10^{-8}$ pour V3, au niveau de l'arrondi en simple précision dans lequel le flot projeté est calculé. Pour la contrainte linéaire C1, la question de l'exactitude est donc réglée par n'importe lequel de ces trois mécanismes, pour un coût négligeable.
+
+**À divergence exacte égale, les différences viennent de l'erreur d'approximation.** La Proposition 2 (b) dit que V2, V3 et V4 visent la même loi. Leurs écarts mesurent donc l'erreur d'approximation et le biais inductif, pas un défaut de la cible. Aux valeurs d'entraînement, les trois sont proches (distances 1,09, 1,12 et 1,03). Aux valeurs de test, V3 fait mieux (1,85 contre 2,61 et 2,58), avec une erreur de spectre plus faible (0,135 contre 0,168) ; avec une seule graine par variante, nous ne tenons pas cet ordre pour significatif. La projection finale V2 ne fait que retirer la partie gradient des échantillons de V0 : elle améliore nettement les énergies de V0 (erreur sur $E_u$ de 0,464 à 0,222), mais garde ses autres défauts.
+
+**La perte de stationnarité améliore fortement la loi aux valeurs de test, et le témoin ne gagne rien.** Aux valeurs de test de $\eta$, V5 ramène la distance d'énergie à 0,699, contre 2,52 pour son témoin et 2,58 pour V4 ; les erreurs sur les énergies passent à 6,7 % et 6,2 %, contre 25 % et 36 % pour le témoin et 26 % et 37 % pour V4 ; l'erreur de spectre tombe de 0,165 (témoin) à 0,0696. Le témoin, qui fait les mêmes 600 itérations sans la perte, reste au niveau de V4 sur toutes les métriques : le gain vient de la perte, pas des itérations. Deux observations renforcent ce résultat. Le résidu du bilan de $\langle a^2\rangle$, **qui n'est pas imposé**, passe de 0,43 (témoin) à 0,0612 : l'amélioration ne se limite pas à l'identité imposée. Et le rapport $\sigma(\mathcal{D})/\sigma_{\mathrm{ref}}$ monte de 0,663 à 0,788 : la perte, estimée sans biais, n'écrase pas la variance de la dissipation, au contraire. Le détail par valeur de $\eta$ (fichier JSON) montre où se fait le gain : à $\eta = 0{,}0190$, la distance passe de 7,74 (V4) et 7,63 (témoin) à 2,22 ; à $\eta = 0{,}0135$, de 3,63 et 3,51 à 0,79 ; à $\eta = 0{,}00476$, où V4 est déjà bon, il n'y a pas de gain (0,184 contre 0,186). Les erreurs de V4 se concentrent aux grandes valeurs de $\eta$, où sa dissipation moyenne dépasse $\varepsilon_{\mathrm{inj}}$ de 122 % à $\eta = 0{,}0190$, et c'est exactement là que la perte agit. Aux valeurs d'entraînement, le gain est plus modeste (0,863 contre 1,11 et 1,03), ce qui est attendu : la perte de flow matching y attache déjà le modèle aux données.
+
+**L'inclinaison a posteriori réduit le résidu mais effondre l'ESS et dégrade la loi.** Sur la moitié $b$ de V4, aux valeurs de test, l'inclinaison réduit le résidu du bilan d'énergie de 0,47 à 0,193, mais la distance d'énergie passe de 2,62 à 4,15, le rapport $\sigma(\mathcal{D})/\sigma_{\mathrm{ref}}$ tombe à 0,204 et le résidu d'hélicité croisée monte de 0,0272 à 0,388. L'ESS/N moyen vaut 0,287, mais cette moyenne cache deux régimes : d'après le JSON, il vaut 0,99 à $\eta = 0{,}00476$, où V4 est déjà proche de la référence, et 0,002 aux trois plus grandes valeurs de test, soit environ un échantillon effectif sur 500. C'est la limite de la Proposition 7 : un repondérage ne crée pas de masse, et il échoue précisément là où le modèle en manque. Avec des poids aussi dégénérés, la loi rééchantillonnée se réduit à quelques échantillons dupliqués, et les coefficients réglés sur la moitié $a$ ne se transfèrent plus à la moitié $b$, d'où la hausse du résidu d'hélicité croisée.
+
+**Le recalage par échantillon met le résidu à zéro en annulant la variance de la dissipation.** Le résidu du bilan d'énergie tombe à $8{,}27\cdot10^{-6}$ aux valeurs de test, et le rapport $\sigma(\mathcal{D})/\sigma_{\mathrm{ref}}$ à $8{,}64\cdot10^{-4}$ ($1{,}40\cdot10^{-15}$ aux valeurs d'entraînement) : la loi de $\mathcal{D}$ devient un Dirac, comme le prédit le Corollaire 6. Le recalage améliore pourtant la distance d'énergie sur les descripteurs (1,1 contre 2,62 pour la base aux valeurs de test) et l'erreur de spectre (0,0804 contre 0,168). La raison est que la base V4 a un biais systématique sur l'énergie des petites échelles : en remettant chaque échantillon à la bonne dissipation, le recalage corrige le spectre moyen, qui domine les descripteurs. Il reste moins bon que V5 aux valeurs de test (1,1 contre 0,699), mais il est meilleur aux valeurs d'entraînement (0,422 contre 0,863). La leçon porte sur les métriques : une distance calculée sur des spectres par couronne ne voit pas que la loi de la dissipation est dégénérée ; il faut une métrique dédiée, ici $\sigma(\mathcal{D})/\sigma_{\mathrm{ref}}$, pour la détecter.
+
+**Le résidu d'hélicité croisée ne discrimine pas les modèles.** Le sous-échantillon des données lui-même a un résidu de 0,0782 aux valeurs de test (0,0251 aux valeurs d'entraînement), alors que les modèles sont entre 0,006 et 0,024. Ce résidu est une moyenne de 1000 instantanés normalisée par l'écart-type ; pour des instantanés indépendants, son ordre de grandeur serait $1/\sqrt{1000} \approx 0{,}03$. Les instantanés de la référence sont corrélés en temps, ce qui réduit leur nombre effectif et gonfle ce résidu, alors que les échantillons générés sont indépendants. La métrique est dominée par le bruit d'échantillonnage.
+
+**Limites.** Les modèles sont faibles : leurs erreurs de spectre vont de 0,07 à 0,23 en $\log_{10}$ aux valeurs de test, contre 0,002 à 0,011 pour les données (le plancher honnête est celui des valeurs d'entraînement, 0,0114) ; même V5 reste six fois au-dessus. Le réseau est un perceptron sur 880 ou 1760 coefficients de Fourier, sans biais inductif spatial, entraîné 6000 itérations sur CPU, avec une seule graine par variante. Le banc est 2D et forcé : ce n'est pas une dynamo. Les valeurs de test sont des interpolations. La perte de stationnarité est imposée à un échantillonneur à 8 pas, l'évaluation en utilise 50. Enfin, aucune métrique de topologie n'a été calculée.
+
+### E3 — dynamo cinématique ABC {#e3}
+
+#### Question {#e3-question}
+
+Avant de générer des champs magnétiques 3D, il faut un banc d'essai 3D fiable. E3 vérifie qu'un solveur pseudo-spectral de l'équation d'induction, écrit pour ce stage, conserve $\nabla\cdot\mathbf{B} = 0$ à la précision machine et retrouve les fenêtres de dynamo publiées pour l'écoulement ABC. Ce banc fournit des modes propres magnétiques 3D, conditionnés par $Rm$, sur lesquels tester ensuite la génération par potentiel vecteur.
+
+#### Dispositif {#e3-dispositif}
+
+L'équation d'induction cinématique, avec un écoulement imposé, s'écrit sur le domaine $[0, 2\pi)^3$ périodique
+
+$$
+\partial_t\mathbf{B} = \nabla\times(\mathbf{u}\times\mathbf{B}) + \eta\,\Delta\mathbf{B}, \qquad \mathbf{u} = (A\sin z + C\cos y,\ B\sin x + A\cos z,\ C\sin y + B\cos x),
+$$
+
+avec $A = B = C = 1$ et $Rm = 1/\eta$, la forme et la convention de Bouya & Dormy (2013). Le solveur est pseudo-spectral sur une grille $32^3$, désaliasé aux deux tiers, avec un schéma de Runge–Kutta d'ordre 4 à facteur intégrant pour la diffusion, au pas $\Delta t = 0{,}05$, sur 150 unités de temps. Le terme d'induction est calculé sous forme de rotationnel, $i\mathbf{k}\times\widehat{(\mathbf{u}\times\mathbf{B})}$, si bien que $\mathbf{k}\cdot\hat{\mathbf{B}}$ reste nul au niveau discret. Le champ initial est aléatoire, filtré par $e^{-|\mathbf{k}|^2/8}$, projeté sur les champs à divergence nulle et privé de sa moyenne, qui est exactement conservée en domaine périodique. Le champ est renormalisé toutes les 20 itérations ; le taux de croissance $\lambda$ est la pente de $\ln\|\mathbf{B}\|$ ajustée sur la seconde moitié de la simulation, et $\lambda_q$ la même pente sur le dernier quart, dont l'écart à $\lambda$ indique la précision. On balaie 24 valeurs de $Rm$ de 2 à 30 ; les seuils sont obtenus par interpolation linéaire entre deux valeurs successives de signes opposés ; deux points ($Rm = 12$ et $17{,}5$) sont recalculés à $N = 48$.
+
+#### Résultats {#e3-resultats}
+
+Tableau 5 — Taux de croissance de la dynamo ABC 1:1:1 à $N = 32$.
+
+| $Rm$ | $\lambda$ (seconde moitié) | $\lambda_q$ (dernier quart) | divergence relative |
+|---|---|---|---|
+| 2 | −0,5001 | −0,5 | $3{,}05\cdot10^{-19}$ |
+| 4 | −0,1511 | −0,151 | $5{,}06\cdot10^{-17}$ |
+| 6 | −0,04598 | −0,04573 | $4{,}61\cdot10^{-17}$ |
+| 8 | −0,007649 | −0,008009 | $8{,}89\cdot10^{-17}$ |
+| 8,5 | −0,002755 | −0,003069 | $9{,}74\cdot10^{-17}$ |
+| 9 | $9{,}61\cdot10^{-4}$ | $7{,}58\cdot10^{-4}$ | $8{,}31\cdot10^{-17}$ |
+| 9,5 | 0,003694 | 0,003667 | $7{,}51\cdot10^{-17}$ |
+| 10 | 0,00557 | 0,00578 | $8{,}04\cdot10^{-17}$ |
+| 11 | 0,007483 | 0,008049 | $6{,}97\cdot10^{-17}$ |
+| 12 | 0,007653 | 0,00803 | $9{,}28\cdot10^{-17}$ |
+| 13 | 0,007328 | 0,008161 | $1{,}23\cdot10^{-16}$ |
+| 14 | 0,006042 | 0,005958 | $9{,}88\cdot10^{-17}$ |
+| 15 | 0,004152 | 0,002831 | $8{,}45\cdot10^{-17}$ |
+| 16 | 0,002858 | 0,0036 | $1{,}21\cdot10^{-16}$ |
+| 17 | 0,001394 | 0,002367 | $9{,}47\cdot10^{-17}$ |
+| 17,5 | $2{,}34\cdot10^{-4}$ | $-2{,}17\cdot10^{-4}$ | $9{,}56\cdot10^{-17}$ |
+| 18 | $-9{,}07\cdot10^{-4}$ | −0,002641 | $1{,}03\cdot10^{-16}$ |
+| 19 | −0,002205 | −0,002479 | $1{,}24\cdot10^{-16}$ |
+| 20 | −0,003185 | $-9{,}37\cdot10^{-4}$ | $1{,}01\cdot10^{-16}$ |
+| 22 | −0,004749 | −0,005808 | $1{,}52\cdot10^{-16}$ |
+| 24 | −0,005743 | −0,004698 | $1{,}04\cdot10^{-16}$ |
+| 26 | −0,002578 | $-3{,}80\cdot10^{-4}$ | $1{,}27\cdot10^{-16}$ |
+| 28 | 0,003897 | 0,005553 | $1{,}25\cdot10^{-16}$ |
+| 30 | 0,01043 | 0,01113 | $1{,}35\cdot10^{-16}$ |
+
+À $N = 48$, $\lambda = 0{,}00812$ à $Rm = 12$ et $\lambda = -5{,}2\cdot10^{-4}$ à $Rm = 17{,}5$. Les seuils interpolés sont 8,87, 17,6 et 26,8. L'expérience a duré 1366 s.
+
+![**Figure 10 — Taux de croissance de la dynamo cinématique ABC ($A = B = C = 1$) en fonction de $Rm = 1/\eta$.** Points bleus : $\lambda$ à $N = 32$ ; carrés orange : vérification à $N = 48$ ; zones ombrées : fenêtres où $\lambda > 0$ ; pointillés verticaux : seuils interpolés. Pour lire la figure : les deux fenêtres de dynamo publiées sont $8{,}9 < Rm < 17{,}5$ et $Rm > 27$ environ ; les petits taux de croissance (de l'ordre de $10^{-2}$) imposent de longues intégrations, et l'écart entre $N = 32$ et $N = 48$ indique la précision.](../experiences/figures/e3_abc.png){width="100%" fig-alt="Courbe du taux de croissance en fonction de Rm de 2 à 30 : très négatif à Rm égal 2, positif entre environ 9 et 17,6 avec un maximum vers Rm égal 12, négatif entre 17,6 et 26,8, puis de nouveau positif. Deux carrés orange à Rm égal 12 et 17,5 pour la résolution 48. Trois lignes pointillées verticales marquent les seuils."}
+
+Le schéma interactif suivant reprend ces mesures et montre une coupe du mode propre à plusieurs valeurs de $Rm$.
+
+```{=html}
+<div class="widget" data-widget="abc-dynamo" data-src="../assets/interactif/data/abc-dynamo.json"></div>
+<script defer src="../assets/interactif/abc-dynamo.js"></script>
+```
+
+#### Lecture critique {#e3-lecture}
+
+**Les seuils sont en accord avec la littérature.** Les seuils mesurés, 8,87 et 17,6, encadrent la première fenêtre de dynamo publiée, $8{,}9 < Rm < 17{,}5$ (Galloway & Frisch 1984, cités par Archontis, Dorch & Nordlund 2003, avec $Rm = 1/\eta$), et le troisième, 26,8, correspond à l'ouverture de la seconde fenêtre « au-dessus de 27 ». Le maximum du taux de croissance dans la première fenêtre est atteint vers $Rm = 12$ (0,00765), à l'endroit indiqué par Archontis et al. (2003), d'après Galanti et al. (1993) ; la valeur publiée de ce maximum n'a pas pu être vérifiée, et nous ne la comparons pas. La comparaison avec Alexakis (2011) demande de convertir sa convention, $R_M = \sqrt3/\eta$.
+
+**La précision des seuils est limitée par la mesure du taux.** À $Rm = 12$, $N = 48$ donne $0{,}00812$, contre $0{,}00765$ ($\lambda$) et $0{,}00803$ ($\lambda_q$) à $N = 32$ : la résolution suffit. À $Rm = 17{,}5$, le signe n'est pas résolu : $\lambda = +2{,}3\cdot10^{-4}$ et $\lambda_q = -2{,}2\cdot10^{-4}$ à $N = 32$, $\lambda = -5{,}2\cdot10^{-4}$ à $N = 48$. Le second seuil est donc à environ 0,1 près de 17,5, en accord avec la valeur publiée, mais notre 17,6 n'est pas plus précis que cela. Entre $Rm = 20$ et 26, $\lambda$ et $\lambda_q$ diffèrent jusqu'à $2\cdot10^{-3}$ (par exemple $-2{,}6\cdot10^{-3}$ contre $-3{,}8\cdot10^{-4}$ à $Rm = 26$), si bien que le troisième seuil n'est connu qu'à une unité près environ. Une cause probable, que nous n'avons pas vérifiée, est le caractère oscillant des modes dominants (pulsation d'environ 0,53 dans la première fenêtre selon Bouya & Dormy 2013), qui superpose une oscillation à la croissance de $\ln\|\mathbf{B}\|$.
+
+**La divergence est nulle à la précision machine.** La divergence relative reste entre $3\cdot10^{-19}$ et $1{,}5\cdot10^{-16}$ sur toute la gamme, grâce à la forme en rotationnel : $\mathbf{k}\cdot(\mathbf{k}\times\hat{\mathbf{v}}) = 0$ pour tout $\hat{\mathbf{v}}$.
+
+**Rôle pour la thèse.** E3 fournit un banc 3D peu coûteux (23 minutes de CPU pour tout le balayage) avec un paramètre de contrôle, deux fenêtres de dynamo et un groupe de symétrie à 24 éléments, dont le mode de la première fenêtre possède toutes les symétries paires (Bouya & Dormy 2013). La suite naturelle est de générer ces modes propres par un potentiel vecteur en jauge de Coulomb, $\hat{\mathbf{A}}_{\mathbf{k}} = i\,\mathbf{k}\times\hat{\mathbf{B}}_{\mathbf{k}}/|\mathbf{k}|^2$, ce qui rend $\nabla\cdot\mathbf{B} = 0$ exacte par construction en 3D (Proposition 1), et de conditionner la génération par $Rm$ de part et d'autre des seuils (Proposition 9).
+
 <!-- SUITE-REDACTION -->
