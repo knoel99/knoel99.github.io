@@ -162,3 +162,223 @@ What this work claims is formulated with caution: **to our knowledge, after a li
 
 The absence of any diffusion or flow matching model trained on dynamo simulations is a negative claim: the search did not find one (the closest MHD work, Kacmaz et al. 2025, is in 2D and its generative model does not impose $\nabla\cdot\mathbf{B} = 0$), but an absence cannot be proved. A new literature watch will be carried out before each submission.
 
+## 2. Theoretical part {#theorie}
+
+This part takes up the theoretical note shared by the report and the PhD topic (`specs/theorie-brief.md`), without contradicting it, and extends it to questions Q1 to Q4. The boxes are numbered $2.n$; when a statement takes up a proposition of the note, its number in the note is given in brackets, for example “[note: Prop. 8]”. The statements are of three kinds: **published results**, attributed to their authors; **propositions proved here**, generally elementary and sometimes probably known in other forms; **conjectures**, labeled as such, with what would be needed to prove them. The notation is that of the site (`specs/notations.md`); the flow time $t \in [0, 1]$ is not a physical time, and the flow's velocity field $v_\theta$ must not be confused with the physical velocity $\mathbf{u}$.
+
+The framework is that of the note. The control parameters are $\boldsymbol\lambda \in \Lambda \subset \mathbb{R}^p$. The discretized state $\mathbf{x} \in \mathbb{R}^D$ follows $\mathrm{d}\mathbf{x} = F_{\boldsymbol\lambda}(\mathbf{x})\,\mathrm{d}t + \Sigma\,\mathrm{d}W_t$, with generator $\mathcal{L}_{\boldsymbol\lambda}\varphi = F_{\boldsymbol\lambda}\cdot\nabla\varphi + \tfrac12\Sigma\Sigma^\top : \nabla^2\varphi$. The data are snapshots of a statistically stationary state, with distribution $\mu_{\boldsymbol\lambda}$. The model is $q_\theta(\cdot\mid\boldsymbol\lambda) = (\Phi^{\boldsymbol\lambda}_1)_\#\mathcal{N}(0, I)$, where $\Phi^{\boldsymbol\lambda}_t$ is the flow of $\dot{\mathbf{z}} = v_\theta(\mathbf{z}, t, \boldsymbol\lambda)$, learned by flow matching (Lipman et al. 2023) on the linear path $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$.
+
+The following table maps the statements of the note to those of this page.
+
+| Theoretical note | This page | Subject |
+|---|---|---|
+| Proposition 1 | Proposition 2.3 | C1 constraint by construction, extended to the bounded domain |
+| Propositions 2 and 3 | Proposition 2.10 | optimal flow on a subspace; unbiased linear penalty |
+| Proposition 4 | Proposition 2.24, Remark 2.26 | equivariance, extended to a joint state–parameter action |
+| Proposition 5 | Propositions 2.12 and 2.13 | stationarity identities, budgets of truncated MHD |
+| Corollary 6 | Corollary 2.16 | inconsistency of the per-sample constraint, with a bound in $W_1$ |
+| Proposition 7 | Proposition 2.21 | I-projection, proof without a finiteness assumption |
+| Proposition 8 | Propositions 2.29 to 2.31 | Rice formula, thresholds, window estimator |
+| Proposition 9 | Propositions 2.34 to 2.36 | error near a jump in the distribution and near a supercritical threshold |
+| (new) | Propositions 2.6, 2.8, 2.15, 2.19, 2.20, 2.32, 2.39 to 2.41; Conjectures 2.17, 2.33, 2.38 | interfaces, poloidal–toroidal, non-sufficiency, estimator, consistency, waiting times, model reduction and assimilation |
+
+![Taxonomy of the physical constraints of the shared note. **a**, C1, local linear ($\mathbf{x} \in S = \ker A$: zero divergence, linear boundary conditions): by construction (potentials) or by projection; C2, local nonlinear ($c(\mathbf{x}) = 0$): nonlinear projection, or penalty biased by the Jensen gap; C3, symmetry of the distribution: equivariant velocity field and invariant base distribution; C4, stationarity identities $\mathbb{E}_\mu[\mathcal{L}\varphi] = 0$: stationarity loss or exponential tilting. Blue: true for each sample; orange: true for the distribution only. **b**, for C4, projecting each sample onto $\mathrm{d}E/\mathrm{d}t = 0$ sends all the mass to zero (a distribution singular with respect to the true one), whereas the I-projection reweights the samples and keeps a spread-out distribution. Illustrative curves.](../figures/taxonomie/figure/out/taxonomie.png){width="100%" fig-alt="Table of the four classes of constraints with their mechanisms, and three histograms comparing the true distribution, the per-sample projection that produces a spike at zero, and the distributional correction by reweighting."}
+
+### 2.1 Constrained field spaces and divergence-free decoders in a bounded domain
+
+Question Q1 asks to generate magnetic fields that satisfy $\nabla\cdot\mathbf{B} = 0$ exactly in a bounded domain, with boundary and interface conditions. We first fix the spaces, then show what a potential-based decoder guarantees and what it does not.
+
+::: def
+[Definition 2.1 — Field spaces]{.tag}
+Let $\Omega \subset \mathbb{R}^3$ be a bounded connected open set with Lipschitz boundary, whose boundary $\Gamma = \partial\Omega$ has connected components $\Gamma_0$ (the outer boundary), $\Gamma_1, \dots, \Gamma_I$, with outward normal $\mathbf{n}$. We write
+
+$$
+H(\mathrm{div}, \Omega) = \{\mathbf{v} \in L^2(\Omega)^3 : \nabla\cdot\mathbf{v} \in L^2(\Omega)\}, \qquad H(\mathrm{rot}, \Omega) = \{\mathbf{v} \in L^2(\Omega)^3 : \nabla\times\mathbf{v} \in L^2(\Omega)^3\}.
+$$
+
+A field in $H(\mathrm{div}, \Omega)$ has a normal trace $\mathbf{v}\cdot\mathbf{n} \in H^{-1/2}(\Gamma)$; a field in $H(\mathrm{rot}, \Omega)$ has a tangential trace $\mathbf{v}\times\mathbf{n}$. The space of **admissible magnetic fields** is
+
+$$
+\mathfrak{B}(\Omega) = \{\mathbf{B} \in H(\mathrm{div}, \Omega) : \nabla\cdot\mathbf{B} = 0,\ \langle \mathbf{B}\cdot\mathbf{n}, 1\rangle_{\Gamma_i} = 0 \text{ for } 0 \le i \le I\}.
+$$
+
+When $\Gamma$ is connected ($I = 0$), the flux condition follows from $\nabla\cdot\mathbf{B} = 0$ by the divergence theorem. The domain is called **simply connected** when every closed curve in it can be contracted to a point; a solid cylinder is, a torus is not.
+:::
+
+The following result is published; we state it in the simply connected case, which is that of a solid cylindrical vessel, and we prove the uniqueness part, the most useful one for a decoder.
+
+:::: thm
+[Theorem 2.2 — Vector potential in Coulomb gauge (Amrouche, Bernardi, Dauge and Girault 1998; Amrouche and Seloula 2011)]{.tag}
+Let $\Omega$ be bounded, connected, simply connected, of class $C^{1,1}$.
+
+(i) For every $\mathbf{B} \in \mathfrak{B}(\Omega)$, there exists a unique $\mathbf{A} \in H^1(\Omega)^3$ such that $\nabla\times\mathbf{A} = \mathbf{B}$, $\nabla\cdot\mathbf{A} = 0$ in $\Omega$ and $\mathbf{A}\cdot\mathbf{n} = 0$ on $\Gamma$; moreover $\lVert\mathbf{A}\rVert_{H^1} \le C\,\lVert\mathbf{B}\rVert_{L^2}$.
+
+(ii) If in addition $\mathbf{B}\cdot\mathbf{n} = 0$ on $\Gamma$, there exists a unique $\mathbf{A} \in H^1(\Omega)^3$ such that $\nabla\times\mathbf{A} = \mathbf{B}$, $\nabla\cdot\mathbf{A} = 0$, $\mathbf{A}\times\mathbf{n} = 0$ on $\Gamma$ and $\langle\mathbf{A}\cdot\mathbf{n}, 1\rangle_{\Gamma_i} = 0$ for $0 \le i \le I$.
+
+The two statements are Theorems 3.2 and 3.4 of Amrouche and Seloula (2011), stated in the $L^p$ norm and for a domain that may be non-simply connected (flux conditions through cuts are then added); the Hilbert case in a non-smooth domain is treated by Amrouche et al. (1998).
+
+::: proof
+*Uniqueness in (i).* If $\mathbf{A}_1$ and $\mathbf{A}_2$ both qualify, $\mathbf{w} = \mathbf{A}_1 - \mathbf{A}_2$ satisfies $\nabla\times\mathbf{w} = 0$, $\nabla\cdot\mathbf{w} = 0$ and $\mathbf{w}\cdot\mathbf{n} = 0$. A square-integrable irrotational field on a simply connected domain is a gradient (Girault and Raviart 1986): $\mathbf{w} = \nabla\chi$ with $\chi \in H^1(\Omega)$. Then $\Delta\chi = 0$ in $\Omega$ and $\partial_n\chi = 0$ on $\Gamma$, and Green's formula gives $\int_\Omega |\nabla\chi|^2 = \int_\Gamma \chi\,\partial_n\chi = 0$, hence $\mathbf{w} = 0$.
+
+*Uniqueness in (ii).* As above, $\mathbf{w} = \nabla\chi$ with $\Delta\chi = 0$. The condition $\mathbf{w}\times\mathbf{n} = 0$ says that the tangential gradient of $\chi$ vanishes on $\Gamma$: $\chi$ equals a constant $c_i$ on each $\Gamma_i$. Green's formula gives $\int_\Omega |\nabla\chi|^2 = \sum_i c_i \langle \mathbf{w}\cdot\mathbf{n}, 1\rangle_{\Gamma_i} = 0$, hence $\mathbf{w} = 0$.
+
+*Existence in (i), sketch.* Thanks to the flux conditions, $\mathbf{B}$ is extended to a divergence-free field $\tilde{\mathbf{B}}$ with compact support in $\mathbb{R}^3$ (each hole is filled with a divergence-free field with prescribed normal trace, which amounts to a compatible Neumann problem). The Biot–Savart potential $\tilde{\mathbf{A}} = \nabla\times(-\Delta)^{-1}\tilde{\mathbf{B}}$ satisfies $\nabla\times\tilde{\mathbf{A}} = \tilde{\mathbf{B}}$ and $\nabla\cdot\tilde{\mathbf{A}} = 0$. Finally, the normal trace is corrected: if $\chi$ solves $\Delta\chi = 0$ in $\Omega$, $\partial_n\chi = -\tilde{\mathbf{A}}\cdot\mathbf{n}$ on $\Gamma$ (a compatible problem since $\int_\Gamma \tilde{\mathbf{A}}\cdot\mathbf{n} = \int_\Omega \nabla\cdot\tilde{\mathbf{A}} = 0$), then $\mathbf{A} = \tilde{\mathbf{A}} + \nabla\chi$ qualifies. The $H^1$ regularity and the estimate come from elliptic regularity on a $C^{1,1}$ domain; we refer to the sources for the details. [∎]{.qed}
+:::
+::::
+
+The theorem says that in Coulomb gauge with $\mathbf{A}\cdot\mathbf{n} = 0$, the potential is a **coordinate** on the space of admissible fields: no field is lost and none is counted twice. It is the 3D generalization, in a bounded domain, of the stream function used by FunDiff (Wang et al. 2026) and by experiment E2.
+
+:::: prop
+[Proposition 2.3 — Potential-based decoder in a bounded domain [note: Prop. 1]]{.tag}
+Let $\mathcal{D} : \mathcal{Z} \to H^1(\Omega)^3$ be a measurable decoder and $\mathbf{B} = \nabla\times\mathcal{D}(\mathbf{z})$.
+
+(i) Whatever the distribution of $\mathbf{z}$, $\mathbf{B} \in \mathfrak{B}(\Omega)$ almost surely: the divergence constraint (class C1) is satisfied by construction.
+
+(ii) If $\mathcal{D}$ takes its values in the gauge space $G = \{\mathbf{A} \in H^1(\Omega)^3 : \nabla\cdot\mathbf{A} = 0,\ \mathbf{A}\cdot\mathbf{n} = 0 \text{ on } \Gamma\}$ and if $\Omega$ is simply connected and $C^{1,1}$, the map $T = \nabla\times : G \to \mathfrak{B}(\Omega)$ is a continuous linear bijection with continuous inverse. For two distributions $\tilde\nu_1, \tilde\nu_2$ on $G$,
+
+$$
+\lVert T^{-1}\rVert^{-1}\, W_2(\tilde\nu_1, \tilde\nu_2) \;\le\; W_2(T_\#\tilde\nu_1, T_\#\tilde\nu_2) \;\le\; \lVert T\rVert\, W_2(\tilde\nu_1, \tilde\nu_2),
+$$
+
+with the $H^1$ norm on $G$ and the $L^2$ norm on $\mathfrak{B}$. Learning the distribution of potentials in a fixed gauge is therefore equivalent, up to constants, to learning the distribution of fields.
+
+::: proof
+(i) For $\chi \in C_c^\infty(\Omega)$, $\langle\nabla\cdot\mathbf{B}, \chi\rangle = -\int_\Omega (\nabla\times\mathbf{A})\cdot\nabla\chi = -\int_\Omega \mathbf{A}\cdot\nabla\times\nabla\chi = 0$, the integration by parts being legitimate because $\chi$ has compact support. The flux of $\nabla\times\mathbf{A}$ through each closed surface $\Gamma_i$ is zero (Stokes' formula on a surface without boundary, extended to $H^1$ by density).
+(ii) $T$ is linear, continuous from $H^1$ to $L^2$, injective and surjective by Theorem 2.2 (i), and the estimate $\lVert\mathbf{A}\rVert_{H^1} \le C\lVert\mathbf{B}\rVert_{L^2}$ gives the continuity of $T^{-1}$. For a coupling $\pi$ of $(\tilde\nu_1, \tilde\nu_2)$, $(T\times T)_\#\pi$ is a coupling of the images and $\lVert T\mathbf{a} - T\mathbf{b}\rVert \le \lVert T\rVert\,\lVert\mathbf{a} - \mathbf{b}\rVert$; we take the infimum. The other inequality is obtained in the same way with $T^{-1}$. [∎]{.qed}
+:::
+::::
+
+::: note
+[Remark 2.4 — Unfixed gauge]{.tag}
+If the decoder does not fix the gauge, two potentials $\mathbf{A}$ and $\mathbf{A} + \nabla\chi$ give the same field: the distribution of $\mathbf{B}$ remains well defined, but the target distribution in the space of potentials depends on the gauge chosen to prepare the data. The training potentials must therefore be computed in a fixed and unique gauge (Theorem 2.2); otherwise flow matching learns gauge noise. In a periodic box, the Coulomb gauge reads $\hat{\mathbf{A}}(\mathbf{k}) = \mathrm{i}\mathbf{k}\times\hat{\mathbf{B}}(\mathbf{k})/|\mathbf{k}|^2$ for $\mathbf{k} \neq 0$, since $\mathrm{i}\mathbf{k}\times(\mathrm{i}\mathbf{k}\times\hat{\mathbf{A}}) = |\mathbf{k}|^2\hat{\mathbf{A}}$ when $\mathbf{k}\cdot\hat{\mathbf{A}} = 0$.
+:::
+
+Vacuum matching is the second difficulty. In VKS as in SFEMaNS, the conductor $\Omega$ is surrounded by an insulating medium where the field derives from a scalar potential (Nore et al. 2018). With $\mu_r = 1$ on both sides and no surface current, $\mathbf{B}$ is continuous across $\Gamma$ and matches an external field $\nabla\phi$ with $\Delta\phi = 0$ outside $\bar\Omega$ and $\phi \to 0$ at infinity.
+
+::: note
+[Remark 2.5 — Vacuum matching is a nonlocal linear constraint]{.tag}
+Let $\mathcal{N}$ denote the exterior Neumann-to-Dirichlet operator, which maps a flux datum $g$ on $\Gamma$ (with zero mean) to the trace $\phi|_\Gamma$ of the solution of the exterior problem $\Delta\phi = 0$, $\partial_n\phi = g$, $\phi \to 0$ at infinity. The continuity of $\mathbf{B}$ reads $\mathbf{B}\cdot\mathbf{n} = \partial_n\phi$ and $\mathbf{n}\times\mathbf{B} = \mathbf{n}\times\nabla_\Gamma\phi$, that is,
+
+$$
+\mathbf{n}\times\mathbf{B} = \mathbf{n}\times\nabla_\Gamma\,\mathcal{N}(\mathbf{B}\cdot\mathbf{n}) \quad \text{on } \Gamma.
+$$
+
+This is a **linear** constraint in $\mathbf{B}$ (class C1), but a **nonlocal** one: the tangential trace at a point depends on the normal flux over the whole boundary. Two consequences follow. On the one hand, Propositions 2 and 3 of the note apply: the orthogonal projection onto this space is exact, and a penalty on the endpoint prediction is unbiased at the optimum; but projecting costs the solution of an exterior problem per sample (by boundary elements, or by a basis of spherical harmonics if the matching is done on an enclosing sphere). On the other hand, one can also jointly decode $\mathbf{A}$ in the conductor and $\phi$ in an insulating layer, then match them through an interface penalty, as SFEMaNS does with an interior penalty method (Guermond et al. 2007, 2009). The choice between these routes is a sub-question of Q1. The simplified pseudo-vacuum conditions ($\mathbf{H}\times\mathbf{n} = 0$) are local but shift the threshold: at $Re = 1.5\times 10^3$ and $\mu_r = 50$, Nore et al. (2018) find $Rm_c = 90 \pm 5$ with pseudo-vacuum against $130 \pm 10$ with the vacuum condition.
+:::
+
+The third difficulty is the permeability jump at the soft-iron impellers. In the reference simulation of Bousquet et al. (2026), $\mu_r = 16$ in the impellers and $1$ elsewhere. Across an interface $\Sigma$ without surface current, the normal component of $\mathbf{B}$ and the tangential component of $\mathbf{H} = \mathbf{B}/\mu_r$ (in Alfvén units) are continuous.
+
+:::: prop
+[Proposition 2.6 — What a potential guarantees at a permeability jump]{.tag}
+Let $\Omega = \Omega_- \cup \Sigma \cup \Omega_+$, with $\mu_r = \mu_\pm$ constant in $\Omega_\pm$ and $\mu_+ \neq \mu_-$, and $\mathbf{n}$ the normal to $\Sigma$ pointing toward $\Omega_+$.
+
+(i) If $\mathbf{A} \in H(\mathrm{rot}, \Omega)$, then $\mathbf{B} = \nabla\times\mathbf{A}$ satisfies $\nabla\cdot\mathbf{B} = 0$ in the sense of distributions on all of $\Omega$; in particular $[\mathbf{B}\cdot\mathbf{n}]_\Sigma = 0$.
+
+(ii) If $\mathbf{A}$ is of class $C^1$ in a neighborhood of $\Sigma$, then $[\mathbf{n}\times\mathbf{H}]_\Sigma = (1/\mu_+ - 1/\mu_-)\,\mathbf{n}\times\mathbf{B}$, which vanishes only if $\mathbf{B}$ is normal to $\Sigma$. A decoder that is smooth in space (for example a multilayer perceptron of the coordinates, which is $C^\infty$) therefore cannot satisfy the interface condition exactly.
+
+(iii) *Proposed construction.* Let $d$ be the signed distance to $\Sigma$ (positive in $\Omega_+$), smooth in a tubular neighborhood of $\Sigma$, and $\mathbf{n} = \nabla d$; outside this neighborhood, the term added below is multiplied by a smooth cutoff function equal to $1$ near $\Sigma$, which changes nothing on $\Sigma$. For a smooth $\mathbf{A}_0$, set $\mathbf{B}_0 = \nabla\times\mathbf{A}_0$ and
+
+$$
+\mathbf{A} = \mathbf{A}_0 + \kappa\,\lvert d\rvert\,\mathbf{n}\times\mathbf{B}_0, \qquad \kappa = \frac{\mu_- - \mu_+}{\mu_- + \mu_+}.
+$$
+
+Then $\mathbf{B} = \nabla\times\mathbf{A}$ satisfies exactly $\nabla\cdot\mathbf{B} = 0$, $[\mathbf{B}\cdot\mathbf{n}]_\Sigma = 0$ and $[\mathbf{n}\times\mathbf{H}]_\Sigma = 0$.
+
+::: proof
+(i) For $\chi \in C_c^\infty(\Omega)$, $\nabla\chi \in H_0(\mathrm{rot}, \Omega)$ and Green's formula in $H(\mathrm{rot})$ (Girault and Raviart 1986) gives $\int_\Omega (\nabla\times\mathbf{A})\cdot\nabla\chi = \int_\Omega \mathbf{A}\cdot\nabla\times\nabla\chi = 0$. If $\mathbf{B}$ is smooth on each side of $\Sigma$, its divergence in the sense of distributions is the sum of the pointwise divergence, which is zero, and of the measure $[\mathbf{B}\cdot\mathbf{n}]\,\delta_\Sigma$; it is zero, hence so is the jump.
+
+(ii) If $\mathbf{A}$ is $C^1$, $\mathbf{B}$ is continuous and $[\mathbf{n}\times\mathbf{B}] = 0$; then $\mathbf{n}\times\mathbf{H}_\pm = \mathbf{n}\times\mathbf{B}/\mu_\pm$ and we subtract.
+
+(iii) $\mathbf{A}$ is continuous (the added term vanishes on $\Sigma$) and piecewise smooth, hence in $H(\mathrm{rot})$, and (i) applies. Set $\mathbf{A}_1 = \kappa\,\mathbf{n}\times\mathbf{B}_0$. Since $\nabla\lvert d\rvert = \pm\mathbf{n}$ in $\Omega_\pm$,
+
+$$
+\mathbf{B} = \mathbf{B}_0 + \lvert d\rvert\,\nabla\times\mathbf{A}_1 + \nabla\lvert d\rvert\times\mathbf{A}_1, \qquad \mathbf{B}_\pm\big|_\Sigma = \mathbf{B}_0 \pm \mathbf{n}\times\mathbf{A}_1.
+$$
+
+The normal component $\mathbf{n}\cdot\mathbf{B}_\pm = \mathbf{n}\cdot\mathbf{B}_0$ is continuous. For the tangential component, $\mathbf{n}\times(\mathbf{n}\times\mathbf{A}_1) = -\mathbf{A}_{1,t}$, where $\mathbf{A}_{1,t} = \kappa\,\mathbf{n}\times\mathbf{B}_0$ is the tangential part of $\mathbf{A}_1$; hence $\mathbf{n}\times\mathbf{B}_\pm = (1 \mp \kappa)\,\mathbf{n}\times\mathbf{B}_0$. The condition $\mathbf{n}\times\mathbf{B}_+/\mu_+ = \mathbf{n}\times\mathbf{B}_-/\mu_-$ is equivalent to $(1-\kappa)\mu_- = (1+\kappa)\mu_+$, that is, to the stated value of $\kappa$. [∎]{.qed}
+:::
+::::
+
+Construction (iii) is proposed here; it must be checked against the numerical literature on magnetic interfaces before anything is claimed about it. It requires the signed distance to the interface, hence the geometry of the impellers, and it becomes more complicated when the interface moves: in the simulations of Bousquet et al. (2026), $\mu_r(\mathbf{x}, t)$ varies with the rotation of the non-axisymmetric impellers. The generator will then have to receive the phase of the impellers as a condition or as a variable.
+
+:::: prop
+[Proposition 2.7 — Gauge and magnetic helicity (Berger and Field 1984)]{.tag}
+For $\mathbf{A}' = \mathbf{A} + \nabla\chi$,
+
+$$
+\int_\Omega \mathbf{A}'\cdot\mathbf{B} - \int_\Omega \mathbf{A}\cdot\mathbf{B} = \int_\Gamma \chi\,\mathbf{B}\cdot\mathbf{n}.
+$$
+
+The magnetic helicity $H_M = \langle\mathbf{A}\cdot\mathbf{B}\rangle$ is therefore gauge invariant when $\mathbf{B}\cdot\mathbf{n} = 0$ on the boundary (idealized perfectly conducting wall, or periodic domain with $\langle\mathbf{B}\rangle = 0$), and gauge dependent otherwise. Berger and Field (1984) define a gauge-invariant relative helicity for this case.
+
+::: proof
+$\int_\Omega \nabla\chi\cdot\mathbf{B} = \int_\Gamma \chi\,\mathbf{B}\cdot\mathbf{n} - \int_\Omega \chi\,\nabla\cdot\mathbf{B}$ and $\nabla\cdot\mathbf{B} = 0$. In the periodic case, the boundary is empty; a constant shift $\mathbf{A}' = \mathbf{A} + \mathbf{c}$ adds $\mathbf{c}\cdot\langle\mathbf{B}\rangle$, which is zero if the mean field is. [∎]{.qed}
+:::
+::::
+
+For VKS with vacuum matching, $\mathbf{B}\cdot\mathbf{n} \neq 0$ on the wall: the “raw” magnetic helicity of a generated field is not a well-defined metric; the relative helicity is needed. In the periodic boxes of tiers 1 and 2, $H_M$ in Coulomb gauge is well defined.
+
+The vector potential has three components for two degrees of freedom per Fourier mode, hence the gauge. The poloidal–toroidal decomposition has only two scalars; in a triply periodic domain, it can be proved in a few lines.
+
+:::: prop
+[Proposition 2.8 — Poloidal–toroidal decomposition in a triply periodic domain]{.tag}
+Let $\mathbf{B} \in L^2(\mathbb{T}^3)^3$ with $\nabla\cdot\mathbf{B} = 0$, $\mathbb{T}^3 = [0, 2\pi)^3$, and $\mathbf{k}_\perp = (k_x, k_y, 0)$. There exist unique scalars $P$ and $T$, with no Fourier component for $\mathbf{k}_\perp = 0$, and a unique horizontal field $\mathbf{b}(z) = (b_x(z), b_y(z), 0)$ with zero mean, such that
+
+$$
+\mathbf{B} = \langle\mathbf{B}\rangle + \nabla\times\nabla\times(P\,\mathbf{e}_z) + \nabla\times(T\,\mathbf{e}_z) + \mathbf{b}(z).
+$$
+
+For $\mathbf{k}_\perp \neq 0$, $\hat P(\mathbf{k}) = \hat B_z(\mathbf{k})/|\mathbf{k}_\perp|^2$ and $\hat T(\mathbf{k}) = \mathbf{e}_z\cdot(\mathrm{i}\mathbf{k}\times\hat{\mathbf{B}}(\mathbf{k}))/|\mathbf{k}_\perp|^2$. Conversely, every field of this form is divergence-free.
+
+::: proof
+In Fourier space, $\nabla\times(T\mathbf{e}_z)$ becomes $\mathrm{i}\,\mathbf{a}\,\hat T$ and $\nabla\times\nabla\times(P\mathbf{e}_z)$ becomes $-\mathbf{b}'\hat P$, with $\mathbf{a} = \mathbf{k}\times\mathbf{e}_z$ and $\mathbf{b}' = \mathbf{k}\times(\mathbf{k}\times\mathbf{e}_z) = \mathbf{k}k_z - \mathbf{e}_z|\mathbf{k}|^2$. For $\mathbf{k}_\perp \neq 0$, $\mathbf{a}$ and $\mathbf{b}'$ are nonzero ($|\mathbf{a}| = |\mathbf{k}_\perp|$, $|\mathbf{b}'| = |\mathbf{k}|\,|\mathbf{k}_\perp|$), orthogonal to $\mathbf{k}$ and orthogonal to each other: they form a basis of the plane $\mathbf{k}^\perp$, which contains $\hat{\mathbf{B}}(\mathbf{k})$ since $\mathbf{k}\cdot\hat{\mathbf{B}} = 0$. The coefficients are unique. The $z$ component gives $\hat B_z = -b'_z\hat P = |\mathbf{k}_\perp|^2\hat P$, since $a_z = 0$. The curl gives $\mathrm{i}\mathbf{k}\times(\mathrm{i}\mathbf{a}\hat T) = -\mathbf{b}'\hat T$, whose $z$ component equals $|\mathbf{k}_\perp|^2\hat T$, and $\mathrm{i}\mathbf{k}\times(-\mathbf{b}'\hat P) = \mathrm{i}|\mathbf{k}|^2\mathbf{a}\hat P$, whose $z$ component is zero; hence $\hat T$. For $\mathbf{k}_\perp = 0$ and $\mathbf{k} \neq 0$, $\mathbf{k} = k_z\mathbf{e}_z$ and $\mathbf{k}\cdot\hat{\mathbf{B}} = 0$ forces $\hat B_z = 0$: these modes form $\mathbf{b}(z)$. The mode $\mathbf{k} = 0$ is the mean. The converse follows from $\nabla\cdot\nabla\times = 0$. [∎]{.qed}
+:::
+::::
+
+A decoder that outputs $(P, T, \mathbf{b})$ produces an exactly solenoidal field, with no gauge to fix and with one scalar fewer than $\mathbf{A}$. In a cylinder with axis $\mathbf{e}_z$, a decomposition of the same type exists in the interior, but the matching conditions couple $P$ and $T$ to the external field; their exact form for the VKS geometry is a sub-question of Q1, to be addressed with C. Nore.
+
+::: note
+[Remark 2.9 — Hybrid representation of SFEMaNS]{.tag}
+SFEMaNS decomposes the fields into azimuthal Fourier modes, $\mathbf{B}(r, \theta, z) = \sum_m \mathbf{B}^m(r, z)\,e^{\mathrm{i}m\theta}$ with $\mathbf{B}^{-m} = \overline{\mathbf{B}^m}$, and discretizes each mode with Lagrange finite elements in the meridian section (SFEMaNS documentation; Guermond et al. 2009). The curl acts mode by mode:
+
+$$
+(\nabla\times\mathbf{A})^m = \Big(\tfrac{\mathrm{i}m}{r}A^m_z - \partial_z A^m_\theta,\ \ \partial_z A^m_r - \partial_r A^m_z,\ \ \tfrac{1}{r}\big(\partial_r(rA^m_\theta) - \mathrm{i}mA^m_r\big)\Big),
+$$
+
+and a direct computation shows that the cylindrical divergence of mode $m$, $\tfrac1r\partial_r(rB^m_r) + \tfrac{\mathrm{i}m}{r}B^m_\theta + \partial_zB^m_z$, vanishes identically for $\mathbf{B}^m = (\nabla\times\mathbf{A})^m$. A decoder that outputs continuous finite element potentials $\mathbf{A}^m$ on the meridian mesh therefore gives exactly solenoidal fields mode by mode, at the continuous as well as at the discrete level (a piecewise continuous potential is in $H(\mathrm{rot})$, Proposition 2.6 (i)). Two linear constraints are added: regularity on the axis $r = 0$, which imposes a behavior in $r^{|m|}$ (up to parities) on each mode, and the symmetry of the mesh under $z \to -z$ if the rotation $R_\pi$ is to act exactly (§2.4). The SFEMaNS data themselves are not exactly divergence-free: $\mathbf{B}$ is approximated there by Lagrange elements and the divergence is controlled in a negative Sobolev norm (Nore et al. 2018). The generator will therefore be “more solenoidal” than its data, and the divergence will have to be measured with the same discrete operator as the code's, otherwise the truncation error dominates the comparison.
+:::
+
+The next two results of the note apply to any linear constraint, hence to the divergence, to linear boundary conditions and to vacuum matching. We recall them because the thesis uses them to choose between projection and potentials; they are elementary consequences of the definitions, probably known in other forms.
+
+:::: prop
+[Proposition 2.10 — Optimal flow on a subspace; unbiased linear penalty [note: Prop. 2 and 3]]{.tag}
+Let $\mu(S) = 1$ with $S$ a linear subspace of $\mathbb{R}^D$, $P$ the orthogonal projector onto $S$ and $\mathbf{x}_0 \sim \mathcal{N}(0, I)$. For $t < 1$,
+
+$$
+v^\star(\mathbf{x}, t) = \mathbb{E}[\mathbf{x}_1 - P\mathbf{x}_0 \mid P\mathbf{x}_t = P\mathbf{x}] - \frac{(I - P)\mathbf{x}}{1 - t}.
+$$
+
+With the exact $v^\star$, free sampling lands exactly in $S$; with perfect training, free generation, final projection, projected flow and potentials give the same distribution. If $A$ is linear with $A\mathbf{x}_1 = 0$ almost surely, the penalty $\lVert A\hat{\mathbf{x}}_1\rVert^2$ on the prediction $\hat{\mathbf{x}}_1 = \mathbf{x}_t + (1-t)v(\mathbf{x}_t, t)$ vanishes at $v^\star$; for a nonlinear constraint, it is biased (Jensen gap, discussed by Bastek, Sun and Kochmann 2025).
+
+::: proof
+$P\mathbf{x}_0$ and $(I-P)\mathbf{x}_0$ are independent Gaussians (isotropy). Since $\mathbf{x}_1 \in S$, $(I-P)\mathbf{x}_t = (1-t)(I-P)\mathbf{x}_0$, independent of $(P\mathbf{x}_t, \mathbf{x}_1, P\mathbf{x}_0)$; we condition each component. For the penalty, $\mathbf{x}_t + (1-t)(\mathbf{x}_1 - \mathbf{x}_0) = \mathbf{x}_1$ gives $\hat{\mathbf{x}}_1 = \mathbb{E}[\mathbf{x}_1 \mid \mathbf{x}_t]$ at $v^\star$, and $A\,\mathbb{E}[\mathbf{x}_1\mid\mathbf{x}_t] = \mathbb{E}[A\mathbf{x}_1\mid\mathbf{x}_t] = 0$ by linearity. [∎]{.qed}
+:::
+::::
+
+The differences observed in E2 between these mechanisms therefore come from the approximation error and the inductive bias, not from the target; the penalty, unbiased at the optimum, nevertheless degraded the magnetic energy there (§1.2). The widget below illustrates the Leray projection on the 2D torus, which is the “projection” alternative to potentials.
+
+```{=html}
+<div class="widget" data-widget="leray"></div>
+<script defer src="../assets/interactif/leray.js"></script>
+```
+
+:::: recap
+::: recap-title
+Key takeaways — §2.1
+:::
+- In Coulomb gauge with $\mathbf{A}\cdot\mathbf{n} = 0$, the vector potential is an exact coordinate on the solenoidal fields of a simply connected domain (Theorem 2.2); a potential-based decoder neither loses nor duplicates any field.
+- Vacuum matching is a nonlocal linear constraint: exact by projection, but at the cost of an exterior problem per sample.
+- A continuous potential guarantees $[\mathbf{B}\cdot\mathbf{n}] = 0$ at a permeability jump, not $[\mathbf{n}\times\mathbf{H}] = 0$; a well-chosen kink in $\lvert d\rvert$ makes both exact.
+- The magnetic helicity of a field that crosses the wall depends on the gauge; the poloidal–toroidal decomposition avoids the gauge in the periodic case.
+::::
+

@@ -128,3 +128,291 @@ What this work claims is stated with caution: **to our knowledge, after a litera
 
 [Section 2](#etat-art) reviews the state of the art: dynamos, model reduction, generative models, hard constraints and constraints in law. [Section 3](#formulation) sets out the framework, the taxonomy of constraints and nine proven statements. [Section 4](#methodes) describes exactly the methods and the protocol of the experiments, [Section 5](#experiences) their results, and [Section 6](#discussion) answers the research questions P1 to P5 and discusses the validity of the conclusions. [Section 7](#conclusion) concludes and opens toward the PhD. The [appendices](#annexes) give the reproduction commands, the hyperparameters and a glossary.
 
+## 2. State of the art {#etat-art}
+
+This section gathers what is published and useful for the internship. All the figures cited come from the referenced articles, re-read on their primary source; none comes from our experiments.
+
+### Laboratory dynamos and numerical dynamos {#ea-dynamos}
+
+The magnetic Reynolds number $Rm = UL/\eta$ compares induction to the diffusion of the field; a dynamo appears only above a threshold $Rm_c$. Liquid metals have a very small magnetic Prandtl number, $Pm = \nu/\eta = 0.82\cdot10^{-5}$ for sodium at 120 °C (Nore et al. 2018), so that the kinetic Reynolds number $Re = Rm/Pm$ reaches several million at the threshold: the flow is fully turbulent when the magnetic field appears.
+
+Three liquid-sodium experiments have achieved a self-sustained dynamo. In **Riga**, a Ponomarenko-type helical flow allowed the first detection of a self-excited magnetic eigenmode, in November 1999: at 2150 rpm and 205 °C, the mode grows at the rate $p_2 = 0.0315 \pm 0.0009$ s⁻¹ and oscillates at $f_2 = 1.326$ Hz (Gailitis et al. 2000; history in Gailitis et al. 2008). In **Karlsruhe**, a module of 52 vortex generators realizes the two-scale dynamo of Roberts and Busse; the first successful run dates from December 1999 (Rädler & Brandenburg 2003), and the saturated field is a stationary dipole that exhibits two quasi-equivalent states (Stieglitz & Müller 2001; Müller et al. 2008). In **Cadarache**, the von Kármán Sodium (VKS) experiment achieved a dynamo in a strongly turbulent flow, between two counter-rotating impellers, with soft-iron impellers, whereas no dynamo appeared with stainless-steel impellers (Monchaux et al. 2007).
+
+The published thresholds for VKS depend on the definition of $Rm$ and cannot be compared directly. With an impeller efficiency factor $K \approx 0.6$, Monchaux et al. (2007) find $Rm_c \approx 31$; with a definition without this factor, Nore et al. (2018) report an experimental interval $52 \le Rm_c \le 71$; Miralles et al. (2013) use yet another definition. A generative model conditioned on "$Rm$" will therefore have to fix its convention.
+
+Direct numerical simulation of VKS with the impellers represented was carried out with the SFEMaNS code, which combines a Fourier decomposition in azimuth and Lagrange finite elements in the meridian plane (Guermond et al. 2007, 2009): the threshold decreases when the magnetic permeability of the impellers increases, and the field is an essentially axisymmetric axial dipole, as in the experiment (Nore et al. 2016). Nore et al. (2018) quantify the sensitivity to boundary conditions: at $Re = 1.5\cdot10^3$ and $\mu_r = 50$, $Rm_c = 90 \pm 5$ with the condition $\mathbf{H}\times\mathbf{n} = 0$ ("pseudo-vacuum"), against $130 \pm 10$ with the vacuum condition, that is, about 40% more; their extrapolation $Rm_c \approx 70$ at large $Re$ falls within the experimental interval. The consortium's second solver, LATU, is a Fourier pseudo-spectral code in which the impellers and walls are represented by penalization, in a periodic box $(3\pi)^3$ with $384^3$ points (Kreuzahler et al. 2017).
+
+For modelling, these works say two things. The relevant control parameters are not limited to $Re$ and $Rm$: the permeability $\mu_r$ and the electromagnetic conditions shift the threshold as much as they do. And the simulation data do not live on a regular Cartesian grid: in SFEMaNS, they are azimuthal Fourier modes carried by an unstructured finite-element mesh.
+
+### Reversals and low-dimensional models {#ea-renversements}
+
+Berhanu et al. (2007) observed the first $\mathbf{B} \to -\mathbf{B}$ reversals in the laboratory, in VKS, when the two impellers rotate at different frequencies. At $F_1 = 16$ Hz and $F_2 = 22$ Hz, the mean durations of the two polarities are $\langle T_+\rangle = 120$ s and $\langle T_-\rangle = 50$ s, and a reversal lasts $\tau \approx 5$ s, compared with an ohmic diffusion time of about 0.4 s; excursions, in which the field drops and then returns to the same polarity, are also observed.
+
+Pétrélis & Fauve (2008) explain these dynamics by the coupling of a dipolar mode $D$ and a quadrupolar mode $Q$. The invariance of the equations under $\mathbf{B} \to -\mathbf{B}$ imposes a normal form for the complex amplitude $A = D + iQ$, which reduces to a phase equation $\dot\theta = \mu_i - \rho\sin 2\theta$. A saddle-node bifurcation at $\mu_i = \rho$ separates the stationary states from periodic reversals; just below this threshold, turbulent noise triggers random reversals. Pétrélis et al. (2009) apply this mechanism to reversals of the Earth's field.
+
+Gissinger (2012) proposes a **deterministic** three-mode model, which serves as test bench E1:
+
+$$
+\dot Q = \mu Q - VD, \qquad \dot D = -\nu D + VQ, \qquad \dot V = \Gamma - V + QD .
+$$
+
+Here $V$ is a velocity mode that breaks the equatorial symmetry, forced by $\Gamma$, and the term $QD$ represents the Lorentz force. The system is invariant under $(Q, D, V) \to (-Q, -D, V)$, the image of $\mathbf{B} \to -\mathbf{B}$. For $\nu = 0.1$ and $\Gamma = 0.9$, the two symmetric attractors merge through a crisis at $\mu_c \approx 0.11928$; at $\mu = 0.119$, the reversals are chaotic, with a Lyapunov exponent $\lambda \simeq 0.1$, and at $\mu = 0.12$ the chaos remains confined around a single fixed point. The law of waiting times between reversals is Poissonian at long times, and the density of $D$ is bimodal, with a very low probability at 0 (Gissinger 2012). The same model, with the roles of $D$ and $Q$ exchanged, appears in Gissinger, Dormy & Fauve (2010), based on simulations in a sphere. An attractor-merging crisis (Grebogi, Ott & Yorke 1983) comes with an intermittency whose mean residence time diverges as the threshold is approached (Grebogi et al. 1987); Gissinger (2012) observes a mean waiting time $\tau \sim (\mu - \mu_c)^{-\gamma}$ with $\gamma \simeq 1/2$, noting that it is "difficult to conclude", so sensitive is the result to $\mu_c$.
+
+Bousquet et al. (2026) obtained reversals in simulations of VKS, with both of the consortium's solvers. For their reference simulation ($Re = 1594$, $Rm = 531$, forcing asymmetry $(F_1 - F_2)/(F_1 + F_2) = 0.058$, $\mu_r = 16$ in the impellers), the reversal follows a five-step mechanism: dipole, weakening near the fast impeller, quadrupolar state, weakening near the slow impeller, reversed dipole. A proper orthogonal decomposition (POD) on 2000 snapshots brings out four dominant axisymmetric modes, a dipole, a quadrupole and two velocity modes; a reduced Galerkin model, DQVU, identified by constrained sparse regression with PySINDy, reproduces the asymmetric bimodal law of the velocity mode $V$, which the three-mode DQV model does not. The data are not public; they are available from the authors upon reasonable request.
+
+![**Figure 1 — The von Kármán Sodium (VKS) experiment: a turbulent flow of liquid sodium generates an axial magnetic dipole that reverses at random, passing through a quadrupolar state.** **a**, Cylindrical vessel filled with liquid sodium, stirred by two curved-blade impellers rotating in opposite directions at frequencies $F_1$ and $F_2$. On the left, the mean flow $\mathbf{u}$ (blue): azimuthal rotation of each half in the direction of its impeller and poloidal recirculation; the loops are level lines of a stream function chosen for its topology, not computed for VKS. On the right, the mean field $\mathbf{B}$ (vermilion) of positive polarity, an axial dipole closing outside. **b**, Qualitative time series of the dipole $D(t)$: long phases around $\pm D^\ast$, two fast reversals (purple) and an excursion (green) that returns to the initial polarity; in VKS, reversals appear when $F_1 \neq F_2$ (Berhanu et al. 2007). **c**, The same trajectory in the $(Q, D)$ plane: the stable states $\pm(D^\ast, Q^\ast)$ are exchanged by $\mathbf{B} \to -\mathbf{B}$, and the reversals cross $D = 0$ with $Q \neq 0$. The curves in **b** and **c** are drawn from the normal form of Pétrélis & Fauve (2008) with white noise and hand-picked parameters: they are qualitative, and neither the durations nor the amplitudes are those of VKS.](../figures/vks/figure/out/vks.png){width="100%" fig-alt="Three panels. a: transparent horizontal cylinder with two bladed impellers at the ends, blue arrows of the flow on the left and vermilion magnetic field lines forming an axial dipole on the right. b: curve of the dipole D as a function of time, alternating between a positive level and a negative level, with two reversals in purple and an excursion in green. c: Q-D plane with two symmetric blobs around the stable states and reversal trajectories that cross D equals zero."}
+
+These models set the target. A generator of 3D dynamo fields should reproduce the joint law of the dominant modes (bimodality, asymmetry, rarity of passages through $D = 0$) and, if possible, the statistics of reversals. Gissinger's model is simple enough for the true law to be known to any desired accuracy, and rich enough to have a reversal threshold, a symmetry and deterministic chaos.
+
+### Model reduction by learning {#ea-rom}
+
+Learned reduced models seek a low-dimensional representation in which the dynamics become simple. Fukami & Taira (2023), the main reference of the offer, compress the flow around a NACA 0012 airfoil at $Re = 100$, subjected to extreme vortex gusts, into **three** latent variables, with an autoencoder whose loss also contains the prediction of lift ($\beta = 0.05$); principal component analysis fails to detect the vortex in this case. Solera-Rico et al. (2024) combine a $\beta$-VAE variational autoencoder and a transformer: at $Re = 100$, with $\beta = 0.05$ and 20 latent variables, the $\beta$-VAE captures 89.8% of the energy on the training data, against 64.4% for 20 POD modes, and 69 POD modes are needed to match it; the full reduced model retains 78.1% of the energy at one convective time and 64.6% at ten. Eivazi et al. (2022) report 87.36% of the energy with 5 latent variables, against 32.41% with 5 POD modes, on a turbulent urban flow.
+
+On the MilaDy side, Bousquet, Nore & Lucor (2025) compare autoencoders and variational autoencoders on Navier–Stokes fields (oscillating cylinder, parametric study, von Kármán flow). They relate the organization of the latent space to the POD modes and analyze the equivariance relations between physical and latent symmetries, which are better preserved by variational autoencoders; increasing the regularization of the latter degrades the reconstruction. Bousquet et al. (2024) analyzed by POD large-eddy simulations of the von Kármán flow at $Re > 10^4$ and confirmed numerically a metastable state that breaks the $R_\pi$ symmetry.
+
+One remark connects these works to E2. For a field that is statistically homogeneous in a periodic direction, the POD modes are the Fourier modes of that direction (a classical result, see Holmes, Lumley & Berkooz 1996, and [Section 4](#m-fourier)). A truncated Fourier basis is therefore the optimal linear latent space in the POD sense for the homogeneous turbulence of E2; the nonlinear autoencoders of Fukami, Solera-Rico or Bousquet will become necessary as soon as homogeneity is lost, as in VKS.
+
+### Diffusion, flow matching and generation of physical fields {#ea-generatif}
+
+Diffusion models learn to invert a progressive noising of the data: DDPM (Ho, Jain & Abbeel 2020), formulation through stochastic differential equations and the probability flow equation (Song et al. 2021), the design choices of EDM (Karras et al. 2022), classifier-free guidance for conditioning (Ho & Salimans 2022). **Flow matching** (Lipman et al. 2023) directly trains the velocity field of an ordinary differential equation that transports Gaussian noise to the data, by regression on conditional paths; the linear path corresponds to the *rectified flow* of Liu, Gong & Liu (2023), and stochastic interpolants unify flows and diffusions (Albergo & Vanden-Eijnden 2023; Albergo, Boffi & Vanden-Eijnden 2025). Tong et al. (2024) generalize the base law and the coupling. These ideas have been extended to function spaces (Kerrigan, Migliorini & Smyth 2024; Lim et al. 2025).
+
+**FunDiff** (Wang et al. 2026), the main reference of the offer, combines a functional autoencoder, whose decoder can be queried at any point, and a latent diffusion transformer trained by *rectified flow*. The constraints in it are of three kinds. Zero divergence is enforced by the architecture: the decoder outputs a stream function $\psi$, with $u = \partial_y\psi$, $v = -\partial_x\psi$, and the predicted divergence is described as "negligible", without a numerical value in the text. Periodicity and reflection symmetries are enforced by construction. The PDE residual is added as a soft loss. On linear elasticity, the relative $L^2$ error is 5.12% at $256\times256$ from $32\times32$ observations with 10% noise.
+
+**PIDM** (Bastek, Sun & Kochmann 2025), another reference of the offer, treats the PDE residual as a virtual zero observation, evaluated on the estimate $\mathbf{x}_0^\ast$ of the diffusion model, and adds a term $\|\mathcal{R}(\mathbf{x}_0^\ast)\|^2$ to the loss. The authors identify the **Jensen gap**: $\mathcal{R}(\mathbb{E}[\mathbf{x}_0\mid\mathbf{x}_t]) \neq \mathbb{E}[\mathcal{R}(\mathbf{x}_0)\mid\mathbf{x}_t]$, so that the penalty on the mean estimate conflicts with the data loss; a two-step sampling estimate reduces this conflict, at the cost of a 69% training overhead (23% for the mean estimate). In topology optimization, the mean absolute error of the residual goes from $1.86\cdot10^{-3}$ to $1.24\cdot10^{-3}$.
+
+Other works generate or reconstruct flows. DiffusionPDE (Huang et al. 2024) guides sampling with the observations and the PDE residual, the latter only after 80% of the steps. Shu, Li & Barati Farimani (2023) and CoCoGen (Jacobsen, Zhuang & Duraisamy 2025) add gradients of the residual during or at the end of sampling. TurbDiff (Lienen et al. 2024) generates 3D turbulent states without an initial state, in about 20 s per sample on GPU against about 602 s for the solver, without an explicit incompressibility constraint. Kohl, Chen & Thuerey (2026) condition an autoregressive diffusion on the Reynolds number and test outside the training range. CoNFiLD (Du et al. 2024) combines neural fields and latent diffusion on 3D geometries. GenCast (Price et al. 2025) outperforms operational ensemble forecasting on 97.2% of 1320 targets, without an explicit physical constraint. The closest to our problem is the work of Galletti et al. (2026), a preprint, which generates by latent flow matching **statistically stationary states** of gyrokinetic turbulence conditioned on dimensionless parameters, to warm-start a solver; no physical constraint is mentioned in it. On the CEREA side, Zhuang, Cheng & Duraisamy (2025) reconstruct global fields from sparse observations with a cross-attention diffusion model. Finally, the review by Biferale & Buzzicotti (2026), a preprint, argues for validating generative models of turbulence on energy transfers, structure functions and conservation laws, rather than on pointwise errors.
+
+### Guidance at sampling time {#ea-guidage}
+
+Guidance modifies the sampling of an already trained model. DPS (Chung et al. 2023) adds the gradient of a likelihood evaluated on the Tweedie estimate, an approximation whose error is again a Jensen gap. **Universal guidance** (Bansal et al. 2024), cited by the offer, extends this idea to any differentiable function: "forward" guidance through the gradient of a loss evaluated on the estimate $\hat{\mathbf{z}}_0$, "backward" guidance that optimizes a correction $\Delta\mathbf{z}_0$ by a few descent steps, and repetition of each step with re-noising. The authors specify that the hyperparameters must be tuned for each guidance network. D-Flow (Ben-Hamu et al. 2024) instead optimizes the initial noise by differentiating through the whole flow, which is expensive. These methods enforce **soft** constraints and act **sample by sample**; we do not use them in the experiments, but they are the reference against which to compare the mechanisms in law.
+
+### Hard constraints {#ea-dures}
+
+A constraint is said to be hard when it is satisfied by construction or to machine precision. Richter-Powell, Lipman & Chen (2022) build networks that are **divergence-free by construction** from differential forms, universal on the torus, at a cost quadratic in the dimension. For convex sets, projection after each Langevin step guarantees feasibility (Christopher, Baek & Fioretto 2024), at the cost of an overhead that can be very high when the projection is an optimization problem (682.40 s against 13.79 s per sample in one of their tasks). ECI (Cheng et al. 2025) enforces linear or value constraints without gradients, through extrapolation, correction and interpolation at each step, in 0.065 s per sample against 28.774 s for D-Flow. PCFM (Utkarsh et al. 2025) handles **nonlinear** constraints through a Gauss–Newton projection at each step and an exact final projection, which accounts for 1 to 3% of the total time.
+
+For the zero divergence of incompressible flows, three works from 2026 are directly relevant. **Genuist et al. (2026)**, a preprint not peer-reviewed, compare six ways of enforcing incompressibility in an autoregressive diffusion (unconstrained baseline, projection onto the manifold, Leray projection at the output of the denoiser, PINN-type soft penalty, a posteriori projection, progressive projection) on decaying 2D turbulence with Ekman friction. The soft penalty "performs poorly across all metrics" in distribution and in rollout; but on the out-of-distribution Taylor–Green case, it is the one that obtains the best squared error ($4.53\cdot10^{-4}$ against $1.49\cdot10^{-3}$ for the baseline), with a nonzero divergence ($1.84\cdot10^{-2}$). The authors conclude that no strategy dominates: strict constraints are better near the distribution and at short horizons, soft constraints sometimes preferable in long rollouts and out of distribution. **PCDM** (Li, Buzzicotti, Bonaccorso & Biferale 2026, preprint) applies the Fourier projection $I - \mathbf{k}\mathbf{k}^\top/|\mathbf{k}|^2$ to the clean estimate of the denoiser, on 3D rotating turbulence at $64^3$: the divergence is zero to machine precision and training is about five times shorter than that of the baseline (12 days against 56 on 4 A100 GPUs). **Project and Generate** (Li, Zhang et al. 2026, preprint) builds a divergence-free Gaussian reference measure, so that the flow matching paths stay in the constrained space; the divergence remains of order $10^{-7}$, whereas unconstrained flow matching diverges numerically in long rollouts.
+
+For the magnetic field, da Silva et al. (2025, preprint) generate the spherical harmonic coefficients of a coronal potential field, which enforces $\nabla\cdot\mathbf{B} = 0$ through the representation; their evaluation is qualitative.
+
+The following table summarizes where each cited method acts and whether the constraint is hard or soft; the costs are those reported by the authors.
+
+| Method | Where the constraint acts | Constraint | Hard or soft | Reported cost |
+|---|---|---|---|---|
+| FunDiff, stream function | architecture (decoder) | $\nabla\cdot\mathbf{u} = 0$ in 2D | hard | not reported |
+| PIDM | training loss | PDE residual | soft | +23% (mean estimate) or +69% (sampling estimate) training time |
+| DPS, DiffusionPDE | guidance at sampling time | observations and residual | soft | DPS: about 95 s per image in 1000 evaluations |
+| Universal guidance | forward and backward guidance, repetitions | any differentiable function | soft | several forward and backward passes per step |
+| Divergence-free networks | architecture | zero divergence | hard | quadratic in the dimension |
+| PCDM; Genuist et al., variant D | Leray projection of the denoiser estimate | $\nabla\cdot\mathbf{u} = 0$ | hard | one Fourier transform per step; PCDM: training about 5 times shorter |
+| Genuist et al., variant L | PINN-type loss | $\nabla\cdot\mathbf{u} = 0$ | soft | nonzero residual divergence |
+| PDM | projection after each Langevin step | convex set | hard | from 26.89 s against 18.51 s to 682.40 s against 13.79 s per sample depending on the task |
+| ECI | correction at each step, without gradients | linear and value constraints | hard | 0.065 s per sample, against 28.774 s for D-Flow |
+| PCFM | Gauss–Newton projection and final projection | nonlinear constraints | hard | final projection: 1 to 3% of the total time |
+| D-Flow | optimization of the initial noise | any differentiable function | soft | 28.774 s per sample |
+| da Silva et al. | representation (spherical harmonics) | potential field, $\nabla\cdot\mathbf{B} = 0$ | hard | no overhead |
+
+### Constraints in law and invariant measures {#ea-loi}
+
+A chaotic dynamics in a statistically stationary state imposes nothing on an isolated snapshot, but it imposes identities on the law of the snapshots. The classical criterion states that a measure $\mu$ is invariant for a Markov process with generator $\mathcal{L}$ if and only if $\int \mathcal{L}f\,\mathrm{d}\mu = 0$ for every $f$ in a core of the generator; necessity is general, sufficiency requires assumptions (Echeverría 1982; Ethier & Kurtz 1986). The generator approach underlies Stein discrepancies (Barbour 1988, 1990; Gorham & Mackey 2015; Gorham et al. 2019; Liu, Lee & Jordan 2016), which test a sample against a target known through its score; here, on the contrary, the target is unknown and it is the physical generator that is known.
+
+The closest prior work to our stationarity losses is the **Weak Generative Sampler** (Cai, Cao, Huang & Zhou 2026): a generator $G_\theta$ is trained to minimize $\mathbb{E}_\varphi\big(\mathbb{E}_z[\mathcal{L}^\ast\varphi(G_\theta(z))]\big)^2$, with random Gaussian test functions, to sample the invariant law of stochastic differential equations up to dimension 100; weak adversarial networks (Zang et al. 2020) are its min-max antecedent. Other works learn a dynamics or an emulator from the invariant measure: optimal transport (Yang et al. 2023), optimization under a stationary Fokker–Planck constraint (Botvinick-Greenhouse, Martin & Yang 2023), chosen statistics or contrastive learning (Jiang et al. 2023), regularization by the MMD distance to the invariant measure in DySLIM (Schiff et al. 2024), whose authors note that invariant measures may not be unique, and score matching of the invariant measure (Chen et al. 2026). Wu et al. (2020) impose the covariance of the data on an adversarial generator of Rayleigh–Bénard convection, and Guan et al. (2023) a global conservation of enstrophy transfer in subgrid-scale closures.
+
+The **I-projection** gives the law closest to a given law, in the Kullback–Leibler sense, under moment constraints; it is an exponential tilting (Csiszár 1975; maximum entropy principle of Jaynes 1957). It has been applied to simulated molecular ensembles (Pitera & Chodera 2012) and to pre-trained text generators (Khalifa, Elsahar & Dymetman 2021). Mun (2026, preprint) seeks "the exponentially tilted high-resolution distribution that minimizes KL divergence from the biased baseline, subject to moment constraints derived from low-resolution simulations", carried out at inference in a diffusion model; Khalafi, Ding & Ribeiro (2024) train diffusions under law constraints by duality. Tauberschmidt et al. (2026) fine-tune a flow matching model toward the tilted law $p_r \propto e^{\lambda r}p$ with a reward built on a **weak-form** PDE residual; this residual is computed on each sample, because the stationary PDE must be satisfied field by field.
+
+Two caveats come from ergodic theory. For a dissipative system, the physical measure (SRB measure) is in general singular with respect to the Lebesgue measure, so that the Liouville equation has no solution with a density and only its **weak form** makes sense; and the selection of this measure as a zero-noise limit is established only in the Axiom A setting, with Young (2002) specifying that there is "no general result" beyond it.
+
+### Generative models for MHD {#ea-mhd}
+
+The works closest to our subject remain far from dynamos. Kacmaz, Huerta & Haas (2025) combine a physics-informed neural operator (PINO) and a conditional diffusion for resistive incompressible 2D MHD, at $Pm = 1$ and $Re$ from 100 to 10,000: at $Re = 1000$, the relative $L^2$ error goes from 0.2548 to 0.1033; the divergence of $\mathbf{B}$ is guaranteed only by the solver, which uses a vector potential, and not by the generative model, and no helicity is evaluated. Martin et al. (2025) generate test-particle trajectories in 3D MHD turbulence; da Silva et al. (2025) coronal potential fields; The Well dataset contains isothermal compressible 3D MHD turbulence, of the interstellar-medium type, which is not a simulation of a laboratory dynamo (Ohana et al. 2024).
+
+To our knowledge, no generative model based on diffusion or flow matching has been published on dynamo simulations (geodynamo, VKS, DRESDYN or 3D turbulent dynamo): searches in the arXiv API and on the web, repeated on November 6, 2026, did not contradict this, but an absence cannot be proven.
+
+### Evaluation metrics {#ea-metriques}
+
+The offer asks for the generated fields to be evaluated by their energy spectra, their helicity, divergence control and topology preservation. Public benchmarks mostly propose deterministic errors: squared error normalized by the variance (VRMSE) and error normalized per spectral band in The Well (Ohana et al. 2024), errors per low, middle and high Fourier band, and error on a conserved quantity, in PDEBench (Takamoto et al. 2022). For samples of a law, these pointwise errors are dominated by the intrinsic variance and are not suitable. Generative works rather use distances between laws: Wasserstein distances between turbulent kinetic energy spectra and between field values in TurbDiff (Lienen et al. 2024), one-point distances and the CRPS score in GenCFD (Raonić et al. 2026), MMD (Gretton et al. 2012) or the energy distance, which equals twice the square of the MMD for the distance-induced kernel (Sejdinovic et al. 2013).
+
+For the magnetic helicity $H_M = \langle\mathbf{A}\cdot\mathbf{B}\rangle$, the gauge matters: there is no absolute measure of the helicity of a subvolume that is not bounded by a magnetic surface, and a relative helicity is then needed (Berger & Field 1984). For topology, persistent homology provides diagrams that are stable under perturbation (Edelsbrunner, Letscher & Zomorodian 2002; Cohen-Steiner, Edelsbrunner & Harer 2007), already applied to MHD simulations of the interstellar medium with dynamo action (Makarenko et al. 2018); magnetic null points and the skeleton of the field are located by dedicated methods (Haynes & Parnell 2007, 2010). None of these tools has, to our knowledge, been used to evaluate generated MHD fields.
+
+### Gaps {#ea-lacunes}
+
+The state of the art leaves six gaps that structure this internship.
+
+1. **No generative model of a dynamo.** The closest MHD work is in 2D, a configuration where a self-sustained dynamo is ruled out by Zel'dovich's anti-dynamo theorem (1957, recalled by Tobias 2021), and its generator does not enforce $\nabla\cdot\mathbf{B} = 0$.
+2. **No joint hard constraint on $\nabla\cdot\mathbf{u}$ and $\nabla\cdot\mathbf{B}$ in 3D.** The building blocks exist separately: 3D Leray projection (PCDM), divergence-free networks, stream function in 2D (FunDiff), potential field. The vector potential, the 3D generalization of the stream function, requires a choice of gauge.
+3. **No treatment of bounded domains.** The Leray projection in Fourier assumes periodicity, whereas VKS and DRESDYN are walled cylinders, with permeability jumps and a matching to the external field.
+4. **No MHD metrics.** No work found evaluates the magnetic or cross helicity, the magnetic energy balances or the topology of the field lines of generated fields.
+5. **No conditioning on $(Re, Rm)$ and no threshold crossing.** No work conditions on both Reynolds numbers at once, or studies the crossing of the dynamo threshold or of the reversal threshold by a generative model.
+6. **No systematic comparison on coupled PDEs, and no constraint in law for fields.** The most direct comparison (Genuist et al. 2026) concerns divergence alone in 2D hydrodynamics and concludes that no strategy dominates; stationarity constraints in law have only been used for low-dimensional systems (at most 100 for the Weak Generative Sampler).
+
+:::: recap
+::: recap-title
+Key takeaways — state of the art
+:::
+- Laboratory and numerical dynamos are as sensitive to materials and boundary conditions as to $Re$ and $Rm$; their data (SFEMaNS, LATU) are not on a regular grid.
+- Reversals have low-dimensional models (the normal form of Pétrélis and Fauve, Gissinger's three-mode model, the DQVU model of Bousquet et al.) that provide test benches with a known truth.
+- Zero divergence can be enforced exactly in a generative model through potentials or projection; no strategy dominates in all regimes (Genuist et al. 2026, preprint).
+- Constraints in law (weak form of Fokker–Planck, invariant measures, I-projection) have been published for low-dimensional systems or external moments, not for field PDEs in a parametric conditional generator.
+- To our knowledge, no generative model has been published on dynamo simulations.
+::::
+
+## 3. Formulation {#formulation}
+
+This section sets out the mathematical framework, classifies the physical constraints and proves nine statements that guide the experiments. The propositions follow the numbering of the theoretical note shared by the report and the PhD proposal (Propositions 1 to 9, including Corollary 6); the other boxes are numbered by chapter. The notation is that of the site: $\mathbf{x} \in \mathbb{R}^D$ is a discretized field, $t \in [0, 1]$ the time of the generative flow (it is **not** a physical time), and $v_\theta$ the velocity field of the flow, not to be confused with the physical velocity $\mathbf{u}$.
+
+### Framework {#cadre}
+
+::: def
+[Definition 3.1 — Parametric family of stationary laws]{.tag}
+Let $\Lambda \subset \mathbb{R}^p$ be the set of control parameters $\boldsymbol\lambda$ (for example $Re$, $Rm$, $\mu_r$, or the forcing $\Gamma$ of Gissinger's model). For each $\boldsymbol\lambda$, the discretized state evolves according to
+
+$$
+\mathrm{d}\mathbf{x} = F_{\boldsymbol\lambda}(\mathbf{x})\,\mathrm{d}t + \Sigma\,\mathrm{d}W_t ,
+$$
+
+with $\Sigma = 0$ for a deterministic dynamics. The **generator** of the dynamics acts on test functions $\varphi$ by
+
+$$
+\mathcal{L}_{\boldsymbol\lambda}\varphi = F_{\boldsymbol\lambda}\cdot\nabla\varphi + \tfrac12\,\Sigma\Sigma^\top : \nabla^2\varphi .
+$$
+
+The data are snapshots of a statistically stationary state. Their law $\mu_{\boldsymbol\lambda}$ is an invariant measure of the dynamics, estimated by time averaging along long trajectories.
+:::
+
+::: def
+[Definition 3.2 — Conditional generative model by flow matching]{.tag}
+A network $v_\theta(\mathbf{z}, t, \boldsymbol\lambda)$ defines, for each $\boldsymbol\lambda$, the flow $\Phi^{\boldsymbol\lambda}_t$ of the equation $\dot{\mathbf{z}} = v_\theta(\mathbf{z}, t, \boldsymbol\lambda)$, and the generated law $q_\theta(\cdot\mid\boldsymbol\lambda) = (\Phi^{\boldsymbol\lambda}_1)_\#\,\mathcal{N}(0, I)$. It is trained with the flow matching loss on the linear path $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\,\mathbf{x}_1$:
+
+$$
+\mathcal{J}(v) = \mathbb{E}\,\big\|\,v(\mathbf{x}_t, t, \boldsymbol\lambda) - (\mathbf{x}_1 - \mathbf{x}_0)\,\big\|^2 ,
+$$
+
+where $t \sim \mathcal{U}[0, 1]$, $\boldsymbol\lambda$ follows the law of the training parameters, $\mathbf{x}_1 \sim \mu_{\boldsymbol\lambda}$ and $\mathbf{x}_0 \sim \mathcal{N}(0, I)$ is independent of $\mathbf{x}_1$. The minimizer is
+
+$$
+v^\star(\mathbf{x}, t, \boldsymbol\lambda) = \mathbb{E}\big[\mathbf{x}_1 - \mathbf{x}_0 \,\big|\, \mathbf{x}_t = \mathbf{x}, \boldsymbol\lambda\big].
+$$
+:::
+
+The minimizer is justified in one line: for every field $v$, $\mathcal{J}(v) = \mathcal{J}(v^\star) + \mathbb{E}\|v(\mathbf{x}_t, t, \boldsymbol\lambda) - v^\star(\mathbf{x}_t, t, \boldsymbol\lambda)\|^2$, because the cross term $\mathbb{E}\big[(v - v^\star)\cdot(v^\star - (\mathbf{x}_1 - \mathbf{x}_0))\big]$ vanishes by conditioning on $(\mathbf{x}_t, t, \boldsymbol\lambda)$. The network therefore learns a conditional expectation by simple regression, without ever computing it; Lipman et al. (2023) show that the flow of $v^\star$ indeed transports $\mathcal{N}(0, I)$ onto $\mu_{\boldsymbol\lambda}$.
+
+Figure 2 summarizes the framework that this report argues for: each class of constraint is handled at the stage where it is true.
+
+![**Figure 2 — Proposed generative framework.** The physical parameters $\boldsymbol\lambda$ drive a latent flow matching; a decoder with potentials makes $\nabla\cdot\mathbf{u} = 0$ and $\nabla\cdot\mathbf{B} = 0$ exact; the symmetry $\mathbf{B} \to -\mathbf{B}$ is enforced by equivariance; the energy balance is enforced in law, not sample by sample. **a**, The velocity field $v_\theta(\mathbf{z}, t, \boldsymbol\lambda)$ transports Gaussian noise to a symmetric bimodal latent law, the image of the two polarities; if $v_\theta(S\mathbf{z}, t, \boldsymbol\lambda) = S\,v_\theta(\mathbf{z}, t, \boldsymbol\lambda)$, the generated law is exactly invariant (Proposition 4). **b**, A functional decoder outputs potentials, whose curls give divergence-free $\mathbf{u}$ and $\mathbf{B}$ whatever the latent law (Proposition 1); in 2D, these potentials are the stream function $\psi$ and the magnetic potential $a$. **c**, Target geometry, of VKS type; the model has not been trained on VKS, and the experiments of this report are simple test benches (E1, E2, E3). **d**, Control in law: an exponential tilting brings the mean dissipation back to the mean injected power without modifying the samples (Proposition 7); enforcing $\varepsilon = P$ on each sample would reduce the law of $\mathrm{d}E/\mathrm{d}t$ to a spike at zero (Corollary 6). **e**, Downstream uses: bases for reduced models, ensembles for data assimilation, frequency of reversals by Rice's formula (Proposition 8). All the data glyphs in the figure are schematic, with no measured values.](../figures/cadre/figure/out/cadre.png){width="100%" fig-alt="Diagram in five panels. a: trajectories of a flow that transports a Gaussian to a law with two symmetric bumps, with an operator S that exchanges the bumps. b: a decoder receives latent tokens and produces maps of potentials whose contour lines are the field lines. c: VKS-type cylinder with two impellers, streamlines on one side and dipolar field lines on the other. d: histograms of the dissipation, the raw law shifted and the tilted law recentered, with a crossed-out spike at zero for the per-sample projection. e: three downstream uses, reduced models, data assimilation and Rice's formula."}
+
+### Taxonomy of constraints {#taxonomie}
+
+Not all "physical constraints" have the same status. Some are true for every admissible field; others are true only for the law of the fields. The following taxonomy, which organizes the whole report, separates four classes and associates with each the mechanism that acts where the constraint is true.
+
+![**Figure 3 — Each class of constraint calls for a mechanism that acts where the constraint is true: on each sample for C1 and C2, on the law for C3 and C4; projecting each sample onto a constraint in law destroys the law.** Blue marks what is true for each sample and the mechanisms that act on each sample; orange, what is true only for the law and the mechanisms that act on the law. **a**, The four classes. C1: $\mathbf{x}$ belongs to a subspace $S = \ker A$ (zero divergence, homogeneous linear boundary conditions), enforced by potentials or by orthogonal projection onto $S$. C2: $c(\mathbf{x}) = 0$, for example the residual of a stationary PDE, enforced by a nonlinear projection, or by a penalty or guidance on the mean end-of-path prediction, biased by the Jensen gap. C3: the law is invariant under a symmetry, but an isolated sample is not; an equivariant velocity field and an invariant base law suffice. C4: stationarity identities $\mathbb{E}_\mu[\mathcal{L}\varphi] = 0$, including the mean energy balance, enforced on the law by a training loss or by an exponential tilting. **b**, For C4, three laws of $\mathrm{d}E/\mathrm{d}t$: the true law, spread out and with zero mean; the projection of each sample onto $\mathrm{d}E/\mathrm{d}t = 0$, which gives a Dirac singular with respect to the true law; the correction in law, which keeps the samples and changes their weights. Illustrative curves, not measurements.](../figures/taxonomie/figure/out/taxonomie.png){width="100%" fig-alt="Panel a: four columns C1 to C4. C1 shows points on a line and an orthogonal projection; C2 an arc of a curve and the Jensen gap between the mean of two points and the curve; C3 two symmetric clouds exchanged by a reflection; C4 a density centered at zero. At the bottom, the mechanism suited to each class. Panel b: three densities of dE/dt, the true law spread out, the per-sample projection reduced to a Dirac at zero, and the correction in law recentered and spread out."}
+
+::: def
+[Definition 3.3 — Four classes of constraints]{.tag}
+
+| Class | Form | Examples in MHD | True for | Suitable mechanism |
+|---|---|---|---|---|
+| C1 — local linear | $\mathbf{x} \in S$, with $S = \ker A$ a closed subspace | $\nabla\cdot\mathbf{u} = 0$, $\nabla\cdot\mathbf{B} = 0$, homogeneous linear boundary conditions | each sample | architecture (potentials) or projection |
+| C2 — local nonlinear | $c(\mathbf{x}) = 0$ | stationary equation (Darcy in PIDM), algebraic relation | each sample, if no time derivative is involved | nonlinear projection (PCFM, ECI), penalty or guidance |
+| C3 — symmetry | $g_\#\mu_{\boldsymbol\lambda} = \mu_{\boldsymbol\lambda}$ for $g \in G$ | $\mathbf{B} \to -\mathbf{B}$; rotation $R_\pi$ of VKS; $(Q, D, V) \to (-Q, -D, V)$ | the law | equivariance of the velocity field |
+| C4 — statistical (stationarity) | $\mathbb{E}_{\mu_{\boldsymbol\lambda}}[\mathcal{L}_{\boldsymbol\lambda}\varphi] = 0$ for $\varphi \in \Phi$ | mean energy balance $\langle\varepsilon\rangle = \langle P\rangle$; balances of cross helicity and of $\langle a^2\rangle$ | the law only | loss in law during training; exponential tilting at sampling time |
+:::
+
+::: note
+[Remark 3.4 — A snapshot does not "satisfy" an evolution equation]{.tag}
+For a snapshot of an unsteady PDE, the residual $\partial_t\mathbf{x} - F(\mathbf{x})$ cannot be computed, since the time derivative is not in the snapshot: every state is the initial state of a solution. The only per-sample constraints that the physical model provides are those that do not involve time, such as zero divergence, boundary conditions or diagnostic elliptic equations (the pressure, for example). In particular, the energy balance $\mathrm{d}E/\mathrm{d}t = P - \varepsilon$ is an **identity**, whose right-hand side is computed on the snapshot; it is not a constraint. The constraint is $\mathbb{E}[P - \varepsilon] = 0$, and it bears on the law.
+:::
+
+### Per-sample constraints: Propositions 1 to 3 {#props-echantillon}
+
+:::: prop
+[Proposition 1 — Linear constraint by construction]{.tag}
+If the model generates $\mathbf{z}$ according to any law and then returns $\mathbf{x} = \mathcal{C}(\mathbf{z})$, with a decoder $\mathcal{C}$ such that $\mathrm{Im}\,\mathcal{C} \subset S$ (for example $\mathbf{u} = \nabla^\perp\psi$, $\mathbf{B} = \nabla\times\mathbf{A}$), then the generated law satisfies $q(S) = 1$, whatever the law of $\mathbf{z}$, hence whatever the quality of the training.
+
+::: proof
+We have $q(S) = q_{\mathbf{z}}(\mathcal{C}^{-1}(S))$, and $\mathcal{C}^{-1}(S)$ is the whole latent space since the image of $\mathcal{C}$ is contained in $S$; hence $q(S) = 1$. [∎]{.qed}
+:::
+::::
+
+The proposition is trivial; all the interest lies in the choice of $\mathcal{C}$. In 2D, $\mathbf{u} = \nabla^\perp\psi = (\partial_y\psi, -\partial_x\psi)$ satisfies $\nabla\cdot\mathbf{u} = \partial_x\partial_y\psi - \partial_y\partial_x\psi = 0$ for every twice-differentiable function $\psi$; this is the choice of FunDiff and of our variant V4. In 3D, $\mathbf{B} = \nabla\times\mathbf{A}$ works for any $\mathbf{A}$, but $\mathbf{A}$ is defined only up to a gradient, and a generative model of potentials must fix the gauge so that the law of $\mathbf{A}$ is determined by the physics.
+
+::: note
+[Remark 3.5 — Bounded domains]{.tag}
+In a bounded domain, the decoder must also respect the boundary conditions. For an impermeable wall in 2D, $\psi$ must be constant on the wall. For the vector potential in 3D, Amrouche & Seloula (2011) give the two canonical choices on a smooth bounded domain: if $\mathbf{B}$ is divergence-free and has zero flux through each connected component of the boundary, there exists a unique $\boldsymbol\psi$ such that $\mathbf{B} = \nabla\times\boldsymbol\psi$, $\nabla\cdot\boldsymbol\psi = 0$ and $\boldsymbol\psi\cdot\mathbf{n} = 0$ on the boundary (with flux conditions through cuts if the domain is not simply connected); if moreover $\mathbf{B}\cdot\mathbf{n} = 0$ on the boundary, one can impose $\boldsymbol\psi\times\mathbf{n} = 0$. Matching to an external potential field, as in SFEMaNS, additionally requires generating or computing this external field.
+:::
+
+The following proposition explains why several different mechanisms aim at the same target, and where the residual divergence of a model that enforces nothing comes from. Like Proposition 3, it is an elementary consequence of the definitions, probably known in other forms; we prove it because what follows relies on it.
+
+:::: prop
+[Proposition 2 — Optimal flow when the data live in a subspace]{.tag}
+Let $S \subset \mathbb{R}^D$ be a subspace, $P$ the orthogonal projector onto $S$, and assume $\mu(S) = 1$. With $\mathbf{x}_0 \sim \mathcal{N}(0, I)$ independent of $\mathbf{x}_1 \sim \mu$, the optimal field reads, for $t \in [0, 1)$,
+
+$$
+v^\star(\mathbf{x}, t) = m(P\mathbf{x}, t) - \frac{(I-P)\,\mathbf{x}}{1-t}, \qquad m(\mathbf{y}, t) = \mathbb{E}\big[\mathbf{x}_1 - P\mathbf{x}_0 \,\big|\, P\mathbf{x}_t = \mathbf{y}\big] \in S .
+$$
+
+Four consequences follow.
+
+(a) With the exact $v^\star$, the orthogonal component of the sampler satisfies $(I-P)\mathbf{x}(t) = (1-t)\,(I-P)\mathbf{x}(0)$: the final sample is exactly in $S$.
+
+(b) In the limit of perfect training, free generation, final projection, projected flow and generation through potentials produce the same law $\mu$. The differences observed between these mechanisms come from approximation error and inductive bias, not from the target.
+
+(c) If the network does not reproduce the singularity at $t = 1$, for example if, along a trajectory, $(I-P)\,v_\theta = -\kappa(t)\,(I-P)\mathbf{x} + \mathbf{r}(t)$ with $0 \le \kappa(t) \le K$ and $\|\mathbf{r}(t)\| \le \rho$, then $\|(I-P)\mathbf{x}(1)\| \ge e^{-K}\,\|(I-P)\mathbf{x}(0)\| - \rho$. The residual divergence of a free model is therefore of order one as long as the network does not represent a contraction rate that diverges as $t \to 1$.
+
+(d) The term $-(I-P)\mathbf{x}/(1-t)$ is stiff near $t = 1$: an explicit scheme with fixed step $h$ resolves it poorly over the last steps, where $h/(1-t)$ is of order one.
+
+::: proof
+*Decomposition.* The noise $\mathbf{x}_0$ is isotropic Gaussian, so $P\mathbf{x}_0$ and $(I-P)\mathbf{x}_0$ are uncorrelated Gaussian vectors, hence independent. Since $\mathbf{x}_1 \in S$ almost surely, $P\mathbf{x}_t = (1-t)P\mathbf{x}_0 + t\,\mathbf{x}_1$ and $(I-P)\mathbf{x}_t = (1-t)(I-P)\mathbf{x}_0$. The variable $(I-P)\mathbf{x}_t$ is therefore independent of the triple $(P\mathbf{x}_t, \mathbf{x}_1, P\mathbf{x}_0)$. We write the target $\mathbf{x}_1 - \mathbf{x}_0 = (\mathbf{x}_1 - P\mathbf{x}_0) - (I-P)\mathbf{x}_0$ and condition on $\mathbf{x}_t$, that is, on the pair $(P\mathbf{x}_t, (I-P)\mathbf{x}_t)$. For the first term, independence gives $\mathbb{E}[\mathbf{x}_1 - P\mathbf{x}_0 \mid P\mathbf{x}_t, (I-P)\mathbf{x}_t] = \mathbb{E}[\mathbf{x}_1 - P\mathbf{x}_0 \mid P\mathbf{x}_t] = m(P\mathbf{x}_t, t)$, which belongs to $S$ because $\mathbf{x}_1 - P\mathbf{x}_0 \in S$ and the conditional expectation commutes with the linear map $I - P$. For the second, $(I-P)\mathbf{x}_0 = (I-P)\mathbf{x}_t/(1-t)$ is a function of $(I-P)\mathbf{x}_t$ when $t < 1$, hence equal to its own conditional expectation.
+
+*(a)* The component $\mathbf{y} = (I-P)\mathbf{x}$ satisfies $\dot{\mathbf{y}} = -\mathbf{y}/(1-t)$, whose solution is $\mathbf{y}(t) = (1-t)\,\mathbf{y}(0)$, zero at $t = 1$. The component $P\mathbf{x}$ satisfies the equation $\dot{\mathbf{w}} = m(\mathbf{w}, t)$, which involves only $P\mathbf{x}$.
+
+*(b)* The flow of $v^\star$ transports $\mathcal{N}(0, I)$ onto $\mu$ (Lipman et al. 2023). The final projection does not change the law, because $P$ is the identity on $S$, which carries $\mu$. For the projected flow, $P\,v^\star(\mathbf{x}, t) = m(P\mathbf{x}, t)$ depends only on $P\mathbf{x}$: by projecting at each step, $\mathbf{w} = P\mathbf{x}$ follows exactly the same equation, with the same initial condition $P\mathbf{x}(0)$, and arrives at the same point as the free trajectory, whose final orthogonal component is zero by (a). Finally, if $\mathcal{C}$ is a linear bijection from a coefficient space onto $S$ (such as $\hat\psi_{\mathbf{k}} \mapsto i\,\mathbf{k}^\perp\hat\psi_{\mathbf{k}}$ for $\mathbf{k} \neq 0$), the target of flow matching in potentials is the law $(\mathcal{C}^{-1})_\#\mu$, which $\mathcal{C}$ maps back onto $\mu$.
+
+*(c)* Along a trajectory, $\mathbf{y} = (I-P)\mathbf{x}$ satisfies the linear equation $\dot{\mathbf{y}} = -\kappa(t)\,\mathbf{y} + \mathbf{r}(t)$, hence $\mathbf{y}(1) = e^{-\int_0^1\kappa}\,\mathbf{y}(0) + \int_0^1 e^{-\int_s^1\kappa}\,\mathbf{r}(s)\,\mathrm{d}s$. The first term has norm at least $e^{-K}\|\mathbf{y}(0)\|$, the second a norm at most $\rho$, and the triangle inequality concludes.
+
+*(d)* On the orthogonal component, the exact field has Lipschitz constant $1/(1-t)$; an explicit scheme with step $h$ is accurate only if $h/(1-t)$ is small, which fails over the last steps. [∎]{.qed}
+:::
+::::
+
+::: note
+[Remark 3.6 — A bounded error leaves no divergence; a missing contraction does]{.tag}
+One might think that the final orthogonal component of a free model equals the error of the network at the final time. The computation says otherwise. If the error is **added** to the exact field, $(I-P)v_\theta = -(I-P)\mathbf{x}/(1-t) + \mathbf{r}(t)$ with $\|\mathbf{r}\| \le \rho$, the solution reads $\mathbf{y}(t) = (1-t)\big[\mathbf{y}(0) + \int_0^t \mathbf{r}(s)/(1-s)\,\mathrm{d}s\big]$, whose second term is bounded by $\rho\,(1-t)\ln\frac{1}{1-t}$, which tends to 0: the contraction erases the error. What leaves a finite divergence is the inability of a bounded network to represent the rate $1/(1-t)$ (point (c)), combined with the finite step of the integrator (point (d)). The residual divergence measured in E2 for free generation should therefore be read as a failure to represent the stiff term, not as a small uniform error.
+:::
+
+An explicit example shows the two components of the optimal field. Take $D = 2$, $S$ the line spanned by $\mathbf{e}_1$ and Gaussian data $\mathbf{x}_1 = \xi\,\mathbf{e}_1$ with $\xi \sim \mathcal{N}(0, \sigma^2)$. Denote by $x_{0,1}$ the first coordinate of the noise. The component $P\mathbf{x}_t = \big((1-t)\,x_{0,1} + t\,\xi\big)\mathbf{e}_1$ has as coordinate a Gaussian of variance $(1-t)^2 + t^2\sigma^2$, whose covariance with $\xi - x_{0,1}$ equals $t\sigma^2 - (1-t)$. Gaussian conditioning gives
+
+$$
+v^\star(\mathbf{y}, t) = \frac{t\sigma^2 - (1-t)}{(1-t)^2 + t^2\sigma^2}\,y_1\,\mathbf{e}_1 \;-\; \frac{y_2}{1-t}\,\mathbf{e}_2 , \qquad \mathbf{y} = y_1\mathbf{e}_1 + y_2\mathbf{e}_2 .
+$$
+
+The first term, bounded, dilates or contracts the law along $S$ to go from variance 1 to variance $\sigma^2$; the second, which diverges as $t \to 1$, brings the orthogonal component back to zero. A network that learns the first term well may very well learn the second poorly, and this is what the residual divergence of free generation measures in E2.
+
+:::: prop
+[Proposition 3 — Penalty on the end-of-path prediction: unbiased for a linear constraint, biased otherwise]{.tag}
+The end-of-path prediction $\hat{\mathbf{x}}_1 = \mathbf{x}_t + (1-t)\,v(\mathbf{x}_t, t)$ equals $\mathbb{E}[\mathbf{x}_1\mid\mathbf{x}_t]$ when $v = v^\star$. If $A$ is linear and $A\mathbf{x}_1 = 0$ almost surely, the penalty $\mathbb{E}\|A\hat{\mathbf{x}}_1\|^2$ vanishes at $v^\star$: added to the flow matching loss, it does not move the optimum. For a nonlinear constraint $c$, in general $c(\mathbb{E}[\mathbf{x}_1\mid\mathbf{x}_t]) \neq \mathbb{E}[c(\mathbf{x}_1)\mid\mathbf{x}_t] = 0$: the penalty does not vanish at $v^\star$ and biases the optimum. This is the Jensen gap discussed by Bastek, Sun & Kochmann (2025).
+
+::: proof
+On the linear path, $\mathbf{x}_t + (1-t)(\mathbf{x}_1 - \mathbf{x}_0) = (1-t)\mathbf{x}_0 + t\,\mathbf{x}_1 + (1-t)\mathbf{x}_1 - (1-t)\mathbf{x}_0 = \mathbf{x}_1$. Taking the conditional expectation given $\mathbf{x}_t$, and since $v^\star(\mathbf{x}_t, t) = \mathbb{E}[\mathbf{x}_1 - \mathbf{x}_0\mid\mathbf{x}_t]$, we obtain $\hat{\mathbf{x}}_1 = \mathbb{E}[\mathbf{x}_1\mid\mathbf{x}_t]$. If $A$ is linear, $A\hat{\mathbf{x}}_1 = \mathbb{E}[A\mathbf{x}_1\mid\mathbf{x}_t] = 0$ almost surely, so the penalty, which is nonnegative, vanishes at $v^\star$; since $v^\star$ also minimizes $\mathcal{J}$, it minimizes the sum. For a nonlinear constraint, one example suffices: in dimension 1, $c(x) = x^2 - 1$ and $\mu = \tfrac12(\delta_{-1} + \delta_{1})$; by symmetry, $\mathbb{E}[\mathbf{x}_1\mid\mathbf{x}_t = 0] = 0$, so $c(\hat{\mathbf{x}}_1) = -1$ at $\mathbf{x}_t = 0$, and, by continuity, $\hat{\mathbf{x}}_1$ sweeps the whole interval $(-1, 1)$ as $\mathbf{x}_t$ ranges over $\mathbb{R}$. The penalty $\mathbb{E}[c(\hat{\mathbf{x}}_1)^2]$ is therefore strictly positive at $v^\star$, and its derivative in a direction $\delta v$ localized where $0 < \hat{\mathbf{x}}_1 < 1$ equals $2(1-t)\,\mathbb{E}[c(\hat{\mathbf{x}}_1)\,c'(\hat{\mathbf{x}}_1)\,\delta v] \neq 0$, whereas the gradient of $\mathcal{J}$ vanishes at $v^\star$: the optimum of the sum is moved. [∎]{.qed}
+:::
+::::
+
+### Symmetry: Proposition 4 {#prop-symetrie}
+
+:::: prop
+[Proposition 4 — Exact symmetry through equivariance]{.tag}
+Let $G$ be a finite group acting on $\mathbb{R}^D$ by linear isometries. If the velocity field satisfies $v(g\mathbf{x}, t, \boldsymbol\lambda) = g\,v(\mathbf{x}, t, \boldsymbol\lambda)$ for all $g$, $\mathbf{x}$, $t$, $\boldsymbol\lambda$, and if the base law $\gamma$ is $G$-invariant (as is $\mathcal{N}(0, I)$), then the generated law $q(\cdot\mid\boldsymbol\lambda)$ is $G$-invariant for **every** $\boldsymbol\lambda$, including without data. The symmetrization $v_{\mathrm{sym}} = \frac{1}{|G|}\sum_{g\in G} g^{-1}\,v(g\,\cdot)$ is equivariant, and if the laws $\mu_{\boldsymbol\lambda}$ are $G$-invariant, the population flow matching loss satisfies $\mathcal{J}(v_{\mathrm{sym}}) \le \mathcal{J}(v)$.
+
+::: proof
+*Invariance.* Let $\Phi_t$ be the flow of $v$ at fixed $\boldsymbol\lambda$. The curve $t \mapsto g\,\Phi_t(\mathbf{z})$ satisfies $\frac{\mathrm{d}}{\mathrm{d}t}\,g\Phi_t(\mathbf{z}) = g\,v(\Phi_t(\mathbf{z}), t) = v(g\Phi_t(\mathbf{z}), t)$, with initial value $g\mathbf{z}$; it is therefore the solution starting from $g\mathbf{z}$, and uniqueness of solutions gives $g\,\Phi_t(\mathbf{z}) = \Phi_t(g\mathbf{z})$. Then $g_\#q = (g\circ\Phi_1)_\#\gamma = (\Phi_1\circ g)_\#\gamma = (\Phi_1)_\#(g_\#\gamma) = (\Phi_1)_\#\gamma = q$.
+
+*Equivariance of the symmetrization.* For $h \in G$, $v_{\mathrm{sym}}(h\mathbf{x}) = \frac{1}{|G|}\sum_g g^{-1}v(gh\mathbf{x}) = h\,\frac{1}{|G|}\sum_g (gh)^{-1}v(gh\mathbf{x}) = h\,v_{\mathrm{sym}}(\mathbf{x})$, by reindexing the sum with $g' = gh$.
+
+*Loss.* Write $(T_g v)(\mathbf{x}) = g^{-1}v(g\mathbf{x})$. Since $g$ is an isometry, $\mathcal{J}(T_g v) = \mathbb{E}\|v(g\mathbf{x}_t) - g(\mathbf{x}_1 - \mathbf{x}_0)\|^2$. Now $(g\mathbf{x}_0, g\mathbf{x}_1)$ has the same law as $(\mathbf{x}_0, \mathbf{x}_1)$, since both laws are invariant and the variables are independent; hence $\mathcal{J}(T_g v) = \mathcal{J}(v)$. The loss is convex in $v$ (quadratic), and Jensen's inequality gives $\mathcal{J}(v_{\mathrm{sym}}) = \mathcal{J}\big(\frac{1}{|G|}\sum_g T_g v\big) \le \frac{1}{|G|}\sum_g\mathcal{J}(T_g v) = \mathcal{J}(v)$. [∎]{.qed}
+:::
+::::
+
+This result is classical for equivariant normalizing flows; we state it because it interacts with stationarity in the following way.
+
+::: note
+[Remark 3.7 — The stationarity identities do not fix the weights of the symmetric components]{.tag}
+The set of invariant measures of a dynamics is convex; its extreme points are the ergodic measures. Below the reversal threshold, Gissinger's dynamics has two symmetric ergodic measures $\mu_+$ (polarity $D > 0$) and $\mu_- = S_\#\mu_+$, and **every** combination $p\,\mu_+ + (1-p)\,\mu_-$ is invariant: $\mathbb{E}_{p\mu_+ + (1-p)\mu_-}[\mathcal{L}\varphi] = p\cdot0 + (1-p)\cdot 0 = 0$ for every test function. The stationarity identities, however many there are, therefore cannot fix $p$. Yet the training data, made of a finite number of trajectories each of which stays on its polarity, generally give $p \neq 1/2$. The symmetry must be enforced separately, through Proposition 4; this is the purpose of the comparison of variants A, B and C in E1.
+:::
+
