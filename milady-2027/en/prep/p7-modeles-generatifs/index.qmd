@@ -69,7 +69,7 @@ The level indicates the difficulty: 1 for the foundations, 2 for the core of the
 
 | Session | Duration | Level | Content | Exercises |
 |:---:|:---:|:---:|---|:---:|
-| 1 | 3 h | 1 | Chapter 1: transport of a law, likelihood and its limits, normalizing flows, continuous flows | 1, 2 |
+| 1 | 3 h | 1 | Chapter 1: transport of a law, likelihood and its limitations, normalizing flows, continuous flows | 1, 2 |
 | 2 | 4 h | 2 | Chapter 2: forward process, posterior law, variational bound, noise prediction, DDPM sampling | 3, 4 |
 | 3 | 5 h | 2 | Chapter 3: forward and reverse SDEs, probability flow ODE, score matching (Vincent, Tweedie), EDM | 5, 6, 7 |
 | 4 | 4 h | 2 | Chapter 4, Sections 4.1 to 4.3: continuity equation, marginal field, gradient theorem, Gaussian example | 8, 9 |
@@ -79,7 +79,7 @@ The level indicates the difficulty: 1 for the foundations, 2 for the core of the
 | 8 | 3 h | 3 | Chapter 7: evaluation, energy distance, sliced Wasserstein, physical metrics, comparison with DDPM | 16 |
 | **Total** | **30 h** | | 7 chapters | 16 exercises |
 
-Each session ends with the indicated exercises, to be worked on before reading their solution. The code blocks are self-contained: each runs as is, in less than thirty seconds on a CPU, with NumPy, SciPy and PyTorch. The outputs copied as comments were obtained by running the blocks on a single compute core; your figures may differ slightly depending on the library versions.
+Each session ends with the indicated exercises, to be worked on before reading their solution. The code blocks are self-contained: each runs as is, in less than thirty seconds on a CPU, with NumPy, SciPy and PyTorch. The outputs copied as comments were obtained by running the blocks on a single compute core; your numbers may differ slightly depending on the library versions.
 
 ## 1. What is a generative model? {#ch1}
 
@@ -117,7 +117,7 @@ The variable $U = \Phi(Z)$ follows the uniform law on $]0, 1[$, since $\mathbb{P
 For the exponential law with parameter 1, $F(x) = 1 - e^{-x}$ for $x \ge 0$, so $T(z) = -\ln\big(1 - \Phi(z)\big)$. The point $z = 0$, the median of the Gaussian, is sent to $T(0) = \ln 2 \approx 0.693$, the median of the exponential law. The map $T$ is increasing: it “stretches” the right tail of the Gaussian and “compresses” its left tail against $0$.
 :::
 
-### 1.2 Likelihood and its limits
+### 1.2 Likelihood and its limitations
 
 When the model is explicit, the most classical criterion to fit it is the likelihood of the data.
 
@@ -141,10 +141,10 @@ By definition, $\mathrm{KL}(\mu \,\|\, q_\theta) = \mathbb{E}_\mu[\log \mu - \lo
 :::
 ::::
 
-Likelihood nevertheless has four limits, which explain why the models of this module are not, in practice, trained by maximizing it directly.
+Likelihood nevertheless has four limitations, which explain why the models of this module are not, in practice, trained by maximizing it directly.
 
 ::: note
-[Remark 1.7 — Four limits of the likelihood]{.tag}
+[Remark 1.7 — Four limitations of the likelihood]{.tag}
 (a) **It requires a computable density.** For a transport model, this requires $T_\theta$ to be invertible and the determinant of its Jacobian to be computable, which generally costs $O(D^3)$ operations.
 
 (b) **It weighs errors asymmetrically.** The divergence $\mathrm{KL}(\mu \,\|\, q)$ heavily penalizes a model that puts an almost zero density where there are data, but hardly penalizes a model that puts mass where there are none: maximum likelihood “covers” all the modes, even if it means filling the space between them.
@@ -556,13 +556,13 @@ Everything that follows rests on an elementary identity: $\Delta p = \nabla\cdot
 
 :::: thm
 [Theorem 3.3 — Reverse SDE (Anderson, 1982; Song et al., 2021)]{.tag}
-Let $\tau = 1 - s$ denote reversed time. The process $\bar{\mathbf{y}}_\tau$ solution of
+Let $\tau = 1 - s$ denote reversed time. The process $\bar{\mathbf{y}}_\tau$ that solves
 
 $$
 \mathrm{d}\bar{\mathbf{y}}_\tau = \Big[-f(\bar{\mathbf{y}}_\tau, 1 - \tau) + g(1 - \tau)^2\,\nabla\log p_{1-\tau}(\bar{\mathbf{y}}_\tau)\Big]\mathrm{d}\tau + g(1 - \tau)\,\mathrm{d}\bar W_\tau, \qquad \bar{\mathbf{y}}_0 \sim p_1,
 $$
 
-has at time $\tau$ the law $p_{1-\tau}$ of the forward process at time $s = 1 - \tau$. In particular $\bar{\mathbf{y}}_1 \sim \mu$.
+has, at time $\tau$, the law $p_{1-\tau}$ of the forward process at time $s = 1 - \tau$. In particular $\bar{\mathbf{y}}_1 \sim \mu$.
 
 ::: proof
 Sketch, at the level of marginal laws (Anderson proves the equality of the laws of entire trajectories). Let $q_\tau = p_{1-\tau}$. By Fokker–Planck, $\partial_\tau q_\tau = -(\partial_s p)_{s = 1 - \tau} = \nabla\cdot(f\,q_\tau) - \frac{g^2}{2}\Delta q_\tau$. We look for a drift $b$ such that this equation is the Fokker–Planck equation of an SDE with diffusion coefficient $g$, that is, $\partial_\tau q = -\nabla\cdot(b\,q) + \frac{g^2}{2}\Delta q$. We need $-\nabla\cdot(b\,q) = \nabla\cdot(f\,q) - g^2\Delta q = \nabla\cdot\big(f\,q - g^2 q\,\nabla\log q\big)$, which is achieved by $b = -f + g^2\,\nabla\log q$. The two Fokker–Planck equations coincide and start from the same law $q_0 = p_1$; by uniqueness of the solution (taken for granted), the marginal laws coincide at all times. [∎]{.qed}
@@ -1179,7 +1179,7 @@ Condition on $\boldsymbol\lambda$: $L(\theta) = \mathbb{E}_{\boldsymbol\lambda}\
 
 ::: note
 [Remark 5.3 — What the theorem does not say: interpolation in $\boldsymbol\lambda$]{.tag}
-Proposition 5.2 only concerns the values of $\boldsymbol\lambda$ present in the data. In practice, only a handful of values of $(Re, Rm)$ are simulated, and one hopes that the network **interpolates** between them. This relies on the regularity of $\boldsymbol\lambda \mapsto \mu_{\boldsymbol\lambda}$ and on the inductive bias of the network, not on a theorem. Yet the systems of the internship have bifurcations: at the dynamo threshold $Rm_c$, the stationary law of the magnetic field changes nature (zero field below, self-sustained field above; see modules [p3](../p3-mhd-dynamo/index.html) and [p4](../p4-systemes-dynamiques/index.html)). A conditional model must therefore be tested at values of $\boldsymbol\lambda$ **absent** from training, inside the range and beyond; Kohl, Chen and Thuerey (2026) thus evaluate their flow diffusion models at Reynolds numbers outside the training range.
+Proposition 5.2 only concerns the values of $\boldsymbol\lambda$ present in the data. In practice, only a handful of values of $(Re, Rm)$ are simulated, and one hopes that the network **interpolates** between them. This relies on the regularity of $\boldsymbol\lambda \mapsto \mu_{\boldsymbol\lambda}$ and on the inductive bias of the network, not on a theorem. Yet the systems of the internship have bifurcations: at the dynamo threshold $Rm_c$, the stationary law of the magnetic field changes nature (zero field below, self-sustained field above; see modules [p3](../p3-mhd-dynamo/index.html) and [p4](../p4-systemes-dynamiques/index.html)). A conditional model must therefore be tested at values of $\boldsymbol\lambda$ **absent** from training, inside the range and beyond; Kohl, Chen and Thuerey (2026) thus evaluate their diffusion models for fluid flows at Reynolds numbers outside the training range.
 :::
 
 The parameter can enter the network by simple concatenation (as in the code of Section 5.6), or through an embedding followed by a modulation of the layers (FiLM, or AdaLN-Zero in the diffusion transformers used by FunDiff), and it is better to normalize it, for example by switching to $\log Re$.
@@ -1649,7 +1649,7 @@ for nom, X in cas.items():
 # weights 0.4/0.1/0.25/0.25    0.0665   0.1989
 ```
 
-The two distances rank the defects in the same order: losing a mode is the most serious, then a poor balance of the weights, then a shift, then a widening of the modes. The energy distance fluctuates around $0$ for the same law ($-0.001$), whereas the sliced distance keeps a positive bias ($0.024$) due to the finite sample size. In both cases, an isolated figure says nothing: it must be compared with the **floor** obtained between two independent samples of the reference.
+The two distances rank the defects in the same order: losing a mode is the most serious, then a poor balance of the weights, then a shift, then a widening of the modes. The energy distance fluctuates around $0$ for the same law ($-0.001$), whereas the sliced distance keeps a positive bias ($0.024$) due to the finite sample size. In both cases, an isolated number says nothing: it must be compared with the **floor** obtained between two independent samples of the reference.
 
 ### 7.3 Physical metrics
 
@@ -1749,7 +1749,7 @@ for lam in [0.25, 0.5, 0.375, 0.625]:
 # λ = 0.625 : DDPM ancestral (100 eval.) D_E = -0.0011   DDIM (10 eval.) D_E = 0.0115
 ```
 
-Putting these figures side by side with those of Section 5.6 (same network, same training budget, same seed), we obtain the following table.
+Putting these numbers side by side with those of Section 5.6 (same network, same training budget, same seed), we obtain the following table.
 
 | Method | Network evaluations | $\hat{\mathcal{E}}$ at the four values of $\lambda$ |
 |---|:---:|---|
@@ -1973,7 +1973,7 @@ The exercises are graded: ★ direct application of the course, ★★ multi-ste
 
 The internship offer asks for the development of conditional generative models, by diffusion or flow matching, of parameterized physical fields, for imposing on them constraints stemming from the equations and the boundary conditions “through the design of the model, the training losses or the sampling procedures”, and for validating them on simple PDEs and then on MHD fields with metrics of spectra, helicity, divergence and topology. This module provides the tools for the first half of this program; module [p8](../p8-contraintes-physiques/index.html) covers the second. Here is where each chapter comes into play in the experiments actually carried out in this repository (the quantitative results are in the report, not here).
 
-- **Experiment E1** ([report, section E1](../../rapport/index.html#e1)). A conditional flow matching model (Chapters 4 and 5) learns the invariant law of the three-mode reversal model of Gissinger (2012) as a function of the forcing parameter $\Gamma$, trained on a grid of values and tested between them (Remark 5.3). The symmetry $(Q, D, V) \to (-Q, -D, V)$, the analogue of the reversal $\mathbf{B} \to -\mathbf{B}$, is imposed there by data augmentation or by an equivariant velocity field; stationarity identities are imposed **in law**; the frequency of reversals is estimated from the generated law alone through the Rice formula. The evaluation uses the energy distance and the sliced Wasserstein distance (Chapter 7).
+- **Experiment E1** ([report, section E1](../../rapport/index.html#e1)). A conditional flow matching model (Chapters 4 and 5) learns the invariant measure of the three-mode reversal model of Gissinger (2012) as a function of the forcing parameter $\Gamma$, trained on a grid of values and tested between them (Remark 5.3). The symmetry $(Q, D, V) \to (-Q, -D, V)$, the analogue of the reversal $\mathbf{B} \to -\mathbf{B}$, is imposed there by data augmentation or by an equivariant velocity field; stationarity identities are imposed **in law**; the frequency of reversals is estimated from the generated law alone through the Rice formula. The evaluation uses the energy distance and the sliced Wasserstein distance (Chapter 7).
 - **Experiment E2** ([report, section E2](../../rapport/index.html#e2)). Forced 2D MHD fields $(\mathbf{u}, \mathbf{B})$ are generated conditionally on the magnetic diffusivity $\eta$, and five divergence-constraint mechanisms are compared with equal network and budget: free generation, penalty on the denoised estimate $\hat{\mathbf{x}}_1 = \mathbf{x}_t + (1 - t)v_\theta$ (Proposition 5.6, with no Jensen gap since the divergence is linear), final projection, projected flow (projected noise and steps) and generation of potentials $(\psi, a)$ (Proposition 6.2). The energy balance, which is quadratic, is handled in law rather than on the denoised estimate (Section 5.5).
 - **Experiment E3** ([report, section E3](../../rapport/index.html#e3)). The growth rate of the ABC kinematic dynamo as a function of $Rm$ provides an example of parametric dependence with a threshold: a model conditioned on $Rm$ must cross this threshold, which is exactly the situation where interpolation in $\boldsymbol\lambda$ is guaranteed by no theorem.
 - The **formulation** of the problem and the **taxonomy** of constraints (where the constraint acts: architecture, loss, sampling; hard or soft) are developed in the report ([formulation](../../rapport/index.html#formulation), [taxonomy](../../rapport/index.html#taxonomie)). The PhD proposal derives from it a [theoretical part](../../these/index.html#theorie) and an [experimental plan](../../these/index.html#plan-experimental).

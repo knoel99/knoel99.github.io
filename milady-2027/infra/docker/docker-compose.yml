@@ -1,0 +1,247 @@
+# Pile de services MilaDy : catalogue PostgreSQL, stockage objet S3 (MinIO), suivi MLflow,
+# conteneurs de calcul (CPU ou GPU) et Jupyter (facultatif).
+#
+# Utilisation (depuis la racine du dépôt ; le Makefile fait tout cela) :
+#   cp infra/docker/.env.example infra/docker/.env   # puis changer les mots de passe
+#                                                    # (bootstrap_vm.sh le fait automatiquement)
+#   docker compose -f infra/docker/docker-compose.yml --env-file infra/docker/.env up -d --wait
+#   docker compose -f infra/docker/docker-compose.yml --env-file infra/docker/.env run --rm worker bash
+#
+# Profils :
+#   (aucun)  db, s3, s3-init, mlflow — démarrés par `make up` ;
+#   cpu      worker      : image milady:cpu (infra/docker/Dockerfile) ;
+#   gpu      worker-gpu  : image milady:gpu (infra/docker/Dockerfile.gpu) + réservation des GPU NVIDIA ;
+#   jupyter  jupyter     : JupyterLab sur le port 8888 (lié à 127.0.0.1 : passer par un tunnel SSH).
+#
+# Sécurité : tous les ports sont liés à ${BIND_ADDR} (127.0.0.1 par défaut). Sur une VM cloud,
+# on y accède par tunnel SSH (voir infra/README.md) ; ne pas ouvrir 5432/9000/5000 sur Internet.
+#
+# NB sur l'image MinIO : MinIO Inc. ne publie plus d'images Docker de l'édition communautaire
+# (minio/minio et quay.io/minio/minio ne sont plus téléchargeables). On utilise par défaut le
+# fork communautaire pgsty/minio (même binaire AGPLv3, mêmes commandes), remplaçable par
+# MINIO_IMAGE / MC_IMAGE dans .env, ou par un bucket S3 du fournisseur (MILADY_S3_ENDPOINT).
+
+name: ${COMPOSE_PROJECT_NAME:-milady}
+
+# ---------------------------------------------------------------------------------------------
+# Blocs réutilisés (ancres YAML)
+# ---------------------------------------------------------------------------------------------
+x-milady-env: &milady-env
+  # Catalogue (SQLAlchemy + psycopg 3).
+  MILADY_DB_URL: postgresql+psycopg://${POSTGRES_USER:-milady}:${POSTGRES_PASSWORD:?définir POSTGRES_PASSWORD dans .env}@db:5432/${POSTGRES_DB:-milady}
+  # Stockage objet : MinIO local par défaut, ou bucket du fournisseur (AWS, Scaleway, OVHcloud).
+  MILADY_STORAGE_URI: ${MILADY_STORAGE_URI:-s3://milady-data}
+  MILADY_MODELS_URI: ${MILADY_MODELS_URI:-s3://milady-models}
+  MILADY_S3_ENDPOINT: ${MILADY_S3_ENDPOINT:-http://s3:9000}
+  AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:?définir S3_ACCESS_KEY dans .env}
+  AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:?définir S3_SECRET_KEY dans .env}
+  AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-us-east-1}
+  # Suivi des entraînements.
+  MLFLOW_TRACKING_URI: http://mlflow:5000
+  MLFLOW_EXPERIMENT_NAME: ${MLFLOW_EXPERIMENT_NAME:-milady}
+  # Divers.
+  MILADY_ROOT: /opt/milady
+  MILADY_HOST: ${MILADY_HOST:-docker}
+
+x-milady-build-args: &milady-build-args
+  MILADY_UID: ${MILADY_UID:-1000}
+  MILADY_GID: ${MILADY_GID:-1000}
+  GIT_COMMIT: ${GIT_COMMIT:-}
+
+x-milady-worker: &milady-worker
+  environment: *milady-env
+  working_dir: /opt/milady
+  # Le dépôt est monté sur /opt/milady (installation éditable) : le code, les configurations et
+  # le dossier data/ de l'hôte sont visibles sans reconstruire l'image.
+  volumes:
+    - ../..:/opt/milady
+  shm_size: "2gb"
+  depends_on:
+    db:
+      condition: service_healthy
+    s3-init:
+      condition: service_completed_successfully
+    mlflow:
+      condition: service_healthy
+  command: ["sleep", "infinity"]
+
+services:
+  # -------------------------------------------------------------------------------------------
+  # Catalogue : PostgreSQL 16 (bases « milady » et « mlflow », créées par infra/db/init.sql).
+  # -------------------------------------------------------------------------------------------
+  db:
+    image: ${POSTGRES_IMAGE:-postgres:16.14-bookworm}
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-milady}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?définir POSTGRES_PASSWORD dans .env}
+      POSTGRES_DB: ${POSTGRES_DB:-milady}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../db/init.sql:/docker-entrypoint-initdb.d/10-init.sql:ro
+    ports:
+      - "${BIND_ADDR:-127.0.0.1}:${DB_PORT:-5432}:5432"
+    # Connexion TCP (127.0.0.1) : n'est possible qu'après la fin des scripts d'initialisation,
+    # et la requête vérifie que la base mlflow existe.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\" && psql -h 127.0.0.1 -U \"$${POSTGRES_USER}\" -d mlflow -tAc 'select 1' >/dev/null"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  # -------------------------------------------------------------------------------------------
+  # Stockage objet compatible S3 (MinIO). API : 9000 ; console web : 9001.
+  # -------------------------------------------------------------------------------------------
+  s3:
+    image: ${MINIO_IMAGE:-pgsty/minio:RELEASE.2026-08-04T00-00-00Z}
+    restart: unless-stopped
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: ${S3_ROOT_USER:-milady-admin}
+      MINIO_ROOT_PASSWORD: ${S3_ROOT_PASSWORD:?définir S3_ROOT_PASSWORD dans .env}
+    volumes:
+      - s3data:/data
+    ports:
+      - "${BIND_ADDR:-127.0.0.1}:${S3_PORT:-9000}:9000"
+      - "${BIND_ADDR:-127.0.0.1}:${S3_CONSOLE_PORT:-9001}:9001"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9000/minio/health/ready"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+
+  # Tâche ponctuelle (idempotente) : buckets milady-data, milady-models, mlflow, et compte
+  # d'accès applicatif (S3_ACCESS_KEY / S3_SECRET_KEY, politique readwrite) distinct du compte root.
+  s3-init:
+    image: ${MC_IMAGE:-pgsty/mc:RELEASE.2026-10-18T00-00-00Z}
+    depends_on:
+      s3:
+        condition: service_healthy
+    environment:
+      S3_ROOT_USER: ${S3_ROOT_USER:-milady-admin}
+      S3_ROOT_PASSWORD: ${S3_ROOT_PASSWORD:?définir S3_ROOT_PASSWORD dans .env}
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY:?définir S3_ACCESS_KEY dans .env}
+      S3_SECRET_KEY: ${S3_SECRET_KEY:?définir S3_SECRET_KEY dans .env}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -eu
+        mc alias set local http://s3:9000 "$${S3_ROOT_USER}" "$${S3_ROOT_PASSWORD}"
+        for bucket in milady-data milady-models mlflow; do
+          mc mb --ignore-existing "local/$${bucket}"
+        done
+        # Versionnement des points de contrôle (protection contre l'écrasement accidentel).
+        mc version enable local/milady-models
+        mc admin user add local "$${S3_ACCESS_KEY}" "$${S3_SECRET_KEY}"
+        mc admin policy attach local readwrite --user "$${S3_ACCESS_KEY}" 2>/dev/null \
+          || echo "politique readwrite déjà attachée à $${S3_ACCESS_KEY}"
+        mc ls local
+        echo "s3-init : buckets et compte applicatif prêts."
+    restart: "no"
+
+  # -------------------------------------------------------------------------------------------
+  # Suivi des entraînements : MLflow (métadonnées dans PostgreSQL/mlflow, artefacts dans s3://mlflow,
+  # servis par le serveur : les clients n'ont pas besoin des clés S3 pour journaliser).
+  # -------------------------------------------------------------------------------------------
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlflow
+    image: milady-mlflow:3.17.2
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      s3-init:
+        condition: service_completed_successfully
+    environment:
+      MLFLOW_S3_ENDPOINT_URL: http://s3:9000
+      AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:?définir S3_ACCESS_KEY dans .env}
+      AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:?définir S3_SECRET_KEY dans .env}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-us-east-1}
+    command:
+      - mlflow
+      - server
+      - --host=0.0.0.0
+      - --port=5000
+      - --workers=2
+      - --backend-store-uri=postgresql://${POSTGRES_USER:-milady}:${POSTGRES_PASSWORD:?définir POSTGRES_PASSWORD dans .env}@db:5432/mlflow
+      - --artifacts-destination=${MLFLOW_ARTIFACTS_DESTINATION:-s3://mlflow}
+      - --serve-artifacts
+      # En-têtes Host acceptés (protection DNS rebinding de MLflow 3) : nom du service dans le
+      # réseau compose + accès local / tunnel SSH.
+      - --allowed-hosts=${MLFLOW_ALLOWED_HOSTS:-mlflow,mlflow:*,localhost,localhost:*,127.0.0.1,127.0.0.1:*}
+    ports:
+      - "${BIND_ADDR:-127.0.0.1}:${MLFLOW_PORT:-5000}:5000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/health', timeout=4)"]
+      interval: 10s
+      timeout: 6s
+      retries: 30
+      start_period: 20s
+
+  # -------------------------------------------------------------------------------------------
+  # Conteneurs de calcul (simulations, entraînement, évaluation). Lancés à la demande :
+  #   docker compose … run --rm worker python -m milady.sweep infra/configs/palier2_abc3d.yaml
+  # -------------------------------------------------------------------------------------------
+  worker:
+    <<: *milady-worker
+    profiles: ["cpu"]
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile
+      args: *milady-build-args
+    image: ${MILADY_IMAGE:-milady}:cpu
+
+  worker-gpu:
+    <<: *milady-worker
+    profiles: ["gpu"]
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile.gpu
+      args: *milady-build-args
+    image: ${MILADY_IMAGE:-milady}:gpu
+    # Mémoire partagée pour NCCL / DataLoader multi-processus.
+    shm_size: "16gb"
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # -------------------------------------------------------------------------------------------
+  # JupyterLab (facultatif) : make jupyter, puis tunnel SSH vers le port 8888.
+  # -------------------------------------------------------------------------------------------
+  jupyter:
+    <<: *milady-worker
+    profiles: ["jupyter"]
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile
+      args:
+        <<: *milady-build-args
+        WITH_JUPYTER: "1"
+    image: ${MILADY_IMAGE:-milady}:cpu-jupyter
+    restart: unless-stopped
+    ports:
+      - "${BIND_ADDR:-127.0.0.1}:${JUPYTER_PORT:-8888}:8888"
+    command:
+      - jupyter
+      - lab
+      - --ip=0.0.0.0
+      - --port=8888
+      - --no-browser
+      - --ServerApp.root_dir=/opt/milady
+      - --IdentityProvider.token=${JUPYTER_TOKEN:?définir JUPYTER_TOKEN dans .env}
+
+volumes:
+  pgdata:
+  s3data:
