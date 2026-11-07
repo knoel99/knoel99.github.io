@@ -1153,7 +1153,7 @@ The following table summarizes, for each mechanism studied, the class of constra
 | Projected flow (E2, V3) | C1 | at each step, and during training | exact in single precision ($2\cdot10^{-8}$) | two projections per step | best law of the three exact mechanisms at the test values (one seed) |
 | Penalty on $\hat{\mathbf{x}}_1$ (E2, V1) | C1 | training loss | no (0.34 and 0.16) | one divergence per example | magnetic energy 2.7 times too high |
 | Equivariance (E1, C) | C3 | architecture | exact by construction | two network evaluations | asymmetry at the floor at every value of $\Gamma$; energy distance 0.0118 → 0.00257 (A → C) |
-| Stationarity loss (E1, F; E2, V5) | C4 | training | in law, approximate | fine-tuning of 460 s in E2, about 330 s in E1 | distance 2.58 → 0.70 in E2; residuals halved but $\sigma(\mathrm{d}E/\mathrm{d}t)$ reduced by a quarter in E1; failure on a biased model |
+| Stationarity loss (E1, F; E2, V5) | C4 | training | in law, approximate | fine-tuning of 460 s in E2, about 330 s in E1 | distance 2.58 → 0.70 in E2; residuals halved at the test values but $\sigma(\mathrm{d}E/\mathrm{d}t)$ reduced by a quarter in E1; failure on a biased model |
 | Exponential tilting (E1, D; E2) | C4 | after sampling | in law, up to the Monte Carlo error | negligible | mean ESS/N 0.29 and degraded law in E2; no law improved in E1 |
 | Per-sample projection or rescaling (E1, E; E2) | C4, ill-posed | after sampling | per sample | negligible | variance of the dissipation canceled in E2; energy distance multiplied by 9 in E1 |
 

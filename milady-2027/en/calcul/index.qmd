@@ -42,7 +42,7 @@ The experiments in the [report](../rapport/index.html#experiences) run on an ord
 
 ::: note
 [What has been tested]{.tag}
-The whole pipeline has run end to end on a machine **without a GPU** (laptop, full Docker stack, Slurm templates executed with a simulated scheduler): the suite of 68 automated tests passes (66 passed and 1 skipped when measured with PostgreSQL and MinIO; the anchor test, added since, also passes). What could **not** be run: a GPU card, a real Slurm cluster, Apptainer, and a VM rented from a provider. The [last section](#tests) details what has been verified and what remains to be verified on site.
+The whole pipeline has run end to end on a machine **without a GPU** (laptop, full Docker stack, Slurm templates executed with a simulated scheduler): the suite of 68 automated tests passes (66 passed and 1 skipped when measured with PostgreSQL and MinIO; the anchor test, added since then, also passes). What could **not** be run: a GPU card, a real Slurm cluster, Apptainer, and a VM rented from a provider. The [last section](#tests) details what has been verified and what remains to be verified on site.
 :::
 
 ## Getting started {#demarrer}
@@ -162,7 +162,7 @@ $$
 \text{cost} \approx \sum_{\text{tasks}} \text{duration (h)} \times \text{number of GPUs} \times \text{hourly price of the instance} \;+\; \text{storage} \;+\; \text{outbound data} .
 $$
 
-First measure a single representative simulation; its duration is recorded in the catalog and extrapolated to the whole campaign. As for memory, a state $(\mathbf{u}, \mathbf{B})$ in single precision takes $6 \times N^3 \times 4$ bytes, i.e., about 0.4 GB at $256^3$; the peak memory measured on CPU is about 14 times this state at $128^3$, i.e., about 6 GB at $256^3$ and 45 GB at $512^3$: a 24 GB GPU is enough at $256^3$, and an 80 GB GPU is needed at $512^3$ (an estimate to be checked with `nvidia-smi`). Three rules reduce the bill: preemptible instances for the simulation arrays, which are independent and can be restarted; a VM deleted as soon as it is no longer in use, after a backup (`make backup`); and data in a bucket rather than on the VM's disk.
+First measure a single representative simulation; its duration is recorded in the catalog and extrapolated to the whole campaign. As for memory, a state $(\mathbf{u}, \mathbf{B})$ in single precision takes $6 \times N^3 \times 4$ bytes, i.e., about 0.4 GB at $256^3$; the peak memory measured on CPU is about 14 times this state at $128^3$, which comes to about 6 GB at $256^3$ and 45 GB at $512^3$: a 24 GB GPU is enough at $256^3$, and an 80 GB GPU is needed at $512^3$ (an estimate to be checked with `nvidia-smi`). Three rules reduce the bill: preemptible instances for the simulation arrays, which are independent and can be restarted; a VM deleted as soon as it is no longer in use, after a backup (`make backup`); and data in a bucket rather than on the VM's disk.
 
 ## What is tested, what remains to be verified {#tests}
 

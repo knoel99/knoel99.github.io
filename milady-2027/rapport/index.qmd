@@ -1153,7 +1153,7 @@ Le tableau suivant résume, pour chaque mécanisme étudié, la classe de contra
 | Flot projeté (E2, V3) | C1 | à chaque pas, et à l'entraînement | exacte en simple précision ($2\cdot10^{-8}$) | deux projections par pas | meilleure loi des trois mécanismes exacts aux valeurs de test (une graine) |
 | Pénalité sur $\hat{\mathbf{x}}_1$ (E2, V1) | C1 | perte d'entraînement | non (0,34 et 0,16) | une divergence par exemple | énergie magnétique 2,7 fois trop forte |
 | Équivariance (E1, C) | C3 | architecture | exacte par construction | deux évaluations du réseau | asymétrie au plancher à toute valeur de $\Gamma$ ; distance d'énergie 0,0118 → 0,00257 (A → C) |
-| Perte de stationnarité (E1, F ; E2, V5) | C4 | entraînement | en loi, approchée | réglage fin de 460 s dans E2, environ 330 s dans E1 | distance 2,58 → 0,70 dans E2 ; résidus divisés par deux mais $\sigma(\mathrm{d}E/\mathrm{d}t)$ réduit d'un quart dans E1 ; échec sur un modèle biaisé |
+| Perte de stationnarité (E1, F ; E2, V5) | C4 | entraînement | en loi, approchée | réglage fin de 460 s dans E2, environ 330 s dans E1 | distance 2,58 → 0,70 dans E2 ; résidus divisés par deux aux valeurs de test mais $\sigma(\mathrm{d}E/\mathrm{d}t)$ réduit d'un quart dans E1 ; échec sur un modèle biaisé |
 | Inclinaison exponentielle (E1, D ; E2) | C4 | après l'échantillonnage | en loi, à l'erreur de Monte-Carlo près | négligeable | ESS/N moyen 0,29 et loi dégradée dans E2 ; aucune loi améliorée dans E1 |
 | Projection ou recalage par échantillon (E1, E ; E2) | C4, mal posée | après l'échantillonnage | par échantillon | négligeable | variance de la dissipation annulée dans E2 ; distance d'énergie multipliée par 9 dans E1 |
 

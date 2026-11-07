@@ -70,13 +70,13 @@ python3 e1_gissinger.py           # E1, about 2 to 3 h (resumable)
 python3 figures.py && python3 digest.py > resultats/digest.md
 ```
 
-Each script accepts `--quick` for a reduced version that takes a few minutes, useful for checking the installation. The seeds are fixed in the code (0 and 1 for the two repetitions of E1). The durations given were measured on the machine described above, partly while other computations were running.
+Each script accepts `--quick` for a reduced version (from a few minutes to about twenty minutes for E1), useful for checking the installation. The seeds are fixed in the code (0 and 1 for the two repetitions of E1). The durations given were measured on the machine described above, partly while other computations were running.
 
 ## E1 — dipole reversals {#e1}
 
 Gissinger's three-mode model serves as a "pocket dynamo": it has the symmetry $\mathbf{B}\to-\mathbf{B}$, an onset threshold for reversals (between $\Gamma = 0.86$ and $0.865$) and exactly known dynamics. We learn the stationary distribution $p(Q, D, V \mid \Gamma)$ by conditional flow matching, then measure the effect of the symmetry imposed by construction, of the stationarity loss, and of the per-sample projection. The reversal frequency is estimated from the generated distribution alone, through the Rice formula.
 
-In short: the equivariant velocity field keeps the distribution symmetric at every value of $\Gamma$, whereas data augmentation symmetrizes it only at training values; projecting each sample onto $\mathrm{d}E/\mathrm{d}t = 0$ multiplies the distance to the true distribution by 9; Rice's formula recovers the crossing frequency within 14% far from the threshold and within 42% at the threshold; the stationarity loss improves the residuals of a good model but fails on a biased model.
+In short: the equivariant velocity field keeps the distribution symmetric at every value of $\Gamma$, whereas data augmentation symmetrizes it only at training values; projecting each sample onto $\mathrm{d}E/\mathrm{d}t = 0$ multiplies the energy distance to the true distribution by 9; Rice's formula recovers the crossing frequency with a cumulative error of 14% far from the threshold (up to 65% at a single value) and of 42% near the threshold; the stationarity loss improves the residuals of a good model but fails on a biased model.
 
 Results and discussion: [report, section E1](../rapport/index.html#e1). Interactive diagram: [Gissinger model](../interactifs/index.html#gissinger).
 
