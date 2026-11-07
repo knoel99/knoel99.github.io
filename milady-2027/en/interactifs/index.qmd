@@ -1,0 +1,39 @@
+---
+title: "Interactive diagrams"
+subtitle: "Five thought experiments to manipulate in the browser"
+lang: en
+format:
+  html:
+    theme: none
+    minimal: true
+    toc: false
+    anchor-sections: false
+    html-math-method:
+      method: katex
+      url: "https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.js"
+    highlight-style: github
+    embed-resources: false
+    css: ../../assets/paper.css
+    include-in-header:
+      - text: |
+          <meta name="color-scheme" content="light dark">
+          <script>(function(){try{var t=localStorage.getItem("milady-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+    include-before-body:
+      - text: |
+          <a class="skip" href="#main">Skip to content</a>
+          <header class="topbar">
+            <button type="button" class="tb-btn" id="toc-toggle" aria-controls="sidetoc" aria-expanded="false"><span aria-hidden="true">☰</span><span class="tb-label">Contents</span></button>
+            <a class="brand" href="../../en/index.html">MilaDy<span class="brand-sub"> · 2027</span></a>
+            <span class="tb-title" id="tb-title"></span>
+            <button type="button" class="tb-btn" id="theme-toggle"><span aria-hidden="true">◐</span><span class="tb-label">Theme</span></button>
+          </header>
+          <div class="layout">
+          <nav class="sidetoc" id="sidetoc" aria-label="Contents"></nav>
+          <main class="paper" id="main">
+    include-after-body:
+      - text: |
+          </main>
+          </div>
+          <footer class="foot"><p><a href="../../en/index.html">← Home</a> · <a href="../../en/prep/index.html">Preparation</a> · <a href="../../en/encadrants/index.html">Supervisors</a> · <a href="../../en/rapport/index.html">Internship report</a> · <a href="../../en/these/index.html">PhD proposal</a> · <a href="../../en/interactifs/index.html">Interactive diagrams</a> · <a href="../../en/experiences/index.html">Experiments</a></p></footer>
+          <script defer src="../../assets/theme.js"></script>
+---

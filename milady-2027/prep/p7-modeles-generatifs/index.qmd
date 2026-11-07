@@ -1945,13 +1945,15 @@ Les exercices sont gradués : ★ application directe du cours, ★★ calcul ou
         print("w = {:3.1f}   : {:.3f}     {:.3f}        {:.3f}      {:.4f}      {:.3f}   {:.4f}".format(
               w, *resume(x), distance_energie(x, ref)))
     # sortie :
-    # données   : écart-type intra-mode = 0.150, entre les modes = 0.0000, rayon = 1.499
-    # w = 0.0   : écart-type intra-mode = 0.150, entre les modes = 0.0620, rayon = 1.476, D_E = 0.0026
-    # w = 1.0   : écart-type intra-mode = 0.097, entre les modes = 0.0205, rayon = 1.499, D_E = 0.0109
-    # w = 3.0   : écart-type intra-mode = 0.155, entre les modes = 0.0025, rayon = 1.529, D_E = 0.0574
+    #             largeur   largeur      décalage   entre les   rayon    D_E
+    #             (exacts)  (empiriques) des modes  modes       médian
+    # données   : 0.150     0.150        0.012      0.0000      1.499
+    # w = 0.0   : 0.150     0.141        0.029      0.0620      1.476   0.0026
+    # w = 1.0   : 0.097     0.065        0.083      0.0205      1.499   0.0109
+    # w = 3.0   : 0.155     0.023        0.181      0.0025      1.529   0.0574
     ```
 
-    Sans guidage ($w = 0$), la largeur des modes est correcte mais 6 % des points restent entre les modes : ce modèle, qui partage sa capacité entre les tâches conditionnelle et non conditionnelle, est un peu moins bon que celui de la section 5.6. Le guidage nettoie l'espace entre les modes (6 % → 2 % → 0,25 %), mais il déforme la loi : à $w = 1$ les modes sont trop étroits (écart-type $0{,}097$ au lieu de $0{,}15$), comme le prévoit l'exercice 12 ; à $w = 3$ ils sont repoussés vers l'extérieur (rayon $1{,}53$ au lieu de $1{,}50$). La distance d'énergie est multipliée par 4 puis par 20. Pour reproduire une loi physique, il faut donc $w = 0$ et investir plutôt dans le modèle lui-même ; le guidage n'a d'intérêt que si l'on accepte de sacrifier la fidélité statistique.
+    Sans guidage ($w = 0$), la largeur des modes est correcte mais 6 % des points restent entre les modes : ce modèle, qui partage sa capacité entre les tâches conditionnelle et non conditionnelle, est un peu moins bon que celui de la section 5.6. Le guidage nettoie l'espace entre les modes (6 % → 2 % → 0,25 %), mais il déforme la loi de deux façons. D'abord, mesurée autour de leurs propres centres, la largeur des modes chute de $0{,}14$ à $0{,}065$ pour $w = 1$, puis à $0{,}023$ pour $w = 3$ : c'est la réduction de la dispersion prévue par l'exercice 12. Ensuite, les modes se déplacent, de $0{,}08$ puis de $0{,}18$ par rapport à leur position exacte (le rayon médian passe à $1{,}53$ pour $w = 3$), ce qui rappelle l'exagération de la condition dans l'exercice 12. La largeur mesurée autour des centres exacts mélange les deux effets : à $w = 3$, sa valeur ($0{,}155$, proche de celle des données) ne reflète que le déplacement des modes, ce qui montre qu'un indicateur isolé peut tromper. La distance d'énergie, elle, est multipliée par 4 puis par 20. Pour reproduire une loi physique, il faut donc $w = 0$ et investir plutôt dans le modèle lui-même ; le guidage n'a d'intérêt que si l'on accepte de sacrifier la fidélité statistique.
 
 15. **★ Bruit en espace de fonctions.** Sur $[0, 1)$ périodique, on considère $x_0 = \sum_{k \ne 0}\sqrt{\kappa_k}\,\xi_k\,e^{2i\pi ks}$ avec $\kappa_k = |k|^{-\alpha}$ (et $\xi_{-k} = \bar\xi_k$ pour un champ réel). (a) Pour quelles valeurs de $\alpha$ a-t-on $\mathbb{E}\|x_0\|_{L^2}^2 < \infty$ ? (b) Sur une grille de $N$ points, combien vaut $\mathbb{E}\|x_0\|^2$ pour le bruit blanc ? Comparer à la sortie du bloc de la section 6.2. (c) Pour $\alpha = 2$, que vaut $\mathbb{E}\|x_0\|^2$ ?
 
