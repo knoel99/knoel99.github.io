@@ -44,6 +44,8 @@ def fix_target(target: str, fr_dir: Path, en_dir: Path) -> str:
         rel_root = resolved.relative_to(ROOT)
     except ValueError:
         return target
+    if not (resolved.exists() or resolved.suffix == ".html"):
+        return target  # pas une ressource réelle (ex. « [0,1](x) » dans une formule) : ne rien toucher
     is_page = resolved.suffix in PAGE_EXT and (resolved.suffix == ".html" or resolved.is_dir())
     if is_page and resolved.name in ("index.html",) or (is_page and resolved.is_dir()):
         return target  # page : même chemin relatif côté anglais
