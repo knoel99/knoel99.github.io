@@ -49,7 +49,7 @@ Les cinq schémas suivent l'ordre du parcours : le transport de lois qui fonde l
 
 Un modèle de flow matching transporte une loi simple, ici une gaussienne, vers la loi des données par un champ de vitesse $v(\mathbf{x}, t)$. Ce schéma utilise le champ marginal **exact** pour une loi cible formée de deux gaussiennes symétriques $\pm\mathbf{m}(\lambda)$ : c'est le champ qu'un réseau chercherait à apprendre. Le curseur $\lambda$ joue le rôle d'un paramètre physique de conditionnement, comme $Rm$ dans le stage.
 
-Observez deux choses. Les chemins conditionnels $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$ sont droits mais se croisent ; les trajectoires du flot marginal ne se croisent jamais. La loi finale est symétrique parce que le champ l'est : c'est la Proposition 4 du rapport à l'œuvre.
+Observez deux choses. Les chemins conditionnels $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$ sont droits et se croisent souvent. Les trajectoires du flot marginal sont courbes ; deux particules ne sont jamais au même point **au même instant** (unicité des solutions de l'équation différentielle), mais leurs traces dans le plan peuvent se couper à des instants différents. En un même point $(\mathbf{x}, t)$ passent des chemins conditionnels de directions différentes, et $v(\mathbf{x}, t)$ est leur moyenne. La loi finale est symétrique parce que le champ l'est : c'est la Proposition 4 du rapport à l'œuvre.
 
 ```{=html}
 <div class="widget" data-widget="flow-matching"></div>
@@ -86,7 +86,7 @@ Pour aller plus loin : module [p5 — probabilités et transport optimal](../pre
 
 ## 4. Renversements du dipôle : le modèle de Gissinger {#gissinger}
 
-Le modèle à trois modes de Gissinger (2012) couple un mode dipolaire $D$, un mode quadripolaire $Q$ et un mode de vitesse $V$. Il reproduit des renversements chaotiques du dipôle, analogues à ceux de l'expérience VKS. Faites varier $\Gamma$ : en dessous d'environ $0{,}865$, la trajectoire reste d'un côté (pas de renversement) ; au-dessus, les deux attracteurs symétriques ont fusionné et $D$ change de signe de façon irrégulière.
+Le modèle à trois modes de Gissinger (2012) couple un mode dipolaire $D$, un mode quadripolaire $Q$ et un mode de vitesse $V$. Il reproduit des renversements chaotiques du dipôle, analogues à ceux de l'expérience VKS. Faites varier $\Gamma$ : jusqu'à $\Gamma = 0{,}86$, la trajectoire reste d'un côté (pas de renversement) ; juste au-dessus (dès $0{,}8625$ dans les simulations du site), les deux attracteurs symétriques ont fusionné et $D$ change de signe de façon irrégulière, d'abord rarement, puis de plus en plus souvent quand $\Gamma$ augmente.
 
 Le schéma compte les passages de $D$ par zéro et les compare à l'estimation par la **formule de Rice**, calculée à partir des seuls états visités : $\nu_0 \approx \mathbb{E}\big[|\dot D|\,\mathbf{1}_{|D|<h}\big]/(2h)$. C'est l'idée de la Proposition 8 du rapport : un modèle génératif de la loi stationnaire suffit à prédire la fréquence des renversements, sans intégrer en temps.
 

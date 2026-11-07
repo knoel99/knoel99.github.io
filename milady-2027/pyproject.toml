@@ -1,0 +1,85 @@
+# Paquet Python « milady » : format de données MFF, catalogue, stockage, solveur MHD 3D,
+# entraînement (flow matching contraint) et évaluation.
+#
+# Installation de développement (portable) :   make setup
+# Image Docker :                                infra/docker/Dockerfile (CPU) et Dockerfile.gpu
+#
+# Les versions exactes (verrou reproductible) sont dans infra/env/requirements.txt (CPU)
+# et infra/env/requirements-gpu.txt (CUDA) ; ici on ne donne que des bornes basses.
+
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "milady"
+version = "0.1.0"
+description = "MilaDy 2027 : modèles génératifs conditionnels sous contraintes physiques pour des champs MHD paramétriques (format MFF, catalogue, solveur, entraînement)."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+authors = [{ name = "MilaDy 2027" }]
+keywords = ["MHD", "dynamo", "flow matching", "HDF5", "The Well", "HPC"]
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+# Dépendances de base : tout ce qu'il faut pour simuler, écrire/lire le format,
+# remplir le catalogue (SQLite ou PostgreSQL), entraîner et évaluer sur CPU.
+# torch vient de l'index PyPI (CUDA) ou de l'index PyTorch CPU : voir infra/env/.
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "h5py>=3.10",
+    "zarr>=3.0",
+    "numcodecs>=0.13",
+    "pyyaml>=6.0",
+    "sqlalchemy>=2.0",
+    "psycopg[binary]>=3.1",
+    "fsspec>=2024.6",
+    "jsonschema>=4.20",
+    "torch>=2.4",
+    "mlflow-skinny>=3.0",
+    "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+# Stockage objet S3 (MinIO, AWS S3, Scaleway, OVHcloud) via fsspec.
+s3 = ["s3fs>=2024.6", "boto3>=1.34"]
+# Outils GPU (suivi mémoire/utilisation). torch CUDA s'installe via requirements-gpu.txt
+# ou l'image pytorch/pytorch : un extra ne peut pas choisir l'index de paquets.
+gpu = ["nvidia-ml-py>=12.535"]
+# Développement et tests.
+dev = ["pytest>=8.0", "ruff>=0.6", "mypy>=1.10"]
+# Service Jupyter optionnel du docker-compose (profil « jupyter »).
+jupyter = ["jupyterlab>=4.2"]
+
+[project.urls]
+Homepage = "https://knoel99.github.io/milady-2027/"
+Repository = "https://github.com/knoel99/milady-2027"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["milady*"]
+
+[tool.setuptools.package-data]
+milady = ["**/*.json", "**/*.yaml", "**/*.sql"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "slow: tests longs (désactivés par défaut avec -m 'not slow')",
+    "postgres: nécessite un serveur PostgreSQL (MILADY_DB_URL)",
+    "s3: nécessite un stockage S3 (MILADY_S3_ENDPOINT)",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true

@@ -1605,7 +1605,7 @@ Fukami and Taira (2023) apply this idea to extreme interactions between a vortex
 
 ### 5.7 β-VAE and transformer for a reduced-order model
 
-Solera-Rico et al. (2024) build a two-stage reduced-order model: a β-VAE compresses the snapshots of a 2D flow around two collinear flat plates, then a transformer predicts the time evolution of the latents from a window of 64 past steps. According to the published version (same figures in the arXiv preprint arXiv:2304.03571v2), in the chaotic case at $Re = 100$, with $\beta = 0.05$ and 20 latent variables, the β-VAE reconstructs 89.8% of the energy on the training data and 80.1% on the test data, against 64.4% for 20 POD modes; 69 POD modes are needed to match the β-VAE. The complete model (β-VAE + transformer) reproduces 78.1% of the energy one convective time after the last known snapshot and 64.6% ten convective times after, on unseen data. The regularization $\beta$ makes the latents almost uncorrelated, which makes them easier to interpret.
+Solera-Rico et al. (2024) build a two-stage reduced-order model: a β-VAE compresses the snapshots of a 2D flow around two collinear flat plates, then a transformer predicts the time evolution of the latents from a window of 64 past steps. According to the published version (same figures in the arXiv preprint arXiv:2304.03571v2), in the chaotic case at $Re = 100$, with $\beta = 0.05$ and 20 latent variables, the β-VAE reconstructs 89.8% of the energy on the training data and 80.1% on the test data, compared with 64.4% for 20 POD modes; 69 POD modes are needed to match the β-VAE. The complete model (β-VAE + transformer) reproduces 78.1% of the energy one convective time after the last known snapshot and 64.6% ten convective times after, on unseen data. The regularization $\beta$ makes the latents almost uncorrelated, which makes them easier to interpret.
 
 ::: ex
 [Example 5.17 — Reading these figures]{.tag}
@@ -1775,7 +1775,7 @@ with torch.no_grad():
 
 ::: note
 [Remark 6.6 — What the benchmarks say]{.tag}
-Cross-grid consistency does not guarantee accuracy. On the 3D MHD dataset of *The Well* (Ohana et al., 2024), for one-step prediction on the `MHD_64` dataset, the authors report a VRMSE error of 0.36 for the FNO against 0.18 for a U-Net and 0.16 for a ConvNeXt-type U-Net (their table 2). The choice of architecture for MHD fields therefore remains an experimental question.
+Cross-grid consistency does not guarantee accuracy. On the 3D MHD dataset of *The Well* (Ohana et al., 2024), for one-step prediction on the `MHD_64` dataset, the authors report a VRMSE error of 0.36 for the FNO versus 0.18 for a U-Net and 0.16 for a ConvNeXt-type U-Net (their table 2). The choice of architecture for MHD fields therefore remains an experimental question.
 :::
 
 ### 6.3 Equivariance by symmetrization over a group
@@ -2160,7 +2160,7 @@ Key takeaways — chapter 7
 
 ## Exercises {#exercices}
 
-The exercises are sorted by difficulty: ★ for a direct application of the course, ★★ for a multi-step argument, ★★★ for a question close to research. Attempt each exercise before reading the solution.
+The exercises are sorted by difficulty: ★ for a direct application of the material, ★★ for a multi-step argument, ★★★ for a question close to research. Attempt each exercise before reading the solution.
 
 ### Level ★
 
@@ -2308,7 +2308,7 @@ The exercises are sorted by difficulty: ★ for a direct application of the cour
 
 ## Link with the internship {#lien-stage}
 
-The MilaDy internship asks for conditional generative models (diffusion, flow matching) of MHD fields parameterized by $Re$, $Rm$ and material properties, which respect zero divergence, the energy balance and the boundary conditions, and then for their comparison with physical metrics (spectra, helicity, divergence, topology). Each chapter of this module provides one building block.
+The MilaDy internship asks for building conditional generative models (diffusion, flow matching) of MHD fields parameterized by $Re$, $Rm$ and material properties, which respect zero divergence, the energy balance and the boundary conditions, and then for comparing them using physical metrics (spectra, helicity, divergence, topology). Each chapter of this module provides one building block.
 
 **Parameterizing the generator.** The velocity field $v_\theta(\mathbf{x}, t, \boldsymbol\lambda)$ of a flow matching model is a network trained by quadratic regression (chapter 1, proposition 1.2). For a small state, it is an MLP with sinusoidal embeddings of $t$ and $\boldsymbol\lambda$ (chapter 2), like `MLPField` in experiments E1 and E2; for a field on a periodic grid, it is a U-Net with circular padding, GroupNorm and FiLM modulation (chapters 2 and 3), like `experiences/unet.py`. For a field decoded at arbitrary points, in the manner of FunDiff, it is a transformer with a cross-attention decoder (chapter 4).
 

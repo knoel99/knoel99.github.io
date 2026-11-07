@@ -1,0 +1,21 @@
+# Contexte de construction des images Docker (infra/docker/Dockerfile*, contexte = racine du dépôt).
+# Liste blanche : on exclut tout (le site web, les figures, les données…) puis on réintègre
+# uniquement ce dont le paquet milady et les scripts ont besoin.
+*
+!pyproject.toml
+!README.md
+!LICENSE
+!Makefile
+!milady/
+!tests/
+!infra/
+!experiences/*.py
+
+# Jamais dans une image : secrets, données, caches, conteneurs construits.
+**/.env
+**/__pycache__
+**/*.pyc
+**/*.egg-info
+**/.pytest_cache
+infra/**/*.sif
+infra/**/*.tar

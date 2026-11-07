@@ -49,7 +49,7 @@ The five diagrams follow the order of the curriculum: the transport of probabili
 
 A flow matching model transports a simple distribution, here a Gaussian, to the data distribution through a velocity field $v(\mathbf{x}, t)$. This diagram uses the **exact** marginal field for a target distribution made of two symmetric Gaussians $\pm\mathbf{m}(\lambda)$: it is the field that a network would try to learn. The slider $\lambda$ plays the role of a physical conditioning parameter, like $Rm$ in the internship.
 
-Notice two things. The conditional paths $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$ are straight but cross each other; the trajectories of the marginal flow never cross. The final distribution is symmetric because the field is: this is Proposition 4 of the report at work.
+Notice two things. The conditional paths $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$ are straight and often cross. The trajectories of the marginal flow are curved; two particles are never at the same point **at the same time** (uniqueness of solutions of the differential equation), but their tracks in the plane can intersect at different times. Conditional paths with different directions pass through the same point $(\mathbf{x}, t)$, and $v(\mathbf{x}, t)$ is their average. The final distribution is symmetric because the field is: this is Proposition 4 of the report at work.
 
 ```{=html}
 <div class="widget" data-widget="flow-matching"></div>
@@ -86,7 +86,7 @@ Further reading: module [p5 — probability and optimal transport](../prep/p5-pr
 
 ## 4. Dipole reversals: the Gissinger model {#gissinger}
 
-Gissinger's three-mode model (2012) couples a dipolar mode $D$, a quadrupolar mode $Q$ and a velocity mode $V$. It reproduces chaotic reversals of the dipole, analogous to those of the VKS experiment. Vary $\Gamma$: below about $0.865$, the trajectory stays on one side (no reversal); above it, the two symmetric attractors have merged and $D$ changes sign irregularly.
+Gissinger's three-mode model (2012) couples a dipolar mode $D$, a quadrupolar mode $Q$ and a velocity mode $V$. It reproduces chaotic reversals of the dipole, analogous to those of the VKS experiment. Vary $\Gamma$: up to $\Gamma = 0.86$, the trajectory stays on one side (no reversal); just above (from $0.8625$ in the site's simulations), the two symmetric attractors have merged and $D$ changes sign irregularly, rarely at first, then more and more often as $\Gamma$ increases.
 
 The diagram counts the zero crossings of $D$ and compares them with the estimate given by **Rice's formula**, computed from the visited states alone: $\nu_0 \approx \mathbb{E}\big[|\dot D|\,\mathbf{1}_{|D|<h}\big]/(2h)$. This is the idea behind Proposition 8 of the report: a generative model of the stationary distribution is enough to predict the reversal frequency, without integrating in time.
 

@@ -76,7 +76,7 @@ The level indicates the difficulty: 1 for the foundations, 2 for the core of the
 | 8 | 3 h | 3 | Chapter 6: Brownian motion, SDEs, Euler–Maruyama, Itô, Fokker–Planck, continuity equation, marginal velocity of flow matching | 13, 14, 15 |
 | **Total** | **25 h** | | 6 chapters, 6 figures, 5 interactive diagrams | 15 exercises |
 
-Each session ends with the listed exercises, to be done before reading their solutions. The code blocks are short (under 30 seconds each on a single processor core): copy them, run them, then modify them. The interactive diagrams are manipulated directly in the page; they take up the examples of the text with sliders.
+Each session ends with the listed exercises, to be done before reading their solutions. The code blocks are short (under 30 seconds each on a single processor core): copy them, run them, then modify them. The interactive diagrams are manipulated directly in the page; they revisit the examples from the text, with sliders.
 
 ## 1. Random variables, distributions and moments {#ch1}
 
@@ -756,7 +756,7 @@ Three lessons. The product $|\text{error}|\times\sqrt N$ remains of the order of
 ::: recap-title
 Key takeaways — chapter 3
 :::
-- The empirical mean is unbiased, with variance $\sigma^2/N$; the error is in $\sigma/\sqrt N$ in any dimension.
+- The empirical mean is unbiased, with variance $\sigma^2/N$; the error is of order $\sigma/\sqrt N$ in any dimension.
 - 95% confidence interval: $\hat I_N \pm 1.96\,\hat\sigma_N/\sqrt N$; with correlated samples, $N$ is replaced by a smaller effective number.
 - Importance sampling: $\mathbb{E}_p[f] = \mathbb{E}_q[f\,p/q]$; draw where $|f|p$ is large.
 - Self-normalized weights when $p$ is known up to a constant; diagnosis through $\mathrm{ESS} = (\sum w)^2/\sum w^2$, with $\mathrm{ESS}/N \to \mathbb{E}_q[w]^2/\mathbb{E}_q[w^2]$; an empirical ESS can be deceptively large.
@@ -776,12 +776,12 @@ $$
 h(p) = -\int p(\mathbf{x})\log p(\mathbf{x})\,\mathrm{d}\mathbf{x}.
 $$
 
-Entropy measures the spread of a distribution: it is all the larger as the mass is spread over a large volume.
+Entropy measures the spread of a distribution: the larger the volume over which the mass is spread, the larger the entropy.
 :::
 
 ::: ex
 [Example 4.2 — Reference entropies]{.tag}
-For the uniform distribution on $[a, b]$, $h = \log(b - a)$, which is negative if $b - a < 1$: unlike discrete entropy, differential entropy is not nonnegative. For $\mathcal{N}(m, \sigma^2)$, we have $-\log p(x) = \frac12\log(2\pi\sigma^2) + \frac{(x - m)^2}{2\sigma^2}$, whose expectation gives
+For the uniform distribution on $[a, b]$, $h = \log(b - a)$, which is negative if $b - a < 1$: unlike discrete entropy, differential entropy is not always nonnegative. For $\mathcal{N}(m, \sigma^2)$, we have $-\log p(x) = \frac12\log(2\pi\sigma^2) + \frac{(x - m)^2}{2\sigma^2}$, whose expectation gives
 
 $$
 h = \frac12\log(2\pi e\,\sigma^2).
@@ -1028,7 +1028,7 @@ print("\ntwo constraints : lambda =", lam.round(4), "; moments obtained =", (w @
 </figure>
 ```
 
-The table reads in two regimes. As long as $c \le 1.5$, the tilt transfers mass from one mode to the other, the estimated and exact multipliers agree to within $3\times10^{-3}$ and the ESS stays above 60%. For $c \ge 3$, the constraint requires moving the right mode beyond what the sample contains: the estimated multiplier departs from the true one (9.4 instead of 6 for $c = 3.5$), the divergence blows up and the ESS drops to 0.1%. Interactive diagram 2 lets you explore these two regimes continuously.
+The table shows two regimes. As long as $c \le 1.5$, the tilt transfers mass from one mode to the other, the estimated and exact multipliers agree to within $3\times10^{-3}$ and the ESS stays above 60%. For $c \ge 3$, the constraint requires moving the right mode beyond what the sample contains: the estimated multiplier departs from the true one (9.4 instead of 6 for $c = 3.5$), the divergence blows up and the ESS drops to 0.1%. Interactive diagram 2 lets you explore these two regimes continuously.
 
 ```{=html}
 <div class="widget" data-widget="tilt">
@@ -1759,7 +1759,7 @@ The exercises are graded: ★ for a direct application of the course, ★★ for
 1. **★ Exponential distribution.** Let $X$ have density $a\,e^{-ax}$ on $[0, \infty)$, with $a > 0$. Compute $\mathbb{P}(X > t)$, $\mathbb{E}[X]$ and $\mathrm{Var}(X)$, then show the memoryless property: $\mathbb{P}(X > s + t \mid X > s) = \mathbb{P}(X > t)$.
 
 ::: sol
-*Solution.* $\mathbb{P}(X > t) = \int_t^\infty a\,e^{-ax}\,\mathrm{d}x = e^{-at}$. By integration by parts, $\mathbb{E}[X] = \int_0^\infty x\,a\,e^{-ax}\,\mathrm{d}x = \big[-x\,e^{-ax}\big]_0^\infty + \int_0^\infty e^{-ax}\,\mathrm{d}x = 1/a$, and likewise $\mathbb{E}[X^2] = \frac{2}{a}\mathbb{E}[X] = 2/a^2$, hence $\mathrm{Var}(X) = 2/a^2 - 1/a^2 = 1/a^2$. Finally $\mathbb{P}(X > s + t \mid X > s) = \mathbb{P}(X > s + t)/\mathbb{P}(X > s) = e^{-a(s + t)}/e^{-as} = e^{-at}$. If the reversals of a dynamo occur with exponential waiting times, the time already elapsed since the last reversal tells nothing about the next one; a departure from the exponential distribution (measured for example by $W_1$ between distributions of waiting times) signals a memory in the dynamics.
+*Solution.* $\mathbb{P}(X > t) = \int_t^\infty a\,e^{-ax}\,\mathrm{d}x = e^{-at}$. By integration by parts, $\mathbb{E}[X] = \int_0^\infty x\,a\,e^{-ax}\,\mathrm{d}x = \big[-x\,e^{-ax}\big]_0^\infty + \int_0^\infty e^{-ax}\,\mathrm{d}x = 1/a$, and likewise $\mathbb{E}[X^2] = \frac{2}{a}\mathbb{E}[X] = 2/a^2$, hence $\mathrm{Var}(X) = 2/a^2 - 1/a^2 = 1/a^2$. Finally $\mathbb{P}(X > s + t \mid X > s) = \mathbb{P}(X > s + t)/\mathbb{P}(X > s) = e^{-a(s + t)}/e^{-as} = e^{-at}$. If the reversals of a dynamo occur with exponential waiting times, the time already elapsed since the last reversal says nothing about the next one; a departure from the exponential distribution (measured for example by $W_1$ between distributions of waiting times) signals a memory in the dynamics.
 :::
 
 2. **★ Zero covariance without independence.** Let $X \sim \mathcal{N}(0, 1)$ and $Y = X^2$. Show that $\mathrm{Cov}(X, Y) = 0$, then that $X$ and $Y$ are not independent.

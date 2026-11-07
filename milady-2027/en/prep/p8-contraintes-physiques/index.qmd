@@ -340,7 +340,7 @@ $$
 g_\# q = g_\#(\Phi_1)_\#\gamma = (g\circ\Phi_1)_\#\gamma = (\Phi_1\circ g)_\#\gamma = (\Phi_1)_\#(g_\#\gamma) = (\Phi_1)_\#\gamma = q.
 $$
 
-*Second proof (continuity equation).* The density $\rho_t$ of $(\Phi_t)_\#\gamma$ solves $\partial_t\rho_t + \nabla\cdot(\rho_t v) = 0$ with $\rho_0 = \gamma$. Set $\tilde\rho_t(\mathbf{x}) = \rho_t(g^{-1}\mathbf{x})$, the density of $g_\#\rho_t$ (the Jacobian of $g$ is $\pm 1$). Since $g$ is orthogonal and $v$ equivariant, a direct computation with the chain rule gives $\nabla\cdot(\tilde\rho_t v)(\mathbf{x}) = [\nabla\cdot(\rho_t v)](../../../prep/p8-contraintes-physiques/g^{-1}\mathbf{x})$; hence $\tilde\rho_t$ solves the same equation with the same initial datum $\tilde\rho_0 = \gamma$. By uniqueness of the solution of the continuity equation (Lipschitz field), $\tilde\rho_t = \rho_t$ for every $t$, in particular at $t = 1$. [∎]{.qed}
+*Second proof (continuity equation).* The density $\rho_t$ of $(\Phi_t)_\#\gamma$ solves $\partial_t\rho_t + \nabla\cdot(\rho_t v) = 0$ with $\rho_0 = \gamma$. Set $\tilde\rho_t(\mathbf{x}) = \rho_t(g^{-1}\mathbf{x})$, the density of $g_\#\rho_t$ (the Jacobian of $g$ is $\pm 1$). Since $g$ is orthogonal and $v$ equivariant, a direct computation with the chain rule gives $\nabla\cdot(\tilde\rho_t v)(\mathbf{x}) = [\nabla\cdot(\rho_t v)](g^{-1}\mathbf{x})$; hence $\tilde\rho_t$ solves the same equation with the same initial datum $\tilde\rho_0 = \gamma$. By uniqueness of the solution of the continuity equation (Lipschitz field), $\tilde\rho_t = \rho_t$ for every $t$, in particular at $t = 1$. [∎]{.qed}
 :::
 ::::
 

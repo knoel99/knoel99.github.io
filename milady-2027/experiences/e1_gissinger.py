@@ -256,7 +256,7 @@ def main(quick=False, reverse=False, train_only=False):
     iters = 3000 if quick else 12000
     variants = {"A_reference": ("plain", False, iters), "B_augmentation": ("plain", True, iters),
                 "C_equivariant": ("sym", False, iters), "C_court": ("sym", False, max(iters // 10, 300))}
-    seeds = [0] if quick else [0, 1, 2]
+    seeds = [0] if quick else [0, 1]  # deux graines (contrainte de calcul CPU partagé)
     n_gen = 4000 if quick else 10000
     grid = np.concatenate([G_TRAIN, G_TEST])
     results = {"config": {"mu": MU, "nu": NU, "G_train": G_TRAIN.tolist(), "G_test": G_TEST.tolist(),

@@ -34,6 +34,7 @@ window.P3W = window.P3W || (function () {
   function localize(el) {
     if (!EN) return;
     el.querySelectorAll("[data-en]").forEach(function (e) { e.textContent = e.getAttribute("data-en"); });
+    if (el.hasAttribute("data-en-label")) el.setAttribute("aria-label", el.getAttribute("data-en-label"));
     el.querySelectorAll("[data-en-label]").forEach(function (e) { e.setAttribute("aria-label", e.getAttribute("data-en-label")); });
   }
   function num(x, d) {

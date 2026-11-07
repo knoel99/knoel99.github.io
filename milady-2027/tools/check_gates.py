@@ -8,10 +8,11 @@
 - les ancres internes (#id) existent dans la page visée ;
 - aucun dossier index_files/ ni fichier .quarto n'est publié.
 Sortie : « ok » et le nombre de pages, ou la liste des problèmes (code de sortie 1).
+Usage : python3 tools/check_gates.py [page …]   (sans argument : tout le site ; sinon les pages données)
 """
 import re
 import sys
-from html.parser import HTMLParser
+import html
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -20,29 +21,29 @@ KATEX_SRI = 'integrity="sha384-QFFtAGzvvj+bfgCGxXJlNZZR1nXEZgvG8tDLCCY1F19xl20Wl
 PREP_SECTIONS = ["{#objectifs}", "{#prerequis}", "{#plan}", "{#exercices}", "{#lien-stage}", "{#plus-loin}", "{#sources}"]
 
 
-class Links(HTMLParser):
-    def __init__(self):
-        super().__init__(convert_charrefs=True)
-        self.refs, self.ids = [], set()
+class Links:
+    """Identifiants et liens d'une page (extraction rapide par expressions régulières)."""
 
-    def handle_starttag(self, tag, attrs):
-        a = dict(attrs)
-        if "id" in a and a["id"]:
-            self.ids.add(a["id"])
-        for key in ("href", "src"):
-            if a.get(key):
-                self.refs.append(a[key])
+    ID_RE = re.compile(r'\sid="([^"]+)"')
+    REF_RE = re.compile(r'\s(?:href|src)="([^"]+)"')
+
+    def __init__(self, text):
+        # on ignore le contenu des <script> et des formules (pas de liens utiles, et c'est le plus gros)
+        text = re.sub(r"<script\b[^>]*>.*?</script>", "", text, flags=re.S)
+        self.ids = set(self.ID_RE.findall(text))
+        self.refs = [html.unescape(r) for r in self.REF_RE.findall(text)]
 
 
 def parse(path):
-    p = Links()
-    p.feed(path.read_text(encoding="utf-8"))
-    return p
+    return Links(path.read_text(encoding="utf-8"))
 
 
 def main():
     problems = []
+    only = [a.strip("/") for a in sys.argv[1:]]
     pages = sorted(q for q in ROOT.glob("**/index.qmd") if "figures" not in q.parts and "node_modules" not in q.parts)
+    if only:  # restreindre aux pages demandées (chemins relatifs, ex. en/prep/p1-calcul-vectoriel)
+        pages = [q for q in pages if (q.parent.relative_to(ROOT).as_posix() or ".") in only]
     cache = {}
     for qmd in pages:
         rel = qmd.parent.relative_to(ROOT).as_posix() or "."

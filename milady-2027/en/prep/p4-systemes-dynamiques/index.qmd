@@ -195,7 +195,7 @@ $$
 Consequently, for every region $A$ of phase space, $\frac{\mathrm{d}}{\mathrm{d}t}\operatorname{vol}\big(\Phi^t(A)\big) = \int_{\Phi^t(A)} \nabla\cdot F\,\mathrm{d}\mathbf{x}$.
 
 ::: proof
-We take for granted that $\Phi^t$ is differentiable with respect to $\mathbf{x}_0$ (this holds for $F$ of class $C^1$). Differentiating $\partial_t\Phi^t(\mathbf{x}_0) = F(\Phi^t(\mathbf{x}_0))$ with respect to $\mathbf{x}_0$ and exchanging the derivatives, we obtain the variational equation. Jacobi's formula for the derivative of a determinant then gives $\frac{\mathrm{d}}{\mathrm{d}t}\det M = \det M\cdot\operatorname{tr}(M^{-1}\dot M) = \det M\cdot\operatorname{tr}\big(DF(\mathbf{x}(t))\big)$, and the trace of the Jacobian is the divergence: $\operatorname{tr} DF = \nabla\cdot F$. Integrating this scalar linear equation yields (1.1). For the volume, the change of variables $\mathbf{x} = \Phi^t(\mathbf{x}_0)$ gives $\operatorname{vol}(\Phi^t(A)) = \int_A \det M(t, \mathbf{x}_0)\,\mathrm{d}\mathbf{x}_0$; we differentiate under the integral sign and change variables back. [∎]{.qed}
+We assume that $\Phi^t$ is differentiable with respect to $\mathbf{x}_0$ (this holds for $F$ of class $C^1$). Differentiating $\partial_t\Phi^t(\mathbf{x}_0) = F(\Phi^t(\mathbf{x}_0))$ with respect to $\mathbf{x}_0$ and exchanging the derivatives, we obtain the variational equation. Jacobi's formula for the derivative of a determinant then gives $\frac{\mathrm{d}}{\mathrm{d}t}\det M = \det M\cdot\operatorname{tr}(M^{-1}\dot M) = \det M\cdot\operatorname{tr}\big(DF(\mathbf{x}(t))\big)$, and the trace of the Jacobian is the divergence: $\operatorname{tr} DF = \nabla\cdot F$. Integrating this scalar linear equation yields (1.1). For the volume, the change of variables $\mathbf{x} = \Phi^t(\mathbf{x}_0)$ gives $\operatorname{vol}(\Phi^t(A)) = \int_A \det M(t, \mathbf{x}_0)\,\mathrm{d}\mathbf{x}_0$; we differentiate under the integral sign and change variables back. [∎]{.qed}
 :::
 ::::
 
@@ -280,10 +280,10 @@ The phase portrait of a scalar equation can therefore be read off the sign of $f
 
 :::: thm
 [Theorem 1.14 — Poincaré–Bendixson (statement)]{.tag}
-In the plane, if a positive orbit stays in a compact set that contains no fixed point, then its limit set is a periodic orbit: either the orbit is itself periodic, or it winds onto a periodic orbit (a limit cycle).
+In the plane, if a forward orbit stays in a compact set that contains no fixed point, then its limit set is a periodic orbit: either the orbit is itself periodic, or it winds onto a periodic orbit (a limit cycle).
 
 ::: proof
-Taken for granted; see Strogatz (2018) or Guckenheimer and Holmes (1983). The idea is that a curve in the plane that does not intersect itself (uniqueness) is trapped by the Jordan curve theorem. [∎]{.qed}
+Stated without proof; see Strogatz (2018) or Guckenheimer and Holmes (1983). The idea is that a curve in the plane that does not intersect itself (uniqueness) is trapped by the Jordan curve theorem. [∎]{.qed}
 :::
 ::::
 
@@ -362,18 +362,18 @@ $$
 \dot V = \mathbf{y}^{\mathsf T}(A^{\mathsf T}P + PA)\,\mathbf{y} + 2\,\mathbf{y}^{\mathsf T}P\,R(\mathbf{y}) \le -|\mathbf{y}|^2 + 2\|P\|\,C\,|\mathbf{y}|^3 .
 $$
 
-For $|\mathbf{y}| \le \rho_0 = 1/(4\|P\|C)$, we therefore have $\dot V \le -|\mathbf{y}|^2/2 \le -V/(2\lambda_{\max}(P))$. Choose $c = \lambda_{\min}(P)\,\rho_0^2$: the set $\{V \le c\}$ is contained in the ball of radius $\rho_0$, and since $V$ decreases there, a solution starting in this set cannot leave it. Along such a solution, $V$ decreases exponentially; since $V \ge \lambda_{\min}(P)|\mathbf{y}|^2$, so does $\mathbf{y}$. The second claim (instability) is proved with a similar construction; we take it for granted. [∎]{.qed}
+For $|\mathbf{y}| \le \rho_0 = 1/(4\|P\|C)$, we therefore have $\dot V \le -|\mathbf{y}|^2/2 \le -V/(2\lambda_{\max}(P))$. Choose $c = \lambda_{\min}(P)\,\rho_0^2$: the set $\{V \le c\}$ is contained in the ball of radius $\rho_0$, and since $V$ decreases there, a solution starting in this set cannot leave it. Along such a solution, $V$ decreases exponentially; since $V \ge \lambda_{\min}(P)|\mathbf{y}|^2$, so does $\mathbf{y}$. The second claim (instability) is proved with a similar construction; we omit it. [∎]{.qed}
 :::
 ::::
 
 ::: note
 [Remark 2.5 — Hyperbolic points, Hartman–Grobman theorem]{.tag}
-A fixed point is **hyperbolic** if no eigenvalue of $DF(\mathbf{x}^*)$ has zero real part. The Hartman–Grobman theorem (taken for granted) states that in a neighborhood of a hyperbolic point, the phase portrait is a continuous deformation of that of the linearized system. When an eigenvalue has zero real part, linearization is inconclusive: this is precisely the situation of **bifurcations** (chapter 3).
+A fixed point is **hyperbolic** if no eigenvalue of $DF(\mathbf{x}^*)$ has zero real part. The Hartman–Grobman theorem (stated without proof) states that in a neighborhood of a hyperbolic point, the phase portrait is a continuous deformation of that of the linearized system. When an eigenvalue has zero real part, linearization is inconclusive: this is precisely the situation of **bifurcations** (chapter 3).
 :::
 
 ::: ex
 [Example 2.6 — The fixed points of Lorenz]{.tag}
-The origin is always a fixed point. At $O$, the Jacobian has eigenvalues $-b$ and the roots of $\lambda^2 + (s + 1)\lambda + s(1 - r) = 0$. For $r < 1$, all are negative: $O$ is stable. For $r > 1$, the product of the roots $s(1 - r)$ is negative, so one of them is positive: $O$ becomes a saddle. At the same time, two symmetric fixed points $C_\pm = \big(\pm\sqrt{b(r-1)}, \pm\sqrt{b(r-1)}, r - 1\big)$ appear, stable as long as $r < r_H = s(s + b + 3)/(s - b - 1) \approx 24.74$ (formula taken for granted; we check it numerically below). At $r = 28$, all three fixed points are unstable, and yet trajectories remain bounded (proposition 4.1): apart from the exceptional ones that land exactly on the stable manifold of a fixed point, they converge to no equilibrium and oscillate indefinitely, periodically or chaotically.
+The origin is always a fixed point. At $O$, the Jacobian has eigenvalues $-b$ and the roots of $\lambda^2 + (s + 1)\lambda + s(1 - r) = 0$. For $r < 1$, all are negative: $O$ is stable. For $r > 1$, the product of the roots $s(1 - r)$ is negative, so one of them is positive: $O$ becomes a saddle. At the same time, two symmetric fixed points $C_\pm = \big(\pm\sqrt{b(r-1)}, \pm\sqrt{b(r-1)}, r - 1\big)$ appear, stable as long as $r < r_H = s(s + b + 3)/(s - b - 1) \approx 24.74$ (formula stated without proof; we check it numerically below). At $r = 28$, all three fixed points are unstable, and yet trajectories remain bounded (proposition 4.1): apart from the exceptional ones that land exactly on the stable manifold of a fixed point, they converge to no equilibrium and oscillate indefinitely, periodically or chaotically.
 :::
 
 ::: ex
@@ -499,7 +499,7 @@ Consider a family $\dot{\mathbf{x}} = F(\mathbf{x}, r)$ depending on a real para
 
 ::: note
 [Remark 3.2 — Center manifold reduction]{.tag}
-In a neighborhood of a non-hyperbolic fixed point, there exists an invariant manifold, the **center manifold**, tangent to the eigendirections of the eigenvalues with zero real part; the other directions relax exponentially toward it (theorem taken for granted, see Guckenheimer and Holmes, 1983, or Kuznetsov, 2023). The dynamics near the threshold therefore reduces to an equation of dimension 1 (zero eigenvalue) or 2 (imaginary pair), **whatever** the dimension $n$ of the original system, including for the discretized MHD equations. The normal forms below are these reduced equations, after a change of variables.
+In a neighborhood of a non-hyperbolic fixed point, there exists an invariant manifold, the **center manifold**, tangent to the eigendirections of the eigenvalues with zero real part; the other directions relax exponentially toward it (theorem stated without proof; see Guckenheimer and Holmes, 1983, or Kuznetsov, 2023). The dynamics near the threshold therefore reduces to an equation of dimension 1 (zero eigenvalue) or 2 (imaginary pair), **whatever** the dimension $n$ of the original system, including for the discretized MHD equations. The normal forms below are these reduced equations, after a change of variables.
 :::
 
 ### 3.2 The saddle-node
@@ -597,7 +597,7 @@ We compute $\dot z = (\dot\varrho + i\varrho\dot\theta)\,e^{i\theta}$ and identi
 If the Jacobian $DF(\mathbf{x}^*, r)$ has a pair of simple eigenvalues $\alpha(r) \pm i\omega(r)$ with $\alpha(r_c) = 0$, $\alpha'(r_c) \ne 0$ and $\omega(r_c) \ne 0$, all the other eigenvalues having a negative real part, then a periodic orbit with amplitude proportional to $\sqrt{|r - r_c|}$ is born at $r_c$. If a computable coefficient, the first Lyapunov coefficient, is nonzero, this orbit exists past the threshold and is stable (**supercritical** Hopf), or exists before the threshold and is unstable (**subcritical** Hopf), depending on its sign.
 
 ::: proof
-Taken for granted; see Kuznetsov (2023). The proof reduces the system to the center manifold (of dimension 2) and then brings the reduced equation to the normal form 3.8 through polynomial changes of variables. [∎]{.qed}
+Stated without proof; see Kuznetsov (2023). The proof reduces the system to the center manifold (of dimension 2) and then brings the reduced equation to the normal form 3.8 through polynomial changes of variables. [∎]{.qed}
 :::
 ::::
 
@@ -619,7 +619,7 @@ An odd function has only odd powers in its expansion: $f(x, r) = a(r)\,x + c(r)\
 :::
 ::::
 
-This is the situation of the dynamo. The induction equation $\partial_t\mathbf{B} = \nabla\times(\mathbf{u}\times\mathbf{B}) + \eta\Delta\mathbf{B}$ is **linear** in $\mathbf{B}$, and the Laplace force $(\nabla\times\mathbf{B})\times\mathbf{B}$ is **quadratic**; the MHD equations are therefore invariant under $(\mathbf{u}, \mathbf{B}) \mapsto (\mathbf{u}, -\mathbf{B})$. Every dynamo state $\mathbf{B}$ has a twin $-\mathbf{B}$, with exactly the same flow, and the bifurcation from $\mathbf{B} = \mathbf{0}$ (for a real eigenvalue) is a pitchfork: two symmetric branches $\pm\mathbf{B}$ appear together. It is this symmetry that gives meaning to the word “reversal”.
+This is the situation of the dynamo. The induction equation $\partial_t\mathbf{B} = \nabla\times(\mathbf{u}\times\mathbf{B}) + \eta\Delta\mathbf{B}$ is **linear** in $\mathbf{B}$, and the Lorentz force $(\nabla\times\mathbf{B})\times\mathbf{B}$ is **quadratic**; the MHD equations are therefore invariant under $(\mathbf{u}, \mathbf{B}) \mapsto (\mathbf{u}, -\mathbf{B})$. Every dynamo state $\mathbf{B}$ has a twin $-\mathbf{B}$, with exactly the same flow, and the bifurcation from $\mathbf{B} = \mathbf{0}$ (for a real eigenvalue) is a pitchfork: two symmetric branches $\pm\mathbf{B}$ appear together. It is this symmetry that gives meaning to the word “reversal”.
 
 :::: prop
 [Proposition 3.12 — Amplitude law near the threshold]{.tag}
@@ -792,7 +792,7 @@ for a generic $\mathbf{v}$. A small perturbation grows on average as $e^{\lambda
 If $\mu$ is an ergodic invariant measure (chapter 5), for example with compact support (which guarantees the integrability condition of the theorem), then for $\mu$-almost every $\mathbf{x}_0$ there exist $n$ exponents $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n$, independent of $\mathbf{x}_0$, such that the growth rates of $|D\Phi^t(\mathbf{x}_0)\mathbf{v}|$ take these values depending on the direction of $\mathbf{v}$. The volume of a $k$-dimensional parallelepiped grows as $e^{(\lambda_1 + \dots + \lambda_k)t}$.
 
 ::: proof
-Taken for granted; see Eckmann and Ruelle (1985), who also present the computation algorithm. [∎]{.qed}
+Stated without proof; see Eckmann and Ruelle (1985), who also present the computation algorithm. [∎]{.qed}
 :::
 ::::
 
@@ -974,7 +974,7 @@ $$
 $$
 
 ::: proof
-Taken for granted (Birkhoff, 1931). [∎]{.qed}
+Stated without proof (Birkhoff, 1931). [∎]{.qed}
 :::
 ::::
 
@@ -985,7 +985,7 @@ This theorem justifies the practice of the whole internship: a stationary distri
 An invariant measure $\mu$ is **physical** if the set of $\mathbf{x}_0$ for which $\frac1T\int_0^T g(\Phi^t\mathbf{x}_0)\,\mathrm{d}t \to \mathbb{E}_\mu[g]$ for every continuous $g$ has strictly positive **volume** (Lebesgue measure); this set is its basin. Sinai–Ruelle–Bowen (SRB) measures are invariant measures whose conditional measures along the unstable manifolds have a density. According to Young (2002): for uniformly hyperbolic attractors (Axiom A), an SRB measure exists, it is physical, and it is the limit, as the noise tends to zero, of the stationary distributions of the noisy system; it is, however, **singular** with respect to volume in the stable directions, since the support of an attractor that contracts volumes has zero volume.
 :::
 
-For the Lorenz and Gissinger systems, we take for granted the existence of one physical measure per attractor, and we observe it numerically: the histograms of different trajectories converge to the same limit. The practical consequence is important: **the stationary distribution has no density** on $\mathbb{R}^n$. Any equation that characterizes it must therefore be written in weak form, with test functions.
+For the Lorenz and Gissinger systems, we assume the existence of one physical measure per attractor, and we observe it numerically: the histograms of different trajectories converge to the same limit. The practical consequence is important: **the stationary distribution has no density** on $\mathbb{R}^n$. Any equation that characterizes it must therefore be written in weak form, with test functions.
 
 ### 5.3 The Liouville equation
 
@@ -1108,7 +1108,7 @@ $$
 \mathbb{E}_{\mu_\Gamma}\big[\mu Q^2 - \nu D^2 + \Gamma V - V^2 + QDV\big] = 0 :
 $$
 
-on average, the injected power balances the dissipated power, even if $\mathrm{d}E/\mathrm{d}t$ fluctuates at every instant. For the incompressible MHD equations forced in a periodic box, with $\varphi = E = \frac12\langle|\mathbf{u}|^2 + |\mathbf{B}|^2\rangle$ (common notation), we have $F\cdot\nabla E = \mathrm{d}E/\mathrm{d}t = \langle\mathbf{u}\cdot\mathbf{f}\rangle - \nu\langle|\boldsymbol\omega|^2\rangle - \eta\langle|\mathbf{j}|^2\rangle$ (the nonlinear terms cancel; see the module [MHD and the dynamo effect](../p3-mhd-dynamo/index.html)). The stationary identity is then “mean injection = mean dissipation”, $\mathbb{E}_\mu[\langle\mathbf{u}\cdot\mathbf{f}\rangle] = \mathbb{E}_\mu[\nu\langle|\boldsymbol\omega|^2\rangle + \eta\langle|\mathbf{j}|^2\rangle]$: this is the constraint “in distribution” of the energy budget of experiment E2 (see the [report](../../rapport/index.html#e2)). With a white-in-time random forcing, the term $\frac{\sigma^2}{2}\Delta E$ adds the rate of energy injection by the noise.
+on average, the injected power balances the dissipated power, even if $\mathrm{d}E/\mathrm{d}t$ fluctuates at every instant. For the incompressible MHD equations forced in a periodic box, with $\varphi = E = \frac12\langle|\mathbf{u}|^2 + |\mathbf{B}|^2\rangle$ (notation shared by all the modules), we have $F\cdot\nabla E = \mathrm{d}E/\mathrm{d}t = \langle\mathbf{u}\cdot\mathbf{f}\rangle - \nu\langle|\boldsymbol\omega|^2\rangle - \eta\langle|\mathbf{j}|^2\rangle$ (the nonlinear terms cancel; see the module [MHD and the dynamo effect](../p3-mhd-dynamo/index.html)). The stationary identity is then “mean injection = mean dissipation”, $\mathbb{E}_\mu[\langle\mathbf{u}\cdot\mathbf{f}\rangle] = \mathbb{E}_\mu[\nu\langle|\boldsymbol\omega|^2\rangle + \eta\langle|\mathbf{j}|^2\rangle]$: this is the constraint “in distribution” of the energy budget of experiment E2 (see the [report](../../rapport/index.html#e2)). With a white-in-time random forcing, the term $\frac{\sigma^2}{2}\Delta E$ adds the rate of energy injection by the noise.
 :::
 
 For Lorenz, the simplest test functions give explicit identities: $\varphi = x$ gives $\mathbb{E}[x] = \mathbb{E}[y]$; $\varphi = z$ gives $\mathbb{E}[xy] = b\,\mathbb{E}[z]$; $\varphi = x^2/2$ gives $\mathbb{E}[x^2] = \mathbb{E}[xy]$; $\varphi = z^2/2$ gives $\mathbb{E}[xyz] = b\,\mathbb{E}[z^2]$. For Gissinger, $\varphi = Q^2/2$ and $\varphi = D^2/2$ give $\mu\,\mathbb{E}[Q^2] = \mathbb{E}[QDV] = \nu\,\mathbb{E}[D^2]$, and $\varphi = V$ gives $\mathbb{E}[V] = \Gamma + \mathbb{E}[QD]$ (exercises 8 and 9). The following code checks these identities on simulations; the “residual” is $|\text{mean}|/\text{standard deviation}$ of the quantity $F\cdot\nabla\varphi$, which is zero for an exactly stationary distribution.
@@ -1212,7 +1212,7 @@ The conditions $\mathbb{E}_\mu[g\circ\Phi^t] = \mathbb{E}_\mu[g]$ and $\mathbb{E
 An invariant measure is ergodic if and only if it cannot be written as $p\,\mu_1 + (1 - p)\,\mu_2$ with $0 < p < 1$ and invariant $\mu_1 \ne \mu_2$.
 
 ::: proof
-If $\mu$ is not ergodic, there exists an invariant set $A$ with $0 < \mu(A) < 1$. The conditional measures $\mu_A = \mu(\cdot\cap A)/\mu(A)$ and $\mu_{A^c} = \mu(\cdot\cap A^c)/\mu(A^c)$ are invariant (because $A$ and its complement are), distinct (one charges $A$, the other does not), and $\mu = \mu(A)\,\mu_A + (1 - \mu(A))\,\mu_{A^c}$: $\mu$ is not extreme. Conversely (sketch), if $\mu$ is ergodic and $\mu = p\mu_1 + (1-p)\mu_2$, then $\mu_1 \le \mu/p$ has a density $h$ with respect to $\mu$; the invariance of $\mu$ and $\mu_1$ implies that $h$ is an invariant function, hence constant by ergodicity, and $\mu_1 = \mu$. [∎]{.qed}
+If $\mu$ is not ergodic, there exists an invariant set $A$ with $0 < \mu(A) < 1$. The conditional measures $\mu_A = \mu(\cdot\cap A)/\mu(A)$ and $\mu_{A^c} = \mu(\cdot\cap A^c)/\mu(A^c)$ are invariant (because $A$ and its complement are), distinct (one gives mass to $A$, the other does not), and $\mu = \mu(A)\,\mu_A + (1 - \mu(A))\,\mu_{A^c}$: $\mu$ is not extreme. Conversely (sketch), if $\mu$ is ergodic and $\mu = p\mu_1 + (1-p)\mu_2$, then $\mu_1 \le \mu/p$ has a density $h$ with respect to $\mu$; the invariance of $\mu$ and $\mu_1$ implies that $h$ is an invariant function, hence constant by ergodicity, and $\mu_1 = \mu$. [∎]{.qed}
 :::
 ::::
 
@@ -1275,7 +1275,7 @@ $$
 ::: proof
 Equation (heuristic “first-step” argument). During a short interval $\Delta t$, the particle moves from $x$ to $x + \delta X$; the remaining time is then on average $\tau(x + \delta X)$. Hence $\tau(x) = \Delta t + \mathbb{E}[\tau(x + \delta X)] = \Delta t + \tau(x) + \Delta t\,\mathcal{L}\tau(x) + o(\Delta t)$ by proposition 5.8, whence $\mathcal{L}\tau = -1$. The condition $\tau(\beta) = 0$ is obvious. On the left, there is no boundary: the confining potential sends the particle back, and we impose that $e^{-2U(y)/\sigma^2}\tau'(y)$ tend to $0$ as $y \to -\infty$ (this is the case as soon as $\tau'$ remains bounded; the solution below even satisfies $\tau'(y) \approx -1/|U'(y)| \to 0$).
 
-Solution. Multiply the equation by $\frac{2}{\sigma^2}e^{-2U/\sigma^2}$; the left-hand side becomes an exact derivative: $\big(e^{-2U/\sigma^2}\tau'\big)' = -\frac{2}{\sigma^2}e^{-2U/\sigma^2}$. Integrating from $-\infty$ to $y$, $\tau'(y) = -\frac{2}{\sigma^2}e^{2U(y)/\sigma^2}\int_{-\infty}^y e^{-2U(z)/\sigma^2}\,\mathrm{d}z$, then we integrate from $x$ to $\beta$ with $\tau(\beta) = 0$. [∎]{.qed}
+Solving the equation. Multiply it by $\frac{2}{\sigma^2}e^{-2U/\sigma^2}$; the left-hand side becomes an exact derivative: $\big(e^{-2U/\sigma^2}\tau'\big)' = -\frac{2}{\sigma^2}e^{-2U/\sigma^2}$. Integrating from $-\infty$ to $y$, $\tau'(y) = -\frac{2}{\sigma^2}e^{2U(y)/\sigma^2}\int_{-\infty}^y e^{-2U(z)/\sigma^2}\,\mathrm{d}z$, then we integrate from $x$ to $\beta$ with $\tau(\beta) = 0$. [∎]{.qed}
 :::
 ::::
 
