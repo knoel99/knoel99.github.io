@@ -85,6 +85,8 @@ tools/                    rendu et contrôles
 
 Ce dépôt (`knoel99/milady-2027`) est publié par GitHub Pages depuis la branche `main`, à la racine : <https://knoel99.github.io/milady-2027/>. La page d'accueil du site personnel (`knoel99/knoel99.github.io`) y renvoie par une carte. Les pages HTML sont rendues et versionnées avec leurs sources `.qmd` : il n'y a pas d'étape de construction côté GitHub.
 
+Le projet a d'abord été développé dans le dossier `milady-2027/` du dépôt du site personnel, puis extrait ici avec tout son historique (`tools/export_repo.sh`, qui repose sur `git subtree split`). Le développement se poursuit désormais directement dans ce dépôt : modifier les sources, rendre les pages touchées, lancer les contrôles ci-dessus (dont `python3 tools/compare_fr_en.py <page>` pour la parité entre le français et l'anglais), puis pousser sur `main`.
+
 ## Licence
 
 Code et textes : Apache 2.0 (`LICENSE`). Les textes officiels cités (offre, résumé ANR) restent la propriété de leurs auteurs. KaTeX (MIT) est chargé depuis jsDelivr.

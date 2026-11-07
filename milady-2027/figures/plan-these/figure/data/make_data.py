@@ -20,7 +20,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 HERE = Path(__file__).resolve().parent
-EXP = Path("/home/user/knoel99.github.io/milady-2027/experiences/resultats")
+EXP = HERE.parents[3] / "experiences" / "resultats"  # racine du dépôt : figures/plan-these/figure/data → 4 niveaux
 out = {}
 
 # ---------- 1. Gissinger ----------

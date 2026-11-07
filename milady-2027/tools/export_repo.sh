@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Exporte le dossier milady-2027/ du dépôt knoel99.github.io vers le dépôt dédié knoel99/milady-2027,
 # en conservant l'historique des commits qui touchent ce dossier (git subtree split).
+# Script historique : il a servi à la migration initiale ; le développement se poursuit dans knoel99/milady-2027.
 #
 # Usage (depuis la racine du dépôt knoel99.github.io) :
 #   milady-2027/tools/export_repo.sh [URL_DU_DEPOT] [BRANCHE_SOURCE]

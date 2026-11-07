@@ -376,7 +376,7 @@ dV/dt = Γ − V + Q D      (3)
    - µ = 0,25 : point fixe D = −1,293, V = −0,158, conforme aux formules N± (√(0,25 + 0,9√2,5) = 1,2935 ; −√0,025 = −0,158) ;
    - µ = 0,101 : 1036 renversements ;
    - µ = 0,065 : convergence vers O avec cette CI, ce qui illustre la bistabilité.
-   - Script : `/tmp/claude-0/-home-user-knoel99-github-io/7f944193-0bd4-5776-8423-148e13f15fcf/scratchpad/scripts/gissinger_check.py`.
+   - Script : [`specs/sources/scripts/gissinger_check.py`](scripts/gissinger_check.py) (`python3 specs/sources/scripts/gissinger_check.py 0.119 0.12 0.15 0.25 0.101 0.065`).
    - [vérifié : script relancé tel quel par le vérificateur ; mêmes résultats pour µ = 0,119 (74 ; D ∈ [−2,947 ; 3,133]), 0,12 (0), 0,15 (0), 0,25 (D = −1,293, V = −0,158), 0,101 (1036), 0,065 (O)]
 
 ---
