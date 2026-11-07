@@ -110,7 +110,7 @@ export default async function draw(F, L) {
   // ================================================================ constraint chips (classes of the theory note)
   chip(L, pa, 3, chipY, 138, 'C3', 'symmetry **B** ↦ −**B**: equivariance');
   chip(L, pb, 3, chipY, 126, 'C1', '∇·**u** = ∇·**B** = 0: by construction');
-  chip(L, pc, 3, chipY, 79, null, 'internship: 3-mode, 2D MHD', { dash: '1.6 1.2', fill: '#f6f6f6' });
+  chip(L, pc, 3, chipY, 79, null, 'tested: 3-mode, 2D MHD', { dash: '1.6 1.2', fill: '#f6f6f6' });
   chip(L, pd, 3, chipY, 86, 'C4', 'energy balance: in law');
 
   // ================================================================ flow between stations
