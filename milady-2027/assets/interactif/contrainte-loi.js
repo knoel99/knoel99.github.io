@@ -62,7 +62,9 @@
  * 6. Masse manquante : μ(r ≥ r_c) = 1 − F_μ(r_c).
  *
  * 7. Histogrammes : densité Σ_{j ∈ case} w_j / Δ, cases de largeur Δ = 0,125 sur [−3 ; 5] ;
- *    la même échelle verticale sert aux trois panneaux. Le Dirac δ₀ est dessiné comme une flèche.
+ *    avec « support manquant », la case qui contient r_c est réduite à [bord gauche ; r_c[ (support de q),
+ *    soit une densité Σ w_j / (r_c − bord gauche), et n'est pas dessinée au-delà de r_c.
+ *    La même échelle verticale sert aux trois panneaux. Le Dirac δ₀ est dessiné comme une flèche.
  *
  * Références
  *  - I. Csiszár, « I-divergence geometry of probability distributions and minimization problems »,
@@ -106,12 +108,13 @@
     fr: {
       title: "Contrainte en loi ou par échantillon : le bilan d'énergie moyen ⟨dE/dt⟩\u00a0=\u00a00",
       bLab: "biais b", sLab: "largeur s", nLab: "N", cLab: "seuil r<sub>c</sub>",
-      bName: "Biais du modèle b : décalage de la moyenne de q",
-      sName: "Largeur du modèle s : dilatation de q autour de 0",
-      nName: "Nombre N d'échantillons tirés du modèle",
+      bName: "Biais b du modèle : décalage de la moyenne de q",
+      sName: "Largeur s du modèle : dilatation de q autour de 0",
+      nName: "N : nombre d'échantillons tirés du modèle",
       cName: "Seuil rc : le modèle tronqué ne produit jamais r ≥ rc",
       trunc: "support manquant", truncName: "Support manquant : le modèle n'a pas la queue droite de la vraie loi (r ≥ rc)",
       redraw: "Nouveau tirage", redrawTip: "Nouvelle graine pour les N tirages du modèle",
+      redrawName: "Nouveau tirage : nouvelle graine pour les N tirages du modèle",
       play: "Animer b", pause: "Pause", playTip: "Fait varier le biais b entre −1 et 1, en boucle",
       panelA: "(a) Vérité μ et modèle q", panelAs: "(a) μ et q",
       panelB: "(b) Projection par échantillon : chaque r ← 0", panelBs: "(b) Projection r ← 0",
@@ -154,18 +157,19 @@
         "la loi obtenue (un Dirac) est étrangère à μ et son erreur W₁ = E<sub>μ</sub>|r| ne dépend pas du modèle : un générateur parfait " +
         "(b = 0, s = 1) la subit aussi (Corollaire 6). L'inclinaison n'impose que la moyenne, en déformant q le moins possible " +
         "au sens de KL (Proposition 7). Elle ne crée pas de masse : avec « support manquant », la masse s'entasse sous r<sub>c</sub>, " +
-        "l'ESS chute (impossible si r<sub>c</sub> ≤ 0), W₁ peut dépasser celui de q et ne baisse pas quand N augmente. W₁ est calculé " +
+        "l'ESS chute (impossible si r<sub>c</sub> ≤ 0), W₁ peut dépasser celui de q et ne tend pas vers 0 quand N augmente. W₁ est calculé " +
         "exactement contre μ ; même pour q = μ, il reste de l'ordre de 1/√N (bruit d'échantillonnage)."
     },
     en: {
-      title: "Constraint on the law or on each sample: the mean energy balance ⟨dE/dt⟩\u00a0=\u00a00",
+      title: "Constraint in distribution or per sample: the mean energy balance ⟨dE/dt⟩\u00a0=\u00a00",
       bLab: "bias b", sLab: "width s", nLab: "N", cLab: "cut-off r<sub>c</sub>",
-      bName: "Model bias b: shift of the mean of q",
-      sName: "Model width s: dilation of q about 0",
-      nName: "Number N of samples drawn from the model",
+      bName: "Bias b of the model: shift of the mean of q",
+      sName: "Width s of the model: dilation of q about 0",
+      nName: "N: number of samples drawn from the model",
       cName: "Cut-off rc: the truncated model never produces r ≥ rc",
-      trunc: "missing support", truncName: "Missing support: the model lacks the right tail of the true law (r ≥ rc)",
+      trunc: "missing support", truncName: "Missing support: the model lacks the right tail of the true distribution (r ≥ rc)",
       redraw: "New draw", redrawTip: "New seed for the N model samples",
+      redrawName: "New draw: new seed for the N model samples",
       play: "Animate b", pause: "Pause", playTip: "Sweeps the bias b between −1 and 1, in a loop",
       panelA: "(a) Truth μ and model q", panelAs: "(a) μ and q",
       panelB: "(b) Per-sample projection: every r ← 0", panelBs: "(b) Projection r ← 0",
@@ -180,7 +184,7 @@
       stC: function (w, e) { return "W₁ = " + w + " · ESS/N = " + e; },
       miss: function (p) { return p + " of μ"; },
       infeasible: function (pos) { return "impossible: no r " + (pos ? "> 0" : "< 0") + " in the sample"; },
-      canvas: "Three stacked panels sharing the horizontal axis r = dE/dt. (a) exact density of the true law μ " +
+      canvas: "Three stacked panels sharing the horizontal axis r = dE/dt. (a) exact density of the true distribution μ " +
         "(curve) and histogram of the N samples of the model q. (b) per-sample projection: all the mass at r = 0 " +
         "(arrow, Dirac). (c) weighted histogram of the exponential tilting, with the outline of q and the density of μ. " +
         "The numbers are given below the figure.",
@@ -205,10 +209,10 @@
           " of its mass; no weights can create it there.";
       },
       note: "Per-sample projection puts every draw at r = 0: the mean is right, but the standard deviation drops to 0, " +
-        "the resulting law (a Dirac) is singular with respect to μ and its error W₁ = E<sub>μ</sub>|r| does not depend on the model: " +
+        "the resulting distribution (a Dirac) is singular with respect to μ and its error W₁ = E<sub>μ</sub>|r| does not depend on the model: " +
         "a perfect generator (b = 0, s = 1) suffers it too (Corollary 6). Tilting only imposes the mean, distorting q as " +
         "little as possible in the KL sense (Proposition 7). It creates no mass: with “missing support”, the mass piles up " +
-        "below r<sub>c</sub>, the ESS drops (impossible if r<sub>c</sub> ≤ 0), W₁ can exceed that of q and does not decrease as N grows. " +
+        "below r<sub>c</sub>, the ESS drops (impossible if r<sub>c</sub> ≤ 0), W₁ can exceed that of q and does not go to 0 as N grows. " +
         "W₁ is computed exactly against μ; even for q = μ it stays of order 1/√N (sampling noise)."
     }
   };
@@ -334,7 +338,7 @@
   }
   mix(0);
   var W1_PROJ = 2 * mG;                  // E_μ|r| = 2 G(0)
-  var F_MAX = 0;                         // maximum de f_μ (≈ 0,567)
+  var F_MAX = 0;                         // maximum de f_μ (≈ 0,585 en x ≈ −0,42)
   for (var xg = -1.5; xg <= 1; xg += 0.001) F_MAX = Math.max(F_MAX, density(xg));
 
   /* ---------- inclinaison exponentielle : Newton sur le dual ---------- */
@@ -448,7 +452,7 @@
 
     var br = mk("button", null, T.redraw);
     br.type = "button"; br.title = T.redrawTip;
-    br.setAttribute("aria-label", T.redraw + " : " + T.redrawTip);
+    br.setAttribute("aria-label", T.redrawName);
     var bp = this.playBtn = mk("button", null, T.play);
     bp.type = "button"; bp.title = T.playTip;
     controls.appendChild(br); controls.appendChild(bp);
