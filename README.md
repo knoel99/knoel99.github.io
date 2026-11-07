@@ -13,6 +13,7 @@ La plupart des projets vivent dans leur propre dépôt GitHub Pages. Ce dépôt 
 | MScT LLGA | [polytechnique-llga](https://github.com/knoel99/polytechnique-llga) | [live](https://knoel99.github.io/polytechnique-llga/) |
 | Master MVA | [master-mva](https://github.com/knoel99/master-mva) | [live](https://knoel99.github.io/master-mva/) |
 | Infra de calcul | [mastering-compute-infrastructure](https://github.com/knoel99/mastering-compute-infrastructure) | [live](https://knoel99.github.io/mastering-compute-infrastructure/) |
+| MilaDy 2027 (IA générative et dynamos) | [milady-2027](https://github.com/knoel99/milady-2027) | [live](https://knoel99.github.io/milady-2027/) |
 
 ## Structure
 

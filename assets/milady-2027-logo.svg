@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" role="img" aria-label="MilaDy 2027">
+  <rect width="240" height="80" fill="#f5f5f7"/>
+  <!-- dipôle magnétique stylisé : lignes de champ fermées autour d'un axe -->
+  <g fill="none" stroke="#1d1d1f" stroke-width="2.2" stroke-linecap="round">
+    <line x1="36" y1="14" x2="36" y2="66"/>
+    <path d="M36 22 C 12 22, 12 58, 36 58"/>
+    <path d="M36 22 C 60 22, 60 58, 36 58"/>
+    <path d="M36 30 C 22 30, 22 50, 36 50" stroke-width="1.6"/>
+    <path d="M36 30 C 50 30, 50 50, 36 50" stroke-width="1.6"/>
+  </g>
+  <path d="M31 19 L36 13 L41 19" fill="none" stroke="#1d1d1f" stroke-width="2.2" stroke-linejoin="round"/>
+  <text x="70" y="36" fill="#1d1d1f" font-family="ui-sans-serif, sans-serif" font-size="26" font-weight="700" dominant-baseline="middle">MilaDy</text>
+  <text x="71" y="60" fill="#6e6e73" font-family="ui-sans-serif, sans-serif" font-size="15" font-weight="600" dominant-baseline="middle">2027 · dynamos &amp; IA</text>
+</svg>
