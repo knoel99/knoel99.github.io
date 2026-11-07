@@ -127,13 +127,13 @@
       },
       note: "Domaine périodique [0, 2π)², u = v + α∇φ avec v = u_sol (∇·v = 0) et ∇φ = u_grad, " +
         "20 modes de Fourier aléatoires ; ‖f‖² = ⟨|f|²⟩ (moyenne sur le domaine) et ‖v‖ = ‖∇φ‖ = 1, " +
-        "donc fraction retirée = α²/(1 + α²). P agit mode par mode, û_k ← û_k − k (k·û_k)/|k|², " +
+        "donc fraction retirée = α²/(1 + α²). P agit mode par mode, û_k ← û_k − k\u00a0(k·û_k)/|k|², " +
         "exactement et sans FFT puisque les coefficients sont connus ; Pu ne dépend pas de α. " +
         "Fond : ∇·u, bleu < 0 (puits), orange > 0 (sources), gris = 0 ; échelle fixe pour un champ donné " +
         "(±S, S = max |∇·u| à α = 0,5, saturée au-delà) ; les repères au-dessus de la barre marquent ±max |∇·u| actuel. " +
         "Divergence relative : 0 pour un champ solénoïdal, 1 pour un gradient pur. " +
         "Traceurs : particules advectées par le champ affiché, relancées uniformément toutes les 4 unités de temps ; " +
-        "Dρ/Dt = −ρ ∇·u les concentre dans les puits, alors qu'après projection l'écoulement conserve les aires " +
+        "Dρ/Dt = −ρ\u00a0∇·u les concentre dans les puits, alors qu'après projection l'écoulement conserve les aires " +
         "et leur densité reste uniforme. " +
         "En domaine borné, la projection exige de résoudre un problème de Poisson Δφ = ∇·u avec la condition " +
         "aux limites ∂φ/∂n = u·n, puis Pu = u − ∇φ ; c'est la même opération qui impose ∇·B = 0 " +
@@ -152,8 +152,8 @@
       legU: "u shown", legG: "(I−P)u = α∇φ", legTr: function (t) { return "tracers, t = " + t; },
       cbCap: "background: ∇·u (fixed scale, saturated beyond)", cbCapShort: "background: ∇·u (fixed scale)", sinks: "sinks", sources: "sources",
       pyth: "‖u‖² = ‖Pu‖² + ‖(I−P)u‖²",
-      canvas: "Panel (a): colour map of the divergence of the displayed field on the periodic domain " +
-        "[0, 2π)², blue for negative values, grey at zero, orange for positive ones, with the field arrows " +
+      canvas: "Panel (a): color map of the divergence of the displayed field on the periodic domain " +
+        "[0, 2π)², blue for negative values, gray at zero, orange for positive ones, with the field arrows " +
         "on a 16 × 16 grid. Panel (b): right triangle ‖u‖² = ‖Pu‖² + ‖(I−P)u‖² in the space L², " +
         "orthogonal sum of divergence-free fields H and gradients G.",
       l1: function (n, a, shown) { return "Seed " + n + ": 20 modes, 1 ≤ |k| ≤ 4 · α = " + a + " · shown: " + shown; },
@@ -168,13 +168,13 @@
       },
       note: "Periodic domain [0, 2π)², u = v + α∇φ with v = u_sol (∇·v = 0) and ∇φ = u_grad, " +
         "20 random Fourier modes; ‖f‖² = ⟨|f|²⟩ (domain average) and ‖v‖ = ‖∇φ‖ = 1, " +
-        "so the removed fraction is α²/(1 + α²). P acts mode by mode, û_k ← û_k − k (k·û_k)/|k|², " +
+        "so the removed fraction is α²/(1 + α²). P acts mode by mode, û_k ← û_k − k\u00a0(k·û_k)/|k|², " +
         "exactly and without an FFT since the coefficients are known; Pu does not depend on α. " +
-        "Background: ∇·u, blue < 0 (sinks), orange > 0 (sources), grey = 0; fixed scale for a given field " +
-        "(±S, S = max |∇·u| at α = 0.5, saturated beyond); the marks above the colour bar show ±max |∇·u| now. " +
+        "Background: ∇·u, blue < 0 (sinks), orange > 0 (sources), gray = 0; fixed scale for a given field " +
+        "(±S, S = max |∇·u| at α = 0.5, saturated beyond); the marks above the color bar show ±max |∇·u| now. " +
         "Relative divergence: 0 for a solenoidal field, 1 for a pure gradient. " +
         "Tracers: particles advected by the displayed field, reseeded uniformly every 4 time units; " +
-        "Dρ/Dt = −ρ ∇·u gathers them in the sinks, whereas after projection the flow preserves areas " +
+        "Dρ/Dt = −ρ\u00a0∇·u gathers them in the sinks, whereas after projection the flow preserves areas " +
         "and their density stays uniform. " +
         "In a bounded domain, the projection requires solving a Poisson problem Δφ = ∇·u with the boundary " +
         "condition ∂φ/∂n = u·n, then Pu = u − ∇φ; the same operation enforces ∇·B = 0 " +
@@ -205,6 +205,15 @@
 
   function pct(lang, f) { return fmt(lang, 100 * f, 1) + (lang === "fr" ? " %" : "%"); }
 
+  // Texte du DOM : pas de coupure de ligne autour de =, ≤, ×, +, − entourés d'espaces, ni juste
+  // après « | » ou « / » collés à la suite (U+2060, gluon : « |∇·u| », « ∂φ/∂n ») ; en français, espace insécable avant « : »
+  // et fine insécable avant « ; » et « % ».
+  function glue(lang, s) {
+    s = s.replace(/ ([=≤×+−]) /g, "\u00a0$1\u00a0").replace(/([|/])(?=[^\s|])/g, "$1\u2060");
+    if (lang === "fr") s = s.replace(/ :/g, "\u00a0:").replace(/ ([;%])/g, "\u202f$1");
+    return s;
+  }
+
   var SUP = { "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹", "-": "⁻" };
   function fmtSci(lang, x, d) {
     if (x === 0) return "0";
@@ -212,7 +221,7 @@
     var m = x / Math.pow(10, e);
     if (Math.abs(m) >= 10 - 0.5 * Math.pow(10, -d)) { m /= 10; e += 1; }
     if (Math.abs(m) < 1) { m *= 10; e -= 1; }
-    return fmt(lang, m, d) + " × 10" + String(e).replace(/./g, function (ch) { return SUP[ch] || ch; });
+    return fmt(lang, m, d) + "\u00a0×\u00a010" + String(e).replace(/./g, function (ch) { return SUP[ch] || ch; });
   }
 
   function mk(tag, cls, text) {
@@ -490,7 +499,7 @@
     var a0 = parseFloat(el.getAttribute("data-alpha"));
     if (!(a0 >= 0 && a0 <= 1)) a0 = A_DEF;
 
-    el.appendChild(mk("p", "widget-title", T.title));
+    el.appendChild(mk("p", "widget-title", glue(this.lang, T.title)));
     var controls = mk("div", "widget-controls");
     el.appendChild(controls);
 
@@ -550,7 +559,7 @@
     this.rl = [mk("span"), mk("span"), mk("span")];
     this.rl.forEach(function (s) { s.style.display = "block"; ro.appendChild(s); });
     el.appendChild(ro);
-    el.appendChild(mk("p", "widget-note", T.note));
+    el.appendChild(mk("p", "widget-note", glue(this.lang, T.note)));
 
     // état
     this.alpha = Math.round(a0 * 100) / 100;
@@ -590,6 +599,7 @@
     if (window.IntersectionObserver) {
       new IntersectionObserver(function (es) {
         es.forEach(function (e) { self.visible = e.isIntersecting; });
+        if (self.visible) self.ensureLoop();      // relance la boucle au retour à l'écran
       }).observe(el);
     }
     if (window.matchMedia) {
@@ -768,7 +778,8 @@
 
   /* ----- boucle d'animation ----- */
   Widget.prototype.needsLoop = function () {
-    return this.tauLin !== this.target || (this.tracersOn && this.playing);
+    // hors écran : seule une transition en cours garde la boucle active
+    return this.tauLin !== this.target || (this.tracersOn && this.playing && this.visible);
   };
 
   Widget.prototype.ensureLoop = function () {
@@ -815,8 +826,11 @@
       T.l2(fmt(lg, dBefore, 3), dAfter === 0 ? "0" : fmtSci(lg, dAfter, 1), dAfter === 0),
       T.l3(fmt(lg, nu.E, 3), fmt(lg, np.E, 3), pct(lg, np.E / nu.E), fmt(lg, ng.E, 3), pct(lg, ng.E / nu.E))
     ];
-    for (var i = 0; i < 3; i++) if (this.rl[i].textContent !== lines[i]) this.rl[i].textContent = lines[i];
-    this.aOut.textContent = "α = " + fmt(lg, this.alpha, 2);
+    for (var i = 0; i < 3; i++) {
+      lines[i] = glue(lg, lines[i]);
+      if (this.rl[i].textContent !== lines[i]) this.rl[i].textContent = lines[i];
+    }
+    this.aOut.textContent = "α\u00a0=\u00a0" + fmt(lg, this.alpha, 2);
     this.aIn.setAttribute("aria-valuetext", fmt(lg, this.alpha, 2));
   };
 
@@ -837,9 +851,10 @@
       var H = mt + s + mb;
       L.map = { l: ml, t: mt, s: s };
       var x0 = ml + s + gap;
-      L.cb = { x: x0, y: H - CBH, w: wr };
-      L.leg = { x: x0, y: H - CBH - 62, w: wr, vertical: true };
-      var hb = H - CBH - 62 - 8;                  // titre + triangle + formules
+      var cbY = H - CBH - 6;                      // marge basse : jambages de « puits (< 0) »
+      L.cb = { x: x0, y: cbY, w: wr };
+      L.leg = { x: x0, y: cbY - 62, w: wr, vertical: true };
+      var hb = cbY - 62 - 8;                      // titre + triangle + formules
       L.b = this.layoutB(x0, 0, wr, hb);
       L.H = H;
     } else {

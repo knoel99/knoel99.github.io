@@ -192,5 +192,5 @@ export default async function draw(F, L) {
   }
   L.text(c, QX(Qs) + mm(1.8), Y(Ds) - mm(3.2), '+(*D*^{∗}, *Q*^{∗})', { anchor: 'start', valign: 'middle', halo: true });
   L.text(c, QX(-Qs) - mm(1.8), Y(-Ds) + mm(3.2), '−(*D*^{∗}, *Q*^{∗})', { anchor: 'end', valign: 'middle', halo: true });
-  L.callout(c, [QX(-data.fixed.saddle[1]) - 1.1, Y(-data.fixed.saddle[0]) + 1.1], [mm(2.5), Y(-0.62)], 'saddle point', { anchor: 'start' });
+  L.callout(c, [QX(-data.fixed.saddle[1]) - 1.1, Y(-data.fixed.saddle[0]) + 1.1], [mm(2.5), Y(-0.62)], 'saddle\npoint', { anchor: 'start' });
 }

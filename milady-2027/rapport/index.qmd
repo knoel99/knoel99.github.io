@@ -935,7 +935,7 @@ Le schéma interactif suivant reprend ces mesures et montre une coupe du mode pr
 
 #### Lecture critique {#e3-lecture}
 
-**Les seuils sont en accord avec la littérature.** Les seuils mesurés, 8,87 et 17,6, encadrent la première fenêtre de dynamo publiée, $8{,}9 < Rm < 17{,}5$ (Galloway & Frisch 1984, cités par Archontis, Dorch & Nordlund 2003, avec $Rm = 1/\eta$), et le troisième, 26,8, correspond à l'ouverture de la seconde fenêtre « au-dessus de 27 ». Le maximum du taux de croissance dans la première fenêtre est atteint vers $Rm = 12$ ou 13 (0,00765 pour $\lambda$ à $Rm = 12$, 0,00816 pour $\lambda_q$ à $Rm = 13$), à l'endroit indiqué par Archontis et al. (2003), d'après Galanti et al. (1993) ; la valeur publiée de ce maximum n'a pas pu être vérifiée, et nous ne la comparons pas. La comparaison avec Alexakis (2011) demande de convertir sa convention, $R_M = \sqrt3/\eta$.
+**Les seuils sont en accord avec la littérature.** Les seuils mesurés, 8,87 et 17,6, encadrent la première fenêtre de dynamo publiée, $8{,}9 < Rm < 17{,}5$ (Galloway & Frisch 1984, cités par Archontis, Dorch & Nordlund 2003, avec $Rm = 1/\eta$), et le troisième, 26,8, correspond à l'ouverture de la seconde fenêtre « au-dessus de 27 ». Le maximum du taux de croissance dans la première fenêtre est atteint vers $Rm = 12$ ou 13 (0,00765 pour $\lambda$ à $Rm = 12$, 0,00816 pour $\lambda_q$ à $Rm = 13$), à l'endroit ($Rm = 12$) qu'indiquent Archontis et al. (2003) en citant un travail antérieur ; la valeur publiée de ce maximum n'a pas pu être vérifiée, et nous ne la comparons pas. La comparaison avec Alexakis (2011) demande de convertir sa convention, $R_M = \sqrt3/\eta$.
 
 **La précision des seuils est limitée par la mesure du taux.** À $Rm = 12$, $N = 48$ donne $0{,}00812$, contre $0{,}00765$ ($\lambda$) et $0{,}00803$ ($\lambda_q$) à $N = 32$ : la résolution suffit. À $Rm = 17{,}5$, le signe n'est pas résolu : $\lambda = +2{,}3\cdot10^{-4}$ et $\lambda_q = -2{,}2\cdot10^{-4}$ à $N = 32$, $\lambda = -5{,}2\cdot10^{-4}$ à $N = 48$. Le second seuil est donc à environ 0,1 près de 17,5, en accord avec la valeur publiée, mais notre 17,6 n'est pas plus précis que cela. Entre $Rm = 20$ et 26, $\lambda$ et $\lambda_q$ diffèrent jusqu'à $2\cdot10^{-3}$ (par exemple $-2{,}6\cdot10^{-3}$ contre $-3{,}8\cdot10^{-4}$ à $Rm = 26$), si bien que le troisième seuil n'est connu qu'à une unité près environ. Une cause probable, que nous n'avons pas vérifiée, est le caractère oscillant des modes dominants (pulsation d'environ 0,53 dans la première fenêtre selon Bouya & Dormy 2013), qui superpose une oscillation à la croissance de $\ln\|\mathbf{B}\|$.
 
@@ -943,4 +943,276 @@ Le schéma interactif suivant reprend ces mesures et montre une coupe du mode pr
 
 **Rôle pour la thèse.** E3 fournit un banc 3D peu coûteux (23 minutes de CPU pour tout le balayage) avec un paramètre de contrôle, deux fenêtres de dynamo et un groupe de symétrie à 24 éléments, dont le mode de la première fenêtre possède toutes les symétries paires (Bouya & Dormy 2013). La suite naturelle est de générer ces modes propres par un potentiel vecteur en jauge de Coulomb, $\hat{\mathbf{A}}_{\mathbf{k}} = i\,\mathbf{k}\times\hat{\mathbf{B}}_{\mathbf{k}}/|\mathbf{k}|^2$, ce qui rend $\nabla\cdot\mathbf{B} = 0$ exacte par construction en 3D (Proposition 1), et de conditionner la génération par $Rm$ de part et d'autre des seuils (Proposition 9).
 
-<!-- SUITE-REDACTION -->
+## 6. Discussion {#discussion}
+
+### Réponses aux problématiques {#reponses}
+
+**P1 — Conditionnement paramétrique.** Un seul modèle conditionné par $\eta$ interpole correctement les valeurs non vues quand le modèle de base est bon, et ses erreurs se concentrent là où il est mauvais : dans E2, aux grandes valeurs de $\eta$. La perte de stationnarité, qui s'impose sans données à toute valeur de $\eta$, a donné ses plus grands gains précisément à ces valeurs (distance d'énergie divisée par 3,5 à $\eta = 0{,}0190$). C'est l'intérêt principal d'une contrainte qui n'exige pas de valeur cible : elle « remplit » l'espace des paramètres entre les simulations, qui seront rares dans MilaDy. La Proposition 9 dit ce qu'on ne peut pas attendre d'un générateur régulier près d'un saut de loi ; la grille fine de E1 a été construite pour mesurer ce qui se passe au seuil des renversements. Deux points restent hors de portée de ce rapport : l'extrapolation hors de la plage d'entraînement, et le conditionnement par plusieurs paramètres à la fois ($Re$, $Rm$, $\mu_r$, asymétrie du forçage).
+
+**P2 — Contraintes locales exactes.** Pour la contrainte linéaire C1 en domaine périodique, la question est réglée : potentiels, projection finale et flot projeté donnent une divergence nulle à la précision machine, pour un coût négligeable, alors que la génération libre laisse une divergence d'ordre un et que la pénalité douce la réduit peu et se laisse contourner. Entre les mécanismes exacts, la Proposition 2 dit que la cible est la même : le choix se fait sur la qualité d'approximation et le coût. Les potentiels ont l'avantage de diviser la dimension par deux en 2D ; en 3D, le potentiel vecteur en jauge de Coulomb joue ce rôle en domaine périodique. Les conditions aux limites n'ont pas été testées : c'est le principal travail restant sur P2 (Remarque 3.5).
+
+**P3 — Bilan d'énergie.** Le bilan d'énergie d'un état stationnaire n'est pas une contrainte par échantillon : $\mathrm{d}E/\mathrm{d}t = P - \varepsilon$ est une identité, et seule $\mathbb{E}[P - \varepsilon] = 0$ est une contrainte (Remarque 3.4). L'imposer à chaque échantillon produit une loi dégénérée (Corollaire 6), ce que E2 mesure : le recalage annule la variance de la dissipation. L'inclinaison exponentielle respecte la catégorie, mais elle ne crée pas de masse et s'effondre là où le modèle est mauvais. La perte de stationnarité à l'entraînement, estimée sans biais, est la seule voie qui a amélioré à la fois le bilan et la loi dans E2, y compris sur une identité qu'elle n'imposait pas.
+
+**P4 — Évaluation.** Cinq leçons ressortent. Il faut comparer des lois, pas des champs. Toute métrique doit être lue contre un plancher de bruit, mesuré à taille d'échantillon égale. Une seule métrique peut tromper : la distance d'énergie sur des spectres par couronne a favorisé le recalage, que seul $\sigma(\mathcal{D})/\sigma_{\mathrm{ref}}$ démasque. Une métrique dominée par le bruit, comme le résidu d'hélicité croisée face à une référence aux instantanés corrélés, ne classe rien. Enfin, la topologie demandée par l'offre n'a pas été mesurée, et l'hélicité magnétique 3D demandera de fixer une jauge, ou d'utiliser l'hélicité relative en domaine borné (Berger & Field 1984).
+
+**P5 — Vers les dynamos 3D.** E3 fournit un banc 3D validé contre la littérature, avec un paramètre de contrôle et des seuils ; E1 relie la loi générée à une grandeur dynamique, la fréquence des renversements, par la formule de Rice. La génération de champs 3D elle-même reste à faire, et la section suivante dit ce qui manque.
+
+### Menaces sur la validité {#menaces}
+
+**Validité interne.** E2 n'utilise qu'une graine par variante : les écarts de quelques dizaines de pourcents entre V2, V3 et V4 ne sont pas significatifs, alors que les écarts d'un facteur 3 ou plus (V5 contre V4, V1 contre les autres) le sont vraisemblablement, mais sans intervalle de confiance. Le plancher de bruit aux valeurs de test de $\eta$ est optimiste, car ses deux échantillons se recouvrent. Toutes les variantes ont reçu le même budget, sans réglage d'hyperparamètres propre à chacune, ce qui peut avantager l'une ou l'autre. La perte de stationnarité est imposée à un échantillonneur à 8 pas et évaluée sur un échantillonneur à 50 pas. Une partie du gain de V5 pourrait venir d'un simple recalage du niveau d'énergie global ; la baisse de l'erreur de spectre et du résidu de $\langle a^2\rangle$, non imposé, va contre cette lecture, sans l'exclure.
+
+**Validité de construit.** La distance d'énergie de E2 porte sur 21 descripteurs : les énergies par couronne de 1 à 10 et l'hélicité croisée. Elle ignore les phases, donc les structures cohérentes, et les échelles $|\mathbf{k}| > 10$ n'existent pas dans la représentation. L'erreur de spectre compare des spectres moyens. La divergence relative est calculée avec l'opérateur spectral exact, ce qui la rend triviale pour les potentiels : avec des données de différences finies ou d'éléments finis, il faudra définir la divergence avec l'opérateur discret du solveur.
+
+**Validité externe.** Les trois bancs sont des modèles jouets : dimension 3 pour E1, MHD 2D forcée qui n'est pas une dynamo pour E2, induction cinématique sans rétroaction pour E3. Dans E2, $Pm$ va de 0,35 à 2, contre environ $10^{-5}$ pour le sodium, et les nombres de Reynolds sont modestes. Les domaines sont périodiques, alors que VKS et DRESDYN sont des cylindres à parois. Le réseau est un perceptron sur des coefficients de Fourier : un U-Net périodique, prévu dans le dépôt (`unet.py`) mais non utilisé, ou un autoencodeur fonctionnel seront nécessaires en 3D. Enfin, la comparaison de Genuist et al. (2026) rappelle qu'aucune stratégie ne domine dans tous les régimes : nos classements valent pour l'interpolation en paramètre de lois stationnaires, pas pour le déroulement temporel ni l'extrapolation.
+
+### Ce qui manque pour passer aux données MilaDy {#vers-milady}
+
+**Accès et volume des données.** Les simulations de renversements de Bousquet et al. (2026) ne sont pas publiques ; elles sont disponibles auprès des auteurs, et l'accès passera par le consortium. Chaque simulation directe est coûteuse, si bien que les valeurs du paramètre seront peu nombreuses : c'est un argument de plus pour les contraintes qui s'imposent sans données.
+
+**Représentation.** Les sorties de SFEMaNS sont des modes de Fourier azimutaux portés par un maillage d'éléments finis non structuré dans le plan méridien, avec des sauts de perméabilité et un raccord à un potentiel scalaire dans l'isolant ; celles de LATU sont des champs pseudo-spectraux dans une boîte périodique $(3\pi)^3$, où le cylindre et les turbines sont imposés par pénalisation. Dans les deux cas, la base de Fourier de E2 ne suffit plus. Les candidats sont une base POD ou un autoencodeur (Bousquet, Nore & Lucor 2025), ou un autoencodeur fonctionnel à la manière de FunDiff, avec un décodeur qui sort des potentiels. Dans SFEMaNS, $\nabla\cdot\mathbf{B}$ est contrôlée faiblement par le solveur, par une pénalité en norme de Sobolev négative (Nore et al. 2018) : les données ne sont pas exactement solénoïdales pour un opérateur discret donné, et il faudra décider sur quel opérateur imposer la contrainte.
+
+**Symétries.** Dans VKS, la symétrie $R_\pi$ échange les deux turbines. Quand le forçage est asymétrique, $R_\pi$ change aussi le signe de l'asymétrie : l'équivariance utile est alors $v(g\mathbf{x}, t, g\cdot\boldsymbol\lambda) = g\,v(\mathbf{x}, t, \boldsymbol\lambda)$, qui donne $q(\cdot\mid g\cdot\boldsymbol\lambda) = g_\#q(\cdot\mid\boldsymbol\lambda)$ par la même démonstration que la Proposition 4. Cette extension est immédiate mais n'a pas été testée. La symétrie $\mathbf{B} \to -\mathbf{B}$ reste exacte pour les équations MHD.
+
+**Identités de stationnarité en 3D.** Pour le bilan d'énergie de VKS, la puissance injectée est le travail de la force de pénalisation des turbines sur le fluide, et la dissipation comprend les pertes visqueuses et ohmiques avec $\mu_r$ et $\sigma_r$ variables. Les deux se calculent sur un instantané, à condition de disposer de l'opérateur spatial du solveur : une évaluation du second membre par échantillon. Avant d'utiliser ces identités comme perte, il faudra vérifier qu'elles sont satisfaites par les instantanés stockés, au bruit d'échantillonnage près ; une identité mal discrétisée serait une contrainte fausse.
+
+**Renversements.** La formule de Rice s'applique au moment dipolaire axial, fonctionnelle linéaire de $\mathbf{B}$, avec $\dot D$ calculé par l'équation d'induction sur l'instantané. Les simulations contiennent peu de renversements, si bien que leur fréquence observée est très incertaine. Une conjecture à tester est que l'estimateur de Rice, qui utilise tous les instantanés proches de $D = 0$ et pas seulement les passages complets, ait une variance plus faible que le comptage direct.
+
+**Métriques.** Il faudra ajouter les hélicités magnétique et croisée en 3D, les spectres par mode azimutal, la loi des coefficients POD dominants (dont la bimodalité asymétrique du mode $V$ de Bousquet et al. 2026), les transferts d'énergie locaux (Creff et al. 2024), les relations entre aplatissement et dissymétrie qui caractérisent l'intermittence (Ponty, Politano & Pouquet 2025), et des métriques de topologie.
+
+**Calcul.** Les expériences de ce rapport tiennent sur un processeur à 4 cœurs ; des champs 3D de VKS demanderont des GPU et une gestion des volumes de données.
+
+## 7. Conclusion et ouverture vers la thèse {#conclusion}
+
+Ce rapport prospectif a posé un cadre pour les modèles génératifs conditionnels de champs MHD sous contraintes physiques, et l'a confronté à trois expériences à petite échelle. Sa thèse centrale est qu'une contrainte doit être imposée là où elle est vraie. Les contraintes locales linéaires, comme la divergence nulle, sont vraies pour chaque champ : on les impose exactement, à coût négligeable, par l'architecture ou par projection, et une pénalité douce est à la fois insuffisante et contournable. Les symétries et les identités de stationnarité, dont le bilan d'énergie moyen, ne sont vraies que pour la loi : on les impose par équivariance et par une perte de stationnarité, estimée sans biais, qui s'applique aussi aux valeurs du paramètre sans données ; les imposer échantillon par échantillon détruit la loi.
+
+Sur la MHD 2D forcée, ces principes se sont traduits en mesures : divergence nulle à la précision machine pour trois mécanismes, loi nettement meilleure aux valeurs de test de $\eta$ avec la perte de stationnarité (distance d'énergie de 2,58 à 0,70) et aucun gain pour le témoin, effondrement de l'ESS pour l'inclinaison a posteriori, dégénérescence de la loi pour le recalage par échantillon. Le banc 3D de dynamo cinématique ABC retrouve les seuils publiés et conserve $\nabla\cdot\mathbf{B} = 0$ à la précision machine. Les résultats complets du modèle de renversements (E1) compléteront ce bilan. Les modèles restent faibles, sur des bancs jouets, et rien n'a encore été fait sur les données du consortium.
+
+Ces conclusions ouvrent sur un programme de thèse, dont la piste est exposée dans le [sujet de thèse](../these/index.html#piste) : passer aux champs 3D de VKS par un décodeur à potentiels dans un espace latent appris, imposer en loi les identités de stationnarité de la MHD avec pénalisation, conditionner par plusieurs paramètres de part et d'autre des seuils, et relier la loi générée à la statistique des renversements par la formule de Rice. Les étapes immédiates sont plus modestes : répéter E2 avec plusieurs graines, ajouter un réseau convolutif et des métriques de topologie, puis tester la génération de modes propres 3D sur le banc E3, par potentiel vecteur.
+
+## Annexes {#annexes}
+
+### Reproductibilité {#a-reproductibilite}
+
+Tout le code est dans le dossier `experiences/` du dépôt du site. Les scripts n'utilisent que Python 3, NumPy, PyTorch (version CPU) et Matplotlib, et tournent sur un processeur ordinaire. Le dépôt ne fige pas les versions des bibliothèques, ce qui est une limite de reproductibilité ; au moment de la rédaction, l'environnement de travail contenait Python 3.13, NumPy 2.5, PyTorch 2.15 (CPU) et Matplotlib 3.11.
+
+Les commandes suivantes, lancées depuis `experiences/`, reproduisent toute la chaîne. L'option `--quick` de chaque script lance une version réduite, utile pour vérifier l'installation en quelques minutes ; ses sorties portent le suffixe `_quick` et ne sont pas citées dans ce rapport.
+
+```bash
+python3 e3_abc.py                      # E3 : resultats/e3_abc.json, resultats/e3_modes.npz (≈ 23 min)
+python3 e2_donnees.py                  # E2 : instantanés dans $E2_DATA (défaut : ./donnees_e2/)
+python3 e2_mhd2d.py                    # E2 : resultats/e2_mhd2d.json (≈ 67 min, hors données)
+python3 e1_gissinger.py                # E1 : resultats/e1_gissinger.json (reprend après interruption)
+python3 figures.py e1 e2 e3            # graphiques en français et en anglais dans figures/
+python3 digest.py > resultats/digest.md
+```
+
+Le script de E1 garde ses calculs intermédiaires dans `resultats/cache_e1/` et reprend là où il s'est arrêté. Les durées indiquées sont celles mesurées sur le processeur à 4 cœurs décrit en [section 4](#m-calcul). Les graines sont fixées dans les scripts :
+
+| Expérience | Graines |
+|---|---|
+| E1 | simulations : 1 (entraînement), 2 (référence), 3 (grille fine) ; modèles : 0, 1 et 2 ; réglages fins : 100 + graine ; génération : 1000 + graine, 5000 sur la grille fine |
+| E2 | données : 100 + $i$ (entraînement) et 200 + $i$ (référence) pour la $i$-ième valeur de $\eta$ ; modèles V0 à V4 : 0 ; réglages fins V5 et témoin : 1 ; génération : 0 ; inclinaison et recalage : rééchantillonnage de graine 1 |
+| E3 | champ initial : 0 |
+
+### Hyperparamètres {#a-hyperparametres}
+
+Tableau A.1 — Expérience E1 (modèle de Gissinger).
+
+| Élément | Valeur |
+|---|---|
+| Modèle physique | $\mu = 0{,}119$, $\nu = 0{,}1$ ; $\Gamma$ d'entraînement $0{,}80$ à $1{,}00$ par pas de $0{,}02$ (11 valeurs) ; $\Gamma$ de test $0{,}81$ à $0{,}99$ par pas de $0{,}02$ (10 valeurs) ; grille fine au pas de $0{,}005$ (41 valeurs) |
+| Simulation | Runge–Kutta 4, $\Delta t = 0{,}01$ ; transitoire 300 ; durée gardée 3000 ; un instantané toutes les 2 unités de temps |
+| Données | 16 trajectoires par $\Gamma$ (entraînement, grille fine) ; 32 trajectoires par $\Gamma$, symétrisées (référence) |
+| Normalisation | $Q$ et $D$ centrés en 0, $V$ centré sur sa moyenne ; division par l'écart-type de chaque coordonnée ; $c = (\Gamma - 0{,}78)/0{,}24$ |
+| Réseau | perceptron, 4 couches cachées de largeur 256, SiLU ; plongements de Fourier à 16 fréquences (échelle 30 pour $t$, 8 pour $c$) |
+| Entraînement | AdamW, taux en cycle unique de pic $2\cdot10^{-3}$ ; lots de 1024 ; 12 000 itérations (1200 pour C court) ; écrêtage du gradient à 1 ; 3 graines |
+| Échantillonnage | Heun, 50 pas ; 10 000 échantillons par $\Gamma$ et par graine ; 20 000 sur la grille fine (modèles C et F, graine 0) |
+| Perte de stationnarité (F) | $\beta = 20$ ; 800 itérations ; Adam, taux $5\cdot10^{-4}$ ; 8 valeurs de $\Gamma$ par pas, uniformes dans $[0{,}80 ; 1{,}00]$ ; 128 échantillons par valeur (2 moitiés de 64) ; Heun différentiable à 8 pas ; 9 monômes de degré au plus 2 |
+| Inclinaison (D) | 9 identités ; régularisation $\rho = 1$ ; réglée sur la première moitié, appliquée à la seconde ; rééchantillonnage systématique |
+| Projection (E) | 20 itérations de Newton sur $\mathrm{d}E/\mathrm{d}t = 0$ ; gradient par différences centrées de pas $10^{-5}$ |
+| Métriques | distance d'énergie sur 3000 points ; $SW_1$ sur 256 directions ; résidus de Liouville de degré au plus 2 (9 monômes) et 3 (10 monômes) ; fenêtre de Rice $h = 0{,}2$ ; pont $\lvert D\rvert < 0{,}25$ |
+
+Tableau A.2 — Expérience E2 (MHD 2D forcée).
+
+| Élément | Valeur |
+|---|---|
+| Solveur | pseudo-spectral $32^2$, désaliasage 2/3 ; Runge–Kutta 4 à facteur intégrant et Euler–Maruyama pour le forçage ; $\Delta t = 0{,}01$ |
+| Physique | $\nu = 8\cdot10^{-3}$ ; $\alpha = 0{,}02$ ; forçages blancs sur $2 \le \lvert\mathbf{k}\rvert \le 3$, injection nominale 0,05 chacun ; injections d'Itô mesurées $\varepsilon_u = 0{,}04479$, $\varepsilon_b = 0{,}04476$, $\varepsilon_{a^2} = 0{,}00726$ |
+| Paramètre | $\eta$ d'entraînement $0{,}004\cdot2^{k/2}$, $k = 0, \dots, 5$ ; $\eta$ de test $0{,}004\cdot2^{k/2 + 1/4}$, $k = 0, \dots, 4$ ; $c = (\ln\eta - \ln 3{,}5\cdot10^{-3})/(\ln 2{,}6\cdot10^{-2} - \ln 3{,}5\cdot10^{-3})$ |
+| Données | 16 réalisations par $\eta$ ; transitoire 30 ; un instantané par unité de temps ; 2400 instantanés d'entraînement et 1200 de référence par valeur |
+| Représentation | 220 modes de Fourier indépendants ($\lvert k_x\rvert, \lvert k_y\rvert \le 10$) ; dimension 880 (potentiels) ou 1760 (composantes) ; standardisation par coordonnée |
+| Réseau | perceptron, 4 couches cachées de largeur 1024, SiLU ; mêmes plongements que E1 |
+| Entraînement | AdamW, taux en cycle unique de pic $10^{-3}$ ; lots de 256 ; 6000 itérations ; une graine |
+| Pénalité (V1) | poids 10 sur la divergence relative de $\hat{\mathbf{x}}_1$ |
+| Échantillonnage | Heun, 50 pas ; 1000 échantillons par $\eta$ |
+| Perte de stationnarité (V5) | $\beta = 50$ (0 pour le témoin) ; 600 itérations à partir de V4 ; Adam, taux $2\cdot10^{-4}$ ; 4 valeurs de $\eta$ par pas, log-uniformes dans $[3{,}5\cdot10^{-3} ; 2{,}6\cdot10^{-2}]$ ; 64 échantillons par valeur (2 moitiés de 32) ; Heun différentiable à 8 pas ; identité du bilan d'énergie |
+| Volet en loi | inclinaison sur les 3 identités de l'Exemple 3.8, $\rho = 1$, réglée sur 500 échantillons et appliquée aux 500 autres ; recalage des échelles $\lvert\mathbf{k}\rvert > 3$ |
+| Métriques | distance d'énergie sur 21 descripteurs (jusqu'à 1000 points) ; spectres sur les couronnes 1 à 10 |
+
+Tableau A.3 — Expérience E3 (dynamo ABC).
+
+| Élément | Valeur |
+|---|---|
+| Écoulement | ABC, $A = B = C = 1$, domaine $[0, 2\pi)^3$ ; $Rm = 1/\eta$ |
+| Solveur | pseudo-spectral $32^3$ (vérification à $48^3$), désaliasage 2/3 ; Runge–Kutta 4 à facteur intégrant ; $\Delta t = 0{,}05$ ; 150 unités de temps |
+| Champ initial | aléatoire, filtré par $e^{-\lvert\mathbf{k}\rvert^2/8}$, projeté sur les champs solénoïdaux, de moyenne nulle |
+| Taux de croissance | renormalisation toutes les 20 itérations ; pente de $\ln\lVert\mathbf{B}\rVert$ sur la seconde moitié ($\lambda$) et sur le dernier quart ($\lambda_q$) |
+| Balayage | 24 valeurs de $Rm$ de 2 à 30 ; seuils par interpolation linéaire des changements de signe |
+
+### Glossaire {#a-glossaire}
+
+| Terme | Définition |
+|---|---|
+| Crise (de fusion d'attracteurs) | Changement brusque d'un attracteur chaotique quand un paramètre varie ; ici, deux attracteurs symétriques fusionnent et la dynamique se met à passer de l'un à l'autre. |
+| Distance d'énergie | Distance entre deux lois, $2\mathbb{E}\lVert X - Y\rVert - \mathbb{E}\lVert X - X'\rVert - \mathbb{E}\lVert Y - Y'\rVert$, nulle si et seulement si les lois sont égales. |
+| Équivariance | Propriété d'un champ $v$ tel que $v(g\mathbf{x}) = g\,v(\mathbf{x})$ pour toute symétrie $g$ ; elle rend la loi générée invariante par $g$. |
+| ESS (taille effective d'échantillon) | $1/\sum_i w_i^2$ pour des poids normalisés ; nombre d'échantillons indépendants auquel équivaut un échantillon pondéré. |
+| Flow matching | Méthode qui entraîne le champ de vitesse d'une équation différentielle transportant un bruit gaussien vers la loi des données, par régression sur des chemins tirés entre bruit et données. |
+| Formule de Rice | Formule qui donne le nombre moyen de passages d'un processus stationnaire par un niveau à partir de la loi jointe du processus et de sa dérivée. |
+| I-projection | Loi la plus proche d'une loi donnée, au sens de la divergence de Kullback–Leibler, sous des contraintes de moments ; c'est une inclinaison exponentielle. |
+| Identité de stationnarité | Égalité $\mathbb{E}_\mu[\mathcal{L}\varphi] = 0$, vraie pour toute mesure invariante $\mu$ et toute fonction test $\varphi$ ; le bilan d'énergie moyen en est un cas. |
+| LATU | Solveur pseudo-spectral de Fourier avec pénalisation des turbines et des parois, utilisé par le consortium pour VKS. |
+| Mesure invariante | Loi conservée par la dynamique ; la loi des instantanés d'un état statistiquement stationnaire en est une. |
+| Mesure SRB | Mesure invariante « physique » d'un système dissipatif chaotique, en général singulière par rapport au volume. |
+| Pénalisation | Méthode qui représente un obstacle solide dans un code numérique par un terme de force qui impose sa vitesse. |
+| Plancher de bruit | Valeur d'une métrique entre deux échantillons finis de la même loi ; une métrique n'a de sens qu'au-dessus de ce plancher. |
+| POD | Décomposition orthogonale aux valeurs propres : base qui capture le plus d'énergie possible pour un nombre de modes donné. |
+| Projection de Leray | Projection orthogonale d'un champ de vecteurs sur les champs à divergence nulle ; en Fourier, $I - \mathbf{k}\mathbf{k}^\top/\lvert\mathbf{k}\rvert^2$. |
+| $Rm$, $Pm$ | Nombre de Reynolds magnétique $UL/\eta$ et nombre de Prandtl magnétique $\nu/\eta$. |
+| SFEMaNS | Code du consortium qui combine une décomposition de Fourier en azimut et des éléments finis dans le plan méridien, pour les équations de Navier–Stokes et de Maxwell. |
+| Témoin | Variante qui reproduit exactement une expérience sauf l'élément testé, pour en isoler l'effet. |
+| VKS | Expérience von Kármán Sodium (CEA Cadarache) : dynamo turbulente entre deux turbines contrarotatives. |
+
+## Références {#references}
+
+Les références ci-dessous ont été vérifiées sur leur source primaire (API Crossref ou arXiv, pages d'éditeur ou d'actes) le 6 ou le 7 novembre 2026. Les préprints sont signalés comme tels.
+
+**Dynamos, renversements et physique de la MHD**
+
+- Alexakis, A. (2011). Searching for the fastest dynamo: Laminar ABC flows. *Physical Review E* 84, 026321. DOI 10.1103/PhysRevE.84.026321.
+- Amrouche, C., Seloula, N. (2011). $L^p$-theory for vector potentials and Sobolev's inequalities for vector fields. *Comptes Rendus Mathématique* 349(9–10), 529–534. DOI 10.1016/j.crma.2011.04.008.
+- Archontis, V., Dorch, S. B. F., Nordlund, Å. (2003). Numerical simulations of kinematic dynamo action. *Astronomy & Astrophysics* 397, 393–399. DOI 10.1051/0004-6361:20021568.
+- Berger, M. A., Field, G. B. (1984). The topological properties of magnetic helicity. *Journal of Fluid Mechanics* 147, 133–148. DOI 10.1017/S0022112084002019.
+- Berhanu, M., Monchaux, R., Fauve, S., Mordant, N., Pétrélis, F., Chiffaudel, A., Daviaud, F., Dubrulle, B., Marié, L., Ravelet, F., Bourgoin, M., Odier, P., Pinton, J.-F., Volk, R. (2007). Magnetic field reversals in an experimental turbulent dynamo. *EPL* 77, 59001. DOI 10.1209/0295-5075/77/59001.
+- Bousquet, R., Chaffard, O., Creff, M., Lucor, D., Nore, C. (2024). Large scale analysis of three-dimensional turbulent von Kármán swirling flows. *Physics of Fluids* 36(10), 105133. DOI 10.1063/5.0227495.
+- Bousquet, R., Ponty, Y., Botez, V., Plihon, N., Nore, C. (2026). Magnetic field reversals in numerical simulations of the von Kármán sodium experiment. *Physical Review Fluids* 11(6), 063703. DOI 10.1103/9tx2-1m13.
+- Bouya, I., Dormy, E. (2013). Revisiting the ABC flow dynamo. *Physics of Fluids* 25, 037103. DOI 10.1063/1.4795546.
+- Creff, M., Faller, H., Dubrulle, B., Guermond, J.-L., Nore, C. (2024). Tracking dynamo mechanisms from local energy transfers: Application to the von Kármán sodium dynamo. *Physics of Plasmas* 31(2), 022306. DOI 10.1063/5.0174251.
+- Gailitis, A., Lielausis, O., Dement'ev, S., Platacis, E., Cifersons, A., Gerbeth, G., Gundrum, T., Stefani, F., Christen, M., Hänel, H., Will, G. (2000). Detection of a flow induced magnetic field eigenmode in the Riga dynamo facility. *Physical Review Letters* 84, 4365–4368. DOI 10.1103/PhysRevLett.84.4365.
+- Gailitis, A., Gerbeth, G., Gundrum, T., Lielausis, O., Platacis, E., Stefani, F. (2008). History and results of the Riga dynamo experiments. *Comptes Rendus Physique* 9, 721–728. DOI 10.1016/j.crhy.2008.07.004.
+- Galloway, D., Frisch, U. (1984). A numerical investigation of magnetic field generation in a flow with chaotic streamlines. *Geophysical & Astrophysical Fluid Dynamics* 29, 13–18. DOI 10.1080/03091928408248180. (Cité d'après Archontis et al. 2003 ; texte intégral non consulté.)
+- Gissinger, C. (2012). A new deterministic model for chaotic reversals. *European Physical Journal B* 85(4), 137. DOI 10.1140/epjb/e2012-20799-5. arXiv:1109.6569.
+- Gissinger, C., Dormy, E., Fauve, S. (2010). Morphology of field reversals in turbulent dynamos. *EPL* 90, 49001. DOI 10.1209/0295-5075/90/49001.
+- Grebogi, C., Ott, E., Yorke, J. A. (1983). Crises, sudden changes in chaotic attractors, and transient chaos. *Physica D* 7(1–3), 181–200. DOI 10.1016/0167-2789(83)90126-4.
+- Grebogi, C., Ott, E., Romeiras, F., Yorke, J. A. (1987). Critical exponents for crisis-induced intermittency. *Physical Review A* 36(11), 5365–5380. DOI 10.1103/PhysRevA.36.5365.
+- Guermond, J.-L., Laguerre, R., Léorat, J., Nore, C. (2007). An interior penalty Galerkin method for the MHD equations in heterogeneous domains. *Journal of Computational Physics* 221(1), 349–369. DOI 10.1016/j.jcp.2006.06.045.
+- Guermond, J.-L., Laguerre, R., Léorat, J., Nore, C. (2009). Nonlinear magnetohydrodynamics in axisymmetric heterogeneous domains using a Fourier/finite element technique and an interior penalty method. *Journal of Computational Physics* 228(8), 2739–2757. DOI 10.1016/j.jcp.2008.12.026.
+- Kreuzahler, S., Ponty, Y., Plihon, N., Homann, H., Grauer, R. (2017). Dynamo enhancement and mode selection triggered by high magnetic permeability. *Physical Review Letters* 119, 234501. DOI 10.1103/PhysRevLett.119.234501.
+- Krstulovic, G., Brachet, M.-E., Pouquet, A. (2011). Alfvén waves and ideal two-dimensional Galerkin truncated magnetohydrodynamics. *Physical Review E* 84, 016410. DOI 10.1103/PhysRevE.84.016410.
+- Miralles, S., Bonnefoy, N., Bourgoin, M., Odier, P., Pinton, J.-F., Plihon, N., Verhille, G., Boisson, J., Daviaud, F., Dubrulle, B. (2013). Dynamo threshold detection in the von Kármán sodium experiment. *Physical Review E* 88, 013002. DOI 10.1103/PhysRevE.88.013002.
+- Monchaux, R., Berhanu, M., Bourgoin, M., Moulin, M., Odier, P., Pinton, J.-F., Volk, R., Fauve, S., Mordant, N., Pétrélis, F., Chiffaudel, A., Daviaud, F., Dubrulle, B., Gasquet, C., Marié, L., Ravelet, F. (2007). Generation of a magnetic field by dynamo action in a turbulent flow of liquid sodium. *Physical Review Letters* 98, 044502. DOI 10.1103/PhysRevLett.98.044502.
+- Müller, U., Stieglitz, R., Busse, F. H., Tilgner, A. (2008). The Karlsruhe two-scale dynamo experiment. *Comptes Rendus Physique* 9, 729–740. DOI 10.1016/j.crhy.2008.07.005.
+- Nore, C., Castanon Quiroz, D., Cappanera, L., Guermond, J.-L. (2016). Direct numerical simulation of the axial dipolar dynamo in the Von Kármán Sodium experiment. *EPL* 114, 65002. DOI 10.1209/0295-5075/114/65002.
+- Nore, C., Castanon Quiroz, D., Cappanera, L., Guermond, J.-L. (2018). Numerical simulation of the von Kármán sodium dynamo experiment. *Journal of Fluid Mechanics* 854, 164–195. DOI 10.1017/jfm.2018.582.
+- Pétrélis, F., Fauve, S. (2008). Chaotic dynamics of the magnetic field generated by dynamo action in a turbulent flow. *Journal of Physics: Condensed Matter* 20, 494203. DOI 10.1088/0953-8984/20/49/494203.
+- Pétrélis, F., Fauve, S., Dormy, E., Valet, J.-P. (2009). Simple mechanism for reversals of Earth's magnetic field. *Physical Review Letters* 102, 144503. DOI 10.1103/PhysRevLett.102.144503.
+- Ponty, Y., Politano, H., Pouquet, A. (2025). Intermittency assessed through a model of kurtosis–skewness relation in MHD in fast dynamo regimes. *Journal of Plasma Physics* 91(2), E69. DOI 10.1017/S0022377825000169.
+- Rädler, K.-H., Brandenburg, A. (2003). Contributions to the theory of a two-scale homogeneous dynamo experiment. *Physical Review E* 67(2), 026401. DOI 10.1103/PhysRevE.67.026401.
+- Stieglitz, R., Müller, U. (2001). Experimental demonstration of a homogeneous two-scale dynamo. *Physics of Fluids* 13(3), 561–564. DOI 10.1063/1.1331315.
+- Tobias, S. M. (2021). The turbulent dynamo. *Journal of Fluid Mechanics* 912, P1. DOI 10.1017/jfm.2020.1055.
+- Zel'dovich, Ya. B. (1957). The magnetic field in the two-dimensional motion of a conducting turbulent liquid. *Soviet Physics JETP* 4(3), 460. (Cité d'après Tobias 2021.)
+
+**Réduction de modèle et assimilation de données**
+
+- Bousquet, R., Nore, C., Lucor, D. (2025). AutoEncoders latent space interpretability in the light of proper orthogonal decomposition: Machine learning of periodically forced fluid flows. *Computer Physics Communications* 315, 109728. DOI 10.1016/j.cpc.2025.109728.
+- Cheng, S., Min, J., Liu, C., Arcucci, R. (2025). TorchDA: A Python package for performing data assimilation with deep learning forward and transformation functions. *Computer Physics Communications* 306, 109359. DOI 10.1016/j.cpc.2024.109359.
+- Eivazi, H., Le Clainche, S., Hoyas, S., Vinuesa, R. (2022). Towards extraction of orthogonal and parsimonious non-linear modes from turbulent flows. *Expert Systems with Applications* 202, 117038. DOI 10.1016/j.eswa.2022.117038.
+- Fukami, K., Taira, K. (2023). Grasping extreme aerodynamics on a low-dimensional manifold. *Nature Communications* 14, 6480. DOI 10.1038/s41467-023-42213-6.
+- Holmes, P., Lumley, J. L., Berkooz, G. (1996). *Turbulence, Coherent Structures, Dynamical Systems and Symmetry*. Cambridge University Press. DOI 10.1017/CBO9780511622700.
+- Solera-Rico, A., Sanmiguel Vila, C., Gómez-López, M., Wang, Y., Almashjary, A., Dawson, S. T. M., Vinuesa, R. (2024). β-Variational autoencoders and transformers for reduced-order modelling of fluid flows. *Nature Communications* 15, 1361. DOI 10.1038/s41467-024-45578-4.
+
+**Modèles génératifs et génération de champs physiques**
+
+- Albergo, M. S., Vanden-Eijnden, E. (2023). Building normalizing flows with stochastic interpolants. ICLR 2023. arXiv:2209.15571.
+- Albergo, M. S., Boffi, N. M., Vanden-Eijnden, E. (2025). Stochastic interpolants: A unifying framework for flows and diffusions. *Journal of Machine Learning Research* 26(209), 1–80. arXiv:2303.08797.
+- Bansal, A., Chu, H.-M., Schwarzschild, A., Sengupta, S., Goldblum, M., Geiping, J., Goldstein, T. (2024). Universal guidance for diffusion models. ICLR 2024. arXiv:2302.07121.
+- Bastek, J.-H., Sun, W., Kochmann, D. M. (2025). Physics-informed diffusion models. ICLR 2025. arXiv:2403.14404.
+- Ben-Hamu, H., Puny, O., Gat, I., Karrer, B., Singer, U., Lipman, Y. (2024). D-Flow: Differentiating through flows for controlled generation. ICML 2024, PMLR 235, 3462–3483. arXiv:2402.14017.
+- Biferale, L., Buzzicotti, M. (2026). Generative AI in turbulence: Foundations, applications, validations and benchmarks. Préprint, arXiv:2610.35123.
+- Chung, H., Kim, J., McCann, M. T., Klasky, M. L., Ye, J. C. (2023). Diffusion posterior sampling for general noisy inverse problems. ICLR 2023. arXiv:2209.14687.
+- Du, P., Parikh, M. H., Fan, X., Liu, X.-Y., Wang, J.-X. (2024). Conditional neural field latent diffusion model for generating spatiotemporal turbulence. *Nature Communications* 15, 10416. DOI 10.1038/s41467-024-54712-1.
+- Galletti, G., Gutenbrunner, G., Hornsby, W., Zanisi, L., Carey, N., Pamela, S., Brandstetter, J., Paischer, F. (2026). A shortcut to statistically steady-state turbulence with flow matching. Préprint, arXiv:2607.13022.
+- Ho, J., Jain, A., Abbeel, P. (2020). Denoising diffusion probabilistic models. NeurIPS 2020. arXiv:2006.11239.
+- Ho, J., Salimans, T. (2022). Classifier-free diffusion guidance. arXiv:2207.12598.
+- Huang, J., Yang, G., Wang, Z., Park, J. J. (2024). DiffusionPDE: Generative PDE-solving under partial observation. *Advances in Neural Information Processing Systems* 37, 130291–130323. DOI 10.52202/079017-4140.
+- Jacobsen, C., Zhuang, Y., Duraisamy, K. (2025). CoCoGen: Physically consistent and conditioned score-based generative models for forward and inverse problems. *SIAM Journal on Scientific Computing* 47(2), C399–C425. DOI 10.1137/24M1636071.
+- Karras, T., Aittala, M., Aila, T., Laine, S. (2022). Elucidating the design space of diffusion-based generative models. NeurIPS 2022. arXiv:2206.00364.
+- Kerrigan, G., Migliorini, G., Smyth, P. (2024). Functional flow matching. AISTATS 2024, PMLR 238, 3934–3942. arXiv:2305.17209.
+- Kohl, G., Chen, L.-W., Thuerey, N. (2026). Benchmarking autoregressive conditional diffusion models for turbulent flow simulation. *Neural Networks* 199, 108641. DOI 10.1016/j.neunet.2026.108641.
+- Lienen, M., Lüdke, D., Hansen-Palmus, J., Günnemann, S. (2024). From zero to turbulence: Generative modeling for 3D flow simulation. ICLR 2024. arXiv:2306.01776.
+- Lim, J. H., Kovachki, N. B., Baptista, R., Beckham, C., Azizzadenesheli, K., Kossaifi, J., Voleti, V., Song, J., Kreis, K., Kautz, J., Pal, C., Vahdat, A., Anandkumar, A. (2025). Score-based diffusion models in function space. *Journal of Machine Learning Research* 26(158), 1–62. arXiv:2302.07400.
+- Lipman, Y., Chen, R. T. Q., Ben-Hamu, H., Nickel, M., Le, M. (2023). Flow matching for generative modeling. ICLR 2023. arXiv:2210.02747.
+- Liu, X., Gong, C., Liu, Q. (2023). Flow straight and fast: Learning to generate and transfer data with rectified flow. ICLR 2023. arXiv:2209.03003.
+- Price, I., et al. (2025). Probabilistic weather forecasting with machine learning. *Nature* 637(8044), 84–90. DOI 10.1038/s41586-024-08252-9.
+- Shu, D., Li, Z., Barati Farimani, A. (2023). A physics-informed diffusion model for high-fidelity flow field reconstruction. *Journal of Computational Physics* 478, 111972. DOI 10.1016/j.jcp.2023.111972.
+- Song, Y., Sohl-Dickstein, J., Kingma, D. P., Kumar, A., Ermon, S., Poole, B. (2021). Score-based generative modeling through stochastic differential equations. ICLR 2021. arXiv:2011.13456.
+- Tong, A., Fatras, K., Malkin, N., Huguet, G., Zhang, Y., Rector-Brooks, J., Wolf, G., Bengio, Y. (2024). Improving and generalizing flow-based generative models with minibatch optimal transport. *Transactions on Machine Learning Research*. arXiv:2302.00482.
+- Wang, S., Dou, Z., Shan, S., Liu, T.-R., Lu, L. (2026). FunDiff: diffusion models over function spaces for physics-informed generative modeling. *Nature Communications* 17, 5749. DOI 10.1038/s41467-026-72292-0.
+- Zhuang, Y., Cheng, S., Duraisamy, K. (2025). Spatially-aware diffusion models with cross-attention for global field reconstruction with sparse observations. *Computer Methods in Applied Mechanics and Engineering* 435, 117623. DOI 10.1016/j.cma.2024.117623.
+
+**Contraintes dures et modèles génératifs pour la MHD**
+
+- Cheng, C., Han, B., Maddix, D. C., Ansari, A. F., Stuart, A., Mahoney, M. W., Wang, Y. (2025). Gradient-free generation for hard-constrained systems. ICLR 2025. arXiv:2412.01786.
+- Christopher, J. K., Baek, S., Fioretto, F. (2024). Constrained synthesis with projected diffusion models. NeurIPS 2024. DOI 10.52202/079017-2834.
+- da Silva, D. E., Kirk, M., Mathews, N., Muñoz-Jaramillo, A. (2025). Diffusion modeling of the three-dimensional magnetic field in the Sun's corona. Préprint, arXiv:2510.01441.
+- Genuist, W., Savin, É., Gatti, F., Clouteau, D. (2026). Divergence-free diffusion models for incompressible fluid flows. Préprint, arXiv:2601.19368.
+- Kacmaz, S., Huerta, E. A., Haas, R. (2025). Resolving turbulent magnetohydrodynamics: A hybrid operator-diffusion framework. *Machine Learning: Science and Technology* 6(3), 035057. DOI 10.1088/2632-2153/ae054c.
+- Li, T., Buzzicotti, M., Bonaccorso, F., Biferale, L. (2026). Physics-constrained diffusion model for synthesis of 3D turbulent data. Préprint, arXiv:2603.12834.
+- Li, X., Zhang, H., Jiang, R., Chen, D., Lin, C., Han, L., Qi, Y., Guo, X., Cheng, Y. (2026). Project and generate: Divergence-free neural operators for incompressible flows. Préprint, arXiv:2603.24500.
+- Martin, J., Lübke, J., Li, T., Buzzicotti, M., Grauer, R., Biferale, L. (2025). Generation of cosmic-ray trajectories by a diffusion model trained on test particles in 3D magnetohydrodynamic turbulence. *Astrophysical Journal Supplement Series* 277(2), 48. DOI 10.3847/1538-4365/adb432.
+- Ohana, R., McCabe, M., Meyer, L., Morel, R., et al. (27 auteurs) (2024). The Well: a large-scale collection of diverse physics simulations for machine learning. NeurIPS 2024, Datasets and Benchmarks Track. DOI 10.52202/079017-1430.
+- Richter-Powell, J., Lipman, Y., Chen, R. T. Q. (2022). Neural conservation laws: A divergence-free perspective. *Advances in Neural Information Processing Systems* 35, 38075–38088. DOI 10.52202/068431-2759.
+- Utkarsh, U., Cai, P., Edelman, A., Gómez-Bombarelli, R., Rackauckas, C. V. (2025). Physics-constrained flow matching: Sampling generative models with hard constraints. NeurIPS 2025. DOI 10.52202/085713-5354.
+
+**Mesures invariantes, contraintes en loi et inclinaison exponentielle**
+
+- Barbour, A. D. (1988). Stein's method and Poisson process convergence. *Journal of Applied Probability* 25(A), 175–184. DOI 10.2307/3214155.
+- Barbour, A. D. (1990). Stein's method for diffusion approximations. *Probability Theory and Related Fields* 84(3), 297–322. DOI 10.1007/BF01197887.
+- Botvinick-Greenhouse, J., Martin, R., Yang, Y. (2023). Learning dynamics on invariant measures using PDE-constrained optimization. *Chaos* 33(6), 063152. DOI 10.1063/5.0149673.
+- Cai, Z., Cao, Y., Huang, Y., Zhou, X. (2026). Weak generative sampler to efficiently sample invariant distribution of stochastic differential equation. *SIAM Journal on Scientific Computing* 48(4), C708–C735. DOI 10.1137/24M1665271.
+- Chen, Y., Das, S., Guo, W., Zhong, X. (2026). Physics-informed machine learning for reconstruction of dynamical systems with invariant measure score matching. *Physica D* 496, 135326. DOI 10.1016/j.physd.2026.135326.
+- Csiszár, I. (1975). I-divergence geometry of probability distributions and minimization problems. *Annals of Probability* 3(1), 146–158. DOI 10.1214/aop/1176996454.
+- Echeverría, P. (1982). A criterion for invariant measures of Markov processes. *Zeitschrift für Wahrscheinlichkeitstheorie und verwandte Gebiete* 61(1), 1–16. DOI 10.1007/BF00537221.
+- Ethier, S. N., Kurtz, T. G. (1986). *Markov Processes: Characterization and Convergence*. Wiley. DOI 10.1002/9780470316658.
+- Gorham, J., Mackey, L. (2015). Measuring sample quality with Stein's method. *Advances in Neural Information Processing Systems* 28. arXiv:1506.03039.
+- Gorham, J., Duncan, A. B., Vollmer, S. J., Mackey, L. (2019). Measuring sample quality with diffusions. *Annals of Applied Probability* 29(5), 2884–2928. DOI 10.1214/19-AAP1467.
+- Guan, Y., Subel, A., Chattopadhyay, A., Hassanzadeh, P. (2023). Learning physics-constrained subgrid-scale closures in the small-data regime for stable and accurate LES. *Physica D* 443, 133568. DOI 10.1016/j.physd.2022.133568.
+- Jaynes, E. T. (1957). Information theory and statistical mechanics. *Physical Review* 106(4), 620–630. DOI 10.1103/PhysRev.106.620.
+- Jiang, R., Lu, P. Y., Orlova, E., Willett, R. (2023). Training neural operators to preserve invariant measures of chaotic attractors. NeurIPS 2023. arXiv:2306.01187.
+- Khalafi, S., Ding, D., Ribeiro, A. (2024). Constrained diffusion models via dual training. *Advances in Neural Information Processing Systems* 37, 26543–26576. DOI 10.52202/079017-0836.
+- Khalifa, M., Elsahar, H., Dymetman, M. (2021). A distributional approach to controlled text generation. ICLR 2021. arXiv:2012.11635.
+- Liu, Q., Lee, J., Jordan, M. (2016). A kernelized Stein discrepancy for goodness-of-fit tests. ICML 2016, PMLR 48, 276–284.
+- Mun, J. (2026). Multifidelity computer model emulation via diffusion model steering and targeted maximum likelihood. Préprint, arXiv:2608.30096.
+- Pitera, J. W., Chodera, J. D. (2012). On the use of experimental observations to bias simulated ensembles. *Journal of Chemical Theory and Computation* 8(10), 3445–3451. DOI 10.1021/ct300112v.
+- Schiff, Y., Wan, Z. Y., Parker, J. B., Hoyer, S., Kuleshov, V., Sha, F., Zepeda-Núñez, L. (2024). DySLIM: Dynamics stable learning by invariant measure for chaotic systems. ICML 2024, PMLR 235, 43649–43684. arXiv:2402.04467.
+- Tauberschmidt, J., Fellenz, S., Vollmer, S. J., Duncan, A. B. (2026). Physics-constrained fine-tuning of flow-matching models for generation and inverse problems. ICLR 2026. arXiv:2508.09156.
+- Wu, J.-L., Kashinath, K., Albert, A., Chirila, D., Prabhat, Xiao, H. (2020). Enforcing statistical constraints in generative adversarial networks for modeling chaotic dynamical systems. *Journal of Computational Physics* 406, 109209. DOI 10.1016/j.jcp.2019.109209.
+- Yang, Y., Nurbekyan, L., Negrini, E., Martin, R., Pasha, M. (2023). Optimal transport for parameter identification of chaotic dynamics via invariant measures. *SIAM Journal on Applied Dynamical Systems* 22(1), 269–310. DOI 10.1137/21M1421337.
+- Young, L.-S. (2002). What are SRB measures, and which dynamical systems have them? *Journal of Statistical Physics* 108(5–6), 733–754. DOI 10.1023/A:1019762724717.
+- Zang, Y., Bao, G., Ye, X., Zhou, H. (2020). Weak adversarial networks for high-dimensional partial differential equations. *Journal of Computational Physics* 411, 109409. DOI 10.1016/j.jcp.2020.109409.
+
+**Processus stochastiques et métriques**
+
+- Bonneel, N., Rabin, J., Peyré, G., Pfister, H. (2015). Sliced and Radon Wasserstein barycenters of measures. *Journal of Mathematical Imaging and Vision* 51(1), 22–45. DOI 10.1007/s10851-014-0506-3.
+- Kac, M. (1943). On the average number of real roots of a random algebraic equation. *Bulletin of the American Mathematical Society* 49(4), 314–320. DOI 10.1090/S0002-9904-1943-07912-8.
+- Rabin, J., Peyré, G., Delon, J., Bernot, M. (2012). Wasserstein barycenter and its application to texture mixing. *Scale Space and Variational Methods in Computer Vision* (SSVM 2011), LNCS, 435–446. DOI 10.1007/978-3-642-24785-9_37.
+- Rice, S. O. (1944). Mathematical analysis of random noise. *Bell System Technical Journal* 23(3), 282–332. DOI 10.1002/j.1538-7305.1944.tb00874.x.
+- Rice, S. O. (1945). Mathematical analysis of random noise (suite). *Bell System Technical Journal* 24(1), 46–156. DOI 10.1002/j.1538-7305.1945.tb00453.x.
+- Sejdinovic, D., Sriperumbudur, B., Gretton, A., Fukumizu, K. (2013). Equivalence of distance-based and RKHS-based statistics in hypothesis testing. *Annals of Statistics* 41(5), 2263–2291. DOI 10.1214/13-AOS1140.
+- Székely, G. J., Rizzo, M. L. (2013). Energy statistics: A class of statistics based on distances. *Journal of Statistical Planning and Inference* 143(8), 1249–1272. DOI 10.1016/j.jspi.2013.03.018.
+
+**Offre et projet**
+
+- ANR (2025). Projet MilaDy — Modélisation par apprentissage automatique des dynamos turbulentes, ANR-25-CE51-0077. <https://anr.fr/Projet-ANR-25-CE51-0077>.
+- Offre de stage de Master 2 (2027). *Physics-Constrained Generative AI Modelling of Parametric Dynamical Systems (with potential PhD position)*, CEREA (ENPC) et LISN, encadrement S. Cheng et D. Lucor. <https://scheng2024.github.io/stage_milady_2027.pdf>.
+
