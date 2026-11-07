@@ -70,13 +70,13 @@ python3 e1_gissinger.py           # E1, environ 2 à 3 h (reprenable)
 python3 figures.py && python3 digest.py > resultats/digest.md
 ```
 
-Chaque script accepte `--quick` pour une version réduite de quelques minutes, utile pour vérifier l'installation. Les graines sont fixées dans le code (0 et 1 pour les deux répétitions d'E1). Les durées indiquées ont été mesurées sur la machine décrite plus haut, en partie pendant que d'autres calculs tournaient.
+Chaque script accepte `--quick` pour une version réduite (de quelques minutes à une vingtaine de minutes pour E1), utile pour vérifier l'installation. Les graines sont fixées dans le code (0 et 1 pour les deux répétitions d'E1). Les durées indiquées ont été mesurées sur la machine décrite plus haut, en partie pendant que d'autres calculs tournaient.
 
 ## E1 — renversements du dipôle {#e1}
 
 Le modèle à trois modes de Gissinger sert de « dynamo de poche » : il a la symétrie $\mathbf{B}\to-\mathbf{B}$, un seuil d'apparition des renversements (entre $\Gamma = 0{,}86$ et $0{,}865$) et une dynamique connue exactement. On y apprend la loi stationnaire $p(Q, D, V \mid \Gamma)$ par flow matching conditionnel, puis on mesure ce que changent la symétrie imposée par construction, la perte de stationnarité et la projection par échantillon. La fréquence des renversements est estimée à partir de la seule loi générée, par la formule de Rice.
 
-En bref : le champ de vitesse équivariant garde la loi symétrique à toute valeur de $\Gamma$, alors que l'augmentation des données ne la symétrise qu'aux valeurs d'entraînement ; la projection de chaque échantillon sur $\mathrm{d}E/\mathrm{d}t = 0$ multiplie par 9 la distance à la vraie loi ; la formule de Rice retrouve la fréquence des passages à 14 % près loin du seuil et à 42 % près au seuil ; la perte de stationnarité améliore les résidus d'un bon modèle, mais échoue sur un modèle biaisé.
+En bref : le champ de vitesse équivariant garde la loi symétrique à toute valeur de $\Gamma$, alors que l'augmentation des données ne la symétrise qu'aux valeurs d'entraînement ; la projection de chaque échantillon sur $\mathrm{d}E/\mathrm{d}t = 0$ multiplie par 9 la distance d'énergie à la vraie loi ; la formule de Rice retrouve la fréquence des passages avec une erreur cumulée de 14 % loin du seuil (jusqu'à 65 % en un point) et de 42 % près du seuil ; la perte de stationnarité améliore les résidus d'un bon modèle, mais échoue sur un modèle biaisé.
 
 Résultats et discussion : [rapport, section E1](../rapport/index.html#e1). Schéma interactif : [modèle de Gissinger](../interactifs/index.html#gissinger).
 

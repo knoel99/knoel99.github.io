@@ -376,7 +376,7 @@ des temps « horloge » de la commande entière ; elles donnent un ordre de gran
 | `make sweep … SCHEDULER=docker SWEEP_ARGS="--force --indices 0,1"` | 9 s | un conteneur par simulation, tâches `docker` au catalogue |
 | `make train …` (mêmes surcharges) | 10 s | run MLflow (86 paramètres, courbes de perte), points de contrôle dans `s3://milady-models` |
 | `make eval … EVAL_ARGS="--out s3://milady-models/…/eval.json"` | 5 s | évaluations au catalogue, rapport JSON dans S3 |
-| `make test` (dans le conteneur, PostgreSQL et MinIO de la pile) | 32 s | 66 réussis, 1 sauté (données E2) |
+| `make test` (dans le conteneur, PostgreSQL et MinIO de la pile) | 32 s | 66 réussis, 1 sauté (données E2) ; depuis, un 68e test (ancrage du réglage fin) a été ajouté : hors conteneur, sans PostgreSQL, 64 réussis et 4 sautés |
 | `make backup BACKUP_TARGET=/tmp/…` | 1 s | `milady-*.dump`, `mlflow-*.dump`, miroir des 3 buckets |
 | `docker compose … down -v` | 3 s | conteneurs, réseau et volumes supprimés |
 
