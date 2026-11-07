@@ -59,3 +59,11 @@ Aucune erreur de physique trouvée. Points de vigilance : association mode ↔ p
 | c | 4 | 4 | 5 | 5 | 4 | 5 | 4 |
 | d | 4 | 5 | 5 | 5 | 5 | 4 | 5 |
 | e | 4 | 4 | 5 | 5 | 4 | 5 | 4 |
+
+## Contrôle indépendant (relecture à froid puis vérification physique)
+1. **c, ∇·B visuel** : la boucle dipolaire extérieure (L = 3,2 R) était coupée par le cadre de la station c ; ses deux bouts ouverts au bord du panneau d se lisaient comme une ligne de champ qui s'arrête, contraire au message ∇·B = 0. Lignes reprises en r₀ = 0,50 ; 0,57 ; 0,64 R (L ≤ 2,05 R) : les trois boucles se referment en entier dans la station, et ne traversent plus la turbine du haut.
+2. **c, rappel de B** : posé sur la boucle extérieure (il ne croise plus aucune boucle).
+3. **c, reflet du verre** : la bande blanche passait au centre des cellules poloïdales (r ≈ 0,7 R) et coupait chaque ligne de courant ; déplacée près de la paroi gauche et dessinée sous les lignes de courant.
+4. **Arc de retour** : le trait vertical en tirets frôlait la lettre « d » (0,6 mm) ; écarté d'un millimètre.
+5. **Légende, a** : « en grande dimension elles ne sont que presque droites » était inexact : en 1D, le flot à couplage indépendant a les mêmes extrémités que la carte optimale mais des trajectoires courbées ; la rectitude tient au couplage, pas à la dimension. Phrase corrigée.
+Vérifié conforme : sens des cellules VKS (montée le long de l'axe vers chaque turbine, éjection radiale, retour à la paroi, convergence au plan médian), contrarotation, B montant dans le noyau et redescendant dehors, orientation des isolignes ψ → u et a → B (u = (∂_yψ, −∂_xψ)), sens de l'inclinaison (moyenne brute 1,14 → 1,00), loi de dE/dt centrée en 0, taxonomie C1/C3/C4 de la note, orthographe.

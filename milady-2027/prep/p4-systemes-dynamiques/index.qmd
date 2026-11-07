@@ -215,7 +215,7 @@ Le code suivant vérifie numériquement la propriété de groupe, la formule (1.
 import numpy as np
 from scipy.integrate import solve_ivp
 
-s, r, b = 10.0, 28.0, 8.0 / 3.0       # nombre de Prandtl s, Rayleigh réduit r, rapport d'aspect b
+s, r, b = 10.0, 28.0, 8.0 / 3.0       # nombre de Prandtl s, Rayleigh réduit r, facteur géométrique b
 
 def lorenz(t, x):
     return [s * (x[1] - x[0]), x[0] * (r - x[2]) - x[1], x[0] * x[1] - b * x[2]]
@@ -362,7 +362,7 @@ $$
 \dot V = \mathbf{y}^{\mathsf T}(A^{\mathsf T}P + PA)\,\mathbf{y} + 2\,\mathbf{y}^{\mathsf T}P\,R(\mathbf{y}) \le -|\mathbf{y}|^2 + 2\|P\|\,C\,|\mathbf{y}|^3 .
 $$
 
-Pour $|\mathbf{y}| \le 1/(4\|P\|C)$, on a donc $\dot V \le -|\mathbf{y}|^2/2 \le -V/(2\lambda_{\max}(P))$, et $V$ décroît exponentiellement ; comme $V \ge \lambda_{\min}(P)|\mathbf{y}|^2$, $\mathbf{y}$ aussi. La seconde affirmation (instabilité) se démontre avec une construction voisine ; on l'admet. [∎]{.qed}
+Pour $|\mathbf{y}| \le \rho_0 = 1/(4\|P\|C)$, on a donc $\dot V \le -|\mathbf{y}|^2/2 \le -V/(2\lambda_{\max}(P))$. Choisissons $c = \lambda_{\min}(P)\,\rho_0^2$ : l'ensemble $\{V \le c\}$ est contenu dans la boule de rayon $\rho_0$, et comme $V$ y décroît, une solution qui part de cet ensemble ne peut pas en sortir. Le long d'une telle solution, $V$ décroît exponentiellement ; comme $V \ge \lambda_{\min}(P)|\mathbf{y}|^2$, $\mathbf{y}$ aussi. La seconde affirmation (instabilité) se démontre avec une construction voisine ; on l'admet. [∎]{.qed}
 :::
 ::::
 
@@ -373,7 +373,7 @@ Un point fixe est **hyperbolique** si aucune valeur propre de $DF(\mathbf{x}^*)$
 
 ::: ex
 [Exemple 2.6 — Les points fixes de Lorenz]{.tag}
-L'origine est toujours un point fixe. En $O$, la jacobienne a pour valeurs propres $-b$ et les racines de $\lambda^2 + (s + 1)\lambda + s(1 - r) = 0$. Pour $r < 1$, toutes sont négatives : $O$ est stable. Pour $r > 1$, le produit des racines $s(1 - r)$ est négatif, donc l'une est positive : $O$ devient une selle. Au même moment apparaissent deux points fixes symétriques $C_\pm = \big(\pm\sqrt{b(r-1)}, \pm\sqrt{b(r-1)}, r - 1\big)$, stables tant que $r < r_H = s(s + b + 3)/(s - b - 1) \approx 24{,}74$ (formule admise ; on la vérifie numériquement ci-dessous). À $r = 28$, les trois points fixes sont instables, et pourtant les trajectoires restent bornées : elles ne peuvent être que périodiques ou chaotiques.
+L'origine est toujours un point fixe. En $O$, la jacobienne a pour valeurs propres $-b$ et les racines de $\lambda^2 + (s + 1)\lambda + s(1 - r) = 0$. Pour $r < 1$, toutes sont négatives : $O$ est stable. Pour $r > 1$, le produit des racines $s(1 - r)$ est négatif, donc l'une est positive : $O$ devient une selle. Au même moment apparaissent deux points fixes symétriques $C_\pm = \big(\pm\sqrt{b(r-1)}, \pm\sqrt{b(r-1)}, r - 1\big)$, stables tant que $r < r_H = s(s + b + 3)/(s - b - 1) \approx 24{,}74$ (formule admise ; on la vérifie numériquement ci-dessous). À $r = 28$, les trois points fixes sont instables, et pourtant les trajectoires restent bornées (proposition 4.1) : hormis celles, exceptionnelles, qui tombent exactement sur la variété stable d'un point fixe, elles ne convergent vers aucun équilibre et oscillent indéfiniment, de façon périodique ou chaotique.
 :::
 
 ::: ex
@@ -448,7 +448,7 @@ print("divergence mu - nu - 1 =", round(mu - nu - 1, 3))
 # divergence mu - nu - 1 = -0.981
 ```
 
-Le seuil $r_H$ trouvé par balayage coïncide avec la formule. Pour le modèle de Gissinger, la formule des valeurs propres en $O$ est confirmée, et $N_+$ a une paire de valeurs propres complexes de partie réelle $+0{,}094$ : c'est un **col-foyer** instable, qui attire dans une direction ($-1{,}17$) et repousse en spirale dans les deux autres. Tous les points fixes étant instables et les trajectoires bornées, la dynamique est nécessairement oscillante ; on verra qu'elle est chaotique.
+Le seuil $r_H$ trouvé par balayage coïncide avec la formule. Pour le modèle de Gissinger, la formule des valeurs propres en $O$ est confirmée, et $N_+$ a une paire de valeurs propres complexes de partie réelle $+0{,}094$ : c'est un **col-foyer** instable, qui attire dans une direction ($-1{,}17$) et repousse en spirale dans les deux autres. Les trajectoires restent bornées (Gissinger, 2012, l'attribue aux signes relatifs des termes quadratiques ; on l'observe numériquement). Tous les points fixes étant instables, une trajectoire typique ne converge vers aucun équilibre et oscille indéfiniment ; on verra qu'elle est chaotique.
 
 ### 2.4 Fonctions de Lyapunov
 
@@ -565,7 +565,7 @@ Le taux de relaxation $|r|$ ou $2r$ tend vers zéro au seuil : c'est le **ralent
 
 :::: prop
 [Proposition 3.7 — Fourche sous-critique et hystérésis]{.tag}
-Pour $\dot x = rx + x^3 - x^5$, les points fixes non nuls vérifient $x^2 = \big(1 \pm \sqrt{1 + 4r}\big)/2$. La branche « $+$ » existe pour $r \ge -1/4$ et est stable ; la branche « $-$ » existe pour $-1/4 \le r < 0$ et est instable ; $x = 0$ est stable pour $r < 0$. Sur l'intervalle $[-1/4, 0]$, l'état nul et l'état $|x| \approx 1$ sont **tous deux stables** (bistabilité).
+Pour $\dot x = rx + x^3 - x^5$, les points fixes non nuls vérifient $x^2 = \big(1 \pm \sqrt{1 + 4r}\big)/2$. La branche « $+$ » existe pour $r \ge -1/4$ et est stable (pour $r > -1/4$) ; la branche « $-$ » existe pour $-1/4 \le r < 0$ et est instable ; $x = 0$ est stable pour $r < 0$. Sur l'intervalle $\left]-1/4, 0\right[$, l'état nul et l'état d'amplitude finie ($x^2 > 1/2$, soit $|x|$ entre $0{,}71$ et $1$) sont **tous deux stables** (bistabilité).
 
 ::: proof
 En un point fixe non nul, $r + x^2 - x^4 = 0$, équation du second degré en $x^2$ qui donne les deux branches. Sur ces branches, $r = x^4 - x^2$, donc $f'(x) = r + 3x^2 - 5x^4 = 2x^2 - 4x^4 = 2x^2(1 - 2x^2)$, négatif si et seulement si $x^2 > 1/2$, c'est-à-dire sur la branche « $+$ ». [∎]{.qed}
@@ -827,7 +827,7 @@ Le calcul numérique suit Benettin et al. (1980). La méthode la plus simple fai
 ```python
 import numpy as np
 
-s, r, b = 10.0, 28.0, 8.0 / 3.0       # nombre de Prandtl s, Rayleigh réduit r, rapport d'aspect b
+s, r, b = 10.0, 28.0, 8.0 / 3.0       # nombre de Prandtl s, Rayleigh réduit r, facteur géométrique b
 
 def F(x):
     return np.array([s * (x[1] - x[0]), x[0] * (r - x[2]) - x[1], x[0] * x[1] - b * x[2]])
@@ -1135,7 +1135,7 @@ def residu(g):
     """|moyenne| / écart-type de la quantité g = F.grad(phi) évaluée sur l'échantillon."""
     return abs(g.mean()) / g.std()
 
-# --- Lorenz (sigma, r, beta) = (10, 28, 8/3) ---
+# --- Lorenz (s, r, b) = (10, 28, 8/3) ---
 s, r, b = 10.0, 28.0, 8.0 / 3.0
 lorenz = lambda X: np.array([s * (X[1] - X[0]), X[0] * (r - X[2]) - X[1], X[0] * X[1] - b * X[2]])
 E = echantillonner(lorenz, rng.normal(size=(3, 50)) * 5 + np.array([[0], [0], [25]]), 0.005, 20, 200, 0.05)

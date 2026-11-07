@@ -13,10 +13,10 @@ Sources : [D] description technique de l'appelant ; [N] note théorique `specs/t
 - Inconnu / laissé vague : couche de sodium au repos, anneau médian, moteurs (non dessinés).
 
 ## Modèles calculés [C] (illustratifs)
-- Flot latent : base N(0, 1) → mélange symétrique ½N(−1,55 ; 0,30²) + ½N(1,55 ; 0,30²) ; couplage optimal 1D (carte monotone) → trajectoires droites. Avec couplage indépendant, l'écart maximal à la corde vaut 0,47 (trajectoires en S près de 0) : la figure montre le cas « presque droit » visé par [D].
-- Potentiels 2D : sommes de Fourier aléatoires périodiques (|k| ≤ 3 pour ψ, ≤ 4 pour a), u = ∇^⊥ψ = (∂_yψ, −∂_xψ) [Not] ; |∇·u| discret = 2·10⁻¹⁵.
+- Flot latent : base N(0, 1) → mélange symétrique ½N(−1,55 ; 0,30²) + ½N(1,55 ; 0,30²) ; couplage optimal 1D (carte monotone) → trajectoires droites. Avec couplage indépendant, l'écart maximal à la corde vaut 0,47 (trajectoires en S près de 0), pour les mêmes extrémités (écart 2·10⁻⁵ : en 1D, tout flot d'EDO est monotone, donc égal à la carte optimale) : la figure montre le cas droit, la légende dit que la rectitude tient au couplage.
+- Potentiels 2D : sommes de Fourier aléatoires périodiques (|k| ≤ 3, amplitudes ∝ k^−2,6 pour ψ et k^−2,1 pour a), u = ∇^⊥ψ = (∂_yψ, −∂_xψ) [Not] ; |∇·u| discret = 2·10⁻¹⁵.
 - VKS : fonction de courant de Stokes ψ = r²(1 − r²) sin(πz/h), u_r = −r⁻¹∂_zψ, u_z = r⁻¹∂_rψ ; u_z > 0 sur l'axe pour z > 0 (vers la turbine), u_r < 0 dans le plan médian (convergence).
-- Dipôle : noyau uniformément aimanté (rayon 0,8 R) ; dehors, lignes r = L sin²θ.
+- Dipôle : noyau uniformément aimanté (rayon 0,8 R) ; dehors, lignes r = L sin²θ. Trois lignes coupant le plan médian en r₀ = 0,50 ; 0,57 ; 0,64 R (L = 2,05 ; 1,58 ; 1,25 R) : chaque boucle se referme dans la station c, aucune n'est coupée au bord (une ligne coupée aurait l'air de finir, contraire à ∇·B = 0).
 - Loi de ε : ε ~ Gamma(7, ·), moyenne brute 1,14 E[P] ; inclinaison exponentielle exacte e^{−βε} → moyenne 1,00 E[P] ; ESS/N = 0,89. P − ε ~ N(0 ; 0,28²) (identité dE/dt = P − ε, variance non nulle, Corollaire 6 [N]).
 - Usages : trois modes de Fourier ; ensemble de 7 trajectoires resserré à 3 observations ; densité de D = même mélange bimodal que le latent.
 
