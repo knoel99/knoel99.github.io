@@ -51,7 +51,7 @@ WORKDIR /opt/milady
 # l'image de base : on ne la réinstalle pas, on vérifie seulement la version de torch.
 COPY infra/env/requirements-gpu.txt /tmp/requirements-gpu.txt
 RUN --mount=type=secret,id=cacert,required=false \
-    if [ -f /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
+    if [ -s /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
  && grep -vE '^(torch|triton|cuda-[a-z-]+|nvidia-[a-z0-9-]+-cu1[0-9])==' /tmp/requirements-gpu.txt \
       | grep -vE '^--extra-index-url' > /tmp/requirements-nocuda.txt \
  && pip install -r /tmp/requirements-nocuda.txt \
@@ -60,7 +60,7 @@ RUN --mount=type=secret,id=cacert,required=false \
 
 COPY --chown=milady:milady . /opt/milady
 RUN --mount=type=secret,id=cacert,required=false \
-    if [ -f /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
+    if [ -s /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
  && pip install --no-deps -e . \
  && mkdir -p /opt/milady/data \
  && chown -R milady:milady /opt/milady \

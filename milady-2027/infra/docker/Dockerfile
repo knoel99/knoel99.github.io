@@ -45,7 +45,7 @@ WORKDIR /opt/milady
 # 1) Dépendances épinglées d'abord (couche mise en cache tant que le verrou ne change pas).
 COPY infra/env/requirements.txt /tmp/requirements.txt
 RUN --mount=type=secret,id=cacert,required=false \
-    if [ -f /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
+    if [ -s /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
  && pip install -r /tmp/requirements.txt \
  && if [ "${WITH_JUPYTER}" = "1" ]; then pip install "jupyterlab==4.6.4"; fi
 
@@ -53,7 +53,7 @@ RUN --mount=type=secret,id=cacert,required=false \
 #    (docker-compose) remplace le code sans reconstruire l'image.
 COPY --chown=milady:milady . /opt/milady
 RUN --mount=type=secret,id=cacert,required=false \
-    if [ -f /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
+    if [ -s /run/secrets/cacert ]; then export PIP_CERT=/run/secrets/cacert; fi \
  && pip install --no-deps -e . \
  && mkdir -p /opt/milady/data \
  && chown -R milady:milady /opt/milady \

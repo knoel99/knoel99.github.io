@@ -42,10 +42,16 @@ env_get = $(shell [ -f $(ENV_FILE) ] && sed -n 's/^$(1)=//p' $(ENV_FILE) | tail 
 
 RUN    ?= $(if $(wildcard $(ENV_FILE)),docker,local)
 WORKER ?= $(or $(call env_get,MILADY_WORKER),worker)
-UID_   := $(shell id -u)
-GID_   := $(shell id -g)
+# UID/GID de l'utilisateur du conteneur : ceux de .env (propriétaire du dépôt), sinon l'utilisateur courant.
+UID_   := $(or $(call env_get,MILADY_UID),$(shell id -u))
+GID_   := $(or $(call env_get,MILADY_GID),$(shell id -g))
 GIT_COMMIT ?= $(shell git -C $(ROOT) rev-parse --short=12 HEAD 2>/dev/null || true)
 export GIT_COMMIT
+# Certificat facultatif d'un proxy TLS pour pip pendant `docker build` (réseau d'entreprise/HPC).
+MILADY_BUILD_CACERT ?=
+export MILADY_BUILD_CACERT
+comma := ,
+BUILD_SECRET := $(if $(MILADY_BUILD_CACERT),--secret id=cacert$(comma)src=$(MILADY_BUILD_CACERT),)
 
 ifeq ($(RUN),docker)
   PY := $(COMPOSE) run --rm $(WORKER) python
@@ -136,11 +142,11 @@ test: ## Tests pytest (courts)
 # ---------------------------------------------------------------------------------------------
 image: ## Construit l'image CPU milady:cpu
 	docker build -f $(ROOT)/infra/docker/Dockerfile -t $(IMAGE):cpu \
-	  --build-arg MILADY_UID=$(UID_) --build-arg MILADY_GID=$(GID_) --build-arg GIT_COMMIT=$(GIT_COMMIT) $(ROOT)
+	  --build-arg MILADY_UID=$(UID_) --build-arg MILADY_GID=$(GID_) --build-arg GIT_COMMIT=$(GIT_COMMIT) $(BUILD_SECRET) $(ROOT)
 
 image-gpu: ## Construit l'image GPU milady:gpu (CUDA 12.6)
 	docker build -f $(ROOT)/infra/docker/Dockerfile.gpu -t $(IMAGE):gpu \
-	  --build-arg MILADY_UID=$(UID_) --build-arg MILADY_GID=$(GID_) --build-arg GIT_COMMIT=$(GIT_COMMIT) $(ROOT)
+	  --build-arg MILADY_UID=$(UID_) --build-arg MILADY_GID=$(GID_) --build-arg GIT_COMMIT=$(GIT_COMMIT) $(BUILD_SECRET) $(ROOT)
 
 sif: ## Image Apptainer milady.sif (depuis milady:gpu si présente, sinon apptainer.def)
 	@command -v apptainer >/dev/null || { echo "apptainer introuvable (voir infra/slurm/README-slurm.md)"; exit 1; }

@@ -43,6 +43,11 @@ x-milady-env: &milady-env
   MILADY_ROOT: /opt/milady
   MILADY_HOST: ${MILADY_HOST:-docker}
 
+# Certificat facultatif d'un proxy TLS (réseau d'entreprise/HPC) pour pip pendant la construction :
+# MILADY_BUILD_CACERT=/chemin/ca.pem dans l'environnement ou .env ; /dev/null (vide) sinon.
+x-build-secrets: &build-secrets
+  - cacert
+
 x-milady-build-args: &milady-build-args
   MILADY_UID: ${MILADY_UID:-1000}
   MILADY_GID: ${MILADY_GID:-1000}
@@ -150,6 +155,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.mlflow
+      secrets: *build-secrets
     image: milady-mlflow:3.17.2
     restart: unless-stopped
     depends_on:
@@ -194,6 +200,7 @@ services:
       context: ../..
       dockerfile: infra/docker/Dockerfile
       args: *milady-build-args
+      secrets: *build-secrets
     image: ${MILADY_IMAGE:-milady}:cpu
 
   worker-gpu:
@@ -203,6 +210,7 @@ services:
       context: ../..
       dockerfile: infra/docker/Dockerfile.gpu
       args: *milady-build-args
+      secrets: *build-secrets
     image: ${MILADY_IMAGE:-milady}:gpu
     # Mémoire partagée pour NCCL / DataLoader multi-processus.
     shm_size: "16gb"
@@ -229,6 +237,7 @@ services:
       args:
         <<: *milady-build-args
         WITH_JUPYTER: "1"
+      secrets: *build-secrets
     image: ${MILADY_IMAGE:-milady}:cpu-jupyter
     restart: unless-stopped
     ports:
@@ -245,3 +254,7 @@ services:
 volumes:
   pgdata:
   s3data:
+
+secrets:
+  cacert:
+    file: ${MILADY_BUILD_CACERT:-/dev/null}
